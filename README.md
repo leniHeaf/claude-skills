@@ -16,6 +16,7 @@ git clone https://github.com/leniHeaf/claude-skills && bash claude-skills/instal
 | `bash install-skills.sh` | global für alle Projekte (`~/.claude/skills`) |
 | `bash install-skills.sh ~/mein-projekt` | nur in ein Projekt |
 | `bash install-skills.sh --update` | Skills im Repo auf neuesten Stand von GitHub bringen |
+| `npx skills add emilkowalski/skill` | Emils Skills alternativ über die [skills-CLI](https://skills.sh) holen (`skills-lock.json`) |
 
 Danach Claude Code neu starten. Mit `/skills` siehst du, ob sie geladen sind.
 
@@ -27,6 +28,15 @@ Danach Claude Code neu starten. Mit `/skills` siehst du, ob sie geladen sind.
 | `animate` | Emil Kowalski | Animationen nach seinem Motion-System bauen |
 | `improve-animations` | Emil Kowalski | bestehende Animationen verbessern |
 | `review-animations` | Emil Kowalski | Animationen prüfen (Easing, Timing, Springs) |
+| `animate-expo` | Emil Kowalski | Animationen in React Native / Expo (Reanimated, Gestures, Haptics) |
+| `animation-vocabulary` | Emil Kowalski | Glossar: vage Beschreibung → exakter Fachbegriff für einen Effekt |
+| `apple-design` | Emil Kowalski | Apples Design- und Motion-Prinzipien fürs Web (Springs, Gesten, Tiefe) |
+| `ask-sonner` | Emil Kowalski | Sonner-Toasts einrichten, stylen und Probleme lösen |
+| `find-animation-opportunities` | Emil Kowalski | Stellen finden, die (nicht) animiert werden sollten |
+| `mobile-native` | Emil Kowalski | Web-Apps auf dem Handy nativ wirken lassen (100vh, Notch, Taps …) |
+| `pick-ui-library` | Emil Kowalski | passende Frontend-Bibliothek für eine Aufgabe wählen |
+| `prototype` | Emil Kowalski | mehrere UI-Varianten bauen und live per Picker vergleichen |
+| `write-swift` | Emil Kowalski | modernes Swift schreiben (Swift 6, Concurrency, Testing) |
 | `impeccable` | [Paul Bakaus](https://github.com/pbakaus/impeccable) | Design-Audit, Typografie, Layout, Polish |
 | `taste-skill` | [Leonxlnx](https://github.com/Leonxlnx/taste-skill) | „Anti-Slop“: kein generischer KI-Look |
 | `ui-ux-pro-max` | [Next Level Builder](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | Stile, Farbpaletten, Font-Paare, UX-Regeln |
