@@ -16,7 +16,7 @@ git clone https://github.com/leniHeaf/claude-skills && bash claude-skills/instal
 | `bash install-skills.sh` | global für alle Projekte (`~/.claude/skills`) |
 | `bash install-skills.sh ~/mein-projekt` | nur in ein Projekt |
 | `bash install-skills.sh --update` | Skills im Repo auf neuesten Stand von GitHub bringen |
-| `npx skills add emilkowalski/skill` | Emils Skills alternativ über die [skills-CLI](https://skills.sh) holen (`skills-lock.json`) |
+| `npx skills add <repo>` | Skills alternativ über die [skills-CLI](https://skills.sh) holen, z. B. `emilkowalski/skill`, `Leonxlnx/taste-skill` (`skills-lock.json`) |
 
 Danach Claude Code neu starten. Mit `/skills` siehst du, ob sie geladen sind.
 
@@ -38,7 +38,19 @@ Danach Claude Code neu starten. Mit `/skills` siehst du, ob sie geladen sind.
 | `prototype` | Emil Kowalski | mehrere UI-Varianten bauen und live per Picker vergleichen |
 | `write-swift` | Emil Kowalski | modernes Swift schreiben (Swift 6, Concurrency, Testing) |
 | `impeccable` | [Paul Bakaus](https://github.com/pbakaus/impeccable) | Design-Audit, Typografie, Layout, Polish |
-| `taste-skill` | [Leonxlnx](https://github.com/Leonxlnx/taste-skill) | „Anti-Slop“: kein generischer KI-Look |
+| `design-taste-frontend` | [Leonxlnx](https://github.com/Leonxlnx/taste-skill) | Anti-Slop-Frontend: kein generischer KI-Look (ehem. `taste-skill`) |
+| `design-taste-frontend-v1` | Leonxlnx | Original-v1 des Taste-Skills (nur für exakte Kompatibilität) |
+| `redesign-existing-projects` | Leonxlnx | bestehende Websites/Apps auf Premium-Niveau heben |
+| `high-end-visual-design` | Leonxlnx | „teurer“ Agentur-Look: Fonts, Abstände, Schatten, Karten |
+| `minimalist-ui` | Leonxlnx | ruhige Editorial-UIs, warme Monochrom-Palette |
+| `industrial-brutalist-ui` | Leonxlnx | brutalistisch-technischer Swiss/Terminal-Stil |
+| `gpt-taste` | Leonxlnx | Layout-Varianz, AIDA-Struktur, GSAP-ScrollTrigger |
+| `stitch-design-taste` | Leonxlnx | DESIGN.md-Designsysteme für Google Stitch |
+| `full-output-enforcement` | Leonxlnx | verhindert gekürzten Code und Platzhalter |
+| `image-to-code` | Leonxlnx | erst Design-Bilder generieren, dann nachbauen |
+| `imagegen-frontend-web` | Leonxlnx | Website-Designreferenzen als Bilder (pro Sektion) |
+| `imagegen-frontend-mobile` | Leonxlnx | Mobile-App-Screens als Bilder generieren |
+| `brandkit` | Leonxlnx | Brand-Kit-Boards: Logos, Identität, Guidelines |
 | `ui-ux-pro-max` | [Next Level Builder](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | Stile, Farbpaletten, Font-Paare, UX-Regeln |
 
 Ergänzend nützlich: Komponenten von [21st.dev](https://21st.dev/community/components)
@@ -48,7 +60,7 @@ Ergänzend nützlich: Komponenten von [21st.dev](https://21st.dev/community/comp
 
 ```text
 Baue mir eine Landingpage für <Firma/Angebot> mit React, Tailwind und Framer Motion.
-Nutze die Skills taste-skill, emil-design-eng und ui-ux-pro-max. Prüfe danach mit /impeccable audit.
+Nutze die Skills design-taste-frontend, emil-design-eng und ui-ux-pro-max. Prüfe danach mit /impeccable audit.
 ```
 
 ## Lizenzen

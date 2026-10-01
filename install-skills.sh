@@ -25,7 +25,19 @@ SKILLS=(
   "emilkowalski/skill|skills/prototype|prototype"
   "emilkowalski/skill|skills/write-swift|write-swift"
   "pbakaus/impeccable|.claude/skills/impeccable|impeccable"
-  "Leonxlnx/taste-skill|skills/taste-skill|taste-skill"
+  "Leonxlnx/taste-skill|skills/taste-skill|design-taste-frontend"
+  "Leonxlnx/taste-skill|skills/taste-skill-v1|design-taste-frontend-v1"
+  "Leonxlnx/taste-skill|skills/redesign-skill|redesign-existing-projects"
+  "Leonxlnx/taste-skill|skills/soft-skill|high-end-visual-design"
+  "Leonxlnx/taste-skill|skills/minimalist-skill|minimalist-ui"
+  "Leonxlnx/taste-skill|skills/brutalist-skill|industrial-brutalist-ui"
+  "Leonxlnx/taste-skill|skills/gpt-tasteskill|gpt-taste"
+  "Leonxlnx/taste-skill|skills/stitch-skill|stitch-design-taste"
+  "Leonxlnx/taste-skill|skills/output-skill|full-output-enforcement"
+  "Leonxlnx/taste-skill|skills/image-to-code-skill|image-to-code"
+  "Leonxlnx/taste-skill|skills/imagegen-frontend-web|imagegen-frontend-web"
+  "Leonxlnx/taste-skill|skills/imagegen-frontend-mobile|imagegen-frontend-mobile"
+  "Leonxlnx/taste-skill|skills/brandkit|brandkit"
   "nextlevelbuilder/ui-ux-pro-max-skill|.claude/skills/ui-ux-pro-max|ui-ux-pro-max"
 )
 
@@ -51,6 +63,7 @@ else
   TARGET="$HOME/.claude/skills"
 fi
 mkdir -p "$TARGET"
+rm -rf "$TARGET/taste-skill"  # alter Name von design-taste-frontend
 
 for entry in "${SKILLS[@]}"; do
   IFS='|' read -r _ _ name <<<"$entry"
