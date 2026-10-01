@@ -53,6 +53,11 @@ if [[ "${1:-}" == "--update" ]]; then
     [[ -f "$dir/LICENSE" ]] && cp "$dir/LICENSE" "$SRC/$name/LICENSE.upstream"
     echo "↻ $name  ($repo)"
   done
+  # Subagents, auf die der impeccable-Skill verweist
+  imp="$TMP/pbakaus__impeccable"
+  mkdir -p "$REPO_DIR/.claude/agents"
+  cp "$imp"/.claude/agents/impeccable-*.md "$REPO_DIR/.claude/agents/"
+  echo "↻ agents/impeccable-*  (pbakaus/impeccable)"
   echo "Aktualisiert. Änderungen mit 'git diff' prüfen und committen."
   exit 0
 fi
@@ -71,6 +76,10 @@ for entry in "${SKILLS[@]}"; do
   cp -R "$SRC/$name" "$TARGET/$name"
   echo "✓ $name"
 done
+
+mkdir -p "$TARGET/../agents"
+cp "$REPO_DIR"/.claude/agents/*.md "$TARGET/../agents/"
+echo "✓ agents (impeccable-*)"
 
 echo
 echo "Fertig. Skills liegen in $TARGET – Claude Code neu starten, damit sie geladen werden."

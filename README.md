@@ -37,7 +37,7 @@ Danach Claude Code neu starten. Mit `/skills` siehst du, ob sie geladen sind.
 | `pick-ui-library` | Emil Kowalski | passende Frontend-Bibliothek für eine Aufgabe wählen |
 | `prototype` | Emil Kowalski | mehrere UI-Varianten bauen und live per Picker vergleichen |
 | `write-swift` | Emil Kowalski | modernes Swift schreiben (Swift 6, Concurrency, Testing) |
-| `impeccable` | [Paul Bakaus](https://github.com/pbakaus/impeccable) | Design-Audit, Typografie, Layout, Polish |
+| `impeccable` | [Paul Bakaus](https://github.com/pbakaus/impeccable) | Design-Audit, Typografie, Layout, Polish (inkl. 4 Subagents in `.claude/agents/`) |
 | `design-taste-frontend` | [Leonxlnx](https://github.com/Leonxlnx/taste-skill) | Anti-Slop-Frontend: kein generischer KI-Look (ehem. `taste-skill`) |
 | `design-taste-frontend-v1` | Leonxlnx | Original-v1 des Taste-Skills (nur für exakte Kompatibilität) |
 | `redesign-existing-projects` | Leonxlnx | bestehende Websites/Apps auf Premium-Niveau heben |
