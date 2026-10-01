@@ -1,46 +1,47 @@
-# Claude Skills – die „10.000-Euro-Website“
+# Claude Skills – Design & Motion
 
-Eine professionelle Landingpage, gebaut mit Claude Code, Framer Motion (`motion`) und den Design-Skills aus dem Video.
+Sammlung von Design-Skills für [Claude Code](https://claude.com/claude-code), mit denen Claude
+hochwertige Websites mit sauberem UI/UX und flüssigen Animationen (Framer Motion) baut.
 
-## 1. Skills mit einem Befehl installieren
+Die Skills liegen fertig in `.claude/skills/` – wer dieses Repo in Claude Code öffnet, hat sie sofort.
+
+## Installation (ein Befehl)
 
 ```bash
-bash install-skills.sh            # nur für dieses Projekt (.claude/skills)
-bash install-skills.sh --global   # für alle Projekte (~/.claude/skills)
+git clone https://github.com/leniHeaf/claude-skills && bash claude-skills/install-skills.sh
 ```
 
-Installiert werden:
+| Befehl | Wirkung |
+| --- | --- |
+| `bash install-skills.sh` | global für alle Projekte (`~/.claude/skills`) |
+| `bash install-skills.sh ~/mein-projekt` | nur in ein Projekt |
+| `bash install-skills.sh --update` | Skills im Repo auf neuesten Stand von GitHub bringen |
+
+Danach Claude Code neu starten. Mit `/skills` siehst du, ob sie geladen sind.
+
+## Enthaltene Skills
 
 | Skill | Quelle | Wofür |
 | --- | --- | --- |
-| `emil-design-eng`, `animate`, `improve-animations`, `review-animations` | [emilkowalski/skill](https://github.com/emilkowalski/skill) | Motion-System: Easing, Timing, Springs |
-| `impeccable` | [pbakaus/impeccable](https://github.com/pbakaus/impeccable) | Design-Audit, Polish, Typografie |
-| `taste-skill` | [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) | Kein KI-Einheitslook („Anti-Slop“) |
-| `ui-ux-pro-max` | [nextlevelbuilder/ui-ux-pro-max-skill](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | Paletten, Font-Paare, UX-Regeln |
+| `emil-design-eng` | [Emil Kowalski](https://github.com/emilkowalski/skill) | Design-Engineering-Philosophie, Polish, Details |
+| `animate` | Emil Kowalski | Animationen nach seinem Motion-System bauen |
+| `improve-animations` | Emil Kowalski | bestehende Animationen verbessern |
+| `review-animations` | Emil Kowalski | Animationen prüfen (Easing, Timing, Springs) |
+| `impeccable` | [Paul Bakaus](https://github.com/pbakaus/impeccable) | Design-Audit, Typografie, Layout, Polish |
+| `taste-skill` | [Leonxlnx](https://github.com/Leonxlnx/taste-skill) | „Anti-Slop“: kein generischer KI-Look |
+| `ui-ux-pro-max` | [Next Level Builder](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | Stile, Farbpaletten, Font-Paare, UX-Regeln |
 
-Danach Claude Code neu starten. Komponenten von [21st.dev](https://21st.dev/community/components) lassen sich zusätzlich per `npx shadcn@latest add "<URL>"` einfügen.
+Ergänzend nützlich: Komponenten von [21st.dev](https://21st.dev/community/components)
+(per `npx shadcn@latest add "<URL>"`) und [Motion / Framer Motion](https://motion.dev) (`npm i motion`).
 
-## 2. Die Website
-
-`website/` enthält die fertige Landingpage für das fiktive Digitalstudio **Werkraum**:
-Hero mit 3D-Mockup (Spring-Tilt), Logo-Laufband, Bento-Leistungen, Projekte, animierte Kennzahlen,
-scrollgesteuerter Prozess, Preise, FAQ-Akkordeon und Kontaktformular.
-
-Stack: Vite · React 19 · TypeScript · Tailwind CSS v4 · Motion · Phosphor Icons · Geist.
-
-```bash
-cd website
-npm install
-npm run dev     # http://localhost:5173
-npm run build   # statischer Build in website/dist
-```
-
-Die Animationen folgen den Skill-Regeln: kräftiges `ease-out`, UI-Animationen unter 300 ms,
-`scale(0.97)` beim Drücken und `prefers-reduced-motion` wird respektiert.
-
-## Der „eine Prompt“ für eigene Seiten
+## Beispiel-Prompt
 
 ```text
 Baue mir eine Landingpage für <Firma/Angebot> mit React, Tailwind und Framer Motion.
-Nutze die Skills taste-skill, emil-design-eng und ui-ux-pro-max. Danach prüfe mit /impeccable audit.
+Nutze die Skills taste-skill, emil-design-eng und ui-ux-pro-max. Prüfe danach mit /impeccable audit.
 ```
+
+## Lizenzen
+
+Alle Skills stammen von ihren jeweiligen Autor:innen (MIT bzw. Apache-2.0).
+Die Original-Lizenz liegt jeweils als `LICENSE.upstream` im Skill-Ordner.
