@@ -20,6 +20,7 @@
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   --ease-reveal: cubic-bezier(0.19, 1, 0.22, 1);
 
+  color-scheme: dark;
   --header-h: clamp(64px, 5.6vw, 120px);
 }
 
@@ -110,7 +111,7 @@ h1, h2, h3, h4, p, figure { margin: 0; }
    ========================================================================== */
 .header {
   position: sticky;
-  top: 0;
+  top: env(safe-area-inset-top, 0px);
   z-index: 50;
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
