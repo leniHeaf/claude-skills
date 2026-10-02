@@ -156,3 +156,53 @@
     });
   }
 })();
+
+// Moodboard-Filter, Lightbox und Kontaktformular
+(() => {
+  const chips = document.querySelectorAll(".chips [data-filter]");
+  const items = document.querySelectorAll(".mood__item");
+  chips.forEach((chip) =>
+    chip.addEventListener("click", () => {
+      chips.forEach((c) => c.classList.toggle("is-active", c === chip));
+      const f = chip.dataset.filter;
+      items.forEach((it) => {
+        const show = f === "*" || it.dataset.cat === f;
+        it.classList.toggle("is-hidden", !show);
+        if (show) it.classList.add("is-in"), it.querySelector("[data-blur]")?.classList.add("is-in");
+      });
+    })
+  );
+
+  const box = document.querySelector("[data-lightbox]");
+  if (box && box.showModal) {
+    const media = box.querySelector(".lightbox__media");
+    document.querySelectorAll(".mood__btn").forEach((btn) =>
+      btn.addEventListener("click", () => {
+        const ph = btn.querySelector(".ph").cloneNode(true);
+        ph.classList.add("is-in");
+        media.replaceChildren(ph);
+        box.showModal();
+      })
+    );
+    box.querySelector("[data-lightbox-close]").addEventListener("click", () => box.close());
+    box.addEventListener("click", (e) => { if (e.target === box) box.close(); });
+  }
+
+  const form = document.querySelector("[data-form]");
+  if (form) {
+    const status = form.querySelector(".form__status");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      let ok = true;
+      form.querySelectorAll("[required]").forEach((el) => {
+        const valid = el.checkValidity() && el.value.trim() !== "";
+        el.closest(".field").classList.toggle("is-invalid", !valid);
+        if (!valid) ok = false;
+      });
+      status.textContent = ok
+        ? "Danke! (Platzhalter – hier ist noch kein Versand angebunden.)"
+        : "Bitte die markierten Felder ausfüllen.";
+      if (ok) form.reset();
+    });
+  }
+})();

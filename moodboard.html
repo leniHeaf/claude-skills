@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Moodboard – Studio X</title>
+  <meta name="description" content="Platzhalter-Website eines Kreativstudios.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=JetBrains+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,300;6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-mood">
+  <a class="skip" href="#main">Zum Inhalt springen</a>
+
+  <!-- Laufband -->
+  <div class="ticker" aria-label="Neuigkeiten">
+    <div class="ticker__track">
+      <ul class="ticker__list">
+        <li>Neue Kampagne für <a href="work.html">Marke Eins</a></li>
+        <li>Unterwegs: <a href="work.html">Projekt Nord</a> Stadtlauf 2026</li>
+        <li><a href="work.html">Neuer Auftritt</a> für Kunde Zwei</li>
+        <li>Studie: Jugendkultur für <a href="work.html">Marke Drei</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header" data-header>
+    <a class="logo" href="index.html#top" aria-label="Studio X – Startseite">STUDIO.X</a>
+    <p class="header__claim">Ein Kreativstudio<br>aus Musterstadt</p>
+    <nav class="nav" aria-label="Hauptnavigation">
+      <ul>
+        <li><a href="index.html#about">Über uns</a></li>
+        <li><a href="work.html">Arbeiten</a></li>
+        <li><a href="jobs.html">Jobs</a></li>
+        <li><a href="moodboard.html" class="is-active" aria-current="page">Moodboard</a></li>
+        <li><a href="openspace.html">Open Space</a></li>
+      </ul>
+    </nav>
+    <span class="header__year">© <span data-year>2026</span></span>
+    <a class="header__contact" href="kontakt.html">Kontakt
+      <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10h8M10.5 6.5 14 10l-3.5 3.5"/></svg>
+    </a>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="menu" data-burger>
+      <span></span><span></span><span class="sr">Menü</span>
+    </button>
+  </header>
+
+  <!-- Mobiles Menü -->
+  <div class="menu" id="menu" data-menu hidden>
+    <ul>
+      <li><a href="index.html#about">Über uns</a></li>
+      <li><a href="work.html">Arbeiten</a></li>
+      <li><a href="jobs.html">Jobs</a></li>
+      <li><a href="moodboard.html">Moodboard</a></li>
+      <li><a href="openspace.html">Open Space</a></li>
+      <li><a href="kontakt.html">Kontakt</a></li>
+    </ul>
+  </div>
+
+  <main id="main">
+    <section class="phead">
+      <h1 class="phead__title"><span class="line"><span>Moodboard<sup>24</sup></span></span></h1>
+      <p class="phead__intro" data-reveal>Platzhaltertext: Eine lose Sammlung von Bildern, Farben und Formen, die das Team gerade beschäftigen. Ersetze die Kacheln durch eure eigenen Referenzen.</p>
+      <div class="chips" role="group" aria-label="Filter"><button type="button" class="chip is-active" data-filter="*">Alle</button><button type="button" class="chip" data-filter="Farbe">Farbe</button><button type="button" class="chip" data-filter="Typografie">Typografie</button><button type="button" class="chip" data-filter="Fotografie">Fotografie</button><button type="button" class="chip" data-filter="Raum">Raum</button><button type="button" class="chip" data-filter="Bewegung">Bewegung</button></div>
+    </section>
+    <section class="mood">
+      <ul class="mood__grid">
+        <li class="mood__item" data-cat="Farbe" data-reveal>
+          <button type="button" class="mood__btn" aria-label="Referenz 01 vergrößern">
+            <span class="ph ph--sun" style="aspect-ratio:3/4" data-blur><span class="ph__label">Ref. 01</span></span>
+          </button>
+          <span class="mood__cap"><span>01</span><span>Farbe</span></span>
+        </li>
+        <li class="mood__item" data-cat="Typografie" data-reveal>
+          <button type="button" class="mood__btn" aria-label="Referenz 02 vergrößern">
+            <span class="ph ph--ember" style="aspect-ratio:1/1" data-blur><span class="ph__label">Ref. 02</span></span>
+          </button>
+          <span class="mood__cap"><span>02</span><span>Typografie</span></span>
+        </li>
+        <li class="mood__item" data-cat="Fotografie" data-reveal>
+          <button type="button" class="mood__btn" aria-label="Referenz 03 vergrößern">
+            <span class="ph ph--coral" style="aspect-ratio:4/5" data-blur><span class="ph__label">Ref. 03</span></span>
+          </button>
+          <span class="mood__cap"><span>03</span><span>Fotografie</span></span>
+        </li>
+        <li class="mood__item" data-cat="Raum" data-reveal>
+          <button type="button" class="mood__btn" aria-label="Referenz 04 vergrößern">
+            <span class="ph ph--paper" style="aspect-ratio:9/16" data-blur><span class="ph__label">Ref. 04</span></span>
+          </button>
+          <span class="mood__cap"><span>04</span><span>Raum</span></span>
+        </li>
+        <li class="mood__item" data-cat="Bewegung" data-reveal>
+          <button type="button" class="mood__btn" aria-label="Referenz 05 vergrößern">
+            <span class="ph ph--stone" style="aspect-ratio:4/3" data-blur><span class="ph__label">Ref. 05</span></span>
+          </button>
+          <span class="mood__cap"><span>05</span><span>Bewegung</span></span>
+        </li>
+        <li class="mood__item" data-cat="Farbe" data-reveal>
+          <button type="button" class="mood__btn" aria-label="Referenz 06 vergrößern">
+            <span class="ph ph--court" style="aspect-ratio:3/4" data-blur><span class="ph__label">Ref. 06</span></span>
+          </button>
+          <span class="mood__cap"><span>06</span><span>Farbe</span></span>
+        </li>
+        <li class="mood__item" data-cat="Typografie" data-reveal>
+          <button type="button" class="mood__btn" aria-label="Referenz 07 vergrößern">
+            <span class="ph ph--ink" style="aspect-ratio:1/1" data-blur><span class="ph__label">Ref. 07</span></span>
+          </button>
+          <span class="mood__cap"><span>07</span><span>Typografie</span></span>
+        </li>
+        <li class="mood__item" data-cat="Fotografie" data-reveal>
+          <button type="button" class="mood__btn" aria-label="Referenz 08 vergrößern">
+            <span class="ph ph--lime" style="aspect-ratio:2/3" data-blur><span class="ph__label">Ref. 08</span></span>
+          </button>
+          <span class="mood__cap"><span>08</span><span>Fotografie</span></span>
+        </li>
+        <li class="mood__item" data-cat="Raum" data-reveal>
+          <button type="button" class="mood__btn" aria-label="Referenz 09 vergrößern">
+            <span class="ph ph--dusk" style="aspect-ratio:4/5" data-blur><span class="ph__label">Ref. 09</span></span>
+          </button>
+          <span class="mood__cap"><span>09</span><span>Raum</span></span>
+        </li>
+        <li class="mood__item" data-cat="Bewegung" data-reveal>
+          <button type="button" class="mood__btn" aria-label="Referenz 10 vergrößern">
+            <span class="ph ph--sky" style="aspect-ratio:16/9" data-blur><span class="ph__label">Ref. 10</span></span>
+          </button>
+          <span class="mood__cap"><span>10</span><span>Bewegung</span></span>
+        </li>
+        <li class="mood__item" data-cat="Farbe" data-reveal>
+          <button type="button" class="mood__btn" aria-label="Referenz 11 vergrößern">
+            <span class="ph ph--clay" style="aspect-ratio:3/4" data-blur><span class="ph__label">Ref. 11</span></span>
+          </button>
+          <span class="mood__cap"><span>11</span><span>Farbe</span></span>
+        </li>
+        <li class="mood__item" data-cat="Typografie" data-reveal>
+          <button type="button" class="mood__btn" aria-label="Referenz 12 vergrößern">
+            <span class="ph ph--night" style="aspect-ratio:1/1" data-blur><span class="ph__label">Ref. 12</span></span>
+          </button>
+          <span class="mood__cap"><span>12</span><span>Typografie</span></span>
+        </li>
+        <li class="mood__item" data-cat="Fotografie" data-reveal>
+          <button type="button" class="mood__btn" aria-label="Referenz 13 vergrößern">
+            <span class="ph ph--film" style="aspect-ratio:4/5" data-blur><span class="ph__label">Ref. 13</span></span>
+          </button>
+          <span class="mood__cap"><span>13</span><span>Fotografie</span></span>
+        </li>
+        <li class="mood__item" data-cat="Raum" data-reveal>
+          <button type="button" class="mood__btn" aria-label="Referenz 14 vergrößern">
+            <span class="ph ph--mono" style="aspect-ratio:2/3" data-blur><span class="ph__label">Ref. 14</span></span>
+          </button>
+          <span class="mood__cap"><span>14</span><span>Raum</span></span>
+        </li>
+        <li class="mood__item" data-cat="Bewegung" data-reveal>
+          <button type="button" class="mood__btn" aria-label="Referenz 15 vergrößern">
+            <span class="ph ph--sun" style="aspect-ratio:3/4" data-blur><span class="ph__label">Ref. 15</span></span>
+          </button>
+          <span class="mood__cap"><span>15</span><span>Bewegung</span></span>
+        </li>
+        <li class="mood__item" data-cat="Farbe" data-reveal>
+          <button type="button" class="mood__btn" aria-label="Referenz 16 vergrößern">
+            <span class="ph ph--ember" style="aspect-ratio:1/1" data-blur><span class="ph__label">Ref. 16</span></span>
+          </button>
+          <span class="mood__cap"><span>16</span><span>Farbe</span></span>
+        </li>
+        <li class="mood__item" data-cat="Typografie" data-reveal>
+          <button type="button" class="mood__btn" aria-label="Referenz 17 vergrößern">
+            <span class="ph ph--coral" style="aspect-ratio:9/16" data-blur><span class="ph__label">Ref. 17</span></span>
+          </button>
+          <span class="mood__cap"><span>17</span><span>Typografie</span></span>
+        </li>
+        <li class="mood__item" data-cat="Fotografie" data-reveal>
+          <button type="button" class="mood__btn" aria-label="Referenz 18 vergrößern">
+            <span class="ph ph--paper" style="aspect-ratio:4/5" data-blur><span class="ph__label">Ref. 18</span></span>
+          </button>
+          <span class="mood__cap"><span>18</span><span>Fotografie</span></span>
+        </li>
+        <li class="mood__item" data-cat="Raum" data-reveal>
+          <button type="button" class="mood__btn" aria-label="Referenz 19 vergrößern">
+            <span class="ph ph--stone" style="aspect-ratio:4/3" data-blur><span class="ph__label">Ref. 19</span></span>
+          </button>
+          <span class="mood__cap"><span>19</span><span>Raum</span></span>
+        </li>
+        <li class="mood__item" data-cat="Bewegung" data-reveal>
+          <button type="button" class="mood__btn" aria-label="Referenz 20 vergrößern">
+            <span class="ph ph--court" style="aspect-ratio:3/4" data-blur><span class="ph__label">Ref. 20</span></span>
+          </button>
+          <span class="mood__cap"><span>20</span><span>Bewegung</span></span>
+        </li>
+        <li class="mood__item" data-cat="Farbe" data-reveal>
+          <button type="button" class="mood__btn" aria-label="Referenz 21 vergrößern">
+            <span class="ph ph--ink" style="aspect-ratio:1/1" data-blur><span class="ph__label">Ref. 21</span></span>
+          </button>
+          <span class="mood__cap"><span>21</span><span>Farbe</span></span>
+        </li>
+        <li class="mood__item" data-cat="Typografie" data-reveal>
+          <button type="button" class="mood__btn" aria-label="Referenz 22 vergrößern">
+            <span class="ph ph--lime" style="aspect-ratio:2/3" data-blur><span class="ph__label">Ref. 22</span></span>
+          </button>
+          <span class="mood__cap"><span>22</span><span>Typografie</span></span>
+        </li>
+        <li class="mood__item" data-cat="Fotografie" data-reveal>
+          <button type="button" class="mood__btn" aria-label="Referenz 23 vergrößern">
+            <span class="ph ph--dusk" style="aspect-ratio:4/5" data-blur><span class="ph__label">Ref. 23</span></span>
+          </button>
+          <span class="mood__cap"><span>23</span><span>Fotografie</span></span>
+        </li>
+        <li class="mood__item" data-cat="Raum" data-reveal>
+          <button type="button" class="mood__btn" aria-label="Referenz 24 vergrößern">
+            <span class="ph ph--sky" style="aspect-ratio:3/4" data-blur><span class="ph__label">Ref. 24</span></span>
+          </button>
+          <span class="mood__cap"><span>24</span><span>Raum</span></span>
+        </li>
+      </ul>
+    </section>
+    <dialog class="lightbox" data-lightbox>
+      <div class="lightbox__media"></div>
+      <button type="button" class="lightbox__close" data-lightbox-close>Schließen</button>
+    </dialog>
+  </main>
+
+  <footer class="footer" id="contact">
+    <a class="footer__cta" href="mailto:hallo@example.com">
+      <span class="line"><span>Lass uns</span></span>
+      <span class="line"><span>reden →</span></span>
+    </a>
+    <div class="footer__grid">
+      <div><h4>Adresse</h4><p>Musterstraße 1<br>12345 Musterstadt</p></div>
+      <div><h4>Kontakt</h4><p><a href="mailto:hallo@example.com">hallo@example.com</a><br><a href="tel:+490000000">+49 000 000 00</a></p></div>
+      <div><h4>Social</h4><p><a href="#">Instagram</a><br><a href="#">LinkedIn</a></p></div>
+      <div><h4>Rechtliches</h4><p><a href="#">Impressum</a><br><a href="#">Datenschutz</a></p></div>
+    </div>
+    <div class="footer__bottom">
+      <span class="logo logo--big" aria-hidden="true">STUDIO.X</span>
+      <span>© <span data-year>2026</span> Studio X</span>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

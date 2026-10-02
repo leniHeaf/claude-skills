@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kontakt – Studio X</title>
+  <meta name="description" content="Platzhalter-Website eines Kreativstudios.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=JetBrains+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,300;6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-contact">
+  <a class="skip" href="#main">Zum Inhalt springen</a>
+
+  <!-- Laufband -->
+  <div class="ticker" aria-label="Neuigkeiten">
+    <div class="ticker__track">
+      <ul class="ticker__list">
+        <li>Neue Kampagne für <a href="work.html">Marke Eins</a></li>
+        <li>Unterwegs: <a href="work.html">Projekt Nord</a> Stadtlauf 2026</li>
+        <li><a href="work.html">Neuer Auftritt</a> für Kunde Zwei</li>
+        <li>Studie: Jugendkultur für <a href="work.html">Marke Drei</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header" data-header>
+    <a class="logo" href="index.html#top" aria-label="Studio X – Startseite">STUDIO.X</a>
+    <p class="header__claim">Ein Kreativstudio<br>aus Musterstadt</p>
+    <nav class="nav" aria-label="Hauptnavigation">
+      <ul>
+        <li><a href="index.html#about">Über uns</a></li>
+        <li><a href="work.html">Arbeiten</a></li>
+        <li><a href="jobs.html">Jobs</a></li>
+        <li><a href="moodboard.html">Moodboard</a></li>
+        <li><a href="openspace.html">Open Space</a></li>
+      </ul>
+    </nav>
+    <span class="header__year">© <span data-year>2026</span></span>
+    <a class="header__contact" href="kontakt.html">Kontakt
+      <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10h8M10.5 6.5 14 10l-3.5 3.5"/></svg>
+    </a>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="menu" data-burger>
+      <span></span><span></span><span class="sr">Menü</span>
+    </button>
+  </header>
+
+  <!-- Mobiles Menü -->
+  <div class="menu" id="menu" data-menu hidden>
+    <ul>
+      <li><a href="index.html#about">Über uns</a></li>
+      <li><a href="work.html">Arbeiten</a></li>
+      <li><a href="jobs.html">Jobs</a></li>
+      <li><a href="moodboard.html">Moodboard</a></li>
+      <li><a href="openspace.html">Open Space</a></li>
+      <li><a href="kontakt.html">Kontakt</a></li>
+    </ul>
+  </div>
+
+  <main id="main">
+    <section class="phead">
+      <h1 class="phead__title"><span class="line"><span>Lass uns</span></span><span class="line"><span>reden</span></span></h1>
+    </section>
+    <section class="split contact">
+      <h2 class="label"><span>Kontakt</span></h2>
+      <div class="contact__grid">
+        <div class="contact__info" data-reveal>
+          <div><h3>Neue Projekte</h3><p>Vorname Nachname<br><a href="mailto:projekte@example.com">projekte@example.com</a></p></div>
+          <div><h3>Presse</h3><p><a href="mailto:presse@example.com">presse@example.com</a></p></div>
+          <div><h3>Jobs</h3><p><a href="jobs.html">Offene Stellen</a></p></div>
+          <div><h3>Studio</h3><p>Musterstraße 1<br>12345 Musterstadt<br><a href="tel:+490000000">+49 000 000 00</a></p></div>
+        </div>
+        <form class="form" data-form novalidate data-reveal>
+          <label class="field"><span>Name</span><input name="name" autocomplete="name" required></label>
+          <label class="field"><span>E-Mail</span><input name="email" type="email" autocomplete="email" required></label>
+          <label class="field"><span>Unternehmen</span><input name="company" autocomplete="organization"></label>
+          <fieldset class="field field--chips"><legend>Budget</legend><div class="chips"><label class="chip"><input type="radio" name="budget" value="< 25k"><span>< 25k</span></label><label class="chip"><input type="radio" name="budget" value="25–50k"><span>25–50k</span></label><label class="chip"><input type="radio" name="budget" value="50–100k"><span>50–100k</span></label><label class="chip"><input type="radio" name="budget" value="> 100k"><span>> 100k</span></label></div></fieldset>
+          <label class="field"><span>Nachricht</span><textarea name="message" rows="4" required></textarea></label>
+          <button class="submit" type="submit">Senden <span aria-hidden="true">→</span></button>
+          <p class="form__status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="contact">
+    <a class="footer__cta" href="mailto:hallo@example.com">
+      <span class="line"><span>Lass uns</span></span>
+      <span class="line"><span>reden →</span></span>
+    </a>
+    <div class="footer__grid">
+      <div><h4>Adresse</h4><p>Musterstraße 1<br>12345 Musterstadt</p></div>
+      <div><h4>Kontakt</h4><p><a href="mailto:hallo@example.com">hallo@example.com</a><br><a href="tel:+490000000">+49 000 000 00</a></p></div>
+      <div><h4>Social</h4><p><a href="#">Instagram</a><br><a href="#">LinkedIn</a></p></div>
+      <div><h4>Rechtliches</h4><p><a href="#">Impressum</a><br><a href="#">Datenschutz</a></p></div>
+    </div>
+    <div class="footer__bottom">
+      <span class="logo logo--big" aria-hidden="true">STUDIO.X</span>
+      <span>© <span data-year>2026</span> Studio X</span>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
