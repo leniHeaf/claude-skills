@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Studio X – Kreativstudio</title>
+  <meta name="description" content="Platzhalter-Website eines Kreativstudios.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=JetBrains+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,300;6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Zum Inhalt springen</a>
+
+  <!-- Laufband -->
+  <div class="ticker" aria-label="Neuigkeiten">
+    <div class="ticker__track">
+      <ul class="ticker__list">
+        <li>Neue Kampagne für <a href="work.html">Marke Eins</a></li>
+        <li>Unterwegs: <a href="work.html">Projekt Nord</a> Stadtlauf 2026</li>
+        <li><a href="work.html">Neuer Auftritt</a> für Kunde Zwei</li>
+        <li>Studie: Jugendkultur für <a href="work.html">Marke Drei</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header" data-header>
+    <a class="logo" href="#top" aria-label="Studio X – Startseite">STUDIO.X</a>
+    <p class="header__claim">Ein Kreativstudio<br>aus Musterstadt</p>
+    <nav class="nav" aria-label="Hauptnavigation">
+      <ul>
+        <li><a href="#about" class="is-active">Über uns</a></li>
+        <li><a href="work.html">Arbeiten</a></li>
+        <li><a href="#jobs">Jobs</a></li>
+        <li><a href="#services">Leistungen</a></li>
+        <li><a href="#contact">Studio</a></li>
+      </ul>
+    </nav>
+    <span class="header__year">© <span data-year>2026</span></span>
+    <a class="header__contact" href="#contact">Kontakt
+      <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10h8M10.5 6.5 14 10l-3.5 3.5"/></svg>
+    </a>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="menu" data-burger>
+      <span></span><span></span><span class="sr">Menü</span>
+    </button>
+  </header>
+
+  <!-- Mobiles Menü -->
+  <div class="menu" id="menu" data-menu hidden>
+    <ul>
+      <li><a href="#about">Über uns</a></li>
+      <li><a href="work.html">Arbeiten</a></li>
+      <li><a href="#jobs">Jobs</a></li>
+      <li><a href="#services">Leistungen</a></li>
+      <li><a href="#contact">Kontakt</a></li>
+    </ul>
+  </div>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero" id="top">
+      <h1 class="hero__title" aria-label="Wir gestalten Marken und Räume, die bleiben.">
+        <span class="line"><span>Wir gestalten Marken &amp;</span></span>
+        <span class="line"><span>Räume, die im Kopf</span></span>
+        <span class="line"><span>bleiben.</span></span>
+      </h1>
+      <figure class="hero__media" data-parallax="0.12">
+        <div class="ph ph--frame" data-reveal-clip>
+          <div class="ph ph--portrait"><span class="ph__label">Bild 3:4</span></div>
+        </div>
+      </figure>
+    </section>
+
+    <!-- About -->
+    <section class="about" id="about">
+      <p class="about__text" data-reveal>
+        STUDIO.X ist ein Platzhalter-Studio für Gestaltung mit Sitz in Musterstadt.
+        Dieser Absatz steht für eine kurze Selbstbeschreibung: wofür das Studio steht,
+        in welchen Disziplinen es arbeitet und mit wem. Hier könnte etwa stehen, dass das
+        Team Marken, digitale Erlebnisse, Shops und Kampagnen entwickelt und dabei
+        Strategie, Gestaltung und Technik zusammenbringt. Ersetze diesen Text durch eure
+        eigene Geschichte – zwei bis vier Sätze, ruhig und selbstbewusst formuliert.
+      </p>
+    </section>
+
+    <!-- Kunden -->
+    <section class="split clients" id="clients">
+      <h2 class="label"><span>Kunden</span></h2>
+      <ul class="clients__list" data-clients>
+        <li>Nordwind</li><li>Aurora Labs</li><li>Kiefer &amp; Sohn</li><li>Halde</li><li>Ostlicht</li>
+        <li>Mira Mode</li><li>Blauwerk</li><li>Fjell</li><li>Pavillon</li>
+        <li>Ferne Verlag</li><li>Lumen</li><li>Kollektiv Acht</li><li>Tidewater</li>
+        <li>Brücke</li><li>Sonnhalde</li><li>Vela</li><li>Grünraum</li>
+        <li>Atelier Moos</li><li>Kranich</li><li>Rote Fabrik</li><li>Okto</li>
+        <li>Westhafen</li><li>Silo</li><li>Bergmann</li><li>Feldweg</li>
+        <li>Kunsthalle Süd</li><li>Polar Motors</li>
+      </ul>
+    </section>
+
+    <!-- Leistungen -->
+    <section class="split services" id="services">
+      <h2 class="label"><span>Leistungen</span></h2>
+      <div class="services__list" id="work">
+
+        <article class="service">
+          <div class="service__copy" data-reveal>
+            <h3>Social Media</h3>
+            <p>Platzhaltertext: Wir bauen Communities mit passenden Formaten und Inhalten auf, die eure Marke nahbar machen.</p>
+            <ul>
+              <li>Plattformstrategie</li><li>Content-Produktion</li><li>Community</li><li>Creator-Kooperationen</li><li>Reporting</li>
+            </ul>
+          </div>
+          <a class="card" href="work.html" data-reveal>
+            <div class="card__media"><div class="ph ph--sun" data-blur><span class="ph__label">Bild 1:1</span></div></div>
+            <div class="card__meta"><span class="card__code">AB 2601</span><span class="card__title">Kunde Eins<br>Kampagne Frühling</span></div>
+            <span class="card__tag">Social</span>
+          </a>
+          <a class="card card--offset" href="work.html" data-reveal>
+            <div class="card__media"><div class="ph ph--ember" data-blur><span class="ph__label">Bild 1:1</span></div></div>
+            <div class="card__meta"><span class="card__code">CD 2602</span><span class="card__title">Kunde Zwei<br>Launch-Serie</span></div>
+            <span class="card__tag">Kampagne</span>
+          </a>
+        </article>
+
+        <article class="service">
+          <div class="service__copy" data-reveal>
+            <h3>E-Commerce</h3>
+            <p>Platzhaltertext: Wir entwickeln Shops als Orte, die inspirieren, gut zu bedienen sind und verkaufen.</p>
+            <ul>
+              <li>Shop-Strategie</li><li>SEO-Beratung</li><li>Onsite-Marketing</li><li>Merchandising</li><li>Conversion-Optimierung</li><li>Experience Design</li><li>Entwicklung</li>
+            </ul>
+          </div>
+          <a class="card" href="work.html" data-reveal>
+            <div class="card__media"><div class="ph ph--coral" data-blur><span class="ph__label">Bild 1:1</span></div></div>
+            <div class="card__meta"><span class="card__code">EF 2501</span><span class="card__title">Kunde Drei<br>Shop-Relaunch</span></div>
+            <span class="card__tag">E-Commerce</span>
+          </a>
+          <a class="card card--offset card--tall" href="work.html" data-reveal>
+            <div class="card__media"><div class="ph ph--paper" data-blur><span class="ph__label">Bild 4:5</span></div></div>
+            <div class="card__meta"><span class="card__code">GH 2502</span><span class="card__title">Kunde Vier<br>Eine neue Pflegemarke</span></div>
+            <span class="card__tag">Branding</span>
+          </a>
+        </article>
+
+        <article class="service">
+          <div class="service__copy" data-reveal>
+            <h3>Branding</h3>
+            <p>Platzhaltertext: Wir entwickeln Identitäten, Designsysteme und Geschichten für Marken mit Haltung.</p>
+            <ul>
+              <li>Kulturelle Insights</li><li>Markenstrategie</li><li>Markenarchitektur</li><li>Brand Design</li><li>Tonalität</li><li>Naming</li><li>Kampagnen</li><li>Employer Branding</li>
+            </ul>
+          </div>
+          <a class="card" href="work.html" data-reveal>
+            <div class="card__media"><div class="ph ph--stone" data-blur><span class="ph__label">Bild 1:1</span></div></div>
+            <div class="card__meta"><span class="card__code">IJ 2401</span><span class="card__title">Kunde Fünf<br>Mobilität im Abo</span></div>
+            <span class="card__tag">Branding</span>
+          </a>
+          <a class="card card--offset" href="work.html" data-reveal>
+            <div class="card__media"><div class="ph ph--court" data-blur><span class="ph__label">Bild 1:1</span></div></div>
+            <div class="card__meta"><span class="card__code">KL 2402</span><span class="card__title">Kunde Sechs<br>Ein Begleiter für jeden Tag</span></div>
+            <span class="card__tag">Branding</span>
+          </a>
+        </article>
+
+        <article class="service">
+          <div class="service__copy" data-reveal>
+            <h3>Digitale Produkte</h3>
+            <p>Platzhaltertext: Wir gestalten digitale Erlebnisse, die Marke und Publikum verbinden und mitwachsen.</p>
+            <ul>
+              <li>Digitale Strategie</li><li>Design Sprints</li><li>Microsites</li><li>Interaktive Erlebnisse</li><li>Apps</li><li>AR/VR</li>
+            </ul>
+          </div>
+          <a class="card" href="work.html" data-reveal>
+            <div class="card__media"><div class="ph ph--ink" data-blur><span class="ph__label">Bild 1:1</span></div></div>
+            <div class="card__meta"><span class="card__code">MN 2301</span><span class="card__title">Kunde Sieben<br>Plattform-Relaunch</span></div>
+            <span class="card__tag">Digital</span>
+          </a>
+          <a class="card card--offset card--phone" href="work.html" data-reveal>
+            <div class="card__media"><div class="ph ph--screen" data-blur><span class="ph__label">App-Screen</span></div></div>
+            <div class="card__meta"><span class="card__code">OP 2302</span><span class="card__title">Kunde Acht<br>Ticketing-App</span></div>
+            <span class="card__tag">Digital</span>
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <!-- Jobs -->
+    <section class="split jobs" id="jobs">
+      <h2 class="label"><span>Jobs</span></h2>
+      <ul class="jobs__list">
+        <li><a href="#contact" data-reveal><span>Senior Designer:in</span><span class="jobs__meta">Vollzeit · Musterstadt</span></a></li>
+        <li><a href="#contact" data-reveal><span>Creative Developer:in</span><span class="jobs__meta">Vollzeit · Remote</span></a></li>
+        <li><a href="#contact" data-reveal><span>Strateg:in</span><span class="jobs__meta">Teilzeit · Musterstadt</span></a></li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" id="contact">
+    <a class="footer__cta" href="mailto:hallo@example.com">
+      <span class="line"><span>Lass uns</span></span>
+      <span class="line"><span>reden →</span></span>
+    </a>
+    <div class="footer__grid">
+      <div><h4>Adresse</h4><p>Musterstraße 1<br>12345 Musterstadt</p></div>
+      <div><h4>Kontakt</h4><p><a href="mailto:hallo@example.com">hallo@example.com</a><br><a href="tel:+490000000">+49 000 000 00</a></p></div>
+      <div><h4>Social</h4><p><a href="#">Instagram</a><br><a href="#">LinkedIn</a></p></div>
+      <div><h4>Rechtliches</h4><p><a href="#">Impressum</a><br><a href="#">Datenschutz</a></p></div>
+    </div>
+    <div class="footer__bottom">
+      <span class="logo logo--big" aria-hidden="true">STUDIO.X</span>
+      <span>© <span data-year>2026</span> Studio X</span>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

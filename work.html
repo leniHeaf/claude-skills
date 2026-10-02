@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Arbeiten – Studio X</title>
+  <meta name="description" content="Platzhalter-Website eines Kreativstudios.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=JetBrains+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,300;6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-work">
+  <a class="skip" href="#main">Zum Inhalt springen</a>
+
+  <!-- Laufband -->
+  <div class="ticker" aria-label="Neuigkeiten">
+    <div class="ticker__track">
+      <ul class="ticker__list">
+        <li>Neue Kampagne für <a href="work.html">Marke Eins</a></li>
+        <li>Unterwegs: <a href="work.html">Projekt Nord</a> Stadtlauf 2026</li>
+        <li><a href="work.html">Neuer Auftritt</a> für Kunde Zwei</li>
+        <li>Studie: Jugendkultur für <a href="work.html">Marke Drei</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header" data-header>
+    <a class="logo" href="index.html#top" aria-label="Studio X – Startseite">STUDIO.X</a>
+    <p class="header__claim">Ein Kreativstudio<br>aus Musterstadt</p>
+    <nav class="nav" aria-label="Hauptnavigation">
+      <ul>
+        <li><a href="index.html#about" >Über uns</a></li>
+        <li><a href="work.html" class="is-active" aria-current="page">Arbeiten</a></li>
+        <li><a href="index.html#jobs">Jobs</a></li>
+        <li><a href="index.html#services">Leistungen</a></li>
+        <li><a href="index.html#contact">Studio</a></li>
+      </ul>
+    </nav>
+    <span class="header__year">© <span data-year>2026</span></span>
+    <a class="header__contact" href="index.html#contact">Kontakt
+      <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10h8M10.5 6.5 14 10l-3.5 3.5"/></svg>
+    </a>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="menu" data-burger>
+      <span></span><span></span><span class="sr">Menü</span>
+    </button>
+  </header>
+
+  <!-- Mobiles Menü -->
+  <div class="menu" id="menu" data-menu hidden>
+    <ul>
+      <li><a href="index.html#about">Über uns</a></li>
+      <li><a href="work.html">Arbeiten</a></li>
+      <li><a href="index.html#jobs">Jobs</a></li>
+      <li><a href="index.html#services">Leistungen</a></li>
+      <li><a href="index.html#contact">Kontakt</a></li>
+    </ul>
+  </div>
+
+  <main id="main">
+    <section class="work">
+      <h1 class="work__title">Ausgewählte Arbeiten<sup>20</sup></h1>
+      <div class="work__grid">
+      <a class="wcard wcard--p45" href="#" style="--y:0vw" data-reveal>
+        <div class="wcard__media"><div class="ph ph--sun" data-blur><span class="ph__label">Projekt 01</span></div></div>
+        <div class="card__meta"><span class="card__code">AF 2401</span><span class="card__title">Kunde 01<br>Projekttitel Platzhalter</span></div>
+        <span class="card__tag">Branding</span>
+      </a>
+      <a class="wcard wcard--p916" href="#" style="--y:-4vw" data-reveal>
+        <div class="wcard__media"><div class="ph ph--ember" data-blur><span class="ph__label">Projekt 02</span></div></div>
+        <div class="card__meta"><span class="card__code">BI 2508</span><span class="card__title">Kunde 02<br>Projekttitel Platzhalter</span></div>
+        <span class="card__tag">Social</span>
+      </a>
+      <a class="wcard wcard--sq" href="#" style="--y:2vw" data-reveal>
+        <div class="wcard__media"><div class="ph ph--coral" data-blur><span class="ph__label">Projekt 03</span></div></div>
+        <div class="card__meta"><span class="card__code">CL 2603</span><span class="card__title">Kunde 03<br>Projekttitel Platzhalter</span></div>
+        <span class="card__tag">Kampagne</span>
+      </a>
+      <a class="wcard wcard--p45" href="#" style="--y:10vw" data-reveal>
+        <div class="wcard__media"><div class="ph ph--paper" data-blur><span class="ph__label">Projekt 04</span></div></div>
+        <div class="card__meta"><span class="card__code">DO 2410</span><span class="card__title">Kunde 04<br>Projekttitel Platzhalter</span></div>
+        <span class="card__tag">E-Commerce</span>
+      </a>
+      <a class="wcard wcard--sq" href="#" style="--y:6vw" data-reveal>
+        <div class="wcard__media"><div class="ph ph--stone" data-blur><span class="ph__label">Projekt 05</span></div></div>
+        <div class="card__meta"><span class="card__code">ER 2505</span><span class="card__title">Kunde 05<br>Projekttitel Platzhalter</span></div>
+        <span class="card__tag">Digital</span>
+      </a>
+      <a class="wcard wcard--p45" href="#" style="--y:0vw" data-reveal>
+        <div class="wcard__media"><div class="ph ph--court" data-blur><span class="ph__label">Projekt 06</span></div></div>
+        <div class="card__meta"><span class="card__code">FU 2612</span><span class="card__title">Kunde 06<br>Projekttitel Platzhalter</span></div>
+        <span class="card__tag">Experience</span>
+      </a>
+      <a class="wcard wcard--p916" href="#" style="--y:8vw" data-reveal>
+        <div class="wcard__media"><div class="ph ph--ink" data-blur><span class="ph__label">Projekt 07</span></div></div>
+        <div class="card__meta"><span class="card__code">GX 2407</span><span class="card__title">Kunde 07<br>Projekttitel Platzhalter</span></div>
+        <span class="card__tag">Branding</span>
+      </a>
+      <a class="wcard wcard--p45" href="#" style="--y:-2vw" data-reveal>
+        <div class="wcard__media"><div class="ph ph--lime" data-blur><span class="ph__label">Projekt 08</span></div></div>
+        <div class="card__meta"><span class="card__code">HG 2502</span><span class="card__title">Kunde 08<br>Projekttitel Platzhalter</span></div>
+        <span class="card__tag">Social</span>
+      </a>
+      <a class="wcard wcard--p45" href="#" style="--y:0vw" data-reveal>
+        <div class="wcard__media"><div class="ph ph--dusk" data-blur><span class="ph__label">Projekt 09</span></div></div>
+        <div class="card__meta"><span class="card__code">IJ 2609</span><span class="card__title">Kunde 09<br>Projekttitel Platzhalter</span></div>
+        <span class="card__tag">Kampagne</span>
+      </a>
+      <a class="wcard wcard--sq" href="#" style="--y:12vw" data-reveal>
+        <div class="wcard__media"><div class="ph ph--sky" data-blur><span class="ph__label">Projekt 10</span></div></div>
+        <div class="card__meta"><span class="card__code">JM 2404</span><span class="card__title">Kunde 10<br>Projekttitel Platzhalter</span></div>
+        <span class="card__tag">E-Commerce</span>
+      </a>
+      <a class="wcard wcard--p916" href="#" style="--y:3vw" data-reveal>
+        <div class="wcard__media"><div class="ph ph--clay" data-blur><span class="ph__label">Projekt 11</span></div></div>
+        <div class="card__meta"><span class="card__code">KP 2511</span><span class="card__title">Kunde 11<br>Projekttitel Platzhalter</span></div>
+        <span class="card__tag">Digital</span>
+      </a>
+      <a class="wcard wcard--p45" href="#" style="--y:8vw" data-reveal>
+        <div class="wcard__media"><div class="ph ph--night" data-blur><span class="ph__label">Projekt 12</span></div></div>
+        <div class="card__meta"><span class="card__code">LS 2606</span><span class="card__title">Kunde 12<br>Projekttitel Platzhalter</span></div>
+        <span class="card__tag">Experience</span>
+      </a>
+      <a class="wcard wcard--sq" href="#" style="--y:9vw" data-reveal>
+        <div class="wcard__media"><div class="ph ph--sun" data-blur><span class="ph__label">Projekt 13</span></div></div>
+        <div class="card__meta"><span class="card__code">MV 2401</span><span class="card__title">Kunde 13<br>Projekttitel Platzhalter</span></div>
+        <span class="card__tag">Branding</span>
+      </a>
+      <a class="wcard wcard--p916" href="#" style="--y:0vw" data-reveal>
+        <div class="wcard__media"><div class="ph ph--ember" data-blur><span class="ph__label">Projekt 14</span></div></div>
+        <div class="card__meta"><span class="card__code">NY 2508</span><span class="card__title">Kunde 14<br>Projekttitel Platzhalter</span></div>
+        <span class="card__tag">Social</span>
+      </a>
+      <a class="wcard wcard--p45" href="#" style="--y:10vw" data-reveal>
+        <div class="wcard__media"><div class="ph ph--coral" data-blur><span class="ph__label">Projekt 15</span></div></div>
+        <div class="card__meta"><span class="card__code">OH 2603</span><span class="card__title">Kunde 15<br>Projekttitel Platzhalter</span></div>
+        <span class="card__tag">Kampagne</span>
+      </a>
+      <a class="wcard wcard--p45" href="#" style="--y:4vw" data-reveal>
+        <div class="wcard__media"><div class="ph ph--paper" data-blur><span class="ph__label">Projekt 16</span></div></div>
+        <div class="card__meta"><span class="card__code">PK 2410</span><span class="card__title">Kunde 16<br>Projekttitel Platzhalter</span></div>
+        <span class="card__tag">E-Commerce</span>
+      </a>
+      <a class="wcard wcard--p45" href="#" style="--y:2vw" data-reveal>
+        <div class="wcard__media"><div class="ph ph--stone" data-blur><span class="ph__label">Projekt 17</span></div></div>
+        <div class="card__meta"><span class="card__code">QN 2505</span><span class="card__title">Kunde 17<br>Projekttitel Platzhalter</span></div>
+        <span class="card__tag">Digital</span>
+      </a>
+      <a class="wcard wcard--sq" href="#" style="--y:10vw" data-reveal>
+        <div class="wcard__media"><div class="ph ph--court" data-blur><span class="ph__label">Projekt 18</span></div></div>
+        <div class="card__meta"><span class="card__code">RQ 2612</span><span class="card__title">Kunde 18<br>Projekttitel Platzhalter</span></div>
+        <span class="card__tag">Experience</span>
+      </a>
+      <a class="wcard wcard--p45" href="#" style="--y:0vw" data-reveal>
+        <div class="wcard__media"><div class="ph ph--ink" data-blur><span class="ph__label">Projekt 19</span></div></div>
+        <div class="card__meta"><span class="card__code">ST 2407</span><span class="card__title">Kunde 19<br>Projekttitel Platzhalter</span></div>
+        <span class="card__tag">Branding</span>
+      </a>
+      <a class="wcard wcard--p916" href="#" style="--y:6vw" data-reveal>
+        <div class="wcard__media"><div class="ph ph--lime" data-blur><span class="ph__label">Projekt 20</span></div></div>
+        <div class="card__meta"><span class="card__code">TW 2502</span><span class="card__title">Kunde 20<br>Projekttitel Platzhalter</span></div>
+        <span class="card__tag">Social</span>
+      </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="contact">
+    <a class="footer__cta" href="mailto:hallo@example.com">
+      <span class="line"><span>Lass uns</span></span>
+      <span class="line"><span>reden →</span></span>
+    </a>
+    <div class="footer__grid">
+      <div><h4>Adresse</h4><p>Musterstraße 1<br>12345 Musterstadt</p></div>
+      <div><h4>Kontakt</h4><p><a href="mailto:hallo@example.com">hallo@example.com</a><br><a href="tel:+490000000">+49 000 000 00</a></p></div>
+      <div><h4>Social</h4><p><a href="#">Instagram</a><br><a href="#">LinkedIn</a></p></div>
+      <div><h4>Rechtliches</h4><p><a href="#">Impressum</a><br><a href="#">Datenschutz</a></p></div>
+    </div>
+    <div class="footer__bottom">
+      <span class="logo logo--big" aria-hidden="true">STUDIO.X</span>
+      <span>© <span data-year>2026</span> Studio X</span>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
