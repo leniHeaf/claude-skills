@@ -105,6 +105,32 @@
   );
   onScroll();
 
+  // FAQ-Akkordeon: Höhe weich animieren, ein Eintrag gleichzeitig offen
+  const faqItems = [...document.querySelectorAll(".faq__item")];
+  const animateItem = (item, open) => {
+    const body = item.querySelector(".faq__body");
+    if (reduceMotion || !body.animate) {
+      item.open = open;
+      return;
+    }
+    if (open) item.open = true;
+    const full = body.scrollHeight;
+    body.getAnimations().forEach((a) => a.cancel());
+    const anim = body.animate(
+      open ? [{ height: "0px" }, { height: `${full}px` }] : [{ height: `${full}px` }, { height: "0px" }],
+      { duration: open ? 420 : 280, easing: "cubic-bezier(0.23, 1, 0.32, 1)" }
+    );
+    if (!open) anim.onfinish = () => (item.open = false);
+  };
+  faqItems.forEach((item) => {
+    item.querySelector("summary").addEventListener("click", (e) => {
+      e.preventDefault();
+      const willOpen = !item.open;
+      if (willOpen) faqItems.forEach((other) => other !== item && other.open && animateItem(other, false));
+      animateItem(item, willOpen);
+    });
+  });
+
   // Mobil-Menü
   const burger = document.querySelector("[data-burger]");
   const menu = document.querySelector("[data-menu]");
