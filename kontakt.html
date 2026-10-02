@@ -76,7 +76,7 @@
           <label class="field"><span>Name</span><input name="name" autocomplete="name" required></label>
           <label class="field"><span>E-Mail</span><input name="email" type="email" autocomplete="email" required></label>
           <label class="field"><span>Unternehmen</span><input name="company" autocomplete="organization"></label>
-          <fieldset class="field field--chips"><legend>Budget</legend><div class="chips"><label class="chip"><input type="radio" name="budget" value="< 25k"><span>< 25k</span></label><label class="chip"><input type="radio" name="budget" value="25–50k"><span>25–50k</span></label><label class="chip"><input type="radio" name="budget" value="50–100k"><span>50–100k</span></label><label class="chip"><input type="radio" name="budget" value="> 100k"><span>> 100k</span></label></div></fieldset>
+          <div class="field field--chips" role="radiogroup" aria-labelledby="budget-label"><span id="budget-label">Budget</span><div class="chips"><label class="chip"><input type="radio" name="budget" value="unter 25k"><span>&lt; 25k</span></label><label class="chip"><input type="radio" name="budget" value="25–50k"><span>25–50k</span></label><label class="chip"><input type="radio" name="budget" value="50–100k"><span>50–100k</span></label><label class="chip"><input type="radio" name="budget" value="über 100k"><span>&gt; 100k</span></label></div></div>
           <label class="field"><span>Nachricht</span><textarea name="message" rows="4" required></textarea></label>
           <button class="submit" type="submit">Senden <span aria-hidden="true">→</span></button>
           <p class="form__status" role="status" aria-live="polite"></p>

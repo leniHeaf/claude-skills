@@ -831,8 +831,6 @@ h1, h2, h3, h4, p, figure { margin: 0; }
 .chip:active { transform: scale(0.96); }
 .chip.is-active, .chip:has(input:checked) { background: var(--fg); color: var(--bg); border-color: var(--fg); }
 @media (hover: hover) and (pointer: fine) { .chip:hover { border-color: var(--fg); } }
-.field--chips { display: block; }
-.field--chips .chips { margin: 0; padding: 0; }
 .chip input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
 
 /* Moodboard: Masonry über CSS-Spalten */
@@ -893,6 +891,8 @@ h1, h2, h3, h4, p, figure { margin: 0; }
 @media (hover: hover) and (pointer: fine) { .cta__link:hover span { transform: translateX(0.15em); } }
 
 /* Kontakt */
+.field .chips { grid-column: auto; }
+.page-contact .footer__cta { display: none; }
 .contact { padding-bottom: clamp(80px, 9vw, 220px); }
 .contact__grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: clamp(32px, 6vw, 160px); align-items: start; }
 .contact__info { display: grid; gap: clamp(24px, 2.4vw, 56px); font-size: clamp(16px, 1.25vw, 28px); line-height: 1.15; }
