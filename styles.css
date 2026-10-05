@@ -3219,3 +3219,100 @@ h1, h2, h3, h4, p, figure { margin: 0; }
   .k-x__spin { transform: rotateY(-20deg) rotateX(10deg) !important; }
 }
 @media (max-width: 900px) { .k-x { right: -6%; top: 6%; opacity: 0.6; } }
+
+/* ==========================================================================
+   LUX: Lagerfeld-Look für alle Unterseiten
+   ========================================================================== */
+.lux {
+  --sans: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  --serif: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  --mono: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  --lsans: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+  --accent: #000; --yellow: #000; --card: transparent; --sig: #000;
+  --line: rgba(0,0,0,0.18);
+  font-family: var(--k);
+}
+.lux .ticker__track { animation: none; width: auto; justify-content: center; }
+.lux .ticker { text-align: center; }
+.lux .ticker__list li::after { display: none; }
+.lux .ticker a { color: #fff; }
+.lux .logo { font-style: normal; transform: none; }
+.lux main * { font-stretch: 100% !important; font-style: normal; }
+
+/* Fotos schwarz-weiß, Farbe beim Überfahren */
+.lux main img, .lux main .ph { filter: grayscale(1) contrast(1.05) !important; }
+@media (hover: hover) and (pointer: fine) { .lux main a:hover img, .lux main a:hover .ph { filter: none !important; } }
+.lux .ph__label { background: #fff; color: #000; }
+
+/* Seitentitel: zurückhaltende Versalien */
+.lux .phead__title, .lux .ahero__title, .lux .jhero__title, .lux .work__title, .lux .article__title,
+.lux .lhero h1, .lux .lart__intro h1, .lux .project-head .phead__title {
+  font-family: var(--k); font-weight: 600; text-transform: uppercase; color: #000;
+  font-size: clamp(28px, 3.2vw, 56px); line-height: 1.1; letter-spacing: 0.02em;
+}
+.lux .work__title { font-size: clamp(32px, 4vw, 72px); }
+.lux .phead__title sup, .lux .work__title sup { font-size: 0.45em; }
+
+/* Zwischenüberschriften */
+.lux main h2:not(.label), .lux main h3, .lux .service h3, .lux .culture h2, .lux .awiki__head, .lux .wrow__title, .lux .orow__title,
+.lux .acard__title, .lux .hcase h3, .lux .mgal__meta h3, .lux .lart__body h2, .lux .ltoolkit h2, .lux .story-feature h2 {
+  font-family: var(--k); font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; line-height: 1.15;
+}
+.lux .service h3, .lux .culture h2, .lux .awiki__head, .lux .ltoolkit h2, .lux .story-feature h2 { font-size: clamp(20px, 1.8vw, 32px); }
+.lux .lart__body h2 { font-size: clamp(16px, 1.3vw, 22px); margin-top: 2.2em; }
+.lux .wrow__title, .lux .orow__title, .lux .wcard-l h3, .lux .feat h3, .lux .phases h3, .lux .value h3, .lux .acard__title { font-size: clamp(14px, 1.05vw, 18px); }
+.lux .label, .lux .label-s { font-family: var(--k); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; font-size: 12px; color: #000; }
+
+/* Fließtext klein und ruhig */
+.lux main p, .lux main li, .lux main dd, .lux main dt, .lux main blockquote {
+  font-family: var(--k); font-weight: 400; letter-spacing: 0; text-transform: none;
+}
+.lux main p, .lux main li, .lux main dd { font-size: clamp(14px, 1vw, 16px); line-height: 1.65; }
+.lux .phead__intro, .lux .lhero__intro, .lux .ahero__intro, .lux .lart__def, .lux .project-intro p, .lux .about__text, .lux .culture p { font-size: clamp(15px, 1.15vw, 19px); line-height: 1.6; max-width: 40em; }
+.lux .lart__body p { font-size: 16px; line-height: 1.75; }
+.lux .lart__body blockquote, .lux .quote-card p, .lux .project-claim { font-size: clamp(18px, 1.6vw, 26px); font-weight: 600; text-transform: uppercase; line-height: 1.3; letter-spacing: 0.02em; color: #000; border-color: #000; }
+.lux .card__tag, .lux .card__code, .lux .card__meta, .lux .card__title, .lux .mood__cap, .lux .wrow__meta, .lux .orow__meta, .lux .hnote, .lux .jobs__meta {
+  font-family: var(--k); font-size: 12px; letter-spacing: 0.04em;
+}
+.lux .card__code::before { border-radius: 0; }
+
+/* Große Linktexte (Jobs, CTA, FAQ, Formulare) verkleinern */
+.lux .jobs__list a, .lux .cta__link, .lux .facts__list > div, .lux .submit { font-family: var(--k); font-weight: 600; text-transform: uppercase; font-size: clamp(16px, 1.4vw, 24px); letter-spacing: 0.02em; }
+.lux .faq__item summary { font-family: var(--k); font-weight: 600; font-size: clamp(14px, 1.1vw, 17px); text-transform: none; letter-spacing: 0; }
+.lux .faq__item, .lux .jobs__list a, .lux .facts__list > div, .lux .wlist, .lux .wrow a, .lux .orow a, .lux .olist { border-color: #000; }
+.lux .field input, .lux .field textarea, .lux .asearch input { font-family: var(--k); font-size: 16px; font-weight: 400; color: #000; border-bottom-color: #000; }
+
+/* Flächen: kantig, schwarze Linien statt Karten */
+.lux .wcard-l a, .lux .feat, .lux .ltoolkit, .lux .quote-card, .lux .story-feature, .lux .wiki-index > div, .lux .steps li, .lux .acard a,
+.lux .mood__btn, .lux .lart__body blockquote {
+  border-radius: 0 !important; background: transparent !important; box-shadow: none !important; border: 0; border-top: 1px solid #000;
+}
+.lux .wcard-l a, .lux .feat { padding: 20px 0 0; }
+.lux .steps li { padding: 14px 0; border-top: 1px solid var(--line); }
+.lux .steps li::before { background: #000; color: #fff; border-radius: 0; }
+.lux .icon { background: #000; color: #fff; border: 0; border-radius: 0; }
+.lux .pill, .lux .hbtn, .lux .book { background: #000; color: #fff; border-radius: 0; font-family: var(--k); font-weight: 600; letter-spacing: 0.06em; }
+.lux .book__faces { display: none; }
+.lux .book { padding: 14px 20px; }
+.lux .ulink, .lux .hlink, .lux .article__link { font-family: var(--k); font-weight: 600; font-size: 12px; border-bottom: 1px solid #000; letter-spacing: 0.04em; }
+.lux .chip, .lux .awiki__filter button { border-radius: 0; font-family: var(--k); }
+.lux .chip.is-active, .lux .awiki__filter button.is-active { background: #000; color: #fff; }
+.lux .awiki__filter button { font-weight: 600; font-size: 14px; text-transform: uppercase; }
+.lux .term { font-family: var(--k); border-bottom: 1px solid #000; }
+.lux .term::after { background: #000; color: #fff; border-radius: 0; font-family: var(--k); }
+.lux .lrel, .lux .lsec, .lux .split, .lux .awiki { border-color: #000; }
+.lux .k-sec, .lux .split + .split { border-top-width: 0; }
+.lux main > section + section { border-top: 1px solid var(--line); }
+.lux .header { position: sticky; }
+.lux .page-project, .lux.page-project { --accent: #000; }
+.lux .project-head .phead__title { color: #000; }
+.lux .mreel, .lux .glitch { filter: grayscale(1); }
+/* Arbeiten-Seite im Lux-Look: Titel oben, Raster darunter */
+.lux .work__title { position: static; transform: none; margin-top: clamp(48px, 5vw, 96px); text-align: left; white-space: normal; filter: none !important; opacity: 1 !important; }
+.lux .work__intro { margin-top: 10px; font-size: 15px; }
+.lux .work__grid { filter: none !important; opacity: 1 !important; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 3vw, 48px) 12px; margin-top: clamp(32px, 3vw, 56px); }
+.lux .wcard { margin-top: 0 !important; }
+.lux .work { padding-inline: var(--edge); }
+@media (max-width: 760px) { .lux .work__grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 760px) { .lux .work { padding-inline: 16px; } .lux .work__grid { column-gap: 10px; } .lux .wcard { min-width: 0; } }
+.lux main { overflow-x: clip; } .lux .card__meta { flex-wrap: wrap; min-width: 0; } .lux .card__title { min-width: 0; overflow-wrap: anywhere; }
