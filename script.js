@@ -1521,3 +1521,77 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
   };
   requestAnimationFrame(tick);
 })();
+
+// Case Studies v3: noch mehr Bewegung – Wortband, horizontale Bildstrecke,
+// Fortschritt im Projekt-Kopf, Labels Buchstabe für Buchstabe, Bild-Neigung
+(() => {
+  const root = document.querySelector(".cs3");
+  if (!root || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  // Fortschrittslinie im Projekt-Kopf
+  const bar = document.querySelector(".c3-bar");
+  const prog = document.createElement("i");
+  prog.className = "c3-prog";
+  bar?.appendChild(prog);
+
+  // Wortband aus den Leistungen, läuft je nach Scrollrichtung
+  const tags = (document.querySelector(".c2-bar__t span")?.textContent || "").split("·").map((t) => t.trim()).filter(Boolean);
+  const name = document.querySelector(".c2-bar__t b")?.textContent || "";
+  const words = [name, ...tags];
+  const band = document.createElement("div");
+  band.className = "c3-band"; band.setAttribute("aria-hidden", "true");
+  const set = words.map((w) => `<span>${w}</span><em>✦</em>`).join("");
+  band.innerHTML = `<div class="c3-band__t">${set + set + set + set}</div>`;
+  const firstSec = root.querySelector(".c3-sec");
+  firstSec?.after(band);
+  const track = band.firstElementChild;
+
+  // Horizontale Bildstrecke aus allen Bildern der Seite (klebt beim Scrollen)
+  const srcs = [...new Set([...root.querySelectorAll(".c3-m img, .c3-hero img")].map((i) => i.getAttribute("src")))];
+  let hs = null;
+  if (srcs.length >= 3) {
+    hs = document.createElement("section");
+    hs.className = "c3-hs";
+    hs.innerHTML = `<div class="c3-hs__pin"><p class="c3-label c3-in">Einblicke <b class="c3-hs__n">01</b> / ${String(srcs.length).padStart(2, "0")}</p><div class="c3-hs__row">${srcs.map((s) => `<figure><img src="${s}" alt="" loading="lazy" decoding="async"></figure>`).join("")}</div></div>`;
+    (root.querySelector(".c3-ext") || root.querySelector(".c3-next")).before(hs);
+  }
+  const row = hs?.querySelector(".c3-hs__row");
+  const num = hs?.querySelector(".c3-hs__n");
+
+  // Labels: Buchstabe für Buchstabe
+  root.querySelectorAll(".c3-sec .c3-label").forEach((l) => {
+    l.innerHTML = [...l.textContent].map((c, i) => `<span style="transition-delay:${i * 25}ms">${c === " " ? "&nbsp;" : c}</span>`).join("");
+    l.classList.add("c3-chars");
+  });
+
+  let x = 0, lastY = scrollY;
+  const tick = () => {
+    const h = innerHeight, max = document.documentElement.scrollHeight - h;
+    prog.style.transform = `scaleX(${max > 0 ? scrollY / max : 0})`;
+    const dy = scrollY - lastY; lastY = scrollY;
+    x -= 0.5 + Math.min(Math.abs(dy) * 0.4, 18) * (dy < 0 ? -1 : 1);
+    const w = track.scrollWidth / 4; let p = x % w; if (p > 0) p -= w;
+    track.style.transform = `translate3d(${p}px,0,0)`;
+    if (hs) {
+      const r = hs.getBoundingClientRect();
+      const t = Math.min(1, Math.max(0, -r.top / (hs.offsetHeight - h)));
+      const dist = row.scrollWidth - innerWidth + 48;
+      row.style.transform = `translate3d(${-t * dist}px,0,0)`;
+      num.textContent = String(Math.min(srcs.length, 1 + Math.floor(t * srcs.length))).padStart(2, "0");
+    }
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+  if (hs) { const setH = () => { hs.style.height = (row.scrollWidth - innerWidth + innerHeight + 200) + "px"; }; addEventListener("load", setH); addEventListener("resize", setH); setTimeout(setH, 400); }
+
+  // Bilder neigen sich zur Maus
+  if (fine) root.querySelectorAll(".c3-m, .c3-hs figure").forEach((f) => {
+    f.addEventListener("pointermove", (e) => {
+      const r = f.getBoundingClientRect(), px = (e.clientX - r.left) / r.width - 0.5, py = (e.clientY - r.top) / r.height - 0.5;
+      f.style.transform = `perspective(1200px) rotateY(${px * 5}deg) rotateX(${-py * 5}deg)`;
+      f.classList.add("is-hov");
+    });
+    f.addEventListener("pointerleave", () => { f.style.transform = ""; f.classList.remove("is-hov"); });
+  });
+})();
