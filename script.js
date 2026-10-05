@@ -1259,9 +1259,10 @@
   header.insertBefore(icons, burger || null);
 
   const promos = {
-    Arbeiten: [["plakatwand", "Run Club", "projekt-runclub.html"], ["../taeubert/website-laptop", "Täubert", "projekt-taeubert.html"]],
+    Arbeiten: [["plakatwand", "Run Club", "projekt-runclub.html"], ["../taeubert/website-laptop", "Täubert", "projekt-taeubert.html"], ["../crea-response/wandlogo", "Crea Response", "projekt-crea-response.html"]],
     Leistungen: [["touchpoints", "So arbeiten wir", "prozess.html"], ["haltestelle", "Social Media", "index.html#social"]],
     Studio: [["flasche", "Jobs", "jobs.html"]],
+    Arbeiten2: [],
     Academy: [["plakatwand", "Marken-Wiki", "academy.html#wiki"], ["flasche", "Workshop-Toolkit", "academy-toolkit.html"]],
   };
   // Aktiven Bereich markieren
