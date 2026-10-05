@@ -1312,3 +1312,139 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
   window.addEventListener("pointerup", () => { if (!drag) return; drag = null; track.style.scrollSnapType = ""; });
   track.addEventListener("dragstart", (e) => e.preventDefault());
 });
+
+// ==========================================================================
+// V10 Motion: weiches Scrollen, Buchstaben-Animation, Text hellt beim
+// Scrollen auf, Bilder ziehen sich auf, Projekt-Intro, fester Projekt-Kopf,
+// Text-Rollover auf Links
+// ==========================================================================
+(() => {
+  const body = document.body;
+  if (!body.classList.contains("v5")) return;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  if (reduce) return;
+  const isCase = body.classList.contains("page-case");
+
+  // Weiches Scrollen (nur Maus/Trackpad, lädt still nach; ohne Netz bleibt normales Scrollen)
+  if (fine) {
+    const s = document.createElement("script");
+    s.src = "https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js";
+    s.async = true;
+    s.onload = () => {
+      if (!window.Lenis) return;
+      const lenis = new window.Lenis({ duration: 1.15, smoothWheel: true });
+      const raf = (t) => { lenis.raf(t); requestAnimationFrame(raf); };
+      requestAnimationFrame(raf);
+      document.documentElement.classList.add("has-lenis");
+    };
+    document.head.appendChild(s);
+  }
+
+  // Große Titel: Buchstabe für Buchstabe (baut auf den Wortmasken auf)
+  document.querySelectorAll("main h1.m8-split").forEach((h) => {
+    let n = 0;
+    h.querySelectorAll(".m8w > span").forEach((w) => {
+      const txt = w.textContent;
+      w.innerHTML = [...txt].map((c) => `<span class="m10c" style="transition-delay:${(n++) * 22}ms">${c}</span>`).join("");
+    });
+    h.classList.add("m10-chars");
+    if (!h.classList.contains("m8-split")) {
+      // Titel ohne Wortmasken (z. B. Link-Text): selbst beobachten
+      const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { h.classList.add("m8-in"); io.disconnect(); } });
+      io.observe(h);
+    }
+  });
+
+  // Text hellt beim Scrollen Wort für Wort auf
+  const fades = [...document.querySelectorAll(".cs-statement, .cs-quote__t, .ac2-hero__intro, .cs-info .cs-cols p, .k-split__text p, .rw__sub")];
+  const fadeWords = fades.map((el) => {
+    if (!el.querySelector(".m8w")) {
+      el.innerHTML = el.innerHTML.split(/(\s+|<[^>]+>)/).map((t) => (!t || /^\s+$/.test(t) || t.startsWith("<")) ? t : `<span class="m10w">${t}</span>`).join("");
+    }
+    el.classList.add("m10-fade");
+    return { el, words: [...el.querySelectorAll(".m10w, .m8w")] };
+  });
+
+  // Bilder ziehen sich beim Scrollen auf
+  const expand = [...document.querySelectorAll(".cs-media--hero, .cs-media--wide, .cs-media--full, .ac2-feat--big figure, .project-media--wide")];
+  expand.forEach((f) => f.classList.add("m10-expand"));
+  // Bildpaare laufen unterschiedlich schnell
+  const pairs = [...document.querySelectorAll(".cs-pair .cs-media:nth-child(2)")];
+
+  const vh = () => innerHeight;
+  const tick = () => {
+    const h = vh();
+    fadeWords.forEach(({ el, words }) => {
+      const r = el.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > h) return;
+      const p = Math.min(1, Math.max(0, (h * 0.9 - r.top) / (h * 0.55 + r.height * 0.6)));
+      const k = Math.floor(p * words.length * 1.05);
+      words.forEach((w, i) => w.classList.toggle("is-lit", i < k));
+    });
+    expand.forEach((f) => {
+      const r = f.getBoundingClientRect();
+      if (r.bottom < -50 || r.top > h + 50) return;
+      const p = Math.min(1, Math.max(0, (h - r.top) / (h * 0.75)));
+      const inset = (1 - p) * 9;
+      f.style.clipPath = `inset(${inset}% ${inset}% ${inset}% ${inset}%)`;
+    });
+    pairs.forEach((f) => {
+      const r = f.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > h) return;
+      f.style.transform = `translate3d(0, ${((r.top + r.height / 2 - h / 2) * -0.12).toFixed(1)}px, 0)`;
+    });
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+
+  // Text-Rollover: Wort rollt beim Überfahren nach oben weg
+  if (fine) document.querySelectorAll(".header .nav__toggle, .kl-cta, .cs-back, .ac2-chips button, .rw__more a, .mnav__cta, .ac2-news__btn").forEach((el) => {
+    const label = [...el.childNodes].find((n) => n.nodeType === 3 && n.textContent.trim());
+    if (!label) return;
+    const t = label.textContent.trim();
+    const wrap = document.createElement("span");
+    wrap.className = "m10-roll";
+    wrap.innerHTML = `<span>${t}</span><span aria-hidden="true">${t}</span>`;
+    label.replaceWith(wrap);
+  });
+
+  if (!isCase) return;
+
+  // Projekt-Intro: Farbfläche mit Projektname, zieht dann nach oben weg
+  const file = (location.pathname.split("/").pop() || "").replace(".html", "");
+  const theme = {
+    "projekt-runclub": ["#ffe100", "#000"], "projekt-taeubert": ["#c8102e", "#fff"],
+    "projekt-medaesthetic": ["#e8e0d6", "#1c1c1c"], "projekt-kuehlkraft": ["#cfe3ea", "#0f2a33"],
+    "projekt-mybaumarkt": ["#1f4e3d", "#fff"],
+  }[file] || ["#1c1c1c", "#fff"];
+  const name = (document.querySelector(".cs-kicker")?.firstChild?.textContent || "").split("—")[0].trim();
+  const intro = document.createElement("div");
+  intro.className = "m10-intro";
+  intro.setAttribute("aria-hidden", "true");
+  intro.style.setProperty("--bg", theme[0]); intro.style.setProperty("--fg", theme[1]);
+  intro.innerHTML = `<p>${[...name].map((c, i) => `<span style="animation-delay:${200 + i * 45}ms">${c === " " ? "&nbsp;" : c}</span>`).join("")}</p>`;
+  body.appendChild(intro);
+  setTimeout(() => intro.classList.add("is-out"), 1350 + name.length * 45);
+  setTimeout(() => intro.remove(), 2600 + name.length * 45);
+
+  // Fester Projekt-Kopf: Name + Leistungen, Schließen-Kreuz, rundes Monogramm
+  const leist = [...document.querySelectorAll(".cs-facts div")].find((d) => d.querySelector("dt")?.textContent === "Leistungen");
+  const sub = leist ? leist.querySelector("dd").innerHTML.split("<br>").slice(0, 3).join(" · ") : "";
+  const bar = document.createElement("div");
+  bar.className = "m10-bar";
+  bar.innerHTML = `<p><b>${name}</b><span>${sub}</span></p><a class="m10-close" href="work.html" aria-label="Projekt schließen">×</a>`;
+  body.appendChild(bar);
+  const mono = document.createElement("a");
+  mono.className = "m10-mono"; mono.href = "index.html"; mono.setAttribute("aria-label", "Startseite");
+  mono.innerHTML = "<span>S</span><span>X</span>";
+  body.appendChild(mono);
+  const hero = document.querySelector(".cs-hero");
+  const showBar = () => {
+    const past = hero ? hero.getBoundingClientRect().bottom < 0 : scrollY > 400;
+    const hdr = document.querySelector(".header");
+    bar.classList.toggle("is-on", past && (!hdr || hdr.classList.contains("is-hidden") || hdr.getBoundingClientRect().bottom <= 0));
+    mono.classList.toggle("is-on", past);
+  };
+  addEventListener("scroll", showBar, { passive: true }); showBar();
+})();
