@@ -822,3 +822,14 @@
     });
   }
 })();
+
+// V5: Pfeile für die Bildreihe
+(() => {
+  const list = document.querySelector(".k-cards");
+  if (!list) return;
+  document.querySelectorAll("[data-k]").forEach((b) => b.addEventListener("click", () => {
+    const card = list.querySelector("li");
+    const step = card ? card.getBoundingClientRect().width + 12 : 300;
+    list.scrollBy({ left: Number(b.dataset.k) * step, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+  }));
+})();

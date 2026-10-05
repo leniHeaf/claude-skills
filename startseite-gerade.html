@@ -9,10 +9,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=JetBrains+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,300;6..72,400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=Instrument+Serif:ital@0;1&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body class="page-home v5">
+<body class="page-home fx v2 v3 v4">
+  <div class="v2loader" aria-hidden="true"><div class="v2loader__inner"><span class="v2loader__brand">STUDIO.X</span><span class="v2loader__num">0</span></div></div>
   <a class="skip" href="#main">Zum Inhalt springen</a>
 
   <!-- Laufband -->
@@ -66,42 +66,37 @@
 
   <svg class="v2defs" width="0" height="0" aria-hidden="true" focusable="false"><filter id="liquid"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
   <main id="main">
-    <!-- Einstieg: zwei Bilder nebeneinander -->
-    <section class="k-hero" id="top">
-      <div class="k-hero__img"><img src="assets/runclub/plakatwand.webp" alt="Run-Club-Plakatwand" decoding="async"></div>
-      <div class="k-hero__img"><img src="assets/runclub/haltestelle.webp" alt="Run-Club-Citylight an einer Haltestelle" decoding="async"></div>
-      <div class="k-over k-over--hero">
-        <h1>Marken, die man nicht vergisst</h1>
-        <p>Strategie, Design und Roll-out aus einer Hand.</p>
-        <div class="k-links"><a href="#anfrage">Projekt anfragen</a><a href="work.html">Arbeiten ansehen</a></div>
+    <!-- Einstieg: Vollbild-Slider mit Headline -->
+    <section class="v2hero" id="top" aria-label="Ausgewählte Projekte">
+      <ul class="v2hero__slides"><li class="v2hero__slide is-on"><img src="assets/runclub/plakatwand.webp" alt="Run Club: Kampagne im Stadtraum" decoding="async"></li><li class="v2hero__slide"><img src="assets/runclub/haltestelle.webp" alt="Run Club: Citylight-Serie" loading="lazy" decoding="async"></li><li class="v2hero__slide"><img src="assets/runclub/merch.webp" alt="Run Club: Merchandise-Kollektion" loading="lazy" decoding="async"></li></ul>
+      <div class="v2hero__shade" aria-hidden="true"></div>
+      <div class="v2hero__content">
+        <h1 class="v2hero__title"><span class="line"><span>Marken, die man</span></span><span class="line"><span>nicht vergisst.</span></span></h1>
+        <div class="v2hero__row">
+          <a class="v2btn v2btn--sig" href="#anfrage">Projekt anfragen <span aria-hidden="true">→</span></a>
+          <ol class="v2hero__caps" aria-live="polite"><li class="is-on"><span>Run Club</span> Kampagne im Stadtraum</li><li><span>Run Club</span> Citylight-Serie</li><li><span>Run Club</span> Merchandise-Kollektion</li></ol>
+          <a class="v2badge" href="#anfrage" aria-label="Projekt anfragen" data-cursor="Los">
+            <svg viewBox="0 0 120 120" aria-hidden="true"><defs><path id="v2circle" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0"/></defs><text><textPath href="#v2circle">Projekt anfragen · Projekt anfragen · </textPath></text></svg>
+            <span aria-hidden="true">↗</span>
+          </a>
+          <ol class="v2hero__bars" aria-hidden="true"><li><i></i></li><li><i></i></li><li><i></i></li></ol>
+        </div>
       </div>
     </section>
 
-    <!-- Arbeiten: Text links, Bildreihe rechts -->
-    <section class="k-row" id="work">
-      <div class="k-row__intro">
-        <h2>Ausgewählte Arbeiten</h2>
-        <p>Run Club: eine Identität für eine Lauf-Community – vom Plakat über die Kollektion bis zum Feed.</p>
-        <a class="k-link" href="projekt-runclub.html">Zum Projekt</a>
-        <div class="k-arrows"><button type="button" data-k="-1" aria-label="Zurück">←</button><button type="button" data-k="1" aria-label="Weiter">→</button></div>
+    <!-- Intro -->
+    <section class="v2intro" id="about">
+      <p class="v2intro__text">Studio X ist eine Branding-Agentur für Unternehmen, die mehr sind, als ihr Auftritt heute zeigt. <span>Wir verbinden Strategie, Design und Roll-out – mit einem kleinen Team vom ersten Gespräch bis zum Launch.</span></p>
+      <div class="v2intro__side">
+        <p class="v2status"><i aria-hidden="true"></i> Freie Kapazität ab Januar</p>
+        <a class="v2more" href="prozess.html">So arbeiten wir →</a>
       </div>
-      <ul class="k-cards" tabindex="0" aria-label="Projektbilder"><li><a href="projekt-runclub.html"><div class="k-card__img"><img src="assets/runclub/plakatwand.webp" alt="Run Club: Kampagne im Stadtraum" loading="lazy" decoding="async"></div><p class="k-card__t">Kampagne im Stadtraum</p><p class="k-card__s">Run Club</p></a></li><li><a href="projekt-runclub.html"><div class="k-card__img"><img src="assets/runclub/haltestelle.webp" alt="Run Club: Citylight-Serie" loading="lazy" decoding="async"></div><p class="k-card__t">Citylight-Serie</p><p class="k-card__s">Run Club</p></a></li><li><a href="projekt-runclub.html"><div class="k-card__img"><img src="assets/runclub/merch.webp" alt="Run Club: Merchandise-Kollektion" loading="lazy" decoding="async"></div><p class="k-card__t">Merchandise-Kollektion</p><p class="k-card__s">Run Club</p></a></li><li><a href="projekt-runclub.html"><div class="k-card__img"><img src="assets/runclub/flasche.webp" alt="Run Club: Produktdesign" loading="lazy" decoding="async"></div><p class="k-card__t">Produktdesign</p><p class="k-card__s">Run Club</p></a></li><li><a href="projekt-runclub.html"><div class="k-card__img"><img src="assets/runclub/touchpoints.webp" alt="Run Club: Digitale Touchpoints" loading="lazy" decoding="async"></div><p class="k-card__t">Digitale Touchpoints</p><p class="k-card__s">Run Club</p></a></li></ul>
     </section>
 
-    <!-- Statement auf Bild -->
-    <section class="k-split" id="about">
-      <div class="k-split__text">
-        <h2>Studio X</h2>
-        <p>Wir sind eine Branding-Agentur für Unternehmen, die mehr sind, als ihr Auftritt heute zeigt. Ein kleines Team begleitet euch vom ersten Gespräch bis zum Launch.</p>
-        <a class="k-link k-link--light" href="prozess.html">So arbeiten wir</a>
-      </div>
-      <div class="k-split__img"><img src="assets/runclub/touchpoints.webp" alt="Run-Club-Touchpoints" loading="lazy" decoding="async"></div>
-    </section>
-
-    <!-- Leistungen: drei Kacheln -->
-    <section class="k-sec" id="services">
-      <div class="k-head"><h2>Was wir machen</h2><p>Einzeln buchbar oder als Gesamtpaket.</p></div>
-      <ul class="k-tiles"><li class="k-tile"><img src="assets/runclub/flasche.webp" alt="" loading="lazy" decoding="async"><div class="k-over"><h3>Strategie</h3><a href="leistung-markenstrategie.html">Mehr erfahren</a></div></li><li class="k-tile"><img src="assets/runclub/merch.webp" alt="" loading="lazy" decoding="async"><div class="k-over"><h3>Design</h3><a href="leistung-brand-design.html">Mehr erfahren</a></div></li><li class="k-tile"><img src="assets/runclub/haltestelle.webp" alt="" loading="lazy" decoding="async"><div class="k-over"><h3>Roll-out</h3><a href="leistung-markenkommunikation.html">Mehr erfahren</a></div></li></ul>
+    <!-- Arbeiten -->
+    <section class="v2work" id="work">
+      <div class="v2head"><h2 data-split>Ausgewählte Arbeiten</h2><a class="v2more" href="work.html">Alle Arbeiten →</a></div>
+      <ul class="v2work__grid"><li class="v2work__item v2work__item--wide"><a href="projekt-runclub.html" data-cursor="Ansehen"><div class="v2work__media"><img src="assets/runclub/plakatwand.webp" alt="Run Club: Identität für eine Lauf-Community" loading="lazy" decoding="async"><span class="v2work__chip">Branding · Kampagne</span></div><div class="v2work__meta"><h3>Run Club</h3><p>Identität für eine Lauf-Community</p></div></a></li><li class="v2work__item v2work__item--tall"><a href="projekt-runclub.html" data-cursor="Ansehen"><div class="v2work__media"><img src="assets/runclub/flasche.webp" alt="Run Club: Trinkflasche & Merch" loading="lazy" decoding="async"><span class="v2work__chip">Produktdesign</span></div><div class="v2work__meta"><h3>Run Club</h3><p>Trinkflasche & Merch</p></div></a></li><li class="v2work__item v2work__item--sq"><a href="projekt-runclub.html" data-cursor="Ansehen"><div class="v2work__media"><img src="assets/runclub/haltestelle.webp" alt="Run Club: Citylight an der Haltestelle" loading="lazy" decoding="async"><span class="v2work__chip">Kampagne</span></div><div class="v2work__meta"><h3>Run Club</h3><p>Citylight-Serie</p></div></a></li><li class="v2work__item v2work__item--sq"><a href="projekt-runclub.html" data-cursor="Ansehen"><div class="v2work__media"><img src="assets/runclub/merch.webp" alt="Run Club: Merchandise-Kollektion" loading="lazy" decoding="async"><span class="v2work__chip">Merchandise</span></div><div class="v2work__meta"><h3>Run Club</h3><p>Merchandise-Kollektion</p></div></a></li></ul>
     </section>
 
     <!-- Social: 3D-Smartphones mit durchlaufenden Feeds -->
@@ -121,11 +116,21 @@
       </div>
     </section>
 
+    <!-- Gelbes Band -->
+    <section class="v2band" aria-label="Leistungen im Überblick">
+      <div class="v2band__track"><p>Strategie <span>·</span> Design <span>·</span> Roll-out <span>·</span> Naming <span>·</span> Kampagnen</p><p aria-hidden="true">Strategie <span>·</span> Design <span>·</span> Roll-out <span>·</span> Naming <span>·</span> Kampagnen</p></div>
+    </section>
+
+    <!-- Leistungen -->
+    <section class="v2serv" id="services">
+      <div class="v2head"><h2 data-split>Was wir machen</h2><p class="v2head__sub">Einzeln buchbar oder als Gesamtpaket.</p></div>
+      <ul class="v2serv__grid"><li class="v2serv__card"><div class="v2serv__top"><span class="v2serv__no">01</span><span class="v2serv__arrow" aria-hidden="true">↗</span></div><h3>Strategie</h3><p>Positionierung, Zielgruppe, Werte – kompakt genug für den Alltag.</p><ul><li><a href="leistung-markenstrategie.html">Markenstrategie</a></li><li><a href="leistung-markenworkshop.html">Markenworkshop</a></li><li><a href="leistung-marken-kompass.html">Marken-Kompass</a></li><li><a href="leistung-naming.html">Naming</a></li><li><a href="leistung-brand-story.html">Brand Story</a></li></ul></li><li class="v2serv__card"><div class="v2serv__top"><span class="v2serv__no">02</span><span class="v2serv__arrow" aria-hidden="true">↗</span></div><h3>Design</h3><p>Logo, Farben, Schrift, Bildstil – als System, mit dem euer Team arbeiten kann.</p><ul><li><a href="leistung-brand-design.html">Brand Design</a></li><li><a href="academy-logogestaltung.html">Logo</a></li><li><a href="academy-farbklima.html">Farbklima</a></li><li><a href="academy-brand-guidelines.html">Guidelines</a></li></ul></li><li class="v2serv__card"><div class="v2serv__top"><span class="v2serv__no">03</span><span class="v2serv__arrow" aria-hidden="true">↗</span></div><h3>Roll-out</h3><p>Kampagnen, Website und Social Media, die eure Marke sichtbar machen.</p><ul><li><a href="leistung-markenkommunikation.html">Markenkommunikation</a></li><li><a href="academy-kampagnen-raster.html">Kampagnen</a></li><li><a href="academy-webdesign.html">Website</a></li></ul></li></ul>
+    </section>
 
     <!-- Academy -->
-    <section class="k-sec k-sec--pad">
-      <div class="k-head k-head--pad"><h2>Die Welt von Studio X</h2><p>Wissen, Methoden und Einblicke aus der Academy.</p></div>
-      <ul class="k-tiles k-tiles--pad"><li class="k-tile k-tile--s"><img src="assets/runclub/touchpoints.webp" alt="" loading="lazy" decoding="async"><div class="k-over"><h3>Was ist Markenpositionierung?</h3><a href="academy-markenpositionierung.html">Jetzt lesen</a></div></li><li class="k-tile k-tile--s"><img src="assets/runclub/plakatwand.webp" alt="" loading="lazy" decoding="async"><div class="k-over"><h3>Wie entsteht ein gutes Logo?</h3><a href="academy-logogestaltung.html">Jetzt lesen</a></div></li><li class="k-tile k-tile--s"><img src="assets/runclub/flasche.webp" alt="" loading="lazy" decoding="async"><div class="k-over"><h3>Farbklima für eure Marke</h3><a href="academy-farbklima.html">Jetzt lesen</a></div></li></ul>
+    <section class="v2acad">
+      <div class="v2head"><h2 data-split>Aus der Academy</h2><a class="v2more" href="academy.html">Zum Marken-Wiki →</a></div>
+      <ul class="v2acad__grid"><li><a href="academy-markenpositionierung.html"><span class="v2tag">Strategie</span><h3>Was ist Markenpositionierung?</h3><span class="v2more">Lesen →</span></a></li><li><a href="academy-logogestaltung.html"><span class="v2tag">Design</span><h3>Wie entsteht ein gutes Logo?</h3><span class="v2more">Lesen →</span></a></li><li><a href="academy-zielgruppe.html"><span class="v2tag">Identität</span><h3>Wie definiert man eine Zielgruppe?</h3><span class="v2more">Lesen →</span></a></li></ul>
     </section>
 
     <!-- Anfrage in drei Schritten + FAQ -->
