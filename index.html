@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=JetBrains+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,300;6..72,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body class="page-home">
+<body class="page-home fx">
   <a class="skip" href="#main">Zum Inhalt springen</a>
 
   <!-- Laufband -->
@@ -140,13 +140,18 @@
     <!-- Prozess -->
     <section class="split hsteps">
       <h2 class="label"><span>So arbeiten wir</span></h2>
-      <div><ol class="hsteps__list"><li data-reveal><span class="hstep__no">01</span><h3>Verstehen</h3><p>Gespräche, Analyse, Bestandsaufnahme.</p></li><li data-reveal><span class="hstep__no">02</span><h3>Entscheiden</h3><p>Strategie gemeinsam im Workshop festlegen.</p></li><li data-reveal><span class="hstep__no">03</span><h3>Gestalten</h3><p>Richtungen entwickeln, eine ausarbeiten.</p></li><li data-reveal><span class="hstep__no">04</span><h3>Anwenden</h3><p>Vorlagen, Guidelines, erste Formate.</p></li><li data-reveal><span class="hstep__no">05</span><h3>Begleiten</h3><p>Roll-out und Nachschärfen im Alltag.</p></li></ol><a class="hlink" href="prozess.html">Unser Prozess im Detail <span aria-hidden="true">→</span></a></div>
+      <div><div class="hsteps__line" aria-hidden="true"><i></i></div><ol class="hsteps__list"><li data-reveal><span class="hstep__no">01</span><h3>Verstehen</h3><p>Gespräche, Analyse, Bestandsaufnahme.</p></li><li data-reveal><span class="hstep__no">02</span><h3>Entscheiden</h3><p>Strategie gemeinsam im Workshop festlegen.</p></li><li data-reveal><span class="hstep__no">03</span><h3>Gestalten</h3><p>Richtungen entwickeln, eine ausarbeiten.</p></li><li data-reveal><span class="hstep__no">04</span><h3>Anwenden</h3><p>Vorlagen, Guidelines, erste Formate.</p></li><li data-reveal><span class="hstep__no">05</span><h3>Begleiten</h3><p>Roll-out und Nachschärfen im Alltag.</p></li></ol><a class="hlink" href="prozess.html">Unser Prozess im Detail <span aria-hidden="true">→</span></a></div>
     </section>
 
-    <!-- Stimmen -->
-    <section class="split hquotes">
-      <h2 class="label"><span>Stimmen</span></h2>
-      <div><ul class="hquotes__list"><li class="hquote" data-reveal><p>„Platzhalter für ein Kundenzitat: Was hat sich durch die Zusammenarbeit konkret verändert?“</p><span class="card__tag">Name · Funktion, Unternehmen 1</span></li><li class="hquote" data-reveal><p>„Platzhalter für ein Kundenzitat: Was hat sich durch die Zusammenarbeit konkret verändert?“</p><span class="card__tag">Name · Funktion, Unternehmen 2</span></li><li class="hquote" data-reveal><p>„Platzhalter für ein Kundenzitat: Was hat sich durch die Zusammenarbeit konkret verändert?“</p><span class="card__tag">Name · Funktion, Unternehmen 3</span></li></ul><a class="hlink" href="stories.html">Alle Success Stories <span aria-hidden="true">→</span></a></div>
+    <!-- Stimmen: großes Zitat zum Durchblättern -->
+    <section class="mq" aria-roledescription="Karussell" aria-label="Kundenstimmen (Platzhalter)">
+      <div class="mq__head"><h2 class="label"><span>Stimmen</span></h2><p class="mq__count label-s"><span data-q-now>01</span> / 03</p></div>
+      <ul class="mq__list" aria-live="polite"><li class="mq__item is-active"><blockquote>„Platzhalter: Hier steht, was sich durch die Zusammenarbeit konkret verändert hat – in ein, zwei Sätzen, gerne mit Ergebnis.“</blockquote><p><strong>Name Nachname</strong><span>Geschäftsführung, Unternehmen Eins</span></p></li><li class="mq__item" hidden><blockquote>„Platzhalter: Ein zweites Zitat, zum Beispiel darüber, wie der Workshop das Team auf eine gemeinsame Linie gebracht hat.“</blockquote><p><strong>Name Nachname</strong><span>Marketing, Unternehmen Zwei</span></p></li><li class="mq__item" hidden><blockquote>„Platzhalter: Ein drittes Zitat über den Launch der neuen Marke und die ersten Reaktionen von Kund:innen.“</blockquote><p><strong>Name Nachname</strong><span>Gründerin, Unternehmen Drei</span></p></li></ul>
+      <div class="mq__nav">
+        <button type="button" class="hbtn hbtn--ghost" data-q="-1" aria-label="Vorheriges Zitat">←</button>
+        <button type="button" class="hbtn hbtn--ghost" data-q="1" aria-label="Nächstes Zitat">→</button>
+        <a class="hlink" href="stories.html">Alle Success Stories <span aria-hidden="true">→</span></a>
+      </div>
     </section>
 
     <!-- Academy -->

@@ -397,7 +397,7 @@
   });
 
   // ---------- Eigener Cursor (weich nachgeführt) ----------
-  const cursor = document.querySelector(".mcursor");
+  const cursor = null; // website-weit gesteuert, siehe unten
   const cur = { x: mouse.x, y: mouse.y };
   if (cursor && finePointer && !reduce) {
     document.body.classList.add("has-cursor");
@@ -468,7 +468,7 @@
   // ---------- Eine gemeinsame Animationsschleife ----------
   const tick = () => {
     // Cursor
-    if (document.body.classList.contains("has-cursor")) {
+    if (cursor && document.body.classList.contains("has-cursor")) {
       cur.x += (mouse.x - cur.x) * 0.22;
       cur.y += (mouse.y - cur.y) * 0.22;
       cursor.style.transform = `translate3d(${cur.x}px, ${cur.y}px, 0)`;
@@ -530,5 +530,78 @@
       });
     }, { threshold: 0.6 });
     nums.forEach((n) => io.observe(n));
+  }
+})();
+
+// ==========================================================================
+// Website-weit: Cursor mit Label, Prozess-Linie, Zitat-Slider
+// ==========================================================================
+(() => {
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  // Cursor
+  const cursor = document.querySelector(".mcursor");
+  if (cursor && fine && !reduce && document.body.classList.contains("fx")) {
+    document.body.classList.add("has-cursor");
+    const label = cursor.querySelector("span");
+    const m = { x: innerWidth / 2, y: innerHeight / 2 }, c = { ...m };
+    window.addEventListener("pointermove", (e) => { m.x = e.clientX; m.y = e.clientY; }, { passive: true });
+    document.addEventListener("pointerover", (e) => {
+      const t = e.target.closest("[data-cursor], a, button, summary, label");
+      const lab = t?.dataset?.cursor;
+      cursor.classList.toggle("is-label", !!lab);
+      cursor.classList.toggle("is-link", !!t && !lab);
+      label.textContent = lab || "";
+    });
+    document.documentElement.addEventListener("pointerleave", () => cursor.classList.add("is-hidden"));
+    document.documentElement.addEventListener("pointerenter", () => cursor.classList.remove("is-hidden"));
+    const loop = () => {
+      c.x += (m.x - c.x) * 0.22;
+      c.y += (m.y - c.y) * 0.22;
+      cursor.style.transform = `translate3d(${c.x}px, ${c.y}px, 0)`;
+      requestAnimationFrame(loop);
+    };
+    requestAnimationFrame(loop);
+    // Projekt- und Artikelbilder bekommen das Label „Ansehen“
+    document.querySelectorAll(".card, .wcard, .acard a, .mgal__card a, .hcase a, .story-feature").forEach((el) => {
+      if (!el.dataset.cursor) el.dataset.cursor = "Ansehen";
+    });
+  }
+
+  // Prozess: Linie und Schritte folgen dem Scrollen
+  const steps = document.querySelector(".hsteps");
+  if (steps && !reduce) {
+    steps.classList.add("is-scrub");
+    const line = steps.querySelector(".hsteps__line i");
+    const items = [...steps.querySelectorAll(".hsteps__list li")];
+    let ticking = false;
+    const update = () => {
+      const r = steps.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, (innerHeight * 0.85 - r.top) / (r.height * 0.9)));
+      if (line) line.style.transform = `scaleX(${p})`;
+      items.forEach((li, i) => li.classList.toggle("is-on", p >= (i + 0.5) / items.length));
+      ticking = false;
+    };
+    window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  }
+
+  // Zitat-Slider
+  const mq = document.querySelector(".mq");
+  if (mq) {
+    const items = [...mq.querySelectorAll(".mq__item")];
+    const now = mq.querySelector("[data-q-now]");
+    let i = 0;
+    const show = (n) => {
+      i = (n + items.length) % items.length;
+      items.forEach((it, k) => { it.hidden = k !== i; it.classList.toggle("is-active", k === i); });
+      if (now) now.textContent = String(i + 1).padStart(2, "0");
+    };
+    mq.querySelectorAll("[data-q]").forEach((b) => b.addEventListener("click", () => show(i + Number(b.dataset.q))));
+    mq.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") show(i + 1);
+      if (e.key === "ArrowLeft") show(i - 1);
+    });
   }
 })();
