@@ -8,9 +8,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=JetBrains+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,300;6..72,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body class="page-academy">
+<body class="theme-light page-academy">
   <a class="skip" href="#main">Zum Inhalt springen</a>
 
   <!-- Laufband -->
@@ -62,58 +63,86 @@
   </div>
 
   <main id="main">
-    <section class="phead">
-      <h1 class="phead__title"><span class="line"><span>Academy<sup>4</sup></span></span></h1>
-      <p class="phead__intro" data-reveal>Was wir in Projekten lernen, schreiben wir hier auf: kurze, praktische Texte zu Strategie, Branding, Web und Kampagnen. Für Marken, die selbst besser werden wollen.</p>
-      <div class="chips" role="group" aria-label="Kategorien filtern"><button type="button" class="chip is-active" data-filter="*">Alle</button><button type="button" class="chip" data-filter="Branding">Branding</button><button type="button" class="chip" data-filter="Kampagne">Kampagne</button><button type="button" class="chip" data-filter="Strategie">Strategie</button><button type="button" class="chip" data-filter="Web">Web</button></div>
+    <section class="lhero">
+      <p class="label-s">Academy</p>
+      <h1>Wissen für Marken, die klarer werden wollen.</h1>
+      <p class="lhero__intro">Kurze Erklärungen, erprobte Methoden und Vorlagen aus unserer Projektarbeit – zum Nachlesen, Weitergeben und direkt Anwenden.</p>
+      <div class="chips" role="group" aria-label="Themen filtern"><button type="button" class="chip is-active" data-filter="*">Alle</button><button type="button" class="chip" data-filter="Strategie">Strategie</button><button type="button" class="chip" data-filter="Brand Design">Brand Design</button><button type="button" class="chip" data-filter="Digital">Digital</button></div>
     </section>
-    <section class="academy">
-      <ul class="academy__grid" data-filter-list>
-        <li class="acard acard--featured" data-cat="Strategie" data-reveal>
-          <a href="academy-markenstrategie.html">
-            <div class="acard__media"><div class="ph ph--paper" data-blur><span class="ph__label">Titelbild</span></div></div>
-            <div class="acard__meta"><span class="card__tag">Strategie</span><span class="card__tag">7 Min.</span></div>
-            <h2 class="acard__title">Markenstrategie auf einer Seite</h2>
-            <p class="acard__lead">Eine gute Markenstrategie passt auf ein Blatt Papier. Wenn sie das nicht tut, ist sie meistens noch nicht fertig gedacht.</p>
-          </a>
-        </li>
-        <li class="acard" data-cat="Branding" data-reveal>
-          <a href="academy-logo-briefing.html">
-            <div class="acard__media"><div class="ph ph--lime" data-blur><span class="ph__label">Titelbild</span></div></div>
-            <div class="acard__meta"><span class="card__tag">Branding</span><span class="card__tag">5 Min.</span></div>
-            <h2 class="acard__title">Das bessere Logo-Briefing</h2>
-            <p class="acard__lead">Die meisten Logo-Briefings beschreiben Geschmack. Ein gutes Briefing beschreibt stattdessen, wo das Zeichen funktionieren muss.</p>
-          </a>
-        </li>
-        <li class="acard" data-cat="Web" data-reveal>
-          <a href="academy-website-relaunch.html">
-            <div class="acard__media"><div class="ph ph--screen" data-blur><span class="ph__label">Titelbild</span></div></div>
-            <div class="acard__meta"><span class="card__tag">Web</span><span class="card__tag">9 Min.</span></div>
-            <h2 class="acard__title">Website-Relaunch ohne Stillstand</h2>
-            <p class="acard__lead">Ein Relaunch muss kein Großprojekt sein, das ein Jahr lang alles blockiert. In kleinen Schritten geht es schneller und mit weniger Risiko.</p>
-          </a>
-        </li>
-        <li class="acard" data-cat="Kampagne" data-reveal>
-          <a href="academy-kampagnen-raster.html">
-            <div class="acard__media"><div class="ph ph--sun" data-blur><span class="ph__label">Titelbild</span></div></div>
-            <div class="acard__meta"><span class="card__tag">Kampagne</span><span class="card__tag">6 Min.</span></div>
-            <h2 class="acard__title">Ein Raster für jede Kampagne</h2>
-            <p class="acard__lead">Wiedererkennung entsteht nicht durch ein einzelnes starkes Motiv, sondern durch Wiederholung. Ein festes Raster macht genau das einfach.</p>
-          </a>
-        </li>
+    <section class="lwrap">
+      <ul class="lgrid">
+      <li class="wcard-l" data-cat="Strategie" data-reveal>
+        <a href="academy-markenpositionierung.html">
+          <span class="icon icon--sm" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><path d="M50 14v72M14 50h72"/><circle cx="66" cy="34" r="6"/></svg></span>
+          <span class="label-s">Strategie · 8 Min.</span>
+          <h3>Was ist Markenpositionierung?</h3>
+          <p>Positionierung beschreibt den Platz, den eine Marke im Kopf ihrer Zielgruppe einnehmen will – und den sie bewusst anderen überlässt.</p>
+          <span class="ulink">Lesen <span aria-hidden="true">→</span></span>
+        </a>
+      </li>
+      <li class="wcard-l" data-cat="Strategie" data-reveal>
+        <a href="academy-zielgruppe.html">
+          <span class="icon icon--sm" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><circle cx="50" cy="50" r="30"/><circle cx="50" cy="50" r="14"/><circle cx="50" cy="50" r="2"/></svg></span>
+          <span class="label-s">Strategie · 6 Min.</span>
+          <h3>Wie definiert man eine Zielgruppe?</h3>
+          <p>Eine Zielgruppe ist keine Statistik, sondern eine Gruppe von Menschen mit einem gemeinsamen Problem, das eure Marke lösen kann.</p>
+          <span class="ulink">Lesen <span aria-hidden="true">→</span></span>
+        </a>
+      </li>
+      <li class="wcard-l" data-cat="Strategie" data-reveal>
+        <a href="academy-markenstrategie.html">
+          <span class="icon icon--sm" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 20h60v60H20zM20 50h60M50 20v60"/></svg></span>
+          <span class="label-s">Strategie · 7 Min.</span>
+          <h3>Markenstrategie auf einer Seite</h3>
+          <p>Eine gute Markenstrategie passt auf ein Blatt Papier. Wenn sie das nicht tut, ist sie meistens noch nicht fertig gedacht.</p>
+          <span class="ulink">Lesen <span aria-hidden="true">→</span></span>
+        </a>
+      </li>
+      <li class="wcard-l" data-cat="Brand Design" data-reveal>
+        <a href="academy-logo-briefing.html">
+          <span class="icon icon--sm" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><rect x="22" y="22" width="40" height="40"/><rect x="38" y="38" width="40" height="40"/></svg></span>
+          <span class="label-s">Brand Design · 5 Min.</span>
+          <h3>Das bessere Logo-Briefing</h3>
+          <p>Die meisten Logo-Briefings beschreiben Geschmack. Ein gutes Briefing beschreibt stattdessen, wo das Zeichen funktionieren muss.</p>
+          <span class="ulink">Lesen <span aria-hidden="true">→</span></span>
+        </a>
+      </li>
+      <li class="wcard-l" data-cat="Brand Design" data-reveal>
+        <a href="academy-kampagnen-raster.html">
+          <span class="icon icon--sm" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 50c10-16 24-24 38-24s28 8 38 24c-10 16-24 24-38 24S22 66 12 50z"/><circle cx="50" cy="50" r="10"/></svg></span>
+          <span class="label-s">Brand Design · 6 Min.</span>
+          <h3>Ein Raster für jede Kampagne</h3>
+          <p>Wiedererkennung entsteht nicht durch ein einzelnes starkes Motiv, sondern durch Wiederholung. Ein festes Raster macht genau das einfach.</p>
+          <span class="ulink">Lesen <span aria-hidden="true">→</span></span>
+        </a>
+      </li>
+      <li class="wcard-l" data-cat="Digital" data-reveal>
+        <a href="academy-website-relaunch.html">
+          <span class="icon icon--sm" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 70 46 42l14 14 22-26"/><path d="M66 30h16v16"/></svg></span>
+          <span class="label-s">Digital · 9 Min.</span>
+          <h3>Website-Relaunch ohne Stillstand</h3>
+          <p>Ein Relaunch muss kein Großprojekt sein, das ein Jahr lang alles blockiert. In kleinen Schritten geht es schneller und mit weniger Risiko.</p>
+          <span class="ulink">Lesen <span aria-hidden="true">→</span></span>
+        </a>
+      </li>
       </ul>
     </section>
-    <section class="split newsletter">
-      <h2 class="label"><span>Newsletter</span></h2>
-      <form class="newsletter__form form" data-newsletter novalidate data-reveal>
-        <p class="newsletter__text">Einmal im Monat ein neuer Artikel, kein Spam.</p>
-        <label class="field"><span>E-Mail</span><input id="nl-email" name="email" type="email" autocomplete="email" required></label>
-        <button class="submit" type="submit">Anmelden <span aria-hidden="true">→</span></button>
-        <p class="form__status" role="status" aria-live="polite"></p>
-      </form>
+    <section class="ltoolkit" data-reveal>
+      <div class="ltoolkit__text">
+        <p class="label-s">Toolkit</p>
+        <h2>Euer nächster Markenworkshop, fertig vorbereitet.</h2>
+        <p>Agenda, Übungen und Vorlagen für einen Tag, an dem ein Team gemeinsam die Grundlagen seiner Marke festlegt. Das Toolkit erscheint bald.</p>
+        <form class="ltoolkit__form" data-newsletter novalidate>
+          <label class="field"><span>E-Mail</span><input id="tk-email" name="email" type="email" autocomplete="email" required></label>
+          <button class="pill" type="submit">Auf die Warteliste</button>
+          <p class="form__status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+      <div class="ltoolkit__art" aria-hidden="true"><span class="icon icon--lg" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 20h60v60H20zM20 50h60M50 20v60"/></svg></span><span class="icon icon--lg" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><rect x="22" y="22" width="40" height="40"/><rect x="38" y="38" width="40" height="40"/></svg></span><span class="icon icon--lg" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><circle cx="50" cy="50" r="30"/><circle cx="50" cy="50" r="14"/><circle cx="50" cy="50" r="2"/></svg></span></div>
     </section>
   </main>
 
+  <a class="book" href="kontakt.html"><span class="book__faces" aria-hidden="true"><i></i><i></i><i></i></span>Termin buchen</a>
   <footer class="footer" id="contact">
     <a class="footer__cta" href="mailto:hallo@example.com">
       <span class="line"><span>Lass uns</span></span>

@@ -11,7 +11,9 @@
   if (track) {
     const list = track.querySelector(".ticker__list");
     // So oft kopieren, bis eine Hälfte breiter als der Viewport ist
-    let copies = Math.max(1, Math.ceil(window.innerWidth / list.offsetWidth));
+    const w = list.offsetWidth;
+    // Ausgeblendetes Laufband (Breite 0) nicht vervielfältigen
+    let copies = w > 0 ? Math.min(10, Math.max(1, Math.ceil(window.innerWidth / w))) : 1;
     for (let i = 1; i < copies; i++) track.appendChild(list.cloneNode(true));
     const half = track.innerHTML;
     track.insertAdjacentHTML("beforeend", half);
@@ -160,7 +162,7 @@
 // Moodboard-Filter, Lightbox und Kontaktformular
 (() => {
   const chips = document.querySelectorAll(".chips [data-filter]");
-  const items = document.querySelectorAll(".mood__item, .acard[data-cat]");
+  const items = document.querySelectorAll(".mood__item, .acard[data-cat], .wcard-l[data-cat]");
   chips.forEach((chip) =>
     chip.addEventListener("click", () => {
       chips.forEach((c) => c.classList.toggle("is-active", c === chip));
