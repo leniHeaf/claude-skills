@@ -1259,7 +1259,7 @@
   header.insertBefore(icons, burger || null);
 
   const promos = {
-    Arbeiten: [["plakatwand", "Run Club", "projekt-runclub.html"], ["merch", "Alle Arbeiten", "work.html"]],
+    Arbeiten: [["plakatwand", "Run Club", "projekt-runclub.html"], ["../taeubert/website-laptop", "Täubert", "projekt-taeubert.html"]],
     Leistungen: [["touchpoints", "So arbeiten wir", "prozess.html"], ["haltestelle", "Social Media", "index.html#social"]],
     Studio: [["flasche", "Jobs", "jobs.html"]],
     Academy: [["plakatwand", "Marken-Wiki", "academy.html#wiki"], ["flasche", "Workshop-Toolkit", "academy-toolkit.html"]],
