@@ -1053,7 +1053,7 @@
   const cur = document.createElement("div");
   cur.className = "m8-cursor";
   cur.setAttribute("aria-hidden", "true");
-  cur.innerHTML = "<span>Ansehen</span>";
+  cur.innerHTML = "<span>Projekt ansehen</span>";
   body.appendChild(cur);
   const pos = { x: -100, y: -100 }, cp = { x: -100, y: -100 };
   window.addEventListener("pointermove", (e) => { pos.x = e.clientX; pos.y = e.clientY; }, { passive: true });
@@ -2057,11 +2057,11 @@ document.querySelectorAll(".c3-giant").forEach((g) => { const n = g.textContent.
       document.body.classList.add("bx-arrived");
       document.querySelector(".m8-curtain")?.remove();
       const ov = document.createElement("div");
-      ov.className = "bx3-ov bx3-ov--arrive";
-      ov.innerHTML = `<div class="bx3-card" style="background-image:url('${from.src}')"></div>`;
+      ov.className = "bx4 is-load is-arrive";
+      ov.innerHTML = `<div class="bx4__load"><p class="bx4__logo">STUDIO.X</p><p class="bx4__sub bx-serif">Experience</p><p class="bx4__count">100</p></div>`;
       document.body.appendChild(ov);
-      requestAnimationFrame(() => requestAnimationFrame(() => ov.classList.add("is-out")));
-      setTimeout(() => ov.remove(), 1400);
+      setTimeout(() => ov.classList.add("is-out"), 250);
+      setTimeout(() => ov.remove(), 1500);
     } else {
       document.body.classList.add("bx-enter");
       setTimeout(() => document.body.classList.remove("bx-enter"), 1400);
@@ -2069,34 +2069,57 @@ document.querySelectorAll(".c3-giant").forEach((g) => { const n = g.textContent.
   }
   if (reduce) return;
 
-  // Abflug in ein Projekt
+  // Abflug in ein Projekt (nach Art von Auge XP): Markenfarbe füllt den
+  // Bildschirm, das Bild schrumpft in die Mitte, der Projektname mischt
+  // sich aus zwei Schriften zusammen, danach Ladebildschirm mit Zähler
+  const BRAND = { "crea-response": ["#7c3aed", "#fff"], taeubert: ["#e1251b", "#fff"], runclub: ["#ffe100", "#000"], medaesthetic: ["#e8ddd2", "#1c1c1c"], kuehlkraft: ["#cfe8f1", "#0f2a33"], mybaumarkt: ["#2f8a5f", "#fff"], dogstar: ["#fff1b8", "#10101a"] };
+  const NAMES = { "crea-response": "Crea Response", taeubert: "Täubert", runclub: "Run Club", medaesthetic: "med.aesthetic", kuehlkraft: "kühlkraft", mybaumarkt: "Baumarkt Gnoien", dogstar: "Dogstar" };
+  const scramble = (el, text, dur) => {
+    const pool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    const t0 = performance.now();
+    const step = (now) => {
+      const k = Math.min(1, (now - t0) / dur);
+      el.innerHTML = [...text].map((c, i) => {
+        if (c === " ") return " ";
+        const done = i / text.length < k * 1.15 - 0.15;
+        const ch = done ? c : pool[Math.random() * pool.length | 0];
+        return `<span class="${(done ? i % 3 === 0 : Math.random() < 0.5) ? "bx-serif" : "bx-sans"}">${ch}</span>`;
+      }).join("");
+      if (k < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
   addEventListener("click", (e) => {
     const a = e.target.closest('a[href^="projekt-"]');
     if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
-    const img = a.querySelector("img") || document.querySelector(".c3-next__i img");
-    if (!img) return;
     e.preventDefault(); e.stopImmediatePropagation();
-    const r = img.getBoundingClientRect();
-    const src = img.currentSrc || img.src;
+    const slug = a.getAttribute("href").replace("projekt-", "").replace(".html", "").split("#")[0];
+    const [bg, fg] = BRAND[slug] || ["#111", "#fff"];
+    const img = a.querySelector("img");
+    const r = img ? img.getBoundingClientRect() : { left: e.clientX - 60, top: e.clientY - 40, width: 120, height: 80 };
     const ov = document.createElement("div");
-    ov.className = "bx3-ov";
-    const card = document.createElement("div");
-    card.className = "bx3-card";
-    card.style.backgroundImage = `url('${src}')`;
-    Object.assign(card.style, { left: r.left + "px", top: r.top + "px", width: r.width + "px", height: r.height + "px" });
-    ov.appendChild(card);
+    ov.className = "bx4";
+    ov.style.setProperty("--bg", bg); ov.style.setProperty("--fg", fg);
+    ov.style.setProperty("--cx", e.clientX + "px"); ov.style.setProperty("--cy", e.clientY + "px");
+    ov.innerHTML = `<div class="bx4__fill"></div>${img ? `<div class="bx4__thumb" style="background-image:url('${img.currentSrc || img.src}')"></div>` : ""}<p class="bx4__name"></p><div class="bx4__load"><p class="bx4__logo">STUDIO.X</p><p class="bx4__sub bx-serif"></p><p class="bx4__count">000</p></div>`;
     document.body.appendChild(ov);
-    img.style.visibility = "hidden";
-    document.body.classList.add("bx-diving");
-    const W = innerWidth, H = innerHeight;
-    const cx = r.left + r.width / 2 - W / 2, cy = r.top + r.height / 2 - H / 2;
-    card.animate([
-      { left: r.left + "px", top: r.top + "px", width: r.width + "px", height: r.height + "px", transform: "translateZ(0) rotateY(0) rotateX(0)", borderRadius: "0px" },
-      { left: (r.left - cx * 0.4) + "px", top: (r.top - cy * 0.4) + "px", width: r.width * 1.15 + "px", height: r.height * 1.15 + "px", transform: `translateZ(160px) rotateY(${cx > 0 ? -28 : 28}deg) rotateX(${cy > 0 ? 14 : -14}deg)`, borderRadius: "18px", offset: 0.45 },
-      { left: "0px", top: "0px", width: W + "px", height: H + "px", transform: "translateZ(0) rotateY(0) rotateX(0)", borderRadius: "0px" },
-    ], { duration: 1150, easing: "cubic-bezier(0.77, 0, 0.175, 1)", fill: "forwards" });
-    try { sessionStorage.setItem("bx3-from", JSON.stringify({ src })); } catch (err) {}
-    setTimeout(() => { location.href = a.href; }, 1150);
+    const th = ov.querySelector(".bx4__thumb");
+    const tw = Math.min(260, innerWidth * 0.36), thh = tw * 0.62;
+    if (th) th.animate([
+      { left: r.left + "px", top: r.top + "px", width: r.width + "px", height: r.height + "px" },
+      { left: (innerWidth - tw) / 2 + "px", top: innerHeight / 2 - thh - 30 + "px", width: tw + "px", height: thh + "px" },
+    ], { duration: 900, easing: "cubic-bezier(0.77, 0, 0.175, 1)", fill: "forwards" });
+    requestAnimationFrame(() => ov.classList.add("is-in"));
+    setTimeout(() => scramble(ov.querySelector(".bx4__name"), (NAMES[slug] || slug).toUpperCase(), 900), 450);
+    setTimeout(() => {
+      ov.classList.add("is-load");
+      scramble(ov.querySelector(".bx4__sub"), "Experience", 700);
+      const c = ov.querySelector(".bx4__count"), t0 = performance.now();
+      const tick = (now) => { const k = Math.min(1, (now - t0) / 700); c.textContent = String(Math.round(k * 100)).padStart(3, "0"); if (k < 1) requestAnimationFrame(tick); };
+      requestAnimationFrame(tick);
+    }, 1550);
+    try { sessionStorage.setItem("bx3-from", JSON.stringify({ src: img ? (img.currentSrc || img.src) : "", slug })); } catch (err) {}
+    setTimeout(() => { location.href = a.href; }, 2350);
   }, true);
 
   addEventListener("pageshow", (e) => {
