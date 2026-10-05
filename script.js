@@ -1254,16 +1254,22 @@
   icons.className = "kl-icons";
   icons.innerHTML =
     `<a href="academy.html#wiki" aria-label="Academy durchsuchen">${ico.search}</a>` +
-    `<a href="jobs.html" aria-label="Jobs">${ico.user}</a>` +
-    `<a href="moodboard.html" aria-label="Moodboard">${ico.heart}</a>` +
-    `<a href="kontakt.html" aria-label="Kontakt">${ico.mail}</a>`;
+    `<a class="kl-cta" href="kontakt.html">Projekt anfragen</a>`;
   const burger = header.querySelector(".burger");
   header.insertBefore(icons, burger || null);
 
   const promos = {
-    Leistungen: [["touchpoints", "Projekt Run Club", "projekt-runclub.html"], ["merch", "Alle Arbeiten", "work.html"]],
+    Arbeiten: [["plakatwand", "Run Club", "projekt-runclub.html"], ["merch", "Alle Arbeiten", "work.html"]],
+    Leistungen: [["touchpoints", "So arbeiten wir", "prozess.html"], ["haltestelle", "Social Media", "index.html#social"]],
+    Studio: [["flasche", "Jobs", "jobs.html"]],
     Academy: [["plakatwand", "Marken-Wiki", "academy.html#wiki"], ["flasche", "Workshop-Toolkit", "academy-toolkit.html"]],
   };
+  // Aktiven Bereich markieren
+  const file = location.pathname.split("/").pop() || "index.html";
+  const sec = /^projekt-|^work|^stories/.test(file) ? "work" : /^leistung-/.test(file) ? "leistung"
+    : /^(jobs|openspace|moodboard|prozess)/.test(file) ? "studio" : /^academy/.test(file) ? "academy" : "";
+  if (sec) header.querySelector(`[data-sec="${sec}"]`)?.classList.add("is-current");
+  header.querySelectorAll(".sub a").forEach((a) => { if (a.getAttribute("href") === file) a.setAttribute("aria-current", "page"); });
   header.querySelectorAll(".has-sub").forEach((li) => {
     const sub = li.querySelector(".sub");
     const key = li.querySelector(".nav__toggle").textContent.trim();
@@ -1283,4 +1289,6 @@
 
 // Reels: Doppeltipp/Klick setzt ein Herz
 document.querySelectorAll(".rw__reel").forEach((r) => r.addEventListener("dblclick", () => r.classList.toggle("is-liked")));
-document.querySelectorAll("body.v5 .menu li").forEach((li, i) => li.firstElementChild && li.firstElementChild.style.setProperty("--i", i));
+document.querySelectorAll("body.v5 .menu .mnav > li").forEach((li, i) => li.style.setProperty("--i", i));
+// Mobiles Menü: immer nur ein Bereich offen
+document.querySelectorAll(".mnav details").forEach((d, _, all) => d.addEventListener("toggle", () => { if (d.open) all.forEach((o) => { if (o !== d) o.open = false; }); }));

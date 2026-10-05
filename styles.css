@@ -3652,3 +3652,42 @@ body.v5 .header { z-index: 60; } body.v5.menu-open .header { transform: none !im
 @media (prefers-reduced-motion: reduce) { .project-media > .ph::after, .wcard__media > .ph::after { animation: none; } }
 .project-media > .ph .ph__label, .wcard__media > .ph .ph__label { opacity: 1 !important; transform: none !important; }
 .project-media > .ph .ph__label, .wcard__media > .ph .ph__label { position: absolute !important; left: 50% !important; top: 50% !important; right: auto !important; bottom: auto !important; translate: -50% -50%; white-space: nowrap; margin: 0 !important; }
+
+/* ==========================================================================
+   Navigation, neu geordnet: Arbeiten · Leistungen · Studio · Academy
+   ========================================================================== */
+body.v5 .header .nav ul { gap: clamp(18px, 2.2vw, 36px); }
+body.v5 .header .has-sub.is-current > .nav__toggle { background-size: 100% 2px; }
+body.v5 .header .sub a[aria-current="page"] { font-weight: 700; }
+body.v5 .header .sub > div:not(.kl-promo) { min-width: 170px; }
+body.v5 .header .sub .label-s { min-height: 1.2em; }
+.kl-cta {
+  width: auto !important; height: auto !important; display: inline-flex !important; align-items: center;
+  padding: 12px 18px; background: #000; color: #fff !important;
+  font: 700 13px/1 "Montserrat", sans-serif; letter-spacing: 0.02em; white-space: nowrap;
+  transition: background 250ms ease, color 250ms ease;
+}
+.kl-cta:hover { background: #ffe100; color: #000 !important; }
+@media (max-width: 640px) { .kl-cta { padding: 10px 12px; font-size: 12px; } }
+@media (max-width: 400px) { .kl-cta { display: none !important; } }
+
+/* Mobiles Menü: Bereiche zum Aufklappen */
+body.v5 .menu { display: flex; flex-direction: column; gap: 28px; padding-top: 112px; }
+body.v5 .menu[hidden] { display: none; }
+body.v5 .mnav > li { border-bottom: 1px solid #e6e6e6; opacity: 0; transform: translateX(-24px); transition: opacity 400ms ease, transform 600ms cubic-bezier(0.19, 1, 0.22, 1); transition-delay: calc(var(--i, 0) * 50ms + 150ms); }
+body.v5 .menu.is-open .mnav > li { opacity: 1; transform: none; }
+body.v5 .mnav summary { list-style: none; display: flex; justify-content: space-between; align-items: center; padding: 20px 0; font: 700 22px/1 "Montserrat", sans-serif; cursor: pointer; }
+body.v5 .mnav summary::-webkit-details-marker { display: none; }
+body.v5 .mnav summary::after { content: "+"; font-weight: 400; font-size: 26px; transition: transform 300ms ease; }
+body.v5 .mnav details[open] summary::after { transform: rotate(45deg); }
+body.v5 .mnav details > div { display: grid; padding: 0 0 18px; }
+body.v5 .menu .mnav details a { font: 500 16px/1 "Montserrat", sans-serif; padding: 11px 0; transform: none; opacity: 1; justify-content: flex-start; }
+body.v5 .menu .mnav details a::after { content: none; }
+body.v5 .mnav details[open] > div a { animation: mnav-in 450ms cubic-bezier(0.19, 1, 0.22, 1) both; }
+body.v5 .mnav details[open] > div a:nth-child(2) { animation-delay: 30ms; } body.v5 .mnav details[open] > div a:nth-child(3) { animation-delay: 60ms; } body.v5 .mnav details[open] > div a:nth-child(4) { animation-delay: 90ms; } body.v5 .mnav details[open] > div a:nth-child(n+5) { animation-delay: 120ms; }
+@keyframes mnav-in { from { opacity: 0; transform: translateY(-6px); } }
+body.v5 .menu a.mnav__cta { display: block; padding: 18px; background: #000; color: #fff; text-align: center; font: 700 15px/1 "Montserrat", sans-serif; transform: none; opacity: 1; }
+body.v5 .menu a.mnav__cta::after { content: none; }
+body.v5 .mnav__meta { margin: 0; font: 400 14px/1.7 "Montserrat", sans-serif; }
+body.v5 .menu .mnav__meta a { display: inline; padding: 0; font: inherit; transform: none; opacity: 1; }
+body.v5 .menu .mnav__meta a::after { content: none; }
