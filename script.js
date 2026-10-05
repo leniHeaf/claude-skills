@@ -849,3 +849,71 @@
     f.reset();
   });
 })();
+
+// ==========================================================================
+// V7: Animation und 3D (Neigung, rotierendes X, Raum-Karussell, Aufdecken)
+// ==========================================================================
+(() => {
+  if (!document.body.classList.contains("v7")) return;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  requestAnimationFrame(() => setTimeout(() => document.body.classList.add("is-loaded"), 60));
+
+  // Bilder beim Scrollen aufdecken
+  const reveal = document.querySelectorAll(".k-cards .k-card__img, .k-split__img, .k-tile img, .v2social__stage");
+  reveal.forEach((el) => el.setAttribute("data-r", ""));
+  if ("IntersectionObserver" in window && !reduce) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -10% 0px" });
+    reveal.forEach((el) => io.observe(el));
+  } else reveal.forEach((el) => el.classList.add("is-in"));
+  if (reduce) return;
+
+  const mouse = { x: 0, y: 0 }; // -1 … 1
+  window.addEventListener("pointermove", (e) => { mouse.x = e.clientX / innerWidth * 2 - 1; mouse.y = e.clientY / innerHeight * 2 - 1; }, { passive: true });
+  const sm = { x: 0, y: 0 };
+  const heroImgs = [...document.querySelectorAll(".k-hero__img")];
+  const xSpin = document.querySelector(".k-x__spin");
+  const cards = [...document.querySelectorAll(".k-cards li")];
+  const list = document.querySelector(".k-cards");
+  const phones = [...document.querySelectorAll(".v2social__stage .phone")];
+  let angle = 0;
+
+  const loop = () => {
+    sm.x += (mouse.x - sm.x) * 0.06; sm.y += (mouse.y - sm.y) * 0.06;
+    // Einstieg: leichte Raumneigung
+    if (fine && scrollY < innerHeight) heroImgs.forEach((h, i) => {
+      const dir = i === 0 ? 1 : -1;
+      h.style.transform = `rotateY(${sm.x * 4 * dir}deg) rotateX(${-sm.y * 3}deg) translateZ(0)`;
+    });
+    // Rotierendes X
+    if (xSpin) { angle += 0.35; xSpin.style.transform = `rotateY(${angle + sm.x * 30}deg) rotateX(${12 - sm.y * 20}deg)`; }
+    // Karten drehen sich je nach Position im sichtbaren Bereich
+    if (list && cards.length) {
+      const lr = list.getBoundingClientRect(), mid = lr.left + lr.width / 2;
+      cards.forEach((c) => {
+        const r = c.getBoundingClientRect();
+        const d = Math.max(-1, Math.min(1, (r.left + r.width / 2 - mid) / lr.width));
+        c.style.transform = `rotateY(${-d * 18}deg) translateZ(${-Math.abs(d) * 60}px)`;
+      });
+    }
+    // Telefone neigen sich
+    if (fine) phones.forEach((p, i) => {
+      const off = (i - 1) * 6;
+      p.style.transform = `rotateY(${sm.x * 14 + off * -1}deg) rotateX(${-sm.y * 8}deg) translateZ(${i === 1 ? 40 : 0}px)`;
+    });
+    requestAnimationFrame(loop);
+  };
+  requestAnimationFrame(loop);
+
+  // Kacheln: Neigung zur Maus mit Lichtreflex
+  if (fine) document.querySelectorAll(".k-tile").forEach((t) => {
+    t.addEventListener("pointermove", (e) => {
+      const r = t.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+      t.classList.add("is-tilt");
+      t.style.transform = `rotateY(${(px - 0.5) * 14}deg) rotateX(${(0.5 - py) * 12}deg) scale(1.02)`;
+      t.style.setProperty("--mx", px * 100 + "%"); t.style.setProperty("--my", py * 100 + "%");
+    });
+    t.addEventListener("pointerleave", () => { t.classList.remove("is-tilt"); t.style.transform = ""; });
+  });
+})();

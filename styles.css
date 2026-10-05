@@ -3163,3 +3163,59 @@ h1, h2, h3, h4, p, figure { margin: 0; }
 .k-news .form__status { text-transform: none; letter-spacing: 0; }
 .k-news { max-width: none; }
 .k-news > * { max-width: 760px; }
+
+/* ==========================================================================
+   V7: Animation und 3D im Lagerfeld-Look
+   ========================================================================== */
+/* Einstieg: Vorhang, 3D-Neigung, Zeilen */
+.v7 .k-hero { perspective: 1400px; }
+.v7 .k-hero__img { transform-style: preserve-3d; will-change: transform; }
+.v7 .k-hero__img img { clip-path: inset(0 0 100% 0); transition: clip-path 1300ms cubic-bezier(0.77, 0, 0.175, 1), filter 600ms ease; transform: scale(1.08); }
+.v7.is-loaded .k-hero__img img { clip-path: inset(0 0 0 0); transform: scale(1); transition: clip-path 1300ms cubic-bezier(0.77, 0, 0.175, 1), transform 2200ms cubic-bezier(0.23, 1, 0.32, 1), filter 600ms ease; }
+.v7.is-loaded .k-hero__img + .k-hero__img img { transition-delay: 150ms, 150ms, 0ms; }
+.v7 .k-over--hero > * { opacity: 0; transform: translateY(24px); transition: opacity 900ms ease, transform 1100ms cubic-bezier(0.19, 1, 0.22, 1); }
+.v7.is-loaded .k-over--hero > * { opacity: 1; transform: none; }
+.v7.is-loaded .k-over--hero > :nth-child(1) { transition-delay: 700ms; }
+.v7.is-loaded .k-over--hero > :nth-child(2) { transition-delay: 820ms; }
+.v7.is-loaded .k-over--hero > :nth-child(3) { transition-delay: 940ms; }
+
+/* Bilder decken sich beim Scrollen auf */
+.v7 [data-r] { clip-path: inset(100% 0 0 0); transition: clip-path 1200ms cubic-bezier(0.77, 0, 0.175, 1); }
+.v7 [data-r].is-in { clip-path: inset(0 0 0 0); }
+
+/* Massives 3D-X */
+.v7 .k-split__text { position: relative; overflow: hidden; perspective: 900px; }
+.k-x { position: absolute; right: 8%; top: 12%; width: clamp(160px, 18vw, 320px); aspect-ratio: 1; perspective: 900px; pointer-events: none; }
+.k-x__spin { position: absolute; inset: 0; transform-style: preserve-3d; will-change: transform; }
+.k-x__spin span {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  font: 800 clamp(180px, 20vw, 360px) / 1 var(--k); color: #fff;
+  transform: translateZ(calc(var(--z) * 2.4px - 16px));
+  backface-visibility: visible;
+}
+.k-x__spin span:not(:last-child) { color: #3a3a3a; }
+.k-x__spin span:first-child { color: #2a2a2a; }
+
+/* Arbeiten: Karten drehen sich in den Raum */
+.v7 .k-cards { perspective: 1200px; }
+.v7 .k-cards li { transform-style: preserve-3d; will-change: transform; transition: transform 120ms linear; }
+
+/* Kacheln: 3D-Neigung mit Lichtreflex */
+.v7 .k-tiles { perspective: 1400px; }
+.v7 .k-tile { transform-style: preserve-3d; transition: transform 600ms cubic-bezier(0.23, 1, 0.32, 1); will-change: transform; }
+.v7 .k-tile.is-tilt { transition: transform 80ms linear; }
+.k-shine { position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0; transition: opacity 400ms ease;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.28), transparent 45%); }
+.v7 .k-tile.is-tilt .k-shine { opacity: 1; }
+.v7 .k-over { transform: translateZ(40px); }
+
+/* Telefone neigen sich zur Maus */
+.v7 .v2social__stage { perspective: 1400px; }
+.v7 .v2social__stage .phone { transition: transform 700ms cubic-bezier(0.23, 1, 0.32, 1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .v7 .k-hero__img img, .v7 [data-r] { clip-path: none !important; transform: none !important; }
+  .v7 .k-over--hero > * { opacity: 1; transform: none; }
+  .k-x__spin { transform: rotateY(-20deg) rotateX(10deg) !important; }
+}
+@media (max-width: 900px) { .k-x { right: -6%; top: 6%; opacity: 0.6; } }
