@@ -728,3 +728,96 @@
   window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
   update();
 })();
+
+// ==========================================================================
+// Social-Bühne: Telefone drehen beim Scrollen, WebGL-Flüssigkeit, Liquid-Hover
+// ==========================================================================
+(() => {
+  const sec = document.querySelector('[data-scrub="social"]');
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Telefone auffächern je nach Scrollposition
+  if (sec && !reduce) {
+    const L = sec.querySelector(".phone--l"), C = sec.querySelector(".phone--c"), R = sec.querySelector(".phone--r");
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      if (innerWidth <= 1024) { [L, C, R].forEach((p) => (p.style.transform = "")); return; }
+      const r = sec.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - innerHeight)));
+      const e = 1 - Math.pow(1 - p, 3);
+      const spread = 30 + e * 42, rot = 10 + e * 22, tilt = 18 - e * 18;
+      L.style.transform = `translateX(-${spread}%) rotateY(${rot}deg) rotateX(${tilt}deg) rotateZ(-${6 - e * 4}deg) translateZ(-80px)`;
+      R.style.transform = `translateX(${spread}%) rotateY(-${rot}deg) rotateX(${tilt}deg) rotateZ(${6 - e * 4}deg) translateZ(-80px)`;
+      C.style.transform = `translateY(${(1 - e) * 40}px) rotateX(${tilt * 0.6}deg) translateZ(${40 + e * 40}px)`;
+    };
+    window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    window.addEventListener("resize", update);
+    update();
+  }
+
+  // WebGL: flüssiges Gelb, rein rechnerisch (keine Texturen nötig)
+  const canvas = sec?.querySelector(".v2social__gl");
+  const gl = canvas && !reduce ? canvas.getContext("webgl", { premultipliedAlpha: false, antialias: false }) : null;
+  if (gl) {
+    const vs = "attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}";
+    const fs = `precision mediump float;uniform vec2 r;uniform float t;uniform vec2 m;
+      float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+      float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);
+        return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),f.x),f.y);}
+      float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<5;i++){v+=a*n(p);p*=2.;a*=.5;}return v;}
+      void main(){vec2 uv=gl_FragCoord.xy/r;vec2 q=uv*vec2(r.x/r.y,1.)*1.6;
+        float d=distance(uv,m);
+        q+=vec2(fbm(q+t*.08),fbm(q-t*.06))*1.2+(m-uv)*.6*exp(-d*4.);
+        float f=fbm(q+fbm(q+t*.05));
+        float g=smoothstep(.45,.85,f+.25*exp(-d*5.));
+        vec3 base=vec3(.055);vec3 sig=vec3(1.,.82,.12);
+        vec3 col=mix(base,sig*.9,g*.85);col+=sig*.15*exp(-d*6.);
+        gl_FragColor=vec4(col,1.);}`;
+    const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; };
+    const prog = gl.createProgram();
+    gl.attachShader(prog, sh(gl.VERTEX_SHADER, vs)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(prog);
+    if (gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+      gl.useProgram(prog);
+      const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+      const loc = gl.getAttribLocation(prog, "p"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+      const uR = gl.getUniformLocation(prog, "r"), uT = gl.getUniformLocation(prog, "t"), uM = gl.getUniformLocation(prog, "m");
+      const mouse = { x: 0.7, y: 0.4 }, sm = { x: 0.7, y: 0.4 };
+      sec.addEventListener("pointermove", (e) => { const b = canvas.getBoundingClientRect(); mouse.x = (e.clientX - b.left) / b.width; mouse.y = 1 - (e.clientY - b.top) / b.height; });
+      let visible = false;
+      new IntersectionObserver((es) => (visible = es[0].isIntersecting)).observe(canvas);
+      const resize = () => { const dpr = Math.min(1.5, devicePixelRatio || 1) * 0.5; canvas.width = canvas.clientWidth * dpr; canvas.height = canvas.clientHeight * dpr; gl.viewport(0, 0, canvas.width, canvas.height); };
+      resize(); window.addEventListener("resize", resize);
+      const t0 = performance.now();
+      const frame = (now) => {
+        if (visible) {
+          sm.x += (mouse.x - sm.x) * 0.06; sm.y += (mouse.y - sm.y) * 0.06;
+          gl.uniform2f(uR, canvas.width, canvas.height); gl.uniform1f(uT, (now - t0) / 1000); gl.uniform2f(uM, sm.x, sm.y);
+          gl.drawArrays(gl.TRIANGLES, 0, 3);
+        }
+        requestAnimationFrame(frame);
+      };
+      requestAnimationFrame(frame);
+    }
+  }
+
+  // Projektbilder: kurze Verflüssigung beim Überfahren (SVG-Filter)
+  const disp = document.querySelector("#liquid feDisplacementMap");
+  if (disp && !reduce && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    let raf = null;
+    document.querySelectorAll(".v2work__media").forEach((m) => {
+      m.parentElement.addEventListener("pointerenter", () => {
+        cancelAnimationFrame(raf);
+        m.classList.add("is-liquid");
+        const t0 = performance.now(), dur = 900;
+        const step = (now) => {
+          const t = Math.min(1, (now - t0) / dur);
+          disp.setAttribute("scale", String(Math.sin(t * Math.PI) * 60));
+          if (t < 1) raf = requestAnimationFrame(step); else m.classList.remove("is-liquid");
+        };
+        raf = requestAnimationFrame(step);
+      });
+    });
+  }
+})();
