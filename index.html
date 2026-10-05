@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=JetBrains+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,300;6..72,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="page-home">
   <a class="skip" href="#main">Zum Inhalt springen</a>
 
   <!-- Laufband -->
@@ -68,33 +68,28 @@
   </div>
 
   <main id="main">
-    <!-- Hero: Positionierung, Beleg, zwei klare Wege -->
-    <section class="hero" id="top">
-      <h1 class="hero__title" aria-label="Wir machen Marken klar, mutig und unverwechselbar.">
-        <span class="line"><span>Wir machen Marken</span></span>
-        <span class="line"><span>klar, mutig &amp;</span></span>
-        <span class="line"><span>unverwechselbar.</span></span>
-      </h1>
-      <div class="hero__sub" data-reveal>
-        <p>Studio X ist eine Branding-Agentur für Unternehmen, die mehr sind als ihr Auftritt zeigt. Wir verbinden Strategie, Design und Roll-out – mit einem kleinen Team vom ersten Gespräch bis zum Launch.</p>
-        <div class="hero__cta">
-          <a class="hbtn" href="#anfrage">Projekt anfragen <span aria-hidden="true">→</span></a>
+    <!-- Kinetischer Einstieg -->
+    <section class="mhero" id="top">
+      <p class="mhero__eyebrow label-s"><span>Branding-Agentur</span><span>Musterstadt</span><span>Seit 2017</span></p>
+      <h1 class="mhero__title" aria-label="Marken, die man nicht vergisst." data-kinetic><span class="line"><span><span class="kw"><span class="kl">M</span><span class="kl">a</span><span class="kl">r</span><span class="kl">k</span><span class="kl">e</span><span class="kl">n</span><span class="kl">,</span></span></span></span><span class="line"><span><span class="kw"><span class="kl">d</span><span class="kl">i</span><span class="kl">e</span></span> <span class="kw"><span class="kl">m</span><span class="kl">a</span><span class="kl">n</span></span> <span class="kw"><span class="kl">n</span><span class="kl">i</span><span class="kl">c</span><span class="kl">h</span><span class="kl">t</span></span></span></span><span class="line"><span><span class="kw"><span class="kl">v</span><span class="kl">e</span><span class="kl">r</span><span class="kl">g</span><span class="kl">i</span><span class="kl">s</span><span class="kl">s</span><span class="kl">t</span><span class="kl">.</span></span></span></span></h1>
+      <div class="mhero__foot">
+        <p class="mhero__sub">Wir entwickeln Strategie, Identität und Kampagnen für Unternehmen, die mehr sind, als ihr Auftritt heute zeigt.</p>
+        <div class="mhero__cta">
+          <a class="hbtn hbtn--sig" href="#anfrage">Projekt anfragen <span aria-hidden="true">→</span></a>
           <a class="hbtn hbtn--ghost" href="work.html">Arbeiten ansehen</a>
         </div>
+        <p class="mhero__status label-s"><i aria-hidden="true"></i> Freie Kapazität ab Januar</p>
       </div>
-      <figure class="hero__media" data-parallax="0.12">
-        <div class="ph ph--frame" data-reveal-clip>
-          <img class="hero__img" src="assets/runclub/haltestelle.webp" alt="Run-Club-Plakat an einer Bushaltestelle" decoding="async">
-        </div>
-      </figure>
     </section>
 
-    <!-- Showreel -->
-    <section class="hreel" aria-label="Showreel">
-      <div class="hreel__frame" data-reveal>
-        <div class="ph ph--ink" data-blur><span class="ph__label">Showreel 16:9</span></div>
-        <button type="button" class="hreel__play" data-reel><span aria-hidden="true">▶</span> Showreel abspielen</button>
-        <p class="hreel__note" role="status" aria-live="polite"></p>
+    <!-- Showreel wächst beim Scrollen -->
+    <section class="mreel" data-scrub="reel" aria-label="Showreel">
+      <div class="mreel__sticky">
+        <div class="mreel__frame">
+          <img src="assets/runclub/plakatwand.webp" alt="Run-Club-Kampagne an einer Plakatwand" decoding="async">
+          <button type="button" class="mreel__play" data-reel data-cursor="Play"><span aria-hidden="true">▶</span> Showreel 2026</button>
+          <p class="hreel__note" role="status" aria-live="polite"></p>
+        </div>
       </div>
     </section>
 
@@ -104,36 +99,42 @@
       <div class="hmarquee__track"><ul><li>Nordwind</li><li>Aurora Labs</li><li>Kiefer & Sohn</li><li>Halde</li><li>Ostlicht</li><li>Mira Mode</li><li>Blauwerk</li><li>Fjell</li><li>Pavillon</li><li>Lumen</li><li>Kollektiv Acht</li><li>Tidewater</li><li>Run Club</li><li>Polar Motors</li></ul><ul aria-hidden="true"><li>Nordwind</li><li>Aurora Labs</li><li>Kiefer & Sohn</li><li>Halde</li><li>Ostlicht</li><li>Mira Mode</li><li>Blauwerk</li><li>Fjell</li><li>Pavillon</li><li>Lumen</li><li>Kollektiv Acht</li><li>Tidewater</li><li>Run Club</li><li>Polar Motors</li></ul></div>
     </section>
 
-    <!-- Passt das? Problem-Checkliste -->
-    <section class="split hfit" id="about">
-      <h2 class="label"><span>Passt das?</span></h2>
-      <div class="hfit__body">
-        <p class="hfit__lead" data-reveal>Wir sind die Richtigen, wenn mindestens einer dieser Sätze auf euch zutrifft:</p>
-        <ul class="hfit__list"><li data-reveal><span aria-hidden="true">✕</span>Eure Marke wirkt austauschbar, obwohl euer Angebot es nicht ist.</li><li data-reveal><span aria-hidden="true">✕</span>Das Team beschreibt das Unternehmen jedes Mal anders.</li><li data-reveal><span aria-hidden="true">✕</span>Website, Präsentation und Social Media sehen aus wie von drei Firmen.</li><li data-reveal><span aria-hidden="true">✕</span>Ihr wachst – und der Auftritt wächst nicht mit.</li><li data-reveal><span aria-hidden="true">✕</span>Ihr wollt höhere Preise, aber die Marke sagt „günstig“.</li></ul>
-        <a class="hbtn" href="#anfrage" data-reveal>Lasst uns darüber sprechen <span aria-hidden="true">→</span></a>
+
+    <!-- Manifest: Wort für Wort -->
+    <section class="mmani" data-scrub="mani">
+      <div class="mmani__sticky">
+        <p class="label-s">Haltung</p>
+        <p class="mmani__text" data-words>Wir glauben nicht an Marken, die allen gefallen wollen. Wir glauben an Marken mit Haltung, einer klaren Position und einem Auftritt, den man aus dem Augenwinkel erkennt. Dafür bringen wir Strategie, Design und Roll-out in ein kleines Team – vom ersten Gespräch bis zum Launch.</p>
       </div>
     </section>
 
-    <!-- Ausgewählte Arbeiten mit Ergebnis -->
-    <section class="split hwork" id="work">
-      <h2 class="label"><span>Arbeiten</span></h2>
-      <div class="hwork__body">
-        <ul class="hcases"><li class="hcase hcase--big" data-reveal><a href="projekt-runclub.html"><div class="hcase__media"><img src="assets/runclub/plakatwand.webp" alt="Run Club: Kampagnenmotiv" loading="lazy" decoding="async" data-blur></div><div class="hcase__meta"><div><span class="card__code">Run Club</span><h3>Identität für eine Lauf-Community</h3><span class="card__tag">Branding · Kampagne · Merch</span></div><p class="hcase__kpi"><strong>3 ×</strong><span>mehr Teilnehmende pro Lauf*</span></p></div></a></li><li class="hcase" data-reveal><a href="work.html"><div class="hcase__media"><div class="ph ph--court" data-blur><span class="ph__label">Projektbild</span></div></div><div class="hcase__meta"><div><span class="card__code">Kunde Zwei</span><h3>Neupositionierung im B2B-Markt</h3><span class="card__tag">Strategie · Brand Design</span></div><p class="hcase__kpi"><strong>+40 %</strong><span>qualifizierte Anfragen*</span></p></div></a></li><li class="hcase" data-reveal><a href="work.html"><div class="hcase__media"><div class="ph ph--coral" data-blur><span class="ph__label">Projektbild</span></div></div><div class="hcase__meta"><div><span class="card__code">Kunde Drei</span><h3>Rebranding nach einer Fusion</h3><span class="card__tag">Strategie · Rebranding</span></div><p class="hcase__kpi"><strong>1</strong><span>gemeinsame Marke statt drei*</span></p></div></a></li></ul>
-        <p class="hnote">* Platzhalterwerte – durch echte Projektergebnisse ersetzen.</p>
-        <a class="hlink" href="work.html">Alle Arbeiten <span aria-hidden="true">→</span></a>
+    <!-- Arbeiten: gepinnte horizontale Galerie -->
+    <section class="mgal" id="work" data-scrub="gallery">
+      <div class="mgal__sticky">
+        <div class="mgal__head">
+          <h2 class="mgal__title">Ausgewählte<br>Arbeiten</h2>
+          <a class="hlink" href="work.html">Alle Arbeiten <span aria-hidden="true">→</span></a>
+        </div>
+        <ul class="mgal__track"><li class="mgal__card"><a href="projekt-runclub.html" data-cursor="Ansehen"><div class="mgal__media"><img src="assets/runclub/plakatwand.webp" alt="Run Club: Identität für eine Lauf-Community" loading="lazy" decoding="async"></div><div class="mgal__meta"><span class="mgal__no">01</span><div><h3>Run Club</h3><p>Identität für eine Lauf-Community</p></div><p class="mgal__kpi"><strong>3 ×</strong><span>mehr Teilnehmende*</span></p></div></a></li><li class="mgal__card"><a href="projekt-runclub.html" data-cursor="Ansehen"><div class="mgal__media"><img src="assets/runclub/haltestelle.webp" alt="Run Club: Kampagne im Stadtraum" loading="lazy" decoding="async"></div><div class="mgal__meta"><span class="mgal__no">02</span><div><h3>Run Club</h3><p>Kampagne im Stadtraum</p></div><p class="mgal__kpi"><strong>40+</strong><span>Motive in einem Raster*</span></p></div></a></li><li class="mgal__card"><a href="work.html" data-cursor="Ansehen"><div class="mgal__media"><div class="ph ph--court"><span class="ph__label">Projektbild</span></div></div><div class="mgal__meta"><span class="mgal__no">03</span><div><h3>Kunde Zwei</h3><p>Neupositionierung im B2B-Markt</p></div><p class="mgal__kpi"><strong>+40 %</strong><span>qualifizierte Anfragen*</span></p></div></a></li><li class="mgal__card"><a href="projekt-runclub.html" data-cursor="Ansehen"><div class="mgal__media"><img src="assets/runclub/merch.webp" alt="Run Club: Merchandise-Kollektion" loading="lazy" decoding="async"></div><div class="mgal__meta"><span class="mgal__no">04</span><div><h3>Run Club</h3><p>Merchandise-Kollektion</p></div><p class="mgal__kpi"><strong>7</strong><span>Produkte, ein System*</span></p></div></a></li><li class="mgal__card"><a href="work.html" data-cursor="Ansehen"><div class="mgal__media"><div class="ph ph--coral"><span class="ph__label">Projektbild</span></div></div><div class="mgal__meta"><span class="mgal__no">05</span><div><h3>Kunde Drei</h3><p>Rebranding nach einer Fusion</p></div><p class="mgal__kpi"><strong>1</strong><span>Marke statt drei*</span></p></div></a></li></ul>
+        <div class="mgal__bar" aria-hidden="true"><i></i></div>
+        <p class="hnote mgal__note">* Platzhalterwerte – durch echte Projektergebnisse ersetzen.</p>
       </div>
     </section>
 
-    <!-- Leistungen in drei Säulen -->
-    <section class="split hpillars" id="services">
-      <h2 class="label"><span>Leistungen</span></h2>
-      <ul class="hpillars__list"><li class="hpillar" data-reveal><span class="hpillar__no">01</span><h3>Strategie</h3><p>Wofür steht ihr, für wen, und warum ihr? Wir klären Positionierung, Zielgruppe und Werte – kompakt genug für den Alltag.</p><ul><li><a href="leistung-markenstrategie.html">Markenstrategie <span aria-hidden="true">→</span></a></li><li><a href="leistung-markenworkshop.html">Markenworkshop <span aria-hidden="true">→</span></a></li><li><a href="leistung-marken-kompass.html">Marken-Kompass <span aria-hidden="true">→</span></a></li><li><a href="leistung-naming.html">Naming <span aria-hidden="true">→</span></a></li><li><a href="leistung-brand-story.html">Brand Story <span aria-hidden="true">→</span></a></li></ul></li><li class="hpillar" data-reveal><span class="hpillar__no">02</span><h3>Design</h3><p>Aus der Strategie wird ein System: Logo, Farben, Schrift, Bildstil und Vorlagen, mit denen euer Team selbst arbeiten kann.</p><ul><li><a href="leistung-brand-design.html">Brand Design <span aria-hidden="true">→</span></a></li><li><a href="academy-logogestaltung.html">Logo <span aria-hidden="true">→</span></a></li><li><a href="academy-farbklima.html">Farbklima <span aria-hidden="true">→</span></a></li><li><a href="academy-brand-guidelines.html">Guidelines <span aria-hidden="true">→</span></a></li></ul></li><li class="hpillar" data-reveal><span class="hpillar__no">03</span><h3>Roll-out</h3><p>Wir bringen die Marke dorthin, wo eure Zielgruppe ist – mit Kampagnen, Website und Social Media.</p><ul><li><a href="leistung-markenkommunikation.html">Markenkommunikation <span aria-hidden="true">→</span></a></li><li><a href="academy-kampagnen-raster.html">Kampagnen <span aria-hidden="true">→</span></a></li><li><a href="academy-webdesign.html">Website <span aria-hidden="true">→</span></a></li></ul></li></ul>
+    <!-- Leistungen: große Liste mit Bildvorschau -->
+    <section class="mserv" id="services">
+      <div class="mserv__head">
+        <h2 class="label"><span>Leistungen</span></h2>
+        <p class="mserv__intro">Von der ersten Strategie-Frage bis zur fertigen Kampagne – einzeln buchbar oder als Gesamtpaket.</p>
+      </div>
+      <ul class="mserv__list"><li><a href="leistung-markenstrategie.html" data-preview="assets/runclub/touchpoints.webp"><span class="mserv__no">01</span><span class="mserv__name">Markenstrategie</span><span class="mserv__cat">Strategie</span><span class="mserv__arrow" aria-hidden="true">→</span></a></li><li><a href="leistung-markenworkshop.html" data-preview="ph--paper"><span class="mserv__no">02</span><span class="mserv__name">Markenworkshop</span><span class="mserv__cat">Strategie</span><span class="mserv__arrow" aria-hidden="true">→</span></a></li><li><a href="leistung-marken-kompass.html" data-preview="ph--stone"><span class="mserv__no">03</span><span class="mserv__name">Marken-Kompass</span><span class="mserv__cat">Strategie</span><span class="mserv__arrow" aria-hidden="true">→</span></a></li><li><a href="leistung-naming.html" data-preview="ph--lime"><span class="mserv__no">04</span><span class="mserv__name">Naming</span><span class="mserv__cat">Strategie</span><span class="mserv__arrow" aria-hidden="true">→</span></a></li><li><a href="leistung-brand-story.html" data-preview="ph--dusk"><span class="mserv__no">05</span><span class="mserv__name">Brand Story</span><span class="mserv__cat">Strategie</span><span class="mserv__arrow" aria-hidden="true">→</span></a></li><li><a href="leistung-brand-design.html" data-preview="assets/runclub/flasche.webp"><span class="mserv__no">06</span><span class="mserv__name">Brand Design</span><span class="mserv__cat">Design</span><span class="mserv__arrow" aria-hidden="true">→</span></a></li><li><a href="leistung-markenkommunikation.html" data-preview="assets/runclub/haltestelle.webp"><span class="mserv__no">07</span><span class="mserv__name">Markenkommunikation</span><span class="mserv__cat">Roll-out</span><span class="mserv__arrow" aria-hidden="true">→</span></a></li></ul>
+      <div class="mserv__preview" aria-hidden="true"></div>
     </section>
 
-    <!-- Zahlen -->
-    <section class="split hnums">
+    <!-- Zahlen zählen hoch -->
+    <section class="split hnums mnums" id="about">
       <h2 class="label"><span>In Zahlen</span></h2>
-      <div><ul class="hnums__list"><li data-reveal><strong>120+</strong><span>Marken begleitet</span></li><li data-reveal><strong>9</strong><span>Jahre Erfahrung</span></li><li data-reveal><strong>14</strong><span>Menschen im Team</span></li><li data-reveal><strong>4,9</strong><span>Ø Bewertung</span></li></ul><p class="hnote">Platzhalterwerte – durch echte Zahlen ersetzen.</p></div>
+      <div><ul class="hnums__list"><li><strong><span data-count="120">120</span>+</strong><span>Marken begleitet</span></li><li><strong><span data-count="9">9</span></strong><span>Jahre Erfahrung</span></li><li><strong><span data-count="14">14</span></strong><span>Menschen im Team</span></li><li><strong><span data-count="98">98</span>%</strong><span>würden uns weiterempfehlen</span></li></ul><p class="hnote">Platzhalterwerte – durch echte Zahlen ersetzen.</p></div>
     </section>
 
     <!-- Prozess -->
@@ -218,6 +219,7 @@
     </div>
   </footer>
 
+  <div class="mcursor" aria-hidden="true"><span></span></div>
   <script src="script.js" defer></script>
 </body>
 </html>

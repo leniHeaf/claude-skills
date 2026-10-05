@@ -377,3 +377,158 @@
     note.textContent = "Hier läuft später euer Showreel-Video.";
   });
 })();
+
+// ==========================================================================
+// MEGA-Startseite: Cursor, kinetische Buchstaben, Scroll-Szenen, Vorschau
+// ==========================================================================
+(() => {
+  if (!document.body.classList.contains("page-home")) return;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const mobile = () => window.innerWidth <= 760;
+  const clamp01 = (v) => Math.min(1, Math.max(0, v));
+  const easeOut = (t) => 1 - Math.pow(1 - t, 3);
+  const mouse = { x: innerWidth / 2, y: innerHeight / 2, moved: false };
+  window.addEventListener("pointermove", (e) => { mouse.x = e.clientX; mouse.y = e.clientY; mouse.moved = true; }, { passive: true });
+
+  // Manifest in Wörter zerlegen
+  document.querySelectorAll("[data-words]").forEach((p) => {
+    p.innerHTML = p.textContent.trim().split(/\s+/).map((w) => `<span class="w">${w}</span>`).join(" ");
+  });
+
+  // ---------- Eigener Cursor (weich nachgeführt) ----------
+  const cursor = document.querySelector(".mcursor");
+  const cur = { x: mouse.x, y: mouse.y };
+  if (cursor && finePointer && !reduce) {
+    document.body.classList.add("has-cursor");
+    const label = cursor.querySelector("span");
+    document.addEventListener("pointerover", (e) => {
+      const t = e.target.closest("[data-cursor], a, button, summary, label");
+      const lab = t?.dataset?.cursor;
+      cursor.classList.toggle("is-label", !!lab);
+      cursor.classList.toggle("is-link", !!t && !lab);
+      label.textContent = lab || "";
+    });
+    document.addEventListener("pointerleave", () => cursor.classList.add("is-hidden"));
+    document.addEventListener("pointerenter", () => cursor.classList.remove("is-hidden"));
+  }
+
+  // ---------- Kinetische Buchstaben ----------
+  const kinetic = document.querySelector("[data-kinetic]");
+  const letters = kinetic ? [...kinetic.querySelectorAll(".kl")] : [];
+  let centers = [];
+  const measure = () => {
+    centers = letters.map((l) => { const r = l.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 + scrollY }; });
+  };
+  const state = letters.map(() => 0);
+  const kineticOn = letters.length && finePointer && !reduce;
+  if (kineticOn) {
+    setTimeout(measure, 1400);
+    window.addEventListener("resize", measure);
+  }
+
+  // ---------- Scroll-Szenen ----------
+  const reel = document.querySelector('[data-scrub="reel"]');
+  const reelFrame = reel?.querySelector(".mreel__frame");
+  const mani = document.querySelector('[data-scrub="mani"]');
+  const words = mani ? [...mani.querySelectorAll(".w")] : [];
+  const gal = document.querySelector('[data-scrub="gallery"]');
+  const track = gal?.querySelector(".mgal__track");
+  const bar = gal?.querySelector(".mgal__bar i");
+  const pinned = () => !reduce && !mobile();
+  const sizeGallery = () => {
+    if (!gal) return;
+    if (!pinned()) { gal.style.height = ""; return; }
+    const extra = Math.max(0, track.scrollWidth - innerWidth);
+    gal.style.height = `${innerHeight + extra}px`;
+  };
+  sizeGallery();
+  window.addEventListener("resize", sizeGallery);
+  window.addEventListener("load", sizeGallery);
+  const progress = (el) => {
+    const r = el.getBoundingClientRect();
+    const span = r.height - innerHeight;
+    return span > 0 ? clamp01(-r.top / span) : 0;
+  };
+
+  // ---------- Leistungs-Vorschau ----------
+  const preview = document.querySelector(".mserv__preview");
+  const prev = { x: mouse.x, y: mouse.y };
+  if (preview && finePointer && !reduce) {
+    document.querySelectorAll("[data-preview]").forEach((a) => {
+      a.addEventListener("pointerenter", () => {
+        const src = a.dataset.preview;
+        preview.innerHTML = src.startsWith("assets/") ? `<img src="${src}" alt="">` : `<div class="ph ${src}"></div>`;
+        preview.classList.add("is-on");
+      });
+      a.addEventListener("pointerleave", () => preview.classList.remove("is-on"));
+    });
+  }
+
+  // ---------- Eine gemeinsame Animationsschleife ----------
+  const tick = () => {
+    // Cursor
+    if (document.body.classList.contains("has-cursor")) {
+      cur.x += (mouse.x - cur.x) * 0.22;
+      cur.y += (mouse.y - cur.y) * 0.22;
+      cursor.style.transform = `translate3d(${cur.x}px, ${cur.y}px, 0)`;
+    }
+    // Buchstaben: breiter und fetter in Mausnähe
+    if (kineticOn && centers.length) {
+      const R = Math.max(180, innerWidth * 0.16);
+      for (let i = 0; i < letters.length; i++) {
+        const c = centers[i];
+        const d = Math.hypot(mouse.x - c.x, mouse.y - (c.y - scrollY));
+        const target = mouse.moved ? clamp01(1 - d / R) : 0;
+        state[i] += (target - state[i]) * 0.14;
+        if (Math.abs(target - state[i]) > 0.001 || state[i] > 0.001) {
+          const t = easeOut(state[i]);
+          letters[i].style.fontStretch = `${62 + t * 38}%`;
+          letters[i].style.fontWeight = String(Math.round(700 + t * 200));
+        }
+      }
+    }
+    if (!reduce && !mobile()) {
+      if (reelFrame) reelFrame.style.transform = `scale(${0.55 + 0.45 * easeOut(progress(reel))})`;
+      if (words.length) {
+        const n = Math.floor(progress(mani) * 1.15 * words.length);
+        words.forEach((w, i) => w.classList.toggle("is-on", i < n));
+      }
+      if (track && pinned()) {
+        const p = progress(gal);
+        const extra = Math.max(0, track.scrollWidth - innerWidth);
+        track.style.transform = `translate3d(${-p * extra}px, 0, 0)`;
+        if (bar) bar.style.transform = `scaleX(${p})`;
+      }
+    }
+    if (preview?.classList.contains("is-on")) {
+      prev.x += (mouse.x - prev.x) * 0.16;
+      prev.y += (mouse.y - prev.y) * 0.16;
+      preview.style.transform = `translate3d(calc(${prev.x}px - 50%), calc(${prev.y}px - 50%), 0)`;
+    }
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+
+  // ---------- Zahlen zählen hoch ----------
+  const nums = document.querySelectorAll("[data-count]");
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (!en.isIntersecting) return;
+        io.unobserve(en.target);
+        const el = en.target, end = parseFloat(el.dataset.count);
+        if (reduce) { el.textContent = end; return; }
+        const t0 = performance.now(), dur = 1400;
+        const step = (now) => {
+          const t = clamp01((now - t0) / dur);
+          el.textContent = Math.round(end * easeOut(t));
+          if (t < 1) requestAnimationFrame(step);
+        };
+        el.textContent = "0";
+        requestAnimationFrame(step);
+      });
+    }, { threshold: 0.6 });
+    nums.forEach((n) => io.observe(n));
+  }
+})();
