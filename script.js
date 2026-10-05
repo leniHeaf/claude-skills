@@ -963,7 +963,7 @@
 
   // Überschriften in Wortmasken teilen (Auszeichnungen bleiben erhalten)
   const heads = [...main.querySelectorAll("h1, h2")].filter((h) =>
-    !h.closest(".phone, .k-x, [data-split], .v2social__stage, .cs2") && h.textContent.trim());
+    !h.closest(".phone, .k-x, [data-split], .v2social__stage, .cs2, .cs3") && h.textContent.trim());
   const splitText = (root, counter) => {
     [...root.childNodes].forEach((n) => {
       if (n.nodeType === 3) {
@@ -985,12 +985,12 @@
 
   // Fließtext und Listen gleiten nach
   const texts = [...main.querySelectorAll("p, li, dt, dd, blockquote, .btn, .k-links, form")].filter((el) =>
-    !el.closest("[data-reveal], .phone, .v2social__stage, .k-cards, .m8-txt, nav, .hask, details, [hidden], .cs2") && !el.querySelector("img"));
+    !el.closest("[data-reveal], .phone, .v2social__stage, .k-cards, .m8-txt, nav, .hask, details, [hidden], .cs2, .cs3") && !el.querySelector("img"));
   texts.forEach((el) => el.classList.add("m8-txt"));
 
   // Bilder: Vorhang von unten, darin leichte Parallaxe
   const imgs = [...main.querySelectorAll("img, .ph")].filter((el) =>
-    !el.closest(".phone, .k-hero, .v2social__stage, [data-r], .rw__row, .cs2") && !el.hasAttribute("data-r"));
+    !el.closest(".phone, .k-hero, .v2social__stage, [data-r], .rw__row, .cs2, .cs3") && !el.hasAttribute("data-r"));
   imgs.forEach((el) => el.classList.add("m8-img"));
 
   const all = [...heads, ...texts, ...imgs];
@@ -1038,7 +1038,7 @@
 
   // 3D-Neigung für Karten mit Bild
   const cards = [...main.querySelectorAll("a, article")].filter((c) =>
-    c.querySelector("img, .ph") && !c.closest(".k-cards, .phone, .v2social__stage, .k-tiles, .k-hero, .cs2") && c.offsetWidth > 160);
+    c.querySelector("img, .ph") && !c.closest(".k-cards, .phone, .v2social__stage, .k-tiles, .k-hero, .cs2, .cs3") && c.offsetWidth > 160);
   cards.forEach((c) => {
     c.classList.add("m8-tilt");
     c.addEventListener("pointermove", (e) => {
@@ -1165,7 +1165,7 @@
   document.querySelectorAll(".k-hero__img, .k-split__img, .k-card__img, .k-tile, .rw__clip, .rw__story").forEach((f) => frames.add(f));
   document.querySelectorAll("main img").forEach((img) => {
     const p = img.parentElement;
-    if (p && !p.closest(".phone, .k-hero, .rw, .cs2") && img.getBoundingClientRect().width > 260) frames.add(p);
+    if (p && !p.closest(".phone, .k-hero, .rw, .cs2, .cs3") && img.getBoundingClientRect().width > 260) frames.add(p);
   });
   frames.forEach((f) => {
     if (getComputedStyle(f).position === "static") f.style.position = "relative";
@@ -1459,4 +1459,56 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
   if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) { els.forEach((el) => el.classList.add("is-in")); return; }
   const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -6% 0px" });
   els.forEach((el) => io.observe(el));
+})();
+
+// Case Studies v3: Zeilen-Masken, Bilder skalieren beim Scrollen von 120 % auf 100 %, Titelbild-Parallaxe
+(() => {
+  const root = document.querySelector(".cs3");
+  if (!root) return;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // Text in echte Zeilen teilen
+  const splitLines = (el) => {
+    const html = el.innerHTML.replace(/<br\s*\/?>/g, "   ");
+    const words = html.split(/\s+/).filter(Boolean);
+    el.innerHTML = words.map((w) => w === " " ? '<br class="c3-br">' : `<span class="c3-wd">${w}</span>`).join(" ");
+    const lines = []; let top = null;
+    el.querySelectorAll(".c3-wd, .c3-br").forEach((w) => {
+      if (w.classList.contains("c3-br")) { top = null; return; }
+      const t = w.offsetTop;
+      if (top === null || Math.abs(t - top) > 4) { lines.push([]); top = t; }
+      lines[lines.length - 1].push(w.innerHTML);
+    });
+    el.innerHTML = lines.map((l, i) => `<span class="c3-line"><span style="transition-delay:${i * 70}ms">${l.join(" ")}</span></span>`).join("");
+  };
+  const texts = [...root.querySelectorAll("[data-lines]")];
+  const run = () => texts.forEach(splitLines);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(run); else run();
+  let rw; addEventListener("resize", () => { clearTimeout(rw); rw = setTimeout(() => texts.forEach((t) => { t.innerHTML = t.dataset.src || t.innerHTML; }), 300); });
+  texts.forEach((t) => { t.dataset.src = t.innerHTML; });
+
+  const fades = [...root.querySelectorAll("[data-lines], .c3-label, .c3-facts, .c3-ext, .c3-next__n")];
+  if (reduce || !("IntersectionObserver" in window)) { fades.forEach((e) => e.classList.add("c3-in")); return; }
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("c3-in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" });
+  setTimeout(() => fades.forEach((e) => io.observe(e)), 150);
+
+  const imgs = [...root.querySelectorAll(".c3-m")];
+  const hero = root.querySelector(".c3-hero img, .c3-hero__ph");
+  const pairs = [...root.querySelectorAll(".c3-pair .c3-m:nth-child(2)")];
+  const tick = () => {
+    const h = innerHeight;
+    if (hero && scrollY < h * 1.2) hero.style.transform = `translate3d(0, ${scrollY * -0.25}px, 0)`;
+    imgs.forEach((f) => {
+      const r = f.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > h) return;
+      const p = Math.min(1, Math.max(0, (h - r.top) / (h + r.height * 0.4)));
+      f.style.setProperty("--s", (1.2 - 0.2 * p).toFixed(4));
+    });
+    pairs.forEach((f) => {
+      const r = f.parentElement.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > h) return;
+      f.style.setProperty("--py", ((r.top + r.height / 2 - h / 2) * -0.08).toFixed(1) + "px");
+    });
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
 })();
