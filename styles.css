@@ -3651,3 +3651,4 @@ body.v5 .header { z-index: 60; } body.v5.menu-open .header { transform: none !im
 @keyframes ph-sheen { to { transform: translateX(100%); } }
 @media (prefers-reduced-motion: reduce) { .project-media > .ph::after, .wcard__media > .ph::after { animation: none; } }
 .project-media > .ph .ph__label, .wcard__media > .ph .ph__label { opacity: 1 !important; transform: none !important; }
+.project-media > .ph .ph__label, .wcard__media > .ph .ph__label { position: absolute !important; left: 50% !important; top: 50% !important; right: auto !important; bottom: auto !important; translate: -50% -50%; white-space: nowrap; margin: 0 !important; }
