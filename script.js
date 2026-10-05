@@ -1595,3 +1595,162 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
     f.addEventListener("pointerleave", () => { f.style.transform = ""; f.classList.remove("is-hov"); });
   });
 })();
+
+// ==========================================================================
+// Case Studies als Markenerlebnis: Markenwelt pro Projekt
+// – Hero-Canvas mit markeneigener Bewegung (Crea: Würfelgitter, Täubert:
+//   Lackglanz + Funken, Run Club: Tempo-Streifen), Licht folgt der Maus
+// – Gepinnte Wortbühne: Markenbegriffe wechseln beim Scrollen
+// – Farbwelt: Farbflächen wachsen auf, Werte zählen ein
+// – Seite taucht beim Scrollen in die Markenfarbe ein
+// ==========================================================================
+(() => {
+  const root = document.querySelector(".cs3");
+  if (!root) return;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const slug = (location.pathname.split("/").pop() || "").replace("projekt-", "").replace(".html", "");
+  const B = {
+    "crea-response": { fx: "cubes", dark: "#0b0b0f", accent: "#7c3aed", ink: "#ebebeb",
+      words: ["Strategie", "Technologie", "Daten", "Menschen", "Wachstum"],
+      colors: [["Purple", "#7C3AED"], ["Black", "#0B0B0F"], ["Graphite", "#1F1F27"], ["Light", "#EBEBEB"]] },
+    taeubert: { fx: "gloss", dark: "#0a0a0a", accent: "#e1251b", ink: "#f2f2f2",
+      words: ["Unfallinstandsetzung", "Lackierung", "Smart Repair", "Aufbereitung"],
+      colors: [["Schwarz", "#0A0A0A"], ["Weiß", "#F2F2F2"], ["Signalrot", "#E1251B"]] },
+    runclub: { fx: "speed", dark: "#0d0d0d", accent: "#ffe100", ink: "#ffe100",
+      words: ["Community", "Movement", "Better Days"],
+      colors: [["Signalgelb", "#FFE100"], ["Schwarz", "#0D0D0D"]] },
+  }[slug] || { fx: "dust", dark: "#222a36", accent: "#fef5f9", ink: "#fef5f9", words: [], colors: [] };
+  document.body.style.setProperty("--b-dark", B.dark);
+  document.body.style.setProperty("--b-acc", B.accent);
+  document.body.style.setProperty("--b-ink", B.ink);
+
+  // ---------- Wortbühne ----------
+  let stage = null, stageWords = [];
+  if (B.words.length) {
+    stage = document.createElement("section");
+    stage.className = "bx-stage"; stage.dataset.dark = "";
+    stage.style.height = (B.words.length * 70 + 60) + "vh";
+    stage.innerHTML = `<div class="bx-stage__pin"><p class="bx-stage__k">Wofür die Marke steht</p><div class="bx-stage__w">${B.words.map((w, i) => `<span data-i="${i}" style="font-size:min(11vw, ${(150 / Math.max(6, w.length)).toFixed(2)}vw, 190px) !important">${w}</span>`).join("")}</div><p class="bx-stage__n"><b>01</b> / ${String(B.words.length).padStart(2, "0")}</p><i class="bx-stage__line"></i></div>`;
+    const anchor = root.querySelector(".c3-band") || root.querySelector(".c3-sec");
+    anchor.after(stage);
+    stageWords = [...stage.querySelectorAll(".bx-stage__w span")];
+  }
+
+  // ---------- Farbwelt ----------
+  let swatch = null;
+  if (B.colors.length) {
+    swatch = document.createElement("section");
+    swatch.className = "bx-colors";
+    swatch.innerHTML = `<p class="c3-label c3-in">Farbwelt</p><div class="bx-colors__row">${B.colors.map(([n, h]) => `<div class="bx-sw" style="--c:${h}"><span class="bx-sw__n">${n}</span><span class="bx-sw__h" data-hex="${h}">#······</span></div>`).join("")}</div>`;
+    const before = root.querySelectorAll(".c3-sec")[3] || root.querySelector(".c3-hs") || root.querySelector(".c3-next");
+    before.before(swatch);
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      swatch.classList.add("is-in"); io.disconnect();
+      swatch.querySelectorAll(".bx-sw__h").forEach((el, k) => {
+        const hex = el.dataset.hex, chars = "0123456789ABCDEF";
+        let n = 0; const t = setInterval(() => {
+          n++; el.textContent = "#" + [...hex.slice(1)].map((c, i) => i < n / 3 ? c : chars[Math.random() * 16 | 0]).join("");
+          if (n > 20) { clearInterval(t); el.textContent = hex; }
+        }, 45 + k * 10);
+      });
+    }, { threshold: 0.3 });
+    io.observe(swatch);
+  }
+
+  // Dunkle Bereiche: ganze Seite taucht in die Markenfarbe ein
+  root.querySelector(".c3-hs")?.setAttribute("data-dark", "");
+  const darks = [...root.querySelectorAll("[data-dark]")];
+
+  if (reduce) { stageWords[0]?.classList.add("is-on"); return; }
+
+  // ---------- Hero-Canvas ----------
+  const hero = root.querySelector(".c3-hero");
+  const cv = document.createElement("canvas");
+  cv.className = "bx-fx"; cv.setAttribute("aria-hidden", "true");
+  hero.appendChild(cv);
+  const ctx = cv.getContext("2d");
+  let W = 0, H = 0, dpr = Math.min(2, devicePixelRatio || 1);
+  const size = () => { W = hero.clientWidth; H = hero.clientHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };
+  size(); addEventListener("resize", size);
+  const m = { x: -999, y: -999, vx: 0, vy: 0, px: 0, py: 0 };
+  hero.addEventListener("pointermove", (e) => {
+    const r = hero.getBoundingClientRect();
+    m.x = e.clientX - r.left; m.y = e.clientY - r.top;
+    hero.style.setProperty("--mx", m.x + "px"); hero.style.setProperty("--my", m.y + "px");
+    hero.classList.add("is-lit");
+  });
+  hero.addEventListener("pointerleave", () => { hero.classList.remove("is-lit"); m.x = m.y = -999; });
+  const sparks = [];
+  const hexA = (h, a) => { const n = parseInt(h.slice(1), 16); return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`; };
+  let t0 = performance.now();
+  const streaks = Array.from({ length: 60 }, () => ({ y: Math.random(), x: Math.random(), l: 0.05 + Math.random() * 0.25, s: 0.002 + Math.random() * 0.006 }));
+  const dust = Array.from({ length: 70 }, () => ({ x: Math.random(), y: Math.random(), r: Math.random() * 1.6 + 0.3, s: Math.random() * 0.0004 + 0.0001 }));
+
+  const draw = (now) => {
+    const t = (now - t0) / 1000;
+    m.vx = m.x - m.px; m.vy = m.y - m.py; m.px = m.x; m.py = m.y;
+    const energy = Math.min(1, Math.hypot(m.vx, m.vy) / 40);
+    ctx.clearRect(0, 0, W, H);
+    if (scrollY < H * 1.2) {
+      if (B.fx === "cubes") {
+        // isometrisches Würfelgitter, leuchtet um die Maus
+        const s = 46, hgt = s * Math.sqrt(3) / 2;
+        ctx.lineWidth = 1;
+        for (let row = -1; row < H / hgt + 2; row++) {
+          for (let col = -1; col < W / s + 2; col++) {
+            const x = col * s + (row % 2) * s / 2 + Math.sin(t * 0.4 + row * 0.3) * 6, y = row * hgt;
+            const d = Math.hypot(x - m.x, y - m.y);
+            const a = 0.05 + Math.max(0, 1 - d / 260) * 0.85 + Math.max(0, Math.sin(t * 1.2 - (x + y) * 0.006)) * 0.08;
+            ctx.strokeStyle = hexA(B.accent, a);
+            ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + s / 2, y + hgt); ctx.lineTo(x - s / 2, y + hgt); ctx.closePath(); ctx.stroke();
+          }
+        }
+      } else if (B.fx === "gloss") {
+        // Lackglanz zieht diagonal über das Bild, Funken folgen der Maus
+        const p = ((t * 0.18) % 1.6) - 0.3;
+        const gx = p * (W + H);
+        const g = ctx.createLinearGradient(gx - 260, 0, gx + 260, H);
+        g.addColorStop(0, "rgba(255,255,255,0)"); g.addColorStop(0.5, "rgba(255,255,255,0.22)"); g.addColorStop(1, "rgba(255,255,255,0)");
+        ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+        if (m.x > -900) for (let i = 0; i < 2 + energy * 8; i++) sparks.push({ x: m.x, y: m.y, vx: (Math.random() - 0.5) * 6 + m.vx * 0.2, vy: (Math.random() - 1) * 5, l: 1 });
+      } else if (B.fx === "speed") {
+        // Tempo-Streifen, schneller wenn die Maus sich bewegt
+        streaks.forEach((k) => {
+          k.x -= k.s * (1 + energy * 6);
+          if (k.x + k.l < 0) { k.x = 1; k.y = Math.random(); }
+          const y = k.y * H + (m.y > -900 ? (m.y - H / 2) * 0.05 : 0);
+          const g = ctx.createLinearGradient(k.x * W, 0, (k.x + k.l) * W, 0);
+          g.addColorStop(0, hexA(B.accent, 0.9)); g.addColorStop(1, hexA(B.accent, 0));
+          ctx.strokeStyle = g; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(k.x * W, y); ctx.lineTo((k.x + k.l) * W, y); ctx.stroke();
+        });
+      } else {
+        dust.forEach((p) => { p.y -= p.s; if (p.y < 0) p.y = 1; ctx.fillStyle = "rgba(255,255,255,.5)"; ctx.beginPath(); ctx.arc(p.x * W, p.y * H, p.r, 0, 7); ctx.fill(); });
+      }
+      for (let i = sparks.length - 1; i >= 0; i--) {
+        const s = sparks[i]; s.x += s.vx; s.y += s.vy; s.vy += 0.25; s.l -= 0.025;
+        if (s.l <= 0) { sparks.splice(i, 1); continue; }
+        ctx.strokeStyle = hexA(B.accent, s.l); ctx.lineWidth = 1.6;
+        ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(s.x - s.vx * 2, s.y - s.vy * 2); ctx.stroke();
+      }
+    }
+
+    // Wortbühne
+    if (stage) {
+      const r = stage.getBoundingClientRect();
+      const p = Math.min(0.9999, Math.max(0, -r.top / (stage.offsetHeight - innerHeight)));
+      const idx = Math.floor(p * stageWords.length);
+      stageWords.forEach((w, i) => { w.classList.toggle("is-on", i === idx); w.classList.toggle("is-past", i < idx); });
+      const n = stage.querySelector(".bx-stage__n b"); const nv = String(idx + 1).padStart(2, "0");
+      if (n.textContent !== nv) { n.textContent = nv; if (navigator.vibrate && !fineHover) try { navigator.vibrate(8); } catch (e) {} }
+      stage.style.setProperty("--p", p.toFixed(4));
+    }
+    // Eintauchen in die Markenfarbe
+    const mid = innerHeight / 2;
+    const dark = darks.some((d) => { const r = d.getBoundingClientRect(); return r.top < mid && r.bottom > mid; });
+    document.body.classList.toggle("bx-dark", dark);
+    requestAnimationFrame(draw);
+  };
+  const fineHover = window.matchMedia("(hover: hover)").matches;
+  requestAnimationFrame(draw);
+})();
