@@ -2940,3 +2940,51 @@ h1, h2, h3, h4, p, figure { margin: 0; }
 .v3 .v2hero__slide.is-on { opacity: 1; }
 .v3 .v2hero__slide.is-prev { opacity: 0; }
 .v3 .v2band__track p { font-style: normal; }
+
+/* ==========================================================================
+   V4: geradlinig – Grotesk, keine Kursiven, gerade Telefone, strenges Raster
+   ========================================================================== */
+.v4 { --edge: clamp(20px, 3vw, 56px); --gapv: clamp(96px, 10vw, 200px); }
+.v4 .v2hero__title, .v4 .v2head h2, .v4 .v2social__title, .v4 .v2serv__card h3, .v4 .hask__title,
+.v4 .footer__cta, .v4 .v2intro__text, .v4 .v2band__track p, .v4 .v2acad__grid h3, .v4 .hfaq .lfaq .faq__item summary {
+  font-family: "Archivo", "Helvetica Neue", Arial, sans-serif; font-style: normal !important; font-weight: 500; letter-spacing: -0.035em;
+}
+.v4 .v2hero__title { font-size: clamp(52px, 8.4vw, 200px); line-height: 0.92; }
+.v4 .v2hero__title .line:nth-child(2) { font-style: normal; }
+.v4 .v2intro__text { font-size: clamp(26px, 2.8vw, 60px); line-height: 1.1; font-weight: 500; }
+.v4 .v2intro__text span { font-style: normal; }
+.v4 .v2head h2 { font-size: clamp(36px, 4.4vw, 96px); line-height: 1; }
+.v4 .v2serv__card h3 { font-size: clamp(36px, 4.4vw, 96px); }
+.v4 .v2social__title { font-size: clamp(36px, 4.4vw, 96px); line-height: 1; }
+.v4 .footer__cta { font-weight: 500; }
+.v4 .hfaq .lfaq .faq__item summary { font-size: clamp(18px, 1.4vw, 26px); letter-spacing: -0.01em; }
+.v4 .v2acad__grid h3 { font-size: clamp(22px, 2vw, 40px); }
+
+/* Einheitliche Kante und Abstände */
+.v4 .v2intro, .v4 .v2work, .v4 .v2serv, .v4 .v2acad, .v4 .hask { padding-inline: var(--edge); }
+.v4 .v2intro { padding-block: var(--gapv); }
+.v4 .v2work, .v4 .v2serv, .v4 .v2acad { padding-bottom: var(--gapv); }
+.v4 .v2acad { padding-top: 0; }
+.v4 .v2hero__content { padding: var(--edge); }
+
+/* Band: schlichte Zeile */
+.v4 .v2band { margin-bottom: var(--gapv); padding-block: 22px; }
+.v4 .v2band__track { width: auto; padding-inline: var(--edge); }
+.v4 .v2band__track p { font-size: clamp(22px, 2.2vw, 44px); white-space: normal; letter-spacing: -0.02em; }
+.v4 .v2band__track span { color: var(--muted); }
+
+/* Leistungen ohne Pfeile */
+.v4 .v2serv__arrow { display: none; }
+
+/* Telefone gerade nebeneinander */
+.v4 .v2social__stage { perspective: none; display: flex; justify-content: center; align-items: center; gap: clamp(12px, 1.6vw, 28px); }
+.v4 .phone { position: relative; transform: none !important; box-shadow: 0 30px 60px -36px rgba(0,0,0,0.8); }
+.v4 .phone--c { width: clamp(200px, 17vw, 300px); }
+.v4 .phone--l, .v4 .phone--r { width: clamp(170px, 14vw, 250px); }
+.v4 .v2social { height: auto; }
+.v4 .v2social__sticky { position: relative; height: auto; min-height: 100vh; padding: var(--gapv) var(--edge); }
+@media (max-width: 760px) {
+  .v4 .v2social__stage { height: auto; overflow: hidden; justify-content: flex-start; }
+  .v4 .phone--l { display: none; }
+  .v4 .phone--c, .v4 .phone--r { width: 46%; }
+}
