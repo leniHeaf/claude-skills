@@ -1799,3 +1799,118 @@ h1, h2, h3, h4, p, figure { margin: 0; }
 .theme-studio .book { background: var(--fg); color: var(--bg); border-radius: 999px; box-shadow: none; }
 .theme-studio .book__faces i { border-color: var(--fg); }
 .theme-studio .field input { font-family: var(--serif); font-weight: 300; font-size: clamp(20px, 1.6vw, 34px); }
+
+/* ==========================================================================
+   Academy-Übersicht: Suche, Kategorie-Leiste, kompakte Liste
+   ========================================================================== */
+.ahero {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gap);
+  row-gap: clamp(16px, 1.6vw, 32px);
+  padding: clamp(64px, 7vw, 160px) var(--pad) clamp(40px, 4vw, 96px);
+}
+.ahero > * { grid-column: 2 / 12; }
+.ahero__title {
+  font-weight: 700; font-stretch: 62%;
+  font-size: clamp(64px, 11vw, 280px); line-height: 0.88; text-transform: uppercase;
+}
+.is-loaded .ahero__title .line > span { transform: none; }
+.ahero__intro {
+  grid-column: 2 / 9;
+  font-family: var(--serif); font-weight: 300;
+  font-size: clamp(20px, 2.05vw, 50px); line-height: 1.05; letter-spacing: -0.012em;
+}
+.asearch {
+  grid-column: 2 / 9;
+  display: flex; align-items: center; gap: 14px;
+  margin-top: clamp(8px, 1vw, 24px);
+  border-bottom: 1px solid var(--fg);
+  padding-bottom: 10px;
+}
+.asearch svg { width: 22px; height: 22px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; }
+.asearch input {
+  width: 100%; min-width: 0;
+  background: none; border: 0; color: var(--fg);
+  font: 300 clamp(20px, 1.6vw, 34px) / 1.2 var(--serif);
+}
+.asearch input::placeholder { color: var(--muted); }
+.asearch input:focus { outline: none; }
+.asearch:focus-within { border-bottom-width: 2px; padding-bottom: 9px; }
+
+.awiki { padding-bottom: clamp(80px, 9vw, 200px); align-items: start; }
+.awiki__side { grid-column: 2 / 4; position: sticky; top: calc(var(--header-h) + 24px); }
+.awiki__side > div { display: grid; gap: 18px; }
+.awiki__filter { display: grid; gap: 4px; }
+.awiki__filter button {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 8px 0;
+  background: none; border: 0; border-bottom: 1px solid var(--line);
+  color: var(--muted); cursor: pointer; text-align: left;
+  font: 700 clamp(18px, 1.5vw, 30px) / 1 var(--sans); font-stretch: 62%; text-transform: uppercase;
+  transition: color 200ms ease;
+}
+.awiki__filter button span { font: 400 12px / 1 var(--mono); }
+.awiki__filter button.is-active { color: var(--fg); border-bottom-color: var(--fg); }
+@media (hover: hover) and (pointer: fine) { .awiki__filter button:hover { color: var(--fg); } }
+.awiki__count { color: var(--muted); }
+
+.awiki__list { grid-column: 4 / 12; min-width: 0; display: grid; gap: clamp(48px, 5vw, 96px); }
+.awiki__group[hidden] { display: none; }
+.awiki__head {
+  margin-bottom: 12px;
+  font-weight: 700; font-stretch: 62%;
+  font-size: clamp(36px, 3.6vw, 88px); line-height: 0.9; text-transform: uppercase;
+  scroll-margin-top: calc(var(--header-h) + 24px);
+}
+.awiki__head sup { font: 400 clamp(11px, 0.8vw, 16px) / 1 var(--mono); vertical-align: top; margin-left: 0.4em; color: var(--muted); }
+.wlist, .olist { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.wrow[hidden] { display: none; }
+.wrow a, .orow a {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.6fr) auto;
+  gap: clamp(16px, 2vw, 40px);
+  align-items: baseline;
+  padding: clamp(14px, 1.2vw, 22px) 0;
+  border-bottom: 1px solid var(--line);
+}
+.wrow__title, .orow__title {
+  font-weight: 700; font-stretch: 62%;
+  font-size: clamp(20px, 1.6vw, 34px); line-height: 1; text-transform: uppercase;
+  transition: transform 300ms var(--ease-out);
+}
+.wrow__desc, .orow__desc {
+  font-family: var(--serif); font-weight: 300;
+  font-size: clamp(15px, 1.05vw, 21px); line-height: 1.3; color: var(--muted);
+}
+.wrow__meta, .orow__meta {
+  font: 400 clamp(11px, 0.75vw, 15px) / 1 var(--mono); text-transform: uppercase;
+  white-space: nowrap; color: var(--muted);
+}
+.wrow__meta span, .orow__meta { display: inline-block; transition: transform 300ms var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .wrow a:hover .wrow__title, .orow a:hover .orow__title { transform: translateX(0.3em); }
+  .wrow a:hover .wrow__desc, .orow a:hover .orow__desc { color: var(--fg); }
+  .wrow a:hover .wrow__meta span, .orow a:hover .orow__meta { transform: translateX(4px); }
+}
+.wrow a:active, .orow a:active { opacity: 0.7; }
+.awiki__empty { font-family: var(--serif); font-size: clamp(18px, 1.4vw, 28px); color: var(--muted); }
+.awiki__empty button { background: none; border: 0; padding: 0; color: var(--fg); font: inherit; text-decoration: underline; cursor: pointer; }
+
+.aoffers { padding-bottom: clamp(80px, 9vw, 200px); }
+.aoffers .olist { grid-column: 4 / 12; }
+
+@media (max-width: 1024px) {
+  .ahero > *, .ahero__intro, .asearch { grid-column: 1 / -1; }
+  .awiki__side { grid-column: 1 / 4; }
+  .awiki__list, .aoffers .olist { grid-column: 4 / 13; }
+}
+@media (max-width: 760px) {
+  .awiki__side { grid-column: 1 / -1; position: static; margin-bottom: 32px; }
+  .awiki__filter { display: flex; flex-wrap: wrap; gap: 8px; }
+  .awiki__filter button { border: 1px solid var(--line); border-radius: 999px; padding: 10px 14px; gap: 8px; font-size: 18px; }
+  .awiki__filter button.is-active { border-color: var(--fg); }
+  .awiki__list, .aoffers .olist { grid-column: 1 / -1; }
+  .wrow a, .orow a { grid-template-columns: 1fr auto; row-gap: 6px; }
+  .wrow__desc, .orow__desc { grid-column: 1 / -1; grid-row: 2; }
+}

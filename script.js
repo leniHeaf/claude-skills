@@ -270,3 +270,49 @@
     openLi?.querySelector(".nav__toggle").focus();
   });
 })();
+
+// Academy-Übersicht: Suche und Kategorie-Filter für das Marken-Wiki
+(() => {
+  const list = document.querySelector(".awiki__list");
+  if (!list) return;
+  const rows = [...list.querySelectorAll(".wrow")];
+  const groups = [...list.querySelectorAll(".awiki__group")];
+  const buttons = [...document.querySelectorAll(".awiki__filter button")];
+  const search = document.getElementById("wiki-search");
+  const count = document.querySelector("[data-count]");
+  const empty = list.querySelector(".awiki__empty");
+  let cat = "*";
+
+  const apply = () => {
+    const q = (search?.value || "").trim().toLowerCase();
+    let shown = 0;
+    rows.forEach((r) => {
+      const ok = (cat === "*" || r.dataset.cat === cat) && (!q || r.dataset.text.includes(q));
+      r.hidden = !ok;
+      if (ok) shown++;
+    });
+    groups.forEach((g) => { g.hidden = !g.querySelector(".wrow:not([hidden])"); });
+    if (count) count.textContent = shown;
+    if (empty) empty.hidden = shown > 0;
+  };
+  const setCat = (c) => {
+    cat = c;
+    buttons.forEach((b) => {
+      const on = b.dataset.cat === c;
+      b.classList.toggle("is-active", on);
+      b.setAttribute("aria-pressed", String(on));
+    });
+    apply();
+  };
+  buttons.forEach((b) => b.addEventListener("click", () => setCat(b.dataset.cat)));
+  search?.addEventListener("input", apply);
+  list.querySelector("[data-reset]")?.addEventListener("click", () => { if (search) search.value = ""; setCat("*"); search?.focus(); });
+
+  // Anker aus dem Menü (#identitaet, #strategie, #design) wählen die Kategorie
+  const fromHash = () => {
+    const map = { "#identitaet": "Identität", "#strategie": "Strategie", "#design": "Design" };
+    if (map[location.hash]) { if (search) search.value = ""; setCat(map[location.hash]); }
+  };
+  window.addEventListener("hashchange", fromHash);
+  fromHash();
+})();
