@@ -1747,10 +1747,178 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
     }
     // Eintauchen in die Markenfarbe
     const mid = innerHeight / 2;
-    const dark = darks.some((d) => { const r = d.getBoundingClientRect(); return r.top < mid && r.bottom > mid; });
+    const dark = [...root.querySelectorAll("[data-dark]")].some((d) => { const r = d.getBoundingClientRect(); return r.top < mid && r.bottom > mid; });
     document.body.classList.toggle("bx-dark", dark);
     requestAnimationFrame(draw);
   };
   const fineHover = window.matchMedia("(hover: hover)").matches;
   requestAnimationFrame(draw);
+})();
+
+// ==========================================================================
+// 3D-Erlebnis auf den Case Studies (three.js, lädt nach):
+// 1) Markenobjekt im Einstieg – schwebt, folgt der Maus, dreht beim Scrollen
+// 2) 3D-Flug: gepinnter Raum, die Kamera fliegt beim Scrollen durch einen
+//    Gang aus Projektbildern und Markenbegriffen
+// ==========================================================================
+(() => {
+  const root = document.querySelector(".cs3");
+  if (!root || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const slug = (location.pathname.split("/").pop() || "").replace("projekt-", "").replace(".html", "");
+  const cfg = {
+    "crea-response": { shape: "hex", color: 0x7c3aed, fog: 0x0b0b0f, words: ["Strategie", "Technologie", "Daten", "Menschen", "Wachstum"] },
+    taeubert: { shape: "gloss", color: 0xe1251b, fog: 0x0a0a0a, words: ["Präzision", "Lack", "Glanz", "Handwerk"] },
+    runclub: { shape: "ring", color: 0xffe100, fog: 0x0d0d0d, words: ["Community", "Movement", "Better Days"] },
+  }[slug] || { shape: "ico", color: 0xfef5f9, fog: 0x222a36, words: [] };
+  const imgs = [...new Set([...root.querySelectorAll(".c3-m img, .c3-hero img")].map((i) => i.getAttribute("src")))];
+
+  // Bühne für den 3D-Flug vorbereiten (auch ohne WebGL als dunkle Fläche)
+  let fly = null;
+  if (imgs.length >= 2) {
+    fly = document.createElement("section");
+    fly.className = "bx3-fly"; fly.dataset.dark = "";
+    fly.style.height = Math.max(300, (imgs.length + cfg.words.length) * 60) + "vh";
+    fly.innerHTML = `<div class="bx3-fly__pin"><canvas class="bx3-fly__cv" aria-hidden="true"></canvas><p class="bx3-fly__k">Durch die Marke</p><p class="bx3-fly__hint">Scrollen</p></div>`;
+    (root.querySelector(".c3-hs") || root.querySelector(".c3-next")).before(fly);
+  }
+
+  const load = (cb) => {
+    if (window.THREE) return cb();
+    const s = document.createElement("script");
+    s.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js";
+    s.onload = cb; document.head.appendChild(s);
+  };
+  load(() => {
+    const T = window.THREE;
+    const test = document.createElement("canvas");
+    if (!(test.getContext("webgl") || test.getContext("experimental-webgl"))) return;
+    const mouse = { x: 0, y: 0 };
+    addEventListener("pointermove", (e) => { mouse.x = e.clientX / innerWidth * 2 - 1; mouse.y = e.clientY / innerHeight * 2 - 1; }, { passive: true });
+    const dpr = Math.min(1.75, devicePixelRatio || 1);
+    const col = new T.Color(cfg.color);
+
+    // ---------- 1) Markenobjekt im Einstieg ----------
+    const hero = root.querySelector(".c3-hero");
+    const hc = document.createElement("canvas");
+    hc.className = "bx3-hero"; hc.setAttribute("aria-hidden", "true");
+    hero.appendChild(hc);
+    const hr = new T.WebGLRenderer({ canvas: hc, alpha: true, antialias: true });
+    hr.setPixelRatio(dpr);
+    const hs = new T.Scene();
+    const hcam = new T.PerspectiveCamera(35, 1, 0.1, 100); hcam.position.z = 9;
+    hs.add(new T.AmbientLight(0xffffff, 0.35));
+    const key = new T.PointLight(0xffffff, 1.4); key.position.set(4, 5, 6); hs.add(key);
+    const rim = new T.PointLight(cfg.color, 3, 20); rim.position.set(-5, -2, 3); hs.add(rim);
+    const obj = new T.Group(); hs.add(obj);
+    if (cfg.shape === "hex") {
+      // Zeichen aus sechs Balken mit Lücke, wie das gebrochene C
+      const mat = new T.MeshStandardMaterial({ color: cfg.color, emissive: cfg.color, emissiveIntensity: 0.55, metalness: 0.4, roughness: 0.3 });
+      for (let i = 0; i < 6; i++) {
+        if (i === 0) continue;
+        const a = i / 6 * Math.PI * 2 + Math.PI / 6;
+        const beam = new T.Mesh(new T.BoxGeometry(1.55, 0.32, 0.45), mat);
+        beam.position.set(Math.cos(a) * 1.35, Math.sin(a) * 1.35, 0);
+        beam.rotation.z = a + Math.PI / 2;
+        obj.add(beam);
+        const inner = beam.clone(); inner.scale.set(0.55, 0.8, 0.8);
+        inner.position.set(Math.cos(a) * 0.78, Math.sin(a) * 0.78, 0.15); obj.add(inner);
+      }
+    } else if (cfg.shape === "gloss") {
+      const m = new T.MeshPhysicalMaterial ? new T.MeshPhysicalMaterial({ color: cfg.color, metalness: 0.6, roughness: 0.12, clearcoat: 1, clearcoatRoughness: 0.05 }) : new T.MeshStandardMaterial({ color: cfg.color, metalness: 0.6, roughness: 0.15 });
+      const blob = new T.Mesh(new T.TorusKnotGeometry(1.05, 0.38, 220, 32), m); obj.add(blob);
+      const wl = new T.PointLight(0xffffff, 2.2, 30); wl.position.set(0, 6, 3); hs.add(wl);
+    } else if (cfg.shape === "ring") {
+      const m = new T.MeshStandardMaterial({ color: cfg.color, emissive: cfg.color, emissiveIntensity: 0.35, metalness: 0.2, roughness: 0.4 });
+      for (let i = 0; i < 3; i++) { const r = new T.Mesh(new T.TorusGeometry(1.1 + i * 0.42, 0.07, 16, 120), m); r.rotation.x = 1.1 + i * 0.25; r.rotation.y = i * 0.5; obj.add(r); }
+    } else {
+      obj.add(new T.Mesh(new T.IcosahedronGeometry(1.4, 1), new T.MeshStandardMaterial({ color: cfg.color, wireframe: true })));
+    }
+    // Partikel um das Objekt
+    const pg = new T.BufferGeometry(); const N = 380; const pos = new Float32Array(N * 3);
+    for (let i = 0; i < N; i++) { const r = 2.2 + Math.random() * 3.2, a = Math.random() * 6.28, b = (Math.random() - 0.5) * 3; pos.set([Math.cos(a) * r, b, Math.sin(a) * r], i * 3); }
+    pg.setAttribute("position", new T.BufferAttribute(pos, 3));
+    const pts = new T.Points(pg, new T.PointsMaterial({ color: cfg.color, size: 0.035, transparent: true, opacity: 0.8 }));
+    hs.add(pts);
+    const hsize = () => { const w = hero.clientWidth, h = hero.clientHeight; hr.setSize(w, h, false); hcam.aspect = w / h; hcam.updateProjectionMatrix(); obj.position.x = w > 800 ? 2.4 : 0; obj.position.y = w > 800 ? 0.4 : 1.1; pts.position.x = obj.position.x; };
+    hsize(); addEventListener("resize", hsize);
+    let spin = 0, intro = 0;
+
+    // ---------- 2) 3D-Flug ----------
+    let fr, fs, fcam, items = [], depth = 0;
+    if (fly) {
+      const cv = fly.querySelector("canvas");
+      fr = new T.WebGLRenderer({ canvas: cv, antialias: true }); fr.setPixelRatio(dpr);
+      fs = new T.Scene(); fs.background = new T.Color(cfg.fog); fs.fog = new T.Fog(cfg.fog, 4, 26);
+      fcam = new T.PerspectiveCamera(60, 1, 0.1, 80);
+      const loader = new T.TextureLoader();
+      const seq = [];
+      imgs.forEach((s, i) => { seq.push({ img: s }); if (cfg.words[i]) seq.push({ word: cfg.words[i] }); });
+      cfg.words.slice(imgs.length).forEach((w) => seq.push({ word: w }));
+      const gap = 6;
+      seq.forEach((it, i) => {
+        const z = -i * gap - 6;
+        let mesh;
+        if (it.img) {
+          const tex = loader.load(it.img); tex.anisotropy = 4;
+          mesh = new T.Mesh(new T.PlaneGeometry(4.8, 3.2), new T.MeshBasicMaterial({ map: tex, side: T.DoubleSide }));
+          const side = (Math.floor(i / 2) % 2) ? 1 : -1;
+          mesh.position.set(side * 3.4, (i % 3 - 1) * 0.5, z);
+          mesh.rotation.y = -side * 0.5;
+        } else {
+          const c = document.createElement("canvas"); c.width = 2048; c.height = 512;
+          const g = c.getContext("2d"); g.fillStyle = "#" + col.getHexString();
+          g.font = "700 300px Archivo, Helvetica, Arial, sans-serif"; g.textAlign = "center"; g.textBaseline = "middle";
+          const txt = it.word.toUpperCase(); let fsz = 300; while (g.measureText(txt).width > 1900 && fsz > 80) { fsz -= 10; g.font = `700 ${fsz}px Archivo, Helvetica, Arial, sans-serif`; }
+          g.fillText(txt, 1024, 256);
+          const tex = new T.CanvasTexture(c);
+          mesh = new T.Mesh(new T.PlaneGeometry(5.2, 1.3), new T.MeshBasicMaterial({ map: tex, transparent: true }));
+          mesh.position.set(0, 0, z);
+        }
+        fs.add(mesh); items.push(mesh);
+      });
+      // Gitterlinien als Gang
+      const lineMat = new T.LineBasicMaterial({ color: cfg.color, transparent: true, opacity: 0.35 });
+      depth = seq.length * gap + 10;
+      for (let z = 0; z > -depth; z -= 3) {
+        const g = new T.BufferGeometry().setFromPoints([new T.Vector3(-5, -2.6, z), new T.Vector3(5, -2.6, z), new T.Vector3(5, 2.6, z), new T.Vector3(-5, 2.6, z), new T.Vector3(-5, -2.6, z)]);
+        fs.add(new T.Line(g, lineMat));
+      }
+      const fsize = () => { const w = innerWidth, h = innerHeight; fr.setSize(w, h, false); fcam.aspect = w / h; fcam.updateProjectionMatrix(); };
+      fsize(); addEventListener("resize", fsize);
+    }
+
+    const sm = { x: 0, y: 0 }; let last = performance.now();
+    const loop = (now) => {
+      const dt = Math.min(0.05, (now - last) / 1000); last = now;
+      sm.x += (mouse.x - sm.x) * 0.06; sm.y += (mouse.y - sm.y) * 0.06;
+      const H = innerHeight;
+      if (scrollY < H * 1.2) {
+        intro = Math.min(1, intro + dt * 0.8);
+        const e = 1 - Math.pow(1 - intro, 3);
+        spin += dt * 0.35;
+        obj.scale.setScalar(0.2 + e * 0.8);
+        obj.rotation.y = spin + sm.x * 0.9 + scrollY * 0.004;
+        obj.rotation.x = sm.y * 0.6 + Math.sin(spin) * 0.15 + scrollY * 0.002;
+        obj.position.z = scrollY / H * 3;
+        pts.rotation.y = spin * 0.3; pts.rotation.x = sm.y * 0.2;
+        hcam.position.x = sm.x * 0.6; hcam.position.y = -sm.y * 0.4; hcam.lookAt(0, 0, 0);
+        hr.render(hs, hcam);
+      }
+      if (fly) {
+        const r = fly.getBoundingClientRect();
+        if (r.bottom > 0 && r.top < H) {
+          const p = Math.min(1, Math.max(0, -r.top / (fly.offsetHeight - H)));
+          const tz = -p * (depth - 12);
+          fcam.position.z += (tz - fcam.position.z) * 0.12;
+          fcam.position.x = sm.x * 1.2; fcam.position.y = -sm.y * 0.7;
+          fcam.rotation.y = -sm.x * 0.18; fcam.rotation.x = -sm.y * 0.1;
+          items.forEach((m, i) => { const d = m.position.z - fcam.position.z; m.material.opacity = 1; if (m.geometry.parameters.width === 5.2) m.rotation.y = Math.sin(now / 1500 + i) * 0.08; });
+          fr.render(fs, fcam);
+          fly.classList.toggle("is-moving", p > 0.02 && p < 0.98);
+        }
+      }
+      requestAnimationFrame(loop);
+    };
+    requestAnimationFrame(loop);
+  });
 })();
