@@ -917,3 +917,243 @@
     t.addEventListener("pointerleave", () => { t.classList.remove("is-tilt"); t.style.transform = ""; });
   });
 })();
+
+// ==========================================================================
+// V8 Motion: Seitenvorhang, Wortmasken, Bild-Aufdeckung, Parallaxe,
+// Scroll-Neigung, 3D-Karten, Cursor, Fortschrittslinie
+// ==========================================================================
+(() => {
+  const body = document.body;
+  if (!body.classList.contains("v5")) return;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  if (reduce) return;
+  document.documentElement.classList.add("m8");
+  const main = document.querySelector("main") || body;
+
+  // Seitenvorhang: deckt beim Laden auf, schließt beim Seitenwechsel
+  const curtain = document.createElement("div");
+  curtain.className = "m8-curtain";
+  curtain.setAttribute("aria-hidden", "true");
+  curtain.innerHTML = '<span class="m8-curtain__mark">STUDIO.X</span>';
+  body.appendChild(curtain);
+  requestAnimationFrame(() => requestAnimationFrame(() => curtain.classList.add("is-up")));
+  window.addEventListener("pageshow", (e) => { if (e.persisted) { curtain.classList.remove("is-down"); curtain.classList.add("is-up"); } });
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest("a[href]");
+    if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    if (a.target && a.target !== "_self") return;
+    if (a.hasAttribute("download")) return;
+    const href = a.getAttribute("href");
+    if (!href || href.startsWith("#") || /^(mailto|tel|javascript):/i.test(href)) return;
+    const url = new URL(a.href, location.href);
+    if (url.origin !== location.origin) return;
+    if (url.pathname === location.pathname && url.hash) return;
+    e.preventDefault();
+    curtain.classList.remove("is-up");
+    curtain.classList.add("is-down");
+    setTimeout(() => { location.href = a.href; }, 650);
+  });
+
+  // Fortschrittslinie
+  const bar = document.createElement("div");
+  bar.className = "m8-progress";
+  bar.setAttribute("aria-hidden", "true");
+  body.appendChild(bar);
+
+  // Überschriften in Wortmasken teilen (Auszeichnungen bleiben erhalten)
+  const heads = [...main.querySelectorAll("h1, h2")].filter((h) =>
+    !h.closest(".phone, .k-x, [data-split], .v2social__stage") && h.textContent.trim());
+  const splitText = (root, counter) => {
+    [...root.childNodes].forEach((n) => {
+      if (n.nodeType === 3) {
+        const parts = n.textContent.split(/(\s+)/);
+        const frag = document.createDocumentFragment();
+        parts.forEach((p) => {
+          if (!p) return;
+          if (/^\s+$/.test(p)) { frag.appendChild(document.createTextNode(" ")); return; }
+          const o = document.createElement("span"); o.className = "m8w";
+          const i = document.createElement("span"); i.textContent = p;
+          i.style.transitionDelay = (counter.n++ * 55) + "ms";
+          o.appendChild(i); frag.appendChild(o);
+        });
+        n.replaceWith(frag);
+      } else if (n.nodeType === 1 && n.tagName !== "BR") splitText(n, counter);
+    });
+  };
+  heads.forEach((h) => { splitText(h, { n: 0 }); h.classList.add("m8-split"); });
+
+  // Fließtext und Listen gleiten nach
+  const texts = [...main.querySelectorAll("p, li, dt, dd, blockquote, .btn, .k-links, form")].filter((el) =>
+    !el.closest("[data-reveal], .phone, .v2social__stage, .k-cards, .m8-txt, nav, .hask, details, [hidden]") && !el.querySelector("img"));
+  texts.forEach((el) => el.classList.add("m8-txt"));
+
+  // Bilder: Vorhang von unten, darin leichte Parallaxe
+  const imgs = [...main.querySelectorAll("img, .ph")].filter((el) =>
+    !el.closest(".phone, .k-hero, .v2social__stage, [data-r], .rw__media") && !el.hasAttribute("data-r"));
+  imgs.forEach((el) => el.classList.add("m8-img"));
+
+  const all = [...heads, ...texts, ...imgs];
+  // Footer-Wortmarke Buchstabe für Buchstabe
+  const marks = [...document.querySelectorAll(".logo--big, .k-foot__mark")];
+  marks.forEach((m) => {
+    m.innerHTML = [...m.textContent].map((c, i) => `<span class="m8c" style="transition-delay:${i * 45}ms">${c === " " ? "&nbsp;" : c}</span>`).join("");
+    m.classList.add("m8-mark"); all.push(m);
+  });
+
+  if ("IntersectionObserver" in window) {
+    // Abgeschnittene Bilder melden keine Schnittmenge, daher den Rahmen beobachten
+    const map = new Map();
+    all.forEach((el) => {
+      const t = el.classList.contains("m8-img") && el.parentElement ? el.parentElement : el;
+      if (!map.has(t)) map.set(t, []);
+      map.get(t).push(el);
+    });
+    const io = new IntersectionObserver((es) => es.forEach((e) => {
+      if (e.isIntersecting) { map.get(e.target).forEach((el) => el.classList.add("m8-in")); io.unobserve(e.target); }
+    }), { rootMargin: "0px 0px -8% 0px" });
+    map.forEach((_, t) => io.observe(t));
+  } else all.forEach((el) => el.classList.add("m8-in"));
+
+  // Parallaxe in Bildrahmen
+  const para = imgs.filter((el) => {
+    const p = el.parentElement;
+    return p && getComputedStyle(p).overflow === "hidden" && el.getBoundingClientRect().height > 180;
+  });
+  para.forEach((el) => el.classList.add("m8-para"));
+    const tick = () => {
+    const y = scrollY, h = document.documentElement.scrollHeight - innerHeight;
+    bar.style.transform = `scaleX(${h > 0 ? y / h : 0})`;
+    para.forEach((el) => {
+      const r = el.getBoundingClientRect();
+      if (r.bottom < -100 || r.top > innerHeight + 100) return;
+      const d = (r.top + r.height / 2 - innerHeight / 2) / innerHeight; // -1 … 1
+      el.style.setProperty("--py", (d * -6).toFixed(2) + "%");
+    });
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+
+  if (!fine) return;
+
+  // 3D-Neigung für Karten mit Bild
+  const cards = [...main.querySelectorAll("a, article")].filter((c) =>
+    c.querySelector("img, .ph") && !c.closest(".k-cards, .phone, .v2social__stage, .k-tiles, .k-hero") && c.offsetWidth > 160);
+  cards.forEach((c) => {
+    c.classList.add("m8-tilt");
+    c.addEventListener("pointermove", (e) => {
+      const r = c.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5, py = (e.clientY - r.top) / r.height - 0.5;
+      c.style.transform = `perspective(900px) rotateY(${px * 8}deg) rotateX(${-py * 8}deg) translateZ(0)`;
+    });
+    c.addEventListener("pointerleave", () => { c.style.transform = ""; });
+  });
+
+  // Cursor: Punkt, wird über Bildern zur Linse „Ansehen“
+  const cur = document.createElement("div");
+  cur.className = "m8-cursor";
+  cur.setAttribute("aria-hidden", "true");
+  cur.innerHTML = "<span>Ansehen</span>";
+  body.appendChild(cur);
+  const pos = { x: -100, y: -100 }, cp = { x: -100, y: -100 };
+  window.addEventListener("pointermove", (e) => { pos.x = e.clientX; pos.y = e.clientY; }, { passive: true });
+  document.addEventListener("pointerover", (e) => {
+    const t = e.target;
+    cur.classList.toggle("is-view", !!t.closest(".m8-tilt, .k-cards a, .k-tile, .k-hero a"));
+    cur.classList.toggle("is-link", !!t.closest("a, button, input, select, textarea, label, summary"));
+  });
+  document.addEventListener("pointerleave", () => cur.classList.add("is-off"));
+  document.addEventListener("pointerenter", () => cur.classList.remove("is-off"));
+  const follow = () => {
+    cp.x += (pos.x - cp.x) * 0.2; cp.y += (pos.y - cp.y) * 0.2;
+    cur.style.transform = `translate3d(${cp.x}px, ${cp.y}px, 0)`;
+    requestAnimationFrame(follow);
+  };
+  requestAnimationFrame(follow);
+})();
+
+// ==========================================================================
+// Reel-Wand (Spalten mit eigenem Tempo) + Story-Slider mit Fortschrittsbalken
+// ==========================================================================
+(() => {
+  const rw = document.querySelector(".rw");
+  if (!rw) return;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const stories = [...rw.querySelectorAll("[data-story]")];
+  const DUR = 4200;
+
+  const setup = (s, offset) => {
+    const imgs = [...s.querySelectorAll(".rw__media img, .rw__media video")];
+    const bars = [...s.querySelectorAll(".rw__bars i")];
+    let i = 0, timer = 0, left = DUR + offset, started = 0;
+    const show = (n) => {
+      i = (n + imgs.length) % imgs.length;
+      imgs.forEach((m, k) => m.classList.toggle("is-on", k === i));
+      bars.forEach((b, k) => {
+        b.classList.toggle("is-done", k < i);
+        b.classList.remove("is-on");
+        if (k === i) { void b.offsetWidth; b.classList.add("is-on"); }
+      });
+    };
+    const run = () => { clearTimeout(timer); started = performance.now(); timer = setTimeout(() => { left = DUR; show(i + 1); run(); }, left); };
+    const pause = () => { clearTimeout(timer); left = Math.max(200, left - (performance.now() - started)); };
+    s.style.setProperty("--dur", DUR + "ms");
+    s.addEventListener("click", (e) => {
+      const r = s.getBoundingClientRect();
+      left = DUR; show(e.clientX - r.left < r.width / 3 ? i - 1 : i + 1);
+      if (rw.classList.contains("is-play")) run();
+    });
+    show(0);
+    if (offset) bars[0].firstElementChild.style.animationDelay = -(DUR - left) + "ms";
+    return { run, pause };
+  };
+  const ctrls = stories.map((s, k) => setup(s, k * -1300));
+
+  const io = new IntersectionObserver(([e]) => {
+    rw.classList.toggle("is-play", e.isIntersecting && !reduce);
+    if (reduce) return;
+    ctrls.forEach((c) => (e.isIntersecting ? c.run() : c.pause()));
+  }, { threshold: 0.05 });
+  io.observe(rw);
+
+  if (reduce) return;
+  // Spalten bewegen sich unterschiedlich schnell
+  const cols = [...rw.querySelectorAll(".rw__col")];
+  const speeds = (innerWidth < 860 ? [-40, 40] : [-90, 70, -50, 110]);
+  const wall = rw.querySelector(".rw__wall");
+  const tick = () => {
+    const r = wall.getBoundingClientRect();
+    if (r.bottom > 0 && r.top < innerHeight) {
+      const p = (innerHeight - r.top) / (innerHeight + r.height) - 0.5; // -0.5 … 0.5
+      cols.forEach((c, k) => { c.style.transform = `translate3d(0, ${(p * speeds[k % speeds.length] * 2).toFixed(1)}px, 0)`; });
+    }
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+})();
+
+// Filmkorn + Katalog-Beschriftung auf großen Bildern
+(() => {
+  if (!document.body.classList.contains("v5")) return;
+  const frames = new Set();
+  document.querySelectorAll(".k-hero__img, .k-split__img, .k-card__img, .k-tile, .rw__clip, .rw__story").forEach((f) => frames.add(f));
+  document.querySelectorAll("main img").forEach((img) => {
+    const p = img.parentElement;
+    if (p && !p.closest(".phone, .k-hero, .rw") && img.getBoundingClientRect().width > 260) frames.add(p);
+  });
+  frames.forEach((f) => {
+    if (getComputedStyle(f).position === "static") f.style.position = "relative";
+    if (getComputedStyle(f).overflow === "visible") f.style.overflow = "hidden";
+    f.classList.add("m8-grain");
+  });
+  // Nummerierte Beschriftung im Katalogstil
+  let n = 0;
+  document.querySelectorAll(".k-hero__img, .k-split__img").forEach((f) => {
+    if (f.querySelector(".m8-label") || !f.querySelector("img")) return;
+    const l = document.createElement("span");
+    l.className = "m8-label"; l.setAttribute("aria-hidden", "true");
+    l.textContent = String(++n).padStart(2, "0") + " — Run Club";
+    if (getComputedStyle(f).position === "static") f.style.position = "relative";
+    f.appendChild(l);
+  });
+})();
