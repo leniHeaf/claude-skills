@@ -4040,3 +4040,62 @@ a:hover > .m10-roll > span + span, button:hover > .m10-roll > span + span { tran
 @media (max-width: 860px) { .m10-mono { display: none; } .m10-bar { height: 52px; } }
 @media (prefers-reduced-motion: reduce) { .m10-intro, .m10-bar, .m10-mono { display: none; } }
 .m10-mono { left: auto; right: clamp(10px, 1.6vw, 24px); }
+
+/* ==========================================================================
+   Case Studies nach Art von Maison Auge: hell, mittig, Versal-Text
+   ========================================================================== */
+body.page-case2 { --c2bg: #f7f3f1; --c2ink: #1f242b; --c2f: "Archivo", "Helvetica Neue", Arial, sans-serif; background: var(--c2bg); }
+body.page-case2 > .ticker, body.page-case2 > .header, body.page-case2 .m9-marq, body.page-case2 .m8-progress { display: none !important; }
+.cs2 { background: var(--c2bg); color: var(--c2ink); font-family: var(--c2f); padding: 0 16px; overflow-x: clip; }
+.cs2 * { font-family: var(--c2f); }
+
+/* Projekt-Kopf */
+.c2-bar { position: fixed; inset: 0 0 auto 0; z-index: 80; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: 64px; padding: 0 clamp(16px, 2.4vw, 36px); background: color-mix(in srgb, var(--c2bg) 88%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: var(--c2ink); animation: c2-down 800ms cubic-bezier(0.19, 1, 0.22, 1) both; }
+@keyframes c2-down { from { transform: translateY(-100%); } }
+.c2-bar__t { grid-column: 2; margin: 0; display: grid; justify-items: center; gap: 3px; text-align: center; }
+.c2-bar__t b { font: 800 12px/1 var(--c2f); letter-spacing: 0.02em; text-transform: uppercase; }
+.c2-bar__t span { font: 700 8px/1 var(--c2f); letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.7; }
+.c2-close { grid-column: 3; justify-self: end; display: grid; place-items: center; width: 36px; height: 36px; color: var(--c2ink); font: 400 26px/1 var(--c2f); text-decoration: none; transition: transform 500ms cubic-bezier(0.19, 1, 0.22, 1); }
+.c2-close:hover { transform: rotate(90deg); }
+.c2-mono { position: fixed; left: clamp(12px, 1.6vw, 24px); top: 50%; display: grid; place-items: center; width: 40px; height: 40px; margin-top: -20px; border: 1.5px solid var(--c2ink); border-radius: 50%; color: var(--c2ink); font: 800 10px/0.85 var(--c2f); text-decoration: none; transition: transform 800ms cubic-bezier(0.19, 1, 0.22, 1); }
+.c2-mono:hover { transform: rotate(360deg); }
+.c2-mono span { display: block; }
+
+/* Inhalt: eine schmale Mittelspalte */
+.c2-top { max-width: 760px; margin: 0 auto; padding: clamp(130px, 14vw, 190px) 0 clamp(48px, 6vw, 80px); text-align: center; }
+.c2-title { margin: 0; font: 800 clamp(22px, 2.5vw, 36px)/1.08 var(--c2f) !important; letter-spacing: -0.01em; text-transform: uppercase !important; color: var(--c2ink); }
+.c2-hero, .c2-wide { max-width: 940px; margin: 0 auto clamp(70px, 9vw, 130px); }
+.c2-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-width: 640px; margin: 0 auto clamp(70px, 9vw, 130px); }
+.c2-img { margin: 0; overflow: hidden; background: #e7e1dd; }
+.c2-img img { display: block; width: 100%; height: auto; filter: none !important; }
+.c2-pair .c2-img { aspect-ratio: 3 / 4; }
+.c2-pair .c2-img img { height: 100%; object-fit: cover; }
+.c2-ph { display: grid; place-items: center; aspect-ratio: 16 / 9; }
+.c2-ph span { font: 700 10px/1 var(--c2f); letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.55; }
+
+.c2-sec { max-width: 760px; margin: 0 auto clamp(56px, 7vw, 100px); }
+.c2-label { margin: 0 0 22px; text-align: center; font: 800 9px/1 var(--c2f) !important; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c2ink); }
+.c2-text { margin: 0; font: 800 clamp(14px, 1.25vw, 18px)/1.22 var(--c2f) !important; letter-spacing: 0; text-transform: uppercase; color: var(--c2ink); }
+.c2-text--muted { text-align: center; opacity: 0.5; }
+.c2-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 14px 24px; margin: 0 0 32px; padding: 14px 0; border-top: 1px solid currentColor; border-bottom: 1px solid currentColor; }
+.c2-facts dt { margin: 0 0 4px; font: 800 9px/1 var(--c2f); letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.6; }
+.c2-facts dd { margin: 0; font: 700 12px/1.35 var(--c2f); text-transform: uppercase; }
+.c2-ext { max-width: 760px; margin: 0 auto clamp(70px, 9vw, 120px); text-align: center; }
+.c2-ext a { display: inline-flex; gap: 8px; padding: 12px 18px; border: 1px solid var(--c2ink); border-radius: 999px; color: var(--c2ink); font: 800 11px/1 var(--c2f); letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: background 300ms, color 300ms; }
+.c2-ext a:hover { background: var(--c2ink); color: var(--c2bg); }
+
+.c2-next { border-top: 1px solid var(--c2ink); max-width: 940px; margin: 0 auto; padding: clamp(60px, 8vw, 110px) 0 clamp(80px, 10vw, 140px); text-align: center; }
+.c2-next a { display: grid; justify-items: center; gap: 4px; color: var(--c2ink); text-decoration: none; }
+.c2-next__name { font: 800 clamp(30px, 5vw, 64px)/1 var(--c2f); letter-spacing: -0.02em; text-transform: uppercase; }
+.c2-next__img { width: min(320px, 70vw); margin-top: 30px; aspect-ratio: 4 / 3; overflow: hidden; }
+.c2-next__img img { width: 100%; height: 100%; object-fit: cover; filter: none !important; transition: transform 1200ms cubic-bezier(0.19, 1, 0.22, 1); }
+.c2-next a:hover .c2-next__img img { transform: scale(1.06); }
+
+/* Ruhige Einblendungen */
+.c2-rv { opacity: 0; transform: translateY(28px); transition: opacity 900ms ease, transform 1100ms cubic-bezier(0.19, 1, 0.22, 1); }
+.c2-rv.is-in { opacity: 1; transform: none; }
+.c2-img.c2-rv img { transform: scale(1.06); transition: transform 1600ms cubic-bezier(0.19, 1, 0.22, 1); }
+.c2-img.c2-rv.is-in img { transform: none; }
+@media (prefers-reduced-motion: reduce) { .c2-rv, .c2-img.c2-rv img { opacity: 1; transform: none; } .c2-bar { animation: none; } }
+@media (max-width: 700px) { .c2-mono { display: none; } .c2-bar__t span { font-size: 7px; } .c2-pair { gap: 6px; } }
+.cs2 .c2-facts dd, .cs2 .c2-facts dt { font-family: var(--c2f) !important; text-transform: uppercase !important; } .cs2 .c2-label { border: 0 !important; }

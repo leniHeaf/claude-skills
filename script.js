@@ -963,7 +963,7 @@
 
   // Überschriften in Wortmasken teilen (Auszeichnungen bleiben erhalten)
   const heads = [...main.querySelectorAll("h1, h2")].filter((h) =>
-    !h.closest(".phone, .k-x, [data-split], .v2social__stage") && h.textContent.trim());
+    !h.closest(".phone, .k-x, [data-split], .v2social__stage, .cs2") && h.textContent.trim());
   const splitText = (root, counter) => {
     [...root.childNodes].forEach((n) => {
       if (n.nodeType === 3) {
@@ -985,12 +985,12 @@
 
   // Fließtext und Listen gleiten nach
   const texts = [...main.querySelectorAll("p, li, dt, dd, blockquote, .btn, .k-links, form")].filter((el) =>
-    !el.closest("[data-reveal], .phone, .v2social__stage, .k-cards, .m8-txt, nav, .hask, details, [hidden]") && !el.querySelector("img"));
+    !el.closest("[data-reveal], .phone, .v2social__stage, .k-cards, .m8-txt, nav, .hask, details, [hidden], .cs2") && !el.querySelector("img"));
   texts.forEach((el) => el.classList.add("m8-txt"));
 
   // Bilder: Vorhang von unten, darin leichte Parallaxe
   const imgs = [...main.querySelectorAll("img, .ph")].filter((el) =>
-    !el.closest(".phone, .k-hero, .v2social__stage, [data-r], .rw__row") && !el.hasAttribute("data-r"));
+    !el.closest(".phone, .k-hero, .v2social__stage, [data-r], .rw__row, .cs2") && !el.hasAttribute("data-r"));
   imgs.forEach((el) => el.classList.add("m8-img"));
 
   const all = [...heads, ...texts, ...imgs];
@@ -1038,7 +1038,7 @@
 
   // 3D-Neigung für Karten mit Bild
   const cards = [...main.querySelectorAll("a, article")].filter((c) =>
-    c.querySelector("img, .ph") && !c.closest(".k-cards, .phone, .v2social__stage, .k-tiles, .k-hero") && c.offsetWidth > 160);
+    c.querySelector("img, .ph") && !c.closest(".k-cards, .phone, .v2social__stage, .k-tiles, .k-hero, .cs2") && c.offsetWidth > 160);
   cards.forEach((c) => {
     c.classList.add("m8-tilt");
     c.addEventListener("pointermove", (e) => {
@@ -1165,7 +1165,7 @@
   document.querySelectorAll(".k-hero__img, .k-split__img, .k-card__img, .k-tile, .rw__clip, .rw__story").forEach((f) => frames.add(f));
   document.querySelectorAll("main img").forEach((img) => {
     const p = img.parentElement;
-    if (p && !p.closest(".phone, .k-hero, .rw") && img.getBoundingClientRect().width > 260) frames.add(p);
+    if (p && !p.closest(".phone, .k-hero, .rw, .cs2") && img.getBoundingClientRect().width > 260) frames.add(p);
   });
   frames.forEach((f) => {
     if (getComputedStyle(f).position === "static") f.style.position = "relative";
@@ -1447,4 +1447,16 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
     mono.classList.toggle("is-on", past);
   };
   addEventListener("scroll", showBar, { passive: true }); showBar();
+})();
+
+// Case Studies (ruhig): Bilder und Texte gleiten beim Scrollen sanft herein
+(() => {
+  const root = document.querySelector(".cs2");
+  if (!root) return;
+  const els = [...root.querySelectorAll(".c2-title, .c2-label, .c2-facts, .c2-text, .c2-img, .c2-ext, .c2-next a")];
+  els.forEach((el) => el.classList.add("c2-rv"));
+  document.querySelectorAll(".c2-pair").forEach((p) => [...p.children].forEach((c, i) => c.style.transitionDelay = i * 120 + "ms"));
+  if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) { els.forEach((el) => el.classList.add("is-in")); return; }
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -6% 0px" });
+  els.forEach((el) => io.observe(el));
 })();
