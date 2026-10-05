@@ -1103,8 +1103,8 @@
       left = DUR; show(e.clientX - r.left < r.width / 3 ? i - 1 : i + 1);
       if (rw.classList.contains("is-play")) run();
     });
-    show(0);
-    if (offset) bars[0].firstElementChild.style.animationDelay = -(DUR - left) + "ms";
+    show(+s.dataset.start || 0);
+    if (offset) bars[i].firstElementChild.style.animationDelay = -(DUR - left) + "ms";
     return { run, pause };
   };
   const ctrls = stories.map((s, k) => setup(s, k * -1300));
@@ -1155,5 +1155,61 @@
     l.textContent = String(++n).padStart(2, "0") + " — Run Club";
     if (getComputedStyle(f).position === "static") f.style.position = "relative";
     f.appendChild(l);
+  });
+})();
+
+// ==========================================================================
+// V9: Laufbänder mit Scrolltempo, magnetische Links
+// ==========================================================================
+(() => {
+  if (!document.body.classList.contains("v5")) return;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  const make = (words, dark) => {
+    const m = document.createElement("div");
+    m.className = "m9-marq" + (dark ? " m9-marq--dark" : "");
+    m.setAttribute("aria-hidden", "true");
+    const t = document.createElement("div");
+    t.className = "m9-marq__track";
+    const set = words.map((w) => `<span>${w}<i>✕</i></span>`).join("");
+    t.innerHTML = set + set + set + set;
+    m.appendChild(t);
+    return m;
+  };
+  const bands = [];
+  const footer = document.querySelector("footer");
+  if (footer) { const m = make(["Strategie", "Design", "Roll-out", "Social"], false); footer.before(m); bands.push(m); }
+  const rw = document.querySelector(".rw");
+  if (rw) { const m = make(["Für den Feed", "Reels", "Stories", "Kampagnen"], true); rw.before(m); bands.push(m); }
+  if (reduce || !bands.length) return;
+
+  let x = 0, lastY = scrollY, vel = 0, dir = 1;
+  const tracks = bands.map((b) => b.querySelector(".m9-marq__track"));
+  const loop = () => {
+    const dy = scrollY - lastY; lastY = scrollY;
+    vel += (dy - vel) * 0.1;
+    if (Math.abs(dy) > 0.5) dir = dy > 0 ? 1 : -1;
+    x -= (0.6 + Math.min(Math.abs(vel) * 0.35, 14)) * dir;
+    tracks.forEach((t, k) => {
+      const w = t.scrollWidth / 4;
+      let p = (k % 2 ? -x : x) % w; if (p > 0) p -= w;
+      t.style.transform = `translate3d(${p}px, 0, 0)`;
+      t.style.setProperty("--rot", (x * 0.6) % 360 + "deg");
+    });
+    requestAnimationFrame(loop);
+  };
+  requestAnimationFrame(loop);
+
+  if (!fine) return;
+  document.querySelectorAll(".k-links a, .header__contact, .rw__more a, .footer__cta, main button[type=submit], .btn").forEach((el) => {
+    el.classList.add("m9-mag");
+    el.addEventListener("pointermove", (e) => {
+      const r = el.getBoundingClientRect();
+      const dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
+      el.classList.add("is-mag");
+      el.style.translate = `${dx * 0.25}px ${dy * 0.35}px`;
+    });
+    el.addEventListener("pointerleave", () => { el.classList.remove("is-mag"); el.style.translate = ""; });
   });
 })();
