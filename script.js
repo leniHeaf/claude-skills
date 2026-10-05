@@ -1486,7 +1486,7 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
   let rw; addEventListener("resize", () => { clearTimeout(rw); rw = setTimeout(() => texts.forEach((t) => { t.innerHTML = t.dataset.src || t.innerHTML; }), 300); });
   texts.forEach((t) => { t.dataset.src = t.innerHTML; });
 
-  const fades = [...root.querySelectorAll("[data-lines], .c3-label, .c3-facts, .c3-ext, .c3-next__n")];
+  const fades = [...root.querySelectorAll("[data-lines], .c3-label, .c3-facts, .c3-ext, .c3-next__n, .c3-m")];
   if (reduce || !("IntersectionObserver" in window)) { fades.forEach((e) => e.classList.add("c3-in")); return; }
   const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("c3-in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" });
   setTimeout(() => fades.forEach((e) => io.observe(e)), 150);
@@ -1494,8 +1494,16 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
   const imgs = [...root.querySelectorAll(".c3-m")];
   const hero = root.querySelector(".c3-hero img, .c3-hero__ph");
   const pairs = [...root.querySelectorAll(".c3-pair .c3-m:nth-child(2)")];
+  const giant = root.querySelector(".c3-giant");
   const tick = () => {
     const h = innerHeight;
+    if (giant && scrollY < h * 1.2) { giant.style.transform = `translate3d(0, ${scrollY * -0.55}px, 0)`; giant.style.opacity = Math.max(0, 1 - scrollY / (h * 0.7)); }
+    root.querySelectorAll(".c3-text .c3-line > span").forEach((l) => {
+      const r = l.getBoundingClientRect();
+      if (r.top > h || r.bottom < 0) return;
+      const o = Math.min(1, Math.max(0.18, (h * 0.85 - r.top) / (h * 0.25)));
+      l.style.setProperty("--o", o.toFixed(3));
+    });
     if (hero && scrollY < h * 1.2) hero.style.transform = `translate3d(0, ${scrollY * -0.25}px, 0)`;
     imgs.forEach((f) => {
       const r = f.getBoundingClientRect();

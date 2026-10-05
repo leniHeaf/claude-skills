@@ -4166,3 +4166,31 @@ body.page-case3 .footer { background: var(--c3ink); }
   .c3-m img { transform: none; } .c3-line > span, .c3-label, .c3-facts, .c3-ext, .c3-next__n { transform: none; opacity: 1; }
 }
 .cs3 .c3-sec { border: 0 !important; padding: 0 !important; }
+
+/* Case Studies v3: mehr Bewegung */
+.cs3 { position: relative; }
+/* Seite gleitet wie ein Panel von unten herein */
+.page-case3 .cs3 { animation: c3-panel 1100ms cubic-bezier(0.77, 0, 0.175, 1) both; }
+@keyframes c3-panel { from { transform: translateY(100vh); } to { transform: none; } }
+/* Riesiger Projektname über dem Titelbild */
+.c3-giant { position: absolute; left: 0; right: 0; top: 0; height: 100vh; height: 100dvh; z-index: 2; margin: 0; display: flex; justify-content: center; align-items: flex-end; padding-bottom: 4vh; overflow: hidden; pointer-events: none; color: #fef5f9; font: 700 clamp(64px, 17vw, 300px)/0.8 var(--c3f) !important; letter-spacing: -0.04em; text-transform: uppercase; mix-blend-mode: difference; will-change: transform; }
+.c3-giant span { display: inline-block; transform: translateY(110%); animation: c3-letter 1200ms cubic-bezier(0.19, 1, 0.22, 1) both; animation-delay: calc(700ms + var(--i) * 60ms); }
+@keyframes c3-letter { to { transform: none; } }
+.c3-hero img, .c3-hero__ph { animation: c3-heroin 1800ms cubic-bezier(0.19, 1, 0.22, 1) 300ms both; }
+@keyframes c3-heroin { from { clip-path: inset(30% 30% 30% 30%); scale: 1.3; } to { clip-path: inset(0); scale: 1; } }
+/* Bilder: Vorhang von unten + Zoom */
+.c3-m .c3-m__in { clip-path: inset(100% 0 0 0); transition: clip-path 1300ms cubic-bezier(0.77, 0, 0.175, 1); }
+.c3-m.c3-in .c3-m__in { clip-path: inset(0); }
+.c3-pair .c3-m:nth-child(2) .c3-m__in { transition-delay: 150ms; }
+/* Text: Zeilen gleiten herein und werden beim Lesen dunkel */
+.c3-text .c3-line > span { opacity: var(--o, 0.18); transition: transform 1100ms cubic-bezier(0.19, 1, 0.22, 1), opacity 250ms linear; }
+.c3-title .c3-line > span { opacity: 1; }
+.c3-sec--big .c3-text { font-size: clamp(18px, 2.05vw, 30px) !important; line-height: 1.18 !important; }
+/* Nächstes Projekt: Buchstaben laufen beim Überfahren */
+.c3-next__n { transition: letter-spacing 700ms cubic-bezier(0.19, 1, 0.22, 1), opacity 900ms, transform 1100ms cubic-bezier(0.19, 1, 0.22, 1); }
+.c3-next:hover .c3-next__n { letter-spacing: 0.02em; }
+@media (prefers-reduced-motion: reduce) {
+  .page-case3 .cs3, .c3-giant span, .c3-hero img, .c3-hero__ph { animation: none; }
+  .c3-m .c3-m__in { clip-path: none; } .c3-text .c3-line > span { opacity: 1; }
+}
+.cs3 .c3-text, .cs3 .c3-giant, .cs3 .c3-label, .cs3 .c3-title, .cs3 .c3-next__n, .cs3 .c3-facts { text-transform: uppercase !important; } .cs3 .c3-giant { mix-blend-mode: normal; color: #fef5f9; text-shadow: 0 2px 30px rgba(0,0,0,.25); }
