@@ -316,3 +316,64 @@
   window.addEventListener("hashchange", fromHash);
   fromHash();
 })();
+
+// Startseite: Anfrage in drei Schritten
+(() => {
+  const form = document.querySelector("[data-steps]");
+  if (!form) return;
+  const steps = [...form.querySelectorAll(".hform__step")];
+  const bars = [...form.querySelectorAll(".hform__progress li")];
+  const back = form.querySelector("[data-back]");
+  const next = form.querySelector("[data-next]");
+  const submit = form.querySelector("[data-submit]");
+  const status = form.querySelector(".form__status");
+  let i = 0;
+
+  const show = (n) => {
+    i = n;
+    steps.forEach((s, k) => { s.hidden = k !== i; s.classList.toggle("is-current", k === i); });
+    bars.forEach((b, k) => b.classList.toggle("is-on", k <= i));
+    back.hidden = i === 0;
+    next.hidden = i === steps.length - 1;
+    submit.hidden = i !== steps.length - 1;
+    status.textContent = "";
+    steps[i].querySelector("input")?.focus({ preventScroll: true });
+  };
+  const valid = () => {
+    const step = steps[i];
+    const radios = step.querySelectorAll("input[type=radio]");
+    if (radios.length) return [...radios].some((r) => r.checked);
+    let ok = true;
+    step.querySelectorAll("input[required]").forEach((el) => {
+      const good = el.checkValidity() && el.value.trim() !== "";
+      el.closest(".field").classList.toggle("is-invalid", !good);
+      if (!good) ok = false;
+    });
+    return ok;
+  };
+  next.addEventListener("click", () => {
+    if (!valid()) { status.textContent = "Bitte eine Antwort wählen."; return; }
+    show(i + 1);
+  });
+  back.addEventListener("click", () => show(i - 1));
+  // Auswahl einer Option führt direkt zum nächsten Schritt
+  form.querySelectorAll("input[type=radio]").forEach((r) =>
+    r.addEventListener("change", () => setTimeout(() => { if (i < steps.length - 1) show(i + 1); }, 180))
+  );
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!valid()) { status.textContent = "Bitte Name und eine gültige E-Mail-Adresse angeben."; return; }
+    form.classList.add("is-done");
+    status.textContent = "Danke! Wir melden uns innerhalb von zwei Werktagen. (Platzhalter – hier ist noch kein Versand angebunden.)";
+  });
+})();
+
+// Showreel-Platzhalter: Button gibt Rückmeldung, bis ein Video eingebunden ist
+(() => {
+  const btn = document.querySelector("[data-reel]");
+  if (!btn) return;
+  const note = btn.parentElement.querySelector(".hreel__note");
+  btn.addEventListener("click", () => {
+    note.textContent = "Hier läuft später euer Showreel-Video.";
+  });
+})();
