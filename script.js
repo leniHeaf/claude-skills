@@ -1292,3 +1292,23 @@ document.querySelectorAll(".rw__reel").forEach((r) => r.addEventListener("dblcli
 document.querySelectorAll("body.v5 .menu .mnav > li").forEach((li, i) => li.style.setProperty("--i", i));
 // Mobiles Menü: immer nur ein Bereich offen
 document.querySelectorAll(".mnav details").forEach((d, _, all) => d.addEventListener("toggle", () => { if (d.open) all.forEach((o) => { if (o !== d) o.open = false; }); }));
+
+// Case Studies: Zähler der Bildreihe folgt dem sichtbaren Bild, Ziehen mit der Maus
+document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
+  const track = sl.querySelector(".cs-slider__track");
+  const nums = [...sl.querySelectorAll(".cs-counter span")];
+  const slides = [...track.children];
+  const upd = () => {
+    const mid = track.getBoundingClientRect().left + track.clientWidth / 2;
+    let best = 0, bd = Infinity;
+    slides.forEach((s, i) => { const r = s.getBoundingClientRect(); const d = Math.abs(r.left + r.width / 2 - mid); if (d < bd) { bd = d; best = i; } });
+    nums.forEach((n, i) => n.classList.toggle("is-on", i === best));
+  };
+  track.addEventListener("scroll", () => requestAnimationFrame(upd), { passive: true });
+  upd();
+  let drag = null;
+  track.addEventListener("pointerdown", (e) => { if (e.pointerType !== "mouse") return; drag = { x: e.clientX, s: track.scrollLeft }; track.style.scrollSnapType = "none"; });
+  window.addEventListener("pointermove", (e) => { if (drag) track.scrollLeft = drag.s - (e.clientX - drag.x); });
+  window.addEventListener("pointerup", () => { if (!drag) return; drag = null; track.style.scrollSnapType = ""; });
+  track.addEventListener("dragstart", (e) => e.preventDefault());
+});
