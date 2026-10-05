@@ -990,7 +990,7 @@
 
   // Bilder: Vorhang von unten, darin leichte Parallaxe
   const imgs = [...main.querySelectorAll("img, .ph")].filter((el) =>
-    !el.closest(".phone, .k-hero, .v2social__stage, [data-r], .rw__media") && !el.hasAttribute("data-r"));
+    !el.closest(".phone, .k-hero, .v2social__stage, [data-r], .rw__row") && !el.hasAttribute("data-r"));
   imgs.forEach((el) => el.classList.add("m8-img"));
 
   const all = [...heads, ...texts, ...imgs];
@@ -1117,6 +1117,32 @@
   io.observe(rw);
 
   if (reduce) return;
+
+  // Reel-Reihe läuft endlos durch; Scrollen beschleunigt, Ziehen und Hover bremsen
+  const row = rw.querySelector("[data-row]");
+  if (row) {
+    const track = row.querySelector(".rw__track");
+    track.innerHTML += track.innerHTML;
+    track.querySelectorAll("li").forEach((li, k) => { if (k >= track.children.length / 2) li.setAttribute("aria-hidden", "true"); });
+    let x = 0, speed = 0.7, target = 0.7, lastY = scrollY, drag = null;
+    row.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") target = 0.15; });
+    row.addEventListener("pointerleave", () => { target = 0.7; });
+    row.addEventListener("pointerdown", (e) => { drag = { x: e.clientX, start: x }; row.classList.add("is-drag"); row.setPointerCapture(e.pointerId); });
+    row.addEventListener("pointermove", (e) => { if (drag) x = drag.start + (e.clientX - drag.x); });
+    const end = () => { drag = null; row.classList.remove("is-drag"); };
+    row.addEventListener("pointerup", end); row.addEventListener("pointercancel", end);
+    const run = () => {
+      const dy = Math.abs(scrollY - lastY); lastY = scrollY;
+      speed += (target + Math.min(dy * 0.25, 10) - speed) * 0.08;
+      if (!drag && rw.classList.contains("is-play")) x -= speed;
+      const half = track.scrollWidth / 2;
+      if (half > 0) { x %= half; if (x > 0) x -= half; }
+      track.style.transform = `translate3d(${x}px, 0, 0)`;
+      requestAnimationFrame(run);
+    };
+    requestAnimationFrame(run);
+  }
+
   // Spalten bewegen sich unterschiedlich schnell
   const cols = [...rw.querySelectorAll(".rw__col")];
   const speeds = (innerWidth < 860 ? [-40, 40] : [-90, 70, -50, 110]);
@@ -1213,3 +1239,48 @@
     el.addEventListener("pointerleave", () => { el.classList.remove("is-mag"); el.style.translate = ""; });
   });
 })();
+
+// Navigation: Icons rechts, Bilder im Mega-Menü, Abdunklung
+(() => {
+  const header = document.querySelector("body.v5 .header");
+  if (!header) return;
+  const ico = {
+    search: '<svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg>',
+    heart: '<svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>',
+    user: '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>',
+    mail: '<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14"/><path d="m3 6 9 7 9-7"/></svg>',
+  };
+  const icons = document.createElement("div");
+  icons.className = "kl-icons";
+  icons.innerHTML =
+    `<a href="academy.html#wiki" aria-label="Academy durchsuchen">${ico.search}</a>` +
+    `<a href="jobs.html" aria-label="Jobs">${ico.user}</a>` +
+    `<a href="moodboard.html" aria-label="Moodboard">${ico.heart}</a>` +
+    `<a href="kontakt.html" aria-label="Kontakt">${ico.mail}</a>`;
+  const burger = header.querySelector(".burger");
+  header.insertBefore(icons, burger || null);
+
+  const promos = {
+    Leistungen: [["touchpoints", "Projekt Run Club", "projekt-runclub.html"], ["merch", "Alle Arbeiten", "work.html"]],
+    Academy: [["plakatwand", "Marken-Wiki", "academy.html#wiki"], ["flasche", "Workshop-Toolkit", "academy-toolkit.html"]],
+  };
+  header.querySelectorAll(".has-sub").forEach((li) => {
+    const sub = li.querySelector(".sub");
+    const key = li.querySelector(".nav__toggle").textContent.trim();
+    sub.querySelectorAll("a").forEach((a, i) => a.style.setProperty("--i", i));
+    if (!promos[key]) return;
+    const p = document.createElement("div");
+    p.className = "kl-promo";
+    p.innerHTML = promos[key].map(([img, t, href]) =>
+      `<a href="${href}"><figure><img src="assets/runclub/${img}.webp" alt="" loading="lazy" decoding="async"></figure><span>${t}</span></a>`).join("");
+    sub.appendChild(p);
+  });
+  const dim = document.createElement("div");
+  dim.className = "kl-dim";
+  dim.setAttribute("aria-hidden", "true");
+  document.body.appendChild(dim);
+})();
+
+// Reels: Doppeltipp/Klick setzt ein Herz
+document.querySelectorAll(".rw__reel").forEach((r) => r.addEventListener("dblclick", () => r.classList.toggle("is-liked")));
+document.querySelectorAll("body.v5 .menu li").forEach((li, i) => li.firstElementChild && li.firstElementChild.style.setProperty("--i", i));
