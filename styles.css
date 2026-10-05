@@ -4262,3 +4262,65 @@ body.page-case3.bx-dark .c3-label, body.page-case3.bx-dark .c3-text, body.page-c
 .bx3-fly__hint::after { content: ""; display: block; width: 1px; height: 40px; margin: 12px auto 0; background: currentColor; animation: bx3-hint 1.6s cubic-bezier(0.77, 0, 0.175, 1) infinite; transform-origin: top; }
 @keyframes bx3-hint { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); transform-origin: top; } 51% { transform-origin: bottom; } 100% { transform: scaleY(0); transform-origin: bottom; } }
 .bx3-fly.is-moving .bx3-fly__hint { opacity: 0; }
+
+/* ==========================================================================
+   Eigene Bewegungssprache pro Marke
+   ========================================================================== */
+/* Kacheln (Crea: Pixel lösen sich zufällig auf, Baumarkt: Steine fallen von unten weg) */
+.bx-tiles { position: absolute; inset: 0; z-index: 2; display: grid; pointer-events: none; }
+.bx-tiles i { background: var(--b-dark, #111); transition: opacity 300ms steps(2), transform 700ms cubic-bezier(0.77, 0, 0.175, 1); }
+[data-anim="crea-response"] .bx-tiles i { background: #0b0b0f; box-shadow: inset 0 0 0 1px rgba(124,58,237,.35); }
+[data-anim="crea-response"] .c3-m.c3-in .bx-tiles i { opacity: 0; }
+[data-anim="mybaumarkt"] .bx-tiles i { background: #1f4e3d; border: 1px solid rgba(255,255,255,.08); }
+[data-anim="mybaumarkt"] .c3-m.c3-in .bx-tiles i { transform: translateY(110%); opacity: 0; }
+.c3-m__in { position: relative; }
+[data-anim="crea-response"] .c3-m .c3-m__in, [data-anim="mybaumarkt"] .c3-m .c3-m__in { clip-path: none; }
+
+/* Täubert: diagonaler Lack-Wisch + Glanz über jedes Bild */
+[data-anim="taeubert"] .c3-m .c3-m__in { clip-path: polygon(0 100%, 0 100%, 0 100%, 0 100%); transition: clip-path 1200ms cubic-bezier(0.77, 0, 0.175, 1); }
+[data-anim="taeubert"] .c3-m.c3-in .c3-m__in { clip-path: polygon(0 0, 140% 0, 0 140%, 0 100%); clip-path: polygon(-50% -50%, 200% -50%, 200% 200%, -50% 200%); }
+[data-anim="taeubert"] .c3-m .c3-m__in::after { content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,.55) 50%, transparent 65%); transform: translateX(-120%); }
+[data-anim="taeubert"] .c3-m.c3-in .c3-m__in::after { animation: bx-shine 1600ms cubic-bezier(0.19, 1, 0.22, 1) 700ms both; }
+[data-anim="taeubert"] .c3-m:hover .c3-m__in::after { animation: bx-shine 900ms cubic-bezier(0.19, 1, 0.22, 1) both; }
+@keyframes bx-shine { from { transform: translateX(-120%); } to { transform: translateX(120%); } }
+
+/* Run Club: Bilder sprinten seitlich herein mit Bewegungsunschärfe */
+[data-anim="runclub"] .c3-m .c3-m__in { clip-path: none; transform: translateX(-35%) skewX(-14deg); opacity: 0; filter: blur(14px); transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1), opacity 500ms, filter 900ms; }
+[data-anim="runclub"] .c3-pair .c3-m:nth-child(2) .c3-m__in { transform: translateX(35%) skewX(-14deg); }
+[data-anim="runclub"] .c3-m.c3-in .c3-m__in { transform: none !important; opacity: 1; filter: none; }
+[data-anim="runclub"] .c3-line > span { transform: translateX(60%) skewX(-20deg); opacity: 0; transition: transform 800ms cubic-bezier(0.16, 1, 0.3, 1), opacity 400ms; }
+[data-anim="runclub"] .c3-in .c3-line > span { transform: none; opacity: var(--o, 1); }
+[data-anim="runclub"] .c3-giant span { animation-name: bx-run; }
+@keyframes bx-run { from { transform: translateX(120vw) skewX(-25deg); } 80% { transform: translateX(-2vw) skewX(8deg); } to { transform: none; } }
+
+/* med.aesthetic: Iris öffnet sich, alles weich und unscharf zu scharf */
+[data-anim="medaesthetic"] .c3-m .c3-m__in { clip-path: circle(0% at 50% 50%); filter: blur(12px); transition: clip-path 1600ms cubic-bezier(0.65, 0, 0.35, 1), filter 1600ms; }
+[data-anim="medaesthetic"] .c3-m.c3-in .c3-m__in { clip-path: circle(75% at 50% 50%); filter: none; }
+[data-anim="medaesthetic"] .c3-line > span { transform: none; opacity: 0; filter: blur(10px); transition: opacity 1400ms, filter 1400ms; }
+[data-anim="medaesthetic"] .c3-in .c3-line > span { opacity: var(--o, 1); filter: none; }
+[data-anim="medaesthetic"] .c3-giant span { animation-name: bx-soft; animation-duration: 2000ms; }
+@keyframes bx-soft { from { transform: none; opacity: 0; filter: blur(24px); letter-spacing: 0.3em; } to { transform: none; opacity: 1; filter: none; } }
+
+/* kühlkraft: Frost taut auf – kalt, unscharf, dann klar */
+[data-anim="kuehlkraft"] .c3-m .c3-m__in { clip-path: none; filter: blur(18px) saturate(0.2) brightness(1.4) hue-rotate(160deg); transition: filter 1800ms cubic-bezier(0.19, 1, 0.22, 1); }
+[data-anim="kuehlkraft"] .c3-m.c3-in .c3-m__in { filter: none; }
+[data-anim="kuehlkraft"] .c3-line > span { transform: none; opacity: 0; letter-spacing: 0.4em; filter: blur(6px); transition: opacity 1200ms, letter-spacing 1400ms cubic-bezier(0.19, 1, 0.22, 1), filter 1200ms; }
+[data-anim="kuehlkraft"] .c3-in .c3-line > span { opacity: var(--o, 1); letter-spacing: 0; filter: none; }
+[data-anim="kuehlkraft"] .c3-giant span { animation-name: bx-freeze; }
+@keyframes bx-freeze { from { transform: scale(1.6); opacity: 0; filter: blur(20px); } to { transform: none; opacity: 1; filter: none; } }
+
+/* Baumarkt: Text fällt Zeile für Zeile herein und setzt auf */
+[data-anim="mybaumarkt"] .c3-line > span { transform: translateY(-120%); transition: transform 900ms cubic-bezier(0.34, 1.56, 0.64, 1); }
+[data-anim="mybaumarkt"] .c3-giant span { animation-name: bx-drop; animation-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1); }
+@keyframes bx-drop { from { transform: translateY(-120vh) rotate(-12deg); } to { transform: none; } }
+
+/* Crea: Name baut sich wie ein Datensignal auf */
+[data-anim="crea-response"] .c3-giant span { animation-name: bx-glitch; animation-duration: 900ms; }
+@keyframes bx-glitch { 0% { transform: translateY(0); opacity: 0; clip-path: inset(0 0 100% 0); } 30% { opacity: 1; clip-path: inset(40% 0 30% 0); transform: translateX(-12px); } 55% { clip-path: inset(10% 0 60% 0); transform: translateX(10px); } 80% { clip-path: inset(0 0 0 0); transform: translateX(-3px); } 100% { transform: none; opacity: 1; clip-path: none; } }
+
+/* Dogstar: Sterne – Bilder blinken auf */
+[data-anim="dogstar"] .c3-m .c3-m__in { clip-path: none; opacity: 0; }
+[data-anim="dogstar"] .c3-m.c3-in .c3-m__in { animation: bx-twinkle 1400ms ease both; }
+@keyframes bx-twinkle { 0% { opacity: 0; } 20% { opacity: .8; } 30% { opacity: .1; } 50% { opacity: 1; } 60% { opacity: .4; } 100% { opacity: 1; } }
+
+.bx-fx--frost, .bx-fx--stars, .bx-fx--iris { mix-blend-mode: normal; }

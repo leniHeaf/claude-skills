@@ -1724,7 +1724,7 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
           g.addColorStop(0, hexA(B.accent, 0.9)); g.addColorStop(1, hexA(B.accent, 0));
           ctx.strokeStyle = g; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(k.x * W, y); ctx.lineTo((k.x + k.l) * W, y); ctx.stroke();
         });
-      } else {
+      } else if (B.fx === "dust" && !["kuehlkraft", "dogstar", "medaesthetic"].includes(slug)) {
         dust.forEach((p) => { p.y -= p.s; if (p.y < 0) p.y = 1; ctx.fillStyle = "rgba(255,255,255,.5)"; ctx.beginPath(); ctx.arc(p.x * W, p.y * H, p.r, 0, 7); ctx.fill(); });
       }
       for (let i = sparks.length - 1; i >= 0; i--) {
@@ -1769,6 +1769,10 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
     "crea-response": { shape: "hex", color: 0x7c3aed, fog: 0x0b0b0f, words: ["Strategie", "Technologie", "Daten", "Menschen", "Wachstum"] },
     taeubert: { shape: "gloss", color: 0xe1251b, fog: 0x0a0a0a, words: ["Präzision", "Lack", "Glanz", "Handwerk"] },
     runclub: { shape: "ring", color: 0xffe100, fog: 0x0d0d0d, words: ["Community", "Movement", "Better Days"] },
+    medaesthetic: { shape: "pearl", color: 0xe8d9cc, fog: 0x1c1a19, words: [] },
+    kuehlkraft: { shape: "ice", color: 0x9fd8ee, fog: 0x0f2a33, words: [] },
+    mybaumarkt: { shape: "bricks", color: 0x2f8a5f, fog: 0x14231c, words: [] },
+    dogstar: { shape: "star", color: 0xfff1b8, fog: 0x10101a, words: [] },
   }[slug] || { shape: "ico", color: 0xfef5f9, fog: 0x222a36, words: [] };
   const imgs = [...new Set([...root.querySelectorAll(".c3-m img, .c3-hero img")].map((i) => i.getAttribute("src")))];
 
@@ -1830,8 +1834,18 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
     } else if (cfg.shape === "ring") {
       const m = new T.MeshStandardMaterial({ color: cfg.color, emissive: cfg.color, emissiveIntensity: 0.35, metalness: 0.2, roughness: 0.4 });
       for (let i = 0; i < 3; i++) { const r = new T.Mesh(new T.TorusGeometry(1.1 + i * 0.42, 0.07, 16, 120), m); r.rotation.x = 1.1 + i * 0.25; r.rotation.y = i * 0.5; obj.add(r); }
+    } else if (cfg.shape === "pearl") {
+      obj.add(new T.Mesh(new T.SphereGeometry(1.2, 64, 64), new T.MeshStandardMaterial({ color: cfg.color, metalness: 0.15, roughness: 0.18 })));
+    } else if (cfg.shape === "ice") {
+      const m = new T.MeshPhysicalMaterial({ color: cfg.color, metalness: 0, roughness: 0.05, transmission: 0.6, transparent: true, opacity: 0.85 });
+      obj.add(new T.Mesh(new T.OctahedronGeometry(1.4, 0), m));
+      obj.add(new T.LineSegments(new T.EdgesGeometry(new T.OctahedronGeometry(1.42, 0)), new T.LineBasicMaterial({ color: 0xffffff })));
+    } else if (cfg.shape === "bricks") {
+      const m = new T.MeshStandardMaterial({ color: cfg.color, roughness: 0.6 });
+      for (let i = 0; i < 9; i++) { const b = new T.Mesh(new T.BoxGeometry(0.9, 0.42, 0.45), m); b.position.set((i % 3 - 1) * 0.95 + (Math.floor(i / 3) % 2) * 0.45 - 0.2, Math.floor(i / 3) * 0.45 - 0.5, 0); b.userData.y = b.position.y; b.userData.k = i; obj.add(b); }
+      obj.userData.bricks = true;
     } else {
-      obj.add(new T.Mesh(new T.IcosahedronGeometry(1.4, 1), new T.MeshStandardMaterial({ color: cfg.color, wireframe: true })));
+      obj.add(new T.Mesh(new T.IcosahedronGeometry(1.4, 0), new T.MeshStandardMaterial({ color: cfg.color, emissive: cfg.color, emissiveIntensity: 0.4, flatShading: true })));
     }
     // Partikel um das Objekt
     const pg = new T.BufferGeometry(); const N = 380; const pos = new Float32Array(N * 3);
@@ -1855,6 +1869,8 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
       imgs.forEach((s, i) => { seq.push({ img: s }); if (cfg.words[i]) seq.push({ word: cfg.words[i] }); });
       cfg.words.slice(imgs.length).forEach((w) => seq.push({ word: w }));
       const gap = 6;
+      const MODE = { taeubert: "carousel", runclub: "sprint" }[slug] || "corridor";
+      fly.dataset.mode = MODE;
       seq.forEach((it, i) => {
         const z = -i * gap - 6;
         let mesh;
@@ -1864,6 +1880,7 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
           const side = (Math.floor(i / 2) % 2) ? 1 : -1;
           mesh.position.set(side * 3.4, (i % 3 - 1) * 0.5, z);
           mesh.rotation.y = -side * 0.5;
+          if (MODE === "sprint") { mesh.position.set(i * 6.5, (i % 2 ? 0.7 : -0.7), -4); mesh.rotation.set(0, 0, 0); }
         } else {
           const c = document.createElement("canvas"); c.width = 2048; c.height = 512;
           const g = c.getContext("2d"); g.fillStyle = "#" + col.getHexString();
@@ -1873,12 +1890,28 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
           const tex = new T.CanvasTexture(c);
           mesh = new T.Mesh(new T.PlaneGeometry(5.2, 1.3), new T.MeshBasicMaterial({ map: tex, transparent: true }));
           mesh.position.set(0, 0, z);
+          if (MODE === "sprint") mesh.position.set(i * 6.5, 0, -2);
         }
         fs.add(mesh); items.push(mesh);
       });
+      const carousel = new T.Group();
+      if (MODE === "carousel") {
+        const R = 7.5;
+        items.forEach((m, i) => { const a = i / items.length * Math.PI * 2; m.position.set(Math.sin(a) * R, 0, Math.cos(a) * R); m.rotation.set(0, a, 0); fs.remove(m); carousel.add(m); });
+        carousel.position.z = -R - 6; fs.add(carousel);
+      }
+      fly._carousel = carousel; fly._mode = MODE;
       // Gitterlinien als Gang
       const lineMat = new T.LineBasicMaterial({ color: cfg.color, transparent: true, opacity: 0.35 });
       depth = seq.length * gap + 10;
+      if (MODE === "sprint") {
+        for (let i = 0; i < 160; i++) { const y = (Math.random() - 0.5) * 6, z = -3 - Math.random() * 8, x = Math.random() * depth * 1.2 - 10, l = 1 + Math.random() * 6;
+          fs.add(new T.Line(new T.BufferGeometry().setFromPoints([new T.Vector3(x, y, z), new T.Vector3(x + l, y, z)]), lineMat)); }
+      } else if (MODE === "carousel") {
+        const ring = new T.Mesh(new T.TorusGeometry(7.5, 0.02, 8, 200), new T.MeshBasicMaterial({ color: cfg.color }));
+        ring.rotation.x = Math.PI / 2; ring.position.y = -1.9; carousel.add(ring);
+        const ring2 = ring.clone(); ring2.position.y = 1.9; carousel.add(ring2);
+      } else
       for (let z = 0; z > -depth; z -= 3) {
         const g = new T.BufferGeometry().setFromPoints([new T.Vector3(-5, -2.6, z), new T.Vector3(5, -2.6, z), new T.Vector3(5, 2.6, z), new T.Vector3(-5, 2.6, z), new T.Vector3(-5, -2.6, z)]);
         fs.add(new T.Line(g, lineMat));
@@ -1900,6 +1933,7 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
         obj.rotation.y = spin + sm.x * 0.9 + scrollY * 0.004;
         obj.rotation.x = sm.y * 0.6 + Math.sin(spin) * 0.15 + scrollY * 0.002;
         obj.position.z = scrollY / H * 3;
+        if (obj.userData.bricks) obj.children.forEach((b) => { const k = Math.min(1, Math.max(0, intro * 9 - b.userData.k * 0.6)); b.position.y = b.userData.y + (1 - k) * 4; b.rotation.z = (1 - k) * 0.8; });
         pts.rotation.y = spin * 0.3; pts.rotation.x = sm.y * 0.2;
         hcam.position.x = sm.x * 0.6; hcam.position.y = -sm.y * 0.4; hcam.lookAt(0, 0, 0);
         hr.render(hs, hcam);
@@ -1908,11 +1942,24 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
         const r = fly.getBoundingClientRect();
         if (r.bottom > 0 && r.top < H) {
           const p = Math.min(1, Math.max(0, -r.top / (fly.offsetHeight - H)));
+          if (fly._mode === "carousel") {
+            fcam.position.set(sm.x * 0.8, 0.4 - sm.y * 0.6, 4); fcam.rotation.set(-0.05 - sm.y * 0.06, -sm.x * 0.1, 0);
+            const target = -p * Math.PI * 2 * (1 - 1 / items.length) + Math.PI;
+            fly._carousel.rotation.y += (target - fly._carousel.rotation.y) * 0.1;
+          } else if (fly._mode === "sprint") {
+            const tx = p * (items.length - 1) * 6.5;
+            const prev = fcam.position.x; fcam.position.x += (tx - fcam.position.x) * 0.1;
+            const v = fcam.position.x - prev;
+            fcam.position.y = -sm.y * 0.5; fcam.position.z = 4.2 + Math.min(2, Math.abs(v) * 3);
+            fcam.rotation.set(-sm.y * 0.05, -sm.x * 0.12, -v * 0.08);
+            items.forEach((m) => { m.rotation.y = Math.max(-0.6, Math.min(0.6, -v * 0.4)); });
+          } else {
           const tz = -p * (depth - 12);
           fcam.position.z += (tz - fcam.position.z) * 0.12;
           fcam.position.x = sm.x * 1.2; fcam.position.y = -sm.y * 0.7;
           fcam.rotation.y = -sm.x * 0.18; fcam.rotation.x = -sm.y * 0.1;
-          items.forEach((m, i) => { const d = m.position.z - fcam.position.z; m.material.opacity = 1; if (m.geometry.parameters.width === 5.2) m.rotation.y = Math.sin(now / 1500 + i) * 0.08; });
+          }
+          items.forEach((m, i) => { const d = m.position.z - fcam.position.z; m.material.opacity = 1; if (fly._mode === "corridor" && m.geometry.parameters.width === 5.2) m.rotation.y = Math.sin(now / 1500 + i) * 0.08; });
           fr.render(fs, fcam);
           fly.classList.toggle("is-moving", p > 0.02 && p < 0.98);
         }
@@ -1922,3 +1969,70 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
     requestAnimationFrame(loop);
   });
 })();
+
+// ==========================================================================
+// Jede Marke bewegt sich anders: eigene Bild-Aufdeckung, Textbewegung,
+// Namens-Animation und Atmosphäre im Einstieg
+// ==========================================================================
+(() => {
+  const root = document.querySelector(".cs3");
+  if (!root) return;
+  const slug = (location.pathname.split("/").pop() || "").replace("projekt-", "").replace(".html", "");
+  document.body.dataset.anim = slug;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  // Kachel-Aufdeckung (Crea: Daten-Pixel, Baumarkt: Steine von unten)
+  if (slug === "crea-response" || slug === "mybaumarkt") {
+    const cols = slug === "crea-response" ? 10 : 6, rows = slug === "crea-response" ? 7 : 5;
+    root.querySelectorAll(".c3-m .c3-m__in").forEach((box) => {
+      const g = document.createElement("div"); g.className = "bx-tiles";
+      g.style.gridTemplateColumns = `repeat(${cols},1fr)`;
+      for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+        const t = document.createElement("i");
+        const d = slug === "crea-response" ? Math.random() * 900 : ((rows - 1 - r) * 140 + Math.abs(c - cols / 2) * 40);
+        t.style.transitionDelay = d + "ms"; g.appendChild(t);
+      }
+      box.appendChild(g);
+    });
+  }
+
+  // Crea: Titel und Labels „entschlüsseln“ sich
+  const decode = (el) => {
+    const final = el.textContent, chars = "01ABCDEF#/<>_";
+    let f = 0; const id = setInterval(() => {
+      f++; el.textContent = [...final].map((c, i) => (c === " " || i < f * 1.5) ? c : chars[Math.random() * chars.length | 0]).join("");
+      if (f * 1.5 >= final.length) { clearInterval(id); el.textContent = final; }
+    }, 40);
+  };
+  if (slug === "crea-response") {
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { io.unobserve(e.target); decode(e.target); } }));
+    root.querySelectorAll(".c3-facts span, .c3-ext a").forEach((el) => io.observe(el));
+  }
+
+  // Atmosphäre im Einstieg für Marken ohne eigene Hero-Animation
+  const hero = root.querySelector(".c3-hero");
+  const fx = { kuehlkraft: "frost", dogstar: "stars", medaesthetic: "iris" }[slug];
+  if (hero && fx) {
+    const cv = document.createElement("canvas"); cv.className = "bx-fx bx-fx--" + fx; cv.setAttribute("aria-hidden", "true"); hero.appendChild(cv);
+    const ctx = cv.getContext("2d"); let W, H; const dpr = Math.min(2, devicePixelRatio || 1);
+    const size = () => { W = hero.clientWidth; H = hero.clientHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }; size(); addEventListener("resize", size);
+    const P = Array.from({ length: fx === "stars" ? 260 : 140 }, () => ({ x: Math.random(), y: Math.random(), r: Math.random() * (fx === "stars" ? 1.8 : 2.6) + 0.4, s: Math.random() * 0.0012 + 0.0003, ph: Math.random() * 6.28, dx: (Math.random() - 0.5) * 0.0006 }));
+    const m = { x: 0.5, y: 0.5 }; hero.addEventListener("pointermove", (e) => { const r = hero.getBoundingClientRect(); m.x = (e.clientX - r.left) / r.width; m.y = (e.clientY - r.top) / r.height; });
+    const loop = (now) => {
+      if (scrollY < innerHeight * 1.2) {
+        ctx.clearRect(0, 0, W, H); const t = now / 1000;
+        if (fx === "iris") {
+          // weiche Lichtringe wie bei einer Linse
+          for (let i = 0; i < 5; i++) { const r = ((t * 60 + i * 140) % 700); ctx.strokeStyle = `rgba(255,240,230,${0.25 * (1 - r / 700)})`; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(m.x * W, m.y * H, r, 0, 7); ctx.stroke(); }
+        } else P.forEach((p) => {
+          if (fx === "frost") { p.y += p.s; p.x += p.dx + (m.x - 0.5) * 0.0008; if (p.y > 1) { p.y = 0; p.x = Math.random(); } ctx.fillStyle = "rgba(225,245,255,.85)"; }
+          else { const a = 0.4 + 0.6 * Math.abs(Math.sin(t * 1.5 + p.ph)); ctx.fillStyle = `rgba(255,246,210,${a})`; p.x += (m.x - 0.5) * 0.0004 * p.r; }
+          ctx.beginPath(); ctx.arc(((p.x % 1) + 1) % 1 * W, p.y * H, p.r, 0, 7); ctx.fill();
+        });
+      }
+      requestAnimationFrame(loop);
+    };
+    requestAnimationFrame(loop);
+  }
+})();
+document.querySelectorAll(".c3-giant").forEach((g) => { const n = g.textContent.trim().length; g.style.setProperty("font-size", `min(17vw, ${(150 / Math.max(5, n)).toFixed(2)}vw, 300px)`, "important"); });
