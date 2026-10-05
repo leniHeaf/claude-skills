@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Studio X – Kreativstudio</title>
+  <meta name="description" content="Platzhalter-Website eines Kreativstudios.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=JetBrains+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,300;6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-home fx">
+  <a class="skip" href="#main">Zum Inhalt springen</a>
+
+  <!-- Laufband -->
+  <div class="ticker" aria-label="Neuigkeiten">
+    <div class="ticker__track">
+      <ul class="ticker__list">
+        <li>Neues Projekt: <a href="projekt-runclub.html">Run Club</a> · Tuesdays 7:15am</li>
+        <li>Unterwegs: <a href="work.html">Projekt Nord</a> Stadtlauf 2026</li>
+        <li><a href="work.html">Neuer Auftritt</a> für Kunde Zwei</li>
+        <li>Studie: Jugendkultur für <a href="work.html">Marke Drei</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header" data-header>
+    <a class="logo" href="#top" aria-label="Studio X – Startseite">STUDIO.X</a>
+    <p class="header__claim">Ein Kreativstudio<br>aus Musterstadt</p>
+    <nav class="nav" aria-label="Hauptnavigation">
+      <ul>
+        <li><a href="#about" class="is-active" aria-current="page">Über uns</a></li>
+        <li class="has-sub"><button type="button" class="nav__toggle" aria-expanded="false">Leistungen<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></button><div class="sub"><div><p class="label-s">Strategie</p><a href="leistung-markenstrategie.html">Markenstrategie</a><a href="leistung-markenworkshop.html">Markenworkshop</a><a href="leistung-marken-kompass.html">Marken-Kompass</a><a href="leistung-brand-story.html">Brand Story</a><a href="leistung-naming.html">Naming</a></div><div><p class="label-s">Design</p><a href="leistung-brand-design.html">Brand Design</a></div><div><p class="label-s">Roll-out</p><a href="leistung-markenkommunikation.html">Markenkommunikation</a></div></div></li>
+        <li><a href="prozess.html">Prozess</a></li>
+        <li><a href="stories.html">Success Stories</a></li>
+        <li><a href="work.html">Arbeiten</a></li>
+        <li class="has-sub"><button type="button" class="nav__toggle" aria-expanded="false">Academy<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></button><div class="sub"><div><p class="label-s">Lernen</p><a href="academy-training.html">Strategie-Training</a><a href="academy-ebook.html">Strategie-eBook</a><a href="academy-toolkit.html">Workshop-Toolkit</a><a href="academy-templates.html">Branding-Vorlagen</a><a href="academy-newsletter.html">Community-Newsletter</a></div><div><p class="label-s">Marken-Wiki</p><a href="academy.html#wiki">Alle Artikel</a><a href="academy.html#identitaet">Identität</a><a href="academy.html#strategie">Strategie</a><a href="academy.html#design">Design</a></div></div></li>
+      </ul>
+    </nav>
+    <span class="header__year">© <span data-year>2026</span></span>
+    <a class="header__contact" href="kontakt.html">Kontakt
+      <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10h8M10.5 6.5 14 10l-3.5 3.5"/></svg>
+    </a>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="menu" data-burger>
+      <span></span><span></span><span class="sr">Menü</span>
+    </button>
+  </header>
+
+  <!-- Mobiles Menü -->
+  <div class="menu" id="menu" data-menu hidden>
+    <ul>
+      <li><a href="#about">Über uns</a></li>
+      <li><a href="leistung-markenstrategie.html">Markenstrategie</a></li>
+      <li><a href="leistung-markenworkshop.html">Markenworkshop</a></li>
+      <li><a href="leistung-marken-kompass.html">Marken-Kompass</a></li>
+      <li><a href="leistung-brand-story.html">Brand Story</a></li>
+      <li><a href="leistung-naming.html">Naming</a></li>
+      <li><a href="leistung-brand-design.html">Brand Design</a></li>
+      <li><a href="leistung-markenkommunikation.html">Markenkommunikation</a></li>
+      <li><a href="prozess.html">Prozess</a></li>
+      <li><a href="stories.html">Success Stories</a></li>
+      <li><a href="work.html">Arbeiten</a></li>
+      <li><a href="academy.html">Academy</a></li>
+      <li><a href="kontakt.html">Kontakt</a></li>
+    </ul>
+  </div>
+
+  <main id="main">
+    <!-- Kinetischer Einstieg -->
+    <section class="mhero" id="top">
+      <p class="mhero__eyebrow label-s"><span>Branding-Agentur</span><span>Musterstadt</span><span>Seit 2017</span></p>
+      <h1 class="mhero__title" aria-label="Marken, die man nicht vergisst." data-kinetic><span class="line"><span><span class="kw"><span class="kl">M</span><span class="kl">a</span><span class="kl">r</span><span class="kl">k</span><span class="kl">e</span><span class="kl">n</span><span class="kl">,</span></span></span></span><span class="line"><span><span class="kw"><span class="kl">d</span><span class="kl">i</span><span class="kl">e</span></span> <span class="kw"><span class="kl">m</span><span class="kl">a</span><span class="kl">n</span></span> <span class="kw"><span class="kl">n</span><span class="kl">i</span><span class="kl">c</span><span class="kl">h</span><span class="kl">t</span></span></span></span><span class="line"><span><span class="kw"><span class="kl">v</span><span class="kl">e</span><span class="kl">r</span><span class="kl">g</span><span class="kl">i</span><span class="kl">s</span><span class="kl">s</span><span class="kl">t</span><span class="kl">.</span></span></span></span></h1>
+      <div class="mhero__foot">
+        <p class="mhero__sub">Wir entwickeln Strategie, Identität und Kampagnen für Unternehmen, die mehr sind, als ihr Auftritt heute zeigt.</p>
+        <div class="mhero__cta">
+          <a class="hbtn hbtn--sig" href="#anfrage">Projekt anfragen <span aria-hidden="true">→</span></a>
+          <a class="hbtn hbtn--ghost" href="work.html">Arbeiten ansehen</a>
+        </div>
+        <p class="mhero__status label-s"><i aria-hidden="true"></i> Freie Kapazität ab Januar</p>
+      </div>
+    </section>
+
+    <!-- Showreel wächst beim Scrollen -->
+    <section class="mreel" data-scrub="reel" aria-label="Showreel">
+      <div class="mreel__sticky">
+        <div class="mreel__frame">
+          <img src="assets/runclub/plakatwand.webp" alt="Run-Club-Kampagne an einer Plakatwand" decoding="async">
+          <button type="button" class="mreel__play" data-reel data-cursor="Play"><span aria-hidden="true">▶</span> Showreel 2026</button>
+          <p class="hreel__note" role="status" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Vertrauen: Kundenlogos als Laufband -->
+    <section class="hmarquee" aria-label="Kund:innen (Platzhalter)">
+      <p class="label-s">Marken, die uns vertrauen</p>
+      <div class="hmarquee__track"><ul><li>Nordwind</li><li>Aurora Labs</li><li>Kiefer & Sohn</li><li>Halde</li><li>Ostlicht</li><li>Mira Mode</li><li>Blauwerk</li><li>Fjell</li><li>Pavillon</li><li>Lumen</li><li>Kollektiv Acht</li><li>Tidewater</li><li>Run Club</li><li>Polar Motors</li></ul><ul aria-hidden="true"><li>Nordwind</li><li>Aurora Labs</li><li>Kiefer & Sohn</li><li>Halde</li><li>Ostlicht</li><li>Mira Mode</li><li>Blauwerk</li><li>Fjell</li><li>Pavillon</li><li>Lumen</li><li>Kollektiv Acht</li><li>Tidewater</li><li>Run Club</li><li>Polar Motors</li></ul></div>
+    </section>
+
+
+    <!-- Manifest: Wort für Wort -->
+    <section class="mmani" data-scrub="mani">
+      <div class="mmani__sticky">
+        <p class="label-s">Haltung</p>
+        <p class="mmani__text" data-words>Wir glauben nicht an Marken, die allen gefallen wollen. Wir glauben an Marken mit Haltung, einer klaren Position und einem Auftritt, den man aus dem Augenwinkel erkennt. Dafür bringen wir Strategie, Design und Roll-out in ein kleines Team – vom ersten Gespräch bis zum Launch.</p>
+      </div>
+    </section>
+
+    <!-- Arbeiten: gepinnte horizontale Galerie -->
+    <section class="mgal" id="work" data-scrub="gallery">
+      <div class="mgal__sticky">
+        <div class="mgal__head">
+          <h2 class="mgal__title">Ausgewählte<br>Arbeiten</h2>
+          <a class="hlink" href="work.html">Alle Arbeiten <span aria-hidden="true">→</span></a>
+        </div>
+        <ul class="mgal__track"><li class="mgal__card"><a href="projekt-runclub.html" data-cursor="Ansehen"><div class="mgal__media"><img src="assets/runclub/plakatwand.webp" alt="Run Club: Identität für eine Lauf-Community" loading="lazy" decoding="async"></div><div class="mgal__meta"><span class="mgal__no">01</span><div><h3>Run Club</h3><p>Identität für eine Lauf-Community</p></div><p class="mgal__kpi"><strong>3 ×</strong><span>mehr Teilnehmende*</span></p></div></a></li><li class="mgal__card"><a href="projekt-runclub.html" data-cursor="Ansehen"><div class="mgal__media"><img src="assets/runclub/haltestelle.webp" alt="Run Club: Kampagne im Stadtraum" loading="lazy" decoding="async"></div><div class="mgal__meta"><span class="mgal__no">02</span><div><h3>Run Club</h3><p>Kampagne im Stadtraum</p></div><p class="mgal__kpi"><strong>40+</strong><span>Motive in einem Raster*</span></p></div></a></li><li class="mgal__card"><a href="work.html" data-cursor="Ansehen"><div class="mgal__media"><div class="ph ph--court"><span class="ph__label">Projektbild</span></div></div><div class="mgal__meta"><span class="mgal__no">03</span><div><h3>Kunde Zwei</h3><p>Neupositionierung im B2B-Markt</p></div><p class="mgal__kpi"><strong>+40 %</strong><span>qualifizierte Anfragen*</span></p></div></a></li><li class="mgal__card"><a href="projekt-runclub.html" data-cursor="Ansehen"><div class="mgal__media"><img src="assets/runclub/merch.webp" alt="Run Club: Merchandise-Kollektion" loading="lazy" decoding="async"></div><div class="mgal__meta"><span class="mgal__no">04</span><div><h3>Run Club</h3><p>Merchandise-Kollektion</p></div><p class="mgal__kpi"><strong>7</strong><span>Produkte, ein System*</span></p></div></a></li><li class="mgal__card"><a href="work.html" data-cursor="Ansehen"><div class="mgal__media"><div class="ph ph--coral"><span class="ph__label">Projektbild</span></div></div><div class="mgal__meta"><span class="mgal__no">05</span><div><h3>Kunde Drei</h3><p>Rebranding nach einer Fusion</p></div><p class="mgal__kpi"><strong>1</strong><span>Marke statt drei*</span></p></div></a></li></ul>
+        <div class="mgal__bar" aria-hidden="true"><i></i></div>
+        <p class="hnote mgal__note">* Platzhalterwerte – durch echte Projektergebnisse ersetzen.</p>
+      </div>
+    </section>
+
+    <!-- Leistungen: große Liste mit Bildvorschau -->
+    <section class="mserv" id="services">
+      <div class="mserv__head">
+        <h2 class="label"><span>Leistungen</span></h2>
+        <p class="mserv__intro">Von der ersten Strategie-Frage bis zur fertigen Kampagne – einzeln buchbar oder als Gesamtpaket.</p>
+      </div>
+      <ul class="mserv__list"><li><a href="leistung-markenstrategie.html" data-preview="assets/runclub/touchpoints.webp"><span class="mserv__no">01</span><span class="mserv__name">Markenstrategie</span><span class="mserv__cat">Strategie</span><span class="mserv__arrow" aria-hidden="true">→</span></a></li><li><a href="leistung-markenworkshop.html" data-preview="ph--paper"><span class="mserv__no">02</span><span class="mserv__name">Markenworkshop</span><span class="mserv__cat">Strategie</span><span class="mserv__arrow" aria-hidden="true">→</span></a></li><li><a href="leistung-marken-kompass.html" data-preview="ph--stone"><span class="mserv__no">03</span><span class="mserv__name">Marken-Kompass</span><span class="mserv__cat">Strategie</span><span class="mserv__arrow" aria-hidden="true">→</span></a></li><li><a href="leistung-naming.html" data-preview="ph--lime"><span class="mserv__no">04</span><span class="mserv__name">Naming</span><span class="mserv__cat">Strategie</span><span class="mserv__arrow" aria-hidden="true">→</span></a></li><li><a href="leistung-brand-story.html" data-preview="ph--dusk"><span class="mserv__no">05</span><span class="mserv__name">Brand Story</span><span class="mserv__cat">Strategie</span><span class="mserv__arrow" aria-hidden="true">→</span></a></li><li><a href="leistung-brand-design.html" data-preview="assets/runclub/flasche.webp"><span class="mserv__no">06</span><span class="mserv__name">Brand Design</span><span class="mserv__cat">Design</span><span class="mserv__arrow" aria-hidden="true">→</span></a></li><li><a href="leistung-markenkommunikation.html" data-preview="assets/runclub/haltestelle.webp"><span class="mserv__no">07</span><span class="mserv__name">Markenkommunikation</span><span class="mserv__cat">Roll-out</span><span class="mserv__arrow" aria-hidden="true">→</span></a></li></ul>
+      <div class="mserv__preview" aria-hidden="true"></div>
+    </section>
+
+    <!-- Zahlen zählen hoch -->
+    <section class="split hnums mnums" id="about">
+      <h2 class="label"><span>In Zahlen</span></h2>
+      <div><ul class="hnums__list"><li><strong><span data-count="120">120</span>+</strong><span>Marken begleitet</span></li><li><strong><span data-count="9">9</span></strong><span>Jahre Erfahrung</span></li><li><strong><span data-count="14">14</span></strong><span>Menschen im Team</span></li><li><strong><span data-count="98">98</span>%</strong><span>würden uns weiterempfehlen</span></li></ul><p class="hnote">Platzhalterwerte – durch echte Zahlen ersetzen.</p></div>
+    </section>
+
+    <!-- Prozess -->
+    <section class="split hsteps">
+      <h2 class="label"><span>So arbeiten wir</span></h2>
+      <div><div class="hsteps__line" aria-hidden="true"><i></i></div><ol class="hsteps__list"><li data-reveal><span class="hstep__no">01</span><h3>Verstehen</h3><p>Gespräche, Analyse, Bestandsaufnahme.</p></li><li data-reveal><span class="hstep__no">02</span><h3>Entscheiden</h3><p>Strategie gemeinsam im Workshop festlegen.</p></li><li data-reveal><span class="hstep__no">03</span><h3>Gestalten</h3><p>Richtungen entwickeln, eine ausarbeiten.</p></li><li data-reveal><span class="hstep__no">04</span><h3>Anwenden</h3><p>Vorlagen, Guidelines, erste Formate.</p></li><li data-reveal><span class="hstep__no">05</span><h3>Begleiten</h3><p>Roll-out und Nachschärfen im Alltag.</p></li></ol><a class="hlink" href="prozess.html">Unser Prozess im Detail <span aria-hidden="true">→</span></a></div>
+    </section>
+
+    <!-- Stimmen: großes Zitat zum Durchblättern -->
+    <section class="mq" aria-roledescription="Karussell" aria-label="Kundenstimmen (Platzhalter)">
+      <div class="mq__head"><h2 class="label"><span>Stimmen</span></h2><p class="mq__count label-s"><span data-q-now>01</span> / 03</p></div>
+      <ul class="mq__list" aria-live="polite"><li class="mq__item is-active"><blockquote>„Platzhalter: Hier steht, was sich durch die Zusammenarbeit konkret verändert hat – in ein, zwei Sätzen, gerne mit Ergebnis.“</blockquote><p><strong>Name Nachname</strong><span>Geschäftsführung, Unternehmen Eins</span></p></li><li class="mq__item" hidden><blockquote>„Platzhalter: Ein zweites Zitat, zum Beispiel darüber, wie der Workshop das Team auf eine gemeinsame Linie gebracht hat.“</blockquote><p><strong>Name Nachname</strong><span>Marketing, Unternehmen Zwei</span></p></li><li class="mq__item" hidden><blockquote>„Platzhalter: Ein drittes Zitat über den Launch der neuen Marke und die ersten Reaktionen von Kund:innen.“</blockquote><p><strong>Name Nachname</strong><span>Gründerin, Unternehmen Drei</span></p></li></ul>
+      <div class="mq__nav">
+        <button type="button" class="hbtn hbtn--ghost" data-q="-1" aria-label="Vorheriges Zitat">←</button>
+        <button type="button" class="hbtn hbtn--ghost" data-q="1" aria-label="Nächstes Zitat">→</button>
+        <a class="hlink" href="stories.html">Alle Success Stories <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+
+    <!-- Academy -->
+    <section class="split hacad">
+      <h2 class="label"><span>Academy</span></h2>
+      <div><p class="hfit__lead" data-reveal>Was wir in Projekten lernen, teilen wir: 30 Artikel im Marken-Wiki, frei zugänglich.</p><ul class="hacad__list"><li data-reveal><a href="academy-markenpositionierung.html"><span class="card__tag">Strategie</span><h3>Was ist Markenpositionierung?</h3><span class="hlink">Lesen <span aria-hidden="true">→</span></span></a></li><li data-reveal><a href="academy-logogestaltung.html"><span class="card__tag">Design</span><h3>Wie entsteht ein gutes Logo?</h3><span class="hlink">Lesen <span aria-hidden="true">→</span></span></a></li><li data-reveal><a href="academy-zielgruppe.html"><span class="card__tag">Identität</span><h3>Wie definiert man eine Zielgruppe?</h3><span class="hlink">Lesen <span aria-hidden="true">→</span></span></a></li></ul><a class="hlink" href="academy.html">Zum Marken-Wiki <span aria-hidden="true">→</span></a></div>
+    </section>
+
+    <!-- Aus dem Studio -->
+    <section class="hnews">
+      <div class="hnews__head">
+        <h2 class="label"><span>Aus dem Studio</span></h2>
+        <p class="hnote">Platzhalter-Einträge</p>
+      </div>
+      <ul class="hnews__rail" tabindex="0" aria-label="Neuigkeiten, seitlich scrollbar"><li class="hnews__item"><a href="academy.html"><div class="hnews__media"><div class="ph ph--sun" data-blur><span class="ph__label">Bild</span></div></div><span class="card__tag">02.10.2026</span><h3>Run Club geht in die zweite Saison</h3><p>Neue Motive, neue Strecke, gleiche Uhrzeit: Wie wir die Kampagne für den Herbst weiterentwickelt haben.</p></a></li><li class="hnews__item"><a href="academy.html"><div class="hnews__media"><div class="ph ph--night" data-blur><span class="ph__label">Bild</span></div></div><span class="card__tag">18.09.2026</span><h3>Talk-Abend im Open Space</h3><p>Drei Gäste, eine Frage: Wann ist eine Marke zu laut? Ein Rückblick auf den Abend.</p></a></li><li class="hnews__item"><a href="academy.html"><div class="hnews__media"><div class="ph ph--clay" data-blur><span class="ph__label">Bild</span></div></div><span class="card__tag">04.09.2026</span><h3>Willkommen im Team</h3><p>Zwei neue Kolleg:innen verstärken Strategie und Motion Design.</p></a></li><li class="hnews__item"><a href="academy.html"><div class="hnews__media"><div class="ph ph--lime" data-blur><span class="ph__label">Bild</span></div></div><span class="card__tag">21.08.2026</span><h3>Werkstattbericht: Farbklima</h3><p>Warum wir für ein Rebranding 140 Gelbtöne getestet haben – und welcher es wurde.</p></a></li></ul>
+    </section>
+
+    <!-- Anfrage in drei Schritten + FAQ -->
+    <section class="split hask" id="anfrage">
+      <h2 class="label"><span>Anfrage</span></h2>
+      <div class="hask__body">
+        <h3 class="hask__title">Drei kurze Fragen,<br>dann melden wir uns.</h3>
+        <form class="hform" data-steps novalidate>
+          <ol class="hform__progress" aria-hidden="true"><li class="is-on"></li><li></li><li></li></ol>
+          <fieldset class="hform__step is-current" data-step="1">
+            <legend>1 / 3 · Worum geht es?</legend>
+            <div class="hopts"><label class="hopt"><input type="radio" name="thema" value="Markenstrategie" required><span>Markenstrategie</span></label><label class="hopt"><input type="radio" name="thema" value="Neues Branding" required><span>Neues Branding</span></label><label class="hopt"><input type="radio" name="thema" value="Rebranding" required><span>Rebranding</span></label><label class="hopt"><input type="radio" name="thema" value="Website & Kampagne" required><span>Website & Kampagne</span></label><label class="hopt"><input type="radio" name="thema" value="Noch unklar" required><span>Noch unklar</span></label></div>
+          </fieldset>
+          <fieldset class="hform__step" data-step="2" hidden>
+            <legend>2 / 3 · Wann soll es losgehen?</legend>
+            <div class="hopts"><label class="hopt"><input type="radio" name="start" value="So bald wie möglich" required><span>So bald wie möglich</span></label><label class="hopt"><input type="radio" name="start" value="In 1–3 Monaten" required><span>In 1–3 Monaten</span></label><label class="hopt"><input type="radio" name="start" value="Später in diesem Jahr" required><span>Später in diesem Jahr</span></label></div>
+          </fieldset>
+          <fieldset class="hform__step" data-step="3" hidden>
+            <legend>3 / 3 · Wie erreichen wir euch?</legend>
+            <label class="field"><span>Name</span><input name="name" autocomplete="name" required></label>
+            <label class="field"><span>E-Mail</span><input name="email" type="email" autocomplete="email" required></label>
+            <label class="field"><span>Unternehmen (optional)</span><input name="company" autocomplete="organization"></label>
+          </fieldset>
+          <div class="hform__nav">
+            <button type="button" class="hbtn hbtn--ghost" data-back hidden>Zurück</button>
+            <button type="button" class="hbtn" data-next>Weiter <span aria-hidden="true">→</span></button>
+            <button type="submit" class="hbtn" data-submit hidden>Anfrage senden <span aria-hidden="true">→</span></button>
+          </div>
+          <p class="form__status" role="status" aria-live="polite"></p>
+        </form>
+        <div class="hfaq">
+          <p class="label-s">Klartext</p>
+          <div class="faq__list lfaq"><details class="faq__item"><summary><span>Was kostet ein Branding-Projekt?</span><i aria-hidden="true"></i></summary><div class="faq__body"><p>Das hängt vom Umfang ab. Eine Markenstrategie beginnt im mittleren vierstelligen Bereich, ein vollständiges Branding mit Design und Vorlagen liegt meist im fünfstelligen Bereich. Nach dem Erstgespräch bekommt ihr ein klares Angebot.</p></div></details><details class="faq__item"><summary><span>Wie lange dauert es?</span><i aria-hidden="true"></i></summary><div class="faq__body"><p>Eine Strategie sechs bis acht Wochen, ein komplettes Branding drei bis vier Monate.</p></div></details><details class="faq__item"><summary><span>Arbeitet ihr auch mit kleinen Unternehmen?</span><i aria-hidden="true"></i></summary><div class="faq__body"><p>Ja. Viele unserer Kund:innen sind Start-ups und Familienunternehmen. Entscheidend ist der Wille, die Marke ernst zu nehmen.</p></div></details><details class="faq__item"><summary><span>Wem gehören die Ergebnisse?</span><i aria-hidden="true"></i></summary><div class="faq__body"><p>Euch. Alle Dateien und Nutzungsrechte gehen nach Abschluss vollständig auf euch über.</p></div></details></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" id="contact">
+    <a class="footer__cta" href="mailto:hallo@example.com">
+      <span class="line"><span>Lass uns</span></span>
+      <span class="line"><span>reden →</span></span>
+    </a>
+    <div class="footer__grid">
+      <div><h4>Studio</h4><p><a href="work.html">Arbeiten</a><br><a href="jobs.html">Jobs</a><br><a href="moodboard.html">Moodboard</a><br><a href="openspace.html">Open Space</a></p></div>
+      <div><h4>Adresse</h4><p>Musterstraße 1<br>12345 Musterstadt</p></div>
+      <div><h4>Kontakt</h4><p><a href="mailto:hallo@example.com">hallo@example.com</a><br><a href="tel:+490000000">+49 000 000 00</a></p></div>
+      <div><h4>Social</h4><p><a href="#">Instagram</a><br><a href="#">LinkedIn</a></p></div>
+      <div><h4>Rechtliches</h4><p><a href="#">Impressum</a><br><a href="#">Datenschutz</a></p></div>
+    </div>
+    <div class="footer__bottom">
+      <span class="logo logo--big" aria-hidden="true">STUDIO.X</span>
+      <span>© <span data-year>2026</span> Studio X</span>
+    </div>
+  </footer>
+
+  <div class="mcursor" aria-hidden="true"><span></span></div>
+  <script src="script.js" defer></script>
+</body>
+</html>

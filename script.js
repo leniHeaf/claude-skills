@@ -605,3 +605,35 @@
     });
   }
 })();
+
+// Startseite V2: Vollbild-Slider im Einstieg
+(() => {
+  const hero = document.querySelector(".v2hero");
+  if (!hero) return;
+  const slides = [...hero.querySelectorAll(".v2hero__slide")];
+  const caps = [...hero.querySelectorAll(".v2hero__caps li")];
+  const bars = [...hero.querySelectorAll(".v2hero__bars li")];
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const DUR = 5000;
+  hero.style.setProperty("--slide", DUR + "ms");
+  let i = 0, timer;
+  const show = (n) => {
+    i = n % slides.length;
+    slides.forEach((s, k) => s.classList.toggle("is-on", k === i));
+    caps.forEach((c, k) => c.classList.toggle("is-on", k === i));
+    bars.forEach((b, k) => {
+      b.classList.remove("is-run");
+      b.classList.toggle("is-done", k < i);
+    });
+    if (!reduce) {
+      void bars[i].offsetWidth; // Balken neu starten
+      bars[i].classList.add("is-run");
+    }
+  };
+  const next = () => show(i + 1);
+  const start = () => { clearInterval(timer); timer = setInterval(next, DUR); };
+  show(0);
+  if (!reduce) start();
+  // Pause, wenn der Tab nicht sichtbar ist
+  document.addEventListener("visibilitychange", () => { if (document.hidden) clearInterval(timer); else if (!reduce) start(); });
+})();
