@@ -2836,3 +2836,107 @@ h1, h2, h3, h4, p, figure { margin: 0; }
   @keyframes gridin { 0%, 40% { transform: none; } 55%, 85% { transform: translateY(-34%); } 100% { transform: none; } }
 }
 @media (prefers-reduced-motion: reduce) { .feedwrap { animation: none; } }
+
+/* ==========================================================================
+   V3: redaktionell und authentisch (überschreibt den SaaS-Look von V2)
+   Papier, Linien statt Karten, Serife für Überschriften, keine Pillen
+   ========================================================================== */
+.v3 {
+  --bg: #ecebe6;
+  --fg: #141414;
+  --muted: rgba(20, 20, 20, 0.58);
+  --line: rgba(20, 20, 20, 0.22);
+  --panel: #e2e0d9;
+  --v2font: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --serif3: "Instrument Serif", "Times New Roman", serif;
+  --r: 0px;
+  font-family: var(--v2font);
+}
+.v3::after { opacity: 0.06; }
+.v3.is-intro .v2loader { display: none; }
+.v3 .mcursor { mix-blend-mode: difference; }
+
+/* Typografie */
+.v3 .v2hero__title, .v3 .v2head h2, .v3 .v2social__title, .v3 .v2serv__card h3, .v3 .hask__title, .v3 .footer__cta, .v3 .v2intro__text {
+  font-family: var(--serif3); font-weight: 400; font-variation-settings: normal; letter-spacing: -0.02em;
+}
+.v3 .v2hero__title { font-size: clamp(56px, 10vw, 240px); line-height: 0.88; }
+.v3 .v2hero__title .line:nth-child(2) { font-style: italic; }
+.v3 .v2head h2 { font-size: clamp(44px, 6vw, 140px); line-height: 0.9; }
+.v3 .v2intro__text { font-size: clamp(30px, 3.6vw, 82px); line-height: 1.02; }
+.v3 .v2intro__text span { color: var(--muted); font-style: italic; }
+.v3 .v2social__title { font-size: clamp(44px, 5.4vw, 120px); line-height: 0.92; }
+.v3 .footer__cta { font-style: italic; }
+.v3 .v2tag, .v3 .v2note, .v3 .v2more, .v3 .v2work__meta p, .v3 .v2hero__caps, .v3 .v2status { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+
+/* Header */
+.v3 .nav a, .v3 .nav__toggle { font-family: var(--v2font); font-size: 15px; }
+.v3 .header__contact { background: none; color: #fff; border-radius: 0; padding: 0; border-bottom: 1px solid currentColor; font-family: var(--mono); font-size: 13px; text-transform: uppercase; }
+
+/* Einstieg randlos */
+.v3 .v2hero { margin: 0; border-radius: 0; height: 100svh; }
+.v3 .v2badge { display: none; }
+.v3 .v2btn, .v3 .v2btn--sig { border-radius: 0; background: #fff; color: #111; font-family: var(--mono); font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; padding: 1.1em 1.4em; }
+.v3 .v2hero__bars li { border-radius: 0; height: 2px; }
+
+/* Intro */
+.v3 .v2intro { border-bottom: 1px solid var(--line); }
+.v3 .v2status { background: none; padding: 0; }
+.v3 .v2more { border-bottom: 1px solid currentColor; }
+
+/* Arbeiten wie Kontaktabzug */
+.v3 .v2work__media, .v3 .v2acad__grid a, .v3 .v2serv__card { border-radius: 0; }
+.v3 .v2work__chip { border-radius: 0; background: #111; color: #fff; font-family: var(--mono); font-size: 11px; text-transform: uppercase; }
+.v3 .v2work__meta { border-top: 1px solid var(--line); padding-top: 8px; }
+.v3 .v2work__meta h3 { font-family: var(--v2font); font-weight: 600; font-size: 15px; letter-spacing: 0; }
+
+/* Social-Bühne: ruhiger dunkler Grund statt Farbverlauf */
+.v3 .v2social { margin: 0 0 clamp(80px, 9vw, 200px); }
+.v3 .v2social__sticky { border-radius: 0; top: 0; height: 100vh; background: #151515; }
+.v3 .v2social__gl { display: none; }
+.v3 .v2social__copy .v2tag { background: none; padding: 0; color: rgba(255,255,255,0.6); }
+
+/* Band: gerade, schwarz auf Papier */
+.v3 .v2band { transform: none; background: transparent; color: var(--fg); border-block: 1px solid var(--line); padding-block: 14px; }
+.v3 .v2band__track p { font-family: var(--serif3); font-weight: 400; font-variation-settings: normal; font-style: italic; font-size: clamp(40px, 5vw, 110px); letter-spacing: -0.01em; }
+
+/* Leistungen als Liste statt Stapelkarten */
+.v3 .v2serv__card { position: relative; top: auto; background: transparent; box-shadow: none; border-top: 1px solid var(--fg); padding: clamp(20px, 2vw, 36px) 0; margin: 0; min-height: 0; }
+.v3 .v2serv__card:last-child { border-bottom: 1px solid var(--fg); }
+.v3 .v2serv__card h3 { font-size: clamp(48px, 6vw, 140px); }
+.v3 .v2serv__card ul a { border-radius: 0; border: 0; border-bottom: 1px solid var(--line); padding: 0.3em 0; margin-right: 14px; font-size: 15px; }
+@media (hover: hover) and (pointer: fine) {
+  .v3 .v2serv__card:hover { background: transparent; }
+  .v3 .v2serv__card:hover h3 { font-style: italic; }
+  .v3 .v2serv__card ul a:hover { background: none; color: var(--fg); border-color: var(--fg); }
+}
+
+/* Academy */
+.v3 .v2acad__grid a { background: transparent; border-top: 1px solid var(--fg); padding: 16px 0 0; min-height: 0; gap: 28px; }
+.v3 .v2acad__grid h3 { font-family: var(--serif3); font-weight: 400; font-size: clamp(28px, 2.6vw, 56px); }
+.v3 .v2acad__grid .v2tag { background: none; padding: 0; }
+
+/* Anfrage: Papier statt gelber Box */
+.v3 .hask { background: transparent; margin: 0; border-radius: 0; border-top: 1px solid var(--fg); }
+.v3 .hopt span { border-radius: 0; font-family: var(--v2font); font-weight: 500; }
+.v3 .hopt input:checked + span { background: var(--fg); color: var(--bg); }
+.v3 .hbtn { border-radius: 0; background: var(--fg); color: var(--bg); font-family: var(--mono); text-transform: uppercase; font-size: 13px; }
+.v3 .hbtn--ghost { background: transparent; color: var(--fg); }
+.v3 .hfaq .lfaq .faq__item summary { font-family: var(--serif3); font-weight: 400; font-size: clamp(22px, 1.8vw, 36px); letter-spacing: -0.01em; }
+
+/* V3 ruhig: verspielte Effekte aus */
+.v3::after { display: none; }
+.v3 .mcursor { display: none !important; }
+.v3.has-cursor, .v3.has-cursor a, .v3.has-cursor button, .v3.has-cursor label { cursor: auto; }
+.v3.has-cursor a, .v3.has-cursor button { cursor: pointer; }
+.v3 .post__heart, .v3 .toasts { display: none; }
+.v3 .v2band__track { animation: none; }
+.v3 .v2band__track p + p { display: none; }
+.v3 .v2band { overflow: hidden; }
+.v3 .v2work__media img, .v3 .v2work__media .ph { transform: none !important; inset: 0; height: 100%; filter: none !important; }
+.v3 .v2serv__card:hover h3 { font-style: normal; }
+.v3 .v2hero__slide img { transform: none !important; }
+.v3 .v2hero__slide { clip-path: none !important; opacity: 0; transition: opacity 900ms ease; }
+.v3 .v2hero__slide.is-on { opacity: 1; }
+.v3 .v2hero__slide.is-prev { opacity: 0; }
+.v3 .v2band__track p { font-style: normal; }

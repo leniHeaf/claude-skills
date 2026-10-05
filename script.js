@@ -542,7 +542,7 @@
 
   // Cursor
   const cursor = document.querySelector(".mcursor");
-  if (cursor && fine && !reduce && document.body.classList.contains("fx")) {
+  if (cursor && fine && !reduce && document.body.classList.contains("fx") && !document.body.classList.contains("v3")) {
     document.body.classList.add("has-cursor");
     const label = cursor.querySelector("span");
     const m = { x: innerWidth / 2, y: innerHeight / 2 }, c = { ...m };
@@ -643,7 +643,8 @@
 // ==========================================================================
 (() => {
   if (!document.body.classList.contains("v2")) return;
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const calm = document.body.classList.contains("v3");
+  const reduce = calm || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
   // Intro einmal pro Besuch
@@ -804,7 +805,7 @@
 
   // Projektbilder: kurze Verflüssigung beim Überfahren (SVG-Filter)
   const disp = document.querySelector("#liquid feDisplacementMap");
-  if (disp && !reduce && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  if (disp && !reduce && !document.body.classList.contains("v3") && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
     let raf = null;
     document.querySelectorAll(".v2work__media").forEach((m) => {
       m.parentElement.addEventListener("pointerenter", () => {
