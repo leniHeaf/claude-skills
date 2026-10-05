@@ -637,3 +637,94 @@
   // Pause, wenn der Tab nicht sichtbar ist
   document.addEventListener("visibilitychange", () => { if (document.hidden) clearInterval(timer); else if (!reduce) start(); });
 })();
+
+// ==========================================================================
+// V2 Ultra: Intro, Wisch-Slider, Magnet-Buttons, Parallax, Wort-Masken
+// ==========================================================================
+(() => {
+  if (!document.body.classList.contains("v2")) return;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  // Intro einmal pro Besuch
+  let seen = false;
+  try { seen = sessionStorage.getItem("sx-intro") === "1"; } catch (e) {}
+  if (!reduce && !seen) {
+    const body = document.body;
+    body.classList.add("is-intro");
+    const num = document.querySelector(".v2loader__num");
+    const t0 = performance.now(), dur = 1300;
+    const step = (now) => {
+      const t = Math.min(1, (now - t0) / dur);
+      num.textContent = Math.round(100 * (1 - Math.pow(1 - t, 3)));
+      if (t < 1) requestAnimationFrame(step);
+      else {
+        body.classList.add("is-revealed");
+        setTimeout(() => body.classList.remove("is-intro", "is-revealed"), 1000);
+      }
+    };
+    requestAnimationFrame(step);
+    try { sessionStorage.setItem("sx-intro", "1"); } catch (e) {}
+  }
+
+  // Slider: vorheriges Bild bleibt liegen, das neue wischt darüber
+  const slides = [...document.querySelectorAll(".v2hero__slide")];
+  if (slides.length) {
+    const obs = new MutationObserver((muts) => {
+      muts.forEach((m) => {
+        const el = m.target;
+        if (m.oldValue && m.oldValue.includes("is-on") && !el.classList.contains("is-on")) {
+          slides.forEach((s) => s.classList.remove("is-prev"));
+          el.classList.add("is-prev");
+        }
+      });
+    });
+    slides.forEach((s) => obs.observe(s, { attributes: true, attributeFilter: ["class"], attributeOldValue: true }));
+  }
+
+  // Überschriften in Wörter teilen
+  const heads = document.querySelectorAll("[data-split]");
+  heads.forEach((h) => {
+    h.innerHTML = h.textContent.trim().split(/\s+/).map((w, i) => `<span class="sw"><span style="transition-delay:${i * 70}ms">${w}</span></span>`).join(" ");
+  });
+  if ("IntersectionObserver" in window && !reduce) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -15% 0px" });
+    heads.forEach((h) => io.observe(h));
+  } else heads.forEach((h) => h.classList.add("is-in"));
+
+  if (reduce) return;
+
+  // Magnetische Buttons
+  if (fine) {
+    document.querySelectorAll(".v2btn, .v2badge, .header__contact").forEach((el) => {
+      el.addEventListener("pointermove", (e) => {
+        const r = el.getBoundingClientRect();
+        const x = (e.clientX - (r.left + r.width / 2)) * 0.25;
+        const y = (e.clientY - (r.top + r.height / 2)) * 0.35;
+        el.style.transform = `translate(${x}px, ${y}px)`;
+      });
+      el.addEventListener("pointerleave", () => {
+        el.style.transition = "transform 450ms cubic-bezier(0.23, 1, 0.32, 1)";
+        el.style.transform = "";
+        setTimeout(() => (el.style.transition = ""), 460);
+      });
+    });
+  }
+
+  // Parallax in den Projektbildern
+  const media = [...document.querySelectorAll(".v2work__media")];
+  let ticking = false;
+  const update = () => {
+    const vh = innerHeight;
+    media.forEach((m) => {
+      const r = m.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > vh) return;
+      const p = (r.top + r.height / 2 - vh / 2) / vh; // -1 … 1
+      const img = m.querySelector("img, .ph");
+      if (img) img.style.transform = `translate3d(0, ${(-p * 6).toFixed(2)}%, 0)`;
+    });
+    ticking = false;
+  };
+  window.addEventListener("scroll", () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  update();
+})();
