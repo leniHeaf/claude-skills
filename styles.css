@@ -4324,3 +4324,24 @@ body.page-case3.bx-dark .c3-label, body.page-case3.bx-dark .c3-text, body.page-c
 @keyframes bx-twinkle { 0% { opacity: 0; } 20% { opacity: .8; } 30% { opacity: .1; } 50% { opacity: 1; } 60% { opacity: .4; } 100% { opacity: 1; } }
 
 .bx-fx--frost, .bx-fx--stars, .bx-fx--iris { mix-blend-mode: normal; }
+
+/* ==========================================================================
+   3D-Seitenübergänge
+   ========================================================================== */
+.bx3-ov { position: fixed; inset: 0; z-index: 9995; perspective: 1400px; pointer-events: none; }
+.bx3-card { position: absolute; background: #111 center / cover no-repeat; transform-style: preserve-3d; box-shadow: 0 60px 120px -30px rgba(0,0,0,.55); will-change: transform, left, top, width, height; }
+.bx3-ov--arrive .bx3-card { inset: 0; transition: opacity 900ms ease 250ms, transform 1300ms cubic-bezier(0.19, 1, 0.22, 1); }
+.bx3-ov--arrive.is-out .bx3-card { opacity: 0; transform: scale(1.06); }
+
+/* Seite fällt beim Projekt-Klick nach hinten weg */
+body.bx-diving > main, body.bx-diving > header, body.bx-diving > footer, body.bx-diving > .ticker, body.bx-diving > .c2-bar, body.bx-diving > .m9-marq { transition: transform 1100ms cubic-bezier(0.77, 0, 0.175, 1), opacity 900ms ease, filter 900ms; transform-origin: 50% 50vh; transform: perspective(1400px) translateZ(-420px) rotateX(10deg); opacity: 0.25; filter: blur(4px); }
+/* Seite klappt bei anderen Links weg */
+body.bx-leaving main, body.bx-leaving > .footer { transition: transform 650ms cubic-bezier(0.77, 0, 0.175, 1), opacity 650ms; transform-origin: 50% 0; transform: perspective(1400px) rotateX(-14deg) translateY(-6vh) scale(0.9); opacity: 0.2; }
+/* Neue Seite klappt herein */
+body.bx-enter main { animation: bx-enter 1200ms cubic-bezier(0.19, 1, 0.22, 1) both; transform-origin: 50% 0; }
+@keyframes bx-enter { from { transform: perspective(1400px) rotateX(12deg) translateY(10vh) scale(0.94); opacity: 0; } to { transform: none; opacity: 1; } }
+/* Ankunft aus einem Projekt-Klick: kein zweites Hereingleiten */
+body.bx-arrived .cs3 { animation: none !important; }
+body.bx-arrived .c3-hero img { animation: none !important; }
+@media (prefers-reduced-motion: reduce) { body.bx-diving > *, body.bx-leaving main, body.bx-enter main { transform: none !important; animation: none !important; } }
+.bx-arrived .c3-giant span { animation-delay: calc(250ms + var(--i) * 60ms); }

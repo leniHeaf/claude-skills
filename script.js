@@ -951,7 +951,7 @@
     if (url.pathname === location.pathname && url.hash) return;
     e.preventDefault();
     curtain.classList.remove("is-up");
-    curtain.classList.add("is-down");
+    curtain.classList.add("is-down"); document.body.classList.add("bx-leaving");
     setTimeout(() => { location.href = a.href; }, 650);
   });
 
@@ -2036,3 +2036,73 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
   }
 })();
 document.querySelectorAll(".c3-giant").forEach((g) => { const n = g.textContent.trim().length; g.style.setProperty("font-size", `min(17vw, ${(150 / Math.max(5, n)).toFixed(2)}vw, 300px)`, "important"); });
+
+// ==========================================================================
+// 3D-Seitenübergänge
+// – Projekt anklicken: das Bild löst sich aus der Seite, kippt in 3D und
+//   wächst auf den ganzen Bildschirm, die Seite dahinter fällt nach hinten
+//   weg; auf der Projektseite geht es nahtlos mit dem Titelbild weiter
+// – Alle anderen Links: die Seite klappt in 3D nach hinten weg, die neue
+//   Seite klappt nach vorn herein
+// ==========================================================================
+(() => {
+  if (!document.body.classList.contains("v5")) return;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let from = null;
+  try { from = JSON.parse(sessionStorage.getItem("bx3-from") || "null"); sessionStorage.removeItem("bx3-from"); } catch (e) {}
+
+  // Ankunft
+  if (!reduce) {
+    if (from && document.querySelector(".cs3")) {
+      document.body.classList.add("bx-arrived");
+      document.querySelector(".m8-curtain")?.remove();
+      const ov = document.createElement("div");
+      ov.className = "bx3-ov bx3-ov--arrive";
+      ov.innerHTML = `<div class="bx3-card" style="background-image:url('${from.src}')"></div>`;
+      document.body.appendChild(ov);
+      requestAnimationFrame(() => requestAnimationFrame(() => ov.classList.add("is-out")));
+      setTimeout(() => ov.remove(), 1400);
+    } else {
+      document.body.classList.add("bx-enter");
+      setTimeout(() => document.body.classList.remove("bx-enter"), 1400);
+    }
+  }
+  if (reduce) return;
+
+  // Abflug in ein Projekt
+  addEventListener("click", (e) => {
+    const a = e.target.closest('a[href^="projekt-"]');
+    if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+    const img = a.querySelector("img") || document.querySelector(".c3-next__i img");
+    if (!img) return;
+    e.preventDefault(); e.stopImmediatePropagation();
+    const r = img.getBoundingClientRect();
+    const src = img.currentSrc || img.src;
+    const ov = document.createElement("div");
+    ov.className = "bx3-ov";
+    const card = document.createElement("div");
+    card.className = "bx3-card";
+    card.style.backgroundImage = `url('${src}')`;
+    Object.assign(card.style, { left: r.left + "px", top: r.top + "px", width: r.width + "px", height: r.height + "px" });
+    ov.appendChild(card);
+    document.body.appendChild(ov);
+    img.style.visibility = "hidden";
+    document.body.classList.add("bx-diving");
+    const W = innerWidth, H = innerHeight;
+    const cx = r.left + r.width / 2 - W / 2, cy = r.top + r.height / 2 - H / 2;
+    card.animate([
+      { left: r.left + "px", top: r.top + "px", width: r.width + "px", height: r.height + "px", transform: "translateZ(0) rotateY(0) rotateX(0)", borderRadius: "0px" },
+      { left: (r.left - cx * 0.4) + "px", top: (r.top - cy * 0.4) + "px", width: r.width * 1.15 + "px", height: r.height * 1.15 + "px", transform: `translateZ(160px) rotateY(${cx > 0 ? -28 : 28}deg) rotateX(${cy > 0 ? 14 : -14}deg)`, borderRadius: "18px", offset: 0.45 },
+      { left: "0px", top: "0px", width: W + "px", height: H + "px", transform: "translateZ(0) rotateY(0) rotateX(0)", borderRadius: "0px" },
+    ], { duration: 1150, easing: "cubic-bezier(0.77, 0, 0.175, 1)", fill: "forwards" });
+    try { sessionStorage.setItem("bx3-from", JSON.stringify({ src })); } catch (err) {}
+    setTimeout(() => { location.href = a.href; }, 1150);
+  }, true);
+
+  addEventListener("pageshow", (e) => {
+    if (!e.persisted) return;
+    document.body.classList.remove("bx-diving", "bx-leaving");
+    document.querySelectorAll(".bx3-ov").forEach((o) => o.remove());
+    document.querySelectorAll('a[href^="projekt-"] img').forEach((i) => { i.style.visibility = ""; });
+  });
+})();
