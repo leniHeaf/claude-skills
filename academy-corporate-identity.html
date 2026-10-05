@@ -33,11 +33,11 @@
     <nav class="nav" aria-label="Hauptnavigation">
       <ul>
         <li><a href="index.html#about">Über uns</a></li>
+        <li class="has-sub"><button type="button" class="nav__toggle" aria-expanded="false">Leistungen<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></button><div class="sub"><div><p class="label-s">Strategie</p><a href="leistung-markenstrategie.html">Markenstrategie</a><a href="leistung-markenworkshop.html">Markenworkshop</a><a href="leistung-marken-kompass.html">Marken-Kompass</a><a href="leistung-brand-story.html">Brand Story</a><a href="leistung-naming.html">Naming</a></div><div><p class="label-s">Design</p><a href="leistung-brand-design.html">Brand Design</a></div><div><p class="label-s">Roll-out</p><a href="leistung-markenkommunikation.html">Markenkommunikation</a></div></div></li>
+        <li><a href="prozess.html">Prozess</a></li>
+        <li><a href="stories.html">Success Stories</a></li>
         <li><a href="work.html">Arbeiten</a></li>
-        <li><a href="jobs.html">Jobs</a></li>
-        <li><a href="academy.html" class="is-active" aria-current="page">Academy</a></li>
-        <li><a href="moodboard.html">Moodboard</a></li>
-        <li><a href="openspace.html">Open Space</a></li>
+        <li class="has-sub"><button type="button" class="nav__toggle is-active" aria-expanded="false">Academy<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></button><div class="sub"><div><p class="label-s">Lernen</p><a href="academy-training.html">Strategie-Training</a><a href="academy-ebook.html">Strategie-eBook</a><a href="academy-toolkit.html">Workshop-Toolkit</a><a href="academy-templates.html">Branding-Vorlagen</a><a href="academy-newsletter.html">Community-Newsletter</a></div><div><p class="label-s">Marken-Wiki</p><a href="academy.html#wiki">Alle Artikel</a><a href="academy.html#identitaet">Identität</a><a href="academy.html#strategie">Strategie</a><a href="academy.html#design">Design</a></div></div></li>
       </ul>
     </nav>
     <span class="header__year">© <span data-year>2026</span></span>
@@ -53,11 +53,17 @@
   <div class="menu" id="menu" data-menu hidden>
     <ul>
       <li><a href="index.html#about">Über uns</a></li>
+      <li><a href="leistung-markenstrategie.html">Markenstrategie</a></li>
+      <li><a href="leistung-markenworkshop.html">Markenworkshop</a></li>
+      <li><a href="leistung-marken-kompass.html">Marken-Kompass</a></li>
+      <li><a href="leistung-brand-story.html">Brand Story</a></li>
+      <li><a href="leistung-naming.html">Naming</a></li>
+      <li><a href="leistung-brand-design.html">Brand Design</a></li>
+      <li><a href="leistung-markenkommunikation.html">Markenkommunikation</a></li>
+      <li><a href="prozess.html">Prozess</a></li>
+      <li><a href="stories.html">Success Stories</a></li>
       <li><a href="work.html">Arbeiten</a></li>
-      <li><a href="jobs.html">Jobs</a></li>
       <li><a href="academy.html">Academy</a></li>
-      <li><a href="moodboard.html">Moodboard</a></li>
-      <li><a href="openspace.html">Open Space</a></li>
       <li><a href="kontakt.html">Kontakt</a></li>
     </ul>
   </div>
@@ -66,7 +72,7 @@
     <article class="lart">
       <header class="lart__intro">
         <div>
-          <p class="label-s"><a href="academy.html">Academy</a> · Identität · 5 Min. Lesezeit</p>
+          <p class="label-s"><a href="academy.html#wiki">Marken-Wiki</a> · <a href="academy.html#identitaet">Identität</a> · 5 Min. Lesezeit</p>
           <h1>Corporate Identity einfach erklärt</h1>
           <p class="lart__def">Die Corporate Identity ist das Selbstverständnis eines Unternehmens – das Design ist nur der sichtbare Teil davon.</p>
         </div>
@@ -89,29 +95,29 @@
       <p class="label-s">Weiterlesen</p>
       <ul class="lgrid">
       <li class="wcard-l" data-cat="Identität" data-reveal>
-        <a href="academy-corporate-design.html">
-          <span class="icon icon--sm" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 20h60v60H20zM20 50h60M50 20v60"/></svg></span>
+        <a href="academy-zielgruppe.html">
+          <span class="icon icon--sm" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><circle cx="50" cy="50" r="30"/><circle cx="50" cy="50" r="14"/><circle cx="50" cy="50" r="2"/></svg></span>
           <span class="label-s">Identität · 6 Min.</span>
-          <h3>Was gehört zum Corporate Design?</h3>
-          <p>Das Corporate Design ist das sichtbare System einer Marke: alle Elemente und Regeln, mit denen sie gestaltet wird.</p>
+          <h3>Wie definiert man eine Zielgruppe?</h3>
+          <p>Eine Zielgruppe ist keine Statistik, sondern eine Gruppe von Menschen mit einem gemeinsamen Problem, das eure Marke lösen kann.</p>
           <span class="ulink">Lesen <span aria-hidden="true">→</span></span>
         </a>
       </li>
       <li class="wcard-l" data-cat="Identität" data-reveal>
-        <a href="academy-brand-story.html">
-          <span class="icon icon--sm" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><path d="M22 60c0-14 6-24 18-28M22 60h16v20H22zM56 60c0-14 6-24 18-28M56 60h16v20H56z"/></svg></span>
+        <a href="academy-alleinstellungsmerkmal.html">
+          <span class="icon icon--sm" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><path d="M50 14l9 26h27l-22 16 8 27-22-16-22 16 8-27-22-16h27z"/></svg></span>
           <span class="label-s">Identität · 6 Min.</span>
-          <h3>Eine Brand Story erzählen</h3>
-          <p>Eine gute Markengeschichte macht nicht die Marke zur Heldin, sondern die Menschen, für die sie da ist.</p>
+          <h3>Was ist ein Alleinstellungsmerkmal?</h3>
+          <p>Ein Alleinstellungsmerkmal ist der Grund, warum sich jemand für euch entscheidet – und der bei keinem anderen Anbieter genauso gilt.</p>
           <span class="ulink">Lesen <span aria-hidden="true">→</span></span>
         </a>
       </li>
       <li class="wcard-l" data-cat="Identität" data-reveal>
-        <a href="academy-rebranding.html">
-          <span class="icon icon--sm" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><path d="M80 40a32 32 0 0 0-58-8M20 60a32 32 0 0 0 58 8"/><path d="M22 18v14h14M78 82V68H64"/></svg></span>
-          <span class="label-s">Identität · 7 Min.</span>
-          <h3>Wann lohnt sich ein Rebranding?</h3>
-          <p>Ein Rebranding lohnt sich, wenn die Marke nicht mehr zu dem passt, was das Unternehmen heute ist – nicht, wenn man sich am Logo sattgesehen hat.</p>
+        <a href="academy-markennamen-finden.html">
+          <span class="icon icon--sm" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><path d="M16 50 50 16h34v34L50 84z"/><circle cx="68" cy="32" r="5"/></svg></span>
+          <span class="label-s">Identität · 8 Min.</span>
+          <h3>Wie findet man einen Markennamen?</h3>
+          <p>Ein guter Name ist leicht zu sagen, schwer zu verwechseln und lässt Raum für die Geschichte, die ihr erzählen wollt.</p>
           <span class="ulink">Lesen <span aria-hidden="true">→</span></span>
         </a>
       </li>
@@ -126,6 +132,7 @@
       <span class="line"><span>reden →</span></span>
     </a>
     <div class="footer__grid">
+      <div><h4>Studio</h4><p><a href="work.html">Arbeiten</a><br><a href="jobs.html">Jobs</a><br><a href="moodboard.html">Moodboard</a><br><a href="openspace.html">Open Space</a></p></div>
       <div><h4>Adresse</h4><p>Musterstraße 1<br>12345 Musterstadt</p></div>
       <div><h4>Kontakt</h4><p><a href="mailto:hallo@example.com">hallo@example.com</a><br><a href="tel:+490000000">+49 000 000 00</a></p></div>
       <div><h4>Social</h4><p><a href="#">Instagram</a><br><a href="#">LinkedIn</a></p></div>

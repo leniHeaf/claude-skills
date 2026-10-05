@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Markenworkshop – Studio X</title>
+  <meta name="description" content="Platzhalter-Website eines Kreativstudios.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=JetBrains+Mono:wght@400;500&family=Newsreader:opsz,wght@6..72,300;6..72,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="theme-light page-academy">
+  <a class="skip" href="#main">Zum Inhalt springen</a>
+
+  <!-- Laufband -->
+  <div class="ticker" aria-label="Neuigkeiten">
+    <div class="ticker__track">
+      <ul class="ticker__list">
+        <li>Neues Projekt: <a href="projekt-runclub.html">Run Club</a> · Tuesdays 7:15am</li>
+        <li>Unterwegs: <a href="work.html">Projekt Nord</a> Stadtlauf 2026</li>
+        <li><a href="work.html">Neuer Auftritt</a> für Kunde Zwei</li>
+        <li>Studie: Jugendkultur für <a href="work.html">Marke Drei</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header" data-header>
+    <a class="logo" href="index.html#top" aria-label="Studio X – Startseite">STUDIO.X</a>
+    <p class="header__claim">Ein Kreativstudio<br>aus Musterstadt</p>
+    <nav class="nav" aria-label="Hauptnavigation">
+      <ul>
+        <li><a href="index.html#about">Über uns</a></li>
+        <li class="has-sub"><button type="button" class="nav__toggle is-active" aria-expanded="false">Leistungen<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></button><div class="sub"><div><p class="label-s">Strategie</p><a href="leistung-markenstrategie.html">Markenstrategie</a><a href="leistung-markenworkshop.html">Markenworkshop</a><a href="leistung-marken-kompass.html">Marken-Kompass</a><a href="leistung-brand-story.html">Brand Story</a><a href="leistung-naming.html">Naming</a></div><div><p class="label-s">Design</p><a href="leistung-brand-design.html">Brand Design</a></div><div><p class="label-s">Roll-out</p><a href="leistung-markenkommunikation.html">Markenkommunikation</a></div></div></li>
+        <li><a href="prozess.html">Prozess</a></li>
+        <li><a href="stories.html">Success Stories</a></li>
+        <li><a href="work.html">Arbeiten</a></li>
+        <li class="has-sub"><button type="button" class="nav__toggle" aria-expanded="false">Academy<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></button><div class="sub"><div><p class="label-s">Lernen</p><a href="academy-training.html">Strategie-Training</a><a href="academy-ebook.html">Strategie-eBook</a><a href="academy-toolkit.html">Workshop-Toolkit</a><a href="academy-templates.html">Branding-Vorlagen</a><a href="academy-newsletter.html">Community-Newsletter</a></div><div><p class="label-s">Marken-Wiki</p><a href="academy.html#wiki">Alle Artikel</a><a href="academy.html#identitaet">Identität</a><a href="academy.html#strategie">Strategie</a><a href="academy.html#design">Design</a></div></div></li>
+      </ul>
+    </nav>
+    <span class="header__year">© <span data-year>2026</span></span>
+    <a class="header__contact" href="kontakt.html">Kontakt
+      <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10h8M10.5 6.5 14 10l-3.5 3.5"/></svg>
+    </a>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="menu" data-burger>
+      <span></span><span></span><span class="sr">Menü</span>
+    </button>
+  </header>
+
+  <!-- Mobiles Menü -->
+  <div class="menu" id="menu" data-menu hidden>
+    <ul>
+      <li><a href="index.html#about">Über uns</a></li>
+      <li><a href="leistung-markenstrategie.html">Markenstrategie</a></li>
+      <li><a href="leistung-markenworkshop.html">Markenworkshop</a></li>
+      <li><a href="leistung-marken-kompass.html">Marken-Kompass</a></li>
+      <li><a href="leistung-brand-story.html">Brand Story</a></li>
+      <li><a href="leistung-naming.html">Naming</a></li>
+      <li><a href="leistung-brand-design.html">Brand Design</a></li>
+      <li><a href="leistung-markenkommunikation.html">Markenkommunikation</a></li>
+      <li><a href="prozess.html">Prozess</a></li>
+      <li><a href="stories.html">Success Stories</a></li>
+      <li><a href="work.html">Arbeiten</a></li>
+      <li><a href="academy.html">Academy</a></li>
+      <li><a href="kontakt.html">Kontakt</a></li>
+    </ul>
+  </div>
+
+  <main id="main">
+    <section class="lhero lhero--split">
+      <div class="lhero__text">
+        <p class="label-s">Leistungen · Strategie</p>
+        <h1>Ein Tag, an dem euer Team sich einig wird.</h1>
+        <p class="lhero__intro">Im Markenworkshop legt ihr gemeinsam die Grundlagen eurer Marke fest. Wir bereiten vor, moderieren und halten die Ergebnisse so fest, dass sie weiterwirken.</p>
+        <p><a class="pill" href="kontakt.html">Gespräch vereinbaren</a></p>
+      </div>
+      <div class="lhero__art"><span class="icon icon--xl" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><path d="M16 22h68v42H44L28 80V64H16z"/></svg></span></div>
+    </section>
+    <section class="lsec">
+      <p class="label-s">Was ihr bekommt</p>
+      <ul class="lgrid"><li class="feat" data-reveal><span class="icon icon--sm" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 20h60v60H20zM20 50h60M50 20v60"/></svg></span><h3>Vorbereitung</h3><p>Interviews und Material vorab, damit niemand bei null beginnt.</p></li><li class="feat" data-reveal><span class="icon icon--sm" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><circle cx="34" cy="38" r="10"/><circle cx="66" cy="38" r="10"/><path d="M14 78c2-14 10-22 20-22s18 8 20 22M46 78c2-14 10-22 20-22s18 8 20 22"/></svg></span><h3>Moderation</h3><p>Klare Methoden, faire Diskussion, feste Zeiten.</p></li><li class="feat" data-reveal><span class="icon icon--sm" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><rect x="26" y="16" width="48" height="68" rx="4"/><path d="M36 30h28M36 42h28M36 54h16"/></svg></span><h3>Dokumentation</h3><p>Ein kurzes Ergebnisdokument innerhalb von zwei Tagen.</p></li></ul>
+    </section>
+    <section class="lsec lsec--narrow">
+      <p class="label-s">So läuft es ab</p>
+      <ol class="phases"><li><div><h3>Vorgespräch</h3><p>Ziel und Teilnehmende festlegen.</p></div><span class="label-s">vorab</span></li><li><div><h3>Workshop</h3><p>Ein Tag vor Ort oder zwei halbe Tage remote.</p></div><span class="label-s">Tag 1</span></li><li><div><h3>Ergebnis</h3><p>Zusammenfassung und nächste Schritte.</p></div><span class="label-s">Tag 3</span></li></ol>
+    </section>
+    <section class="lsec lsec--narrow">
+      <p class="label-s">Häufige Fragen</p>
+      <div class="faq__list lfaq"><details class="faq__item"><summary><span>Wie viele Personen sollten teilnehmen?</span><i aria-hidden="true"></i></summary><div class="faq__body"><p>Fünf bis zehn sind ideal. Mehr Menschen bedeuten mehr Meinungen, aber nicht bessere Ergebnisse.</p></div></details><details class="faq__item"><summary><span>Geht das auch remote?</span><i aria-hidden="true"></i></summary><div class="faq__body"><p>Ja, aufgeteilt auf zwei kürzere Termine mit Online-Whiteboard.</p></div></details></div>
+    </section>
+    <section class="lrel">
+      <p class="label-s">Aus dem Marken-Wiki</p>
+      <ul class="lgrid">
+      <li class="wcard-l" data-cat="Identität" data-reveal>
+        <a href="academy-vision-statement.html">
+          <span class="icon icon--sm" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><path d="M26 86V14M26 18h48l-10 16 10 16H26"/></svg></span>
+          <span class="label-s">Identität · 5 Min.</span>
+          <h3>Ein Vision Statement schreiben</h3>
+          <p>Eine Vision beschreibt die Welt, die ihr mitgestalten wollt – so konkret, dass man sich darunter etwas vorstellen kann.</p>
+          <span class="ulink">Lesen <span aria-hidden="true">→</span></span>
+        </a>
+      </li>
+      <li class="wcard-l" data-cat="Identität" data-reveal>
+        <a href="academy-brand-values.html">
+          <span class="icon icon--sm" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><circle cx="34" cy="38" r="10"/><circle cx="66" cy="38" r="10"/><path d="M14 78c2-14 10-22 20-22s18 8 20 22M46 78c2-14 10-22 20-22s18 8 20 22"/></svg></span>
+          <span class="label-s">Identität · 5 Min.</span>
+          <h3>Markenwerte, die man im Alltag merkt</h3>
+          <p>Markenwerte sind Entscheidungsregeln. Wenn sie im Konfliktfall nicht helfen, sind sie nur Wörter an der Wand.</p>
+          <span class="ulink">Lesen <span aria-hidden="true">→</span></span>
+        </a>
+      </li>
+      <li class="wcard-l" data-cat="Strategie" data-reveal>
+        <a href="academy-markenworkshop.html">
+          <span class="icon icon--sm" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><path d="M16 22h68v42H44L28 80V64H16z"/></svg></span>
+          <span class="label-s">Strategie · 6 Min.</span>
+          <h3>Einen Markenworkshop gut vorbereiten</h3>
+          <p>Ein Markenworkshop entscheidet in wenigen Stunden über Grundlagen, die Jahre halten sollen. Vorbereitung ist deshalb die halbe Arbeit.</p>
+          <span class="ulink">Lesen <span aria-hidden="true">→</span></span>
+        </a>
+      </li>
+      </ul>
+    </section>
+    <section class="ltoolkit" data-reveal>
+      <div class="ltoolkit__text">
+        <h2>Klingt passend?</h2>
+        <p>Erzählt uns in einem kurzen Gespräch, wo eure Marke gerade steht. Wir melden uns innerhalb von zwei Werktagen.</p>
+        <p><a class="pill" href="kontakt.html">Gespräch vereinbaren</a></p>
+      </div>
+      <div class="ltoolkit__art" aria-hidden="true"><span class="icon icon--lg" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><path d="M16 22h68v42H44L28 80V64H16z"/></svg></span></div>
+    </section>
+  </main>
+
+  <a class="book" href="kontakt.html"><span class="book__faces" aria-hidden="true"><i></i><i></i><i></i></span>Termin buchen</a>
+  <footer class="footer" id="contact">
+    <a class="footer__cta" href="mailto:hallo@example.com">
+      <span class="line"><span>Lass uns</span></span>
+      <span class="line"><span>reden →</span></span>
+    </a>
+    <div class="footer__grid">
+      <div><h4>Studio</h4><p><a href="work.html">Arbeiten</a><br><a href="jobs.html">Jobs</a><br><a href="moodboard.html">Moodboard</a><br><a href="openspace.html">Open Space</a></p></div>
+      <div><h4>Adresse</h4><p>Musterstraße 1<br>12345 Musterstadt</p></div>
+      <div><h4>Kontakt</h4><p><a href="mailto:hallo@example.com">hallo@example.com</a><br><a href="tel:+490000000">+49 000 000 00</a></p></div>
+      <div><h4>Social</h4><p><a href="#">Instagram</a><br><a href="#">LinkedIn</a></p></div>
+      <div><h4>Rechtliches</h4><p><a href="#">Impressum</a><br><a href="#">Datenschutz</a></p></div>
+    </div>
+    <div class="footer__bottom">
+      <span class="logo logo--big" aria-hidden="true">STUDIO.X</span>
+      <span>© <span data-year>2026</span> Studio X</span>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

@@ -241,3 +241,32 @@
     map.forEach((_, id) => { const h = document.getElementById(id); if (h) io.observe(h); });
   }
 })();
+
+// Dropdown-Navigation: per Klick, Tastatur und Escape bedienbar
+(() => {
+  const subs = [...document.querySelectorAll(".has-sub")];
+  if (!subs.length) return;
+  const close = (except) => subs.forEach((li) => {
+    if (li === except) return;
+    li.classList.remove("is-open");
+    li.querySelector(".nav__toggle").setAttribute("aria-expanded", "false");
+  });
+  subs.forEach((li) => {
+    const btn = li.querySelector(".nav__toggle");
+    btn.addEventListener("click", () => {
+      const open = !li.classList.contains("is-open");
+      close(li);
+      li.classList.toggle("is-open", open);
+      btn.setAttribute("aria-expanded", String(open));
+    });
+    li.addEventListener("mouseenter", () => btn.setAttribute("aria-expanded", "true"));
+    li.addEventListener("mouseleave", () => { if (!li.classList.contains("is-open")) btn.setAttribute("aria-expanded", "false"); });
+  });
+  document.addEventListener("click", (e) => { if (!e.target.closest(".has-sub")) close(); });
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape") return;
+    const openLi = subs.find((li) => li.classList.contains("is-open"));
+    close();
+    openLi?.querySelector(".nav__toggle").focus();
+  });
+})();
