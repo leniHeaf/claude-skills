@@ -160,7 +160,7 @@
 // Moodboard-Filter, Lightbox und Kontaktformular
 (() => {
   const chips = document.querySelectorAll(".chips [data-filter]");
-  const items = document.querySelectorAll(".mood__item");
+  const items = document.querySelectorAll(".mood__item, .acard[data-cat]");
   chips.forEach((chip) =>
     chip.addEventListener("click", () => {
       chips.forEach((c) => c.classList.toggle("is-active", c === chip));
@@ -204,5 +204,38 @@
         : "Bitte die markierten Felder ausfüllen.";
       if (ok) form.reset();
     });
+  }
+})();
+
+// Academy: Newsletter-Formular und aktives Kapitel im Inhaltsverzeichnis
+(() => {
+  const nl = document.querySelector("[data-newsletter]");
+  if (nl) {
+    const status = nl.querySelector(".form__status");
+    nl.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const input = nl.querySelector("input[type=email]");
+      const ok = input.checkValidity() && input.value.trim() !== "";
+      input.closest(".field").classList.toggle("is-invalid", !ok);
+      status.textContent = ok
+        ? "Danke! (Platzhalter – hier ist noch kein Versand angebunden.)"
+        : "Bitte eine gültige E-Mail-Adresse eingeben.";
+      if (ok) nl.reset();
+    });
+  }
+
+  const tocLinks = [...document.querySelectorAll(".article__toc a")];
+  if (tocLinks.length && "IntersectionObserver" in window) {
+    const map = new Map(tocLinks.map((a) => [a.getAttribute("href").slice(1), a]));
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((en) => {
+          if (!en.isIntersecting) return;
+          tocLinks.forEach((a) => a.classList.toggle("is-current", a === map.get(en.target.id)));
+        });
+      },
+      { rootMargin: "-20% 0px -70% 0px" }
+    );
+    map.forEach((_, id) => { const h = document.getElementById(id); if (h) io.observe(h); });
   }
 })();
