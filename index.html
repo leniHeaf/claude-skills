@@ -12,13 +12,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body class="page-home v5">
+<body class="page-home v5 v6">
   <a class="skip" href="#main">Zum Inhalt springen</a>
 
   <!-- Laufband -->
   <div class="ticker" aria-label="Neuigkeiten">
     <div class="ticker__track">
-      <ul class="ticker__list"><li>Neues Projekt: <a href="projekt-runclub.html">Run Club</a> · Tuesdays 7:15am</li><li>Academy: <a href="academy.html">30 Artikel im Marken-Wiki</a></li></ul>
+      <ul class="ticker__list"><li>Kostenloses Erstgespräch – <a href="#anfrage">jetzt Termin sichern</a></li></ul>
     </div>
   </div>
 
@@ -161,6 +161,17 @@
           <div class="faq__list lfaq"><details class="faq__item"><summary><span>Was kostet ein Branding-Projekt?</span><i aria-hidden="true"></i></summary><div class="faq__body"><p>Das hängt vom Umfang ab. Eine Markenstrategie beginnt im mittleren vierstelligen Bereich, ein vollständiges Branding mit Design und Vorlagen liegt meist im fünfstelligen Bereich. Nach dem Erstgespräch bekommt ihr ein klares Angebot.</p></div></details><details class="faq__item"><summary><span>Wie lange dauert es?</span><i aria-hidden="true"></i></summary><div class="faq__body"><p>Eine Strategie sechs bis acht Wochen, ein komplettes Branding drei bis vier Monate.</p></div></details><details class="faq__item"><summary><span>Arbeitet ihr auch mit kleinen Unternehmen?</span><i aria-hidden="true"></i></summary><div class="faq__body"><p>Ja. Viele unserer Kund:innen sind Start-ups und Familienunternehmen. Entscheidend ist der Wille, die Marke ernst zu nehmen.</p></div></details><details class="faq__item"><summary><span>Wem gehören die Ergebnisse?</span><i aria-hidden="true"></i></summary><div class="faq__body"><p>Euch. Alle Dateien und Nutzungsrechte gehen nach Abschluss vollständig auf euch über.</p></div></details></div>
         </div>
       </div>
+    </section>
+    <!-- Newsletter -->
+    <section class="k-news" aria-labelledby="k-news-t">
+      <h2 id="k-news-t">Newsletter abonnieren</h2>
+      <p>Einmal im Monat: neue Projekte, Artikel aus der Academy und Einladungen zu Talks im Studio.</p>
+      <form class="k-news__form" novalidate>
+        <label class="sr" for="k-news-mail">E-Mail-Adresse</label>
+        <div class="k-news__row"><input id="k-news-mail" type="email" name="email" placeholder="E-Mail-Adresse eingeben" autocomplete="email" required><button type="submit">OK</button></div>
+        <label class="k-news__check"><input type="checkbox" required> Ich habe die Datenschutzerklärung gelesen und akzeptiere sie.</label>
+        <p class="form__status" role="status" aria-live="polite"></p>
+      </form>
     </section>
   </main>
 

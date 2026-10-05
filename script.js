@@ -833,3 +833,19 @@
     list.scrollBy({ left: Number(b.dataset.k) * step, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
   }));
 })();
+
+// Lagerfeld-Newsletter: Prüfung von E-Mail und Datenschutz-Häkchen
+(() => {
+  const f = document.querySelector(".k-news__form");
+  if (!f) return;
+  const st = f.querySelector(".form__status");
+  f.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const mail = f.querySelector("input[type=email]");
+    const ok = f.querySelector("input[type=checkbox]");
+    if (!(mail.checkValidity() && mail.value.trim())) { st.textContent = "Bitte eine gültige E-Mail-Adresse eingeben."; return; }
+    if (!ok.checked) { st.textContent = "Bitte die Datenschutzerklärung bestätigen."; return; }
+    st.textContent = "Danke! (Platzhalter – hier ist noch kein Versand angebunden.)";
+    f.reset();
+  });
+})();
