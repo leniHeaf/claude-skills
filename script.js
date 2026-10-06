@@ -2312,7 +2312,7 @@ document.querySelectorAll(".c3-giant").forEach((g) => { const n = g.textContent.
   const g = document.querySelector(".c3-giant");
   if (g) { g.style.removeProperty("font-size"); const n = g.textContent.trim().length; g.style.setProperty("--gs", Math.min(19, 150 / Math.max(4, n)).toFixed(2) + "vw"); }
 })();
-const LION = {"vb": [0, 0, 200, 200], "t": [0, 0], "parts": [{"p": "mane", "d": "M100.0 34.0 C102.1 17.1 138.0 22.4 136.4 15.1 C129.2 27.4 126.6 29.5 126.8 39.3 C135.2 24.5 166.4 43.2 167.6 35.8 C156.3 44.4 153.1 45.3 149.5 54.5 C162.9 44.0 184.6 73.2 188.5 66.9 C174.8 70.5 171.5 70.1 164.7 77.2 C181.1 72.7 188.7 107.9 196.0 103.6 C182.0 101.7 179.0 100.0 170.0 104.0 C186.2 106.1 171.2 137.2 178.8 136.2 C168.4 130.1 167.0 127.9 157.2 127.7 C169.8 134.9 147.4 155.7 153.8 157.3 C147.3 148.7 146.9 146.4 139.0 143.0 C146.9 153.2 122.1 164.7 126.9 168.0 C124.3 158.3 124.7 156.1 119.4 150.7 C122.6 162.4 97.2 167.0 100.3 171.2 C101.6 161.4 102.8 159.3 100.0 153.0 C98.5 164.8 72.3 163.4 73.7 168.2 C79.0 159.1 80.9 157.4 80.6 150.7 C74.5 161.7 47.1 152.5 46.8 157.7 C56.0 150.6 58.7 149.6 61.0 143.0 C50.1 151.5 24.1 131.6 21.7 136.8 C34.3 133.4 37.7 133.5 42.8 127.7 C27.7 131.9 10.1 100.1 4.1 104.4 C18.7 106.3 22.2 107.9 30.0 104.0 C13.1 101.9 18.4 66.0 11.1 67.6 C23.4 74.8 25.5 77.4 35.3 77.2 C20.5 68.8 39.2 37.6 31.8 36.4 C40.4 47.7 41.3 50.9 50.5 54.5 C40.0 41.1 69.2 19.4 62.9 15.5 C66.5 29.2 66.1 32.5 73.2 39.3 C68.7 22.9 103.9 14.1 99.6 8.0 C97.7 22.0 96.0 25.0 100.0 34.0 Z"}, {"p": "mane2", "d": "M111.1 49.1 C112.3 33.5 111.9 31.0 117.3 25.9 C116.1 40.0 138.1 52.1 135.4 60.6 C143.6 47.2 144.5 44.9 151.6 42.9 C144.0 54.8 157.9 75.7 151.5 82.0 C165.0 74.0 166.9 72.3 174.1 73.8 C161.8 80.8 163.8 105.9 154.5 108.3 C170.4 107.6 173.0 107.0 177.3 111.5 C163.0 111.9 147.9 130.9 139.8 129.1 C152.2 134.9 154.4 135.5 155.9 140.6 C144.9 135.2 126.2 144.4 120.8 139.9 C128.0 149.4 129.5 150.7 128.7 155.6 C122.3 147.0 104.1 149.0 101.6 143.2 C103.5 154.1 104.1 155.7 101.3 160.0 C99.8 150.2 82.2 147.0 82.6 140.9 C79.1 151.6 79.0 153.3 74.1 156.4 C77.3 146.9 60.1 137.3 63.4 131.6 C54.5 140.3 53.5 141.9 46.7 142.7 C54.8 135.0 41.0 116.7 47.4 112.6 C33.7 116.8 31.8 117.9 24.3 115.0 C36.7 111.4 37.9 86.8 46.9 86.3 C31.4 83.3 28.9 83.4 24.5 77.4 C38.4 80.3 53.1 59.9 61.2 63.7 C48.9 53.8 46.7 52.7 45.5 45.4 C56.4 54.4 78.9 43.1 84.3 50.2 C78.1 35.8 76.6 33.8 79.0 26.8 C84.5 39.9 109.6 40.3 111.1 49.1 Z"}, {"p": "face", "d": "M70.0 58.0 L76.0 44.0 L86.0 50.0 Z"}, {"p": "face", "d": "M130.0 58.0 L124.0 44.0 L114.0 50.0 Z"}, {"p": "face", "d": "M100.0 46.0 L116.0 49.0 L128.0 57.0 L134.0 72.0 L133.0 92.0 L128.0 110.0 L120.0 126.0 L110.0 140.0 L100.0 146.0 L90.0 140.0 L80.0 126.0 L72.0 110.0 L67.0 92.0 L66.0 72.0 L72.0 57.0 L84.0 49.0 Z"}, {"p": "relief", "d": "M68.0 72.0 L80.0 66.0 L94.0 70.0 L92.0 74.0 L80.0 71.0 L70.0 76.0 Z"}, {"p": "relief", "d": "M132.0 72.0 L120.0 66.0 L106.0 70.0 L108.0 74.0 L120.0 71.0 L130.0 76.0 Z"}, {"p": "relief", "d": "M96.0 90.0 L98.0 100.0 L90.0 104.0 L86.0 96.0 Z"}, {"p": "relief", "d": "M104.0 90.0 L102.0 100.0 L110.0 104.0 L114.0 96.0 Z"}, {"p": "cut", "d": "M73.0 84.0 L83.0 79.0 L93.0 82.0 L87.0 87.0 L78.0 88.0 Z"}, {"p": "cut", "d": "M127.0 84.0 L117.0 79.0 L107.0 82.0 L113.0 87.0 L122.0 88.0 Z"}, {"p": "cut", "d": "M90.0 102.0 L110.0 102.0 L106.0 112.0 L100.0 117.0 L94.0 112.0 Z"}, {"p": "cut", "d": "M100.0 128.0 L92.0 134.0 L84.0 132.0 L86.0 136.0 L93.0 138.0 L100.0 134.0 Z"}, {"p": "cut", "d": "M100.0 128.0 L108.0 134.0 L116.0 132.0 L114.0 136.0 L107.0 138.0 L100.0 134.0 Z"}, {"p": "line", "d": "M100 120 L100 128"}]};
+const LION = {"vb": [10.0, 4.0, 230.0, 150.0], "t": [0, 0], "parts": [{"p": "body", "d": "M26 40 L40 32 L40 24 L56 16 C70 17 82 21 92 27 L102 22 L102 34 C108 41 112 50 113 58 L124 58 L114 68 L162 68 C172 68 180 76 180 86 L196 136 L168 136 C168 129 173 124 180 124 L172 104 C158 116 140 120 124 120 C118 120 112 119 106 117 L80 136 L54 136 C54 129 60 124 68 124 L86 106 C76 96 72 84 72 72 C72 64 76 58 82 56 L82 52 L60 52 L52 60 L38 60 L26 52 Z"}, {"p": "body2", "d": "M114 124 L146 124 C156 124 164 120 170 114 L180 132 L160 142 L114 142 C114 134 120 128 128 128 Z"}, {"p": "body2", "d": "M72 88 L58 76 L50 76 C46 72 40 72 34 75 L50 90 L60 106 L71 106 C67 100 67 94 72 88 Z"}, {"p": "tail", "d": "M160 68 L196 68 C206 68 212 60 212 50 C212 42 218 36 226 36 L226 46 C223 46 222 48 222 50 C222 66 210 78 196 78 L160 78 Z"}, {"p": "tail", "d": "M220 22 C229 22 236 29 236 38 L220 38 Z"}, {"p": "cut", "d": "M46 38 L56 34 L56 40 L48 42 Z"}]};
 // ==========================================================================
 // Studio-Logo: Löwe. 3D-Chrom-Intro (Startseite, einmal pro Besuch) +
 // Löwe im Header und im Ladebildschirm
@@ -2322,7 +2322,7 @@ const LION = {"vb": [0, 0, 200, 200], "t": [0, 0], "parts": [{"p": "mane", "d": 
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const svg = (cls) => {
     const [x, y, w, h] = LION.vb;
-    return `<svg class="${cls}" viewBox="${x} ${y} ${w} ${h}" aria-hidden="true"><g transform="translate(${LION.t[0]} ${LION.t[1]})">${LION.parts.map((p) => p.p === "line" ? `<path d="${p.d}" fill="none" stroke="var(--lion-cut,#fff)" stroke-width="2.5" stroke-linecap="round"/>` : `<path d="${p.d}" fill="${p.p === "cut" ? "var(--lion-cut,#fff)" : "currentColor"}"${p.p === "mane2" || p.p === "relief" ? ' opacity=".62"' : ""}/>`).join("")}</g></svg>`;
+    return `<svg class="${cls}" viewBox="${x} ${y} ${w} ${h}" aria-hidden="true"><g transform="translate(${LION.t[0]} ${LION.t[1]})">${LION.parts.map((p) => p.p === "line" ? `<path d="${p.d}" fill="none" stroke="var(--lion-cut,#fff)" stroke-width="2.5" stroke-linecap="round"/>` : `<path d="${p.d}" fill="${p.p === "cut" ? "var(--lion-cut,#fff)" : "currentColor"}"${p.p === "mane2" || p.p === "relief" || p.p === "body2" ? ' opacity=".55"' : ""}/>`).join("")}</g></svg>`;
   };
   // Header-Logo
   document.querySelectorAll(".header .logo").forEach((l) => { if (!l.querySelector(".lion-mark")) l.insertAdjacentHTML("afterbegin", svg("lion-mark")); });
@@ -2374,31 +2374,31 @@ const LION = {"vb": [0, 0, 200, 200], "t": [0, 0], "parts": [{"p": "mane", "d": 
     const ec = document.createElement("canvas"); ec.width = 1024; ec.height = 512; const g = ec.getContext("2d");
     const bg = g.createLinearGradient(0, 0, 0, 512); bg.addColorStop(0, "#2a2014"); bg.addColorStop(0.45, "#0b0b0c"); bg.addColorStop(1, "#000"); g.fillStyle = bg; g.fillRect(0, 0, 1024, 512);
     const box = (x, y, w, h, c) => { const gg = g.createRadialGradient(x + w / 2, y + h / 2, 0, x + w / 2, y + h / 2, Math.max(w, h) / 2); gg.addColorStop(0, c); gg.addColorStop(1, "rgba(0,0,0,0)"); g.fillStyle = gg; g.fillRect(x, y, w, h); };
-    box(80, 20, 360, 260, "rgba(255,236,200,1)"); box(560, 10, 420, 180, "rgba(255,255,255,.9)"); box(380, 280, 300, 120, "rgba(160,190,255,.5)"); box(880, 180, 160, 260, "rgba(255,220,170,.8)");
+    box(80, 20, 360, 260, "rgba(255,236,200,1)"); box(560, 10, 420, 180, "rgba(255,255,255,.9)"); box(380, 280, 300, 120, "rgba(220,30,30,.35)"); box(880, 180, 160, 260, "rgba(255,220,170,.8)");
     const et = new T.CanvasTexture(ec); et.mapping = T.EquirectangularReflectionMapping; et.encoding = T.sRGBEncoding;
     const env = new T.PMREMGenerator(R).fromEquirectangular(et).texture; scene.environment = env;
-    const chrome = new T.MeshStandardMaterial({ color: 0xf2eee6, metalness: 1, roughness: 0.14, envMapIntensity: 2.4 });
+    const chrome = new T.MeshStandardMaterial({ color: 0xe4e2de, metalness: 1, roughness: 0.3, envMapIntensity: 2.2 });
     const dark = new T.MeshBasicMaterial({ color: 0x050505 });
-    const lionMat = new T.MeshStandardMaterial({ color: 0xcfcac0, metalness: 0.92, roughness: 0.2, envMapIntensity: 2.2 });
-    const front = new T.DirectionalLight(0xfff1dd, 0.9); front.position.set(1.5, 2.5, 10); scene.add(front);
+    const lionMat = new T.MeshStandardMaterial({ color: 0xd8d6d2, metalness: 0.9, roughness: 0.34, envMapIntensity: 2.2 });
+    const front = new T.DirectionalLight(0xfff1dd, 0.35); front.position.set(1.5, 2.5, 10); scene.add(front);
     const rim = new T.DirectionalLight(0xc9d6ff, 1.2); rim.position.set(-6, 3, -4); scene.add(rim);
 
     const toShape = (d) => { const s = new T.Shape(); const n = d.match(/[MLCZ]|-?\d*\.?\d+/g); let i = 0, c = ""; const P = () => [parseFloat(n[i++]) + LION.t[0], -(parseFloat(n[i++]) + LION.t[1])];
       while (i < n.length) { if (/[MLCZ]/.test(n[i])) c = n[i++]; if (c === "M") s.moveTo(...P()); else if (c === "L") s.lineTo(...P()); else if (c === "C") { const a = P(), b = P(), e = P(); s.bezierCurveTo(...a, ...b, ...e); } else if (c === "Z") s.closePath(); } return s; };
     const lion = new T.Group();
     LION.parts.forEach((p) => { if (p.p === "line") return;
-      const D = { mane: [5, 0], mane2: [6, 4], face: [8, 9], relief: [2.5, 19.2], cut: [1, 20.4] }[p.p] || [4, 0];
+      const D = { body: [9, 0], body2: [5, -4], tail: [6, 0], cut: [1, 11.4] }[p.p] || [4, 0];
       const geo = new T.ExtrudeGeometry(toShape(p.d), { depth: D[0], bevelEnabled: p.p !== "cut", bevelThickness: 2, bevelSize: 1.2, bevelSegments: 5, curveSegments: 18 });
       const m = new T.Mesh(geo, p.p === "cut" ? dark : lionMat); m.position.z = D[1]; lion.add(m); });
-    const [vx, vy, vw] = LION.vb, sc = 3.6 / vw;
-    lion.scale.setScalar(sc); lion.position.set(-(vx + vw / 2) * sc, (vy + vw / 2) * sc, -0.2);
+    const [vx, vy, vw, vh] = LION.vb, sc = 4.1 / vw;
+    lion.scale.setScalar(sc); lion.position.set(-(vx + vw / 2) * sc, (vy + vh / 2) * sc, -0.2);
     const emblem = new T.Group(); emblem.add(lion);
-    const curve = new T.EllipseCurve(0, 0, 2.15, 2.65, 0, Math.PI * 2);
-    const ring = new T.Mesh(new T.TubeGeometry(new T.CatmullRomCurve3(curve.getPoints(220).map((p) => new T.Vector3(p.x, p.y, 0)), true), 400, 0.09, 24, true), chrome);
+    const sq = (a, b, n) => { const pts = []; for (let i = 0; i < 240; i++) { const t = i / 240 * Math.PI * 2, c = Math.cos(t), s = Math.sin(t); pts.push(new T.Vector3(a * Math.sign(c) * Math.pow(Math.abs(c), 2 / n), b * Math.sign(s) * Math.pow(Math.abs(s), 2 / n), 0)); } return new T.CatmullRomCurve3(pts, true); };
+    const ring = new T.Mesh(new T.TubeGeometry(sq(2.35, 2.75, 3.2), 480, 0.1, 24, true), chrome);
     emblem.add(ring);
-    const ring2 = new T.Mesh(new T.TubeGeometry(new T.CatmullRomCurve3(new T.EllipseCurve(0, 0, 2.42, 2.92, 0, Math.PI * 2).getPoints(220).map((p) => new T.Vector3(p.x, p.y, 0)), true), 400, 0.025, 12, true), chrome);
+    const ring2 = new T.Mesh(new T.TubeGeometry(sq(2.62, 3.02, 3.2), 480, 0.02, 12, true), chrome);
     emblem.add(ring2);
-    emblem.position.y = 0.55; scene.add(emblem);
+    emblem.position.y = 1.0; scene.add(emblem);
 
     // Wolken/Nebel aus weichen Sprites
     const cc = document.createElement("canvas"); cc.width = cc.height = 256; const c2 = cc.getContext("2d");
@@ -2406,16 +2406,24 @@ const LION = {"vb": [0, 0, 200, 200], "t": [0, 0], "parts": [{"p": "mane", "d": 
     const cloudTex = new T.CanvasTexture(cc);
     const clouds = [];
     for (let i = 0; i < 70; i++) {
-      const m = new T.Sprite(new T.SpriteMaterial({ map: cloudTex, color: i % 3 ? 0x9aa3b5 : 0xd9b98a, transparent: true, opacity: 0.55, depthWrite: false }));
+      const m = new T.Sprite(new T.SpriteMaterial({ map: cloudTex, color: i % 3 ? 0x5a5a5a : 0x6a0a0a, transparent: true, opacity: 0.5, depthWrite: false }));
       const z = -Math.random() * 60; m.position.set((Math.random() - 0.5) * 30, -4 - Math.random() * 6 + (i % 4 === 0 ? 9 : 0), z);
       const s = 8 + Math.random() * 14; m.scale.set(s, s * 0.6, 1); m.userData.v = 0.2 + Math.random() * 0.5; scene.add(m); clouds.push(m);
     }
     // Lichtstrahlen hinter dem Emblem
     const rayC = document.createElement("canvas"); rayC.width = rayC.height = 512; const rg2 = rayC.getContext("2d");
-    rg2.translate(256, 256); for (let i = 0; i < 36; i++) { rg2.rotate(Math.PI * 2 / 36); const gr = rg2.createLinearGradient(0, 0, 0, 256); gr.addColorStop(0, "rgba(255,230,190,.55)"); gr.addColorStop(1, "rgba(255,230,190,0)"); rg2.fillStyle = gr; rg2.beginPath(); rg2.moveTo(0, 0); rg2.lineTo(-6 - Math.random() * 10, 256); rg2.lineTo(6 + Math.random() * 10, 256); rg2.fill(); }
+    rg2.translate(256, 256); for (let i = 0; i < 36; i++) { rg2.rotate(Math.PI * 2 / 36); const gr = rg2.createLinearGradient(0, 0, 0, 256); gr.addColorStop(0, "rgba(214,24,24,.75)"); gr.addColorStop(1, "rgba(214,24,24,0)"); rg2.fillStyle = gr; rg2.beginPath(); rg2.moveTo(0, 0); rg2.lineTo(-6 - Math.random() * 10, 256); rg2.lineTo(6 + Math.random() * 10, 256); rg2.fill(); }
     const rays = new T.Mesh(new T.PlaneGeometry(15, 15), new T.MeshBasicMaterial({ map: new T.CanvasTexture(rayC), transparent: true, opacity: 0, depthWrite: false, blending: T.AdditiveBlending }));
     rays.position.z = -3; scene.add(rays);
-    const key = new T.PointLight(0xffe2b8, 3, 40); scene.add(key);
+    const key = new T.PointLight(0xffffff, 1.6, 30); scene.add(key);
+    // Gravur im Emblem: Name oben, Jahr unten (wie ein klassisches Siegel)
+    const label = (txt, y, size) => { const tc = document.createElement("canvas"); tc.width = 1024; tc.height = 128; const x = tc.getContext("2d");
+      x.fillStyle = "#fff"; x.font = `800 ${size}px Montserrat, Arial, sans-serif`; x.textAlign = "center"; x.textBaseline = "middle";
+      const sp = txt.split("").join(String.fromCharCode(8202, 8202)); x.fillText(sp, 512, 64);
+      const m = new T.Mesh(new T.PlaneGeometry(3.4, 0.425), new T.MeshBasicMaterial({ map: new T.CanvasTexture(tc), transparent: true, opacity: 0.85 }));
+      m.position.set(0, y, 0.25); emblem.add(m); };
+    label("M · O · U", 2.05, 54); label("EST. MMXXVI", -2.18, 44);
+    const bar = new T.Mesh(new T.BoxGeometry(0.9, 0.05, 0.05), new T.MeshBasicMaterial({ color: 0xd61818 })); bar.position.set(0, -1.72, 0.25); emblem.add(bar);
 
     const start = performance.now();
     const ease = (k) => k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
@@ -2424,14 +2432,14 @@ const LION = {"vb": [0, 0, 200, 200], "t": [0, 0], "parts": [{"p": "mane", "d": 
       const t = (now - start) / 1000;
       // Kamera: fliegt durch die Wolken nach vorn und bremst vor dem Emblem
       const k = Math.min(1, t / 5.2), e = ease(k);
-      cam.position.set(Math.sin(t * 0.3) * 0.3 * (1 - e), 1.6 * (1 - e) + 0.15, 46 - e * 33.5);
+      cam.position.set(Math.sin(t * 0.3) * 0.3 * (1 - e), 1.6 * (1 - e) + 0.15, 46 - e * 32);
       cam.lookAt(0, 0.1, 0);
       emblem.rotation.y = (1 - e) * 1.4 + Math.sin(t * 0.6) * 0.05 * e;
       emblem.rotation.x = (1 - e) * -0.25;
       key.position.set(Math.sin(t * 0.8) * 8, 4, 8);
       env.rotation = t * 0.25;
       chrome.envMapIntensity = 2.2 + Math.max(0, Math.sin(t * 1.2 - 4)) * 1.8;
-      rays.material.opacity = Math.max(0, Math.min(0.3, (t - 3.2) / 2)); rays.rotation.z = t * 0.05;
+      rays.material.opacity = Math.max(0, Math.min(0.4, (t - 3.2) / 2)); rays.rotation.z = t * 0.05;
       scene.fog.density = 0.045 - e * 0.03;
       clouds.forEach((c) => { c.position.x += c.userData.v * 0.01 * (c.position.x > 0 ? 1 : -1); c.material.opacity = 0.55 * (1 - Math.max(0, (t - 4.5) / 2)); });
       if (t > 4.6) ov.classList.add("is-title");

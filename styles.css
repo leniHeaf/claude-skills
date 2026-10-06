@@ -4549,3 +4549,13 @@ html.pre-lock .lion-intro { visibility: hidden; }
 .mou__skip:hover { opacity: 1; }
 @media (max-width: 700px) { .mou__key { transform: scale(0.75); } .mou__hint { top: 40px; font-size: 10px !important; } }
 .mou__cv { pointer-events: none; } .mou__key { z-index: 2; }
+.lion-mark { width: 2.3em; height: 1.5em; }
+/* MOU: Schwarz – Rot – Weiß */
+.mou__word span { background: none !important; color: #fff !important; -webkit-background-clip: border-box; }
+.mou__word { position: relative; }
+.mou__word::after { content: ""; position: absolute; left: 50%; bottom: -14px; width: 0; height: 4px; background: #d61818; transform: translateX(-50%); transition: width 900ms cubic-bezier(0.19, 1, 0.22, 1) 900ms; }
+.mou.is-title .mou__word::after { width: 120px; }
+.mou__pre { color: #d61818; opacity: 0; }
+.mou.is-title .mou__pre { opacity: 1; }
+.mou__sub { margin-top: 26px; }
+.mou__title { bottom: 4vh; } .mou__word { font-size: clamp(60px, 11vw, 170px) !important; }
