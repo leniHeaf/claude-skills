@@ -31,7 +31,7 @@
         <stop class="ll-s1" offset="0" stop-color="#fff"/><stop class="ll-s2" offset="0" stop-color="#000"/>
       </linearGradient>
       <mask id="ll-rev" maskUnits="userSpaceOnUse" x="-20" y="-20" width="300" height="200"><rect x="-20" y="-20" width="300" height="200" fill="url(#ll-lg)"/></mask>
-      <radialGradient id="ll-gl"><stop offset="0" stop-color="#fff" stop-opacity=".085"/><stop offset=".45" stop-color="#d61818" stop-opacity=".045"/><stop offset="1" stop-color="#d61818" stop-opacity="0"/></radialGradient>
+      <radialGradient id="ll-gl"><stop offset="0" stop-color="#fff" stop-opacity=".085"/><stop offset=".45" stop-color="#fff" stop-opacity=".035"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
       <mask id="ll-veil" maskUnits="userSpaceOnUse" x="0" y="0" width="100%" height="100%">
         <rect class="ll-vr" width="100%" height="100%" fill="#fff"/>
         <g class="ll-hole" fill="#000" style="display:none"><path d="${D.body}"/><path d="${D.hind}"/><path d="${D.paw}"/><path d="${D.tail}"/><path d="${D.tuft}"/></g>
@@ -1585,7 +1585,7 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
   // Projekt-Intro: Farbfläche mit Projektname, zieht dann nach oben weg
   const file = (location.pathname.split("/").pop() || "").replace(".html", "");
   const theme = {
-    "projekt-runclub": ["#ffe100", "#000"], "projekt-taeubert": ["#c8102e", "#fff"],
+    "projekt-runclub": ["#ffe100", "#000"], "projekt-taeubert": ["#f2f2f2", "#0a0a0a"],
     "projekt-medaesthetic": ["#e8e0d6", "#1c1c1c"], "projekt-kuehlkraft": ["#cfe3ea", "#0f2a33"],
     "projekt-mybaumarkt": ["#1f4e3d", "#fff"],
   }[file] || ["#1c1c1c", "#fff"];
@@ -1655,7 +1655,7 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
   // Abflug in ein Projekt (nach Art von Auge XP): Markenfarbe füllt den
   // Bildschirm, das Bild schrumpft in die Mitte, der Projektname mischt
   // sich aus zwei Schriften zusammen, danach Ladebildschirm mit Zähler
-  const BRAND = { "crea-response": ["#7c3aed", "#fff"], taeubert: ["#e1251b", "#fff"], runclub: ["#ffe100", "#000"], medaesthetic: ["#e8ddd2", "#1c1c1c"], kuehlkraft: ["#cfe8f1", "#0f2a33"], mybaumarkt: ["#2f8a5f", "#fff"], dogstar: ["#fff1b8", "#10101a"] };
+  const BRAND = { "crea-response": ["#7c3aed", "#fff"], taeubert: ["#f2f2f2", "#0a0a0a"], runclub: ["#ffe100", "#000"], medaesthetic: ["#e8ddd2", "#1c1c1c"], kuehlkraft: ["#cfe8f1", "#0f2a33"], mybaumarkt: ["#2f8a5f", "#fff"], dogstar: ["#fff1b8", "#10101a"] };
   const NAMES = { "crea-response": "Crea Response", taeubert: "Täubert", runclub: "Run Club", medaesthetic: "med.aesthetic", kuehlkraft: "kühlkraft", mybaumarkt: "Baumarkt Gnoien", dogstar: "Dogstar" };
   const scramble = (el, text, dur) => {
     const pool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
