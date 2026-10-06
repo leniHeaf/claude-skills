@@ -2461,3 +2461,232 @@ const LION = {"vb": [10.0, 4.0, 230.0, 150.0], "t": [0, 0], "parts": [{"p": "bod
     lx = e.clientX;
   });
 })();
+
+// ==========================================================================
+// Startseite: 3D-Level-Select im Game-Design-Stil
+// Projekte schweben als Karten auf einem Bogen im Raum, Auswahl per Pfeil-
+// tasten, Ziehen, Wischen, Klick oder Buttons – wie ein Spielmenü.
+// Ohne WebGL oder bei „Bewegung reduzieren“ bleibt der normale Hero.
+// ==========================================================================
+(() => {
+  const hero = document.querySelector(".page-home .k-hero");
+  if (!hero || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const probe = document.createElement("canvas");
+  if (!(probe.getContext("webgl") || probe.getContext("experimental-webgl"))) return;
+
+  const P = [
+    { slug: "runclub", name: "Run Club", tags: "Branding · Kampagne · Merch", img: "assets/runclub/plakatwand.webp" },
+    { slug: "taeubert", name: "Täubert", tags: "Branding · Website · App", img: "assets/taeubert/website-app.webp" },
+    { slug: "crea-response", name: "Crea Response", tags: "Branding · Brand Book · Raum", img: "assets/crea-response/wandlogo.webp" },
+    { slug: "medaesthetic", name: "med.aesthetic", tags: "Markenauftritt" },
+    { slug: "kuehlkraft", name: "kühlkraft", tags: "Markenauftritt" },
+    { slug: "mybaumarkt", name: "Baumarkt Gnoien", tags: "Markenauftritt" },
+    { slug: "dogstar", name: "Dogstar", tags: "Markenauftritt" },
+  ];
+  const N = P.length;
+  const mobile = innerWidth < 760;
+
+  // Bühne + HUD
+  const g = document.createElement("section");
+  g.className = "g3"; g.setAttribute("aria-label", "Projekte auswählen");
+  g.innerHTML = `
+    <canvas class="g3__cv" aria-hidden="true"></canvas>
+    <div class="g3__hud">
+      <div class="g3__frame" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+      <p class="g3__top"><span>STUDIO.X</span><span class="g3__mode">Projekt wählen</span></p>
+      <p class="g3__claim">Marken, die man<br>nicht vergisst.</p>
+      <div class="g3__sel">
+        <p class="g3__lvl"><b>01</b> / ${String(N).padStart(2, "0")}</p>
+        <p class="g3__name" aria-live="polite"></p>
+        <p class="g3__tags"></p>
+        <a class="g3__go" href="projekt-runclub.html"><span>Projekt öffnen</span><kbd>Enter</kbd></a>
+      </div>
+      <div class="g3__ctl">
+        <button type="button" class="g3__btn" data-d="-1" aria-label="Vorheriges Projekt">←</button>
+        <div class="g3__dots" aria-hidden="true">${P.map(() => "<i></i>").join("")}</div>
+        <button type="button" class="g3__btn" data-d="1" aria-label="Nächstes Projekt">→</button>
+      </div>
+      <p class="g3__hint" aria-hidden="true">${mobile ? "Wischen zum Wählen" : "← → wählen · Ziehen · Enter öffnen"}</p>
+    </div>`;
+  hero.before(g);
+  hero.classList.add("g3-fallback");
+  document.body.classList.add("has-g3");
+
+  const cv = g.querySelector(".g3__cv");
+  const elName = g.querySelector(".g3__name"), elTags = g.querySelector(".g3__tags"), elLvl = g.querySelector(".g3__lvl b");
+  const go = g.querySelector(".g3__go"), dots = [...g.querySelectorAll(".g3__dots i")];
+
+  // Name wie in Game-UIs „hereinschreiben“
+  const glyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#/+";
+  let scrT = 0;
+  const scramble = (txt) => {
+    cancelAnimationFrame(scrT);
+    const t0 = performance.now();
+    const step = (now) => {
+      const p = Math.min(1, (now - t0) / 520);
+      const n = Math.floor(p * txt.length);
+      elName.textContent = txt.slice(0, n) + [...txt.slice(n)].map((c) => (c === " " ? " " : glyphs[(Math.random() * glyphs.length) | 0])).join("");
+      if (p < 1) scrT = requestAnimationFrame(step); else elName.textContent = txt;
+    };
+    scrT = requestAnimationFrame(step);
+  };
+
+  let cur = 0, target = 0, auto = true;
+  const select = (i) => {
+    cur = ((i % N) + N) % N;
+    const p = P[cur];
+    scramble(p.name.toUpperCase());
+    elTags.textContent = p.tags;
+    elLvl.textContent = String(cur + 1).padStart(2, "0");
+    go.href = `projekt-${p.slug}.html`;
+    dots.forEach((d, k) => d.classList.toggle("on", k === cur));
+  };
+  const move = (d) => { target += d; select(target); };
+  g.querySelectorAll(".g3__btn").forEach((b) => b.addEventListener("click", () => { auto = false; move(+b.dataset.d); }));
+  select(0);
+
+  const start = (THREE) => {
+    const renderer = new THREE.WebGLRenderer({ canvas: cv, antialias: !mobile, alpha: false, powerPreference: "high-performance" });
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, mobile ? 1.5 : 2));
+    renderer.setClearColor(0x0a0a0a, 1);
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.Fog(0x0a0a0a, 9, 26);
+    const cam = new THREE.PerspectiveCamera(mobile ? 58 : 42, 1, 0.1, 100);
+    cam.position.set(0, 0.6, 9.5);
+
+    // Boden-Raster, das langsam auf uns zufährt
+    const grid = new THREE.GridHelper(80, 80, 0x3a3a3a, 0x1c1c1c);
+    grid.position.y = -2.6; scene.add(grid);
+    // Staub im Raum
+    const pc = mobile ? 500 : 1400, pos = new Float32Array(pc * 3);
+    for (let i = 0; i < pc; i++) { pos[i * 3] = (Math.random() - 0.5) * 40; pos[i * 3 + 1] = Math.random() * 14 - 3; pos[i * 3 + 2] = (Math.random() - 0.5) * 40; }
+    const pg = new THREE.BufferGeometry(); pg.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+    const dust = new THREE.Points(pg, new THREE.PointsMaterial({ color: 0xffffff, size: 0.035, transparent: true, opacity: 0.55, depthWrite: false }));
+    scene.add(dust);
+
+    // Karten: Bild in abgerundeter Form auf Canvas, damit die Ecken weich sind
+    const W = 3.4, H = 2.2, R = 7.5, STEP = 0.52;
+    const ring = new THREE.Group(); ring.position.z = -R + 2.2; ring.position.y = mobile ? 1.35 : 0.55; scene.add(ring);
+    const tex = (p) => {
+      const c = document.createElement("canvas"); c.width = 1024; c.height = 664;
+      const x = c.getContext("2d");
+      const rr = (ctx) => { ctx.beginPath(); ctx.moveTo(40, 0); ctx.arcTo(1024, 0, 1024, 664, 40); ctx.arcTo(1024, 664, 0, 664, 40); ctx.arcTo(0, 664, 0, 0, 40); ctx.arcTo(0, 0, 1024, 0, 40); ctx.closePath(); };
+      const t = new THREE.CanvasTexture(c);
+      const paintType = () => {
+        rr(x); x.fillStyle = "#141414"; x.fill();
+        x.strokeStyle = "#2a2a2a"; x.lineWidth = 4; rr(x); x.stroke();
+        x.fillStyle = "#f2f2f2"; x.font = "900 96px Montserrat, Arial, sans-serif"; x.textBaseline = "middle";
+        let s = 96; while (x.measureText(p.name.toUpperCase()).width > 880 && s > 40) { s -= 4; x.font = `900 ${s}px Montserrat, Arial, sans-serif`; }
+        x.fillText(p.name.toUpperCase(), 72, 332);
+        x.font = "700 26px Montserrat, Arial, sans-serif"; x.fillStyle = "#777"; x.fillText("PROJEKTBILDER FOLGEN", 74, 600);
+        t.needsUpdate = true;
+      };
+      if (p.img) {
+        const im = new Image();
+        im.onload = () => {
+          x.save(); rr(x); x.clip();
+          const s = Math.max(1024 / im.width, 664 / im.height);
+          x.drawImage(im, (1024 - im.width * s) / 2, (664 - im.height * s) / 2, im.width * s, im.height * s);
+          x.restore(); t.needsUpdate = true;
+        };
+        im.onerror = paintType; im.src = p.img;
+      } else if (document.fonts && document.fonts.load) document.fonts.load("900 96px Montserrat").then(paintType, paintType); else paintType();
+      return t;
+    };
+    const cards = P.map((p, i) => {
+      const m = new THREE.Mesh(new THREE.PlaneGeometry(W, H), new THREE.MeshBasicMaterial({ map: tex(p), transparent: true, color: 0x666666 }));
+      const holder = new THREE.Group();
+      holder.add(m);
+      // dünner Rahmen als Auswahl-Markierung
+      const edge = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(W * 1.04, H * 1.06)), new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0 }));
+      holder.add(edge);
+      ring.add(holder);
+      return { holder, m, edge, i, born: 250 + i * 110 };
+    });
+
+    const size = () => {
+      const w = g.clientWidth, h = g.clientHeight;
+      renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix();
+    };
+    size(); addEventListener("resize", size);
+
+    // Eingaben: Ziehen/Wischen, Pfeiltasten, Enter, Klick auf Karte, Maus-Parallaxe
+    const mouse = { x: 0, y: 0, sx: 0, sy: 0 };
+    let drag = null, rot = 0, vel = 0;
+    g.addEventListener("pointermove", (e) => {
+      const r = g.getBoundingClientRect();
+      mouse.x = (e.clientX - r.left) / r.width - 0.5; mouse.y = (e.clientY - r.top) / r.height - 0.5;
+      if (drag) { const dx = e.clientX - drag.x; drag.x = e.clientX; drag.moved += Math.abs(dx); rot -= dx / (mobile ? 260 : 380); vel = -dx / 380; }
+    });
+    cv.addEventListener("pointerdown", (e) => { drag = { x: e.clientX, moved: 0 }; auto = false; cv.setPointerCapture(e.pointerId); });
+    const ray = new THREE.Raycaster(), v2 = new THREE.Vector2();
+    cv.addEventListener("pointerup", (e) => {
+      if (!drag) return;
+      const moved = drag.moved; drag = null;
+      if (moved > 6) { target = Math.round(rot + vel * 4); select(target); return; }
+      const r = cv.getBoundingClientRect();
+      v2.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+      ray.setFromCamera(v2, cam);
+      const hit = ray.intersectObjects(cards.map((c) => c.m))[0];
+      if (!hit) return;
+      const k = cards.findIndex((c) => c.m === hit.object);
+      const d = ((k - (((target % N) + N) % N) + N + N / 2) % N) - N / 2;
+      if (Math.abs(d) < 0.5) go.click(); else { target += Math.round(d); select(target); }
+    });
+    addEventListener("keydown", (e) => {
+      if (scrollY > g.offsetHeight * 0.6 || /input|textarea|select/i.test(document.activeElement?.tagName || "")) return;
+      if (e.key === "ArrowRight") { auto = false; move(1); e.preventDefault(); }
+      else if (e.key === "ArrowLeft") { auto = false; move(-1); e.preventDefault(); }
+      else if (e.key === "Enter" && document.activeElement === document.body) { go.click(); }
+    });
+    let autoT = setInterval(() => { if (auto && !document.hidden) move(1); }, 4200);
+    g.addEventListener("pointerenter", () => { auto = false; });
+
+    // Nur rendern, wenn sichtbar
+    let visible = true, raf = 0;
+    new IntersectionObserver(([en]) => { visible = en.isIntersecting; if (visible && !raf) raf = requestAnimationFrame(loop); }).observe(g);
+    const t0 = performance.now();
+    const ease = (t) => 1 - Math.pow(1 - t, 4);
+    function loop(now) {
+      raf = 0;
+      if (!visible) return;
+      const t = now - t0;
+      if (!drag) { rot += (target - rot) * 0.085; }
+      mouse.sx += (mouse.x - mouse.sx) * 0.05; mouse.sy += (mouse.y - mouse.sy) * 0.05;
+      cam.position.x = mouse.sx * 1.4; cam.position.y = 0.6 - mouse.sy * 0.8; cam.lookAt(0, mobile ? 0.6 : 0.2, 0);
+      grid.position.z = (t * 0.0012) % 1;
+      dust.rotation.y = t * 0.00002;
+      cards.forEach((c) => {
+        let d = c.i - rot; d = ((d % N) + N + N / 2) % N - N / 2;      // −N/2 … N/2
+        const a = d * STEP;
+        const k = ease(Math.min(1, Math.max(0, (t - c.born) / 900)));    // Einflug
+        c.holder.position.set(Math.sin(a) * R, Math.sin(t * 0.0012 + c.i) * 0.08 + (1 - k) * -3, Math.cos(a) * R - (1 - k) * 8);
+        c.holder.rotation.y = a + mouse.sx * 0.15;
+        c.holder.rotation.x = -mouse.sy * 0.08;
+        const focus = Math.max(0, 1 - Math.abs(d));
+        const s = 0.86 + focus * 0.26;
+        c.holder.scale.setScalar(s * k);
+        const col = 0.35 + focus * 0.65;
+        c.m.material.color.setRGB(col, col, col);
+        c.m.material.opacity = Math.max(0.15, 1 - Math.abs(d) * 0.28) * k;
+        c.edge.material.opacity = focus > 0.7 ? (focus - 0.7) / 0.3 * (0.55 + Math.sin(t * 0.006) * 0.25) : 0;
+      });
+      renderer.render(scene, cam);
+      raf = requestAnimationFrame(loop);
+    }
+    raf = requestAnimationFrame(loop);
+    document.addEventListener("visibilitychange", () => { if (!document.hidden && visible && !raf) raf = requestAnimationFrame(loop); });
+    g.classList.add("is-ready");
+    addEventListener("pagehide", () => clearInterval(autoT));
+  };
+
+  const fail = () => { g.remove(); hero.classList.remove("g3-fallback"); document.body.classList.remove("has-g3"); };
+  if (window.THREE) start(window.THREE);
+  else {
+    const s = document.createElement("script");
+    s.src = "assets/vendor/three.min.js"; s.async = true;
+    s.onload = () => { try { start(window.THREE); } catch (e) { fail(); } };
+    s.onerror = fail;
+    document.head.appendChild(s);
+  }
+})();
