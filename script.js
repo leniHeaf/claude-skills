@@ -2129,3 +2129,173 @@ document.querySelectorAll(".c3-giant").forEach((g) => { const n = g.textContent.
     document.querySelectorAll('a[href^="projekt-"] img').forEach((i) => { i.style.visibility = ""; });
   });
 })();
+
+// ==========================================================================
+// Mitmach-Erlebnisse pro Marke
+// – Täubert: „Lackier selbst“ – mit der Maus/dem Finger Lack auf ein
+//   verkratztes Fahrzeug sprühen, Fortschritt in Prozent, bei 70 % Glanz
+// – Run Club: „Lauf mit“ – Scrollen ist Laufen: Kilometer, Uhrzeit, Pace,
+//   Läufer auf der Strecke, im Ziel gelbes Konfetti
+// – Crea + alle anderen: Datenpartikel formen beim Scrollen das Zeichen bzw.
+//   den Namen, die Maus wirbelt sie auseinander
+// ==========================================================================
+(() => {
+  const root = document.querySelector(".cs3");
+  if (!root) return;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const slug = (location.pathname.split("/").pop() || "").replace("projekt-", "").replace(".html", "");
+  const acc = { "crea-response": "#7c3aed", taeubert: "#e1251b", runclub: "#ffe100", medaesthetic: "#c9a98f", kuehlkraft: "#7fd0ec", mybaumarkt: "#2f8a5f", dogstar: "#ffe9a0" }[slug] || "#fff";
+  const name = (document.querySelector(".c2-bar__t b")?.textContent || "").trim();
+  const anchor = root.querySelector(".c3-sec");
+  const sec = document.createElement("section");
+  sec.className = "xp xp--" + slug; sec.dataset.dark = "";
+  anchor.after(sec);
+  const dpr = Math.min(2, devicePixelRatio || 1);
+
+  // ---------------- Täubert: Lackier selbst ----------------
+  if (slug === "taeubert") {
+    sec.innerHTML = `<div class="xp__pin xp__pin--static"><p class="xp__k">Mitmachen</p><h2 class="xp__h">Lackier selbst.</h2><p class="xp__s">Fahr mit der Maus oder dem Finger über das Fahrzeug.</p><div class="xp-spray"><canvas></canvas><p class="xp-spray__p"><b>0</b> % lackiert</p><p class="xp-spray__done">Wie neu.</p></div></div>`;
+    const box = sec.querySelector(".xp-spray"), cv = box.querySelector("canvas"), ctx = cv.getContext("2d");
+    const mask = document.createElement("canvas"), mctx = mask.getContext("2d");
+    const top = document.createElement("canvas"), tctx = top.getContext("2d");
+    const img = new Image(); img.src = "assets/taeubert/website-laptop.webp";
+    let W, H, scratches = [], drops = [];
+    const size = () => {
+      W = box.clientWidth; H = Math.round(W * 0.6);
+      [cv, mask, top].forEach((c) => { c.width = W * dpr; c.height = H * dpr; });
+      cv.style.height = H + "px";
+      [ctx, mctx, tctx].forEach((c) => c.setTransform(dpr, 0, 0, dpr, 0, 0));
+      scratches = Array.from({ length: 26 }, () => { const x = Math.random() * W, y = Math.random() * H, a = Math.random() * 6.28, l = 40 + Math.random() * 160; return [x, y, x + Math.cos(a) * l, y + Math.sin(a) * l * 0.4]; });
+    };
+    size(); addEventListener("resize", size);
+    let pct = 0, done = false;
+    const spray = (x, y) => {
+      for (let i = 0; i < 26; i++) {
+        const a = Math.random() * 6.28, r = Math.random() ** 0.6 * 46;
+        mctx.fillStyle = "rgba(0,0,0,.8)"; mctx.beginPath(); mctx.arc(x + Math.cos(a) * r, y + Math.sin(a) * r, 2 + Math.random() * 7, 0, 7); mctx.fill();
+      }
+      for (let i = 0; i < 4; i++) drops.push({ x: x + (Math.random() - 0.5) * 50, y: y + (Math.random() - 0.5) * 50, vx: (Math.random() - 0.5) * 2, vy: (Math.random() - 0.5) * 2, l: 1 });
+    };
+    let down = false;
+    const pos = (e) => { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+    cv.addEventListener("pointerdown", (e) => { down = true; spray(...pos(e)); });
+    cv.addEventListener("pointermove", (e) => { if (down || e.pointerType === "mouse") spray(...pos(e)); });
+    addEventListener("pointerup", () => { down = false; });
+    cv.style.touchAction = "none";
+    let frame = 0;
+    const draw = () => {
+      if (img.complete && img.naturalWidth) {
+        const s = Math.max(W / img.naturalWidth, H / img.naturalHeight), iw = img.naturalWidth * s, ih = img.naturalHeight * s, ix = (W - iw) / 2, iy = (H - ih) / 2;
+        ctx.filter = "grayscale(1) brightness(.45) contrast(.9)"; ctx.drawImage(img, ix, iy, iw, ih); ctx.filter = "none";
+        ctx.strokeStyle = "rgba(255,255,255,.55)"; ctx.lineWidth = 1.2;
+        scratches.forEach(([a, b, c, d]) => { ctx.beginPath(); ctx.moveTo(a, b); ctx.quadraticCurveTo((a + c) / 2 + 8, (b + d) / 2 - 6, c, d); ctx.stroke(); });
+        tctx.globalCompositeOperation = "source-over"; tctx.clearRect(0, 0, W, H);
+        tctx.filter = "saturate(1.35) contrast(1.1) brightness(1.05)"; tctx.drawImage(img, ix, iy, iw, ih); tctx.filter = "none";
+        const g = tctx.createLinearGradient(0, 0, W, H); const t = (performance.now() / 2600) % 1.6 - 0.3;
+        const cl = (v) => Math.min(1, Math.max(0, v));
+        g.addColorStop(cl(t - 0.08), "rgba(255,255,255,0)"); g.addColorStop(cl(t), "rgba(255,255,255,.28)"); g.addColorStop(cl(t + 0.08), "rgba(255,255,255,0)");
+        tctx.fillStyle = g; tctx.fillRect(0, 0, W, H);
+        tctx.globalCompositeOperation = "soft-light"; tctx.fillStyle = "rgba(225,37,27,.55)"; tctx.fillRect(0, 0, W, H);
+        tctx.globalCompositeOperation = "destination-in"; tctx.drawImage(mask, 0, 0, W, H);
+        ctx.drawImage(top, 0, 0, W, H);
+      }
+      drops = drops.filter((d) => (d.l -= 0.04) > 0);
+      drops.forEach((d) => { d.x += d.vx; d.y += d.vy; ctx.fillStyle = `rgba(225,37,27,${d.l * 0.8})`; ctx.beginPath(); ctx.arc(d.x, d.y, 1.6, 0, 7); ctx.fill(); });
+      if (++frame % 20 === 0) {
+        const data = mctx.getImageData(0, 0, mask.width, mask.height).data; let n = 0, c = 0;
+        for (let i = 3; i < data.length; i += 4 * 97) { c++; if (data[i] > 120) n++; }
+        pct = Math.min(100, Math.round(n / c * 100 / 0.92));
+        sec.querySelector(".xp-spray__p b").textContent = pct;
+        if (pct >= 70 && !done) { done = true; box.classList.add("is-done"); }
+      }
+      requestAnimationFrame(draw);
+    };
+    requestAnimationFrame(draw);
+    return;
+  }
+
+  // ---------------- Run Club: Lauf mit ----------------
+  if (slug === "runclub") {
+    sec.style.height = "420vh";
+    sec.innerHTML = `<div class="xp__pin"><p class="xp__k">Mitlaufen</p><h2 class="xp__h">Scrollen ist Laufen.</h2>
+      <div class="xp-run"><div class="xp-run__stats"><p><span>Distanz</span><b class="xp-km">0,00</b><i>km</i></p><p><span>Uhrzeit</span><b class="xp-time">07:15</b><i>Hyde Park</i></p><p><span>Pace</span><b class="xp-pace">–</b><i>min/km</i></p></div>
+      <div class="xp-run__track"><i class="xp-run__line"></i><i class="xp-run__dot"></i>${[1, 2, 3, 4, 5].map((k) => `<span style="left:${k * 20}%">${k} km</span>`).join("")}</div>
+      <p class="xp-run__goal">Better Days.</p></div><canvas class="xp-confetti"></canvas></div>`;
+    const km = sec.querySelector(".xp-km"), tm = sec.querySelector(".xp-time"), pc = sec.querySelector(".xp-pace"), dot = sec.querySelector(".xp-run__dot"), line = sec.querySelector(".xp-run__line");
+    const cv = sec.querySelector(".xp-confetti"), ctx = cv.getContext("2d"); let conf = [], fired = false, lastP = 0, lastT = performance.now(), pace = 0;
+    const size = () => { cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }; size(); addEventListener("resize", size);
+    const loop = (now) => {
+      const r = sec.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, -r.top / (sec.offsetHeight - innerHeight)));
+      const d = p * 5, mins = 15 + p * 27;
+      km.textContent = d.toFixed(2).replace(".", ",");
+      tm.textContent = `07:${String(Math.floor(mins)).padStart(2, "0")}`;
+      const dt = (now - lastT) / 1000; lastT = now;
+      const v = Math.abs(p - lastP) * 5 / Math.max(dt, 0.001); lastP = p;
+      pace += (v - pace) * 0.05;
+      const ps = Math.round(Math.min(480, Math.max(170, 480 - pace * 900)));
+      pc.textContent = pace > 0.005 ? `${Math.floor(ps / 60)}:${String(ps % 60).padStart(2, "0")}` : "–";
+      dot.style.left = p * 100 + "%"; line.style.transform = `scaleX(${p})`;
+      sec.classList.toggle("is-finish", p > 0.97);
+      if (p > 0.97 && !fired) { fired = true; for (let i = 0; i < 260; i++) conf.push({ x: innerWidth / 2, y: innerHeight * 0.6, vx: (Math.random() - 0.5) * 18, vy: -Math.random() * 18 - 4, r: Math.random() * 6.28, s: 4 + Math.random() * 8, c: Math.random() < 0.7 ? "#ffe100" : "#ffffff" }); }
+      if (p < 0.9) fired = false;
+      ctx.clearRect(0, 0, innerWidth, innerHeight);
+      conf = conf.filter((c) => c.y < innerHeight + 20);
+      conf.forEach((c) => { c.vy += 0.45; c.vx *= 0.99; c.x += c.vx; c.y += c.vy; c.r += 0.15; ctx.save(); ctx.translate(c.x, c.y); ctx.rotate(c.r); ctx.fillStyle = c.c; ctx.fillRect(-c.s / 2, -c.s / 4, c.s, c.s / 2); ctx.restore(); });
+      requestAnimationFrame(loop);
+    };
+    requestAnimationFrame(loop);
+    return;
+  }
+
+  // ---------------- Partikel formen Zeichen / Namen ----------------
+  sec.style.height = "300vh";
+  const lines = slug === "crea-response" ? ["Daten.", "Ideen.", "Wirkung."] : [name, "", ""];
+  sec.innerHTML = `<div class="xp__pin"><p class="xp__k">${slug === "crea-response" ? "Aus Daten wird Wirkung" : "Die Marke entsteht"}</p><canvas class="xp-part"></canvas><p class="xp-part__cap">${lines[0]}</p></div>`;
+  const cv = sec.querySelector("canvas"), ctx = cv.getContext("2d"), cap = sec.querySelector(".xp-part__cap");
+  let W, H, P = [];
+  const build = () => {
+    W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const o = document.createElement("canvas"); o.width = W; o.height = H; const g = o.getContext("2d");
+    g.fillStyle = "#fff"; g.strokeStyle = "#fff";
+    if (slug === "crea-response") {
+      const R = Math.min(W, H) * 0.26, cx = W / 2, cy = H * 0.46; g.lineWidth = R * 0.24; g.lineJoin = "miter";
+      g.beginPath(); for (let i = 1; i <= 6; i++) { const a = i / 6 * Math.PI * 2 + Math.PI / 6; const x = cx + Math.cos(a) * R, y = cy + Math.sin(a) * R; i === 1 ? g.moveTo(x, y) : g.lineTo(x, y); } g.stroke();
+      g.lineWidth = R * 0.14; g.beginPath(); for (let i = 1; i <= 6; i++) { const a = i / 6 * Math.PI * 2 + Math.PI / 6; const x = cx + Math.cos(a) * R * 0.55, y = cy + Math.sin(a) * R * 0.55; i === 1 ? g.moveTo(x, y) : g.lineTo(x, y); } g.stroke();
+    } else {
+      let fs = Math.min(W * 0.9 / Math.max(4, name.length) * 1.6, H * 0.3);
+      g.font = `900 ${fs}px Montserrat, Arial, sans-serif`; g.textAlign = "center"; g.textBaseline = "middle";
+      while (g.measureText(name.toUpperCase()).width > W * 0.88) { fs -= 4; g.font = `900 ${fs}px Montserrat, Arial, sans-serif`; }
+      g.fillText(name.toUpperCase(), W / 2, H * 0.46);
+    }
+    const data = g.getImageData(0, 0, W, H).data, step = Math.max(5, Math.round(Math.sqrt(W * H / 15000)));
+    const tg = []; for (let y = 0; y < H; y += step) for (let x = 0; x < W; x += step) if (data[(y * W + x) * 4 + 3] > 128) tg.push([x, y]);
+    P = tg.map(([tx, ty]) => ({ tx, ty, sx: Math.random() * W, sy: Math.random() * H, x: Math.random() * W, y: Math.random() * H, vx: 0, vy: 0, ph: Math.random() * 6.28 }));
+  };
+  build(); let rb; addEventListener("resize", () => { clearTimeout(rb); rb = setTimeout(build, 300); });
+  const m = { x: -999, y: -999 };
+  cv.addEventListener("pointermove", (e) => { const r = cv.getBoundingClientRect(); m.x = e.clientX - r.left; m.y = e.clientY - r.top; });
+  cv.addEventListener("pointerleave", () => { m.x = m.y = -999; });
+  const loop = (now) => {
+    const r = sec.getBoundingClientRect();
+    if (r.bottom > 0 && r.top < innerHeight) {
+      const p = Math.min(1, Math.max(0, -r.top / (sec.offsetHeight - innerHeight)));
+      const k = reduce ? 1 : Math.min(1, p / 0.6);
+      const ease = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+      const li = lines[Math.min(lines.length - 1, Math.floor(p * lines.length))] || lines[0];
+      if (cap.textContent !== li) { cap.classList.remove("is-in"); void cap.offsetWidth; cap.textContent = li; cap.classList.add("is-in"); }
+      ctx.clearRect(0, 0, W, H); ctx.fillStyle = acc;
+      const t = now / 1000;
+      P.forEach((q) => {
+        const gx = q.sx + (q.tx - q.sx) * ease + Math.sin(t + q.ph) * (1 - ease) * 30, gy = q.sy + (q.ty - q.sy) * ease + Math.cos(t * 0.8 + q.ph) * (1 - ease) * 30;
+        q.vx += (gx - q.x) * 0.08; q.vy += (gy - q.y) * 0.08;
+        const dx = q.x - m.x, dy = q.y - m.y, d2 = dx * dx + dy * dy;
+        if (d2 < 14000) { const f = (14000 - d2) / 14000 * 6; const d = Math.sqrt(d2) || 1; q.vx += dx / d * f; q.vy += dy / d * f; }
+        q.vx *= 0.78; q.vy *= 0.78; q.x += q.vx; q.y += q.vy;
+        ctx.fillRect(q.x, q.y, 3, 3);
+      });
+    }
+    requestAnimationFrame(loop);
+  };
+  requestAnimationFrame(loop);
+})();
