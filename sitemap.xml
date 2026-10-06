@@ -58,4 +58,6 @@
   <url><loc>https://www.studio-x.de/prozess.html</loc><lastmod>2026-10-06</lastmod><priority>0.6</priority></url>
   <url><loc>https://www.studio-x.de/stories.html</loc><lastmod>2026-10-06</lastmod><priority>0.6</priority></url>
   <url><loc>https://www.studio-x.de/work.html</loc><lastmod>2026-10-06</lastmod><priority>0.8</priority></url>
+  <url><loc>https://www.studio-x.de/impressum.html</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://www.studio-x.de/datenschutz.html</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
 </urlset>

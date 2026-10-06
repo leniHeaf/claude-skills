@@ -168,6 +168,16 @@
   setTimeout(finish, 9000);
 })();
 
+// Typografie: Fließtext ruhiger (normale Stärke), Überschriften bleiben fett
+(() => {
+  if (!document.body.classList.contains("v5")) return;
+  document.querySelectorAll("main p, main li, main dd, main blockquote, main figcaption, main td, footer p, footer li").forEach((el) => {
+    const c = getComputedStyle(el);
+    if (parseFloat(c.fontSize) <= 22 && c.textTransform !== "uppercase" && el.textContent.trim().length > 40 && !el.querySelector("h1, h2, h3")) el.classList.add("t-body");
+  });
+})();
+
+
 (() => {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -1121,7 +1131,7 @@
     if (url.pathname === location.pathname && url.hash) return;
     e.preventDefault();
     curtain.classList.remove("is-up");
-    curtain.classList.add("is-down"); document.body.classList.add("bx-leaving");
+    curtain.classList.add("is-down");
     setTimeout(() => { location.href = a.href; }, 650);
   });
 
@@ -1204,42 +1214,6 @@
   };
   requestAnimationFrame(tick);
 
-  if (!fine) return;
-
-  // 3D-Neigung für Karten mit Bild
-  const cards = [...main.querySelectorAll("a, article")].filter((c) =>
-    c.querySelector("img, .ph") && !c.closest(".k-cards, .phone, .v2social__stage, .k-tiles, .k-hero, .cs2, .cs3, .cs4, .w4") && c.offsetWidth > 160);
-  cards.forEach((c) => {
-    c.classList.add("m8-tilt");
-    c.addEventListener("pointermove", (e) => {
-      const r = c.getBoundingClientRect();
-      const px = (e.clientX - r.left) / r.width - 0.5, py = (e.clientY - r.top) / r.height - 0.5;
-      c.style.transform = `perspective(900px) rotateY(${px * 8}deg) rotateX(${-py * 8}deg) translateZ(0)`;
-    });
-    c.addEventListener("pointerleave", () => { c.style.transform = ""; });
-  });
-
-  // Cursor: Punkt, wird über Bildern zur Linse „Ansehen“
-  const cur = document.createElement("div");
-  cur.className = "m8-cursor";
-  cur.setAttribute("aria-hidden", "true");
-  cur.innerHTML = "<span>Projekt ansehen</span>";
-  body.appendChild(cur);
-  const pos = { x: -100, y: -100 }, cp = { x: -100, y: -100 };
-  window.addEventListener("pointermove", (e) => { pos.x = e.clientX; pos.y = e.clientY; }, { passive: true });
-  document.addEventListener("pointerover", (e) => {
-    const t = e.target;
-    cur.classList.toggle("is-view", !!t.closest(".m8-tilt, .k-cards a, .k-tile, .k-hero a"));
-    cur.classList.toggle("is-link", !!t.closest("a, button, input, select, textarea, label, summary"));
-  });
-  document.addEventListener("pointerleave", () => cur.classList.add("is-off"));
-  document.addEventListener("pointerenter", () => cur.classList.remove("is-off"));
-  const follow = () => {
-    cp.x += (pos.x - cp.x) * 0.2; cp.y += (pos.y - cp.y) * 0.2;
-    cur.style.transform = `translate3d(${cp.x}px, ${cp.y}px, 0)`;
-    requestAnimationFrame(follow);
-  };
-  requestAnimationFrame(follow);
 })();
 
 // ==========================================================================
@@ -1348,65 +1322,9 @@
     if (f.querySelector(".m8-label") || !f.querySelector("img")) return;
     const l = document.createElement("span");
     l.className = "m8-label"; l.setAttribute("aria-hidden", "true");
-    l.textContent = String(++n).padStart(2, "0") + " — Run Club";
+    l.textContent = String(++n).padStart(2, "0") + " — " + ((f.querySelector("img").alt || "").split(/[:\-–]/)[0].replace(/-$/, "").trim() || "Studio X");
     if (getComputedStyle(f).position === "static") f.style.position = "relative";
     f.appendChild(l);
-  });
-})();
-
-// ==========================================================================
-// V9: Laufbänder mit Scrolltempo, magnetische Links
-// ==========================================================================
-(() => {
-  if (!document.body.classList.contains("v5")) return;
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-
-  const make = (words, dark) => {
-    const m = document.createElement("div");
-    m.className = "m9-marq" + (dark ? " m9-marq--dark" : "");
-    m.setAttribute("aria-hidden", "true");
-    const t = document.createElement("div");
-    t.className = "m9-marq__track";
-    const set = words.map((w) => `<span>${w}<i>✕</i></span>`).join("");
-    t.innerHTML = set + set + set + set;
-    m.appendChild(t);
-    return m;
-  };
-  const bands = [];
-  const footer = document.querySelector("footer");
-  if (footer) { const m = make(["Strategie", "Design", "Roll-out", "Social"], false); footer.before(m); bands.push(m); }
-  const rw = document.querySelector(".rw");
-  if (rw) { const m = make(["Für den Feed", "Reels", "Stories", "Kampagnen"], true); rw.before(m); bands.push(m); }
-  if (reduce || !bands.length) return;
-
-  let x = 0, lastY = scrollY, vel = 0, dir = 1;
-  const tracks = bands.map((b) => b.querySelector(".m9-marq__track"));
-  const loop = () => {
-    const dy = scrollY - lastY; lastY = scrollY;
-    vel += (dy - vel) * 0.1;
-    if (Math.abs(dy) > 0.5) dir = dy > 0 ? 1 : -1;
-    x -= (0.6 + Math.min(Math.abs(vel) * 0.35, 14)) * dir;
-    tracks.forEach((t, k) => {
-      const w = t.scrollWidth / 4;
-      let p = (k % 2 ? -x : x) % w; if (p > 0) p -= w;
-      t.style.transform = `translate3d(${p}px, 0, 0)`;
-      t.style.setProperty("--rot", (x * 0.6) % 360 + "deg");
-    });
-    requestAnimationFrame(loop);
-  };
-  requestAnimationFrame(loop);
-
-  if (!fine) return;
-  document.querySelectorAll(".k-links a, .header__contact, .rw__more a, .footer__cta, main button[type=submit], .btn").forEach((el) => {
-    el.classList.add("m9-mag");
-    el.addEventListener("pointermove", (e) => {
-      const r = el.getBoundingClientRect();
-      const dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
-      el.classList.add("is-mag");
-      el.style.translate = `${dx * 0.25}px ${dy * 0.35}px`;
-    });
-    el.addEventListener("pointerleave", () => { el.classList.remove("is-mag"); el.style.translate = ""; });
   });
 })();
 
@@ -1500,7 +1418,7 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
   // Weiches Scrollen (nur Maus/Trackpad, lädt still nach; ohne Netz bleibt normales Scrollen)
   if (fine) {
     const s = document.createElement("script");
-    s.src = "https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js";
+    s.src = "assets/vendor/lenis.min.js";
     s.async = true;
     s.onload = () => {
       if (!window.Lenis) return;
@@ -1645,9 +1563,6 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
       document.body.appendChild(ov);
       setTimeout(() => ov.classList.add("is-out"), 250);
       setTimeout(() => ov.remove(), 1500);
-    } else {
-      document.body.classList.add("bx-enter");
-      setTimeout(() => document.body.classList.remove("bx-enter"), 1400);
     }
   }
   if (reduce) return;
@@ -2052,7 +1967,7 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
   const load = (cb) => {
     if (window.THREE) return cb();
     const s = document.createElement("script");
-    s.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js";
+    s.src = "assets/vendor/three.min.js";
     s.onload = cb; document.head.appendChild(s);
   };
   load(() => {

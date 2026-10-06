@@ -1,3 +1,6 @@
+/* Montserrat (SIL Open Font License 1.1), lokal eingebunden */
+@font-face { font-family: "Montserrat"; font-style: normal; font-weight: 400 900; font-display: swap; src: url("assets/fonts/montserrat-latin-ext.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Montserrat"; font-style: normal; font-weight: 400 900; font-display: swap; src: url("assets/fonts/montserrat-latin.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 /* ==========================================================================
    Tokens
    ========================================================================== */
@@ -3697,3 +3700,18 @@ body.page-w4 { background: #0a0a0a; }
 }
 /* Projektseiten: überall fette Montserrat */
 body.page-case3, body.page-case3 .cs3, body.page-case3 .cs3 *:not(svg):not(path), body.page-case3 .c3-bar, body.page-case3 .c3-bar * { font-family: "Montserrat", Arial, sans-serif !important; }
+
+/* ==========================================================================
+   Premium: Ruhe, Kontrast, weniger Effekte
+   ========================================================================== */
+body.v5 .ticker { display: none !important; }
+body.v5 .t-body { font-weight: 500 !important; line-height: 1.7; letter-spacing: 0.005em; }
+body.v5 .t-body :is(span, em, i, a, label) { font-weight: inherit !important; }
+body.v5 .t-body :is(b, strong) { font-weight: 700 !important; }
+body.v5 :is(.m9-marq, .m8-cursor) { display: none !important; }
+/* Rechtliches */
+.legal .legal__body { max-width: 860px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 48px) clamp(80px, 10vw, 160px); }
+.legal .legal__sec { padding: clamp(28px, 3vw, 44px) 0; border-top: 1px solid #e4e4e4; }
+.legal .legal__sec h2 { margin: 0 0 14px; font-size: clamp(18px, 1.6vw, 24px) !important; text-transform: uppercase; letter-spacing: -0.01em; }
+.legal .legal__sec p { margin: 0; }
+.legal .todo { background: #f0f0ee; padding: 0 6px; font-weight: 700 !important; }
