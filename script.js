@@ -2329,95 +2329,119 @@ const LION = {"vb": [52.5, 14.4, 173.9, 173.9], "t": [14, 12], "parts": [{"p": "
   // Ladebildschirm im Projekt-Übergang
   new MutationObserver(() => document.querySelectorAll(".bx4__load:not(.has-lion)").forEach((d) => { d.classList.add("has-lion"); d.insertAdjacentHTML("afterbegin", svg("lion-load")); })).observe(document.body, { childList: true });
 
-  // 3D-Intro nur auf der Startseite, einmal pro Sitzung
+  // Kino-Intro (Startseite, einmal pro Sitzung):
+  // 1) Schwarz, Schlüsselloch glüht, „Klicken, um einzutreten“
+  // 2) Kamera fliegt durchs Schlüsselloch
+  // 3) Wie ein Filmstudio-Vorspann: Löwe im Chromring fliegt aus Nebel und
+  //    Wolken auf die Kamera zu, Gegenlicht, Lichtstrahlen, dann „MOU“
   if (!document.body.classList.contains("page-home") || reduce) return;
-  let seen = false; try { seen = sessionStorage.getItem("lion-intro") === "1"; sessionStorage.setItem("lion-intro", "1"); } catch (e) {}
+  let seen = false; try { seen = sessionStorage.getItem("mou-intro") === "1"; sessionStorage.setItem("mou-intro", "1"); } catch (e) {}
   if (seen && !location.hash.includes("intro")) return;
 
   const ov = document.createElement("div");
-  ov.className = "lion-intro";
-  ov.innerHTML = `<canvas></canvas><div class="lion-intro__t"><p class="lion-intro__w">STUDIO.X</p><p class="lion-intro__s">Brand Studio</p></div><button class="lion-intro__skip" type="button">Überspringen</button><p class="lion-intro__n">000</p>`;
+  ov.className = "mou";
+  ov.innerHTML = `<p class="mou__hint">Klicken, um einzutreten</p>
+    <button class="mou__key" type="button" aria-label="Eintreten"><span class="mou__keyfill"></span></button>
+    <canvas class="mou__cv" aria-hidden="true"></canvas>
+    <div class="mou__title"><p class="mou__pre">Welcome to</p><p class="mou__word">${[..."MOU"].map((c, i) => `<span style="--i:${i}">${c}</span>`).join("")}</p><p class="mou__sub">Brand Studio</p></div>
+    <button class="mou__skip" type="button">Überspringen</button>`;
   document.body.appendChild(ov);
   document.documentElement.style.overflow = "hidden";
-  const end = () => { if (ov.classList.contains("is-out")) return; ov.classList.add("is-out"); document.documentElement.style.overflow = ""; setTimeout(() => ov.remove(), 1300); };
-  ov.querySelector(".lion-intro__skip").addEventListener("click", end);
-  const cnt = ov.querySelector(".lion-intro__n"), t0 = performance.now();
-  const count = (now) => { const k = Math.min(1, (now - t0) / 6000); cnt.textContent = String(Math.round(k * 100)).padStart(3, "0"); if (k < 1 && !ov.classList.contains("is-out")) requestAnimationFrame(count); };
-  requestAnimationFrame(count);
-  const fallback = setTimeout(() => { ov.classList.add("is-flat"); ov.insertAdjacentHTML("afterbegin", svg("lion-flat")); setTimeout(() => ov.classList.add("is-text"), 900); setTimeout(end, 3200); }, 2500);
+  let done = false;
+  const end = () => { if (done) return; done = true; ov.classList.add("is-out"); document.documentElement.style.overflow = ""; setTimeout(() => ov.remove(), 1400); };
+  ov.querySelector(".mou__skip").addEventListener("click", end);
 
-  const load = (cb) => { if (window.THREE) return cb(); const s = document.createElement("script"); s.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"; s.onload = cb; document.head.appendChild(s); };
-  load(() => {
-    const T = window.THREE, cv = ov.querySelector("canvas");
-    if (!(cv.getContext("webgl") || cv.getContext("experimental-webgl"))) return;
-    clearTimeout(fallback);
-    const R = new T.WebGLRenderer({ canvas: cv, antialias: true, alpha: false });
-    R.setPixelRatio(Math.min(2, devicePixelRatio || 1)); R.setClearColor(0x050505);
-    R.outputEncoding = T.sRGBEncoding; R.toneMapping = T.ACESFilmicToneMapping; R.toneMappingExposure = 1.15;
-    const scene = new T.Scene(), cam = new T.PerspectiveCamera(32, 1, 0.1, 100); cam.position.set(0, -0.35, 11.5);
+  const load = (cb) => { if (window.THREE) return cb(); const s = document.createElement("script"); s.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"; s.onload = cb; s.onerror = cb; document.head.appendChild(s); };
+  let started = false;
+  const enter = () => {
+    if (started) return; started = true;
+    ov.classList.add("is-enter");
+    setTimeout(() => load(film), 900);
+  };
+  ov.querySelector(".mou__key").addEventListener("click", enter);
+  ov.addEventListener("keydown", (e) => { if (e.key === "Enter") enter(); });
+  setTimeout(enter, 4200);
+  load(() => {}); // vorladen
+
+  function film() {
+    ov.classList.add("is-film");
+    const T = window.THREE, cv = ov.querySelector(".mou__cv");
+    const flat = () => { ov.insertAdjacentHTML("afterbegin", svg("mou__flat")); setTimeout(() => ov.classList.add("is-title"), 1600); setTimeout(end, 5200); };
+    if (!T || !(cv.getContext("webgl") || cv.getContext("experimental-webgl"))) return flat();
+    const R = new T.WebGLRenderer({ canvas: cv, antialias: true });
+    R.setPixelRatio(Math.min(2, devicePixelRatio || 1)); R.setClearColor(0x000000);
+    R.outputEncoding = T.sRGBEncoding; R.toneMapping = T.ACESFilmicToneMapping; R.toneMappingExposure = 1.2;
+    const scene = new T.Scene(); scene.fog = new T.FogExp2(0x05070a, 0.045);
+    const cam = new T.PerspectiveCamera(35, 1, 0.1, 200);
     const size = () => { R.setSize(innerWidth, innerHeight, false); cam.aspect = innerWidth / innerHeight; cam.updateProjectionMatrix(); };
     size(); addEventListener("resize", size);
 
-    // Studio-Licht als Umgebung (Softboxen) für den Chrom-Look
+    // Studiolicht als Umgebung (warm/kalt wie im Kino)
     const ec = document.createElement("canvas"); ec.width = 1024; ec.height = 512; const g = ec.getContext("2d");
-    const bg = g.createLinearGradient(0, 0, 0, 512); bg.addColorStop(0, "#1a1a1a"); bg.addColorStop(0.5, "#060606"); bg.addColorStop(1, "#000"); g.fillStyle = bg; g.fillRect(0, 0, 1024, 512);
-    const box = (x, y, w, h, a) => { const gg = g.createLinearGradient(x, y, x + w, y); gg.addColorStop(0, `rgba(255,255,255,0)`); gg.addColorStop(0.5, `rgba(255,255,255,${a})`); gg.addColorStop(1, `rgba(255,255,255,0)`); g.fillStyle = gg; g.fillRect(x, y, w, h); };
-    box(120, 60, 220, 140, 1); box(600, 40, 300, 60, 0.9); box(420, 300, 160, 40, 0.5); box(860, 200, 120, 220, 0.8); box(0, 220, 1024, 14, 0.35);
+    const bg = g.createLinearGradient(0, 0, 0, 512); bg.addColorStop(0, "#2a2014"); bg.addColorStop(0.45, "#0b0b0c"); bg.addColorStop(1, "#000"); g.fillStyle = bg; g.fillRect(0, 0, 1024, 512);
+    const box = (x, y, w, h, c) => { const gg = g.createRadialGradient(x + w / 2, y + h / 2, 0, x + w / 2, y + h / 2, Math.max(w, h) / 2); gg.addColorStop(0, c); gg.addColorStop(1, "rgba(0,0,0,0)"); g.fillStyle = gg; g.fillRect(x, y, w, h); };
+    box(80, 20, 360, 260, "rgba(255,236,200,1)"); box(560, 10, 420, 180, "rgba(255,255,255,.9)"); box(380, 280, 300, 120, "rgba(160,190,255,.5)"); box(880, 180, 160, 260, "rgba(255,220,170,.8)");
     const et = new T.CanvasTexture(ec); et.mapping = T.EquirectangularReflectionMapping; et.encoding = T.sRGBEncoding;
-    const pm = new T.PMREMGenerator(R); const env = pm.fromEquirectangular(et).texture; scene.environment = env;
-    const chrome = new T.MeshStandardMaterial({ color: 0xd9d9d9, metalness: 1, roughness: 0.22, envMapIntensity: 1.5 });
-    const dark = new T.MeshStandardMaterial({ color: 0x050505, metalness: 0.4, roughness: 0.6 });
+    const env = new T.PMREMGenerator(R).fromEquirectangular(et).texture; scene.environment = env;
+    const chrome = new T.MeshStandardMaterial({ color: 0xe6e2da, metalness: 1, roughness: 0.18, envMapIntensity: 1.6 });
+    const dark = new T.MeshStandardMaterial({ color: 0x050505, metalness: 0.3, roughness: 0.7 });
 
-    // SVG-Pfade (M/L/C/Z) → Formen
-    const toShape = (d) => {
-      const s = new T.Shape(); const n = d.match(/[MLCZ]|-?\d*\.?\d+/g); let i = 0, c = "";
-      const P = () => [parseFloat(n[i++]) + LION.t[0], -(parseFloat(n[i++]) + LION.t[1])];
-      while (i < n.length) { if (/[MLCZ]/.test(n[i])) c = n[i++]; if (c === "M") s.moveTo(...P()); else if (c === "L") s.lineTo(...P()); else if (c === "C") { const a = P(), b = P(), e = P(); s.bezierCurveTo(...a, ...b, ...e); } else if (c === "Z") { s.closePath(); } }
-      return s;
-    };
+    const toShape = (d) => { const s = new T.Shape(); const n = d.match(/[MLCZ]|-?\d*\.?\d+/g); let i = 0, c = ""; const P = () => [parseFloat(n[i++]) + LION.t[0], -(parseFloat(n[i++]) + LION.t[1])];
+      while (i < n.length) { if (/[MLCZ]/.test(n[i])) c = n[i++]; if (c === "M") s.moveTo(...P()); else if (c === "L") s.lineTo(...P()); else if (c === "C") { const a = P(), b = P(), e = P(); s.bezierCurveTo(...a, ...b, ...e); } else if (c === "Z") s.closePath(); } return s; };
     const lion = new T.Group();
-    LION.parts.forEach((p) => {
-      if (p.p === "line") return;
-      const depth = p.p === "face" ? 9 : p.p === "cut" ? 1 : 6;
-      const geo = new T.ExtrudeGeometry(toShape(p.d), { depth, bevelEnabled: p.p !== "cut", bevelThickness: 2.2, bevelSize: 1.4, bevelSegments: 5, curveSegments: 18 });
-      const m = new T.Mesh(geo, p.p === "cut" ? dark : chrome);
-      m.position.z = p.p === "face" ? 2 : p.p === "cut" ? 12.6 : 0;
-      lion.add(m);
-    });
+    LION.parts.forEach((p) => { if (p.p === "line") return;
+      const geo = new T.ExtrudeGeometry(toShape(p.d), { depth: p.p === "face" ? 9 : p.p === "cut" ? 1 : 6, bevelEnabled: p.p !== "cut", bevelThickness: 2.2, bevelSize: 1.4, bevelSegments: 5, curveSegments: 18 });
+      const m = new T.Mesh(geo, p.p === "cut" ? dark : chrome); m.position.z = p.p === "face" ? 2 : p.p === "cut" ? 12.6 : 0; lion.add(m); });
     const [vx, vy, vw] = LION.vb, sc = 3.1 / vw;
-    lion.scale.set(sc, sc, sc); lion.position.set(-(vx + vw / 2) * sc, (vy + vw / 2) * sc, -0.2);
-    const piv = new T.Group(); piv.add(lion); scene.add(piv);
-    // Ovaler Ring
+    lion.scale.setScalar(sc); lion.position.set(-(vx + vw / 2) * sc, (vy + vw / 2) * sc, -0.2);
+    const emblem = new T.Group(); emblem.add(lion);
     const curve = new T.EllipseCurve(0, 0, 2.15, 2.65, 0, Math.PI * 2);
-    const pts = curve.getPoints(220).map((p) => new T.Vector3(p.x, p.y, 0));
-    const ringGeo = new T.TubeGeometry(new T.CatmullRomCurve3(pts, true), 400, 0.07, 24, true);
-    const ring = new T.Mesh(ringGeo, chrome); scene.add(ring);
-    const total = ringGeo.index.count; ringGeo.setDrawRange(0, 0);
-    const key = new T.PointLight(0xffffff, 2.5, 30); key.position.set(-4, 3, 6); scene.add(key);
+    const ring = new T.Mesh(new T.TubeGeometry(new T.CatmullRomCurve3(curve.getPoints(220).map((p) => new T.Vector3(p.x, p.y, 0)), true), 400, 0.09, 24, true), chrome);
+    emblem.add(ring);
+    const ring2 = new T.Mesh(new T.TubeGeometry(new T.CatmullRomCurve3(new T.EllipseCurve(0, 0, 2.42, 2.92, 0, Math.PI * 2).getPoints(220).map((p) => new T.Vector3(p.x, p.y, 0)), true), 400, 0.025, 12, true), chrome);
+    emblem.add(ring2);
+    scene.add(emblem);
 
-    const m = { x: 0, y: 0 }, sm = { x: 0, y: 0 };
-    ov.addEventListener("pointermove", (e) => { m.x = e.clientX / innerWidth * 2 - 1; m.y = e.clientY / innerHeight * 2 - 1; });
+    // Wolken/Nebel aus weichen Sprites
+    const cc = document.createElement("canvas"); cc.width = cc.height = 256; const c2 = cc.getContext("2d");
+    for (let i = 0; i < 26; i++) { const x = 60 + Math.random() * 136, y = 60 + Math.random() * 136, r = 30 + Math.random() * 70; const rg = c2.createRadialGradient(x, y, 0, x, y, r); rg.addColorStop(0, "rgba(255,255,255,.18)"); rg.addColorStop(1, "rgba(255,255,255,0)"); c2.fillStyle = rg; c2.fillRect(0, 0, 256, 256); }
+    const cloudTex = new T.CanvasTexture(cc);
+    const clouds = [];
+    for (let i = 0; i < 70; i++) {
+      const m = new T.Sprite(new T.SpriteMaterial({ map: cloudTex, color: i % 3 ? 0x9aa3b5 : 0xd9b98a, transparent: true, opacity: 0.55, depthWrite: false }));
+      const z = -Math.random() * 60; m.position.set((Math.random() - 0.5) * 30, -4 - Math.random() * 6 + (i % 4 === 0 ? 9 : 0), z);
+      const s = 8 + Math.random() * 14; m.scale.set(s, s * 0.6, 1); m.userData.v = 0.2 + Math.random() * 0.5; scene.add(m); clouds.push(m);
+    }
+    // Lichtstrahlen hinter dem Emblem
+    const rayC = document.createElement("canvas"); rayC.width = rayC.height = 512; const rg2 = rayC.getContext("2d");
+    rg2.translate(256, 256); for (let i = 0; i < 36; i++) { rg2.rotate(Math.PI * 2 / 36); const gr = rg2.createLinearGradient(0, 0, 0, 256); gr.addColorStop(0, "rgba(255,230,190,.55)"); gr.addColorStop(1, "rgba(255,230,190,0)"); rg2.fillStyle = gr; rg2.beginPath(); rg2.moveTo(0, 0); rg2.lineTo(-6 - Math.random() * 10, 256); rg2.lineTo(6 + Math.random() * 10, 256); rg2.fill(); }
+    const rays = new T.Mesh(new T.PlaneGeometry(26, 26), new T.MeshBasicMaterial({ map: new T.CanvasTexture(rayC), transparent: true, opacity: 0, depthWrite: false, blending: T.AdditiveBlending }));
+    rays.position.z = -3; scene.add(rays);
+    const key = new T.PointLight(0xffe2b8, 3, 40); scene.add(key);
+
     const start = performance.now();
-    const ease = (k) => 1 - Math.pow(1 - k, 4);
+    const ease = (k) => k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
     const loop = (now) => {
       if (!ov.isConnected) return;
       const t = (now - start) / 1000;
-      sm.x += (m.x - sm.x) * 0.05; sm.y += (m.y - sm.y) * 0.05;
-      const kr = Math.min(1, t / 1.6); ringGeo.setDrawRange(0, Math.floor(ease(kr) * total / 6) * 6);
-      ring.rotation.y = sm.x * 0.25 + Math.sin(t * 0.6) * 0.06; ring.rotation.x = -sm.y * 0.2;
-      const kl = Math.min(1, Math.max(0, (t - 0.5) / 2.1));
-      piv.rotation.y = (1 - ease(kl)) * -Math.PI * 0.9 + sm.x * 0.45 + Math.sin(t * 0.7) * 0.08;
-      piv.rotation.x = -sm.y * 0.25;
-      piv.position.y = (1 - ease(kl)) * -0.6 + Math.sin(t * 1.1) * 0.04;
-      piv.scale.setScalar(0.85 + ease(kl) * 0.15);
-      key.position.x = Math.sin(t * 0.9) * 6; key.position.y = 3 + Math.cos(t * 0.7) * 2;
-      env.rotation = t * 0.2;
-      chrome.envMapIntensity = 1.2 + Math.max(0, Math.sin(t * 1.4 - 2)) * 1.2;
-      if (t > 2.4) ov.classList.add("is-text");
+      // Kamera: fliegt durch die Wolken nach vorn und bremst vor dem Emblem
+      const k = Math.min(1, t / 5.2), e = ease(k);
+      cam.position.set(Math.sin(t * 0.3) * 0.3 * (1 - e), 1.6 * (1 - e) + 0.15, 46 - e * 35.5);
+      cam.lookAt(0, 0.1, 0);
+      emblem.rotation.y = (1 - e) * 1.4 + Math.sin(t * 0.6) * 0.05 * e;
+      emblem.rotation.x = (1 - e) * -0.25;
+      key.position.set(Math.sin(t * 0.8) * 8, 4, 8);
+      env.rotation = t * 0.25;
+      chrome.envMapIntensity = 1.4 + Math.max(0, Math.sin(t * 1.2 - 4)) * 1.6;
+      rays.material.opacity = Math.max(0, Math.min(0.85, (t - 3.2) / 1.5)); rays.rotation.z = t * 0.05;
+      scene.fog.density = 0.045 - e * 0.03;
+      clouds.forEach((c) => { c.position.x += c.userData.v * 0.01 * (c.position.x > 0 ? 1 : -1); c.material.opacity = 0.55 * (1 - Math.max(0, (t - 4.5) / 2)); });
+      if (t > 4.6) ov.classList.add("is-title");
       R.render(scene, cam);
       requestAnimationFrame(loop);
     };
     requestAnimationFrame(loop);
-    setTimeout(end, 6200);
-  });
+    setTimeout(end, 8400);
+  }
 })();
+

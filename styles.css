@@ -4498,3 +4498,54 @@ body.v5 .header .logo:hover .lion-mark { transform: rotate(-8deg) scale(1.12); }
 .lion-intro__skip:hover { opacity: 1; }
 .lion-intro__n { position: absolute; left: 24px; bottom: 24px; margin: 0; font: 800 11px/1 "Montserrat", Arial, sans-serif; letter-spacing: 0.1em; opacity: 0.6; font-variant-numeric: tabular-nums; }
 .lion-intro__t { bottom: 8vh; }
+
+/* Preloader: Bilder-Stapel */
+html.pre-lock { overflow: hidden; }
+.pre { position: fixed; inset: 0; z-index: 10001; background: #0a0a0a; color: #fff; overflow: hidden; transition: clip-path 900ms cubic-bezier(0.77, 0, 0.175, 1); clip-path: inset(0); }
+.pre.is-out { clip-path: inset(0 0 100% 0); }
+.pre--home.is-out { clip-path: none; opacity: 0; transition: opacity 600ms; }
+.pre__stage { position: absolute; inset: 0; }
+.pre__img { position: absolute; left: 50%; top: 50%; width: var(--w); aspect-ratio: 4 / 5; margin: 0; overflow: hidden; transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) rotate(var(--r)); animation: pre-pop 520ms cubic-bezier(0.19, 1, 0.22, 1) both; box-shadow: 0 30px 60px -20px rgba(0,0,0,.6); }
+.pre__img img { width: 100%; height: 100%; object-fit: cover; display: block; filter: none !important; }
+@keyframes pre-pop { from { clip-path: inset(100% 0 0 0); transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y) + 8vh)) rotate(var(--r)) scale(1.1); } to { clip-path: inset(0); } }
+.pre__img.is-full { transition: width 900ms cubic-bezier(0.77, 0, 0.175, 1), height 900ms cubic-bezier(0.77, 0, 0.175, 1), transform 900ms cubic-bezier(0.77, 0, 0.175, 1), aspect-ratio 0s; width: 100vw; height: 100vh; aspect-ratio: auto; transform: translate(-50%, -50%) rotate(0); z-index: 50 !important; }
+.pre__brand { position: absolute; left: 24px; top: 22px; margin: 0; z-index: 60; font: 900 18px/1 "Montserrat", Arial, sans-serif !important; letter-spacing: -0.02em; }
+.pre__count { position: absolute; right: 24px; bottom: 10px; margin: 0; z-index: 60; font: 900 clamp(80px, 16vw, 240px)/0.8 "Montserrat", Arial, sans-serif !important; letter-spacing: -0.05em; font-variant-numeric: tabular-nums; }
+.pre__count::after { content: "%"; font-size: 0.3em; vertical-align: top; margin-left: 0.05em; }
+.pre__word { position: absolute; left: 24px; bottom: 26px; margin: 0; z-index: 60; font: 800 12px/1 "Montserrat", Arial, sans-serif !important; letter-spacing: 0.24em; text-transform: uppercase; }
+/* Löwen-Intro nach dem Preloader: kurzer Einstieg */
+.lion-intro.is-late { animation: lion-fadein 700ms ease both; }
+@keyframes lion-fadein { from { opacity: 0; } }
+html.pre-lock .lion-intro { visibility: hidden; }
+
+/* ==========================================================================
+   MOU – Kino-Intro: Schlüsselloch → Flug durch die Wolken → Löwe → MOU
+   ========================================================================== */
+.mou { position: fixed; inset: 0; z-index: 10002; background: #000; color: #fff; overflow: hidden; transition: opacity 1200ms ease; }
+.mou.is-out { opacity: 0; pointer-events: none; }
+.mou__hint { position: absolute; left: 24px; top: 72px; margin: 0; font: 800 12px/1 "Montserrat", Arial, sans-serif !important; letter-spacing: 0.32em; text-transform: uppercase; opacity: 0; animation: mou-in 1200ms ease 400ms forwards; }
+@keyframes mou-in { to { opacity: 0.9; } }
+.mou__key { position: absolute; left: 50%; top: 50%; width: 110px; height: 270px; margin: -135px 0 0 -55px; padding: 0; border: 0; background: none; cursor: pointer; transition: transform 1100ms cubic-bezier(0.7, 0, 0.84, 0), opacity 400ms 800ms; }
+.mou__keyfill { position: absolute; inset: 0; clip-path: path("M55 0 A55 55 0 0 1 82 103 L110 270 L0 270 L28 103 A55 55 0 0 1 55 0 Z");
+  background: radial-gradient(circle at 40% 30%, #ff5a3a 0%, #a1160c 35%, #2a0402 70%, #000 100%), #000; background-size: 200% 200%; animation: mou-glow 3.2s ease-in-out infinite alternate; }
+.mou__keyfill::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 20%, rgba(255,140,90,.55), transparent 60%); mix-blend-mode: screen; animation: mou-flicker 1.7s steps(6) infinite; }
+@keyframes mou-glow { from { background-position: 0% 0%; filter: brightness(.7); } to { background-position: 100% 100%; filter: brightness(1.15); } }
+@keyframes mou-flicker { 0%, 100% { opacity: .5; } 40% { opacity: .9; } 60% { opacity: .35; } }
+.mou__key:hover .mou__keyfill { filter: brightness(1.4); }
+.mou.is-enter .mou__key { transform: scale(28); opacity: 0; }
+.mou.is-enter .mou__hint { animation: none; opacity: 0; transition: opacity 400ms; }
+.mou__cv { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1400ms ease; }
+.mou.is-film .mou__cv { opacity: 1; }
+.mou__flat { position: absolute; left: 50%; top: 42%; width: min(300px, 50vw); transform: translate(-50%, -50%); color: #e6e2da; --lion-cut: #000; animation: lion-in 1600ms cubic-bezier(0.19, 1, 0.22, 1) both; }
+.mou__title { position: absolute; left: 0; right: 0; bottom: 6vh; text-align: center; pointer-events: none; }
+.mou__pre { margin: 0 0 10px; font: 800 12px/1 "Montserrat", Arial, sans-serif !important; letter-spacing: 0.4em; text-transform: uppercase; opacity: 0; transition: opacity 900ms; }
+.mou__word { margin: 0; display: inline-flex; gap: 0.12em; overflow: hidden; font: 900 clamp(70px, 15vw, 230px)/0.85 "Montserrat", Arial, sans-serif !important; letter-spacing: 0.08em; text-transform: uppercase; }
+.mou__word span { display: inline-block; transform: translateY(105%); transition: transform 1300ms cubic-bezier(0.19, 1, 0.22, 1); transition-delay: calc(200ms + var(--i) * 120ms); background: linear-gradient(180deg, #fff 30%, #b9b3a8 70%, #fff 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.mou__sub { margin: 12px 0 0; font: 800 11px/1 "Montserrat", Arial, sans-serif !important; letter-spacing: 0.5em; text-transform: uppercase; opacity: 0; transition: opacity 900ms 900ms; }
+.mou.is-title .mou__pre { opacity: 0.85; }
+.mou.is-title .mou__word span { transform: none; }
+.mou.is-title .mou__sub { opacity: 0.6; }
+.mou__skip { position: absolute; right: 24px; bottom: 24px; z-index: 2; background: none; border: 0; color: #fff; opacity: 0.55; font: 800 11px/1 "Montserrat", Arial, sans-serif; letter-spacing: 0.24em; text-transform: uppercase; cursor: pointer; }
+.mou__skip:hover { opacity: 1; }
+@media (max-width: 700px) { .mou__key { transform: scale(0.75); } .mou__hint { top: 40px; font-size: 10px !important; } }
+.mou__cv { pointer-events: none; } .mou__key { z-index: 2; }
