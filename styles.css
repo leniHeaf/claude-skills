@@ -4559,3 +4559,31 @@ html.pre-lock .lion-intro { visibility: hidden; }
 .mou.is-title .mou__pre { opacity: 1; }
 .mou__sub { margin-top: 26px; }
 .mou__title { bottom: 4vh; } .mou__word { font-size: clamp(60px, 11vw, 170px) !important; }
+
+/* Lade-Animation: Silber-Siegel */
+html.seal-lock { overflow: hidden; }
+.seal-load { position: fixed; inset: 0; z-index: 10003; display: grid; place-items: center; background: #0a0a0a; color: #fff; clip-path: inset(0); transition: clip-path 900ms cubic-bezier(0.77, 0, 0.175, 1); }
+.seal-load.is-out { clip-path: inset(0 0 100% 0); }
+.seal-load__coin { width: clamp(170px, 22vw, 260px); aspect-ratio: 0.86; perspective: 900px; animation: seal-in 900ms cubic-bezier(0.19, 1, 0.22, 1) both; }
+@keyframes seal-in { from { opacity: 0; transform: scale(0.8) translateY(20px); } }
+.seal-load__face { position: relative; width: 100%; height: 100%; border-radius: 30% / 26%; border: 0; background: radial-gradient(120% 90% at 30% 20%, #1c1c1c, #070707 70%); box-shadow: inset 0 0 0 7px #bdbdbd, inset 0 0 0 9px #0a0a0a, inset 0 0 0 11px #d9d9d9, 0 30px 60px -20px rgba(0,0,0,.8); filter: url(#silver); transform-style: preserve-3d; }
+.seal-load__coin.is-flip .seal-load__face { animation: seal-flip 380ms cubic-bezier(0.65, 0, 0.35, 1); }
+@keyframes seal-flip { 0% { transform: rotateY(0); } 50% { transform: rotateY(90deg) scale(0.96); } 100% { transform: rotateY(0); } }
+.seal-load__art { position: absolute; inset: 22% 16%; display: grid; place-items: center; opacity: 0; color: #cfcfcf; }
+.seal-load__art.is-on { opacity: 1; }
+.seal-load__art svg { width: 100%; height: 100%; fill: #d4d4d4; }
+.seal-load__art:first-child svg, .seal-load__art:last-child svg { width: 118%; }
+.seal-load__name { position: absolute; left: 0; right: 0; bottom: 14vh; margin: 0; text-align: center; font: 900 13px/1 "Montserrat", Arial, sans-serif !important; letter-spacing: 0.5em; text-transform: uppercase; opacity: 0.8; }
+.seal-load__n { position: absolute; left: 24px; bottom: 24px; margin: 0; font: 800 11px/1 "Montserrat", Arial, sans-serif !important; letter-spacing: 0.1em; opacity: 0.6; font-variant-numeric: tabular-nums; }
+/* Siegel größer, Medaillon statt App-Icon, Kranz aus vielen kleinen Siegeln */
+.seal-load__coin { width: clamp(200px, 26vw, 330px); z-index: 2; }
+.seal-load__face { border-radius: 34% / 30%; background: radial-gradient(120% 90% at 30% 20%, #191919, #050505 70%); box-shadow: inset 0 0 0 4px #cfcfcf, inset 0 0 0 10px #0a0a0a, inset 0 0 0 11.5px #9a9a9a, 0 40px 80px -30px rgba(0,0,0,.9); }
+.seal-load__art svg { fill: url(#silv); color: #bdbdbd; }
+.seal-load__field { position: absolute; inset: 0; pointer-events: none; }
+.seal-load__mini { position: absolute; left: 50%; top: 50%; width: clamp(54px, 6vw, 84px); aspect-ratio: 0.86; margin: calc(clamp(54px, 6vw, 84px) * -0.58) 0 0 calc(clamp(54px, 6vw, 84px) * -0.5); border-radius: 34% / 30%; box-shadow: inset 0 0 0 2px #8a8a8a; display: grid; place-items: center; padding: 16%; opacity: 0; filter: url(#silver); transform: rotate(var(--a)) translateY(calc(-1 * clamp(190px, 26vw, 320px))) rotate(calc(-1 * var(--a))) scale(0.4); animation: seal-mini 2600ms cubic-bezier(0.19, 1, 0.22, 1) var(--d) both; }
+.seal-load__mini svg { width: 100%; height: 100%; fill: #8f8f8f; color: #8f8f8f; }
+@keyframes seal-mini { 0% { opacity: 0; transform: rotate(var(--a)) translateY(calc(-1 * clamp(190px, 26vw, 320px))) rotate(calc(-1 * var(--a))) scale(0.4); } 30% { opacity: 0.9; transform: rotate(var(--a)) translateY(calc(-1 * clamp(190px, 26vw, 320px))) rotate(calc(-1 * var(--a))) scale(1); } 75% { opacity: 0.7; transform: rotate(calc(var(--a) + 40deg)) translateY(calc(-1 * clamp(190px, 26vw, 320px))) rotate(calc(-1 * var(--a) - 40deg)) scale(1); } 100% { opacity: 0; transform: rotate(calc(var(--a) + 60deg)) translateY(0) rotate(calc(-1 * var(--a) - 60deg)) scale(0.2); } }
+@media (max-width: 700px) { .seal-load__mini { display: none; } }
+.seal-load__mini, .seal-load__art { box-sizing: border-box; overflow: hidden; } .seal-load__mini svg, .seal-load__art svg { display: block; min-width: 0; max-width: 100%; max-height: 100%; } .seal-load__mini { display: block; } .seal-load__art { display: flex; align-items: center; justify-content: center; }
+.seal-load__mini { padding: 13px; }
+.seal-load__name { bottom: 6vh; }

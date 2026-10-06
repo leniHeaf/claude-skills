@@ -2451,3 +2451,41 @@ const LION = {"vb": [10.0, 4.0, 230.0, 150.0], "t": [0, 0], "parts": [{"p": "bod
   }
 })();
 
+
+// ==========================================================================
+// Lade-Animation auf jeder Seite: Silber-Siegel im abgerundeten Rahmen,
+// das sich wie eine Münze dreht und dabei mehrere Siegel zeigt
+// (Löwe → Krone → Stern → Monogramm → Löwe), dann Vorhang nach oben.
+// ==========================================================================
+(() => {
+  if (!document.body.classList.contains("v5") || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (document.querySelector(".mou")) return;
+  let fromProject = false; try { fromProject = !!sessionStorage.getItem("bx3-from"); } catch (e) {}
+  if (fromProject || document.body.classList.contains("bx-arrived")) return;
+  const [x, y, w, h] = LION.vb;
+  const lion = `<svg viewBox="${x} ${y} ${w} ${h}"><g>${LION.parts.filter((p) => p.p !== "cut" && p.p !== "line").map((p) => `<path d="${p.d}"/>`).join("")}</g></svg>`;
+  const crown = `<svg viewBox="0 0 100 100"><path d="M14 72 L10 30 L32 48 L50 18 L68 48 L90 30 L86 72 Z M14 78 H86 V88 H14 Z"/><circle cx="10" cy="28" r="5"/><circle cx="50" cy="15" r="5"/><circle cx="90" cy="28" r="5"/></svg>`;
+  const star = `<svg viewBox="0 0 100 100"><path d="M50 4 L58 38 L92 26 L66 50 L92 74 L58 62 L50 96 L42 62 L8 74 L34 50 L8 26 L42 38 Z"/><circle cx="50" cy="50" r="8" fill="#0a0a0a"/></svg>`;
+  const mono = `<svg viewBox="0 0 100 100"><text x="50" y="70" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-weight="900" font-size="62" letter-spacing="-3">SX</text></svg>`;
+  const laurel = `<svg viewBox="0 0 100 100"><path d="M50 90 C30 80 18 62 18 40 M50 90 C70 80 82 62 82 40" fill="none" stroke="currentColor" stroke-width="5"/>${[0,1,2,3,4].map((i) => `<ellipse cx="${22 + i * 2}" cy="${36 + i * 11}" rx="9" ry="4" transform="rotate(${-50 + i * 12} ${22 + i * 2} ${36 + i * 11})"/><ellipse cx="${78 - i * 2}" cy="${36 + i * 11}" rx="9" ry="4" transform="rotate(${50 - i * 12} ${78 - i * 2} ${36 + i * 11})"/>`).join("")}<text x="50" y="62" text-anchor="middle" font-family="Montserrat, Arial" font-weight="900" font-size="26">X</text></svg>`;
+  const sun = `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="16"/>${Array.from({ length: 16 }, (_, i) => `<path d="M50 4 L54 26 L46 26 Z" transform="rotate(${i * 22.5} 50 50)"/>`).join("")}</svg>`;
+  const eye = `<svg viewBox="0 0 100 100"><path d="M6 50 C26 22 74 22 94 50 C74 78 26 78 6 50 Z"/><circle cx="50" cy="50" r="15" fill="#0a0a0a"/><circle cx="50" cy="50" r="7"/></svg>`;
+  const seals = [lion, crown, star, laurel, sun, eye, mono, lion];
+  const ov = document.createElement("div");
+  ov.className = "seal-load";
+  ov.setAttribute("aria-hidden", "true");
+  ov.innerHTML = `<svg width="0" height="0" style="position:absolute"><defs><linearGradient id="silv" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4f4f4"/><stop offset=".45" stop-color="#9c9c9c"/><stop offset=".6" stop-color="#e2e2e2"/><stop offset="1" stop-color="#7d7d7d"/></linearGradient></defs><filter id="silver" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur in="SourceAlpha" stdDeviation="2.2" result="b"/><feSpecularLighting in="b" surfaceScale="5" specularConstant="1.1" specularExponent="22" lighting-color="#ffffff" result="s"><fePointLight x="-60" y="-120" z="160"/></feSpecularLighting><feComposite in="s" in2="SourceAlpha" operator="in" result="sp"/><feComposite in="SourceGraphic" in2="sp" operator="arithmetic" k1="0" k2="1" k3="0.9" k4="0"/></filter></svg>
+    <div class="seal-load__field">${seals.slice(1, 7).concat(seals.slice(1, 7)).map((s, i) => `<div class="seal-load__mini" style="--a:${i * 30}deg;--d:${i * 70}ms">${s}</div>`).join("")}</div>
+    <div class="seal-load__coin"><div class="seal-load__face">${seals.map((s, i) => `<div class="seal-load__art${i === 0 ? " is-on" : ""}">${s}</div>`).join("")}</div></div>
+    <p class="seal-load__name">STUDIO.X</p><p class="seal-load__n">000</p>`;
+  document.body.appendChild(ov);
+  document.documentElement.classList.add("seal-lock");
+  const arts = [...ov.querySelectorAll(".seal-load__art")], coin = ov.querySelector(".seal-load__coin"), n = ov.querySelector(".seal-load__n");
+  const step = 480, t0 = performance.now();
+  arts.forEach((_, i) => { if (!i) return; setTimeout(() => { coin.classList.remove("is-flip"); void coin.offsetWidth; coin.classList.add("is-flip"); setTimeout(() => arts.forEach((a, k) => a.classList.toggle("is-on", k === i)), 160); }, 300 + i * step); });
+  const total = 300 + arts.length * step + 300;
+  const tick = (now) => { const k = Math.min(1, (now - t0) / total); n.textContent = String(Math.round(k * 100)).padStart(3, "0"); if (k < 1) requestAnimationFrame(tick); };
+  requestAnimationFrame(tick);
+  setTimeout(() => ov.classList.add("is-out"), total);
+  setTimeout(() => { ov.remove(); document.documentElement.classList.remove("seal-lock"); }, total + 1000);
+})();
