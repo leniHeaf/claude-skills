@@ -1630,7 +1630,7 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
     stage = document.createElement("section");
     stage.className = "bx-stage"; stage.dataset.dark = "";
     stage.style.height = (B.words.length * 70 + 60) + "vh";
-    stage.innerHTML = `<div class="bx-stage__pin"><p class="bx-stage__k">Wofür die Marke steht</p><div class="bx-stage__w">${B.words.map((w, i) => `<span data-i="${i}" style="font-size:min(11vw, ${(150 / Math.max(6, w.length)).toFixed(2)}vw, 190px) !important">${w}</span>`).join("")}</div><p class="bx-stage__n"><b>01</b> / ${String(B.words.length).padStart(2, "0")}</p><i class="bx-stage__line"></i></div>`;
+    stage.innerHTML = `<div class="bx-stage__pin"><p class="bx-stage__k">Wofür die Marke steht</p><div class="bx-stage__w">${B.words.map((w, i) => `<span data-i="${i}" style="font-size:min(11vw, ${(132 / Math.max(6, w.length)).toFixed(2)}vw, 190px) !important">${w}</span>`).join("")}</div><p class="bx-stage__n"><b>01</b> / ${String(B.words.length).padStart(2, "0")}</p><i class="bx-stage__line"></i></div>`;
     const anchor = root.querySelector(".c3-band") || root.querySelector(".c3-sec");
     anchor.after(stage);
     stageWords = [...stage.querySelectorAll(".bx-stage__w span")];
@@ -2035,7 +2035,7 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
     requestAnimationFrame(loop);
   }
 })();
-document.querySelectorAll(".c3-giant").forEach((g) => { const n = g.textContent.trim().length; g.style.setProperty("font-size", `min(17vw, ${(150 / Math.max(5, n)).toFixed(2)}vw, 300px)`, "important"); });
+document.querySelectorAll(".c3-giant").forEach((g) => { const n = g.textContent.trim().length; g.style.setProperty("font-size", `min(17vw, ${(135 / Math.max(5, n)).toFixed(2)}vw, 300px)`, "important"); });
 
 // ==========================================================================
 // 3D-Seitenübergänge

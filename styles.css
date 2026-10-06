@@ -4378,3 +4378,7 @@ body.v5 .c2-bar__t b, body.v5 .c2-bar__t span, body.v5 .footer h4, body.v5 .foot
 body.v5 .header .nav a, body.v5 .header .nav__toggle { font-size: 13px !important; letter-spacing: 0.06em; }
 body.v5 .header .sub a { font-size: 14px !important; }
 body.v5 .menu .mnav details a { font-size: 15px !important; }
+/* Noch dicker */
+body.v5, body.v5 p, body.v5 li, body.v5 dd, body.v5 dt, body.v5 a, body.v5 span, body.v5 button, body.v5 input, body.v5 label, body.v5 blockquote, body.v5 figcaption, body.v5 summary, body.v5 td, body.v5 th { font-weight: 800 !important; }
+body.v5 h1, body.v5 h2, body.v5 h3, body.v5 h4, body.v5 .logo, body.v5 b, body.v5 strong, body.v5 .c3-giant, body.v5 .c3-title, body.v5 .c3-next__n, body.v5 .bx-stage__w span, body.v5 .bx4__logo, body.v5 .bx4__name, body.v5 .m9-marq__track span, body.v5 .c3-band span { font-weight: 900 !important; }
+body.v5 .bx-serif { font-weight: 400 !important; }
