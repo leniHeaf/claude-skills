@@ -1589,7 +1589,7 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
   if (fine) root.querySelectorAll(".c3-m, .c3-hs figure").forEach((f) => {
     f.addEventListener("pointermove", (e) => {
       const r = f.getBoundingClientRect(), px = (e.clientX - r.left) / r.width - 0.5, py = (e.clientY - r.top) / r.height - 0.5;
-      f.style.transform = `perspective(1200px) rotateY(${px * 5}deg) rotateX(${-py * 5}deg)`;
+      
       f.classList.add("is-hov");
     });
     f.addEventListener("pointerleave", () => { f.style.transform = ""; f.classList.remove("is-hov"); });
@@ -1630,7 +1630,7 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
     stage = document.createElement("section");
     stage.className = "bx-stage"; stage.dataset.dark = "";
     stage.style.height = (B.words.length * 70 + 60) + "vh";
-    stage.innerHTML = `<div class="bx-stage__pin"><p class="bx-stage__k">Wofür die Marke steht</p><div class="bx-stage__w">${B.words.map((w, i) => `<span data-i="${i}" style="font-size:min(11vw, ${(132 / Math.max(6, w.length)).toFixed(2)}vw, 190px) !important">${w}</span>`).join("")}</div><p class="bx-stage__n"><b>01</b> / ${String(B.words.length).padStart(2, "0")}</p><i class="bx-stage__line"></i></div>`;
+    stage.innerHTML = `<div class="bx-stage__pin"><p class="bx-stage__k">Wofür die Marke steht</p><div class="bx-stage__w">${B.words.map((w, i) => `<span data-i="${i}" style="font-size:min(11vw, ${(185 / Math.max(6, w.length)).toFixed(2)}vw, 190px) !important">${w}</span>`).join("")}</div><p class="bx-stage__n"><b>01</b> / ${String(B.words.length).padStart(2, "0")}</p><i class="bx-stage__line"></i></div>`;
     const anchor = root.querySelector(".c3-band") || root.querySelector(".c3-sec");
     anchor.after(stage);
     stageWords = [...stage.querySelectorAll(".bx-stage__w span")];
@@ -1802,7 +1802,7 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
     const col = new T.Color(cfg.color);
 
     // ---------- 1) Markenobjekt im Einstieg ----------
-    const hero = root.querySelector(".c3-hero");
+    const hero = document.createElement("div");
     const hc = document.createElement("canvas");
     hc.className = "bx3-hero"; hc.setAttribute("aria-hidden", "true");
     hero.appendChild(hc);
@@ -1902,7 +1902,7 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
       }
       fly._carousel = carousel; fly._mode = MODE;
       // Gitterlinien als Gang
-      const lineMat = new T.LineBasicMaterial({ color: cfg.color, transparent: true, opacity: 0.35 });
+      const lineMat = new T.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.06 });
       depth = seq.length * gap + 10;
       if (MODE === "sprint") {
         for (let i = 0; i < 160; i++) { const y = (Math.random() - 0.5) * 6, z = -3 - Math.random() * 8, x = Math.random() * depth * 1.2 - 10, l = 1 + Math.random() * 6;
@@ -2298,4 +2298,17 @@ document.querySelectorAll(".c3-giant").forEach((g) => { const n = g.textContent.
     requestAnimationFrame(loop);
   };
   requestAnimationFrame(loop);
+})();
+
+// Case Studies: ruhiger, hochwertiger Einstieg – Name in Serif, Meta-Zeile, keine Effekte über dem Bild
+(() => {
+  const hero = document.querySelector(".cs3 .c3-hero");
+  if (!hero) return;
+  const tags = (document.querySelector(".c2-bar__t span")?.textContent || "").split("·").map((t) => t.trim()).filter(Boolean);
+  const meta = document.createElement("div");
+  meta.className = "c3-meta"; meta.setAttribute("aria-hidden", "true");
+  meta.innerHTML = `<span>Case Study — 2026</span><span>${tags.join(" / ")}</span><span class="c3-meta__s">Scrollen ↓</span>`;
+  hero.appendChild(meta);
+  const g = document.querySelector(".c3-giant");
+  if (g) { g.style.removeProperty("font-size"); const n = g.textContent.trim().length; g.style.setProperty("--gs", Math.min(19, 150 / Math.max(4, n)).toFixed(2) + "vw"); }
 })();
