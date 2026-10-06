@@ -2312,3 +2312,112 @@ document.querySelectorAll(".c3-giant").forEach((g) => { const n = g.textContent.
   const g = document.querySelector(".c3-giant");
   if (g) { g.style.removeProperty("font-size"); const n = g.textContent.trim().length; g.style.setProperty("--gs", Math.min(19, 150 / Math.max(4, n)).toFixed(2) + "vw"); }
 })();
+const LION = {"vb": [52.5, 14.4, 173.9, 173.9], "t": [14, 12], "parts": [{"p": "mane", "d": "M81.6 64.4 C90.5 51.5 92.9 35.7 107.4 27.7 C113.1 24.7 119.0 26.2 120.7 32.4 C110.3 31.1 98.8 43.1 101.5 58.7 L94.4 70.0 Z"}, {"p": "mane", "d": "M89.5 59.8 C103.9 45.2 112.9 26.8 131.4 18.8 C137.6 17.1 143.0 19.8 143.3 26.2 C133.5 22.8 116.7 36.7 113.9 56.1 L102.1 68.9 Z"}, {"p": "mane", "d": "M98.5 58.0 C116.0 46.5 129.4 30.6 149.6 26.7 C156.0 26.4 160.7 30.2 159.7 36.5 C150.8 31.0 131.4 41.7 124.4 60.5 L109.8 70.7 Z"}, {"p": "mane", "d": "M107.6 59.3 C130.8 49.7 151.3 35.3 175.1 34.2 C181.5 35.3 185.3 40.0 182.8 46.0 C175.3 38.7 150.0 47.7 136.1 66.5 L116.4 75.2 Z"}, {"p": "mane", "d": "M115.6 63.4 C139.9 59.2 162.7 49.9 186.0 54.3 C191.9 56.6 194.6 62.1 191.0 67.4 C185.2 58.7 159.1 62.1 141.8 77.6 L121.2 81.8 Z"}, {"p": "mane", "d": "M121.8 69.9 C149.6 70.8 177.0 66.6 201.5 75.7 C206.7 79.3 208.2 85.2 203.5 89.6 C199.8 79.9 169.9 78.1 147.1 89.8 L123.3 89.7 Z"}, {"p": "mane", "d": "M124.7 98.0 C150.3 93.2 176.3 93.4 197.7 80.8 C202.4 76.5 203.0 70.4 197.7 66.8 C195.4 77.0 168.2 82.9 145.3 74.5 L123.3 78.0 Z"}, {"p": "mane", "d": "M121.1 106.0 C148.9 107.1 175.9 113.2 201.0 105.8 C206.5 102.5 208.4 96.8 204.0 92.1 C199.6 101.5 169.7 101.2 147.7 87.9 L124.0 86.4 Z"}, {"p": "mane", "d": "M115.0 112.4 C138.9 118.3 161.0 129.1 184.5 126.4 C190.6 124.4 193.7 119.2 190.4 113.7 C184.1 122.0 158.3 116.7 142.1 100.0 L121.8 94.5 Z"}, {"p": "mane", "d": "M107.0 116.4 C129.5 127.6 148.9 143.4 172.7 146.1 C179.1 145.5 183.2 141.0 181.2 134.9 C173.2 141.7 148.6 130.9 136.0 111.2 L117.0 101.2 Z"}, {"p": "mane", "d": "M98.1 117.6 C114.7 130.2 127.0 147.1 146.9 152.4 C153.2 153.2 158.2 149.7 157.6 143.3 C148.3 148.2 129.7 136.2 124.1 116.9 L110.2 105.7 Z"}, {"p": "mane", "d": "M89.2 115.8 C102.5 131.3 110.2 150.3 128.1 159.6 C134.2 161.7 139.8 159.4 140.5 153.0 C130.5 155.7 114.8 140.7 113.3 121.2 L102.4 107.5 Z"}, {"p": "mane", "d": "M81.4 111.1 C89.4 124.6 90.7 140.5 104.6 149.6 C110.1 152.9 116.1 151.9 118.2 145.8 C107.7 146.3 97.0 133.6 100.9 118.2 L94.6 106.4 Z"}, {"p": "mane", "d": "M94 54 C130 48 142 118 104 132 C80 128 78 58 94 54 Z"}, {"p": "face", "d": "M64 110 C60 120 64 130 72 136 C72 128 76 121 84 117 C78 117 70 115 64 110 Z"}, {"p": "face", "d": "M90 52 C80 52 70 56 64 62 C58 66 52 70 48 76 C45 79 44 83 45 88 C47 90 51 91 54 91 C53 94 53 97 55 99 C58 101 61 101 63 100 C60 104 60 108 63 111 C70 116 80 118 90 116 C98 114 104 108 106 98 C110 84 106 64 96 56 Z"}, {"p": "cut", "d": "M66 72 C70 69 75 69 78 72 C75 74 70 75 66 72 Z"}, {"p": "cut", "d": "M44.5 83 C47 81 51 81 53 83 L52 88 C50 89 47 89 45 88 Z"}, {"p": "line", "d": "M55 99 C58 97 62 97 64 99"}, {"p": "line", "d": "M58 67 C64 63 72 62 80 64"}]};
+// ==========================================================================
+// Studio-Logo: Löwe. 3D-Chrom-Intro (Startseite, einmal pro Besuch) +
+// Löwe im Header und im Ladebildschirm
+// ==========================================================================
+(() => {
+  if (!document.body.classList.contains("v5")) return;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const svg = (cls) => {
+    const [x, y, w, h] = LION.vb;
+    return `<svg class="${cls}" viewBox="${x} ${y} ${w} ${h}" aria-hidden="true"><g transform="translate(${LION.t[0]} ${LION.t[1]})">${LION.parts.map((p) => p.p === "line" ? `<path d="${p.d}" fill="none" stroke="var(--lion-cut,#fff)" stroke-width="2.5" stroke-linecap="round"/>` : `<path d="${p.d}" fill="${p.p === "cut" ? "var(--lion-cut,#fff)" : "currentColor"}"/>`).join("")}</g></svg>`;
+  };
+  // Header-Logo
+  document.querySelectorAll(".header .logo").forEach((l) => { if (!l.querySelector(".lion-mark")) l.insertAdjacentHTML("afterbegin", svg("lion-mark")); });
+  // Ladebildschirm im Projekt-Übergang
+  new MutationObserver(() => document.querySelectorAll(".bx4__load:not(.has-lion)").forEach((d) => { d.classList.add("has-lion"); d.insertAdjacentHTML("afterbegin", svg("lion-load")); })).observe(document.body, { childList: true });
+
+  // 3D-Intro nur auf der Startseite, einmal pro Sitzung
+  if (!document.body.classList.contains("page-home") || reduce) return;
+  let seen = false; try { seen = sessionStorage.getItem("lion-intro") === "1"; sessionStorage.setItem("lion-intro", "1"); } catch (e) {}
+  if (seen && !location.hash.includes("intro")) return;
+
+  const ov = document.createElement("div");
+  ov.className = "lion-intro";
+  ov.innerHTML = `<canvas></canvas><div class="lion-intro__t"><p class="lion-intro__w">STUDIO.X</p><p class="lion-intro__s">Brand Studio</p></div><button class="lion-intro__skip" type="button">Überspringen</button><p class="lion-intro__n">000</p>`;
+  document.body.appendChild(ov);
+  document.documentElement.style.overflow = "hidden";
+  const end = () => { if (ov.classList.contains("is-out")) return; ov.classList.add("is-out"); document.documentElement.style.overflow = ""; setTimeout(() => ov.remove(), 1300); };
+  ov.querySelector(".lion-intro__skip").addEventListener("click", end);
+  const cnt = ov.querySelector(".lion-intro__n"), t0 = performance.now();
+  const count = (now) => { const k = Math.min(1, (now - t0) / 6000); cnt.textContent = String(Math.round(k * 100)).padStart(3, "0"); if (k < 1 && !ov.classList.contains("is-out")) requestAnimationFrame(count); };
+  requestAnimationFrame(count);
+  const fallback = setTimeout(() => { ov.classList.add("is-flat"); ov.insertAdjacentHTML("afterbegin", svg("lion-flat")); setTimeout(() => ov.classList.add("is-text"), 900); setTimeout(end, 3200); }, 2500);
+
+  const load = (cb) => { if (window.THREE) return cb(); const s = document.createElement("script"); s.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"; s.onload = cb; document.head.appendChild(s); };
+  load(() => {
+    const T = window.THREE, cv = ov.querySelector("canvas");
+    if (!(cv.getContext("webgl") || cv.getContext("experimental-webgl"))) return;
+    clearTimeout(fallback);
+    const R = new T.WebGLRenderer({ canvas: cv, antialias: true, alpha: false });
+    R.setPixelRatio(Math.min(2, devicePixelRatio || 1)); R.setClearColor(0x050505);
+    R.outputEncoding = T.sRGBEncoding; R.toneMapping = T.ACESFilmicToneMapping; R.toneMappingExposure = 1.15;
+    const scene = new T.Scene(), cam = new T.PerspectiveCamera(32, 1, 0.1, 100); cam.position.set(0, -0.35, 11.5);
+    const size = () => { R.setSize(innerWidth, innerHeight, false); cam.aspect = innerWidth / innerHeight; cam.updateProjectionMatrix(); };
+    size(); addEventListener("resize", size);
+
+    // Studio-Licht als Umgebung (Softboxen) für den Chrom-Look
+    const ec = document.createElement("canvas"); ec.width = 1024; ec.height = 512; const g = ec.getContext("2d");
+    const bg = g.createLinearGradient(0, 0, 0, 512); bg.addColorStop(0, "#1a1a1a"); bg.addColorStop(0.5, "#060606"); bg.addColorStop(1, "#000"); g.fillStyle = bg; g.fillRect(0, 0, 1024, 512);
+    const box = (x, y, w, h, a) => { const gg = g.createLinearGradient(x, y, x + w, y); gg.addColorStop(0, `rgba(255,255,255,0)`); gg.addColorStop(0.5, `rgba(255,255,255,${a})`); gg.addColorStop(1, `rgba(255,255,255,0)`); g.fillStyle = gg; g.fillRect(x, y, w, h); };
+    box(120, 60, 220, 140, 1); box(600, 40, 300, 60, 0.9); box(420, 300, 160, 40, 0.5); box(860, 200, 120, 220, 0.8); box(0, 220, 1024, 14, 0.35);
+    const et = new T.CanvasTexture(ec); et.mapping = T.EquirectangularReflectionMapping; et.encoding = T.sRGBEncoding;
+    const pm = new T.PMREMGenerator(R); const env = pm.fromEquirectangular(et).texture; scene.environment = env;
+    const chrome = new T.MeshStandardMaterial({ color: 0xd9d9d9, metalness: 1, roughness: 0.22, envMapIntensity: 1.5 });
+    const dark = new T.MeshStandardMaterial({ color: 0x050505, metalness: 0.4, roughness: 0.6 });
+
+    // SVG-Pfade (M/L/C/Z) → Formen
+    const toShape = (d) => {
+      const s = new T.Shape(); const n = d.match(/[MLCZ]|-?\d*\.?\d+/g); let i = 0, c = "";
+      const P = () => [parseFloat(n[i++]) + LION.t[0], -(parseFloat(n[i++]) + LION.t[1])];
+      while (i < n.length) { if (/[MLCZ]/.test(n[i])) c = n[i++]; if (c === "M") s.moveTo(...P()); else if (c === "L") s.lineTo(...P()); else if (c === "C") { const a = P(), b = P(), e = P(); s.bezierCurveTo(...a, ...b, ...e); } else if (c === "Z") { s.closePath(); } }
+      return s;
+    };
+    const lion = new T.Group();
+    LION.parts.forEach((p) => {
+      if (p.p === "line") return;
+      const depth = p.p === "face" ? 9 : p.p === "cut" ? 1 : 6;
+      const geo = new T.ExtrudeGeometry(toShape(p.d), { depth, bevelEnabled: p.p !== "cut", bevelThickness: 2.2, bevelSize: 1.4, bevelSegments: 5, curveSegments: 18 });
+      const m = new T.Mesh(geo, p.p === "cut" ? dark : chrome);
+      m.position.z = p.p === "face" ? 2 : p.p === "cut" ? 12.6 : 0;
+      lion.add(m);
+    });
+    const [vx, vy, vw] = LION.vb, sc = 3.1 / vw;
+    lion.scale.set(sc, sc, sc); lion.position.set(-(vx + vw / 2) * sc, (vy + vw / 2) * sc, -0.2);
+    const piv = new T.Group(); piv.add(lion); scene.add(piv);
+    // Ovaler Ring
+    const curve = new T.EllipseCurve(0, 0, 2.15, 2.65, 0, Math.PI * 2);
+    const pts = curve.getPoints(220).map((p) => new T.Vector3(p.x, p.y, 0));
+    const ringGeo = new T.TubeGeometry(new T.CatmullRomCurve3(pts, true), 400, 0.07, 24, true);
+    const ring = new T.Mesh(ringGeo, chrome); scene.add(ring);
+    const total = ringGeo.index.count; ringGeo.setDrawRange(0, 0);
+    const key = new T.PointLight(0xffffff, 2.5, 30); key.position.set(-4, 3, 6); scene.add(key);
+
+    const m = { x: 0, y: 0 }, sm = { x: 0, y: 0 };
+    ov.addEventListener("pointermove", (e) => { m.x = e.clientX / innerWidth * 2 - 1; m.y = e.clientY / innerHeight * 2 - 1; });
+    const start = performance.now();
+    const ease = (k) => 1 - Math.pow(1 - k, 4);
+    const loop = (now) => {
+      if (!ov.isConnected) return;
+      const t = (now - start) / 1000;
+      sm.x += (m.x - sm.x) * 0.05; sm.y += (m.y - sm.y) * 0.05;
+      const kr = Math.min(1, t / 1.6); ringGeo.setDrawRange(0, Math.floor(ease(kr) * total / 6) * 6);
+      ring.rotation.y = sm.x * 0.25 + Math.sin(t * 0.6) * 0.06; ring.rotation.x = -sm.y * 0.2;
+      const kl = Math.min(1, Math.max(0, (t - 0.5) / 2.1));
+      piv.rotation.y = (1 - ease(kl)) * -Math.PI * 0.9 + sm.x * 0.45 + Math.sin(t * 0.7) * 0.08;
+      piv.rotation.x = -sm.y * 0.25;
+      piv.position.y = (1 - ease(kl)) * -0.6 + Math.sin(t * 1.1) * 0.04;
+      piv.scale.setScalar(0.85 + ease(kl) * 0.15);
+      key.position.x = Math.sin(t * 0.9) * 6; key.position.y = 3 + Math.cos(t * 0.7) * 2;
+      env.rotation = t * 0.2;
+      chrome.envMapIntensity = 1.2 + Math.max(0, Math.sin(t * 1.4 - 2)) * 1.2;
+      if (t > 2.4) ov.classList.add("is-text");
+      R.render(scene, cam);
+      requestAnimationFrame(loop);
+    };
+    requestAnimationFrame(loop);
+    setTimeout(end, 6200);
+  });
+})();
