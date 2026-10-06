@@ -2489,3 +2489,20 @@ const LION = {"vb": [10.0, 4.0, 230.0, 150.0], "t": [0, 0], "parts": [{"p": "bod
   setTimeout(() => ov.classList.add("is-out"), total);
   setTimeout(() => { ov.remove(); document.documentElement.classList.remove("seal-lock"); }, total + 1000);
 })();
+
+// Academy: Siegel je Thema statt Buchstaben, Nummer vor jeder Zeile
+(() => {
+  if (!document.body.classList.contains("page-ac2")) return;
+  const seal = {
+    identitaet: `<svg viewBox="0 0 100 100"><path d="M50 8 L58 38 L90 38 L64 56 L74 88 L50 68 L26 88 L36 56 L10 38 L42 38 Z"/></svg>`,
+    strategie: `<svg viewBox="0 0 100 100"><path d="M14 72 L10 30 L32 48 L50 18 L68 48 L90 30 L86 72 Z M14 78 H86 V88 H14 Z"/></svg>`,
+    design: `<svg viewBox="0 0 100 100"><path d="M6 50 C26 22 74 22 94 50 C74 78 26 78 6 50 Z"/><circle cx="50" cy="50" r="15" fill="#111"/><circle cx="50" cy="50" r="7"/></svg>`,
+  };
+  document.querySelectorAll(".ac2-card").forEach((c) => {
+    const k = (c.className.match(/ac2-card--(\w+)/) || [])[1];
+    const cov = c.querySelector(".ac2-card__cover");
+    const num = cov.querySelector("em")?.textContent || "";
+    cov.innerHTML = seal[k] || "";
+    c.querySelector("a").insertAdjacentHTML("afterbegin", `<span class="bx-num">${num}</span>`);
+  });
+})();
