@@ -1,3 +1,173 @@
+// ==========================================================================
+// Lade-Animation (erster Aufruf pro Sitzung): Löwe wird per Maske
+// freigelegt, wird kurz lebendig (Kopf, Pfote, Brust, Schwanz), wächst mit
+// leisem Licht dahinter – dann geht es durch die Löwen-Silhouette hindurch
+// in die Seite, der Hero baut sich zeitversetzt auf. Danach aus dem DOM.
+// ==========================================================================
+(() => {
+  const html = document.documentElement;
+  let seen = false;
+  try { seen = sessionStorage.getItem("lion-load") === "1"; sessionStorage.setItem("lion-load", "1"); } catch (e) {}
+  if (seen) { html.classList.remove("ll-pre"); return; }
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const NS = "http://www.w3.org/2000/svg";
+  const D = {
+    body: "M26 40 L40 32 L40 24 L56 16 C70 17 82 21 92 27 L102 22 L102 34 C108 41 112 50 113 58 L124 58 L114 68 L162 68 C172 68 180 76 180 86 L196 136 L168 136 C168 129 173 124 180 124 L172 104 C158 116 140 120 124 120 C118 120 112 119 106 117 L80 136 L54 136 C54 129 60 124 68 124 L86 106 C76 96 72 84 72 72 C72 64 76 58 82 56 L82 52 L60 52 L52 60 L38 60 L26 52 Z",
+    hind: "M114 124 L146 124 C156 124 164 120 170 114 L180 132 L160 142 L114 142 C114 134 120 128 128 128 Z",
+    paw: "M72 88 L58 76 L50 76 C46 72 40 72 34 75 L50 90 L60 106 L71 106 C67 100 67 94 72 88 Z",
+    tail: "M160 68 L196 68 C206 68 212 60 212 50 C212 42 218 36 226 36 L226 46 C223 46 222 48 222 50 C222 66 210 78 196 78 L160 78 Z",
+    tuft: "M220 22 C229 22 236 29 236 38 L220 38 Z",
+    eye: "M46 38 L56 34 L56 40 L48 42 Z",
+  };
+  const BG = "#0a0a0a", INK = "#f2f2f2";
+  const ov = document.createElementNS(NS, "svg");
+  ov.setAttribute("class", "ll");
+  ov.setAttribute("aria-hidden", "true");
+  ov.innerHTML = `
+    <defs>
+      <clipPath id="ll-ch" clipPathUnits="userSpaceOnUse"><polygon points="0,0 125,0 125,62 100,66 82,64 76,68 0,68"/></clipPath>
+      <clipPath id="ll-cb" clipPathUnits="userSpaceOnUse"><polygon points="0,64 74,64 80,58 98,58 125,50 125,0 300,0 300,200 0,200"/></clipPath>
+      <linearGradient id="ll-lg" gradientUnits="userSpaceOnUse" x1="100" y1="150" x2="150" y2="4">
+        <stop class="ll-s1" offset="0" stop-color="#fff"/><stop class="ll-s2" offset="0" stop-color="#000"/>
+      </linearGradient>
+      <mask id="ll-rev" maskUnits="userSpaceOnUse" x="-20" y="-20" width="300" height="200"><rect x="-20" y="-20" width="300" height="200" fill="url(#ll-lg)"/></mask>
+      <radialGradient id="ll-gl"><stop offset="0" stop-color="#fff" stop-opacity=".085"/><stop offset=".45" stop-color="#d61818" stop-opacity=".045"/><stop offset="1" stop-color="#d61818" stop-opacity="0"/></radialGradient>
+      <mask id="ll-veil" maskUnits="userSpaceOnUse" x="0" y="0" width="100%" height="100%">
+        <rect class="ll-vr" width="100%" height="100%" fill="#fff"/>
+        <g class="ll-hole" fill="#000" style="display:none"><path d="${D.body}"/><path d="${D.hind}"/><path d="${D.paw}"/><path d="${D.tail}"/><path d="${D.tuft}"/></g>
+      </mask>
+    </defs>
+    <rect class="ll-bg" width="100%" height="100%" fill="${BG}" mask="url(#ll-veil)"/>
+    <ellipse class="ll-glow" fill="url(#ll-gl)" opacity="0"/>
+    <g class="ll-lion" opacity="0"><g mask="url(#ll-rev)" fill="${INK}">
+      <path d="${D.hind}"/>
+      <g class="ll-tail"><path d="${D.tail}"/><path d="${D.tuft}"/></g>
+      <g class="ll-fore">
+        <path d="${D.body}" clip-path="url(#ll-cb)"/>
+        <path class="ll-paw" d="${D.paw}"/>
+        <g class="ll-head"><path d="${D.body}" clip-path="url(#ll-ch)"/><path d="${D.eye}" fill="${BG}"/></g>
+      </g>
+    </g></g>`;
+  document.body.appendChild(ov);
+  html.classList.remove("ll-pre");
+
+  const q = (s) => ov.querySelector(s);
+  const lion = q(".ll-lion"), hole = q(".ll-hole"), glow = q(".ll-glow"), bg = q(".ll-bg");
+  const head = q(".ll-head"), paw = q(".ll-paw"), fore = q(".ll-fore"), tail = q(".ll-tail");
+  const s1 = q(".ll-s1"), s2 = q(".ll-s2");
+  const L0 = [125, 79], F = [130, 96];
+  let W = 0, H = 0, u = 1;
+  const size = () => {
+    W = innerWidth; H = innerHeight;
+    ov.setAttribute("viewBox", `0 0 ${W} ${H}`);
+    u = Math.min(W * (W < 700 ? 0.62 : 0.42), 440, H * 0.46 * 230 / 150) / 230;
+  };
+  size(); addEventListener("resize", size);
+
+  // cubic-bezier(0.16, 1, 0.3, 1)
+  const bez = (x1, y1, x2, y2) => (x) => {
+    let t = x;
+    for (let i = 0; i < 6; i++) {
+      const cx = 3 * x1 * t * (1 - t) ** 2 + 3 * x2 * t * t * (1 - t) + t ** 3 - x;
+      const d = 3 * x1 * (1 - t) ** 2 + 6 * (x2 - x1) * t * (1 - t) + 3 * (1 - x2) * t * t;
+      if (Math.abs(d) < 1e-6) break; t -= cx / d;
+    }
+    t = Math.min(1, Math.max(0, t));
+    return 3 * y1 * t * (1 - t) ** 2 + 3 * y2 * t * t * (1 - t) + t ** 3;
+  };
+  const expo = bez(0.16, 1, 0.3, 1), io = bez(0.65, 0, 0.35, 1);
+  const c01 = (v) => Math.min(1, Math.max(0, v));
+  const seg = (t, a, b) => c01((t - a) / (b - a));
+  const place = (s, dy) => `translate(${(W / 2 + (F[0] - L0[0]) * u).toFixed(2)} ${(H / 2 + (F[1] - L0[1]) * u + dy).toFixed(2)}) scale(${(u * s).toFixed(5)}) translate(${-F[0]} ${-F[1]})`;
+
+  // Hero sanft aufbauen (bestehende Transforms bleiben erhalten: composite "add")
+  const heroIn = (delay) => {
+    const ease = "cubic-bezier(0.16, 1, 0.3, 1)";
+    const run = (el, from, dur, d) => {
+      if (!el) return;
+      try {
+        el.animate([{ transform: from }, { transform: "none" }], { duration: dur, delay: d, easing: ease, fill: "backwards", composite: "add" });
+        el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: dur, delay: d, easing: ease, fill: "backwards" });
+      } catch (e) {}
+    };
+    const main = document.querySelector("main");
+    const media = main && [...main.querySelectorAll("img, video")].find((m) => { const r = m.getBoundingClientRect(); return r.top < innerHeight && r.bottom > 0 && r.width > 200; });
+    if (media) try { media.animate([{ transform: "scale(1.04)" }, { transform: "none" }], { duration: 550, delay, easing: ease, fill: "backwards", composite: "add" }); } catch (e) {}
+    run(document.querySelector(".header"), "translateY(-15px)", 500, delay);
+    run(main && main.querySelector("h1"), "translateY(40px)", 450, delay + 100);
+  };
+
+  let ready = document.readyState === "complete";
+  addEventListener("load", () => { ready = true; });
+  const start = performance.now();
+  let hold = 0, last = start, heroDone = false, done = false;
+  const finish = () => { if (done) return; done = true; ov.remove(); removeEventListener("resize", size); };
+
+  const frame = (now) => {
+    if (done) return;
+    // Auf das vollständige Laden warten (höchstens 2,5 s zusätzlich)
+    if (now - start - hold >= 1800 && !ready && hold < 2500 && !heroDone) hold += now - last;
+    last = now;
+    const t = now - start - hold;
+
+    if (reduce) {
+      lion.setAttribute("transform", place(1, 0));
+      lion.setAttribute("opacity", seg(t, 150, 600).toFixed(3));
+      s1.setAttribute("offset", 1); s2.setAttribute("offset", 1);
+      ov.style.opacity = (1 - seg(t, 1100, 1500)).toFixed(3);
+      if (t > 1100) ov.style.pointerEvents = "none";
+      if (t >= 1550) return finish();
+      return requestAnimationFrame(frame);
+    }
+
+    // 2) Erscheinen: Maske legt frei, scale .92 → 1, leicht von unten
+    const r = expo(seg(t, 150, 950));
+    const m = seg(t, 150, 900);
+    s1.setAttribute("offset", (-0.25 + 1.5 * expo(m)).toFixed(4));
+    s2.setAttribute("offset", (-0.05 + 1.5 * expo(m)).toFixed(4));
+    let s = 0.92 + 0.08 * r;
+    const dy = 26 * (1 - r);
+
+    // 3) Mikrobewegung: Kopf hebt sich, Pfote, Brust atmet, Schwanz
+    const hd = 2.6 * io(seg(t, 1000, 1450));
+    head.setAttribute("transform", `rotate(${hd.toFixed(3)} 100 60)`);
+    const pw = 5 * Math.sin(Math.PI * io(seg(t, 1050, 1600)));
+    paw.setAttribute("transform", `rotate(${pw.toFixed(3)} 70 96)`);
+    const br = 0.014 * Math.sin(Math.PI * seg(t, 1000, 1750));
+    fore.setAttribute("transform", `translate(0 136) scale(1 ${(1 + br).toFixed(5)}) translate(0 -136)`);
+    const tl = 3.2 * Math.sin(2 * Math.PI * seg(t, 950, 1950)) * (1 - seg(t, 1500, 1950) * 0.6);
+    tail.setAttribute("transform", `rotate(${tl.toFixed(3)} 162 73)`);
+
+    // 4) Brand Impact: 1 → 1.08, leises Licht
+    s *= 1 + 0.08 * expo(seg(t, 1500, 1800));
+    let g = expo(seg(t, 1400, 1850));
+    if (hold > 0 && t >= 1799) g *= 0.85 + 0.15 * Math.sin(now / 420);
+
+    // 5) Durch den Löwen: Silhouette wird zum Fenster, zoomt nach vorn
+    const z = seg(t, 1800, 2350);
+    if (z > 0) {
+      if (!heroDone) { heroDone = true; hole.style.display = ""; heroIn(250); }
+      s *= Math.exp(Math.log(40 / 1.08) * z ** 3);
+      ov.style.pointerEvents = "none";
+    }
+    const lo = Math.min(r, 1 - seg(t, 1800, 1980));
+    lion.setAttribute("opacity", lo.toFixed(3));
+    lion.setAttribute("transform", place(s, dy));
+    hole.setAttribute("transform", place(s, dy));
+    g *= 1 - seg(t, 1800, 2000);
+    const gr = 230 * u * s;
+    glow.setAttribute("cx", W / 2 + (F[0] - L0[0]) * u); glow.setAttribute("cy", H / 2 + (F[1] - L0[1]) * u);
+    glow.setAttribute("rx", (gr * 0.95).toFixed(1)); glow.setAttribute("ry", (gr * 0.75).toFixed(1));
+    glow.setAttribute("opacity", g.toFixed(3));
+    bg.setAttribute("opacity", (1 - seg(t, 2050, 2350)).toFixed(3));
+
+    if (t >= 2600) return finish();
+    requestAnimationFrame(frame);
+  };
+  requestAnimationFrame(frame);
+  setTimeout(finish, 9000);
+})();
+
 (() => {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -963,7 +1133,7 @@
 
   // Überschriften in Wortmasken teilen (Auszeichnungen bleiben erhalten)
   const heads = [...main.querySelectorAll("h1, h2")].filter((h) =>
-    !h.closest(".phone, .k-x, [data-split], .v2social__stage, .cs2, .cs3") && h.textContent.trim());
+    !h.closest(".phone, .k-x, [data-split], .v2social__stage, .cs2, .cs3, .cs4") && h.textContent.trim());
   const splitText = (root, counter) => {
     [...root.childNodes].forEach((n) => {
       if (n.nodeType === 3) {
@@ -985,12 +1155,12 @@
 
   // Fließtext und Listen gleiten nach
   const texts = [...main.querySelectorAll("p, li, dt, dd, blockquote, .btn, .k-links, form")].filter((el) =>
-    !el.closest("[data-reveal], .phone, .v2social__stage, .k-cards, .m8-txt, nav, .hask, details, [hidden], .cs2, .cs3") && !el.querySelector("img"));
+    !el.closest("[data-reveal], .phone, .v2social__stage, .k-cards, .m8-txt, nav, .hask, details, [hidden], .cs2, .cs3, .cs4") && !el.querySelector("img"));
   texts.forEach((el) => el.classList.add("m8-txt"));
 
   // Bilder: Vorhang von unten, darin leichte Parallaxe
   const imgs = [...main.querySelectorAll("img, .ph")].filter((el) =>
-    !el.closest(".phone, .k-hero, .v2social__stage, [data-r], .rw__row, .cs2, .cs3") && !el.hasAttribute("data-r"));
+    !el.closest(".phone, .k-hero, .v2social__stage, [data-r], .rw__row, .cs2, .cs3, .cs4") && !el.hasAttribute("data-r"));
   imgs.forEach((el) => el.classList.add("m8-img"));
 
   const all = [...heads, ...texts, ...imgs];
@@ -1038,7 +1208,7 @@
 
   // 3D-Neigung für Karten mit Bild
   const cards = [...main.querySelectorAll("a, article")].filter((c) =>
-    c.querySelector("img, .ph") && !c.closest(".k-cards, .phone, .v2social__stage, .k-tiles, .k-hero, .cs2, .cs3") && c.offsetWidth > 160);
+    c.querySelector("img, .ph") && !c.closest(".k-cards, .phone, .v2social__stage, .k-tiles, .k-hero, .cs2, .cs3, .cs4") && c.offsetWidth > 160);
   cards.forEach((c) => {
     c.classList.add("m8-tilt");
     c.addEventListener("pointermove", (e) => {
@@ -1165,7 +1335,7 @@
   document.querySelectorAll(".k-hero__img, .k-split__img, .k-card__img, .k-tile, .rw__clip, .rw__story").forEach((f) => frames.add(f));
   document.querySelectorAll("main img").forEach((img) => {
     const p = img.parentElement;
-    if (p && !p.closest(".phone, .k-hero, .rw, .cs2, .cs3") && img.getBoundingClientRect().width > 260) frames.add(p);
+    if (p && !p.closest(".phone, .k-hero, .rw, .cs2, .cs3, .cs4") && img.getBoundingClientRect().width > 260) frames.add(p);
   });
   frames.forEach((f) => {
     if (getComputedStyle(f).position === "static") f.style.position = "relative";
@@ -2053,7 +2223,7 @@ document.querySelectorAll(".c3-giant").forEach((g) => { const n = g.textContent.
 
   // Ankunft
   if (!reduce) {
-    if (from && document.querySelector(".cs3")) {
+    if (from && document.querySelector(".cs3, .cs4")) {
       document.body.classList.add("bx-arrived");
       document.querySelector(".m8-curtain")?.remove();
       const ov = document.createElement("div");
@@ -2329,165 +2499,6 @@ const LION = {"vb": [10.0, 4.0, 230.0, 150.0], "t": [0, 0], "parts": [{"p": "bod
   // Ladebildschirm im Projekt-Übergang
   new MutationObserver(() => document.querySelectorAll(".bx4__load:not(.has-lion)").forEach((d) => { d.classList.add("has-lion"); d.insertAdjacentHTML("afterbegin", svg("lion-load")); })).observe(document.body, { childList: true });
 
-  // Kino-Intro (Startseite, einmal pro Sitzung):
-  // 1) Schwarz, Schlüsselloch glüht, „Klicken, um einzutreten“
-  // 2) Kamera fliegt durchs Schlüsselloch
-  // 3) Wie ein Filmstudio-Vorspann: Löwe im Chromring fliegt aus Nebel und
-  //    Wolken auf die Kamera zu, Gegenlicht, Lichtstrahlen, dann „MOU“
-  if (!document.body.classList.contains("page-home") || reduce) return;
-  let seen = false; try { seen = sessionStorage.getItem("mou-intro") === "1"; sessionStorage.setItem("mou-intro", "1"); } catch (e) {}
-  if (seen && !location.hash.includes("intro")) return;
-
-  const ov = document.createElement("div");
-  ov.className = "mou";
-  ov.innerHTML = `<canvas class="mou__cv" aria-hidden="true"></canvas>
-    <div class="mou__title"><p class="mou__pre">Welcome to</p><p class="mou__word">${[..."MOU"].map((c, i) => `<span style="--i:${i}">${c}</span>`).join("")}</p><p class="mou__sub">Brand Studio</p></div>
-    <button class="mou__skip" type="button">Überspringen</button>`;
-  document.body.appendChild(ov);
-  document.documentElement.style.overflow = "hidden";
-  let done = false;
-  const end = () => { if (done) return; done = true; ov.classList.add("is-out"); document.documentElement.style.overflow = ""; setTimeout(() => ov.remove(), 1400); };
-  ov.querySelector(".mou__skip").addEventListener("click", end);
-
-  const load = (cb) => { if (window.THREE) return cb(); const s = document.createElement("script"); s.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"; s.onload = cb; s.onerror = cb; document.head.appendChild(s); };
-  let started = false;
-  const enter = () => {
-    if (started) return; started = true;
-    load(film);
-  };
-  enter();
-
-  function film() {
-    ov.classList.add("is-film");
-    const T = window.THREE, cv = ov.querySelector(".mou__cv");
-    const flat = () => { ov.insertAdjacentHTML("afterbegin", svg("mou__flat")); setTimeout(() => ov.classList.add("is-title"), 1600); setTimeout(end, 5200); };
-    if (!T || !(cv.getContext("webgl") || cv.getContext("experimental-webgl"))) return flat();
-    const R = new T.WebGLRenderer({ canvas: cv, antialias: true });
-    R.setPixelRatio(Math.min(2, devicePixelRatio || 1)); R.setClearColor(0x000000);
-    R.outputEncoding = T.sRGBEncoding; R.toneMapping = T.ACESFilmicToneMapping; R.toneMappingExposure = 1.2;
-    const scene = new T.Scene(); scene.fog = new T.FogExp2(0x05070a, 0.045);
-    const cam = new T.PerspectiveCamera(35, 1, 0.1, 200);
-    const size = () => { R.setSize(innerWidth, innerHeight, false); cam.aspect = innerWidth / innerHeight; cam.updateProjectionMatrix(); };
-    size(); addEventListener("resize", size);
-
-    // Studiolicht als Umgebung (warm/kalt wie im Kino)
-    const ec = document.createElement("canvas"); ec.width = 1024; ec.height = 512; const g = ec.getContext("2d");
-    const bg = g.createLinearGradient(0, 0, 0, 512); bg.addColorStop(0, "#2a2014"); bg.addColorStop(0.45, "#0b0b0c"); bg.addColorStop(1, "#000"); g.fillStyle = bg; g.fillRect(0, 0, 1024, 512);
-    const box = (x, y, w, h, c) => { const gg = g.createRadialGradient(x + w / 2, y + h / 2, 0, x + w / 2, y + h / 2, Math.max(w, h) / 2); gg.addColorStop(0, c); gg.addColorStop(1, "rgba(0,0,0,0)"); g.fillStyle = gg; g.fillRect(x, y, w, h); };
-    box(80, 20, 360, 260, "rgba(255,236,200,1)"); box(560, 10, 420, 180, "rgba(255,255,255,.9)"); box(380, 280, 300, 120, "rgba(220,30,30,.35)"); box(880, 180, 160, 260, "rgba(255,220,170,.8)");
-    const et = new T.CanvasTexture(ec); et.mapping = T.EquirectangularReflectionMapping; et.encoding = T.sRGBEncoding;
-    const env = new T.PMREMGenerator(R).fromEquirectangular(et).texture; scene.environment = env;
-    const chrome = new T.MeshStandardMaterial({ color: 0xe4e2de, metalness: 1, roughness: 0.3, envMapIntensity: 2.2 });
-    const dark = new T.MeshBasicMaterial({ color: 0x050505 });
-    const lionMat = new T.MeshStandardMaterial({ color: 0xd8d6d2, metalness: 0.9, roughness: 0.34, envMapIntensity: 2.2 });
-    const front = new T.DirectionalLight(0xfff1dd, 0.35); front.position.set(1.5, 2.5, 10); scene.add(front);
-    const rim = new T.DirectionalLight(0xc9d6ff, 1.2); rim.position.set(-6, 3, -4); scene.add(rim);
-
-    const toShape = (d) => { const s = new T.Shape(); const n = d.match(/[MLCZ]|-?\d*\.?\d+/g); let i = 0, c = ""; const P = () => [parseFloat(n[i++]) + LION.t[0], -(parseFloat(n[i++]) + LION.t[1])];
-      while (i < n.length) { if (/[MLCZ]/.test(n[i])) c = n[i++]; if (c === "M") s.moveTo(...P()); else if (c === "L") s.lineTo(...P()); else if (c === "C") { const a = P(), b = P(), e = P(); s.bezierCurveTo(...a, ...b, ...e); } else if (c === "Z") s.closePath(); } return s; };
-    const lion = new T.Group();
-    LION.parts.forEach((p) => { if (p.p === "line") return;
-      const D = { body: [9, 0], body2: [5, -4], tail: [6, 0], cut: [1, 11.4] }[p.p] || [4, 0];
-      const geo = new T.ExtrudeGeometry(toShape(p.d), { depth: D[0], bevelEnabled: p.p !== "cut", bevelThickness: 2, bevelSize: 1.2, bevelSegments: 5, curveSegments: 18 });
-      const m = new T.Mesh(geo, p.p === "cut" ? dark : lionMat); m.position.z = D[1]; lion.add(m); });
-    const [vx, vy, vw, vh] = LION.vb, sc = 4.1 / vw;
-    lion.scale.setScalar(sc); lion.position.set(-(vx + vw / 2) * sc, (vy + vh / 2) * sc, -0.2);
-    const emblem = new T.Group(); emblem.add(lion);
-    const sq = (a, b, n) => { const pts = []; for (let i = 0; i < 240; i++) { const t = i / 240 * Math.PI * 2, c = Math.cos(t), s = Math.sin(t); pts.push(new T.Vector3(a * Math.sign(c) * Math.pow(Math.abs(c), 2 / n), b * Math.sign(s) * Math.pow(Math.abs(s), 2 / n), 0)); } return new T.CatmullRomCurve3(pts, true); };
-    const ring = new T.Mesh(new T.TubeGeometry(sq(2.35, 2.75, 3.2), 480, 0.1, 24, true), chrome);
-    emblem.add(ring);
-    const ring2 = new T.Mesh(new T.TubeGeometry(sq(2.62, 3.02, 3.2), 480, 0.02, 12, true), chrome);
-    emblem.add(ring2);
-    emblem.position.y = 1.0; scene.add(emblem);
-
-    // Wolken/Nebel aus weichen Sprites
-    const cc = document.createElement("canvas"); cc.width = cc.height = 256; const c2 = cc.getContext("2d");
-    for (let i = 0; i < 26; i++) { const x = 60 + Math.random() * 136, y = 60 + Math.random() * 136, r = 30 + Math.random() * 70; const rg = c2.createRadialGradient(x, y, 0, x, y, r); rg.addColorStop(0, "rgba(255,255,255,.18)"); rg.addColorStop(1, "rgba(255,255,255,0)"); c2.fillStyle = rg; c2.fillRect(0, 0, 256, 256); }
-    const cloudTex = new T.CanvasTexture(cc);
-    const clouds = [];
-    for (let i = 0; i < 70; i++) {
-      const m = new T.Sprite(new T.SpriteMaterial({ map: cloudTex, color: i % 3 ? 0x5a5a5a : 0x6a0a0a, transparent: true, opacity: 0.5, depthWrite: false }));
-      const z = -Math.random() * 60; m.position.set((Math.random() - 0.5) * 30, -4 - Math.random() * 6 + (i % 4 === 0 ? 9 : 0), z);
-      const s = 8 + Math.random() * 14; m.scale.set(s, s * 0.6, 1); m.userData.v = 0.2 + Math.random() * 0.5; scene.add(m); clouds.push(m);
-    }
-    // Lichtstrahlen hinter dem Emblem
-    const rayC = document.createElement("canvas"); rayC.width = rayC.height = 512; const rg2 = rayC.getContext("2d");
-    rg2.translate(256, 256); for (let i = 0; i < 36; i++) { rg2.rotate(Math.PI * 2 / 36); const gr = rg2.createLinearGradient(0, 0, 0, 256); gr.addColorStop(0, "rgba(214,24,24,.75)"); gr.addColorStop(1, "rgba(214,24,24,0)"); rg2.fillStyle = gr; rg2.beginPath(); rg2.moveTo(0, 0); rg2.lineTo(-6 - Math.random() * 10, 256); rg2.lineTo(6 + Math.random() * 10, 256); rg2.fill(); }
-    const rays = new T.Mesh(new T.PlaneGeometry(15, 15), new T.MeshBasicMaterial({ map: new T.CanvasTexture(rayC), transparent: true, opacity: 0, depthWrite: false, blending: T.AdditiveBlending }));
-    rays.position.z = -3; scene.add(rays);
-    const key = new T.PointLight(0xffffff, 1.6, 30); scene.add(key);
-    // Gravur im Emblem: Name oben, Jahr unten (wie ein klassisches Siegel)
-    const label = (txt, y, size) => { const tc = document.createElement("canvas"); tc.width = 1024; tc.height = 128; const x = tc.getContext("2d");
-      x.fillStyle = "#fff"; x.font = `800 ${size}px Montserrat, Arial, sans-serif`; x.textAlign = "center"; x.textBaseline = "middle";
-      const sp = txt.split("").join(String.fromCharCode(8202, 8202)); x.fillText(sp, 512, 64);
-      const m = new T.Mesh(new T.PlaneGeometry(3.4, 0.425), new T.MeshBasicMaterial({ map: new T.CanvasTexture(tc), transparent: true, opacity: 0.85 }));
-      m.position.set(0, y, 0.25); emblem.add(m); };
-    label("M · O · U", 2.05, 54); label("EST. MMXXVI", -2.18, 44);
-    const bar = new T.Mesh(new T.BoxGeometry(0.9, 0.05, 0.05), new T.MeshBasicMaterial({ color: 0xd61818 })); bar.position.set(0, -1.72, 0.25); emblem.add(bar);
-
-    const start = performance.now();
-    const ease = (k) => k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
-    const loop = (now) => {
-      if (!ov.isConnected) return;
-      const t = (now - start) / 1000;
-      // Kamera: fliegt durch die Wolken nach vorn und bremst vor dem Emblem
-      const k = Math.min(1, t / 5.2), e = ease(k);
-      cam.position.set(Math.sin(t * 0.3) * 0.3 * (1 - e), 1.6 * (1 - e) + 0.15, 46 - e * 32);
-      cam.lookAt(0, 0.1, 0);
-      emblem.rotation.y = (1 - e) * 1.4 + Math.sin(t * 0.6) * 0.05 * e;
-      emblem.rotation.x = (1 - e) * -0.25;
-      key.position.set(Math.sin(t * 0.8) * 8, 4, 8);
-      env.rotation = t * 0.25;
-      chrome.envMapIntensity = 2.2 + Math.max(0, Math.sin(t * 1.2 - 4)) * 1.8;
-      rays.material.opacity = Math.max(0, Math.min(0.4, (t - 3.2) / 2)); rays.rotation.z = t * 0.05;
-      scene.fog.density = 0.045 - e * 0.03;
-      clouds.forEach((c) => { c.position.x += c.userData.v * 0.01 * (c.position.x > 0 ? 1 : -1); c.material.opacity = 0.55 * (1 - Math.max(0, (t - 4.5) / 2)); });
-      if (t > 4.6) ov.classList.add("is-title");
-      R.render(scene, cam);
-      requestAnimationFrame(loop);
-    };
-    requestAnimationFrame(loop);
-    setTimeout(end, 8400);
-  }
-})();
-
-
-// ==========================================================================
-// Lade-Animation auf jeder Seite: Silber-Siegel im abgerundeten Rahmen,
-// das sich wie eine Münze dreht und dabei mehrere Siegel zeigt
-// (Löwe → Krone → Stern → Monogramm → Löwe), dann Vorhang nach oben.
-// ==========================================================================
-(() => {
-  if (!document.body.classList.contains("v5") || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  if (document.querySelector(".mou")) return;
-  let fromProject = false; try { fromProject = !!sessionStorage.getItem("bx3-from"); } catch (e) {}
-  if (fromProject || document.body.classList.contains("bx-arrived")) return;
-  const [x, y, w, h] = LION.vb;
-  const lion = `<svg viewBox="${x} ${y} ${w} ${h}"><g>${LION.parts.filter((p) => p.p !== "cut" && p.p !== "line").map((p) => `<path d="${p.d}"/>`).join("")}</g></svg>`;
-  const crown = `<svg viewBox="0 0 100 100"><path d="M14 72 L10 30 L32 48 L50 18 L68 48 L90 30 L86 72 Z M14 78 H86 V88 H14 Z"/><circle cx="10" cy="28" r="5"/><circle cx="50" cy="15" r="5"/><circle cx="90" cy="28" r="5"/></svg>`;
-  const star = `<svg viewBox="0 0 100 100"><path d="M50 4 L58 38 L92 26 L66 50 L92 74 L58 62 L50 96 L42 62 L8 74 L34 50 L8 26 L42 38 Z"/><circle cx="50" cy="50" r="8" fill="#0a0a0a"/></svg>`;
-  const mono = `<svg viewBox="0 0 100 100"><text x="50" y="70" text-anchor="middle" font-family="Montserrat, Arial, sans-serif" font-weight="900" font-size="62" letter-spacing="-3">SX</text></svg>`;
-  const laurel = `<svg viewBox="0 0 100 100"><path d="M50 90 C30 80 18 62 18 40 M50 90 C70 80 82 62 82 40" fill="none" stroke="currentColor" stroke-width="5"/>${[0,1,2,3,4].map((i) => `<ellipse cx="${22 + i * 2}" cy="${36 + i * 11}" rx="9" ry="4" transform="rotate(${-50 + i * 12} ${22 + i * 2} ${36 + i * 11})"/><ellipse cx="${78 - i * 2}" cy="${36 + i * 11}" rx="9" ry="4" transform="rotate(${50 - i * 12} ${78 - i * 2} ${36 + i * 11})"/>`).join("")}<text x="50" y="62" text-anchor="middle" font-family="Montserrat, Arial" font-weight="900" font-size="26">X</text></svg>`;
-  const sun = `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="16"/>${Array.from({ length: 16 }, (_, i) => `<path d="M50 4 L54 26 L46 26 Z" transform="rotate(${i * 22.5} 50 50)"/>`).join("")}</svg>`;
-  const eye = `<svg viewBox="0 0 100 100"><path d="M6 50 C26 22 74 22 94 50 C74 78 26 78 6 50 Z"/><circle cx="50" cy="50" r="15" fill="#0a0a0a"/><circle cx="50" cy="50" r="7"/></svg>`;
-  const seals = [lion, crown, star, laurel, sun, eye, mono, lion];
-  const ov = document.createElement("div");
-  ov.className = "seal-load";
-  ov.setAttribute("aria-hidden", "true");
-  ov.innerHTML = `<svg width="0" height="0" style="position:absolute"><defs><linearGradient id="silv" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4f4f4"/><stop offset=".45" stop-color="#9c9c9c"/><stop offset=".6" stop-color="#e2e2e2"/><stop offset="1" stop-color="#7d7d7d"/></linearGradient></defs><filter id="silver" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur in="SourceAlpha" stdDeviation="2.2" result="b"/><feSpecularLighting in="b" surfaceScale="5" specularConstant="1.1" specularExponent="22" lighting-color="#ffffff" result="s"><fePointLight x="-60" y="-120" z="160"/></feSpecularLighting><feComposite in="s" in2="SourceAlpha" operator="in" result="sp"/><feComposite in="SourceGraphic" in2="sp" operator="arithmetic" k1="0" k2="1" k3="0.9" k4="0"/></filter></svg>
-    <div class="seal-load__field">${seals.slice(1, 7).concat(seals.slice(1, 7)).map((s, i) => `<div class="seal-load__mini" style="--a:${i * 30}deg;--d:${i * 70}ms">${s}</div>`).join("")}</div>
-    <div class="seal-load__coin"><div class="seal-load__face">${seals.map((s, i) => `<div class="seal-load__art${i === 0 ? " is-on" : ""}">${s}</div>`).join("")}</div></div>
-    <p class="seal-load__name">STUDIO.X</p><p class="seal-load__n">000</p>`;
-  document.body.appendChild(ov);
-  document.documentElement.classList.add("seal-lock");
-  const arts = [...ov.querySelectorAll(".seal-load__art")], coin = ov.querySelector(".seal-load__coin"), n = ov.querySelector(".seal-load__n");
-  const step = 480, t0 = performance.now();
-  arts.forEach((_, i) => { if (!i) return; setTimeout(() => { coin.classList.remove("is-flip"); void coin.offsetWidth; coin.classList.add("is-flip"); setTimeout(() => arts.forEach((a, k) => a.classList.toggle("is-on", k === i)), 160); }, 300 + i * step); });
-  const total = 300 + arts.length * step + 300;
-  const tick = (now) => { const k = Math.min(1, (now - t0) / total); n.textContent = String(Math.round(k * 100)).padStart(3, "0"); if (k < 1) requestAnimationFrame(tick); };
-  requestAnimationFrame(tick);
-  setTimeout(() => ov.classList.add("is-out"), total);
-  setTimeout(() => { ov.remove(); document.documentElement.classList.remove("seal-lock"); }, total + 1000);
 })();
 
 // Academy: Siegel je Thema statt Buchstaben, Nummer vor jeder Zeile
@@ -2505,4 +2516,101 @@ const LION = {"vb": [10.0, 4.0, 230.0, 150.0], "t": [0, 0], "parts": [{"p": "bod
     cov.innerHTML = seal[k] || "";
     c.querySelector("a").insertAdjacentHTML("afterbegin", `<span class="bx-num">${num}</span>`);
   });
+})();
+
+// ==========================================================================
+// Projektseiten v4: Hero-Zoom, Text füllt sich beim Scrollen, Bilder öffnen
+// sich, Parallaxe, gepinnte Galerie, Farbwelt, nächstes Projekt
+// ==========================================================================
+(() => {
+  const root = document.querySelector(".cs4");
+  if (!root) return;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+
+  // Wörter vorbereiten
+  const scrubs = [...root.querySelectorAll("[data-p4-scrub]")].map((el) => {
+    const words = el.textContent.trim().split(/\s+/);
+    el.setAttribute("aria-label", el.textContent.trim());
+    el.innerHTML = words.map((w) => `<span class="p4-sw2" aria-hidden="true">${w.replace(/&/g, "&amp;").replace(/</g, "&lt;")}</span>`).join(" ");
+    return { el, ws: [...el.children] };
+  });
+  if (reduce) { root.querySelectorAll(".p4-img, .p4-pal").forEach((e) => e.classList.add("in")); return; }
+
+  // Einblenden
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -12% 0px" });
+  root.querySelectorAll(".p4-img, .p4-pal").forEach((e) => io.observe(e));
+
+
+  const hero = root.querySelector("[data-p4-hero]");
+  const media = hero?.querySelector(".p4-hero__media");
+  const imgs = [...root.querySelectorAll(".p4-img")];
+  const gal = root.querySelector("[data-p4-gal]");
+  const row = gal?.querySelector(".p4-gal__row");
+  const num = gal?.querySelector(".p4-gal__n em");
+  const next = root.querySelector(".p4-next");
+
+  const sizeGal = () => { if (gal && row) gal.style.height = (row.scrollWidth - innerWidth + innerHeight) + "px"; };
+  sizeGal();
+  addEventListener("resize", sizeGal);
+  addEventListener("load", sizeGal);
+
+  let ticking = false;
+  const frame = () => {
+    ticking = false;
+    const vh = innerHeight;
+    if (hero) {
+      const r = hero.getBoundingClientRect();
+      const p = clamp(-r.top / (r.height - vh));
+      hero.style.setProperty("--p", p.toFixed(4));
+      if (media && !hero.classList.contains("p4-hero--type")) {
+        media.style.setProperty("--in-y", (p * 10).toFixed(2) + "%");
+        media.style.setProperty("--in-x", (p * 9).toFixed(2) + "%");
+        media.style.setProperty("--rad", (p * 18).toFixed(1) + "px");
+        media.style.setProperty("--sc", (1.12 - p * 0.12).toFixed(4));
+      }
+    }
+    scrubs.forEach(({ el, ws }) => {
+      const r = el.getBoundingClientRect();
+      const p = clamp((vh * 0.85 - r.top) / (r.height + vh * 0.35));
+      const n = Math.round(p * ws.length);
+      ws.forEach((w, i) => w.classList.toggle("on", i < n));
+    });
+    imgs.forEach((f) => {
+      const r = f.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > vh) return;
+      const c = (r.top + r.height / 2 - vh / 2) / vh;
+      f.style.setProperty("--py", (c * -6).toFixed(2) + "%");
+    });
+    if (gal && row) {
+      const r = gal.getBoundingClientRect();
+      const span = r.height - vh;
+      const p = span > 0 ? clamp(-r.top / span) : 0;
+      const max = row.scrollWidth - innerWidth;
+      row.style.transform = `translate3d(${(-p * max).toFixed(1)}px,0,0)`;
+      if (num) num.textContent = String(Math.min(row.children.length, 1 + Math.round(p * (row.children.length - 1)))).padStart(2, "0");
+    }
+    if (next) {
+      const r = next.getBoundingClientRect();
+      next.style.setProperty("--nx", clamp((vh - r.top) / r.height).toFixed(3));
+    }
+  };
+  const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(frame); } };
+  addEventListener("scroll", onScroll, { passive: true });
+  addEventListener("resize", onScroll);
+  frame();
+
+  // Bild folgt der Maus über "Nächstes Projekt"
+  if (next && fine) {
+    let lx = 0;
+    next.addEventListener("pointermove", (e) => {
+      const r = next.getBoundingClientRect();
+      const x = e.clientX - r.left, y = e.clientY - r.top;
+      next.style.setProperty("--mx", x + "px");
+      next.style.setProperty("--my", y + "px");
+      next.style.setProperty("--rot", clamp((x - lx) * 0.6, -12, 12).toFixed(1) + "deg");
+      lx = x;
+    });
+  }
 })();
