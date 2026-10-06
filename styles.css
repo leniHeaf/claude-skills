@@ -4463,3 +4463,10 @@ body.v5 .c3-next__n { font-family: "Montserrat", "Archivo", Arial, sans-serif !i
 /* Cursor-Punkt: dunkel auf hellen Projektseiten statt weißer Fleck */
 body.page-case3 .m8-cursor::before { background: #222a36; mix-blend-mode: normal; }
 body.page-case3.bx-dark .m8-cursor::before { background: #fff; }
+
+/* Serifenschrift komplett raus – überall fette Grotesk */
+body.v5 .cs3 .c3-giant, body.v5 .cs3 .c3-giant span, body.v5 .cs3 .bx-stage__w span, body.v5 .xp__h, body.v5 .xp-run__goal, body.v5 .xp-spray__done, body.v5 .xp-part__cap, body.v5 .c3-next__n, body.v5 .bx-sw__h, body.v5 .bx-serif, body.v5 .rw__sticker {
+  font-family: "Montserrat", "Archivo", Arial, sans-serif !important; font-weight: 900 !important; font-style: normal !important; text-transform: uppercase !important; letter-spacing: -0.04em !important;
+}
+body.v5 .bx-serif { font-weight: 400 !important; letter-spacing: 0.2em !important; font-size: 0.8em; }
+body.v5 .cs3 .c3-giant { font-size: min(var(--gs, 16vw), 15vw) !important; line-height: 0.85 !important; }
