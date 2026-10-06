@@ -4419,3 +4419,4 @@ body.v5 .bx-serif { font-weight: 400 !important; }
 @keyframes xp-cap { from { opacity: 0; transform: translateY(30px); filter: blur(8px); } }
 @media (max-width: 700px) { .xp-run__stats { grid-template-columns: 1fr 1fr; } .xp-run__stats p:last-child { display: none; } }
 html:has(body.bx-enter), body.bx-enter, html:has(body.bx-leaving), html:has(body.bx-diving) { overflow-x: clip; }
+body.page-case3 .footer, body.page-case2 .footer { background: #000 !important; color: #fff; }
