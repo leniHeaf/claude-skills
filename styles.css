@@ -4457,3 +4457,9 @@ body.v5 .c3-next__n { font-size: clamp(56px, 10vw, 170px) !important; }
 .bx-sw { border: 0; }
 .c3-m:hover, .c3-hs figure:hover { transform: none !important; }
 body.v5 .bx-stage__w span { font-style: italic !important; }
+/* Nächstes Projekt: fette Grotesk statt Serif */
+body.v5 .c3-next__n { font-family: "Montserrat", "Archivo", Arial, sans-serif !important; font-weight: 900 !important; font-style: normal !important; text-transform: uppercase !important; letter-spacing: -0.04em !important; font-size: clamp(44px, 8.5vw, 150px) !important; line-height: 0.9 !important; }
+.c3-next:hover .c3-next__n { letter-spacing: 0 !important; }
+/* Cursor-Punkt: dunkel auf hellen Projektseiten statt weißer Fleck */
+body.page-case3 .m8-cursor::before { background: #222a36; mix-blend-mode: normal; }
+body.page-case3.bx-dark .m8-cursor::before { background: #fff; }
