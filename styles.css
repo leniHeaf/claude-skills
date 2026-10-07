@@ -3717,52 +3717,41 @@ body.v5 :is(.m9-marq, .m8-cursor) { display: none !important; }
 .legal .todo { background: #f0f0ee; padding: 0 6px; font-weight: 700 !important; }
 
 /* ==========================================================================
-   3D-Level-Select (Startseite)
+   3D-Traumwelt (Startseite)
    ========================================================================== */
-.g3 { position: relative; height: calc(100svh - 64px); min-height: 560px; background: #0a0a0a; color: #f2f2f2; overflow: hidden; font-family: "Montserrat", Arial, sans-serif; user-select: none; }
-.g3__cv { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; touch-action: pan-y; opacity: 0; transition: opacity 1.2s ease; }
-.g3__cv:active { cursor: grabbing; }
-.g3.is-ready .g3__cv { opacity: 1; }
-.g3__hud { position: absolute; inset: 0; pointer-events: none; padding: clamp(18px, 3vw, 40px); }
-.g3__hud a, .g3__hud button { pointer-events: auto; }
-.g3__frame i { position: absolute; width: 26px; height: 26px; border-color: rgba(255,255,255,.55); border-style: solid; border-width: 0; }
-.g3__frame i:nth-child(1) { left: clamp(10px, 1.6vw, 22px); top: clamp(10px, 1.6vw, 22px); border-left-width: 2px; border-top-width: 2px; }
-.g3__frame i:nth-child(2) { right: clamp(10px, 1.6vw, 22px); top: clamp(10px, 1.6vw, 22px); border-right-width: 2px; border-top-width: 2px; }
-.g3__frame i:nth-child(3) { left: clamp(10px, 1.6vw, 22px); bottom: clamp(10px, 1.6vw, 22px); border-left-width: 2px; border-bottom-width: 2px; }
-.g3__frame i:nth-child(4) { right: clamp(10px, 1.6vw, 22px); bottom: clamp(10px, 1.6vw, 22px); border-right-width: 2px; border-bottom-width: 2px; }
-body.v5 .g3 .g3__top { display: flex; justify-content: space-between; margin: 0; font: 800 12px/1 "Montserrat", sans-serif !important; letter-spacing: .22em; text-transform: uppercase; }
-.g3__mode::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 10px; background: #f2f2f2; animation: g3-blink 1.1s steps(2, start) infinite; vertical-align: 1px; }
-@keyframes g3-blink { to { visibility: hidden; } }
-body.v5 .g3 .g3__claim { position: absolute; left: clamp(18px, 3vw, 40px); top: clamp(56px, 8vh, 96px); margin: 0; font: 900 clamp(26px, 3.2vw, 52px)/.95 "Montserrat", sans-serif !important; letter-spacing: -0.04em; text-transform: uppercase; color: #f2f2f2; opacity: .92; }
-.g3__sel { position: absolute; left: clamp(18px, 3vw, 40px); bottom: clamp(70px, 10vh, 110px); max-width: min(80vw, 900px); }
-body.v5 .g3 .g3__lvl { margin: 0 0 10px; font: 800 13px/1 "Montserrat", sans-serif !important; letter-spacing: .2em; color: #8a8a8a; }
-body.v5 .g3 .g3__lvl b { color: #f2f2f2; }
-body.v5 .g3 .g3__name { margin: 0; min-height: 1em; font: 900 clamp(40px, 7vw, 120px)/.9 "Montserrat", sans-serif !important; letter-spacing: -0.05em; text-transform: uppercase; white-space: nowrap; }
-body.v5 .g3 .g3__tags { margin: 14px 0 22px; font: 700 13px/1.4 "Montserrat", sans-serif !important; letter-spacing: .14em; text-transform: uppercase; color: #9a9a9a; }
-body.v5 .g3 .g3__go { display: inline-flex; align-items: center; gap: 14px; padding: 14px 18px 14px 22px; background: #f2f2f2; color: #0a0a0a !important; text-decoration: none; font: 900 13px/1 "Montserrat", sans-serif !important; letter-spacing: .14em; text-transform: uppercase; transition: transform .35s cubic-bezier(.16,1,.3,1), background .3s; }
-.g3__go:hover { transform: translateY(-2px); background: #fff; }
-.g3__go kbd { padding: 5px 7px; border: 1.5px solid #0a0a0a; font: 800 10px/1 "Montserrat", sans-serif; letter-spacing: .1em; }
-.g3__ctl { position: absolute; right: clamp(18px, 3vw, 40px); bottom: clamp(70px, 10vh, 110px); display: flex; align-items: center; gap: 16px; }
-.g3__btn { width: 52px; height: 52px; display: grid; place-items: center; border: 2px solid rgba(255,255,255,.6); background: transparent; color: #f2f2f2; font: 900 20px/1 "Montserrat", sans-serif; cursor: pointer; transition: background .25s, color .25s, transform .25s; }
-.g3__btn:hover, .g3__btn:focus-visible { background: #f2f2f2; color: #0a0a0a; }
-.g3__btn:active { transform: scale(.94); }
-.g3__dots { display: flex; gap: 6px; }
-.g3__dots i { width: 6px; height: 6px; background: rgba(255,255,255,.3); transition: width .4s cubic-bezier(.16,1,.3,1), background .3s; }
-.g3__dots i.on { width: 26px; background: #f2f2f2; }
-body.v5 .g3 .g3__hint { position: absolute; left: 50%; bottom: clamp(26px, 4vh, 40px); transform: translateX(-50%); margin: 0; font: 700 11px/1 "Montserrat", sans-serif !important; letter-spacing: .2em; text-transform: uppercase; color: #6a6a6a; white-space: nowrap; }
-/* normaler Hero bleibt für Screenreader und Suchmaschinen erhalten */
-.k-hero.g3-fallback { position: absolute !important; width: 1px !important; height: 1px !important; overflow: hidden !important; clip: rect(0 0 0 0) !important; white-space: nowrap; }
+.d3 { position: relative; height: 620vh; margin-top: -64px; background: #c4b3c8; }
+.d3__pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+.d3__cv { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity 1.6s ease; }
+.d3.is-ready .d3__cv { opacity: 1; }
+.d3__white { position: absolute; inset: 0; background: #fff; opacity: 0; pointer-events: none; }
+.d3__stage { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 20px; color: #fff; pointer-events: none; opacity: 0; transform: translateY(24px); filter: blur(6px); transition: opacity .9s cubic-bezier(.16,1,.3,1), transform 1.1s cubic-bezier(.16,1,.3,1), filter .9s; }
+.d3__stage.is-on { opacity: 1; transform: none; filter: none; }
+.d3__stage.is-on a { pointer-events: auto; }
+.d3__stage--proj { justify-content: flex-end; padding-bottom: clamp(70px, 13vh, 140px); }
+body.v5 .d3 .d3__title { margin: 0; font: 600 clamp(48px, 8.2vw, 136px)/.92 "Montserrat", sans-serif !important; letter-spacing: -0.055em; color: #fff; text-shadow: 0 2px 40px rgba(90, 70, 110, .25); }
+body.v5 .d3 .d3__sub { margin: clamp(18px, 2.4vw, 30px) 0 0; font: 500 clamp(16px, 1.6vw, 24px)/1.35 "Montserrat", sans-serif !important; letter-spacing: -0.01em; color: rgba(255,255,255,.88); }
+body.v5 .d3 .d3__pills { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: clamp(26px, 4vh, 44px) 0 0; }
+body.v5 .d3 .d3__pill { display: inline-flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 999px; background: #fff; color: #1b1b1f !important; text-decoration: none; font: 600 13px/1 "Montserrat", sans-serif !important; letter-spacing: .01em; box-shadow: 0 10px 30px -12px rgba(60, 40, 80, .45); transition: transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s; }
+body.v5 .d3 .d3__pill:hover { transform: translateY(-2px); box-shadow: 0 16px 36px -14px rgba(60, 40, 80, .55); }
+body.v5 .d3 .d3__pill i { font-style: normal; font-weight: 600 !important; }
+body.v5 .d3 .d3__pill--ghost { background: rgba(255,255,255,.18); color: #fff !important; box-shadow: inset 0 0 0 1px rgba(255,255,255,.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+body.v5 .d3 .d3__scroll { position: absolute; bottom: clamp(24px, 4vh, 40px); left: 0; right: 0; margin: 0; font: 600 12px/1 "Montserrat", sans-serif !important; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.85); animation: d3-bob 2.4s ease-in-out infinite; }
+@keyframes d3-bob { 50% { transform: translateY(6px); opacity: .6; } }
+body.v5 .d3 .d3__no { margin: 0 0 10px; font: 600 13px/1 "Montserrat", sans-serif !important; letter-spacing: .16em; color: rgba(255,255,255,.85); }
+body.v5 .d3 .d3__name { margin: 0; font: 600 clamp(44px, 7vw, 116px)/.92 "Montserrat", sans-serif !important; letter-spacing: -0.055em; color: #fff; text-shadow: 0 2px 40px rgba(60, 40, 80, .35); }
+body.v5 .d3 .d3__tags { margin: 14px 0 0; font: 500 15px/1.4 "Montserrat", sans-serif !important; color: rgba(255,255,255,.9); }
+.d3__bar { position: absolute; left: 50%; bottom: 18px; width: min(220px, 40vw); height: 2px; transform: translateX(-50%); background: rgba(255,255,255,.35); border-radius: 2px; overflow: hidden; }
+.d3__bar i { position: absolute; inset: 0; background: #fff; transform: scaleX(0); transform-origin: 0 50%; }
+/* Header schwebt transparent über der Welt */
+body.v5 .header.d3-over { background: transparent !important; border-bottom-color: transparent !important; }
+body.v5 .header.d3-over .m8-progress { opacity: 0; }
+/* klassischer Hero bleibt für Screenreader und Suchmaschinen */
+.k-hero.d3-fallback { position: absolute !important; width: 1px !important; height: 1px !important; overflow: hidden !important; clip: rect(0 0 0 0) !important; white-space: nowrap; }
 @media (max-width: 760px) {
-  .g3 { height: calc(100svh - 64px); min-height: 520px; }
-  .g3__sel { bottom: 120px; }
-  body.v5 .g3 .g3__name { font-size: clamp(34px, 11vw, 60px); }
-  .g3__ctl { left: clamp(18px, 3vw, 40px); right: auto; bottom: 54px; }
-  .g3__btn { width: 44px; height: 44px; }
-  body.v5 .g3 .g3__hint { left: auto; right: 18px; transform: none; bottom: 70px; }
+  .d3 { height: 560vh; }
+  body.v5 .d3 .d3__sub br { display: none; }
 }
-@media (max-width: 760px) {
-  body.v5 .g3 .g3__hint, .g3__go kbd { display: none; }
-  .g3__sel { bottom: 104px; }
-  .g3__ctl { bottom: 36px; }
-}
-@media (min-width: 761px) { .g3__sel { bottom: clamp(56px, 8vh, 90px); } }
+body.v5 .d3 .d3__stage--end .d3__title { color: #2b2533; text-shadow: none; }
+body.v5 .d3 .d3__stage--end .d3__pill { background: #1b1b1f; color: #fff !important; }
+body.v5 .d3 .d3__title, body.v5 .d3 .d3__name { text-shadow: 0 2px 30px rgba(70, 50, 90, .35), 0 1px 2px rgba(70, 50, 90, .15); }
+body.has-d3 .m8-progress { display: none; }

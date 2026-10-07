@@ -2463,229 +2463,261 @@ const LION = {"vb": [10.0, 4.0, 230.0, 150.0], "t": [0, 0], "parts": [{"p": "bod
 })();
 
 // ==========================================================================
-// Startseite: 3D-Level-Select im Game-Design-Stil
-// Projekte schweben als Karten auf einem Bogen im Raum, Auswahl per Pfeil-
-// tasten, Ziehen, Wischen, Klick oder Buttons – wie ein Spielmenü.
-// Ohne WebGL oder bei „Bewegung reduzieren“ bleibt der normale Hero.
+// Startseite: begehbare 3D-Traumwelt (nach Art von designely.studio)
+// Bögen im Wasser, Trittsteine, schwebende Säulen, Wolken, schillernde
+// Kugel. Beim Scrollen geht die Kamera über die Steine durch drei Bögen –
+// in jedem Bogen ein Projekt. Ohne WebGL / bei reduzierter Bewegung bleibt
+// der normale Hero.
 // ==========================================================================
 (() => {
   const hero = document.querySelector(".page-home .k-hero");
   if (!hero || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   const probe = document.createElement("canvas");
   if (!(probe.getContext("webgl") || probe.getContext("experimental-webgl"))) return;
-
-  const P = [
-    { slug: "runclub", name: "Run Club", tags: "Branding · Kampagne · Merch", img: "assets/runclub/plakatwand.webp" },
-    { slug: "taeubert", name: "Täubert", tags: "Branding · Website · App", img: "assets/taeubert/website-app.webp" },
-    { slug: "crea-response", name: "Crea Response", tags: "Branding · Brand Book · Raum", img: "assets/crea-response/wandlogo.webp" },
-    { slug: "medaesthetic", name: "med.aesthetic", tags: "Markenauftritt" },
-    { slug: "kuehlkraft", name: "kühlkraft", tags: "Markenauftritt" },
-    { slug: "mybaumarkt", name: "Baumarkt Gnoien", tags: "Markenauftritt" },
-    { slug: "dogstar", name: "Dogstar", tags: "Markenauftritt" },
-  ];
-  const N = P.length;
   const mobile = innerWidth < 760;
 
-  // Bühne + HUD
-  const g = document.createElement("section");
-  g.className = "g3"; g.setAttribute("aria-label", "Projekte auswählen");
-  g.innerHTML = `
-    <canvas class="g3__cv" aria-hidden="true"></canvas>
-    <div class="g3__hud">
-      <div class="g3__frame" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-      <p class="g3__top"><span>STUDIO.X</span><span class="g3__mode">Projekt wählen</span></p>
-      <p class="g3__claim">Marken, die man<br>nicht vergisst.</p>
-      <div class="g3__sel">
-        <p class="g3__lvl"><b>01</b> / ${String(N).padStart(2, "0")}</p>
-        <p class="g3__name" aria-live="polite"></p>
-        <p class="g3__tags"></p>
-        <a class="g3__go" href="projekt-runclub.html"><span>Projekt öffnen</span><kbd>Enter</kbd></a>
+  const PROJ = [
+    { slug: "runclub", name: "Run Club", tags: "Branding · Kampagne · Merchandise", img: "assets/runclub/plakatwand.webp" },
+    { slug: "taeubert", name: "Täubert", tags: "Branding · Website · App · Print", img: "assets/taeubert/website-app.webp" },
+    { slug: "crea-response", name: "Crea Response", tags: "Branding · Brand Book · Raum", img: "assets/crea-response/wandlogo.webp" },
+  ];
+  const ARCH_Z = [-8, -30, -52];
+
+  const sec = document.createElement("section");
+  sec.className = "d3"; sec.setAttribute("aria-label", "STUDIO.X – Einstieg");
+  sec.innerHTML = `
+    <div class="d3__pin">
+      <canvas class="d3__cv" aria-hidden="true"></canvas>
+      <div class="d3__white" aria-hidden="true"></div>
+      <div class="d3__stage d3__stage--intro is-on">
+        <p class="d3__title">Marken, die man<br>nicht vergisst.</p>
+        <p class="d3__sub">Strategie, Design und Roll-out aus einer Hand –<br>aus Köln, Saalbach-Hinterglemm und Sonneberg.</p>
+        <p class="d3__pills"><a class="d3__pill" href="#anfrage">Projekt anfragen <i>↗</i></a><a class="d3__pill d3__pill--ghost" href="work.html">Arbeiten ansehen</a></p>
+        <p class="d3__scroll" aria-hidden="true">Scrollen, um einzutreten</p>
       </div>
-      <div class="g3__ctl">
-        <button type="button" class="g3__btn" data-d="-1" aria-label="Vorheriges Projekt">←</button>
-        <div class="g3__dots" aria-hidden="true">${P.map(() => "<i></i>").join("")}</div>
-        <button type="button" class="g3__btn" data-d="1" aria-label="Nächstes Projekt">→</button>
+      ${PROJ.map((p, i) => `
+      <div class="d3__stage d3__stage--proj" data-i="${i}">
+        <p class="d3__no">${String(i + 1).padStart(2, "0")} / ${String(PROJ.length).padStart(2, "0")}</p>
+        <p class="d3__name">${p.name}</p>
+        <p class="d3__tags">${p.tags}</p>
+        <p class="d3__pills"><a class="d3__pill" href="projekt-${p.slug}.html">Projekt ansehen <i>↗</i></a></p>
+      </div>`).join("")}
+      <div class="d3__stage d3__stage--end">
+        <p class="d3__title">Und das ist<br>erst der Anfang.</p>
+        <p class="d3__pills"><a class="d3__pill" href="work.html">Alle Arbeiten <i>↗</i></a></p>
       </div>
-      <p class="g3__hint" aria-hidden="true">${mobile ? "Wischen zum Wählen" : "← → wählen · Ziehen · Enter öffnen"}</p>
+      <div class="d3__bar" aria-hidden="true"><i></i></div>
     </div>`;
-  hero.before(g);
-  hero.classList.add("g3-fallback");
-  document.body.classList.add("has-g3");
+  hero.before(sec);
+  hero.classList.add("d3-fallback");
+  document.body.classList.add("has-d3");
 
-  const cv = g.querySelector(".g3__cv");
-  const elName = g.querySelector(".g3__name"), elTags = g.querySelector(".g3__tags"), elLvl = g.querySelector(".g3__lvl b");
-  const go = g.querySelector(".g3__go"), dots = [...g.querySelectorAll(".g3__dots i")];
-
-  // Name wie in Game-UIs „hereinschreiben“
-  const glyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#/+";
-  let scrT = 0;
-  const scramble = (txt) => {
-    cancelAnimationFrame(scrT);
-    const t0 = performance.now();
-    const step = (now) => {
-      const p = Math.min(1, (now - t0) / 520);
-      const n = Math.floor(p * txt.length);
-      elName.textContent = txt.slice(0, n) + [...txt.slice(n)].map((c) => (c === " " ? " " : glyphs[(Math.random() * glyphs.length) | 0])).join("");
-      if (p < 1) scrT = requestAnimationFrame(step); else elName.textContent = txt;
-    };
-    scrT = requestAnimationFrame(step);
-  };
-
-  let cur = 0, target = 0, auto = true;
-  const select = (i) => {
-    cur = ((i % N) + N) % N;
-    const p = P[cur];
-    scramble(p.name.toUpperCase());
-    elTags.textContent = p.tags;
-    elLvl.textContent = String(cur + 1).padStart(2, "0");
-    go.href = `projekt-${p.slug}.html`;
-    dots.forEach((d, k) => d.classList.toggle("on", k === cur));
-  };
-  const move = (d) => { target += d; select(target); };
-  g.querySelectorAll(".g3__btn").forEach((b) => b.addEventListener("click", () => { auto = false; move(+b.dataset.d); }));
-  select(0);
+  const cv = sec.querySelector(".d3__cv");
+  const stIntro = sec.querySelector(".d3__stage--intro"), stEnd = sec.querySelector(".d3__stage--end");
+  const stProj = [...sec.querySelectorAll(".d3__stage--proj")];
+  const white = sec.querySelector(".d3__white"), bar = sec.querySelector(".d3__bar i");
 
   const start = (THREE) => {
-    const renderer = new THREE.WebGLRenderer({ canvas: cv, antialias: !mobile, alpha: false, powerPreference: "high-performance" });
-    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, mobile ? 1.5 : 2));
-    renderer.setClearColor(0x0a0a0a, 1);
+    const renderer = new THREE.WebGLRenderer({ canvas: cv, antialias: !mobile, powerPreference: "high-performance" });
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, mobile ? 1.4 : 1.75));
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 0.92;
     const scene = new THREE.Scene();
-    scene.fog = new THREE.Fog(0x0a0a0a, 9, 26);
-    const cam = new THREE.PerspectiveCamera(mobile ? 58 : 42, 1, 0.1, 100);
-    cam.position.set(0, 0.6, 9.5);
+    const HORIZON = new THREE.Color("#c4b3c8");
+    scene.fog = new THREE.Fog(HORIZON, 26, 120);
+    const cam = new THREE.PerspectiveCamera(mobile ? 62 : 50, 1, 0.1, 400);
 
-    // Boden-Raster, das langsam auf uns zufährt
-    const grid = new THREE.GridHelper(80, 80, 0x3a3a3a, 0x1c1c1c);
-    grid.position.y = -2.6; scene.add(grid);
-    // Staub im Raum
-    const pc = mobile ? 500 : 1400, pos = new Float32Array(pc * 3);
-    for (let i = 0; i < pc; i++) { pos[i * 3] = (Math.random() - 0.5) * 40; pos[i * 3 + 1] = Math.random() * 14 - 3; pos[i * 3 + 2] = (Math.random() - 0.5) * 40; }
-    const pg = new THREE.BufferGeometry(); pg.setAttribute("position", new THREE.BufferAttribute(pos, 3));
-    const dust = new THREE.Points(pg, new THREE.PointsMaterial({ color: 0xffffff, size: 0.035, transparent: true, opacity: 0.55, depthWrite: false }));
-    scene.add(dust);
+    // Licht: weich, warm von oben, lila vom Himmel
+    scene.add(new THREE.HemisphereLight(0xdfe2ff, 0xd8b4a8, 0.62));
+    const sun = new THREE.DirectionalLight(0xffe4d4, 0.95); sun.position.set(-12, 22, 14); scene.add(sun);
+    scene.add(new THREE.AmbientLight(0xffffff, 0.08));
 
-    // Karten: Bild in abgerundeter Form auf Canvas, damit die Ecken weich sind
-    const W = 3.4, H = 2.2, R = 7.5, STEP = 0.52;
-    const ring = new THREE.Group(); ring.position.z = -R + 2.2; ring.position.y = mobile ? 1.35 : 0.55; scene.add(ring);
-    const tex = (p) => {
-      const c = document.createElement("canvas"); c.width = 1024; c.height = 664;
-      const x = c.getContext("2d");
-      const rr = (ctx) => { ctx.beginPath(); ctx.moveTo(40, 0); ctx.arcTo(1024, 0, 1024, 664, 40); ctx.arcTo(1024, 664, 0, 664, 40); ctx.arcTo(0, 664, 0, 0, 40); ctx.arcTo(0, 0, 1024, 0, 40); ctx.closePath(); };
-      const t = new THREE.CanvasTexture(c);
-      const paintType = () => {
-        rr(x); x.fillStyle = "#141414"; x.fill();
-        x.strokeStyle = "#2a2a2a"; x.lineWidth = 4; rr(x); x.stroke();
-        x.fillStyle = "#f2f2f2"; x.font = "900 96px Montserrat, Arial, sans-serif"; x.textBaseline = "middle";
-        let s = 96; while (x.measureText(p.name.toUpperCase()).width > 880 && s > 40) { s -= 4; x.font = `900 ${s}px Montserrat, Arial, sans-serif`; }
-        x.fillText(p.name.toUpperCase(), 72, 332);
-        x.font = "700 26px Montserrat, Arial, sans-serif"; x.fillStyle = "#777"; x.fillText("PROJEKTBILDER FOLGEN", 74, 600);
-        t.needsUpdate = true;
-      };
-      if (p.img) {
-        const im = new Image();
-        im.onload = () => {
-          x.save(); rr(x); x.clip();
-          const s = Math.max(1024 / im.width, 664 / im.height);
-          x.drawImage(im, (1024 - im.width * s) / 2, (664 - im.height * s) / 2, im.width * s, im.height * s);
-          x.restore(); t.needsUpdate = true;
-        };
-        im.onerror = paintType; im.src = p.img;
-      } else if (document.fonts && document.fonts.load) document.fonts.load("900 96px Montserrat").then(paintType, paintType); else paintType();
-      return t;
+    // Himmel: Verlauf von Blau-Lila oben zu Rosé am Horizont
+    const sky = new THREE.Mesh(new THREE.SphereGeometry(300, 32, 16), new THREE.ShaderMaterial({
+      side: THREE.BackSide, depthWrite: false, fog: false,
+      uniforms: { top: { value: new THREE.Color("#7c8dc0") }, mid: { value: HORIZON }, low: { value: new THREE.Color("#a691a6") } },
+      vertexShader: "varying vec3 vP; void main(){ vP = normalize(position); gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.); }",
+      fragmentShader: "uniform vec3 top; uniform vec3 mid; uniform vec3 low; varying vec3 vP; void main(){ float h = vP.y; vec3 c = h > 0. ? mix(mid, top, pow(clamp(h*1.6,0.,1.), .7)) : mix(mid, low, clamp(-h*4.,0.,1.)); gl_FragColor = vec4(c,1.); }",
+    }));
+    scene.add(sky);
+
+    // Sandstein-Struktur
+    const grain = (() => {
+      const c = document.createElement("canvas"); c.width = c.height = 256;
+      const x = c.getContext("2d"); x.fillStyle = "#fff"; x.fillRect(0, 0, 256, 256);
+      for (let i = 0; i < 9000; i++) { const v = 200 + Math.random() * 55; x.fillStyle = `rgba(${v},${v - 6},${v - 10},.55)`; x.fillRect(Math.random() * 256, Math.random() * 256, 1 + Math.random() * 2, 1 + Math.random() * 2); }
+      const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(2, 2); t.encoding = THREE.sRGBEncoding; return t;
+    })();
+    const stone = (hex) => new THREE.MeshStandardMaterial({ color: new THREE.Color(hex), map: grain, roughness: 0.96, metalness: 0 });
+    const M = { sand: stone("#dbae96"), rose: stone("#d4958c"), lilac: stone("#b6a2d0"), foam: new THREE.MeshStandardMaterial({ color: 0xebcbb8, map: grain, roughness: 1 }), cloud: new THREE.MeshStandardMaterial({ color: 0xf4f1f6, roughness: 1, emissive: 0xc9c2da, emissiveIntensity: 0.28 }) };
+
+    const world = new THREE.Group(); scene.add(world);
+    const reflectable = [];
+    const add = (mesh, refl = true) => { world.add(mesh); if (refl) reflectable.push(mesh); return mesh; };
+
+    // Bogen: Beine + Halbkreis als ein extrudierter Körper
+    const archGeo = (W, Wi, H, D) => {
+      const s = new THREE.Shape();
+      s.moveTo(-W, 0); s.lineTo(-W, H); s.absarc(0, H, W, Math.PI, 0, true); s.lineTo(W, 0); s.lineTo(Wi, 0); s.lineTo(Wi, H); s.absarc(0, H, Wi, 0, Math.PI, false); s.lineTo(-Wi, 0); s.lineTo(-W, 0);
+      const g = new THREE.ExtrudeGeometry(s, { depth: D, bevelEnabled: true, bevelThickness: 0.12, bevelSize: 0.12, bevelSegments: 3, curveSegments: 40 });
+      g.translate(0, -0.6, -D / 2); return g;
     };
-    const cards = P.map((p, i) => {
-      const m = new THREE.Mesh(new THREE.PlaneGeometry(W, H), new THREE.MeshBasicMaterial({ map: tex(p), transparent: true, color: 0x666666 }));
-      const holder = new THREE.Group();
-      holder.add(m);
-      // dünner Rahmen als Auswahl-Markierung
-      const edge = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(W * 1.04, H * 1.06)), new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0 }));
-      holder.add(edge);
-      ring.add(holder);
-      return { holder, m, edge, i, born: 250 + i * 110 };
+    const blob = (x, z, s, mat = M.foam, n = 7) => {
+      const g = new THREE.Group();
+      for (let i = 0; i < n; i++) {
+        const m = new THREE.Mesh(new THREE.SphereGeometry(1, 20, 14), mat);
+        m.position.set((Math.random() - 0.5) * 2.4 * s, (Math.random() * 0.25) * s, (Math.random() - 0.5) * 1.6 * s);
+        m.scale.set(s * (0.7 + Math.random() * 0.6), s * (0.32 + Math.random() * 0.22), s * (0.6 + Math.random() * 0.5));
+        g.add(m);
+      }
+      g.position.set(x, 0.05, z); return add(g);
+    };
+
+    // Die drei Durchgangs-Bögen mit Projekt-Portalen
+    const portals = [];
+    const loader = new THREE.TextureLoader();
+    ARCH_Z.forEach((z, i) => {
+      const a = add(new THREE.Mesh(archGeo(3.6, 2.5, 4.6, 1.5), i % 2 ? M.rose : M.sand)); a.position.set(0, 0, z);
+      blob(-3.3, z + 0.4, 1.1); blob(3.4, z - 0.2, 1.0);
+      // Portal: Projektbild in der Bogenöffnung
+      const ps = new THREE.Shape(); const wi = 2.42, hi = 4.6;
+      ps.moveTo(-wi, -0.6); ps.lineTo(-wi, hi - 0.6); ps.absarc(0, hi - 0.6, wi, Math.PI, 0, true); ps.lineTo(wi, -0.6); ps.lineTo(-wi, -0.6);
+      const pg = new THREE.ShapeGeometry(ps, 40);
+      pg.computeBoundingBox(); const bb = pg.boundingBox, uv = pg.attributes.uv, pos = pg.attributes.position;
+      for (let k = 0; k < uv.count; k++) uv.setXY(k, (pos.getX(k) - bb.min.x) / (bb.max.x - bb.min.x), (pos.getY(k) - bb.min.y) / (bb.max.y - bb.min.y));
+      const pm = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0, toneMapped: false, fog: false });
+      const portal = new THREE.Mesh(pg, pm); portal.position.set(0, 0, z); world.add(portal);
+      loader.load(PROJ[i].img, (t) => {
+        t.encoding = THREE.sRGBEncoding;
+        const planeA = (bb.max.x - bb.min.x) / (bb.max.y - bb.min.y), imgA = t.image.width / t.image.height;
+        if (imgA > planeA) { t.repeat.set(planeA / imgA, 1); t.offset.set((1 - planeA / imgA) / 2, 0); } else { t.repeat.set(1, imgA / planeA); t.offset.set(0, (1 - imgA / planeA) / 2); }
+        pm.map = t; pm.needsUpdate = true;
+      });
+      portals.push({ portal, z });
     });
 
-    const size = () => {
-      const w = g.clientWidth, h = g.clientHeight;
-      renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix();
-    };
+    // Kulisse: große Bögen am Rand, Säulen, Schaum, Wolken, Kugel
+    const big = add(new THREE.Mesh(archGeo(5.2, 3.5, 7.5, 2.2), M.sand)); big.position.set(-12.5, 0, -2); big.rotation.y = 0.5;
+    const big2 = add(new THREE.Mesh(archGeo(5.2, 3.5, 7.5, 2.2), M.rose)); big2.position.set(12.5, 0, -6); big2.rotation.y = -0.45;
+    const big3 = add(new THREE.Mesh(archGeo(4.6, 3.1, 6.5, 2), M.lilac)); big3.position.set(-15, 0, -40); big3.rotation.y = 0.3;
+    const big4 = add(new THREE.Mesh(archGeo(4.6, 3.1, 6.5, 2), M.sand)); big4.position.set(16, 0, -46); big4.rotation.y = -0.25;
+    blob(-10.5, 1.2, 1.8); blob(11, -3.5, 1.9); blob(-13, -38, 1.6); blob(14.5, -44, 1.7);
+    // Schluss-Tor am Ende des Weges
+    const gate = add(new THREE.Mesh(archGeo(7.2, 5.4, 8.5, 2.6), M.lilac)); gate.position.set(0, 0, -78);
+    blob(-6.6, -77, 2.4); blob(6.8, -78.5, 2.2); blob(-11, -84, 2); blob(12, -86, 2.3);
+    const pillars = [];
+    [[-5.4, -14, 3.6, M.rose], [5.8, -20, 4.4, M.lilac], [-7.5, -26, 5.2, M.sand], [7.8, -36, 3.2, M.rose], [-6, -46, 4.0, M.lilac], [6.5, -60, 5.0, M.sand], [-20, -20, 6, M.sand], [21, -26, 7, M.rose]].forEach(([x, z, h, m], i) => {
+      const c = add(new THREE.Mesh(new THREE.BoxGeometry(0.9, h, 0.9), m)); c.position.set(x, h / 2 - 0.4, z); pillars.push({ c, h, ph: i });
+    });
+    // Trittsteine
+    for (let z = 12, i = 0; z > -72; z -= 2.5, i++) {
+      const s = add(new THREE.Mesh(new THREE.BoxGeometry(2.3 - (i % 3) * 0.15, 0.42, 1.5), M.sand));
+      s.position.set(Math.sin(i * 0.9) * 0.35, 0.05, z); s.rotation.y = Math.sin(i * 1.7) * 0.06;
+    }
+    // Wolken
+    const clouds = [];
+    [[-16, 13, -30, 3.2], [10, 15, -60, 4], [24, 11, -18, 2.6], [-26, 16, -70, 4.2], [0, 18, -90, 5], [-6, 12, -10, 2.2]].forEach(([x, y, z, s]) => {
+      const g = new THREE.Group();
+      for (let i = 0; i < 16; i++) { const m = new THREE.Mesh(new THREE.SphereGeometry(1, 18, 12), M.cloud); const u = (i / 15 - 0.5); m.position.set(u * 3.4 * s + (Math.random() - 0.5) * 0.6 * s, (0.5 - Math.abs(u)) * 0.9 * s + Math.random() * 0.25 * s, (Math.random() - 0.5) * 1.2 * s); m.scale.set(s * (0.5 + Math.random() * 0.3), s * (0.38 + Math.random() * 0.22), s * (0.5 + Math.random() * 0.3)); g.add(m); }
+      g.position.set(x, y, z); scene.add(g); clouds.push(g);
+    });
+    // schillernde Kugel mit Ring
+    const orb = new THREE.Group();
+    const orbM = new THREE.ShaderMaterial({
+      transparent: true, uniforms: { t: { value: 0 } },
+      vertexShader: "varying vec3 vN; varying vec3 vV; void main(){ vec4 mv = modelViewMatrix*vec4(position,1.); vN = normalize(normalMatrix*normal); vV = normalize(-mv.xyz); gl_Position = projectionMatrix*mv; }",
+      fragmentShader: "uniform float t; varying vec3 vN; varying vec3 vV; void main(){ float f = 1.-max(dot(vN,vV),0.); vec3 ir = .72+.28*cos(6.2831*(f*.8+vec3(0.,.33,.67)+t*.04)); vec3 c = mix(vec3(.97,.94,.99), ir, smoothstep(.2,1.,f)*.85); gl_FragColor = vec4(c, .72+.28*f); }",
+    });
+    orb.add(new THREE.Mesh(new THREE.SphereGeometry(1.6, 48, 32), orbM));
+    const ringM = new THREE.MeshStandardMaterial({ color: 0xd9b8b6, roughness: 0.6 });
+    const ringMesh = new THREE.Mesh(new THREE.TorusGeometry(2.6, 0.05, 12, 120), ringM); ringMesh.rotation.set(1.2, 0.3, 0); orb.add(ringMesh);
+    orb.position.set(-8.5, 4.2, -16); scene.add(orb);
+
+    // Spiegelbilder unter der Wasserlinie (günstige Reflexion)
+    const mirror = new THREE.Group(); mirror.scale.y = -1; mirror.position.y = -0.02;
+    reflectable.forEach((o) => {
+      const c = o.clone(true);
+      c.traverse((n) => { if (n.isMesh) { n.material = n.material.clone(); n.material.color = n.material.color.clone().multiplyScalar(0.62); n.material.side = THREE.DoubleSide; } });
+      mirror.add(c);
+    });
+    scene.add(mirror);
+
+    // Wasser: Wellen im Vertex-Shader, Fresnel + Glitzern, eigener Nebel
+    const seg = mobile ? 96 : 160;
+    const water = new THREE.Mesh(new THREE.PlaneGeometry(260, 260, seg, seg), new THREE.ShaderMaterial({
+      transparent: true, extensions: { derivatives: true },
+      uniforms: { t: { value: 0 }, deep: { value: new THREE.Color("#86728a") }, skyc: { value: new THREE.Color("#c3b6d0") }, fogc: { value: HORIZON }, near: { value: 26 }, far: { value: 120 } },
+      vertexShader: `uniform float t; varying vec3 vW; varying float vD;
+        void main(){ vec3 p = position; float w = sin(p.x*.35+t*.9)*.06 + sin(p.y*.42-t*1.1)*.05 + sin((p.x+p.y)*1.3+t*1.7)*.02;
+        p.z += w; vec4 wp = modelMatrix*vec4(p,1.); vW = wp.xyz; vec4 mv = viewMatrix*wp; vD = -mv.z; gl_Position = projectionMatrix*mv; }`,
+      fragmentShader: `uniform vec3 deep; uniform vec3 skyc; uniform vec3 fogc; uniform float near; uniform float far; uniform float t; varying vec3 vW; varying float vD;
+        void main(){ vec3 n = normalize(cross(dFdx(vW), dFdy(vW))); if(n.y<0.) n=-n; vec3 v = normalize(cameraPosition - vW);
+        float f = pow(1.-max(dot(n,v),0.), 3.); vec3 l = normalize(vec3(-.4,.8,-.5)); float sp = pow(max(dot(reflect(-l,n),v),0.), 90.);
+        float streak = smoothstep(.82,1.,sin(vW.x*.9+sin(vW.z*.35+t*.4)*1.4)*.5+.5)*.035;
+        vec3 c = mix(deep, skyc, clamp(f*1.25+.18,0.,1.)) + sp*.5 + streak;
+        c = mix(c, fogc, smoothstep(near, far, vD)); gl_FragColor = vec4(c, mix(.8, .96, f)); }`,
+    }));
+    water.rotation.x = -Math.PI / 2; water.renderOrder = 2; scene.add(water);
+
+    const size = () => { const w = innerWidth, h = innerHeight; renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); };
     size(); addEventListener("resize", size);
 
-    // Eingaben: Ziehen/Wischen, Pfeiltasten, Enter, Klick auf Karte, Maus-Parallaxe
+    // Scroll → Fortschritt durch die Welt
     const mouse = { x: 0, y: 0, sx: 0, sy: 0 };
-    let drag = null, rot = 0, vel = 0;
-    g.addEventListener("pointermove", (e) => {
-      const r = g.getBoundingClientRect();
-      mouse.x = (e.clientX - r.left) / r.width - 0.5; mouse.y = (e.clientY - r.top) / r.height - 0.5;
-      if (drag) { const dx = e.clientX - drag.x; drag.x = e.clientX; drag.moved += Math.abs(dx); rot -= dx / (mobile ? 260 : 380); vel = -dx / 380; }
-    });
-    cv.addEventListener("pointerdown", (e) => { drag = { x: e.clientX, moved: 0 }; auto = false; cv.setPointerCapture(e.pointerId); });
-    const ray = new THREE.Raycaster(), v2 = new THREE.Vector2();
-    cv.addEventListener("pointerup", (e) => {
-      if (!drag) return;
-      const moved = drag.moved; drag = null;
-      if (moved > 6) { target = Math.round(rot + vel * 4); select(target); return; }
-      const r = cv.getBoundingClientRect();
-      v2.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
-      ray.setFromCamera(v2, cam);
-      const hit = ray.intersectObjects(cards.map((c) => c.m))[0];
-      if (!hit) return;
-      const k = cards.findIndex((c) => c.m === hit.object);
-      const d = ((k - (((target % N) + N) % N) + N + N / 2) % N) - N / 2;
-      if (Math.abs(d) < 0.5) go.click(); else { target += Math.round(d); select(target); }
-    });
-    addEventListener("keydown", (e) => {
-      if (scrollY > g.offsetHeight * 0.6 || /input|textarea|select/i.test(document.activeElement?.tagName || "")) return;
-      if (e.key === "ArrowRight") { auto = false; move(1); e.preventDefault(); }
-      else if (e.key === "ArrowLeft") { auto = false; move(-1); e.preventDefault(); }
-      else if (e.key === "Enter" && document.activeElement === document.body) { go.click(); }
-    });
-    let autoT = setInterval(() => { if (auto && !document.hidden) move(1); }, 4200);
-    g.addEventListener("pointerenter", () => { auto = false; });
+    addEventListener("pointermove", (e) => { mouse.x = e.clientX / innerWidth - 0.5; mouse.y = e.clientY / innerHeight - 0.5; }, { passive: true });
+    const header = document.querySelector(".header");
+    const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+    const sstep = (a, b, v) => { const x = clamp((v - a) / (b - a)); return x * x * (3 - 2 * x); };
+    let prog = 0, sp = 0, visible = true, raf = 0;
+    const readScroll = () => {
+      const r = sec.getBoundingClientRect();
+      prog = clamp(-r.top / (r.height - innerHeight));
+      header?.classList.toggle("d3-over", r.bottom > 64);
+    };
+    readScroll(); addEventListener("scroll", readScroll, { passive: true });
+    new IntersectionObserver(([en]) => { visible = en.isIntersecting; if (visible && !raf) raf = requestAnimationFrame(loop); }).observe(sec);
 
-    // Nur rendern, wenn sichtbar
-    let visible = true, raf = 0;
-    new IntersectionObserver(([en]) => { visible = en.isIntersecting; if (visible && !raf) raf = requestAnimationFrame(loop); }).observe(g);
+    const Z0 = 15, Z1 = -60;
     const t0 = performance.now();
-    const ease = (t) => 1 - Math.pow(1 - t, 4);
     function loop(now) {
-      raf = 0;
-      if (!visible) return;
-      const t = now - t0;
-      if (!drag) { rot += (target - rot) * 0.085; }
-      mouse.sx += (mouse.x - mouse.sx) * 0.05; mouse.sy += (mouse.y - mouse.sy) * 0.05;
-      cam.position.x = mouse.sx * 1.4; cam.position.y = 0.6 - mouse.sy * 0.8; cam.lookAt(0, mobile ? 0.6 : 0.2, 0);
-      grid.position.z = (t * 0.0012) % 1;
-      dust.rotation.y = t * 0.00002;
-      cards.forEach((c) => {
-        let d = c.i - rot; d = ((d % N) + N + N / 2) % N - N / 2;      // −N/2 … N/2
-        const a = d * STEP;
-        const k = ease(Math.min(1, Math.max(0, (t - c.born) / 900)));    // Einflug
-        c.holder.position.set(Math.sin(a) * R, Math.sin(t * 0.0012 + c.i) * 0.08 + (1 - k) * -3, Math.cos(a) * R - (1 - k) * 8);
-        c.holder.rotation.y = a + mouse.sx * 0.15;
-        c.holder.rotation.x = -mouse.sy * 0.08;
-        const focus = Math.max(0, 1 - Math.abs(d));
-        const s = 0.86 + focus * 0.26;
-        c.holder.scale.setScalar(s * k);
-        const col = 0.35 + focus * 0.65;
-        c.m.material.color.setRGB(col, col, col);
-        c.m.material.opacity = Math.max(0.15, 1 - Math.abs(d) * 0.28) * k;
-        c.edge.material.opacity = focus > 0.7 ? (focus - 0.7) / 0.3 * (0.55 + Math.sin(t * 0.006) * 0.25) : 0;
+      raf = 0; if (!visible) return;
+      const t = (now - t0) / 1000;
+      sp += (prog - sp) * 0.075;
+      const intro = sstep(0, 1, Math.min(1, t / 3.2));           // langsames Heranfahren beim Laden
+      const z = Z0 + 6 * (1 - intro) + (Z1 - Z0) * sp;
+      mouse.sx += (mouse.x - mouse.sx) * 0.04; mouse.sy += (mouse.y - mouse.sy) * 0.04;
+      cam.position.set(Math.sin(sp * 9) * 0.25 + mouse.sx * 0.8, 2.15 + Math.sin(sp * 60) * 0.04 - mouse.sy * 0.3 + (1 - intro) * 1.2, z);
+      cam.lookAt(mouse.sx * 3, 1.9 - mouse.sy * 1.2, z - 12);
+      water.material.uniforms.t.value = t; orbM.uniforms.t.value = t;
+      orb.position.y = 4.2 + Math.sin(t * 0.8) * 0.35; orb.rotation.y = t * 0.15; ringMesh.rotation.z = t * 0.2;
+      pillars.forEach((p) => { p.c.position.y = p.h / 2 - 0.4 + Math.sin(t * 0.6 + p.ph) * 0.12; });
+      clouds.forEach((c, i) => { c.position.x += Math.sin(t * 0.05 + i) * 0.004; });
+      // Portale blenden auf, wenn man sich nähert, und weg, kurz bevor man hindurchgeht
+      portals.forEach(({ portal, z: pz }, i) => {
+        const d = z - pz;
+        portal.material.opacity = sstep(30, 16, d) * sstep(3.2, 8.5, d);
+        const on = d < 17 && d > 3.4;
+        stProj[i].classList.toggle("is-on", on);
       });
+      stIntro.classList.toggle("is-on", sp < 0.06);
+      stEnd.classList.toggle("is-on", sp > 0.91);
+      white.style.opacity = (sstep(0.9, 0.99, sp) * 0.92).toFixed(3);
+      bar.style.transform = `scaleX(${sp.toFixed(4)})`;
       renderer.render(scene, cam);
       raf = requestAnimationFrame(loop);
     }
     raf = requestAnimationFrame(loop);
     document.addEventListener("visibilitychange", () => { if (!document.hidden && visible && !raf) raf = requestAnimationFrame(loop); });
-    g.classList.add("is-ready");
-    addEventListener("pagehide", () => clearInterval(autoT));
+    sec.classList.add("is-ready");
   };
 
-  const fail = () => { g.remove(); hero.classList.remove("g3-fallback"); document.body.classList.remove("has-g3"); };
-  if (window.THREE) start(window.THREE);
+  const fail = () => { sec.remove(); hero.classList.remove("d3-fallback"); document.body.classList.remove("has-d3"); };
+  if (window.THREE) { try { start(window.THREE); } catch (e) { fail(); } }
   else {
     const s = document.createElement("script");
     s.src = "assets/vendor/three.min.js"; s.async = true;
-    s.onload = () => { try { start(window.THREE); } catch (e) { fail(); } };
+    s.onload = () => { try { start(window.THREE); } catch (e) { console.warn(e); fail(); } };
     s.onerror = fail;
     document.head.appendChild(s);
   }
