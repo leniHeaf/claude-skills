@@ -2311,3 +2311,34 @@ document.querySelectorAll(".c3-giant").forEach((g) => { const n = g.textContent.
     upd();
   }
 })();
+
+// ==========================================================================
+// 90er: Camcorder-Overlay (REC, laufender Timecode, Datum, Bildnummer)
+// ==========================================================================
+(() => {
+  const M = ["JAN", "FEB", "MÄR", "APR", "MAI", "JUN", "JUL", "AUG", "SEP", "OKT", "NOV", "DEZ"];
+  const d = new Date();
+  const date = `${M[d.getMonth()]}. ${String(d.getDate()).padStart(2, "0")} ${d.getFullYear()}`;
+  const make = (host, n, rec) => {
+    if (!host || host.querySelector(".cam90")) return null;
+    const o = document.createElement("div");
+    o.className = "cam90"; o.setAttribute("aria-hidden", "true");
+    o.innerHTML = `${rec ? '<span class="cam90__rec"><i></i>REC</span>' : '<span class="cam90__rec">PLAY ▶</span>'}<span class="cam90__tc">0:00:00</span><span class="cam90__date">${date}</span><span class="cam90__no">SP · ${String(n).padStart(3, "0")}</span>`;
+    host.appendChild(o);
+    return o.querySelector(".cam90__tc");
+  };
+  const tcs = [];
+  const reel = document.querySelector(".hy-reel__f");
+  const t = make(reel, 1, true); if (t) tcs.push({ el: t, off: 0, always: true });
+  document.querySelectorAll(".hy-item__media").forEach((m, i) => {
+    m.dataset.frame = `▮ ${String(i + 12).padStart(2, "0")}A`;
+    const el = make(m, i + 2, false); if (el) tcs.push({ el, off: i * 37, host: m.closest("a") });
+  });
+  if (!tcs.length || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const t0 = performance.now();
+  const fmt = (s) => `${Math.floor(s / 3600)}:${String(Math.floor(s / 60) % 60).padStart(2, "0")}:${String(Math.floor(s) % 60).padStart(2, "0")}`;
+  setInterval(() => {
+    const s = (performance.now() - t0) / 1000;
+    tcs.forEach((x) => { if (x.always || x.host?.matches(":hover")) x.el.textContent = fmt(s + x.off); });
+  }, 250);
+})();
