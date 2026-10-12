@@ -945,7 +945,7 @@
   const curtain = document.createElement("div");
   curtain.className = "m8-curtain";
   curtain.setAttribute("aria-hidden", "true");
-  curtain.innerHTML = '<span class="m8-curtain__mark">STUDIO.X</span>';
+  curtain.innerHTML = '<span class="m8-curtain__mark">HOCHGLANZ</span>';
   body.appendChild(curtain);
   requestAnimationFrame(() => requestAnimationFrame(() => curtain.classList.add("is-up")));
   window.addEventListener("pageshow", (e) => { if (e.persisted) { curtain.classList.remove("is-down"); curtain.classList.add("is-up"); } });
@@ -1152,7 +1152,7 @@
     if (f.querySelector(".m8-label") || !f.querySelector("img")) return;
     const l = document.createElement("span");
     l.className = "m8-label"; l.setAttribute("aria-hidden", "true");
-    l.textContent = String(++n).padStart(2, "0") + " — " + ((f.querySelector("img").alt || "").split(/[:\-–]/)[0].replace(/-$/, "").trim() || "Studio X");
+    l.textContent = String(++n).padStart(2, "0") + " — " + ((f.querySelector("img").alt || "").split(/[:\-–]/)[0].replace(/-$/, "").trim() || "Hochglanz");
     if (getComputedStyle(f).position === "static") f.style.position = "relative";
     f.appendChild(l);
   });
@@ -1389,7 +1389,7 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
       document.querySelector(".m8-curtain")?.remove();
       const ov = document.createElement("div");
       ov.className = "bx4 is-load is-arrive";
-      ov.innerHTML = `<div class="bx4__load"><p class="bx4__logo">STUDIO.X</p><p class="bx4__sub bx-serif">Experience</p><p class="bx4__count">100</p></div>`;
+      ov.innerHTML = `<div class="bx4__load"><p class="bx4__logo">HOCHGLANZ</p><p class="bx4__sub bx-serif">Experience</p><p class="bx4__count">100</p></div>`;
       document.body.appendChild(ov);
       setTimeout(() => ov.classList.add("is-out"), 250);
       setTimeout(() => ov.remove(), 1500);
@@ -1429,7 +1429,7 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
     ov.className = "bx4";
     ov.style.setProperty("--bg", bg); ov.style.setProperty("--fg", fg);
     ov.style.setProperty("--cx", e.clientX + "px"); ov.style.setProperty("--cy", e.clientY + "px");
-    ov.innerHTML = `<div class="bx4__fill"></div>${img ? `<div class="bx4__thumb" style="background-image:url('${img.currentSrc || img.src}')"></div>` : ""}<p class="bx4__name"></p><div class="bx4__load"><p class="bx4__logo">STUDIO.X</p><p class="bx4__sub bx-serif"></p><p class="bx4__count">000</p></div>`;
+    ov.innerHTML = `<div class="bx4__fill"></div>${img ? `<div class="bx4__thumb" style="background-image:url('${img.currentSrc || img.src}')"></div>` : ""}<p class="bx4__name"></p><div class="bx4__load"><p class="bx4__logo">HOCHGLANZ</p><p class="bx4__sub bx-serif"></p><p class="bx4__count">000</p></div>`;
     document.body.appendChild(ov);
     const th = ov.querySelector(".bx4__thumb");
     const tw = Math.min(260, innerWidth * 0.36), thh = tw * 0.62;
