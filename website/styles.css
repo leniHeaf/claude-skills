@@ -146,6 +146,9 @@ p { margin: 0; }
 .hero__ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px; }
 .hero__media { margin: 0; aspect-ratio: 4 / 5; overflow: hidden; background: var(--surface); }
 .hero__media img { width: 100%; height: 100%; object-fit: cover; }
+.hero__media { position: relative; overflow: visible; }
+.hero__caption { position: absolute; left: 0; bottom: -32px; font-size: 14px; color: var(--muted); }
+.about__social { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px; }
 
 @media (max-width: 860px) {
   .hero { grid-template-columns: 1fr; min-height: auto; padding-block: 40px 64px; }

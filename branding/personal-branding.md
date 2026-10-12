@@ -26,7 +26,35 @@ Die meisten Agenturen verkaufen Leistungen. Du verkaufst **Klarheit**. Drei Unte
 
 ---
 
-## 2. Deine Geschichte (Kurzversion für Website, Interviews, Pitches)
+## 2. Vorbild: Die Gründerin ist das Gesicht der Agentur
+
+Dein Vorbild ist ein bestimmtes Modell: **Die Personenmarke der Gründerin bringt die Kund:innen, die Agentur liefert.**
+Ein gutes Beispiel dafür ist Sarah Emmerich. Sie hat die Agentur Emmerich Relations gegründet, ist auf LinkedIn mit mehreren zehntausend Follower:innen als Expertin für Personal Branding bekannt und organisiert zusammen mit Diana zur Löwen den Business Creator Summit. In einem Interview mit t3n hat sie gesagt, dass ihre ganze Selbstständigkeit auf ihrer Personal Brand beruht.
+
+**Was du davon übernimmst (nicht kopierst):**
+
+| Baustein | So setzt du ihn um |
+| --- | --- |
+| **Ein klares Expertinnen-Thema** | Du wirst *die* Stimme für „Marken für den Mittelstand, die man sofort wiedererkennt“. Ein Thema, immer wieder. |
+| **LinkedIn als Hauptbühne** | 3 bis 5 Beiträge pro Woche, persönlich und in deinen eigenen Worten. Dort sitzen die Entscheider:innen mit großen Budgets. |
+| **Dein Gesicht überall** | Porträt auf der Startseite, in Beiträgen, in Angeboten. Menschen kaufen von Menschen. |
+| **Eigene Bühne bauen** | Erst Gast in Podcasts und auf Events, später ein eigenes Format (z. B. ein Live-Talk oder ein kleines Branding-Frühstück in deiner Stadt). |
+| **Kooperationen** | Mit anderen Gründerinnen und Creator:innen gemeinsam Events, Lives oder Interviews machen. |
+| **Echte Texte statt KI-Floskeln** | Sarah Emmerich sagt selbst: Eine Personenmarke baut man nicht über KI-Texte auf. Nutze Hilfe beim Strukturieren, aber deine Geschichten und Meinungen müssen von dir kommen. |
+
+**Wichtig:** Nicht deren Stil, Farben oder Formulierungen übernehmen. Deine Marke funktioniert nur, wenn sie unverwechselbar *du* ist.
+
+### Dein Weg zur bekannten Personenmarke
+| Zeitraum | Ziel |
+| --- | --- |
+| Monate 1 bis 3 | Profil fertig, Porträt-Shooting, 3 Beiträge pro Woche auf LinkedIn, erste 1.000 Follower:innen |
+| Monate 4 bis 6 | 2 Podcast-Auftritte, erste Kundenanfragen über LinkedIn, Newsletter starten |
+| Monate 7 bis 12 | Erster Vortrag auf einem Event, 5.000 bis 10.000 Follower:innen, eigenes kleines Event-Format |
+| Jahr 2 | Feste Größe in deiner Nische, Anfragen kommen überwiegend über deine Personenmarke |
+
+---
+
+## 3. Deine Geschichte (Kurzversion für Website, Interviews, Pitches)
 
 > Ich habe Leni Heaf gegründet, weil ich immer wieder gesehen habe, wie gute Unternehmen unsichtbar bleiben. Nicht wegen ihres Angebots, sondern wegen ihres Auftritts. Mein Ziel ist eine Agentur, bei der Marke, Website und Social Media endlich zusammenpassen und bei der Kund:innen wissen, mit wem sie sprechen.
 
@@ -34,7 +62,7 @@ Die meisten Agenturen verkaufen Leistungen. Du verkaufst **Klarheit**. Drei Unte
 
 ---
 
-## 3. Markenpersönlichkeit und Tonalität
+## 4. Markenpersönlichkeit und Tonalität
 
 | Wir sind … | … aber nicht |
 | --- | --- |
@@ -57,7 +85,7 @@ Die meisten Agenturen verkaufen Leistungen. Du verkaufst **Klarheit**. Drei Unte
 
 ---
 
-## 4. Visuelle Identität
+## 5. Visuelle Identität
 
 **Stil:** edel, minimalistisch, viel Weißraum, Schwarz-Weiß-Fotografie mit einem einzigen Farbakzent.
 
@@ -81,7 +109,7 @@ Die meisten Agenturen verkaufen Leistungen. Du verkaufst **Klarheit**. Drei Unte
 
 ---
 
-## 5. Profiltexte (zum Kopieren)
+## 6. Profiltexte (zum Kopieren)
 
 **Instagram (max. 150 Zeichen)**
 ```
@@ -116,7 +144,7 @@ leniheaf.de · Instagram · LinkedIn
 
 ---
 
-## 6. Content-Strategie
+## 7. Content-Strategie
 
 ### Vier Content-Säulen
 | Säule | Anteil | Beispiele |
@@ -141,7 +169,7 @@ leniheaf.de · Instagram · LinkedIn
 
 ---
 
-## 7. Ziel: 1,5 Mio. € Umsatz
+## 8. Ziel: 1,5 Mio. € Umsatz
 
 ### Was 1,5 Mio. € bedeuten
 - **125.000 € Umsatz pro Monat.**
@@ -182,7 +210,7 @@ Von null auf 1,5 Mio. € in einem Jahr schaffen nur sehr wenige Agenturen. Real
 4. **Feste Pakete statt Stundenpreise.** Klar definierte Angebote lassen sich schneller verkaufen und an Mitarbeitende übergeben.
 5. **Früh die richtigen Leute.** Erste Einstellungen: Projektmanagement und Senior-Design, damit du dich auf Vertrieb konzentrieren kannst.
 
-## 8. Checkliste: nächste Schritte
+## 9. Checkliste: nächste Schritte
 
 - [ ] Domain sichern (z. B. leniheaf.de) und E-Mail-Adresse einrichten
 - [ ] Porträt-Shooting buchen
