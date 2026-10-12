@@ -87,33 +87,16 @@ Ein gutes Beispiel dafür ist Sarah Emmerich. Sie hat die Agentur Emmerich Relat
 
 ## 5. Visuelle Identität
 
-**Richtung:** weich, hell und clean. Inspiriert von rhode: viel Weiß, warmes Hellgrau, ruhige Bilder, alles klein geschrieben. Übernommen wird die Stimmung, nicht die Gestaltung.
+**Richtung:** Schweizer Editorial-Stil nach dem Vorbild der **Rue-Collection von Studio Standard**. Die ausführliche Analyse mit Farben, Schriften und Shooting-Liste steht in `rue-analyse.md`.
 
-**Die 5 Regeln des Looks**
-1. **Weiß und warmes Hellgrau.** Inhalte liegen in weich abgerundeten Flächen.
-2. **Kleinschreibung** für Logo, Überschriften, Menü und Buttons. Fließtext normal.
-3. **Leistungen wie Produkte zeigen:** großer Name, Bild, kurze Beschreibung, Preis „ab …“.
-4. **Ruhige, helle Fotos** mit gedeckten Farben. Keine knalligen Stockfotos.
-5. **Keine Akzentfarbe.** Die Marke lebt von Graubraun, Luft und Ruhe.
+**Kurz gesagt:**
+- Logo: `LENI HEAF™` sehr breit und fett, darunter „AGENTUR“, dazu Ringsymbol und „SONNEBERG“ in Schreibmaschinenschrift
+- Farben: Hellgrau `#E7E5E0`, Espresso `#2B2522`, Signalrot `#D8000C`, Rost `#9A4637`
+- Schrift: Inter Tight (Helvetica-Stil) in Großbuchstaben, große Aussagen dünn, Kleintext fett
+- Fotos: Mode-Editorial, Studio und Stadt, Schwarz-Weiß mit leichtem Sepia, roter Lippenstift als Akzent
+- Aufbau: Kapitel mit Nummern wie in einer Präsentation („2.0 Leistungen“)
 
-| Rolle | Farbe | Hex |
-| --- | --- | --- |
-| Hintergrund | Weiß | `#FDFDFC` |
-| Flächen | Warmes Hellgrau | `#F1F0ED` |
-| Überschriften, Buttons | Dunkles Graubraun | `#3A3833` / `#4A4741` |
-| Fließtext | Graubraun | `#67645E` |
-
-**Schriften** (kostenlos über Google Fonts)
-- **Rubik Bold**, klein geschrieben, eng gesetzt: Logo und Überschriften
-- **Hanken Grotesk**: Fließtext, Menü, Buttons
-
-**Logo:** Wortmarke `leni heaf` in Rubik Bold, klein geschrieben. Profilbild-Variante: `lh` auf Hellgrau mit runden Ecken.
-> Nächster Schritt: Wortmarke von einer Designerin final zeichnen lassen, damit sie einzigartig und schützbar ist.
-
-**Fotografie**
-- Helles Studio, natürliches Licht, weiche Hauttöne, viel Weiß im Bild.
-- Mindestens: 1 Porträt Hochformat (Startseite), 1 weiteres Porträt (Über mich), 5 bis 10 Detail- und Arbeitsbilder (Laptop, Moodboards, Muster, Hände).
-- Social Media in derselben ruhigen Bildsprache, damit dein Feed sofort erkennbar ist.
+**Für Social Media gilt dasselbe:** gleiche Farben, gleiche Schrift, Kapitelnummern auf Karussell-Slides, Fotos im gleichen Look. So erkennt man deinen Feed sofort.
 
 ---
 
