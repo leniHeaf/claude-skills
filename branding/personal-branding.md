@@ -141,25 +141,46 @@ leniheaf.de · Instagram · LinkedIn
 
 ---
 
-## 7. Ehrlicher Blick auf deine Ziele
+## 7. Ziel: 1,5 Mio. € Umsatz
 
-Dein Ziel: **30 Angestellte** und **200.000 € Umsatz in 2027**. Beides ist machbar, aber nicht gleichzeitig:
+### Was 1,5 Mio. € bedeuten
+- **125.000 € Umsatz pro Monat.**
+- Bei etwa 100.000 € Umsatz pro Kopf entspricht das einem Team von **rund 15 Personen** (inklusive dir).
+- Für **30 Angestellte** bräuchtest du **2,5 bis 3,5 Mio. €**. 1,5 Mio. € ist also die Zwischenstufe auf dem Weg dorthin.
 
-- 30 Angestellte kosten mit Gehalt und Nebenkosten grob **1,5 bis 2 Mio. € pro Jahr**.
-- In deutschen Agenturen liegt der Umsatz pro Kopf meist bei **etwa 80.000 bis 120.000 €**.
-- **200.000 € Umsatz** tragen also realistisch **2 bis 3 Personen** (inklusive dir).
-- Für **30 Angestellte** brauchst du eher **2,5 bis 3,5 Mio. € Umsatz**.
+### So setzt sich 1,5 Mio. € zusammen (Beispielrechnung)
+| Quelle | Menge | Preis | Umsatz pro Jahr |
+| --- | --- | --- | --- |
+| Monatliche Betreuung (Social Media, Website-Pflege, Ads) | 20 Kund:innen | 3.500 € pro Monat | 840.000 € |
+| Große Projekte (Branding + Website komplett) | 15 Projekte | 30.000 € | 450.000 € |
+| Kleinere Projekte (Website, Logo, Kampagne) | 21 Projekte | 10.000 € | 210.000 € |
+| **Summe** | | | **1.500.000 €** |
 
-**Vorschlag für einen Stufenplan**
-| Phase | Ziel | Team |
-| --- | --- | --- |
-| 2026/27 | 200.000 € Umsatz, 10 bis 15 feste Kund:innen, Retainer (monatliche Betreuung) aufbauen | du + 1 bis 2 Freelancer |
-| 2028 | 500.000 € Umsatz | 4 bis 6 Personen |
-| danach | Spezialisierung, Skalierung | 10, 20, 30 … |
+**Wichtig:** Mit kleinen Aufträgen für 1.500 € kommst du nie auf 1,5 Mio. €, dafür bräuchtest du 1.000 Kund:innen im Jahr. Du brauchst **größere Kund:innen (Mittelstand)** und **feste Monatsverträge**.
 
-Das Wichtigste für planbares Wachstum: **monatliche Betreuungsverträge** (z. B. Social Media für 1.500 bis 3.000 € pro Monat). 8 solcher Kund:innen sind bereits rund 200.000 € im Jahr.
+### Kosten und Gewinn bei 1,5 Mio. € (grobe Schätzung)
+| Posten | pro Jahr |
+| --- | --- |
+| Personal, ca. 14 Mitarbeitende inkl. Nebenkosten | ca. 950.000 € |
+| Büro, Software, Versicherungen, Buchhaltung | ca. 120.000 € |
+| Marketing und Vertrieb | ca. 100.000 € |
+| **Gewinn vor Steuern** | **ca. 330.000 € (rund 20 %)** |
 
----
+### Ehrlicher Zeitplan
+Von null auf 1,5 Mio. € in einem Jahr schaffen nur sehr wenige Agenturen. Realistischer und trotzdem sehr ambitioniert:
+
+| Jahr | Umsatz | Team | Fokus |
+| --- | --- | --- | --- |
+| 2027 | 400.000 bis 600.000 € | 4 bis 6 | Erste 8 bis 10 Monatsverträge, 2 bis 3 starke Referenzen |
+| 2028 | 1,5 Mio. € | ca. 15 | Vertrieb im Mittelstand, Teamleitungen einstellen |
+| 2029/30 | 3 Mio. € | ca. 30 | Spezialisierung, eigene Abteilungen je Leistung |
+
+### Die 5 Hebel, die du dafür brauchst
+1. **Monatsverträge zuerst verkaufen.** Jeder Retainer mit 3.500 € bringt 42.000 € im Jahr.
+2. **Mittelstand als Zielgruppe.** Firmen mit 20 bis 250 Mitarbeitenden haben Budgets von 20.000 bis 100.000 €.
+3. **Vertrieb ist deine Hauptaufgabe.** Ab Tag 1 mindestens 50 % deiner Zeit für Akquise, LinkedIn und Kundengespräche.
+4. **Feste Pakete statt Stundenpreise.** Klar definierte Angebote lassen sich schneller verkaufen und an Mitarbeitende übergeben.
+5. **Früh die richtigen Leute.** Erste Einstellungen: Projektmanagement und Senior-Design, damit du dich auf Vertrieb konzentrieren kannst.
 
 ## 8. Checkliste: nächste Schritte
 
@@ -168,5 +189,6 @@ Das Wichtigste für planbares Wachstum: **monatliche Betreuungsverträge** (z. B
 - [ ] Instagram- und LinkedIn-Profil mit den Texten oben aktualisieren
 - [ ] Impressum und Datenschutzerklärung erstellen (Pflicht in Deutschland, z. B. über einen Generator oder Anwalt)
 - [ ] 2 bis 3 Referenzprojekte fertigstellen (zur Not vergünstigt für Bekannte) und auf der Website zeigen
-- [ ] Festpreis-Pakete definieren (z. B. Starter, Wachstum, Komplett)
+- [ ] Festpreis-Pakete und Monatsverträge definieren (z. B. Starter, Wachstum, Komplett)
+- [ ] Liste mit 100 Wunschkund:innen aus dem Mittelstand anlegen und gezielt ansprechen
 - [ ] Erste 4 Wochen Content vorbereiten
