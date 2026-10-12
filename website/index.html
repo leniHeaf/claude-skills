@@ -8,22 +8,22 @@
   <meta property="og:title" content="Leni Heaf · Branding, Web & Social">
   <meta property="og:description" content="Full-Service-Agentur aus Sonneberg.">
   <meta property="og:type" content="website">
-  <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#000000">
+  <meta name="theme-color" content="#161616">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <!-- Für den Livebetrieb Fonts lokal hosten (DSGVO): siehe README im Ordner website/ -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <a class="skip" href="#main">Zum Inhalt springen</a>
 
   <header class="nav" id="top">
-    <a href="#top" class="nav__logo">LENI_HEAF</a>
+    <a href="#top" class="nav__logo">Leni Heaf</a>
     <nav aria-label="Hauptnavigation">
       <ul class="nav__links">
+        <li><a href="#agentur">Agentur</a></li>
         <li><a href="#leistungen">Leistungen</a></li>
         <li><a href="#arbeiten">Arbeiten</a></li>
         <li><a href="#leni">Leni</a></li>
@@ -33,129 +33,140 @@
   </header>
 
   <main id="main">
-    <!-- PLAKAT 1: Start -->
-    <section class="sheet sheet--hero" aria-labelledby="hero-title">
-      <div class="sheet__head">
-        <div class="sheet__left">
-          <h1 class="title" id="hero-title">LENI HEAF</h1>
-          <a class="folder" href="#arbeiten"><span class="folder__icon" aria-hidden="true"></span><span class="folder__label">projekte</span></a>
-        </div>
-        <dl class="data">
-          <div><dt>AGENTUR</dt><dd>BRANDING / WEB / SOCIAL</dd></div>
-          <div><dt>STUDIO</dt><dd>SONNEBERG_DE</dd></div>
-          <div><dt>LAT</dt><dd>50.3500 LON 11.1700</dd></div>
-          <div><dt>SNAPSHOT</dt><dd><span id="clock">00:00:00</span> MEZ</dd></div>
-          <div><dt>STATUS</dt><dd>OFFEN FÜR PROJEKTE</dd></div>
-          <div><dt>ANTWORT</dt><dd>&lt; 24 H</dd></div>
+    <!-- 1.0 TITEL: schwarz, gestapelte Buchstaben, Foto -->
+    <section class="slide slide--black cover">
+      <div class="cover__left">
+        <p class="cover__words"><span>Branding</span><span>Web</span><span>Social</span></p>
+        <h1 class="sr-only">Leni Heaf, Agentur für Branding, Webdesign und Social Media in Sonneberg</h1>
+        <dl class="info">
+          <div><dt>Studio</dt><dd>Sonneberg, Deutschland</dd></div>
+          <div><dt>Mail</dt><dd><a href="mailto:hallo@leniheaf.de">hallo@leniheaf.de</a></dd></div>
+          <div><dt>Instagram</dt><dd><a href="https://instagram.com/" rel="noopener">@leniheaf</a></dd></div>
+          <div><dt>Status</dt><dd>Offen für Projekte</dd></div>
         </dl>
+        <span class="dot" aria-hidden="true"></span>
       </div>
-      <figure class="photo">
-        <!-- TODO: echtes Schwarz-Weiß-Foto von Leni im weißen Studio (Ganzkörper, sitzend), Querformat 1800x1200 -->
-        <img src="https://picsum.photos/id/325/1800/1200?grayscale" alt="Leni Heaf im Studio" width="1800" height="1200" fetchpriority="high">
-        <figcaption class="photo__mark">©2026</figcaption>
+      <p class="stack" aria-hidden="true"><span>L</span><span>E</span><span>N</span><span>I</span></p>
+      <figure class="cover__photo">
+        <!-- TODO: Schwarz-Weiß-Porträt von Leni, Hochformat 1100x1400 -->
+        <img src="https://picsum.photos/id/64/1100/1400" alt="Leni Heaf, Gründerin" width="1100" height="1400" fetchpriority="high">
       </figure>
+      <p class="label"><span>1.0</span> Agentur</p>
+      <span class="redbar" aria-hidden="true"></span>
     </section>
 
-    <!-- PLAKAT 2: Leistungen -->
-    <section class="sheet" id="leistungen" aria-labelledby="l-title">
-      <div class="sheet__head">
-        <h2 class="title" id="l-title">LEISTUNGEN</h2>
-        <dl class="data">
-          <div><dt>DISZIPLINEN</dt><dd>03</dd></div>
-          <div><dt>MODUS</dt><dd>ALLES AUS EINER HAND</dd></div>
-          <div><dt>PREISE</dt><dd>FESTPREIS, NETTO</dd></div>
-        </dl>
+    <!-- 1.1 HALTUNG: hellgrau, große dünne Aussage -->
+    <section class="slide slide--light" id="agentur">
+      <div class="meta"><span>Leni Heaf</span><span>Agentur</span><span>2026</span></div>
+      <div class="split">
+        <div class="split__text">
+          <p class="small-caps">Gute Unternehmen bleiben oft unsichtbar. Nicht wegen ihres Angebots, sondern wegen ihres Auftritts. Wir entwickeln Marken, Websites und Social Media, die zusammen wirken und mehr Anfragen bringen.</p>
+          <h2 class="statement">Mutig<br>Persönlich<br>Klar</h2>
+        </div>
+        <figure class="split__photo">
+          <img src="https://picsum.photos/id/325/1000/1200" alt="" loading="lazy" width="1000" height="1200">
+        </figure>
       </div>
+      <p class="label"><span>1.1</span> Haltung</p>
+    </section>
+
+    <!-- 2.0 LEISTUNGEN: rot -->
+    <section class="slide slide--red" id="leistungen">
+      <div class="meta"><span>Leni Heaf</span><span>Leistungen</span><span>2026</span></div>
       <div class="services">
         <article class="service">
           <h3>Branding</h3>
-          <p>Positionierung, Logo, Farben, Schrift. Ein Auftritt, den man nicht vergisst.</p>
-          <p class="mono">AB 1.900 € / 4 BIS 6 WOCHEN</p>
+          <p>Positionierung, Logo, Farben, Schrift und Tonalität. Ein Auftritt, den man nicht vergisst.</p>
+          <p class="price">Ab 1.900 €</p>
         </article>
         <article class="service">
           <h3>Webdesign</h3>
           <p>Websites, die gut aussehen, schnell laden und Besucher:innen zu Anfragen machen.</p>
-          <p class="mono">AB 2.500 € / 6 BIS 10 WOCHEN</p>
+          <p class="price">Ab 2.500 €</p>
         </article>
         <article class="service">
           <h3>Social Media</h3>
           <p>Strategie, Content und Betreuung für Instagram, LinkedIn und TikTok.</p>
-          <p class="mono">AB 1.200 € / MONAT</p>
+          <p class="price">Ab 1.200 € / Monat</p>
         </article>
+        <figure class="services__photo">
+          <img src="https://picsum.photos/id/91/700/900" alt="" loading="lazy" width="700" height="900">
+        </figure>
       </div>
-      <figure class="photo photo--wide">
-        <img src="https://picsum.photos/id/201/1800/900?grayscale" alt="" loading="lazy" width="1800" height="900">
-        <figcaption class="photo__mark">©2026</figcaption>
+      <p class="bigline"><span>2.0</span><span>Unsere</span><span>Leistungen</span></p>
+    </section>
+
+    <!-- 3.0 ARBEITEN: hellgrau, Liste mit Linien -->
+    <section class="slide slide--light" id="arbeiten">
+      <div class="meta"><span>Leni Heaf</span><span>Arbeiten</span><span>2026</span></div>
+      <div class="work">
+        <h2 class="headline">Kund:innen, die uns vertrauen</h2>
+        <!-- TODO: Leistungen pro Kund:in prüfen -->
+        <ul class="work__list">
+          <li><span>Sonderpreis Baumarkt</span><span>Social Media, Content</span></li>
+          <li><span>my baumarkt</span><span>Social Media</span></li>
+          <li><span>Täubert Karosserie &amp; Lack</span><span>Branding, Logo, Instagram</span></li>
+          <li><span>Butter und Brot</span><span>Branding, Instagram</span></li>
+          <li><span>Kühlkraft</span><span>Branding, Logo</span></li>
+          <li><span>Dogstar</span><span>Branding, Instagram</span></li>
+          <li><span>Crea Response</span><span>Branding</span></li>
+          <li><span>Yvonne Kleinle</span><span>Personal Branding</span></li>
+        </ul>
+      </div>
+      <p class="label"><span>3.0</span> Arbeiten</p>
+    </section>
+
+    <!-- 4.0 ZAHLEN: schwarz, große Zahlen über Foto -->
+    <section class="slide slide--black numbers">
+      <figure class="numbers__photo">
+        <img src="https://picsum.photos/id/338/1400/900" alt="" loading="lazy" width="1400" height="900">
       </figure>
-    </section>
-
-    <!-- PLAKAT 3: Arbeiten -->
-    <section class="sheet" id="arbeiten" aria-labelledby="a-title">
-      <div class="sheet__head">
-        <h2 class="title" id="a-title">ARBEITEN</h2>
-        <dl class="data">
-          <div><dt>ARCHIV</dt><dd>2024 BIS HEUTE</dd></div>
-          <div><dt>KUND:INNEN</dt><dd>08</dd></div>
-          <div><dt>ERGEBNIS</dt><dd>MEHR ANFRAGEN</dd></div>
-        </dl>
+      <div class="numbers__grid">
+        <p class="num">Kund:innen: 8+</p>
+        <p class="num num--right">Disziplinen: 3</p>
+        <p class="num">Antwort: 24 h</p>
+        <p class="num num--right">Erstgespräch: 0 €</p>
       </div>
-      <!-- TODO: Leistungen pro Kund:in prüfen -->
-      <ol class="archive">
-        <li><span class="mono">01</span><h3>Sonderpreis Baumarkt</h3><span class="mono">SOCIAL MEDIA, CONTENT</span></li>
-        <li><span class="mono">02</span><h3>my baumarkt</h3><span class="mono">SOCIAL MEDIA</span></li>
-        <li><span class="mono">03</span><h3>Täubert Karosserie &amp; Lack</h3><span class="mono">BRANDING, LOGO, INSTAGRAM</span></li>
-        <li><span class="mono">04</span><h3>Butter und Brot</h3><span class="mono">BRANDING, INSTAGRAM</span></li>
-        <li><span class="mono">05</span><h3>Kühlkraft</h3><span class="mono">BRANDING, LOGO</span></li>
-        <li><span class="mono">06</span><h3>Dogstar</h3><span class="mono">BRANDING, INSTAGRAM</span></li>
-        <li><span class="mono">07</span><h3>Crea Response</h3><span class="mono">BRANDING</span></li>
-        <li><span class="mono">08</span><h3>Yvonne Kleinle</h3><span class="mono">PERSONAL BRANDING</span></li>
-      </ol>
+      <p class="label"><span>4.0</span> Fakten</p>
     </section>
 
-    <!-- PLAKAT 4: Leni -->
-    <section class="sheet" id="leni" aria-labelledby="g-title">
-      <div class="sheet__head">
-        <div class="sheet__left">
-          <h2 class="title" id="g-title">HI, ICH BIN LENI</h2>
-          <a class="folder" href="https://instagram.com/" rel="noopener"><span class="folder__icon" aria-hidden="true"></span><span class="folder__label">instagram</span></a>
+    <!-- 5.0 GRÜNDERIN: hellgrau, roter Text über Foto -->
+    <section class="slide slide--light founder" id="leni">
+      <div class="meta"><span>Leni Heaf</span><span>Gründerin</span><span>2026</span></div>
+      <div class="founder__grid">
+        <figure class="founder__photo">
+          <!-- TODO: Porträt von Leni, Querformat 1400x1000 -->
+          <img src="https://picsum.photos/id/65/1400/1000" alt="Porträt von Leni Heaf" loading="lazy" width="1400" height="1000">
+          <p class="founder__overlay">Von Sonneberg<br>für ganz Deutschland</p>
+        </figure>
+        <div class="founder__text">
+          <h2 class="headline">Hi, ich bin Leni</h2>
+          <p>Ich habe diese Agentur gegründet, weil gute Unternehmen eine Marke verdienen, die man sofort wiedererkennt. Persönlich betreut, klar gedacht und ohne Agentur-Floskeln.</p>
+          <p class="founder__links"><a href="https://linkedin.com/" rel="noopener">LinkedIn</a><a href="https://instagram.com/" rel="noopener">Instagram</a></p>
         </div>
-        <dl class="data">
-          <div><dt>ROLLE</dt><dd>GRÜNDERIN</dd></div>
-          <div><dt>ORT</dt><dd>SONNEBERG</dd></div>
-          <div><dt>LINKEDIN</dt><dd><a href="https://linkedin.com/" rel="noopener">FOLGEN</a></dd></div>
-        </dl>
       </div>
-      <p class="lead">Gute Unternehmen bleiben oft unsichtbar. Nicht wegen ihres Angebots, sondern wegen ihres Auftritts. Ich habe diese Agentur gegründet, um das zu ändern. Persönlich, klar und ohne Agentur-Floskeln.</p>
-      <figure class="photo">
-        <!-- TODO: Porträt von Leni, Querformat 1800x1200 -->
-        <img src="https://picsum.photos/id/269/1800/1200?grayscale" alt="" loading="lazy" width="1800" height="1200">
-        <figcaption class="photo__mark">©2026</figcaption>
-      </figure>
+      <p class="label"><span>5.0</span> Gründerin</p>
     </section>
 
-    <!-- PLAKAT 5: Kontakt -->
-    <section class="sheet" id="kontakt" aria-labelledby="k-title">
-      <div class="sheet__head">
-        <h2 class="title" id="k-title">KONTAKT</h2>
-        <dl class="data">
-          <div><dt>MAIL</dt><dd><a href="mailto:hallo@leniheaf.de">HALLO@LENIHEAF.DE</a></dd></div>
-          <div><dt>ERSTGESPRÄCH</dt><dd>KOSTENLOS</dd></div>
-          <div><dt>ANTWORT</dt><dd>&lt; 24 H</dd></div>
-        </dl>
+    <!-- 6.0 KONTAKT: schwarz -->
+    <section class="slide slide--black contact" id="kontakt">
+      <div class="contact__head">
+        <p class="cover__words"><span>Lass uns</span><span>reden</span></p>
+        <p class="stack stack--small" aria-hidden="true"><span>H</span><span>E</span><span>A</span><span>F</span></p>
       </div>
       <form class="form" id="contact-form" novalidate>
         <div class="field">
-          <label for="name">NAME</label>
+          <label for="name">Name</label>
           <input id="name" name="name" type="text" autocomplete="name" required>
           <p class="field__error" id="name-error" aria-live="polite"></p>
         </div>
         <div class="field">
-          <label for="email">E-MAIL</label>
+          <label for="email">E-Mail</label>
           <input id="email" name="email" type="email" autocomplete="email" required>
           <p class="field__error" id="email-error" aria-live="polite"></p>
         </div>
         <div class="field">
-          <label for="service">THEMA</label>
+          <label for="service">Thema</label>
           <select id="service" name="service">
             <option>Branding</option>
             <option>Website</option>
@@ -164,8 +175,8 @@
           </select>
         </div>
         <div class="field field--full">
-          <label for="message">NACHRICHT</label>
-          <textarea id="message" name="message" rows="4" required></textarea>
+          <label for="message">Nachricht</label>
+          <textarea id="message" name="message" rows="3" required></textarea>
           <p class="field__error" id="message-error" aria-live="polite"></p>
         </div>
         <div class="field field--check field--full">
@@ -178,16 +189,18 @@
           <p class="form__status" id="form-status" role="status"></p>
         </div>
       </form>
+      <p class="label"><span>6.0</span> Kontakt</p>
+      <span class="redbar" aria-hidden="true"></span>
     </section>
   </main>
 
   <footer class="footer">
-    <p>©2026 LENI HEAF / SONNEBERG</p>
+    <p>© 2026 Leni Heaf, Sonneberg</p>
     <ul>
-      <li><a href="https://instagram.com/" rel="noopener">INSTAGRAM</a></li>
-      <li><a href="https://linkedin.com/" rel="noopener">LINKEDIN</a></li>
-      <li><a href="#">IMPRESSUM</a></li>
-      <li><a href="#">DATENSCHUTZ</a></li>
+      <li><a href="https://instagram.com/" rel="noopener">Instagram</a></li>
+      <li><a href="https://linkedin.com/" rel="noopener">LinkedIn</a></li>
+      <li><a href="#">Impressum</a></li>
+      <li><a href="#">Datenschutz</a></li>
     </ul>
   </footer>
 

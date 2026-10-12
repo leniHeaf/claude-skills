@@ -1,6 +1,6 @@
 document.documentElement.classList.add("js");
 
-// Plakat-Blätter einblenden, sobald sie ins Bild kommen
+// Folien einblenden, sobald sie ins Bild kommen
 const io = new IntersectionObserver((entries) => {
   entries.forEach((e) => {
     if (!e.isIntersecting) return;
@@ -8,15 +8,7 @@ const io = new IntersectionObserver((entries) => {
     io.unobserve(e.target);
   });
 }, { threshold: 0.08 });
-document.querySelectorAll(".sheet").forEach((s) => io.observe(s));
-
-// Live-Uhrzeit im Datenblock (wie der „Snapshot“ auf dem Plakat)
-const clock = document.getElementById("clock");
-const tick = () => {
-  clock.textContent = new Date().toLocaleTimeString("de-DE", { timeZone: "Europe/Berlin", hour12: false });
-};
-tick();
-setInterval(tick, 1000);
+document.querySelectorAll(".slide").forEach((s) => io.observe(s));
 
 // Kontaktformular: Prüfung und Versand per E-Mail-Programm
 // Für echten Versand ohne E-Mail-Programm z. B. Formspree oder Netlify Forms anbinden.
