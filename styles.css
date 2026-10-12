@@ -3849,7 +3849,7 @@ html body.page-ac2 .ac2-news .ac2-news__btn { background: var(--rue-ink) !import
    RUE-Lookbook-Stil: weiße Seiten, Meta-Zeile, große fette Versalien,
    Bildraster, schokobraune Farbseite
    ========================================================================== */
-:root { --ru-ink: #111; --ru-brown: #5a2a1c; --ru-paper: #fff; --ru-f: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+:root { --ru-ink: #111; --ru-brown: #e1251b; --ru-paper: #fff; --ru-f: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif; }
 body.page-ru { background: #e9e9e7 !important; }
 /* Kopf schlicht wie eine Meta-Zeile */
 body.v5 .header { position: sticky; top: 0; margin: 0 !important; border-radius: 0 !important; height: 46px !important; background: rgba(255,255,255,.94) !important; border-bottom: 1px solid #111 !important; }
