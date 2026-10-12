@@ -3907,3 +3907,77 @@ html body.v5 .footer .m8-mark { padding: .06em .25em .1em 0; margin-bottom: -.1e
   body.v5 .footer .footer__bottom { grid-template-columns: minmax(0, 1fr) !important; overflow: hidden; }
   body.v5 .footer .footer__bottom .logo { font-size: 9.6vw !important; padding-right: .2em; }
 }
+
+/* ==========================================================================
+   Startseite als Magazin: weiß, streng, Porträt, Doppelseiten, Zitat
+   ========================================================================== */
+body.page-mz { background: #fff; }
+.mz { --g: clamp(16px, 3vw, 48px); background: #fff; color: #0a0a0a; overflow-x: clip; }
+.mz * { font-family: "Archivo", Arial, sans-serif; }
+.mz a { color: inherit; }
+body.v5 .mz .mz-no { margin: 0 0 18px; font: 500 12px/1 var(--hy-mono) !important; text-transform: uppercase; letter-spacing: .04em; color: #0a0a0a; }
+.mz-kick { display: flex; justify-content: space-between; gap: 16px; margin: 0 0 clamp(40px, 6vw, 80px); padding: 12px 0; border-top: 2px solid #0a0a0a; border-bottom: 1px solid #0a0a0a; }
+body.v5 .mz .mz-kick span { font: 500 12px/1 var(--hy-mono) !important; text-transform: uppercase; }
+.mz-links { display: flex; gap: 28px; flex-wrap: wrap; margin: 34px 0 0; }
+body.v5 .mz .mz-links a, body.v5 .mz .mz-btn { font: 800 15px/1 "Archivo", sans-serif !important; font-stretch: 88% !important; text-transform: uppercase; text-decoration: none; padding-bottom: 5px; background: linear-gradient(#0a0a0a, #0a0a0a) 0 100% / 100% 2px no-repeat; transition: background-size .45s cubic-bezier(.16,1,.3,1); }
+body.v5 .mz .mz-links a:hover, body.v5 .mz .mz-btn:hover { background-size: 0 2px; background-position: 100% 100%; }
+
+/* Einstieg */
+.mz-hero { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(28px, 5vw, 90px); align-items: end; padding: clamp(50px, 8vh, 100px) var(--g) clamp(80px, 12vh, 150px); }
+body.v5 .mz .mz-hero__t { margin: 0; font: 800 clamp(64px, 10.5vw, 190px)/.84 "Archivo", sans-serif !important; font-stretch: 72% !important; text-transform: uppercase; color: #0a0a0a; }
+body.v5 .mz .mz-hero__sub { max-width: 44ch; margin: 30px 0 0; font: 500 18px/1.55 "Archivo", sans-serif !important; color: #333; }
+.mz-hero__pic { position: relative; margin: 0; aspect-ratio: 4 / 5; background: #e9e9e7; display: grid; place-items: center; overflow: hidden; }
+body.v5 .mz .mz-hero__pic span { font: 800 clamp(120px, 18vw, 260px)/1 "Archivo", sans-serif !important; font-stretch: 72% !important; color: #d8d8d5; }
+body.v5 .mz .mz-hero__pic figcaption { position: absolute; left: 14px; bottom: 12px; font: 500 11px/1 var(--hy-mono) !important; text-transform: uppercase; color: #777; }
+
+/* Doppelseiten */
+.mz-issue { padding: 0 var(--g) clamp(80px, 12vh, 140px); }
+.mz-spread { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(24px, 4vw, 70px); margin-bottom: clamp(90px, 14vh, 170px); }
+.mz-spread--flip { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+.mz-spread--flip .mz-spread__img { order: 2; }
+.mz-spread__img { display: block; aspect-ratio: 4 / 5; overflow: hidden; }
+.mz-spread__img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.4s cubic-bezier(.16,1,.3,1), filter .7s; }
+.mz-spread__img:hover img { transform: scale(1.03); }
+.mz-spread__page { display: flex; flex-direction: column; padding-top: 6px; border-top: 2px solid #0a0a0a; }
+body.v5 .mz .mz-spread__page .mz-no { margin-top: 12px; }
+body.v5 .mz .mz-spread__name { margin: 0; font: 800 clamp(48px, 6.5vw, 116px)/.86 "Archivo", sans-serif !important; font-stretch: 72% !important; text-transform: uppercase; color: #0a0a0a; }
+body.v5 .mz .mz-spread__head { margin: 22px 0 0; font: 700 clamp(20px, 1.8vw, 28px)/1.2 "Archivo", sans-serif !important; color: #0a0a0a; }
+body.v5 .mz .mz-spread__txt { max-width: 40ch; margin: 14px 0 0; font: 500 16px/1.6 "Archivo", sans-serif !important; color: #444; }
+.mz-spread__small { width: 46%; aspect-ratio: 1; margin: auto 0 0; padding-top: 30px; overflow: hidden; }
+.mz-spread__small img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mz-spread__foot { display: flex; justify-content: space-between; gap: 16px; margin: 18px 0 0; padding-top: 12px; border-top: 1px solid #0a0a0a; }
+body.v5 .mz .mz-spread__foot span { font: 500 11px/1.4 var(--hy-mono) !important; text-transform: uppercase; color: #555; }
+body.v5 .mz .mz-spread__foot a { font: 800 13px/1 "Archivo", sans-serif !important; text-transform: uppercase; text-decoration: none; white-space: nowrap; }
+.mz-center { text-align: center; margin: 0; }
+
+/* Zitat */
+.mz-quote { background: #0a0a0a; color: #fff; padding: clamp(110px, 20vh, 220px) var(--g); text-align: center; }
+.mz-quote blockquote { margin: 0; }
+body.v5 .mz .mz-quote p { max-width: 16ch; margin: 0 auto; font: 800 clamp(48px, 7.4vw, 130px)/.9 "Archivo", sans-serif !important; font-stretch: 72% !important; text-transform: uppercase; color: #fff; }
+body.v5 .mz .mz-quote footer { margin-top: 34px; font: 500 13px/1 var(--hy-mono) !important; text-transform: uppercase; color: #9a9a9a; background: none; padding: 0; border: 0; }
+
+/* Leni */
+.mz-me { padding: clamp(100px, 16vh, 180px) var(--g); max-width: 1200px; margin: 0 auto; }
+body.v5 .mz .mz-me__t { margin: 0; font: 800 clamp(64px, 11vw, 190px)/.84 "Archivo", sans-serif !important; font-stretch: 72% !important; text-transform: uppercase; color: #0a0a0a; }
+.mz-me__cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 4vw, 60px); margin-top: 34px; padding-top: 18px; border-top: 2px solid #0a0a0a; }
+body.v5 .mz .mz-me__cols p { margin: 0; font: 500 18px/1.6 "Archivo", sans-serif !important; color: #222; }
+
+/* Leistungen */
+.mz-serv { padding: 0 var(--g) clamp(110px, 18vh, 200px); }
+.mz-serv ul { list-style: none; margin: 0; padding: 0; }
+.mz-serv li a { display: grid; grid-template-columns: 70px minmax(0, 1fr) 40px; align-items: center; padding: 14px 0; border-bottom: 1px solid #0a0a0a; text-decoration: none; transition: padding .5s cubic-bezier(.16,1,.3,1); }
+body.v5 .mz .mz-serv__n { font: 500 12px/1 var(--hy-mono) !important; color: #777; }
+body.v5 .mz .mz-serv__t { font: 800 clamp(34px, 5.4vw, 92px)/.9 "Archivo", sans-serif !important; font-stretch: 72% !important; text-transform: uppercase; }
+@media (hover: hover) { .mz-serv li a:hover { padding-left: 18px; background: #0a0a0a; color: #fff; } .mz-serv li a:hover .mz-serv__n { color: #9a9a9a; } }
+
+@media (max-width: 800px) {
+  .mz-hero, .mz-spread, .mz-spread--flip, .mz-me__cols { grid-template-columns: 1fr; }
+  .mz-spread--flip .mz-spread__img { order: 0; }
+  .mz-hero__pic { order: -1; }
+  .mz-spread__small { width: 60%; }
+  .mz-kick span:nth-child(3) { display: none; }
+  body.v5 .mz .mz-serv__t { font-size: clamp(26px, 8.5vw, 40px) !important; overflow-wrap: anywhere; }
+  .mz-serv li a { grid-template-columns: 36px minmax(0, 1fr) 24px; }
+}
+@media (max-width: 800px) { .mz-hero__pic { order: 0 !important; aspect-ratio: 1; } }
+body.v5 .mz .mz-quote p { max-width: 21ch; }
