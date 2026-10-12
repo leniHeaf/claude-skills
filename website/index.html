@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Leni Heaf · Branding, Webdesign & Social Media</title>
+  <meta name="description" content="Leni Heaf ist eine Full-Service-Agentur für Branding, Webdesign und Social Media. Klare Marken für Unternehmen, die wachsen wollen.">
+  <meta property="og:title" content="Leni Heaf · Agentur für Branding, Webdesign & Social Media">
+  <meta property="og:description" content="Klare Marken für Unternehmen, die wachsen wollen.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#f3f3f1" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#111112" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <!-- Für den Livebetrieb Fonts lokal hosten (DSGVO): siehe README im Ordner website/ -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Zum Inhalt springen</a>
+
+  <header class="nav" id="top">
+    <div class="wrap nav__inner">
+      <a href="#top" class="logo" aria-label="Leni Heaf, zur Startseite">leni heaf</a>
+      <nav aria-label="Hauptnavigation">
+        <ul class="nav__links" id="menu">
+          <li><a href="#leistungen">Leistungen</a></li>
+          <li><a href="#arbeiten">Arbeiten</a></li>
+          <li><a href="#ueber">Über Leni</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </nav>
+      <a href="#kontakt" class="btn btn--primary btn--sm nav__cta">Projekt anfragen</a>
+      <button class="nav__toggle" aria-expanded="false" aria-controls="menu" aria-label="Menü öffnen">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero wrap">
+      <div class="hero__text">
+        <p class="eyebrow reveal">Agentur für Branding, Web & Social</p>
+        <h1 class="hero__title reveal">Marken, die man <em>sofort</em> wiedererkennt.</h1>
+        <p class="hero__sub reveal">Wir entwickeln Marke, Website und Social Media aus einer Hand. Klar, durchdacht und gebaut für Wachstum.</p>
+        <div class="hero__ctas reveal">
+          <a href="#kontakt" class="btn btn--primary">Projekt anfragen</a>
+          <a href="#arbeiten" class="btn btn--ghost">Arbeiten ansehen</a>
+        </div>
+      </div>
+      <figure class="hero__media reveal">
+        <!-- TODO: eigenes Hero-Foto (Studio, Team oder Arbeitssituation), 1200x1500 -->
+        <img src="https://picsum.photos/seed/leniheaf-studio-hero/1200/1500?grayscale" alt="Arbeitsplatz im Studio von Leni Heaf" width="1200" height="1500" fetchpriority="high">
+      </figure>
+    </section>
+
+    <!-- LEISTUNGEN: Bento mit 3 Zellen -->
+    <section class="section wrap" id="leistungen">
+      <h2 class="h2 reveal">Alles, was eine starke Marke braucht.</h2>
+      <div class="bento">
+        <article class="bento__cell bento__cell--big reveal">
+          <img src="https://picsum.photos/seed/leniheaf-branding-moodboard/1400/1000?grayscale" alt="" loading="lazy" width="1400" height="1000">
+          <div class="bento__body bento__body--onimg">
+            <h3>Branding</h3>
+            <p>Positionierung, Logo, Farben, Schrift und Tonalität. Ein Auftritt, der in jedem Kanal gleich klar wirkt.</p>
+          </div>
+        </article>
+        <article class="bento__cell bento__cell--accent reveal">
+          <div class="bento__body">
+            <h3>Webdesign</h3>
+            <p>Schnelle, barrierearme Websites, die Besucher zu Anfragen machen. Von der Struktur bis zum Launch.</p>
+          </div>
+        </article>
+        <article class="bento__cell bento__cell--tint reveal">
+          <div class="bento__body">
+            <h3>Social Media</h3>
+            <p>Strategie, Content und Betreuung für Instagram, LinkedIn und TikTok. Regelmäßig, planbar, messbar.</p>
+          </div>
+          <img class="bento__thumb" src="https://picsum.photos/seed/leniheaf-social-content/900/600?grayscale" alt="" loading="lazy" width="900" height="600">
+        </article>
+      </div>
+    </section>
+
+    <!-- ARBEITEN: horizontale Scroll-Snap-Leiste -->
+    <section class="section" id="arbeiten">
+      <div class="wrap">
+        <h2 class="h2 reveal">Ausgewählte Arbeiten</h2>
+        <p class="lead reveal">Ein Einblick in Projekte aus Branding, Web und Social.</p>
+      </div>
+      <!-- TODO: durch echte Kundenprojekte ersetzen (Bild 1200x900, Titel, Leistung) -->
+      <div class="cases" tabindex="0" aria-label="Projekte, horizontal scrollbar">
+        <a class="case" href="#kontakt">
+          <img src="https://picsum.photos/seed/leniheaf-case-cafe/1200/900?grayscale" alt="" loading="lazy" width="1200" height="900">
+          <h3>Rebranding für ein Café</h3>
+          <p>Branding, Website</p>
+        </a>
+        <a class="case" href="#kontakt">
+          <img src="https://picsum.photos/seed/leniheaf-case-physio/1200/900?grayscale" alt="" loading="lazy" width="1200" height="900">
+          <h3>Praxisauftritt Physiotherapie</h3>
+          <p>Website, Social Media</p>
+        </a>
+        <a class="case" href="#kontakt">
+          <img src="https://picsum.photos/seed/leniheaf-case-fashion/1200/900?grayscale" alt="" loading="lazy" width="1200" height="900">
+          <h3>Launch eines Modelabels</h3>
+          <p>Branding, Social Media</p>
+        </a>
+        <a class="case" href="#kontakt">
+          <img src="https://picsum.photos/seed/leniheaf-case-handwerk/1200/900?grayscale" alt="" loading="lazy" width="1200" height="900">
+          <h3>Handwerksbetrieb digital</h3>
+          <p>Website, Recruiting-Kampagne</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- ABLAUF: große Typo-Liste -->
+    <section class="section wrap" id="ablauf">
+      <h2 class="h2 reveal">So arbeiten wir.</h2>
+      <ol class="steps">
+        <li class="reveal"><h3>Zuhören</h3><p>Wir verstehen dein Geschäft, deine Kundschaft und deine Ziele, bevor wir gestalten.</p></li>
+        <li class="reveal"><h3>Schärfen</h3><p>Positionierung und Markenkern auf den Punkt. Eine Idee, die alles trägt.</p></li>
+        <li class="reveal"><h3>Gestalten</h3><p>Design, Website und Content entstehen als ein System, nicht als Einzelteile.</p></li>
+        <li class="reveal"><h3>Wachsen</h3><p>Nach dem Launch betreuen wir Kanäle, messen Ergebnisse und verbessern laufend.</p></li>
+      </ol>
+    </section>
+
+    <!-- ÜBER LENI: Personal Branding -->
+    <section class="section wrap about" id="ueber">
+      <figure class="about__media reveal">
+        <!-- TODO: professionelles Porträt von Leni, Hochformat 1000x1300 -->
+        <img src="https://picsum.photos/seed/leniheaf-portrait/1000/1300?grayscale" alt="Porträt von Leni Heaf" loading="lazy" width="1000" height="1300">
+      </figure>
+      <div class="about__text">
+        <p class="eyebrow reveal">Gründerin</p>
+        <h2 class="h2 reveal">Hi, ich bin Leni.</h2>
+        <p class="reveal">Ich habe diese Agentur gegründet, weil gute Unternehmen oft unsichtbar bleiben. Nicht wegen ihres Angebots, sondern wegen ihres Auftritts.</p>
+        <p class="reveal">Mein Anspruch: Jede Marke, die unser Studio verlässt, ist klarer, mutiger und leichter zu verstehen als vorher. Persönlich betreut, mit festen Ansprechpartnern und ohne Agentur-Floskeln.</p>
+        <blockquote class="about__quote reveal">„Eine Marke ist das, was Menschen über dich sagen, wenn du nicht im Raum bist.“</blockquote>
+      </div>
+    </section>
+
+    <!-- MANIFEST: zentrierte Aussage -->
+    <section class="manifest">
+      <p class="wrap reveal">Weniger Lärm. Mehr Klarheit. Marken, die bleiben.</p>
+    </section>
+
+    <!-- FAQ: Akkordeon -->
+    <section class="section wrap faq" id="faq">
+      <h2 class="h2 reveal">Häufige Fragen</h2>
+      <div class="faq__list">
+        <details class="reveal">
+          <summary>Was kostet eine Website bei euch?</summary>
+          <p>Das hängt vom Umfang ab. Nach einem kostenlosen Erstgespräch bekommst du ein Festpreisangebot ohne versteckte Posten.</p>
+        </details>
+        <details class="reveal">
+          <summary>Wie lange dauert ein Projekt?</summary>
+          <p>Ein Branding braucht meist 4 bis 6 Wochen, eine Website 6 bis 10 Wochen. Den genauen Zeitplan legen wir gemeinsam fest.</p>
+        </details>
+        <details class="reveal">
+          <summary>Muss ich alles bei euch buchen?</summary>
+          <p>Nein. Du kannst Branding, Website oder Social Media einzeln beauftragen. Am stärksten wirkt es zusammen.</p>
+        </details>
+        <details class="reveal">
+          <summary>Für wen arbeitet ihr?</summary>
+          <p>Für Selbstständige, Praxen, Gastronomie, Handwerk und den Mittelstand in ganz Deutschland, remote oder vor Ort.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- KONTAKT -->
+    <section class="section wrap contact" id="kontakt">
+      <div class="contact__intro">
+        <h2 class="h2 reveal">Lass uns über dein Projekt sprechen.</h2>
+        <p class="reveal">Erzähl kurz, worum es geht. Du bekommst innerhalb von 24 Stunden eine persönliche Antwort.</p>
+        <p class="reveal contact__mail"><a href="mailto:hallo@leniheaf.de">hallo@leniheaf.de</a></p>
+      </div>
+      <form class="form reveal" id="contact-form" novalidate>
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" autocomplete="name" required>
+          <p class="field__error" id="name-error" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="email">E-Mail</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+          <p class="field__error" id="email-error" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="service">Worum geht es?</label>
+          <select id="service" name="service">
+            <option>Branding</option>
+            <option>Website</option>
+            <option>Social Media</option>
+            <option>Alles aus einer Hand</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="message">Nachricht</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+          <p class="field__help">Ein paar Sätze reichen völlig.</p>
+          <p class="field__error" id="message-error" aria-live="polite"></p>
+        </div>
+        <div class="field field--check">
+          <input id="privacy" name="privacy" type="checkbox" required>
+          <label for="privacy">Ich habe die <a href="#">Datenschutzerklärung</a> gelesen und bin einverstanden.</label>
+        </div>
+        <p class="field__error" id="privacy-error" aria-live="polite"></p>
+        <button type="submit" class="btn btn--primary">Projekt anfragen</button>
+        <p class="form__status" id="form-status" role="status"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <a href="#top" class="logo">leni heaf</a>
+      <ul class="footer__links">
+        <li><a href="https://instagram.com/" rel="noopener">Instagram</a></li>
+        <li><a href="https://linkedin.com/" rel="noopener">LinkedIn</a></li>
+        <li><a href="#">Impressum</a></li>
+        <li><a href="#">Datenschutz</a></li>
+      </ul>
+      <p class="footer__copy">© <span id="year">2026</span> Leni Heaf</p>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
