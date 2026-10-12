@@ -1133,7 +1133,7 @@
 
   // Überschriften in Wortmasken teilen (Auszeichnungen bleiben erhalten)
   const heads = [...main.querySelectorAll("h1, h2")].filter((h) =>
-    !h.closest(".phone, .k-x, [data-split], .v2social__stage, .cs2, .cs3, .cs4, .w4") && h.textContent.trim());
+    !h.closest(".phone, .k-x, [data-split], .v2social__stage, .cs2, .cs3, .cs4, .w4, .rue, .ru") && h.textContent.trim());
   const splitText = (root, counter) => {
     [...root.childNodes].forEach((n) => {
       if (n.nodeType === 3) {
@@ -1155,12 +1155,12 @@
 
   // Fließtext und Listen gleiten nach
   const texts = [...main.querySelectorAll("p, li, dt, dd, blockquote, .btn, .k-links, form")].filter((el) =>
-    !el.closest("[data-reveal], .phone, .v2social__stage, .k-cards, .m8-txt, nav, .hask, details, [hidden], .cs2, .cs3, .cs4, .w4") && !el.querySelector("img"));
+    !el.closest("[data-reveal], .phone, .v2social__stage, .k-cards, .m8-txt, nav, .hask, details, [hidden], .cs2, .cs3, .cs4, .w4, .rue, .ru") && !el.querySelector("img"));
   texts.forEach((el) => el.classList.add("m8-txt"));
 
   // Bilder: Vorhang von unten, darin leichte Parallaxe
   const imgs = [...main.querySelectorAll("img, .ph")].filter((el) =>
-    !el.closest(".phone, .k-hero, .v2social__stage, [data-r], .rw__row, .cs2, .cs3, .cs4, .w4") && !el.hasAttribute("data-r"));
+    !el.closest(".phone, .k-hero, .v2social__stage, [data-r], .rw__row, .cs2, .cs3, .cs4, .w4, .rue, .ru") && !el.hasAttribute("data-r"));
   imgs.forEach((el) => el.classList.add("m8-img"));
 
   const all = [...heads, ...texts, ...imgs];
@@ -1208,7 +1208,7 @@
 
   // 3D-Neigung für Karten mit Bild
   const cards = [...main.querySelectorAll("a, article")].filter((c) =>
-    c.querySelector("img, .ph") && !c.closest(".k-cards, .phone, .v2social__stage, .k-tiles, .k-hero, .cs2, .cs3, .cs4, .w4") && c.offsetWidth > 160);
+    c.querySelector("img, .ph") && !c.closest(".k-cards, .phone, .v2social__stage, .k-tiles, .k-hero, .cs2, .cs3, .cs4, .w4, .rue, .ru") && c.offsetWidth > 160);
   cards.forEach((c) => {
     c.classList.add("m8-tilt");
     c.addEventListener("pointermove", (e) => {
@@ -1335,7 +1335,7 @@
   document.querySelectorAll(".k-hero__img, .k-split__img, .k-card__img, .k-tile, .rw__clip, .rw__story").forEach((f) => frames.add(f));
   document.querySelectorAll("main img").forEach((img) => {
     const p = img.parentElement;
-    if (p && !p.closest(".phone, .k-hero, .rw, .cs2, .cs3, .cs4, .w4") && img.getBoundingClientRect().width > 260) frames.add(p);
+    if (p && !p.closest(".phone, .k-hero, .rw, .cs2, .cs3, .cs4, .w4, .rue, .ru") && img.getBoundingClientRect().width > 260) frames.add(p);
   });
   frames.forEach((f) => {
     if (getComputedStyle(f).position === "static") f.style.position = "relative";
@@ -2545,4 +2545,24 @@ const LION = {"vb": [10.0, 4.0, 230.0, 150.0], "t": [0, 0], "parts": [{"p": "bod
     fl.style.setProperty("--rot", Math.max(-10, Math.min(10, (e.clientX - lx) * 0.5)).toFixed(1) + "deg");
     lx = e.clientX;
   });
+})();
+
+// RUE-Startseite: Filter nach Leistung
+(() => {
+  const root = document.querySelector(".rue");
+  if (!root) return;
+  const btns = [...root.querySelectorAll(".rue-filter button")];
+  const tiles = [...root.querySelectorAll(".rue-tile")];
+  const count = root.querySelector("[data-rue-count]"), reset = root.querySelector("[data-reset]");
+  const on = new Set();
+  const apply = () => {
+    let n = 0;
+    tiles.forEach((t) => { const tags = t.dataset.tags.split("|"); const show = !on.size || [...on].some((f) => tags.includes(f)); t.hidden = !show; if (show) n++; });
+    btns.forEach((b) => b.setAttribute("aria-pressed", on.has(b.dataset.f) ? "true" : "false"));
+    count.textContent = `${n} ${n === 1 ? "Projekt" : "Projekte"}`;
+    reset.hidden = !on.size;
+  };
+  btns.forEach((b) => b.addEventListener("click", () => { on.has(b.dataset.f) ? on.delete(b.dataset.f) : on.add(b.dataset.f); apply(); }));
+  reset.addEventListener("click", () => { on.clear(); apply(); });
+  apply();
 })();
