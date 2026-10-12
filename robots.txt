@@ -4,4 +4,4 @@ Disallow: /startseite-dunkel.html
 Disallow: /startseite-gerade.html
 Disallow: /vorschau/
 
-Sitemap: https://www.hochglanz-branding.de/sitemap.xml
+Sitemap: https://www.hochundglanz.de/sitemap.xml

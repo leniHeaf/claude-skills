@@ -3896,3 +3896,14 @@ body.v5 .footer .footer__sub { font: 500 12px/1.4 var(--hy-mono) !important; tex
 body.v5 .footer .footer__bottom .logo { font-size: min(10.4vw, 160px) !important; padding-right: .12em; }
 body.v5 .footer .footer__sub { white-space: normal !important; min-width: 0; overflow-wrap: anywhere; }
 @media (max-width: 900px) { body.v5 .footer .footer__bottom .logo { font-size: 11.2vw !important; } body.v5 .footer .footer__bottom > * { min-width: 0; max-width: 100%; } }
+/* HOCH & GLANZ: Kaufmanns-Und als Zeichen der Marke */
+.logo .amp { display: inline-block; margin: 0 .08em; font-style: italic; font-weight: 400 !important; font-stretch: 100% !important; -webkit-text-stroke: .045em currentColor; color: transparent; }
+/* Mobil: Leistungsliste und Footer-Logo passen in die Breite */
+html body.v5 .logo .amp { color: inherit !important; -webkit-text-stroke: 0 !important; font-weight: 300 !important; font-style: normal !important; margin: 0 .1em; }
+html body.v5 .footer .m8-mark { padding: .06em .25em .1em 0; margin-bottom: -.1em; }
+@media (max-width: 760px) {
+  body.v5 .hy .hy-serv__t { font-size: clamp(28px, 9vw, 40px) !important; hyphens: auto; overflow-wrap: anywhere; }
+  .hy-serv__list a { grid-template-columns: 36px minmax(0, 1fr) 24px; }
+  body.v5 .footer .footer__bottom { grid-template-columns: minmax(0, 1fr) !important; overflow: hidden; }
+  body.v5 .footer .footer__bottom .logo { font-size: 9.6vw !important; padding-right: .2em; }
+}
