@@ -1,173 +1,3 @@
-// ==========================================================================
-// Lade-Animation (erster Aufruf pro Sitzung): Löwe wird per Maske
-// freigelegt, wird kurz lebendig (Kopf, Pfote, Brust, Schwanz), wächst mit
-// leisem Licht dahinter – dann geht es durch die Löwen-Silhouette hindurch
-// in die Seite, der Hero baut sich zeitversetzt auf. Danach aus dem DOM.
-// ==========================================================================
-(() => {
-  const html = document.documentElement;
-  let seen = false;
-  try { seen = sessionStorage.getItem("lion-load") === "1"; sessionStorage.setItem("lion-load", "1"); } catch (e) {}
-  if (seen) { html.classList.remove("ll-pre"); return; }
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const NS = "http://www.w3.org/2000/svg";
-  const D = {
-    body: "M26 40 L40 32 L40 24 L56 16 C70 17 82 21 92 27 L102 22 L102 34 C108 41 112 50 113 58 L124 58 L114 68 L162 68 C172 68 180 76 180 86 L196 136 L168 136 C168 129 173 124 180 124 L172 104 C158 116 140 120 124 120 C118 120 112 119 106 117 L80 136 L54 136 C54 129 60 124 68 124 L86 106 C76 96 72 84 72 72 C72 64 76 58 82 56 L82 52 L60 52 L52 60 L38 60 L26 52 Z",
-    hind: "M114 124 L146 124 C156 124 164 120 170 114 L180 132 L160 142 L114 142 C114 134 120 128 128 128 Z",
-    paw: "M72 88 L58 76 L50 76 C46 72 40 72 34 75 L50 90 L60 106 L71 106 C67 100 67 94 72 88 Z",
-    tail: "M160 68 L196 68 C206 68 212 60 212 50 C212 42 218 36 226 36 L226 46 C223 46 222 48 222 50 C222 66 210 78 196 78 L160 78 Z",
-    tuft: "M220 22 C229 22 236 29 236 38 L220 38 Z",
-    eye: "M46 38 L56 34 L56 40 L48 42 Z",
-  };
-  const BG = "#0a0a0a", INK = "#f2f2f2";
-  const ov = document.createElementNS(NS, "svg");
-  ov.setAttribute("class", "ll");
-  ov.setAttribute("aria-hidden", "true");
-  ov.innerHTML = `
-    <defs>
-      <clipPath id="ll-ch" clipPathUnits="userSpaceOnUse"><polygon points="0,0 125,0 125,62 100,66 82,64 76,68 0,68"/></clipPath>
-      <clipPath id="ll-cb" clipPathUnits="userSpaceOnUse"><polygon points="0,64 74,64 80,58 98,58 125,50 125,0 300,0 300,200 0,200"/></clipPath>
-      <linearGradient id="ll-lg" gradientUnits="userSpaceOnUse" x1="100" y1="150" x2="150" y2="4">
-        <stop class="ll-s1" offset="0" stop-color="#fff"/><stop class="ll-s2" offset="0" stop-color="#000"/>
-      </linearGradient>
-      <mask id="ll-rev" maskUnits="userSpaceOnUse" x="-20" y="-20" width="300" height="200"><rect x="-20" y="-20" width="300" height="200" fill="url(#ll-lg)"/></mask>
-      <radialGradient id="ll-gl"><stop offset="0" stop-color="#fff" stop-opacity=".085"/><stop offset=".45" stop-color="#fff" stop-opacity=".035"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
-      <mask id="ll-veil" maskUnits="userSpaceOnUse" x="0" y="0" width="100%" height="100%">
-        <rect class="ll-vr" width="100%" height="100%" fill="#fff"/>
-        <g class="ll-hole" fill="#000" style="display:none"><path d="${D.body}"/><path d="${D.hind}"/><path d="${D.paw}"/><path d="${D.tail}"/><path d="${D.tuft}"/></g>
-      </mask>
-    </defs>
-    <rect class="ll-bg" width="100%" height="100%" fill="${BG}" mask="url(#ll-veil)"/>
-    <ellipse class="ll-glow" fill="url(#ll-gl)" opacity="0"/>
-    <g class="ll-lion" opacity="0"><g mask="url(#ll-rev)" fill="${INK}">
-      <path d="${D.hind}"/>
-      <g class="ll-tail"><path d="${D.tail}"/><path d="${D.tuft}"/></g>
-      <g class="ll-fore">
-        <path d="${D.body}" clip-path="url(#ll-cb)"/>
-        <path class="ll-paw" d="${D.paw}"/>
-        <g class="ll-head"><path d="${D.body}" clip-path="url(#ll-ch)"/><path d="${D.eye}" fill="${BG}"/></g>
-      </g>
-    </g></g>`;
-  document.body.appendChild(ov);
-  html.classList.remove("ll-pre");
-
-  const q = (s) => ov.querySelector(s);
-  const lion = q(".ll-lion"), hole = q(".ll-hole"), glow = q(".ll-glow"), bg = q(".ll-bg");
-  const head = q(".ll-head"), paw = q(".ll-paw"), fore = q(".ll-fore"), tail = q(".ll-tail");
-  const s1 = q(".ll-s1"), s2 = q(".ll-s2");
-  const L0 = [125, 79], F = [130, 96];
-  let W = 0, H = 0, u = 1;
-  const size = () => {
-    W = innerWidth; H = innerHeight;
-    ov.setAttribute("viewBox", `0 0 ${W} ${H}`);
-    u = Math.min(W * (W < 700 ? 0.62 : 0.42), 440, H * 0.46 * 230 / 150) / 230;
-  };
-  size(); addEventListener("resize", size);
-
-  // cubic-bezier(0.16, 1, 0.3, 1)
-  const bez = (x1, y1, x2, y2) => (x) => {
-    let t = x;
-    for (let i = 0; i < 6; i++) {
-      const cx = 3 * x1 * t * (1 - t) ** 2 + 3 * x2 * t * t * (1 - t) + t ** 3 - x;
-      const d = 3 * x1 * (1 - t) ** 2 + 6 * (x2 - x1) * t * (1 - t) + 3 * (1 - x2) * t * t;
-      if (Math.abs(d) < 1e-6) break; t -= cx / d;
-    }
-    t = Math.min(1, Math.max(0, t));
-    return 3 * y1 * t * (1 - t) ** 2 + 3 * y2 * t * t * (1 - t) + t ** 3;
-  };
-  const expo = bez(0.16, 1, 0.3, 1), io = bez(0.65, 0, 0.35, 1);
-  const c01 = (v) => Math.min(1, Math.max(0, v));
-  const seg = (t, a, b) => c01((t - a) / (b - a));
-  const place = (s, dy) => `translate(${(W / 2 + (F[0] - L0[0]) * u).toFixed(2)} ${(H / 2 + (F[1] - L0[1]) * u + dy).toFixed(2)}) scale(${(u * s).toFixed(5)}) translate(${-F[0]} ${-F[1]})`;
-
-  // Hero sanft aufbauen (bestehende Transforms bleiben erhalten: composite "add")
-  const heroIn = (delay) => {
-    const ease = "cubic-bezier(0.16, 1, 0.3, 1)";
-    const run = (el, from, dur, d) => {
-      if (!el) return;
-      try {
-        el.animate([{ transform: from }, { transform: "none" }], { duration: dur, delay: d, easing: ease, fill: "backwards", composite: "add" });
-        el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: dur, delay: d, easing: ease, fill: "backwards" });
-      } catch (e) {}
-    };
-    const main = document.querySelector("main");
-    const media = main && [...main.querySelectorAll("img, video")].find((m) => { const r = m.getBoundingClientRect(); return r.top < innerHeight && r.bottom > 0 && r.width > 200; });
-    if (media) try { media.animate([{ transform: "scale(1.04)" }, { transform: "none" }], { duration: 550, delay, easing: ease, fill: "backwards", composite: "add" }); } catch (e) {}
-    run(document.querySelector(".header"), "translateY(-15px)", 500, delay);
-    run(main && main.querySelector("h1"), "translateY(40px)", 450, delay + 100);
-  };
-
-  let ready = document.readyState === "complete";
-  addEventListener("load", () => { ready = true; });
-  const start = performance.now();
-  let hold = 0, last = start, heroDone = false, done = false;
-  const finish = () => { if (done) return; done = true; ov.remove(); removeEventListener("resize", size); };
-
-  const frame = (now) => {
-    if (done) return;
-    // Auf das vollständige Laden warten (höchstens 2,5 s zusätzlich)
-    if (now - start - hold >= 1800 && !ready && hold < 2500 && !heroDone) hold += now - last;
-    last = now;
-    const t = now - start - hold;
-
-    if (reduce) {
-      lion.setAttribute("transform", place(1, 0));
-      lion.setAttribute("opacity", seg(t, 150, 600).toFixed(3));
-      s1.setAttribute("offset", 1); s2.setAttribute("offset", 1);
-      ov.style.opacity = (1 - seg(t, 1100, 1500)).toFixed(3);
-      if (t > 1100) ov.style.pointerEvents = "none";
-      if (t >= 1550) return finish();
-      return requestAnimationFrame(frame);
-    }
-
-    // 2) Erscheinen: Maske legt frei, scale .92 → 1, leicht von unten
-    const r = expo(seg(t, 150, 950));
-    const m = seg(t, 150, 900);
-    s1.setAttribute("offset", (-0.25 + 1.5 * expo(m)).toFixed(4));
-    s2.setAttribute("offset", (-0.05 + 1.5 * expo(m)).toFixed(4));
-    let s = 0.92 + 0.08 * r;
-    const dy = 26 * (1 - r);
-
-    // 3) Mikrobewegung: Kopf hebt sich, Pfote, Brust atmet, Schwanz
-    const hd = 2.6 * io(seg(t, 1000, 1450));
-    head.setAttribute("transform", `rotate(${hd.toFixed(3)} 100 60)`);
-    const pw = 5 * Math.sin(Math.PI * io(seg(t, 1050, 1600)));
-    paw.setAttribute("transform", `rotate(${pw.toFixed(3)} 70 96)`);
-    const br = 0.014 * Math.sin(Math.PI * seg(t, 1000, 1750));
-    fore.setAttribute("transform", `translate(0 136) scale(1 ${(1 + br).toFixed(5)}) translate(0 -136)`);
-    const tl = 3.2 * Math.sin(2 * Math.PI * seg(t, 950, 1950)) * (1 - seg(t, 1500, 1950) * 0.6);
-    tail.setAttribute("transform", `rotate(${tl.toFixed(3)} 162 73)`);
-
-    // 4) Brand Impact: 1 → 1.08, leises Licht
-    s *= 1 + 0.08 * expo(seg(t, 1500, 1800));
-    let g = expo(seg(t, 1400, 1850));
-    if (hold > 0 && t >= 1799) g *= 0.85 + 0.15 * Math.sin(now / 420);
-
-    // 5) Durch den Löwen: Silhouette wird zum Fenster, zoomt nach vorn
-    const z = seg(t, 1800, 2350);
-    if (z > 0) {
-      if (!heroDone) { heroDone = true; hole.style.display = ""; heroIn(250); }
-      s *= Math.exp(Math.log(40 / 1.08) * z ** 3);
-      ov.style.pointerEvents = "none";
-    }
-    const lo = Math.min(r, 1 - seg(t, 1800, 1980));
-    lion.setAttribute("opacity", lo.toFixed(3));
-    lion.setAttribute("transform", place(s, dy));
-    hole.setAttribute("transform", place(s, dy));
-    g *= 1 - seg(t, 1800, 2000);
-    const gr = 230 * u * s;
-    glow.setAttribute("cx", W / 2 + (F[0] - L0[0]) * u); glow.setAttribute("cy", H / 2 + (F[1] - L0[1]) * u);
-    glow.setAttribute("rx", (gr * 0.95).toFixed(1)); glow.setAttribute("ry", (gr * 0.75).toFixed(1));
-    glow.setAttribute("opacity", g.toFixed(3));
-    bg.setAttribute("opacity", (1 - seg(t, 2050, 2350)).toFixed(3));
-
-    if (t >= 2600) return finish();
-    requestAnimationFrame(frame);
-  };
-  requestAnimationFrame(frame);
-  setTimeout(finish, 9000);
-})();
-
 // Typografie: Fließtext ruhiger (normale Stärke), Überschriften bleiben fett
 (() => {
   if (!document.body.classList.contains("v5")) return;
@@ -1143,7 +973,7 @@
 
   // Überschriften in Wortmasken teilen (Auszeichnungen bleiben erhalten)
   const heads = [...main.querySelectorAll("h1, h2")].filter((h) =>
-    !h.closest(".phone, .k-x, [data-split], .v2social__stage, .cs2, .cs3, .cs4, .w4") && h.textContent.trim());
+    !h.closest(".phone, .k-x, [data-split], .v2social__stage, .cs2, .cs3, .cs4, .w4, .hy") && h.textContent.trim());
   const splitText = (root, counter) => {
     [...root.childNodes].forEach((n) => {
       if (n.nodeType === 3) {
@@ -1165,12 +995,12 @@
 
   // Fließtext und Listen gleiten nach
   const texts = [...main.querySelectorAll("p, li, dt, dd, blockquote, .btn, .k-links, form")].filter((el) =>
-    !el.closest("[data-reveal], .phone, .v2social__stage, .k-cards, .m8-txt, nav, .hask, details, [hidden], .cs2, .cs3, .cs4, .w4") && !el.querySelector("img"));
+    !el.closest("[data-reveal], .phone, .v2social__stage, .k-cards, .m8-txt, nav, .hask, details, [hidden], .cs2, .cs3, .cs4, .w4, .hy") && !el.querySelector("img"));
   texts.forEach((el) => el.classList.add("m8-txt"));
 
   // Bilder: Vorhang von unten, darin leichte Parallaxe
   const imgs = [...main.querySelectorAll("img, .ph")].filter((el) =>
-    !el.closest(".phone, .k-hero, .v2social__stage, [data-r], .rw__row, .cs2, .cs3, .cs4, .w4") && !el.hasAttribute("data-r"));
+    !el.closest(".phone, .k-hero, .v2social__stage, [data-r], .rw__row, .cs2, .cs3, .cs4, .w4, .hy") && !el.hasAttribute("data-r"));
   imgs.forEach((el) => el.classList.add("m8-img"));
 
   const all = [...heads, ...texts, ...imgs];
@@ -1309,7 +1139,7 @@
   document.querySelectorAll(".k-hero__img, .k-split__img, .k-card__img, .k-tile, .rw__clip, .rw__story").forEach((f) => frames.add(f));
   document.querySelectorAll("main img").forEach((img) => {
     const p = img.parentElement;
-    if (p && !p.closest(".phone, .k-hero, .rw, .cs2, .cs3, .cs4, .w4") && img.getBoundingClientRect().width > 260) frames.add(p);
+    if (p && !p.closest(".phone, .k-hero, .rw, .cs2, .cs3, .cs4, .w4, .hy") && img.getBoundingClientRect().width > 260) frames.add(p);
   });
   frames.forEach((f) => {
     if (getComputedStyle(f).position === "static") f.style.position = "relative";
@@ -2350,8 +2180,8 @@ document.querySelectorAll(".c3-giant").forEach((g) => { const n = g.textContent.
       g.lineWidth = R * 0.14; g.beginPath(); for (let i = 1; i <= 6; i++) { const a = i / 6 * Math.PI * 2 + Math.PI / 6; const x = cx + Math.cos(a) * R * 0.55, y = cy + Math.sin(a) * R * 0.55; i === 1 ? g.moveTo(x, y) : g.lineTo(x, y); } g.stroke();
     } else {
       let fs = Math.min(W * 0.9 / Math.max(4, name.length) * 1.6, H * 0.3);
-      g.font = `900 ${fs}px Montserrat, Arial, sans-serif`; g.textAlign = "center"; g.textBaseline = "middle";
-      while (g.measureText(name.toUpperCase()).width > W * 0.88) { fs -= 4; g.font = `900 ${fs}px Montserrat, Arial, sans-serif`; }
+      g.font = `900 ${fs}px Archivo, Arial, sans-serif`; g.textAlign = "center"; g.textBaseline = "middle";
+      while (g.measureText(name.toUpperCase()).width > W * 0.88) { fs -= 4; g.font = `900 ${fs}px Archivo, Arial, sans-serif`; }
       g.fillText(name.toUpperCase(), W / 2, H * 0.46);
     }
     const data = g.getImageData(0, 0, W, H).data, step = Math.max(5, Math.round(Math.sqrt(W * H / 15000)));
@@ -2399,25 +2229,6 @@ document.querySelectorAll(".c3-giant").forEach((g) => { const n = g.textContent.
   if (g) { g.style.removeProperty("font-size"); const n = g.textContent.trim().length; g.style.setProperty("--gs", Math.min(19, 150 / Math.max(4, n)).toFixed(2) + "vw"); }
 })();
 
-const LION = {"vb": [10.0, 4.0, 230.0, 150.0], "t": [0, 0], "parts": [{"p": "body", "d": "M26 40 L40 32 L40 24 L56 16 C70 17 82 21 92 27 L102 22 L102 34 C108 41 112 50 113 58 L124 58 L114 68 L162 68 C172 68 180 76 180 86 L196 136 L168 136 C168 129 173 124 180 124 L172 104 C158 116 140 120 124 120 C118 120 112 119 106 117 L80 136 L54 136 C54 129 60 124 68 124 L86 106 C76 96 72 84 72 72 C72 64 76 58 82 56 L82 52 L60 52 L52 60 L38 60 L26 52 Z"}, {"p": "body2", "d": "M114 124 L146 124 C156 124 164 120 170 114 L180 132 L160 142 L114 142 C114 134 120 128 128 128 Z"}, {"p": "body2", "d": "M72 88 L58 76 L50 76 C46 72 40 72 34 75 L50 90 L60 106 L71 106 C67 100 67 94 72 88 Z"}, {"p": "tail", "d": "M160 68 L196 68 C206 68 212 60 212 50 C212 42 218 36 226 36 L226 46 C223 46 222 48 222 50 C222 66 210 78 196 78 L160 78 Z"}, {"p": "tail", "d": "M220 22 C229 22 236 29 236 38 L220 38 Z"}, {"p": "cut", "d": "M46 38 L56 34 L56 40 L48 42 Z"}]};
-// ==========================================================================
-// Studio-Logo: Löwe. 3D-Chrom-Intro (Startseite, einmal pro Besuch) +
-// Löwe im Header und im Ladebildschirm
-// ==========================================================================
-(() => {
-  if (!document.body.classList.contains("v5")) return;
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const svg = (cls) => {
-    const [x, y, w, h] = LION.vb;
-    return `<svg class="${cls}" viewBox="${x} ${y} ${w} ${h}" aria-hidden="true"><g transform="translate(${LION.t[0]} ${LION.t[1]})">${LION.parts.map((p) => p.p === "line" ? `<path d="${p.d}" fill="none" stroke="var(--lion-cut,#fff)" stroke-width="2.5" stroke-linecap="round"/>` : `<path d="${p.d}" fill="${p.p === "cut" ? "var(--lion-cut,#fff)" : "currentColor"}"${p.p === "mane2" || p.p === "relief" || p.p === "body2" ? ' opacity=".55"' : ""}/>`).join("")}</g></svg>`;
-  };
-  // Header-Logo
-  document.querySelectorAll(".header .logo").forEach((l) => { if (!l.querySelector(".lion-mark")) l.insertAdjacentHTML("afterbegin", svg("lion-mark")); });
-  // Ladebildschirm im Projekt-Übergang
-  new MutationObserver(() => document.querySelectorAll(".bx4__load:not(.has-lion)").forEach((d) => { d.classList.add("has-lion"); d.insertAdjacentHTML("afterbegin", svg("lion-load")); })).observe(document.body, { childList: true });
-
-})();
-
 // Academy: Siegel je Thema statt Buchstaben, Nummer vor jeder Zeile
 (() => {
   if (!document.body.classList.contains("page-ac2")) return;
@@ -2463,262 +2274,40 @@ const LION = {"vb": [10.0, 4.0, 230.0, 150.0], "t": [0, 0], "parts": [{"p": "bod
 })();
 
 // ==========================================================================
-// Startseite: begehbare 3D-Traumwelt (nach Art von designely.studio)
-// Bögen im Wasser, Trittsteine, schwebende Säulen, Wolken, schillernde
-// Kugel. Beim Scrollen geht die Kamera über die Steine durch drei Bögen –
-// in jedem Bogen ein Projekt. Ohne WebGL / bei reduzierter Bewegung bleibt
-// der normale Hero.
+// HY-Stil: Kreis „Projekt anfragen“ folgt der Maus im Footer,
+// Showreel-Bild wächst beim Scrollen auf volle Breite
 // ==========================================================================
 (() => {
-  const hero = document.querySelector(".page-home .k-hero");
-  if (!hero || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  const probe = document.createElement("canvas");
-  if (!(probe.getContext("webgl") || probe.getContext("experimental-webgl"))) return;
-  const mobile = innerWidth < 760;
-
-  const PROJ = [
-    { slug: "runclub", name: "Run Club", tags: "Branding · Kampagne · Merchandise", img: "assets/runclub/plakatwand.webp" },
-    { slug: "taeubert", name: "Täubert", tags: "Branding · Website · App · Print", img: "assets/taeubert/website-app.webp" },
-    { slug: "crea-response", name: "Crea Response", tags: "Branding · Brand Book · Raum", img: "assets/crea-response/wandlogo.webp" },
-  ];
-  const ARCH_Z = [-8, -30, -52];
-
-  const sec = document.createElement("section");
-  sec.className = "d3"; sec.setAttribute("aria-label", "STUDIO.X – Einstieg");
-  sec.innerHTML = `
-    <div class="d3__pin">
-      <canvas class="d3__cv" aria-hidden="true"></canvas>
-      <div class="d3__white" aria-hidden="true"></div>
-      <div class="d3__stage d3__stage--intro is-on">
-        <p class="d3__title">Marken, die man<br>nicht vergisst.</p>
-        <p class="d3__sub">Strategie, Design und Roll-out aus einer Hand –<br>aus Köln, Saalbach-Hinterglemm und Sonneberg.</p>
-        <p class="d3__pills"><a class="d3__pill" href="#anfrage">Projekt anfragen <i>↗</i></a><a class="d3__pill d3__pill--ghost" href="work.html">Arbeiten ansehen</a></p>
-        <p class="d3__scroll" aria-hidden="true">Scrollen, um einzutreten</p>
-      </div>
-      ${PROJ.map((p, i) => `
-      <div class="d3__stage d3__stage--proj" data-i="${i}">
-        <p class="d3__no">${String(i + 1).padStart(2, "0")} / ${String(PROJ.length).padStart(2, "0")}</p>
-        <p class="d3__name">${p.name}</p>
-        <p class="d3__tags">${p.tags}</p>
-        <p class="d3__pills"><a class="d3__pill" href="projekt-${p.slug}.html">Projekt ansehen <i>↗</i></a></p>
-      </div>`).join("")}
-      <div class="d3__stage d3__stage--end">
-        <p class="d3__title">Und das ist<br>erst der Anfang.</p>
-        <p class="d3__pills"><a class="d3__pill" href="work.html">Alle Arbeiten <i>↗</i></a></p>
-      </div>
-      <div class="d3__bar" aria-hidden="true"><i></i></div>
-    </div>`;
-  hero.before(sec);
-  hero.classList.add("d3-fallback");
-  document.body.classList.add("has-d3");
-
-  const cv = sec.querySelector(".d3__cv");
-  const stIntro = sec.querySelector(".d3__stage--intro"), stEnd = sec.querySelector(".d3__stage--end");
-  const stProj = [...sec.querySelectorAll(".d3__stage--proj")];
-  const white = sec.querySelector(".d3__white"), bar = sec.querySelector(".d3__bar i");
-
-  const start = (THREE) => {
-    const renderer = new THREE.WebGLRenderer({ canvas: cv, antialias: !mobile, powerPreference: "high-performance" });
-    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, mobile ? 1.4 : 1.75));
-    renderer.outputEncoding = THREE.sRGBEncoding;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 0.92;
-    const scene = new THREE.Scene();
-    const HORIZON = new THREE.Color("#c4b3c8");
-    scene.fog = new THREE.Fog(HORIZON, 26, 120);
-    const cam = new THREE.PerspectiveCamera(mobile ? 62 : 50, 1, 0.1, 400);
-
-    // Licht: weich, warm von oben, lila vom Himmel
-    scene.add(new THREE.HemisphereLight(0xdfe2ff, 0xd8b4a8, 0.62));
-    const sun = new THREE.DirectionalLight(0xffe4d4, 0.95); sun.position.set(-12, 22, 14); scene.add(sun);
-    scene.add(new THREE.AmbientLight(0xffffff, 0.08));
-
-    // Himmel: Verlauf von Blau-Lila oben zu Rosé am Horizont
-    const sky = new THREE.Mesh(new THREE.SphereGeometry(300, 32, 16), new THREE.ShaderMaterial({
-      side: THREE.BackSide, depthWrite: false, fog: false,
-      uniforms: { top: { value: new THREE.Color("#7c8dc0") }, mid: { value: HORIZON }, low: { value: new THREE.Color("#a691a6") } },
-      vertexShader: "varying vec3 vP; void main(){ vP = normalize(position); gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.); }",
-      fragmentShader: "uniform vec3 top; uniform vec3 mid; uniform vec3 low; varying vec3 vP; void main(){ float h = vP.y; vec3 c = h > 0. ? mix(mid, top, pow(clamp(h*1.6,0.,1.), .7)) : mix(mid, low, clamp(-h*4.,0.,1.)); gl_FragColor = vec4(c,1.); }",
-    }));
-    scene.add(sky);
-
-    // Sandstein-Struktur
-    const grain = (() => {
-      const c = document.createElement("canvas"); c.width = c.height = 256;
-      const x = c.getContext("2d"); x.fillStyle = "#fff"; x.fillRect(0, 0, 256, 256);
-      for (let i = 0; i < 9000; i++) { const v = 200 + Math.random() * 55; x.fillStyle = `rgba(${v},${v - 6},${v - 10},.55)`; x.fillRect(Math.random() * 256, Math.random() * 256, 1 + Math.random() * 2, 1 + Math.random() * 2); }
-      const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(2, 2); t.encoding = THREE.sRGBEncoding; return t;
-    })();
-    const stone = (hex) => new THREE.MeshStandardMaterial({ color: new THREE.Color(hex), map: grain, roughness: 0.96, metalness: 0 });
-    const M = { sand: stone("#dbae96"), rose: stone("#d4958c"), lilac: stone("#b6a2d0"), foam: new THREE.MeshStandardMaterial({ color: 0xebcbb8, map: grain, roughness: 1 }), cloud: new THREE.MeshStandardMaterial({ color: 0xf4f1f6, roughness: 1, emissive: 0xc9c2da, emissiveIntensity: 0.28 }) };
-
-    const world = new THREE.Group(); scene.add(world);
-    const reflectable = [];
-    const add = (mesh, refl = true) => { world.add(mesh); if (refl) reflectable.push(mesh); return mesh; };
-
-    // Bogen: Beine + Halbkreis als ein extrudierter Körper
-    const archGeo = (W, Wi, H, D) => {
-      const s = new THREE.Shape();
-      s.moveTo(-W, 0); s.lineTo(-W, H); s.absarc(0, H, W, Math.PI, 0, true); s.lineTo(W, 0); s.lineTo(Wi, 0); s.lineTo(Wi, H); s.absarc(0, H, Wi, 0, Math.PI, false); s.lineTo(-Wi, 0); s.lineTo(-W, 0);
-      const g = new THREE.ExtrudeGeometry(s, { depth: D, bevelEnabled: true, bevelThickness: 0.12, bevelSize: 0.12, bevelSegments: 3, curveSegments: 40 });
-      g.translate(0, -0.6, -D / 2); return g;
-    };
-    const blob = (x, z, s, mat = M.foam, n = 7) => {
-      const g = new THREE.Group();
-      for (let i = 0; i < n; i++) {
-        const m = new THREE.Mesh(new THREE.SphereGeometry(1, 20, 14), mat);
-        m.position.set((Math.random() - 0.5) * 2.4 * s, (Math.random() * 0.25) * s, (Math.random() - 0.5) * 1.6 * s);
-        m.scale.set(s * (0.7 + Math.random() * 0.6), s * (0.32 + Math.random() * 0.22), s * (0.6 + Math.random() * 0.5));
-        g.add(m);
-      }
-      g.position.set(x, 0.05, z); return add(g);
-    };
-
-    // Die drei Durchgangs-Bögen mit Projekt-Portalen
-    const portals = [];
-    const loader = new THREE.TextureLoader();
-    ARCH_Z.forEach((z, i) => {
-      const a = add(new THREE.Mesh(archGeo(3.6, 2.5, 4.6, 1.5), i % 2 ? M.rose : M.sand)); a.position.set(0, 0, z);
-      blob(-3.3, z + 0.4, 1.1); blob(3.4, z - 0.2, 1.0);
-      // Portal: Projektbild in der Bogenöffnung
-      const ps = new THREE.Shape(); const wi = 2.42, hi = 4.6;
-      ps.moveTo(-wi, -0.6); ps.lineTo(-wi, hi - 0.6); ps.absarc(0, hi - 0.6, wi, Math.PI, 0, true); ps.lineTo(wi, -0.6); ps.lineTo(-wi, -0.6);
-      const pg = new THREE.ShapeGeometry(ps, 40);
-      pg.computeBoundingBox(); const bb = pg.boundingBox, uv = pg.attributes.uv, pos = pg.attributes.position;
-      for (let k = 0; k < uv.count; k++) uv.setXY(k, (pos.getX(k) - bb.min.x) / (bb.max.x - bb.min.x), (pos.getY(k) - bb.min.y) / (bb.max.y - bb.min.y));
-      const pm = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0, toneMapped: false, fog: false });
-      const portal = new THREE.Mesh(pg, pm); portal.position.set(0, 0, z); world.add(portal);
-      loader.load(PROJ[i].img, (t) => {
-        t.encoding = THREE.sRGBEncoding;
-        const planeA = (bb.max.x - bb.min.x) / (bb.max.y - bb.min.y), imgA = t.image.width / t.image.height;
-        if (imgA > planeA) { t.repeat.set(planeA / imgA, 1); t.offset.set((1 - planeA / imgA) / 2, 0); } else { t.repeat.set(1, imgA / planeA); t.offset.set(0, (1 - imgA / planeA) / 2); }
-        pm.map = t; pm.needsUpdate = true;
-      });
-      portals.push({ portal, z });
-    });
-
-    // Kulisse: große Bögen am Rand, Säulen, Schaum, Wolken, Kugel
-    const big = add(new THREE.Mesh(archGeo(5.2, 3.5, 7.5, 2.2), M.sand)); big.position.set(-12.5, 0, -2); big.rotation.y = 0.5;
-    const big2 = add(new THREE.Mesh(archGeo(5.2, 3.5, 7.5, 2.2), M.rose)); big2.position.set(12.5, 0, -6); big2.rotation.y = -0.45;
-    const big3 = add(new THREE.Mesh(archGeo(4.6, 3.1, 6.5, 2), M.lilac)); big3.position.set(-15, 0, -40); big3.rotation.y = 0.3;
-    const big4 = add(new THREE.Mesh(archGeo(4.6, 3.1, 6.5, 2), M.sand)); big4.position.set(16, 0, -46); big4.rotation.y = -0.25;
-    blob(-10.5, 1.2, 1.8); blob(11, -3.5, 1.9); blob(-13, -38, 1.6); blob(14.5, -44, 1.7);
-    // Schluss-Tor am Ende des Weges
-    const gate = add(new THREE.Mesh(archGeo(7.2, 5.4, 8.5, 2.6), M.lilac)); gate.position.set(0, 0, -78);
-    blob(-6.6, -77, 2.4); blob(6.8, -78.5, 2.2); blob(-11, -84, 2); blob(12, -86, 2.3);
-    const pillars = [];
-    [[-5.4, -14, 3.6, M.rose], [5.8, -20, 4.4, M.lilac], [-7.5, -26, 5.2, M.sand], [7.8, -36, 3.2, M.rose], [-6, -46, 4.0, M.lilac], [6.5, -60, 5.0, M.sand], [-20, -20, 6, M.sand], [21, -26, 7, M.rose]].forEach(([x, z, h, m], i) => {
-      const c = add(new THREE.Mesh(new THREE.BoxGeometry(0.9, h, 0.9), m)); c.position.set(x, h / 2 - 0.4, z); pillars.push({ c, h, ph: i });
-    });
-    // Trittsteine
-    for (let z = 12, i = 0; z > -72; z -= 2.5, i++) {
-      const s = add(new THREE.Mesh(new THREE.BoxGeometry(2.3 - (i % 3) * 0.15, 0.42, 1.5), M.sand));
-      s.position.set(Math.sin(i * 0.9) * 0.35, 0.05, z); s.rotation.y = Math.sin(i * 1.7) * 0.06;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const cta = document.querySelector("body.v5 .footer__cta");
+  if (cta) {
+    const ball = document.createElement("span");
+    ball.className = "hy-ball"; ball.setAttribute("aria-hidden", "true");
+    ball.innerHTML = "<span>[ Projekt anfragen ]</span>";
+    cta.appendChild(ball);
+    const home = () => { const r = cta.getBoundingClientRect(); return { x: r.width * (innerWidth < 760 ? 0.5 : 0.72), y: r.height * (innerWidth < 760 ? 0.72 : 0.42) }; };
+    let p = home(), t = home(), on = false;
+    const set = () => { ball.style.setProperty("--x", p.x.toFixed(1) + "px"); ball.style.setProperty("--y", p.y.toFixed(1) + "px"); };
+    set();
+    if (fine && !reduce) {
+      cta.addEventListener("pointermove", (e) => { const r = cta.getBoundingClientRect(), h = ball.offsetWidth / 2 + 8; t = { x: Math.min(r.width - h, Math.max(h, e.clientX - r.left)), y: Math.min(r.height - h, Math.max(h, e.clientY - r.top)) }; on = true; });
+      cta.addEventListener("pointerleave", () => { on = false; t = home(); });
+      const loop = () => { p.x += (t.x - p.x) * 0.12; p.y += (t.y - p.y) * 0.12; set(); requestAnimationFrame(loop); };
+      requestAnimationFrame(loop);
     }
-    // Wolken
-    const clouds = [];
-    [[-16, 13, -30, 3.2], [10, 15, -60, 4], [24, 11, -18, 2.6], [-26, 16, -70, 4.2], [0, 18, -90, 5], [-6, 12, -10, 2.2]].forEach(([x, y, z, s]) => {
-      const g = new THREE.Group();
-      for (let i = 0; i < 16; i++) { const m = new THREE.Mesh(new THREE.SphereGeometry(1, 18, 12), M.cloud); const u = (i / 15 - 0.5); m.position.set(u * 3.4 * s + (Math.random() - 0.5) * 0.6 * s, (0.5 - Math.abs(u)) * 0.9 * s + Math.random() * 0.25 * s, (Math.random() - 0.5) * 1.2 * s); m.scale.set(s * (0.5 + Math.random() * 0.3), s * (0.38 + Math.random() * 0.22), s * (0.5 + Math.random() * 0.3)); g.add(m); }
-      g.position.set(x, y, z); scene.add(g); clouds.push(g);
-    });
-    // schillernde Kugel mit Ring
-    const orb = new THREE.Group();
-    const orbM = new THREE.ShaderMaterial({
-      transparent: true, uniforms: { t: { value: 0 } },
-      vertexShader: "varying vec3 vN; varying vec3 vV; void main(){ vec4 mv = modelViewMatrix*vec4(position,1.); vN = normalize(normalMatrix*normal); vV = normalize(-mv.xyz); gl_Position = projectionMatrix*mv; }",
-      fragmentShader: "uniform float t; varying vec3 vN; varying vec3 vV; void main(){ float f = 1.-max(dot(vN,vV),0.); vec3 ir = .72+.28*cos(6.2831*(f*.8+vec3(0.,.33,.67)+t*.04)); vec3 c = mix(vec3(.97,.94,.99), ir, smoothstep(.2,1.,f)*.85); gl_FragColor = vec4(c, .72+.28*f); }",
-    });
-    orb.add(new THREE.Mesh(new THREE.SphereGeometry(1.6, 48, 32), orbM));
-    const ringM = new THREE.MeshStandardMaterial({ color: 0xd9b8b6, roughness: 0.6 });
-    const ringMesh = new THREE.Mesh(new THREE.TorusGeometry(2.6, 0.05, 12, 120), ringM); ringMesh.rotation.set(1.2, 0.3, 0); orb.add(ringMesh);
-    orb.position.set(-8.5, 4.2, -16); scene.add(orb);
-
-    // Spiegelbilder unter der Wasserlinie (günstige Reflexion)
-    const mirror = new THREE.Group(); mirror.scale.y = -1; mirror.position.y = -0.02;
-    reflectable.forEach((o) => {
-      const c = o.clone(true);
-      c.traverse((n) => { if (n.isMesh) { n.material = n.material.clone(); n.material.color = n.material.color.clone().multiplyScalar(0.62); n.material.side = THREE.DoubleSide; } });
-      mirror.add(c);
-    });
-    scene.add(mirror);
-
-    // Wasser: Wellen im Vertex-Shader, Fresnel + Glitzern, eigener Nebel
-    const seg = mobile ? 96 : 160;
-    const water = new THREE.Mesh(new THREE.PlaneGeometry(260, 260, seg, seg), new THREE.ShaderMaterial({
-      transparent: true, extensions: { derivatives: true },
-      uniforms: { t: { value: 0 }, deep: { value: new THREE.Color("#86728a") }, skyc: { value: new THREE.Color("#c3b6d0") }, fogc: { value: HORIZON }, near: { value: 26 }, far: { value: 120 } },
-      vertexShader: `uniform float t; varying vec3 vW; varying float vD;
-        void main(){ vec3 p = position; float w = sin(p.x*.35+t*.9)*.06 + sin(p.y*.42-t*1.1)*.05 + sin((p.x+p.y)*1.3+t*1.7)*.02;
-        p.z += w; vec4 wp = modelMatrix*vec4(p,1.); vW = wp.xyz; vec4 mv = viewMatrix*wp; vD = -mv.z; gl_Position = projectionMatrix*mv; }`,
-      fragmentShader: `uniform vec3 deep; uniform vec3 skyc; uniform vec3 fogc; uniform float near; uniform float far; uniform float t; varying vec3 vW; varying float vD;
-        void main(){ vec3 n = normalize(cross(dFdx(vW), dFdy(vW))); if(n.y<0.) n=-n; vec3 v = normalize(cameraPosition - vW);
-        float f = pow(1.-max(dot(n,v),0.), 3.); vec3 l = normalize(vec3(-.4,.8,-.5)); float sp = pow(max(dot(reflect(-l,n),v),0.), 90.);
-        float streak = smoothstep(.82,1.,sin(vW.x*.9+sin(vW.z*.35+t*.4)*1.4)*.5+.5)*.035;
-        vec3 c = mix(deep, skyc, clamp(f*1.25+.18,0.,1.)) + sp*.5 + streak;
-        c = mix(c, fogc, smoothstep(near, far, vD)); gl_FragColor = vec4(c, mix(.8, .96, f)); }`,
-    }));
-    water.rotation.x = -Math.PI / 2; water.renderOrder = 2; scene.add(water);
-
-    const size = () => { const w = innerWidth, h = innerHeight; renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix(); };
-    size(); addEventListener("resize", size);
-
-    // Scroll → Fortschritt durch die Welt
-    const mouse = { x: 0, y: 0, sx: 0, sy: 0 };
-    addEventListener("pointermove", (e) => { mouse.x = e.clientX / innerWidth - 0.5; mouse.y = e.clientY / innerHeight - 0.5; }, { passive: true });
-    const header = document.querySelector(".header");
-    const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
-    const sstep = (a, b, v) => { const x = clamp((v - a) / (b - a)); return x * x * (3 - 2 * x); };
-    let prog = 0, sp = 0, visible = true, raf = 0;
-    const readScroll = () => {
-      const r = sec.getBoundingClientRect();
-      prog = clamp(-r.top / (r.height - innerHeight));
-      header?.classList.toggle("d3-over", r.bottom > 64);
+    addEventListener("resize", () => { if (!on) { p = home(); t = home(); set(); } });
+  }
+  const reel = document.querySelector(".hy-reel__f");
+  if (reel && !reduce) {
+    let tick = false;
+    const upd = () => {
+      tick = false;
+      const r = reel.parentElement.getBoundingClientRect();
+      const k = Math.min(1, Math.max(0, (innerHeight - r.top) / (innerHeight * 1.1)));
+      reel.style.setProperty("--s", (0.86 + 0.14 * k).toFixed(4));
     };
-    readScroll(); addEventListener("scroll", readScroll, { passive: true });
-    new IntersectionObserver(([en]) => { visible = en.isIntersecting; if (visible && !raf) raf = requestAnimationFrame(loop); }).observe(sec);
-
-    const Z0 = 15, Z1 = -60;
-    const t0 = performance.now();
-    function loop(now) {
-      raf = 0; if (!visible) return;
-      const t = (now - t0) / 1000;
-      sp += (prog - sp) * 0.075;
-      const intro = sstep(0, 1, Math.min(1, t / 3.2));           // langsames Heranfahren beim Laden
-      const z = Z0 + 6 * (1 - intro) + (Z1 - Z0) * sp;
-      mouse.sx += (mouse.x - mouse.sx) * 0.04; mouse.sy += (mouse.y - mouse.sy) * 0.04;
-      cam.position.set(Math.sin(sp * 9) * 0.25 + mouse.sx * 0.8, 2.15 + Math.sin(sp * 60) * 0.04 - mouse.sy * 0.3 + (1 - intro) * 1.2, z);
-      cam.lookAt(mouse.sx * 3, 1.9 - mouse.sy * 1.2, z - 12);
-      water.material.uniforms.t.value = t; orbM.uniforms.t.value = t;
-      orb.position.y = 4.2 + Math.sin(t * 0.8) * 0.35; orb.rotation.y = t * 0.15; ringMesh.rotation.z = t * 0.2;
-      pillars.forEach((p) => { p.c.position.y = p.h / 2 - 0.4 + Math.sin(t * 0.6 + p.ph) * 0.12; });
-      clouds.forEach((c, i) => { c.position.x += Math.sin(t * 0.05 + i) * 0.004; });
-      // Portale blenden auf, wenn man sich nähert, und weg, kurz bevor man hindurchgeht
-      portals.forEach(({ portal, z: pz }, i) => {
-        const d = z - pz;
-        portal.material.opacity = sstep(30, 16, d) * sstep(3.2, 8.5, d);
-        const on = d < 17 && d > 3.4;
-        stProj[i].classList.toggle("is-on", on);
-      });
-      stIntro.classList.toggle("is-on", sp < 0.06);
-      stEnd.classList.toggle("is-on", sp > 0.91);
-      white.style.opacity = (sstep(0.9, 0.99, sp) * 0.92).toFixed(3);
-      bar.style.transform = `scaleX(${sp.toFixed(4)})`;
-      renderer.render(scene, cam);
-      raf = requestAnimationFrame(loop);
-    }
-    raf = requestAnimationFrame(loop);
-    document.addEventListener("visibilitychange", () => { if (!document.hidden && visible && !raf) raf = requestAnimationFrame(loop); });
-    sec.classList.add("is-ready");
-  };
-
-  const fail = () => { sec.remove(); hero.classList.remove("d3-fallback"); document.body.classList.remove("has-d3"); };
-  if (window.THREE) { try { start(window.THREE); } catch (e) { fail(); } }
-  else {
-    const s = document.createElement("script");
-    s.src = "assets/vendor/three.min.js"; s.async = true;
-    s.onload = () => { try { start(window.THREE); } catch (e) { console.warn(e); fail(); } };
-    s.onerror = fail;
-    document.head.appendChild(s);
+    addEventListener("scroll", () => { if (!tick) { tick = true; requestAnimationFrame(upd); } }, { passive: true });
+    upd();
   }
 })();
