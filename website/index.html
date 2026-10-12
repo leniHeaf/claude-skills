@@ -13,7 +13,7 @@
   <!-- Für den Livebetrieb Fonts lokal hosten (DSGVO): siehe README im Ordner website/ -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@125,800&family=Courier+Prime:wght@700&family=Inter+Tight:wght@300;400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -33,24 +33,41 @@
   </header>
 
   <main id="main">
-    <!-- 1.0 START: wie Rue 002, gesperrte Riesenbuchstaben, rotes Quadrat, breites Foto -->
+    <!-- 1.0 START: wie die Rue-Logoseite, links Foto mit weißem Logo, rechts hell mit schwarzem Logo -->
     <!-- Fotos: Unsplash (freie Lizenz, auch kommerziell). TODO: später durch eigene Shootings ersetzen -->
-    <section class="hero">
+    <section class="logo-hero">
       <h1 class="sr-only">Leni Heaf, Agentur für Branding, Webdesign und Social Media in Sonneberg</h1>
-      <div class="hero__top">
-        <p class="hero__letters" aria-hidden="true"><span>L</span><span>E</span><span>N</span><span>I</span></p>
-        <a class="hero__square" href="#kontakt">
-          <span>Agentur für Branding, Webdesign und Social Media aus Sonneberg. Für Unternehmen, die gesehen werden wollen.</span>
-          <span class="hero__square-cta">Projekt anfragen</span>
-        </a>
+      <div class="logo-hero__half logo-hero__half--photo">
+        <img src="https://images.unsplash.com/photo-1779400202227-140d6b48a473?w=1200&q=80&auto=format&fit=crop" alt="" width="1200" height="1800" fetchpriority="high">
+        <div class="corner corner--tl">Leni Heaf<br>Sonneberg</div>
+        <div class="corner corner--ml">Branding, Web, Social<br>aus einer Hand</div>
+        <div class="corner corner--mm">Leni Heaf</div>
+        <div class="corner corner--mr">Version<br>2026_Reverse</div>
+          <div class="lockup lockup--light">
+            <p class="lockup__mark">LENI HEAF<sup>™</sup></p>
+            <p class="lockup__sub">Agentur</p>
+            <p class="lockup__copy">© Leni Heaf Sonneberg, 2026. Alle Rechte vorbehalten</p>
+            <span class="rings" aria-hidden="true"><i></i><i></i></span>
+            <p class="lockup__loc"><span>Standort</span><span class="type">SONNEBERG</span></p>
+            <p class="lockup__addr">Branding / Webdesign / Social Media<br><a href="mailto:hallo@leniheaf.de">hallo@leniheaf.de</a></p>
+          </div>
+        <a class="dot dot--link" href="#kontakt" aria-label="Projekt anfragen"></a>
       </div>
-      <ul class="hero__row">
-        <li>Branding</li><li>Webdesign</li><li>Social Media</li><li>Content</li><li>Strategie</li><li>Sonneberg</li><li>Seit 2026</li>
-      </ul>
-      <figure class="hero__photo">
-        <img src="https://images.unsplash.com/photo-1643077286854-6ada321e9b48?w=2000&q=80&auto=format&fit=crop" alt="" width="2000" height="800" fetchpriority="high">
-      </figure>
-      <p class="label"><span>1.0</span> Agentur</p>
+      <div class="logo-hero__half logo-hero__half--light">
+        <div class="corner corner--tr">Brand Identity<br>by Leni Heaf</div>
+        <div class="corner corner--ml">Agentur für<br>Marken mit Haltung</div>
+        <div class="corner corner--mm">Leni Heaf</div>
+        <div class="corner corner--mr">Version<br>2026_Black</div>
+          <div class="lockup lockup--dark">
+            <p class="lockup__mark">LENI HEAF<sup>™</sup></p>
+            <p class="lockup__sub">Agentur</p>
+            <p class="lockup__copy">© Leni Heaf Sonneberg, 2026. Alle Rechte vorbehalten</p>
+            <span class="rings" aria-hidden="true"><i></i><i></i></span>
+            <p class="lockup__loc"><span>Standort</span><span class="type">SONNEBERG</span></p>
+            <p class="lockup__addr">Branding / Webdesign / Social Media<br><a href="mailto:hallo@leniheaf.de">hallo@leniheaf.de</a></p>
+          </div>
+        <a class="logo-hero__cta" href="#kontakt">Projekt anfragen</a>
+      </div>
     </section>
 
     <!-- 1.1 HALTUNG: hellgrau, große dünne Aussage -->
@@ -62,7 +79,7 @@
           <h2 class="statement">Mutig<br>Persönlich<br>Klar</h2>
         </div>
         <figure class="split__photo">
-          <img src="https://images.unsplash.com/photo-1637536701369-f815af927b59?w=1000&q=80&auto=format&fit=crop" alt="" loading="lazy" width="1000" height="1200">
+          <img src="https://images.unsplash.com/photo-1508964801641-4b2410705b73?w=1000&q=80&auto=format&fit=crop" alt="" loading="lazy" width="1000" height="1200">
         </figure>
       </div>
       <p class="label"><span>1.1</span> Haltung</p>
@@ -88,7 +105,7 @@
           <p class="price">Ab 1.200 € / Monat</p>
         </article>
         <figure class="services__photo">
-          <img src="https://images.unsplash.com/photo-1613915617430-8ab0fd7c6baf?w=700&q=80&auto=format&fit=crop" alt="" loading="lazy" width="700" height="900">
+          <img src="https://images.unsplash.com/photo-1659522761084-79196b64abe4?w=700&q=80&auto=format&fit=crop" alt="" loading="lazy" width="700" height="900">
         </figure>
       </div>
       <p class="bigline"><span>2.0</span><span>Unsere</span><span>Leistungen</span></p>
@@ -118,12 +135,12 @@
     <section class="slide slide--white mood">
       <div class="meta"><span>Leni Heaf</span><span>Bildsprache</span><span>2026</span></div>
       <div class="mood__row">
-        <img src="https://images.unsplash.com/photo-1654536118851-7dc3b1875f7e?w=600&q=80&auto=format&fit=crop" alt="" loading="lazy" width="600" height="800">
-        <img src="https://images.unsplash.com/photo-1779743538629-043eebd79552?w=600&q=80&auto=format&fit=crop" alt="" loading="lazy" width="600" height="800">
-        <img src="https://images.unsplash.com/photo-1612375488077-ae09a725baaf?w=600&q=80&auto=format&fit=crop" alt="" loading="lazy" width="600" height="800">
-        <img src="https://images.unsplash.com/photo-1754639347079-d8d8aa8c99f6?w=600&q=80&auto=format&fit=crop" alt="" loading="lazy" width="600" height="800">
-        <img src="https://images.unsplash.com/photo-1633423009587-66dc6192ad4e?w=600&q=80&auto=format&fit=crop" alt="" loading="lazy" width="600" height="800">
-        <img src="https://images.unsplash.com/photo-1612375488496-e464baac2b72?w=600&q=80&auto=format&fit=crop" alt="" loading="lazy" width="600" height="800">
+        <img src="https://images.unsplash.com/photo-1779400204302-d2c3ed9d003d?w=600&q=80&auto=format&fit=crop" alt="" loading="lazy" width="600" height="800">
+        <img src="https://images.unsplash.com/photo-1782357091589-a3382cabc067?w=600&q=80&auto=format&fit=crop" alt="" loading="lazy" width="600" height="800">
+        <img src="https://images.unsplash.com/photo-1721957786618-5584515a50d3?w=600&q=80&auto=format&fit=crop" alt="" loading="lazy" width="600" height="800">
+        <img src="https://images.unsplash.com/photo-1732210571867-2ee57557814c?w=600&q=80&auto=format&fit=crop" alt="" loading="lazy" width="600" height="800">
+        <img src="https://images.unsplash.com/photo-1657815929003-b97cc426cb3d?w=600&q=80&auto=format&fit=crop" alt="" loading="lazy" width="600" height="800">
+        <img src="https://images.unsplash.com/photo-1668952135120-7d997b1b3778?w=600&q=80&auto=format&fit=crop" alt="" loading="lazy" width="600" height="800">
       </div>
       <div class="mood__foot">
         <h2 class="mood__title">Moodboard</h2>
@@ -135,7 +152,7 @@
     <!-- 4.0 ZAHLEN: schwarz, große Zahlen über Foto -->
     <section class="slide slide--black numbers">
       <figure class="numbers__photo">
-        <img src="https://images.unsplash.com/photo-1762532264999-6311cf82d33d?w=1600&q=80&auto=format&fit=crop" alt="" loading="lazy" width="1400" height="900">
+        <img src="https://images.unsplash.com/photo-1790802222952-eb7e610de0d1?w=1600&q=80&auto=format&fit=crop" alt="" loading="lazy" width="1400" height="900">
       </figure>
       <div class="numbers__grid">
         <p class="num">Kund:innen: 8+</p>
@@ -152,7 +169,7 @@
       <div class="founder__grid">
         <figure class="founder__photo">
           <!-- TODO: Porträt von Leni, Querformat 1400x1000 -->
-          <img src="https://images.unsplash.com/photo-1589785152613-cae7ef6afb3b?w=1400&q=80&auto=format&fit=crop" alt="Porträt von Leni Heaf" loading="lazy" width="1400" height="1000">
+          <img src="https://images.unsplash.com/photo-1779406275908-1dabe4083373?w=1400&q=80&auto=format&fit=crop" alt="Porträt von Leni Heaf" loading="lazy" width="1400" height="1000">
           <p class="founder__overlay">Von Sonneberg<br>für ganz Deutschland</p>
         </figure>
         <div class="founder__text">

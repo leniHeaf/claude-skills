@@ -5,7 +5,7 @@
    Formsystem: alles eckig. */
 
 :root {
-  --black: #161616;
+  --black: #2b2522;
   --light: #e8e7e3;
   --red: #d8000c;
   --ink: #161616;
@@ -19,7 +19,7 @@
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 body { margin: 0; background: var(--black); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.45; -webkit-font-smoothing: antialiased; }
-img { display: block; max-width: 100%; height: auto; filter: grayscale(1) contrast(1.08); }
+img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; }
 h1, h2, h3, p, figure, dl, dd { margin: 0; }
 ul { margin: 0; padding: 0; list-style: none; }
@@ -55,12 +55,48 @@ ul { margin: 0; padding: 0; list-style: none; }
 .hero__square:hover { transform: translateY(-4px); }
 .hero__square-cta { border-bottom: 1px solid currentColor; align-self: flex-start; }
 .hero__row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 16px; margin: clamp(18px, 2vw, 28px) 0 12px; padding-top: 10px; border-top: 1px solid var(--ink); font-size: 11px; font-weight: 700; text-transform: uppercase; }
-.hero__photo img { width: 100%; aspect-ratio: 5 / 2; object-fit: cover; object-position: 50% 30%; }
+.hero__photo img { width: 100%; aspect-ratio: 5 / 2; object-fit: cover; object-position: 50% 45%; }
 .hero .label { position: static; margin-top: 18px; }
 @media (max-width: 700px) {
   .hero__letters { padding-right: 0; font-size: 26vw; }
   .hero__square { position: static; width: 100%; aspect-ratio: auto; min-height: 120px; gap: 16px; margin-top: 16px; }
   .hero__photo img { aspect-ratio: 4 / 3; }
+}
+
+/* 1.0 Start wie die Rue-Logoseite */
+.logo-hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 100dvh; }
+.logo-hero__half { position: relative; display: grid; place-items: center; padding: 96px var(--pad) 72px; overflow: hidden; }
+.logo-hero__half--photo { background: #3a332e; color: #f2efe9; }
+.logo-hero__half--photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; filter: grayscale(1) sepia(.32) contrast(1.05) brightness(.58); }
+.logo-hero__half--light { background: #e7e5e0; color: #111; }
+.corner { position: absolute; font-size: 10px; font-weight: 500; text-transform: uppercase; line-height: 1.3; z-index: 1; }
+.corner--tl { left: var(--pad); top: 64px; }
+.corner--tr { right: var(--pad); top: 64px; text-align: left; }
+.corner--ml { left: var(--pad); top: 30%; }
+.corner--mm { left: 50%; top: 30%; transform: translateX(-50%); }
+.corner--mr { right: var(--pad); top: 30%; text-align: right; }
+.lockup { position: relative; z-index: 1; display: grid; justify-items: center; text-align: center; gap: 10px; }
+.lockup__mark { font-family: "Archivo", var(--sans); font-stretch: 125%; font-weight: 800; font-size: clamp(34px, 5.1vw, 92px); line-height: .9; letter-spacing: -0.01em; white-space: nowrap; }
+.lockup__mark sup { font-size: .2em; vertical-align: top; position: relative; top: .3em; margin-left: .05em; font-weight: 700; }
+.lockup__sub { font-size: clamp(13px, 1.1vw, 17px); font-weight: 700; text-transform: uppercase; margin-top: 6px; }
+.lockup__copy { font-size: 11px; }
+.rings { display: flex; margin: 6px 0; }
+.rings i { width: 18px; height: 18px; border: 2.5px solid currentColor; border-radius: 50%; }
+.rings i + i { margin-left: -6px; }
+.lockup__loc { display: flex; align-items: baseline; gap: 18px; font-size: 9px; font-weight: 700; text-transform: uppercase; margin-top: 10px; }
+.lockup__loc .type { font-family: "Courier Prime", "Courier New", monospace; font-size: 17px; letter-spacing: 0.04em; border-bottom: 1px dashed currentColor; padding: 0 22px 2px; }
+.lockup__addr { font-size: 9px; font-weight: 700; text-transform: uppercase; line-height: 1.5; }
+.lockup__addr a { text-decoration: none; }
+.dot.dot--link { position: absolute; left: var(--pad); bottom: var(--pad); width: 38px; height: 38px; margin: 0; z-index: 1; transition: transform .3s var(--ease); }
+.dot--link:hover { transform: scale(1.15); }
+.logo-hero__cta { position: absolute; right: var(--pad); bottom: var(--pad); font-size: 11px; font-weight: 700; text-transform: uppercase; text-decoration: none; border-bottom: 1px solid currentColor; }
+.logo-hero__cta:hover { color: var(--red); }
+@media (max-width: 900px) {
+  .logo-hero { grid-template-columns: 1fr; }
+  .logo-hero__half { min-height: 92dvh; }
+  .logo-hero__half--light { min-height: 70dvh; }
+  .corner--mm { display: none; }
+  .lockup__mark { font-size: 11.5vw; }
 }
 
 /* 3.1 Moodboard */
@@ -132,7 +168,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 /* 4.0 Zahlen */
 .numbers { padding: 0; }
 .numbers__photo { position: absolute; inset: 0; }
-.numbers__photo img { width: 100%; height: 100%; object-fit: cover; opacity: .55; }
+.numbers__photo img { width: 100%; height: 100%; object-fit: cover; opacity: .55; filter: grayscale(1); }
 .numbers__grid { position: relative; flex: 1; display: grid; grid-template-columns: 1fr 1fr; align-content: space-between; gap: 40px; padding: calc(var(--pad) + 40px) var(--pad) calc(var(--pad) + 48px); }
 .num { font-size: clamp(34px, 5vw, 80px); font-weight: 400; line-height: .95; letter-spacing: -0.04em; text-transform: uppercase; color: #ece9e2; }
 .num--right { text-align: right; }
