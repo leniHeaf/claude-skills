@@ -3836,3 +3836,15 @@ html body.v5.v5 :is(h1, h2, .w4-title, .w4-name, .c3-giant, .c3-title, .c3-next_
   body.v5 .footer .footer__bottom { flex-wrap: wrap; gap: 10px; }
   body.v5 .footer .footer__bottom .logo { white-space: nowrap; font-size: 15vw !important; }
 }
+
+/* Wer dahintersteht */
+.hy-me { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 6vw, 110px); align-items: end; padding: 0 var(--g) clamp(140px, 22vh, 260px); }
+.hy-me__pic { position: relative; aspect-ratio: 4 / 5; background: #1c1c1c; display: grid; place-items: center; overflow: hidden; }
+body.v5 .hy .hy-me__pic span { font: 800 clamp(120px, 18vw, 280px)/1 "Archivo", sans-serif !important; font-stretch: 72% !important; color: #2a2a2a; }
+body.v5 .hy .hy-me__pic em { position: absolute; left: 14px; bottom: 12px; font: 500 11px/1 var(--hy-mono) !important; font-style: normal; text-transform: uppercase; color: #6a6a6a; }
+.hy-me__txt .hy-dot { display: flex; }
+body.v5 .hy .hy-big--l { margin: 0; max-width: none; text-align: left; font-size: clamp(64px, 10vw, 170px) !important; }
+body.v5 .hy .hy-me__role { margin: 14px 0 0; font: 500 13px/1 var(--hy-mono) !important; text-transform: uppercase; color: #9a9a9a; }
+body.v5 .hy .hy-lead--l { margin: 28px 0 0; text-align: left; }
+.hy-me .hy-btn { margin-left: -14px; }
+@media (max-width: 760px) { .hy-me { grid-template-columns: 1fr; } }
