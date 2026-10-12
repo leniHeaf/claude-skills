@@ -3981,3 +3981,61 @@ body.v5 .mz .mz-serv__t { font: 800 clamp(34px, 5.4vw, 92px)/.9 "Archivo", sans-
 }
 @media (max-width: 800px) { .mz-hero__pic { order: 0 !important; aspect-ratio: 1; } }
 body.v5 .mz .mz-quote p { max-width: 21ch; }
+
+/* ==========================================================================
+   Magazin-Look auf allen Seiten: weißer Kopf, schwarze Schrift, Linien
+   ========================================================================== */
+body.v5 .header { background: #fff !important; color: #0a0a0a !important; border-bottom: 2px solid #0a0a0a !important; }
+body.v5 .header .logo, body.v5 .header .header__claim, body.v5 .header .header__year, body.v5 .header .header__contact,
+body.v5 .header .nav a, body.v5 .header .nav__toggle { color: #0a0a0a !important; }
+body.v5 .header .nav a, body.v5 .header .nav__toggle { background-image: linear-gradient(#0a0a0a, #0a0a0a) !important; }
+body.v5 .header .header__contact svg { stroke: #0a0a0a; }
+body.v5 .header .sub { background: #fff !important; color: #0a0a0a !important; border-top: 1px solid #0a0a0a; border-bottom: 2px solid #0a0a0a; }
+body.v5 .header .sub a, body.v5 .header .sub span, body.v5 .header .sub p { color: #0a0a0a !important; }
+body.v5 .header .sub a:hover { color: #777 !important; }
+@media (max-width: 900px) { body.v5 .header .burger span:not(.sr) { background: #0a0a0a !important; } }
+
+/* Arbeiten-Übersicht weiß */
+body.page-w4, body.page-w4 .w4 { background: #fff !important; color: #0a0a0a !important; }
+.w4 .w4-row, .w4 ol, .w4 .w4-cols { border-color: #0a0a0a !important; }
+.w4 .w4-row { border-top-color: #0a0a0a !important; }
+body.v5 .w4 .w4-name, body.v5 .w4 .w4-title { color: #0a0a0a !important; }
+body.v5 .w4 .w4-tags, body.v5 .w4 .w4-year, body.v5 .w4 .w4-cols, body.v5 .w4 .w4-kick { color: #555 !important; }
+body.v5 .w4 .w4-no, body.v5 .w4 .w4-kick b { color: #0a0a0a !important; }
+body.v5 .w4 .w4-intro { color: #333 !important; }
+.w4 .w4-row a::before { background: #0a0a0a !important; }
+@media (hover: hover) {
+  .w4 .w4-row a:hover, .w4 .w4-row a:hover * { color: #fff !important; }
+}
+
+/* Academy weiß */
+body.page-ac2, body.page-ac2 .ac2, .page-ac2 .ac2-hero, .page-ac2 .ac2-start, .page-ac2 .ac2-wiki, .page-ac2 .ac2-offers { background: #fff !important; color: #0a0a0a !important; }
+body.page-ac2 .ac2 :is(h1, h2, h3, p, span, a) { color: #0a0a0a; }
+.page-ac2 .ac2-hero::before { -webkit-text-stroke: 1px rgba(0,0,0,.07) !important; }
+.page-ac2 .ac2-feat { background: #f2f2f0 !important; color: #0a0a0a !important; }
+.page-ac2 .ac2-feat:hover { background: #0a0a0a !important; }
+.page-ac2 .ac2-feat:hover * { color: #fff !important; }
+.page-ac2 .ac2-feat p:not(.ac2-meta) { color: #444 !important; }
+.page-ac2 .ac2-bar { background: rgba(255,255,255,.92) !important; border-bottom-color: #0a0a0a !important; }
+.page-ac2 .ac2-chips button { color: #0a0a0a !important; border-color: #0a0a0a !important; }
+.page-ac2 .ac2-chips button.is-active, .page-ac2 .ac2-chips button:hover { background: #0a0a0a !important; color: #fff !important; }
+.page-ac2 .ac2-search { border-color: #0a0a0a !important; }
+.page-ac2 .ac2-card { border-bottom-color: #0a0a0a !important; }
+.page-ac2 .ac2-group__head { border-bottom-color: #0a0a0a !important; }
+.page-ac2 .ac2-card__desc { color: #555 !important; }
+.page-ac2 .ac2-card .bx-num { color: #999 !important; }
+.page-ac2 .ac2-card__cover { background: #fff !important; box-shadow: inset 0 0 0 2px #0a0a0a !important; color: #0a0a0a !important; }
+.page-ac2 .ac2-card a::before { background: #0a0a0a !important; }
+.page-ac2 .ac2-card a:hover *, .page-ac2 .ac2-card a:hover .ac2-card__desc { color: #fff !important; }
+.page-ac2 .ac2-card a:hover .ac2-card__cover { background: #fff !important; color: #0a0a0a !important; }
+.page-ac2 .ac2-card a:hover .ac2-card__cover * { color: #0a0a0a !important; }
+.page-ac2 .ac2-off, .page-ac2 .ac2-off a { background: #fff !important; border-color: #0a0a0a !important; }
+.page-ac2 .ac2-off a:hover { background: #0a0a0a !important; }
+.page-ac2 .ac2-off a:hover * { color: #fff !important; }
+.page-ac2 .ac2-news { background: #0a0a0a !important; }
+.page-ac2 .ac2-news * { color: #fff; }
+.page-ac2 .ac2-news .ac2-news__btn { color: #0a0a0a !important; }
+body.page-ac2 .ac2 .ac2-hero__title { color: #0a0a0a !important; }
+html body.page-ac2 .ac2-stats b, html body.page-ac2 .ac2-meta span:first-child, html body.page-ac2 .ac2-kicker { color: #0a0a0a !important; }
+html body.page-ac2 .ac2-feat:hover .ac2-meta span { color: #fff !important; }
+html body.page-ac2 .ac2-chips button.is-active *, html body.page-ac2 .ac2-chips button:hover * { color: #fff !important; }
