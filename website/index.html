@@ -33,26 +33,24 @@
   </header>
 
   <main id="main">
-    <!-- 1.0 TITEL: schwarz, gestapelte Buchstaben, Foto -->
-    <section class="slide slide--black cover">
-      <div class="cover__left">
-        <p class="cover__words"><span>Branding</span><span>Web</span><span>Social</span></p>
-        <h1 class="sr-only">Leni Heaf, Agentur für Branding, Webdesign und Social Media in Sonneberg</h1>
-        <dl class="info">
-          <div><dt>Studio</dt><dd>Sonneberg, Deutschland</dd></div>
-          <div><dt>Mail</dt><dd><a href="mailto:hallo@leniheaf.de">hallo@leniheaf.de</a></dd></div>
-          <div><dt>Instagram</dt><dd><a href="https://instagram.com/" rel="noopener">@leniheaf</a></dd></div>
-          <div><dt>Status</dt><dd>Offen für Projekte</dd></div>
-        </dl>
-        <span class="dot" aria-hidden="true"></span>
+    <!-- 1.0 START: wie Rue 002, gesperrte Riesenbuchstaben, rotes Quadrat, breites Foto -->
+    <!-- Fotos: Unsplash (freie Lizenz, auch kommerziell). TODO: später durch eigene Shootings ersetzen -->
+    <section class="hero">
+      <h1 class="sr-only">Leni Heaf, Agentur für Branding, Webdesign und Social Media in Sonneberg</h1>
+      <div class="hero__top">
+        <p class="hero__letters" aria-hidden="true"><span>L</span><span>E</span><span>N</span><span>I</span></p>
+        <a class="hero__square" href="#kontakt">
+          <span>Agentur für Branding, Webdesign und Social Media aus Sonneberg. Für Unternehmen, die gesehen werden wollen.</span>
+          <span class="hero__square-cta">Projekt anfragen</span>
+        </a>
       </div>
-      <p class="stack" aria-hidden="true"><span>L</span><span>E</span><span>N</span><span>I</span></p>
-      <figure class="cover__photo">
-        <!-- TODO: Schwarz-Weiß-Porträt von Leni, Hochformat 1100x1400 -->
-        <img src="https://picsum.photos/id/64/1100/1400" alt="Leni Heaf, Gründerin" width="1100" height="1400" fetchpriority="high">
+      <ul class="hero__row">
+        <li>Branding</li><li>Webdesign</li><li>Social Media</li><li>Content</li><li>Strategie</li><li>Sonneberg</li><li>Seit 2026</li>
+      </ul>
+      <figure class="hero__photo">
+        <img src="https://images.unsplash.com/photo-1643077286854-6ada321e9b48?w=2000&q=80&auto=format&fit=crop" alt="" width="2000" height="800" fetchpriority="high">
       </figure>
       <p class="label"><span>1.0</span> Agentur</p>
-      <span class="redbar" aria-hidden="true"></span>
     </section>
 
     <!-- 1.1 HALTUNG: hellgrau, große dünne Aussage -->
@@ -64,7 +62,7 @@
           <h2 class="statement">Mutig<br>Persönlich<br>Klar</h2>
         </div>
         <figure class="split__photo">
-          <img src="https://picsum.photos/id/325/1000/1200" alt="" loading="lazy" width="1000" height="1200">
+          <img src="https://images.unsplash.com/photo-1637536701369-f815af927b59?w=1000&q=80&auto=format&fit=crop" alt="" loading="lazy" width="1000" height="1200">
         </figure>
       </div>
       <p class="label"><span>1.1</span> Haltung</p>
@@ -90,7 +88,7 @@
           <p class="price">Ab 1.200 € / Monat</p>
         </article>
         <figure class="services__photo">
-          <img src="https://picsum.photos/id/91/700/900" alt="" loading="lazy" width="700" height="900">
+          <img src="https://images.unsplash.com/photo-1613915617430-8ab0fd7c6baf?w=700&q=80&auto=format&fit=crop" alt="" loading="lazy" width="700" height="900">
         </figure>
       </div>
       <p class="bigline"><span>2.0</span><span>Unsere</span><span>Leistungen</span></p>
@@ -116,10 +114,28 @@
       <p class="label"><span>3.0</span> Arbeiten</p>
     </section>
 
+    <!-- 3.1 MOODBOARD: Fotoreihe wie im Rue-Lookbook -->
+    <section class="slide slide--white mood">
+      <div class="meta"><span>Leni Heaf</span><span>Bildsprache</span><span>2026</span></div>
+      <div class="mood__row">
+        <img src="https://images.unsplash.com/photo-1654536118851-7dc3b1875f7e?w=600&q=80&auto=format&fit=crop" alt="" loading="lazy" width="600" height="800">
+        <img src="https://images.unsplash.com/photo-1779743538629-043eebd79552?w=600&q=80&auto=format&fit=crop" alt="" loading="lazy" width="600" height="800">
+        <img src="https://images.unsplash.com/photo-1612375488077-ae09a725baaf?w=600&q=80&auto=format&fit=crop" alt="" loading="lazy" width="600" height="800">
+        <img src="https://images.unsplash.com/photo-1754639347079-d8d8aa8c99f6?w=600&q=80&auto=format&fit=crop" alt="" loading="lazy" width="600" height="800">
+        <img src="https://images.unsplash.com/photo-1633423009587-66dc6192ad4e?w=600&q=80&auto=format&fit=crop" alt="" loading="lazy" width="600" height="800">
+        <img src="https://images.unsplash.com/photo-1612375488496-e464baac2b72?w=600&q=80&auto=format&fit=crop" alt="" loading="lazy" width="600" height="800">
+      </div>
+      <div class="mood__foot">
+        <h2 class="mood__title">Moodboard</h2>
+        <p class="small-caps">Klar, ruhig, mit Haltung. So denken wir Bildsprache für die Marken unserer Kund:innen.</p>
+      </div>
+      <p class="label"><span>3.1</span> Bildsprache</p>
+    </section>
+
     <!-- 4.0 ZAHLEN: schwarz, große Zahlen über Foto -->
     <section class="slide slide--black numbers">
       <figure class="numbers__photo">
-        <img src="https://picsum.photos/id/338/1400/900" alt="" loading="lazy" width="1400" height="900">
+        <img src="https://images.unsplash.com/photo-1762532264999-6311cf82d33d?w=1600&q=80&auto=format&fit=crop" alt="" loading="lazy" width="1400" height="900">
       </figure>
       <div class="numbers__grid">
         <p class="num">Kund:innen: 8+</p>
@@ -136,7 +152,7 @@
       <div class="founder__grid">
         <figure class="founder__photo">
           <!-- TODO: Porträt von Leni, Querformat 1400x1000 -->
-          <img src="https://picsum.photos/id/65/1400/1000" alt="Porträt von Leni Heaf" loading="lazy" width="1400" height="1000">
+          <img src="https://images.unsplash.com/photo-1589785152613-cae7ef6afb3b?w=1400&q=80&auto=format&fit=crop" alt="Porträt von Leni Heaf" loading="lazy" width="1400" height="1000">
           <p class="founder__overlay">Von Sonneberg<br>für ganz Deutschland</p>
         </figure>
         <div class="founder__text">
