@@ -384,3 +384,71 @@ body.menu-open .nav { mix-blend-mode: normal; color: #ece8e1; }
   .js .slide .case__img img { clip-path: inset(0 0 100% 0); transition: clip-path 1.3s var(--ease), transform 1s var(--ease), filter .6s; }
   .js .slide.is-in .case__img img { clip-path: inset(0 0 0 0); }
 }
+
+/* ---------- Rue-Feinschliff: eine Bildsprache, warmes Grau, Randdetails ---------- */
+:root { --black: #1b1b1b; --warm: #bdb8ad; --light: #e8e6e1; }
+.slide--black, .slide--brown { background: var(--black); color: var(--warm); }
+.slide--white, .slide--light { background: var(--light); }
+.footer, .menu { background: var(--black); }
+.menu { color: var(--warm); }
+
+/* Bilder sind einheitlich bearbeitet, keine zusätzlichen Filter */
+.logo-hero__half--photo img, .case__img img, .fullbleed__img, .numbers__photo img { filter: none; }
+.case__link:hover .case__img img { filter: none; }
+.fullbleed__img { opacity: .82; }
+
+/* Filmkorn über allen Fotos */
+figure, .logo-hero__half--photo, .fullbleed { position: relative; }
+figure::after, .logo-hero__half--photo::after, .fullbleed::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0; opacity: .22; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.fullbleed__letters { z-index: 1; }
+.fullbleed__bar { z-index: 2; }
+.lockup { z-index: 2; }
+.dot.dot--link, .corner { z-index: 2; }
+
+/* Große Aussagen: normaler Schnitt wie bei Rue */
+.statement, .headline, .mission, .intro__title, .menu__links a, .contact .cover__words, .legal__title, .num, .intro__facts b { font-weight: 400; }
+.slide--black .headline, .slide--black .statement { color: var(--warm); }
+
+/* Services: hervorgehobene Zeile in Rot statt Rost */
+.sg__item--rust { background: var(--red); border-bottom-color: var(--red); color: #fff; }
+.sg__item--rust p { color: #ffe1e1; }
+.sg__list, .sg__item { border-color: #3a3a38; }
+@media (hover: hover) { .sg__item:not(.sg__item--rust):hover { background: #242424; } }
+
+/* Rue-Randdetails: senkrechter Text rechts, roter Balken unten rechts */
+.slide::after {
+  content: "Leni Heaf    Branding, Web und Social aus Sonneberg";
+  position: absolute; right: 10px; top: 50%; transform: translateY(-50%) rotate(180deg);
+  writing-mode: vertical-rl; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .02em; white-space: pre; opacity: .85;
+}
+.slide::before {
+  content: "leniheaf.de"; position: absolute; right: 0; bottom: 0; z-index: 2;
+  width: clamp(120px, 14vw, 220px); padding: 3px 8px; background: var(--red); color: #fff;
+  font-size: 9px; font-weight: 700; text-transform: uppercase;
+}
+.slide--red::before { background: var(--black); }
+@media (max-width: 700px) { .slide::after { display: none; } }
+
+/* 4.0 Fakten wie Rue „Demographics“ */
+.facts { padding: 0; display: block; }
+.facts__photo { position: absolute; left: 0; top: 0; bottom: 0; width: 46%; margin: 0; }
+.facts__photo img { width: 100%; height: 100%; object-fit: cover; }
+.facts .meta { position: absolute; left: var(--pad); top: calc(var(--pad) + 36px); z-index: 1; color: var(--warm); }
+.facts__big { position: absolute; z-index: 1; font-size: clamp(40px, 6.2vw, 108px); font-weight: 400; line-height: .9; letter-spacing: -0.045em; text-transform: uppercase; color: var(--warm); }
+.facts__big--tr { right: 5vw; top: calc(var(--pad) + 30px); text-align: right; }
+.facts__big--ml { left: var(--pad); top: 42%; }
+.facts__big--br { right: 5vw; bottom: calc(var(--pad) + 36px); text-align: right; }
+.facts__data { position: absolute; left: 50%; top: 40%; z-index: 1; display: grid; gap: 14px; margin: 0; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+.facts__data div { display: grid; grid-template-columns: 110px 1fr; }
+.facts__data dd { margin: 0; }
+.facts .label { color: var(--warm); z-index: 1; }
+@media (max-width: 900px) {
+  .facts { display: flex; flex-direction: column; gap: 28px; padding: 80px var(--pad) 72px; }
+  .facts__photo { position: relative; width: 100%; height: 50vh; }
+  .facts .meta, .facts__big, .facts__data { position: static; text-align: left; }
+  .facts__big { font-size: 40px; }
+}
+.logo-hero__half--photo img { filter: brightness(.6); }
