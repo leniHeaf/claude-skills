@@ -87,25 +87,35 @@ Ein gutes Beispiel dafür ist Sarah Emmerich. Sie hat die Agentur Emmerich Relat
 
 ## 5. Visuelle Identität
 
-**Stil:** edel, minimalistisch, viel Weißraum, Schwarz-Weiß-Fotografie mit einem einzigen Farbakzent.
+**Richtung:** Mode-Editorial trifft Plakat. Inspiriert von Jil Sander, Karl Lagerfeld, der Agentur-Identität „A*venue“ und editorialen Schwarz-Weiß-Plakaten. Übernommen wird die Haltung, nicht deren Gestaltung.
+
+**Die 5 Regeln des Looks**
+1. **Papier und Schwarz.** Helles Papierweiß als Grund, tiefes Schwarz für Schrift.
+2. **Schwarz-Weiß-Fotografie** mit Kontrast und leichtem Filmkorn. Keine bunten Stockfotos.
+3. **Plakat-Typo:** Überschriften fett, groß, in Großbuchstaben.
+4. **Ein Rot, sparsam.** Signalrot nur für ein Wort, einen Block oder die Unterschrift. Nie flächig überall.
+5. **Kleine Schreibmaschinen-Details** (z. B. „STUDIO SONNEBERG / BRANDING / WEB / SOCIAL“) als feine Ergänzung.
 
 | Rolle | Farbe | Hex |
 | --- | --- | --- |
-| Hintergrund hell | Kühles Off-White | `#F3F3F1` |
-| Text / Hintergrund dunkel | Tiefes Anthrazit | `#141416` |
-| Akzent (sparsam!) | Kobaltblau | `#2B3FC4` |
-| Akzent im Dunkelmodus | Helles Kobalt | `#8A98FF` |
-| Flächen | Hellgrau | `#E9E9E6` |
+| Hintergrund | Papierweiß | `#F3F2EE` |
+| Text, Flächen | Schwarz | `#111111` |
+| Akzent | Signalrot | `#D42A1F` |
+| Nebentext | Grau | `#55554F` |
 
-**Schrift:** [Geist](https://vercel.com/font) (kostenlos, Open Source) für alles. Überschriften Medium, eng gesetzt. Betonung nur mit *Kursiv* in Akzentfarbe, nie mit einer zweiten Schrift.
+**Schriften** (alle kostenlos über Google Fonts)
+- **Archivo**, fett und breit: Logo und Überschriften
+- **Archivo**, normal: Fließtext
+- **IBM Plex Mono**: kleine Detail-Labels
+- **Permanent Marker**: nur für die rote „Leni“-Unterschrift
 
-**Logo:** Wortmarke `leni heaf` in Kleinbuchstaben, Geist Semibold, eng gesetzt. Favicon/Profilbild-Variante: `lh` weiß auf Anthrazit.
-> Nächster Schritt: Wortmarke von einer Designerin final zeichnen lassen (Abstände, Ligaturen), damit sie einzigartig ist.
+**Logo:** Wortmarke `LENI HEAF` in Archivo Extra Bold, breit laufend, Großbuchstaben. Auf Papier schwarz, auf Schwarz weiß, auf Rot weiß.
+> Nächster Schritt: Wortmarke von einer Designerin final zeichnen lassen, damit sie einzigartig und markenrechtlich schützbar ist.
 
 **Fotografie**
-- Ein professionelles Porträt-Shooting ist die wichtigste Investition für dein Personal Branding.
-- Schwarz-Weiß oder entsättigt, natürliches Licht, ruhige Hintergründe.
-- Mindestens: 1 Porträt Hochformat, 1 Querformat (Website), 3 bis 5 Arbeitssituationen (am Laptop, im Kundengespräch, mit Moodboards).
+- Porträt-Shooting im Studio vor hellem Hintergrund, Schwarz-Weiß, mit Haltung: direkter Blick, Bewegung, auch angeschnittene Bildausschnitte.
+- Mindestens: 1 Porträt Querformat (Startseite), 1 Hochformat (Über mich), 5 bis 10 Arbeitssituationen.
+- Für Social Media: dieselbe Bildsprache, damit dein Feed sofort als „Leni Heaf“ erkennbar ist.
 
 ---
 
