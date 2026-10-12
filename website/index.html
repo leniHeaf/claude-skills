@@ -5,243 +5,192 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Leni Heaf · Agentur für Branding, Webdesign & Social Media</title>
   <meta name="description" content="Leni Heaf ist eine Full-Service-Agentur aus Sonneberg für Branding, Webdesign und Social Media. Für Unternehmen in Thüringen, Franken und ganz Deutschland.">
-  <meta property="og:title" content="Leni Heaf · Wir machen Marken unübersehbar">
-  <meta property="og:description" content="Full-Service-Agentur für Branding, Webdesign und Social Media aus Sonneberg.">
+  <meta property="og:title" content="Leni Heaf · Branding, Web & Social">
+  <meta property="og:description" content="Full-Service-Agentur aus Sonneberg.">
   <meta property="og:type" content="website">
   <meta name="color-scheme" content="dark">
-  <meta name="theme-color" content="#0c0c0c">
+  <meta name="theme-color" content="#000000">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <!-- Für den Livebetrieb Fonts lokal hosten (DSGVO): siehe README im Ordner website/ -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <a class="skip" href="#main">Zum Inhalt springen</a>
 
   <header class="nav" id="top">
-    <div class="wrap nav__inner">
-      <a href="#top" class="logo" aria-label="Leni Heaf, zur Startseite">Leni Heaf</a>
-      <nav aria-label="Hauptnavigation">
-        <ul class="nav__links" id="menu">
-          <li><a href="#arbeiten">Arbeiten</a></li>
-          <li><a href="#leistungen">Leistungen</a></li>
-          <li><a href="#agentur">Agentur</a></li>
-          <li><a href="#kontakt" class="nav__cta">Projekt starten</a></li>
-        </ul>
-      </nav>
-      <button class="nav__toggle" aria-expanded="false" aria-controls="menu" aria-label="Menü öffnen">
-        <span></span><span></span>
-      </button>
-    </div>
+    <a href="#top" class="nav__logo">LENI_HEAF</a>
+    <nav aria-label="Hauptnavigation">
+      <ul class="nav__links">
+        <li><a href="#leistungen">Leistungen</a></li>
+        <li><a href="#arbeiten">Arbeiten</a></li>
+        <li><a href="#leni">Leni</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+      </ul>
+    </nav>
   </header>
 
   <main id="main">
-    <!-- HERO: kinetische Headline mit wechselnder Leistung -->
-    <section class="hero wrap">
-      <p class="hero__kicker" data-anim="fade">Full-Service-Agentur aus Sonneberg</p>
-      <h1 class="hero__title" aria-label="Wir machen Marken unübersehbar.">
-        <span class="line" aria-hidden="true"><span class="line__in">Wir machen</span></span>
-        <span class="line" aria-hidden="true"><span class="line__in">Marken</span></span>
-        <span class="line" aria-hidden="true"><span class="line__in red">unübersehbar.</span></span>
-      </h1>
-      <div class="hero__bottom">
-        <p class="hero__rotator" data-anim="fade" aria-hidden="true">
-          <span>Branding</span><span>Webdesign</span><span>Social Media</span><span>Content</span>
-        </p>
-        <div class="hero__cta" data-anim="fade">
-          <p>Branding, Websites und Social Media aus einer Hand. Für Unternehmen, die gesehen werden wollen.</p>
-          <a href="#kontakt" class="btn">Projekt starten</a>
+    <!-- PLAKAT 1: Start -->
+    <section class="sheet sheet--hero" aria-labelledby="hero-title">
+      <div class="sheet__head">
+        <div class="sheet__left">
+          <h1 class="title" id="hero-title">LENI HEAF</h1>
+          <a class="folder" href="#arbeiten"><span class="folder__icon" aria-hidden="true"></span><span class="folder__label">projekte</span></a>
         </div>
+        <dl class="data">
+          <div><dt>AGENTUR</dt><dd>BRANDING / WEB / SOCIAL</dd></div>
+          <div><dt>STUDIO</dt><dd>SONNEBERG_DE</dd></div>
+          <div><dt>LAT</dt><dd>50.3500 LON 11.1700</dd></div>
+          <div><dt>SNAPSHOT</dt><dd><span id="clock">00:00:00</span> MEZ</dd></div>
+          <div><dt>STATUS</dt><dd>OFFEN FÜR PROJEKTE</dd></div>
+          <div><dt>ANTWORT</dt><dd>&lt; 24 H</dd></div>
+        </dl>
       </div>
+      <figure class="photo">
+        <!-- TODO: echtes Schwarz-Weiß-Foto von Leni im weißen Studio (Ganzkörper, sitzend), Querformat 1800x1200 -->
+        <img src="https://picsum.photos/id/325/1800/1200?grayscale" alt="Leni Heaf im Studio" width="1800" height="1200" fetchpriority="high">
+        <figcaption class="photo__mark">©2026</figcaption>
+      </figure>
     </section>
 
-    <!-- BILDER-LAUFBAND: einziges Laufband der Seite -->
-    <section class="reel" aria-label="Eindrücke aus Projekten">
-      <!-- TODO: echte Projektbilder (Logos, Social Posts, Websites) einsetzen -->
-      <div class="reel__track">
-        <img src="https://picsum.photos/id/21/600/750" alt="" loading="lazy" width="600" height="750">
-        <img src="https://picsum.photos/id/119/900/750" alt="" loading="lazy" width="900" height="750">
-        <img src="https://picsum.photos/id/64/600/750" alt="" loading="lazy" width="600" height="750">
-        <img src="https://picsum.photos/id/20/900/750" alt="" loading="lazy" width="900" height="750">
-        <img src="https://picsum.photos/id/91/600/750" alt="" loading="lazy" width="600" height="750">
-        <img src="https://picsum.photos/id/42/900/750" alt="" loading="lazy" width="900" height="750">
-        <img src="https://picsum.photos/id/21/600/750" alt="" loading="lazy" width="600" height="750">
-        <img src="https://picsum.photos/id/119/900/750" alt="" loading="lazy" width="900" height="750">
-        <img src="https://picsum.photos/id/64/600/750" alt="" loading="lazy" width="600" height="750">
-        <img src="https://picsum.photos/id/20/900/750" alt="" loading="lazy" width="900" height="750">
-        <img src="https://picsum.photos/id/91/600/750" alt="" loading="lazy" width="600" height="750">
-        <img src="https://picsum.photos/id/42/900/750" alt="" loading="lazy" width="900" height="750">
+    <!-- PLAKAT 2: Leistungen -->
+    <section class="sheet" id="leistungen" aria-labelledby="l-title">
+      <div class="sheet__head">
+        <h2 class="title" id="l-title">LEISTUNGEN</h2>
+        <dl class="data">
+          <div><dt>DISZIPLINEN</dt><dd>03</dd></div>
+          <div><dt>MODUS</dt><dd>ALLES AUS EINER HAND</dd></div>
+          <div><dt>PREISE</dt><dd>FESTPREIS, NETTO</dd></div>
+        </dl>
       </div>
-    </section>
-
-    <!-- STATEMENT: Wörter leuchten beim Scrollen auf -->
-    <section class="statement wrap" id="agentur">
-      <p class="statement__text" data-words>Gute Unternehmen bleiben oft unsichtbar. Nicht wegen ihres Angebots, sondern wegen ihres Auftritts. Wir ändern das mit Marken, Websites und Social Media, die zusammen wirken und mehr Anfragen bringen.</p>
-    </section>
-
-    <!-- ARBEITEN: Projektliste mit Bildvorschau am Cursor -->
-    <section class="section wrap" id="arbeiten">
-      <div class="section__head">
-        <h2 class="h2" data-anim="up">Ausgewählte Arbeiten</h2>
-        <a href="#kontakt" class="link">Dein Projekt als nächstes</a>
-      </div>
-      <!-- TODO: Leistungen pro Kund:in prüfen und echte Projektbilder einsetzen -->
-      <ul class="work">
-        <li class="work__row" data-img="https://picsum.photos/id/119/800/600">
-          <img class="work__thumb" src="https://picsum.photos/id/119/800/600" alt="" loading="lazy" width="800" height="600">
-          <h3>Sonderpreis Baumarkt</h3><p>Social Media, Content</p>
-        </li>
-        <li class="work__row" data-img="https://picsum.photos/id/111/800/600">
-          <img class="work__thumb" src="https://picsum.photos/id/111/800/600" alt="" loading="lazy" width="800" height="600">
-          <h3>Täubert Karosserie &amp; Lack</h3><p>Branding, Logo, Instagram</p>
-        </li>
-        <li class="work__row" data-img="https://picsum.photos/id/42/800/600">
-          <img class="work__thumb" src="https://picsum.photos/id/42/800/600" alt="" loading="lazy" width="800" height="600">
-          <h3>Butter und Brot</h3><p>Branding, Instagram</p>
-        </li>
-        <li class="work__row" data-img="https://picsum.photos/id/1/800/600">
-          <img class="work__thumb" src="https://picsum.photos/id/1/800/600" alt="" loading="lazy" width="800" height="600">
-          <h3>my baumarkt</h3><p>Social Media</p>
-        </li>
-        <li class="work__row" data-img="https://picsum.photos/id/96/800/600">
-          <img class="work__thumb" src="https://picsum.photos/id/96/800/600" alt="" loading="lazy" width="800" height="600">
-          <h3>Kühlkraft</h3><p>Branding, Logo</p>
-        </li>
-        <li class="work__row" data-img="https://picsum.photos/id/237/800/600">
-          <img class="work__thumb" src="https://picsum.photos/id/237/800/600" alt="" loading="lazy" width="800" height="600">
-          <h3>Dogstar</h3><p>Branding, Instagram</p>
-        </li>
-      </ul>
-      <p class="work__more">Außerdem für Crea Response und Yvonne Kleinle</p>
-    </section>
-    <div class="cursor-img" aria-hidden="true"><img alt=""></div>
-
-    <!-- LEISTUNGEN -->
-    <section class="section wrap" id="leistungen">
-      <h2 class="h2" data-anim="up">Leistungen</h2>
       <div class="services">
-        <article class="service" data-anim="up">
+        <article class="service">
           <h3>Branding</h3>
-          <p>Wir geben deinem Unternehmen ein Gesicht, das man nicht vergisst.</p>
-          <ul class="tags"><li>Positionierung</li><li>Logo</li><li>Corporate Design</li><li>Markenhandbuch</li></ul>
-          <p class="service__price">ab 1.900 €</p>
+          <p>Positionierung, Logo, Farben, Schrift. Ein Auftritt, den man nicht vergisst.</p>
+          <p class="mono">AB 1.900 € / 4 BIS 6 WOCHEN</p>
         </article>
-        <article class="service" data-anim="up">
+        <article class="service">
           <h3>Webdesign</h3>
-          <p>Websites, die schnell sind, gut aussehen und Besucher:innen zu Anfragen machen.</p>
-          <ul class="tags"><li>Konzept</li><li>Design</li><li>Texte</li><li>SEO</li><li>Launch</li></ul>
-          <p class="service__price">ab 2.500 €</p>
+          <p>Websites, die gut aussehen, schnell laden und Besucher:innen zu Anfragen machen.</p>
+          <p class="mono">AB 2.500 € / 6 BIS 10 WOCHEN</p>
         </article>
-        <article class="service" data-anim="up">
+        <article class="service">
           <h3>Social Media</h3>
-          <p>Strategie, Content und Betreuung, damit deine Kanäle wachsen und verkaufen.</p>
-          <ul class="tags"><li>Instagram</li><li>LinkedIn</li><li>TikTok</li><li>Reels</li><li>Ads</li></ul>
-          <p class="service__price">ab 1.200 € / Monat</p>
+          <p>Strategie, Content und Betreuung für Instagram, LinkedIn und TikTok.</p>
+          <p class="mono">AB 1.200 € / MONAT</p>
         </article>
       </div>
+      <figure class="photo photo--wide">
+        <img src="https://picsum.photos/id/201/1800/900?grayscale" alt="" loading="lazy" width="1800" height="900">
+        <figcaption class="photo__mark">©2026</figcaption>
+      </figure>
     </section>
 
-    <!-- ZAHLEN -->
-    <section class="section wrap">
-      <div class="stats">
-        <div class="stat" data-anim="up"><p class="stat__num"><span data-count="8">8</span>+</p><p>Kund:innen</p></div>
-        <div class="stat" data-anim="up"><p class="stat__num"><span data-count="3">3</span></p><p>Disziplinen aus einer Hand</p></div>
-        <div class="stat" data-anim="up"><p class="stat__num"><span data-count="24">24</span>h</p><p>bis zur persönlichen Antwort</p></div>
-        <div class="stat" data-anim="up"><p class="stat__num"><span data-count="1">1</span></p><p>feste Ansprechpartnerin</p></div>
+    <!-- PLAKAT 3: Arbeiten -->
+    <section class="sheet" id="arbeiten" aria-labelledby="a-title">
+      <div class="sheet__head">
+        <h2 class="title" id="a-title">ARBEITEN</h2>
+        <dl class="data">
+          <div><dt>ARCHIV</dt><dd>2024 BIS HEUTE</dd></div>
+          <div><dt>KUND:INNEN</dt><dd>08</dd></div>
+          <div><dt>ERGEBNIS</dt><dd>MEHR ANFRAGEN</dd></div>
+        </dl>
       </div>
-    </section>
-
-    <!-- ABLAUF -->
-    <section class="section wrap">
-      <h2 class="h2" data-anim="up">So arbeiten wir</h2>
-      <ol class="steps">
-        <li data-anim="up"><h3>Zuhören</h3><p>Wir verstehen dein Geschäft, deine Kundschaft und deine Ziele.</p></li>
-        <li data-anim="up"><h3>Strategie</h3><p>Positionierung und Plan, bevor gestaltet wird.</p></li>
-        <li data-anim="up"><h3>Kreation</h3><p>Logo, Website und Content entstehen als ein System.</p></li>
-        <li data-anim="up"><h3>Wachstum</h3><p>Wir betreuen deine Kanäle und sorgen für mehr Anfragen.</p></li>
+      <!-- TODO: Leistungen pro Kund:in prüfen -->
+      <ol class="archive">
+        <li><span class="mono">01</span><h3>Sonderpreis Baumarkt</h3><span class="mono">SOCIAL MEDIA, CONTENT</span></li>
+        <li><span class="mono">02</span><h3>my baumarkt</h3><span class="mono">SOCIAL MEDIA</span></li>
+        <li><span class="mono">03</span><h3>Täubert Karosserie &amp; Lack</h3><span class="mono">BRANDING, LOGO, INSTAGRAM</span></li>
+        <li><span class="mono">04</span><h3>Butter und Brot</h3><span class="mono">BRANDING, INSTAGRAM</span></li>
+        <li><span class="mono">05</span><h3>Kühlkraft</h3><span class="mono">BRANDING, LOGO</span></li>
+        <li><span class="mono">06</span><h3>Dogstar</h3><span class="mono">BRANDING, INSTAGRAM</span></li>
+        <li><span class="mono">07</span><h3>Crea Response</h3><span class="mono">BRANDING</span></li>
+        <li><span class="mono">08</span><h3>Yvonne Kleinle</h3><span class="mono">PERSONAL BRANDING</span></li>
       </ol>
     </section>
 
-    <!-- GRÜNDERIN -->
-    <section class="section wrap founder">
-      <figure class="founder__media" data-anim="up">
-        <!-- TODO: Porträt von Leni, Hochformat 1000x1250 -->
-        <img src="https://picsum.photos/id/65/1000/1250" alt="Porträt von Leni Heaf" loading="lazy" width="1000" height="1250">
-      </figure>
-      <div class="founder__text">
-        <blockquote data-anim="up">„Ich will, dass man deine Marke erkennt, bevor man deinen Namen liest.“</blockquote>
-        <p class="founder__name" data-anim="up">Leni Heaf, Gründerin</p>
-        <p data-anim="up">Ich habe die Agentur in Sonneberg gegründet, um Unternehmen aus der Region und ganz Deutschland sichtbar zu machen. Persönlich, schnell und ohne Agentur-Floskeln.</p>
-        <div class="founder__links" data-anim="up">
-          <a href="https://linkedin.com/" class="link" rel="noopener">LinkedIn</a>
-          <a href="https://instagram.com/" class="link" rel="noopener">Instagram</a>
+    <!-- PLAKAT 4: Leni -->
+    <section class="sheet" id="leni" aria-labelledby="g-title">
+      <div class="sheet__head">
+        <div class="sheet__left">
+          <h2 class="title" id="g-title">HI, ICH BIN LENI</h2>
+          <a class="folder" href="https://instagram.com/" rel="noopener"><span class="folder__icon" aria-hidden="true"></span><span class="folder__label">instagram</span></a>
         </div>
+        <dl class="data">
+          <div><dt>ROLLE</dt><dd>GRÜNDERIN</dd></div>
+          <div><dt>ORT</dt><dd>SONNEBERG</dd></div>
+          <div><dt>LINKEDIN</dt><dd><a href="https://linkedin.com/" rel="noopener">FOLGEN</a></dd></div>
+        </dl>
       </div>
+      <p class="lead">Gute Unternehmen bleiben oft unsichtbar. Nicht wegen ihres Angebots, sondern wegen ihres Auftritts. Ich habe diese Agentur gegründet, um das zu ändern. Persönlich, klar und ohne Agentur-Floskeln.</p>
+      <figure class="photo">
+        <!-- TODO: Porträt von Leni, Querformat 1800x1200 -->
+        <img src="https://picsum.photos/id/269/1800/1200?grayscale" alt="" loading="lazy" width="1800" height="1200">
+        <figcaption class="photo__mark">©2026</figcaption>
+      </figure>
     </section>
 
-    <!-- KONTAKT -->
-    <section class="section wrap contact" id="kontakt">
-      <h2 class="contact__title" data-anim="up">Lass uns was <span class="red">Großes</span> bauen.</h2>
-      <div class="contact__grid">
-        <div class="contact__intro">
-          <p>Erzähl kurz, worum es geht. Du bekommst innerhalb von 24 Stunden eine persönliche Antwort. Das Erstgespräch ist kostenlos.</p>
-          <p class="contact__mail"><a href="mailto:hallo@leniheaf.de">hallo@leniheaf.de</a></p>
-        </div>
-        <form class="form" id="contact-form" novalidate>
-          <div class="field">
-            <label for="name">Name</label>
-            <input id="name" name="name" type="text" autocomplete="name" required>
-            <p class="field__error" id="name-error" aria-live="polite"></p>
-          </div>
-          <div class="field">
-            <label for="email">E-Mail</label>
-            <input id="email" name="email" type="email" autocomplete="email" required>
-            <p class="field__error" id="email-error" aria-live="polite"></p>
-          </div>
-          <div class="field">
-            <label for="service">Worum geht es?</label>
-            <select id="service" name="service">
-              <option>Branding</option>
-              <option>Website</option>
-              <option>Social Media</option>
-              <option>Alles aus einer Hand</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="message">Nachricht</label>
-            <textarea id="message" name="message" rows="5" required></textarea>
-            <p class="field__error" id="message-error" aria-live="polite"></p>
-          </div>
-          <div class="field field--check">
-            <input id="privacy" name="privacy" type="checkbox" required>
-            <label for="privacy">Ich habe die <a href="#">Datenschutzerklärung</a> gelesen und bin einverstanden.</label>
-          </div>
-          <p class="field__error" id="privacy-error" aria-live="polite"></p>
-          <button type="submit" class="btn">Projekt starten</button>
-          <p class="form__status" id="form-status" role="status"></p>
-        </form>
+    <!-- PLAKAT 5: Kontakt -->
+    <section class="sheet" id="kontakt" aria-labelledby="k-title">
+      <div class="sheet__head">
+        <h2 class="title" id="k-title">KONTAKT</h2>
+        <dl class="data">
+          <div><dt>MAIL</dt><dd><a href="mailto:hallo@leniheaf.de">HALLO@LENIHEAF.DE</a></dd></div>
+          <div><dt>ERSTGESPRÄCH</dt><dd>KOSTENLOS</dd></div>
+          <div><dt>ANTWORT</dt><dd>&lt; 24 H</dd></div>
+        </dl>
       </div>
+      <form class="form" id="contact-form" novalidate>
+        <div class="field">
+          <label for="name">NAME</label>
+          <input id="name" name="name" type="text" autocomplete="name" required>
+          <p class="field__error" id="name-error" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="email">E-MAIL</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+          <p class="field__error" id="email-error" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="service">THEMA</label>
+          <select id="service" name="service">
+            <option>Branding</option>
+            <option>Website</option>
+            <option>Social Media</option>
+            <option>Alles aus einer Hand</option>
+          </select>
+        </div>
+        <div class="field field--full">
+          <label for="message">NACHRICHT</label>
+          <textarea id="message" name="message" rows="4" required></textarea>
+          <p class="field__error" id="message-error" aria-live="polite"></p>
+        </div>
+        <div class="field field--check field--full">
+          <input id="privacy" name="privacy" type="checkbox" required>
+          <label for="privacy">Ich habe die <a href="#">Datenschutzerklärung</a> gelesen und bin einverstanden.</label>
+        </div>
+        <p class="field__error field--full" id="privacy-error" aria-live="polite"></p>
+        <div class="field--full form__foot">
+          <button type="submit" class="btn">Projekt anfragen</button>
+          <p class="form__status" id="form-status" role="status"></p>
+        </div>
+      </form>
     </section>
   </main>
 
-  <footer class="footer wrap">
-    <p class="footer__mark" aria-hidden="true">Leni Heaf</p>
-    <div class="footer__inner">
-      <p>Agentur für Branding, Webdesign &amp; Social Media, Sonneberg</p>
-      <ul class="footer__links">
-        <li><a href="https://instagram.com/" rel="noopener">Instagram</a></li>
-        <li><a href="https://linkedin.com/" rel="noopener">LinkedIn</a></li>
-        <li><a href="#">Impressum</a></li>
-        <li><a href="#">Datenschutz</a></li>
-      </ul>
-      <p>© <span id="year">2026</span></p>
-    </div>
+  <footer class="footer">
+    <p>©2026 LENI HEAF / SONNEBERG</p>
+    <ul>
+      <li><a href="https://instagram.com/" rel="noopener">INSTAGRAM</a></li>
+      <li><a href="https://linkedin.com/" rel="noopener">LINKEDIN</a></li>
+      <li><a href="#">IMPRESSUM</a></li>
+      <li><a href="#">DATENSCHUTZ</a></li>
+    </ul>
   </footer>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <script src="script.js" defer></script>
 </body>
 </html>
