@@ -3,35 +3,39 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Leni Heaf · Branding, Webdesign & Social Media aus Sonneberg</title>
-  <meta name="description" content="Leni Heaf ist eine Full-Service-Agentur aus Sonneberg für Branding, Webdesign und Social Media. Marken mit Haltung für Unternehmen in Thüringen, Franken und ganz Deutschland.">
-  <meta property="og:title" content="Leni Heaf · Marken mit Haltung">
+  <title>leni heaf · branding, webdesign & social media aus sonneberg</title>
+  <meta name="description" content="Leni Heaf ist eine Full-Service-Agentur aus Sonneberg für Branding, Webdesign und Social Media. Marken, die man sofort wiedererkennt, für Unternehmen in Thüringen, Franken und ganz Deutschland.">
+  <meta property="og:title" content="leni heaf · marken, die man sofort wiedererkennt">
   <meta property="og:description" content="Branding, Websites und Social Media aus Sonneberg.">
   <meta property="og:type" content="website">
   <meta name="color-scheme" content="light">
-  <meta name="theme-color" content="#f3f2ee">
+  <meta name="theme-color" content="#fdfdfc">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <!-- Für den Livebetrieb Fonts lokal hosten (DSGVO): siehe README im Ordner website/ -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=IBM+Plex+Mono:wght@400;500&family=Permanent+Marker&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=Rubik:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <a class="skip" href="#main">Zum Inhalt springen</a>
 
+  <div class="wrap">
+    <p class="announce">kostenloses erstgespräch für unternehmen aus sonneberg, coburg und ganz deutschland</p>
+  </div>
+
   <header class="nav" id="top">
     <div class="wrap nav__inner">
       <nav aria-label="Hauptnavigation">
         <ul class="nav__links" id="menu">
-          <li><a href="#leistungen">Leistungen</a></li>
-          <li><a href="#arbeiten">Arbeiten</a></li>
-          <li><a href="#ueber">Über Leni</a></li>
-          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#leistungen">leistungen</a></li>
+          <li><a href="#arbeiten">arbeiten</a></li>
+          <li><a href="#ueber">über leni</a></li>
+          <li><a href="#faq">fragen</a></li>
         </ul>
       </nav>
-      <a href="#top" class="logo" aria-label="Leni Heaf, zur Startseite">Leni Heaf</a>
-      <a href="#kontakt" class="btn btn--sm nav__cta">Projekt anfragen</a>
+      <a href="#top" class="logo" aria-label="Leni Heaf, zur Startseite">leni heaf</a>
+      <a href="#kontakt" class="btn btn--sm nav__cta">projekt anfragen</a>
       <button class="nav__toggle" aria-expanded="false" aria-controls="menu" aria-label="Menü öffnen">
         <span></span><span></span>
       </button>
@@ -39,134 +43,133 @@
   </header>
 
   <main id="main">
-    <!-- HERO: Plakat-Aufbau, Headline oben, Foto darunter -->
-    <section class="hero">
-      <div class="wrap hero__head">
-        <h1 class="hero__title reveal">Marken mit <span class="red">Haltung.</span></h1>
-        <div class="hero__side">
-          <p class="meta reveal">Studio Sonneberg<br>Branding / Web / Social</p>
-          <p class="hero__sub reveal">Branding, Websites und Social Media für Unternehmen, die gesehen werden wollen.</p>
+    <!-- HERO: geteiltes Panel, Text links, Foto rechts -->
+    <section class="wrap">
+      <div class="panel hero">
+        <div class="hero__text">
+          <h1 class="hero__title reveal">marken, die man sofort wiedererkennt</h1>
+          <p class="hero__sub reveal">Branding, Websites und Social Media aus Sonneberg. Persönlich, klar und gemacht, um zu bleiben.</p>
           <div class="hero__ctas reveal">
-            <a href="#kontakt" class="btn">Projekt anfragen</a>
-            <a href="#arbeiten" class="btn btn--line">Arbeiten ansehen</a>
+            <a href="#kontakt" class="btn">projekt anfragen</a>
+            <a href="#leistungen" class="btn btn--line">leistungen ansehen</a>
           </div>
         </div>
-      </div>
-      <figure class="wrap hero__photo reveal">
-        <!-- TODO: Studio-Porträt von Leni in Schwarz-Weiß, Querformat 2000x1100, heller Hintergrund -->
-        <img class="photo" src="https://picsum.photos/seed/lh-b/2000/1100?grayscale" alt="Leni Heaf, Gründerin der Agentur" width="2000" height="1100" fetchpriority="high">
-      </figure>
-    </section>
-
-    <!-- KUNDEN: rotes Laufband, einziges Laufband der Seite -->
-    <section class="clients" aria-label="Kund:innen, die uns vertrauen">
-      <div class="clients__track">
-        <ul class="clients__list">
-          <li>Täubert Karosserie &amp; Lack</li>
-          <li>Kühlkraft</li>
-          <li>Yvonne Kleinle</li>
-          <li>Dogstar</li>
-          <li>Sonderpreis Baumarkt</li>
-          <li>Crea Response</li>
-          <li>Butter und Brot</li>
-          <li>my baumarkt</li>
-        </ul>
-        <ul class="clients__list" aria-hidden="true">
-          <li>Täubert Karosserie &amp; Lack</li>
-          <li>Kühlkraft</li>
-          <li>Yvonne Kleinle</li>
-          <li>Dogstar</li>
-          <li>Sonderpreis Baumarkt</li>
-          <li>Crea Response</li>
-          <li>Butter und Brot</li>
-          <li>my baumarkt</li>
-        </ul>
+        <figure class="hero__media">
+          <!-- TODO: helles, weiches Porträt von Leni (Studio, natürliches Licht), Hochformat 1200x1400 -->
+          <img src="https://picsum.photos/seed/leniheaf-soft-portrait/1200/1400" alt="Leni Heaf, Gründerin der Agentur" width="1200" height="1400" fetchpriority="high">
+        </figure>
       </div>
     </section>
 
-    <!-- LEISTUNGEN: große Typo-Zeilen mit Bild beim Hover -->
-    <section class="section wrap" id="leistungen">
-      <h2 class="h2 reveal">Was wir machen.</h2>
-      <ul class="services">
-        <li class="service reveal">
-          <h3>Branding</h3>
-          <p>Positionierung, Logo, Farben, Schrift und Tonalität. Ein Auftritt, den man nicht mehr vergisst.</p>
-        </li>
-        <li class="service reveal">
-          <h3>Webdesign</h3>
-          <p>Schnelle Websites, die Besucher:innen zu Anfragen machen. Von der Struktur bis zum Launch.</p>
-        </li>
-        <li class="service reveal">
-          <h3>Social Media</h3>
-          <p>Strategie, Content und Betreuung für Instagram, LinkedIn und TikTok. Für mehr Reichweite und mehr Anfragen.</p>
-        </li>
+    <!-- KUNDEN -->
+    <section class="wrap clients" aria-labelledby="clients-title">
+      <h2 class="clients__title reveal" id="clients-title">kund:innen, die uns vertrauen</h2>
+      <ul class="clients__list reveal">
+        <li>Täubert Karosserie &amp; Lack</li>
+        <li>Kühlkraft</li>
+        <li>Yvonne Kleinle</li>
+        <li>Dogstar</li>
+        <li>Sonderpreis Baumarkt</li>
+        <li>Crea Response</li>
+        <li>Butter und Brot</li>
+        <li>my baumarkt</li>
       </ul>
     </section>
 
-    <!-- ARBEITEN: Bento mit 4 Projekten -->
-    <section class="section wrap" id="arbeiten">
-      <h2 class="h2 reveal">Arbeiten.</h2>
+    <!-- LEISTUNGEN: wie Produktkarten mit Preis -->
+    <section class="wrap section" id="leistungen">
+      <div class="cards">
+        <article class="card reveal">
+          <h2 class="card__name">branding</h2>
+          <img src="https://picsum.photos/seed/leniheaf-soft-branding/800/700" alt="" loading="lazy" width="800" height="700">
+          <div class="card__foot">
+            <div><h3>logo &amp; markenauftritt</h3><p>Positionierung, Logo, Farben, Schrift</p></div>
+            <p class="card__price">ab 1.900 €</p>
+          </div>
+        </article>
+        <article class="card reveal">
+          <h2 class="card__name">web</h2>
+          <img src="https://picsum.photos/seed/leniheaf-soft-web/800/700" alt="" loading="lazy" width="800" height="700">
+          <div class="card__foot">
+            <div><h3>website</h3><p>Design, Texte, Umsetzung, Launch</p></div>
+            <p class="card__price">ab 2.500 €</p>
+          </div>
+        </article>
+        <article class="card reveal">
+          <h2 class="card__name">social</h2>
+          <img src="https://picsum.photos/seed/leniheaf-soft-social/800/700" alt="" loading="lazy" width="800" height="700">
+          <div class="card__foot">
+            <div><h3>instagram &amp; linkedin</h3><p>Strategie, Content, Betreuung</p></div>
+            <p class="card__price">ab 1.200 € / monat</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- HALTUNG: zentrierter, ruhiger Text -->
+    <section class="wrap section">
+      <div class="panel philosophy">
+        <h2 class="philosophy__title reveal">eine marke. ein system. richtig gut gemacht.</h2>
+        <p class="reveal">Bei uns entstehen Logo, Website und Social Media nicht als Einzelteile, sondern als ein Auftritt. So wirkt deine Marke überall gleich klar und bringt mehr Anfragen.</p>
+      </div>
+    </section>
+
+    <!-- ARBEITEN -->
+    <section class="wrap section" id="arbeiten">
+      <h2 class="h2 reveal">ausgewählte arbeiten</h2>
       <!-- TODO: echte Projektbilder einsetzen und Leistungen pro Kund:in prüfen -->
       <div class="work">
-        <a class="work__item work__item--wide reveal" href="#kontakt">
-          <img class="photo" src="https://picsum.photos/seed/leniheaf-work-baumarkt/1600/900?grayscale" alt="" loading="lazy" width="1600" height="900">
-          <div class="work__meta"><h3>Sonderpreis Baumarkt</h3><p>Social Media, Content</p></div>
+        <a class="work__item reveal" href="#kontakt">
+          <img src="https://picsum.photos/seed/leniheaf-soft-work-1/900/1000" alt="" loading="lazy" width="900" height="1000">
+          <h3>sonderpreis baumarkt</h3>
+          <p>Social Media, Content</p>
         </a>
         <a class="work__item reveal" href="#kontakt">
-          <img class="photo" src="https://picsum.photos/seed/leniheaf-work-taeubert/900/1100?grayscale" alt="" loading="lazy" width="900" height="1100">
-          <div class="work__meta"><h3>Täubert Karosserie &amp; Lack</h3><p>Branding, Logo, Instagram</p></div>
+          <img src="https://picsum.photos/seed/leniheaf-soft-work-2/900/1000" alt="" loading="lazy" width="900" height="1000">
+          <h3>täubert karosserie &amp; lack</h3>
+          <p>Branding, Logo, Instagram</p>
         </a>
         <a class="work__item reveal" href="#kontakt">
-          <img class="photo" src="https://picsum.photos/seed/leniheaf-work-butterbrot/900/1100?grayscale" alt="" loading="lazy" width="900" height="1100">
-          <div class="work__meta"><h3>Butter und Brot</h3><p>Branding, Instagram</p></div>
-        </a>
-        <a class="work__item work__item--red reveal" href="#kontakt">
-          <p class="work__statement">Dein Projekt als Nächstes?</p>
-          <span class="work__link">Projekt anfragen</span>
+          <img src="https://picsum.photos/seed/leniheaf-soft-work-3/900/1000" alt="" loading="lazy" width="900" height="1000">
+          <h3>butter und brot</h3>
+          <p>Branding, Instagram</p>
         </a>
       </div>
     </section>
 
-    <!-- STATEMENT: Plakat in Rot -->
-    <section class="statement">
-      <div class="wrap">
-        <p class="statement__text reveal">Aus Sonneberg.<br>Für ganz Deutschland.</p>
+    <!-- ÜBER LENI: geteiltes Panel, Foto links -->
+    <section class="wrap section" id="ueber">
+      <div class="panel about">
+        <figure class="about__media">
+          <!-- TODO: zweites Porträt von Leni, Hochformat 1000x1200 -->
+          <img src="https://picsum.photos/seed/leniheaf-soft-about/1000/1200" alt="Porträt von Leni Heaf" loading="lazy" width="1000" height="1200">
+        </figure>
+        <div class="about__text">
+          <h2 class="h2 reveal">hi, ich bin leni</h2>
+          <p class="reveal">Ich habe diese Agentur in Sonneberg gegründet, weil gute Unternehmen oft unsichtbar bleiben. Nicht wegen ihres Angebots, sondern wegen ihres Auftritts.</p>
+          <p class="reveal">Mein Anspruch: Jede Marke, die unser Studio verlässt, ist klarer und leichter zu erkennen als vorher. Persönlich betreut und ohne Agentur-Floskeln.</p>
+          <div class="about__social reveal">
+            <a href="https://linkedin.com/" class="btn" rel="noopener">folge mir auf linkedin</a>
+            <a href="https://instagram.com/" class="btn btn--line" rel="noopener">instagram</a>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- ABLAUF -->
-    <section class="section wrap" id="ablauf">
-      <h2 class="h2 reveal">So arbeiten wir.</h2>
+    <section class="wrap section" id="ablauf">
+      <h2 class="h2 reveal">so arbeiten wir</h2>
       <ol class="steps">
-        <li class="reveal"><h3>Zuhören</h3><p>Wir verstehen dein Geschäft, deine Kundschaft und deine Ziele, bevor wir gestalten.</p></li>
-        <li class="reveal"><h3>Schärfen</h3><p>Positionierung und Markenkern auf den Punkt. Eine Idee, die alles trägt.</p></li>
-        <li class="reveal"><h3>Gestalten</h3><p>Logo, Website und Content entstehen als ein System, nicht als Einzelteile.</p></li>
-        <li class="reveal"><h3>Wachsen</h3><p>Nach dem Launch betreuen wir deine Kanäle und sorgen für mehr Anfragen.</p></li>
+        <li class="reveal"><h3>zuhören</h3><p>Wir verstehen dein Geschäft, deine Kundschaft und deine Ziele.</p></li>
+        <li class="reveal"><h3>schärfen</h3><p>Positionierung und Markenkern auf den Punkt gebracht.</p></li>
+        <li class="reveal"><h3>gestalten</h3><p>Logo, Website und Content als ein System.</p></li>
+        <li class="reveal"><h3>wachsen</h3><p>Wir betreuen deine Kanäle und sorgen für mehr Anfragen.</p></li>
       </ol>
     </section>
 
-    <!-- ÜBER LENI -->
-    <section class="section wrap about" id="ueber">
-      <figure class="about__media reveal">
-        <!-- TODO: Porträt von Leni, Hochformat 1000x1300 -->
-        <img class="photo" src="https://picsum.photos/seed/leniheaf-portrait-about/1000/1300?grayscale" alt="Porträt von Leni Heaf" loading="lazy" width="1000" height="1300">
-      </figure>
-      <div class="about__text">
-        <p class="meta reveal">Gründerin / Sonneberg</p>
-        <h2 class="h2 reveal">Hi, ich bin Leni.</h2>
-        <p class="reveal">Ich habe diese Agentur gegründet, weil gute Unternehmen oft unsichtbar bleiben. Nicht wegen ihres Angebots, sondern wegen ihres Auftritts.</p>
-        <p class="reveal">Mein Anspruch: Jede Marke, die unser Studio verlässt, ist klarer, mutiger und leichter zu erkennen als vorher. Persönlich betreut und ohne Agentur-Floskeln.</p>
-        <p class="about__sign reveal" aria-hidden="true">Leni</p>
-        <div class="about__social reveal">
-          <a href="https://linkedin.com/" class="btn" rel="noopener">Folge mir auf LinkedIn</a>
-          <a href="https://instagram.com/" class="btn btn--line" rel="noopener">Instagram</a>
-        </div>
-      </div>
-    </section>
-
     <!-- FAQ -->
-    <section class="section wrap faq" id="faq">
-      <h2 class="h2 reveal">Fragen.</h2>
+    <section class="wrap section faq" id="faq">
+      <h2 class="h2 reveal">fragen</h2>
       <div class="faq__list">
         <details class="reveal">
           <summary>Was kostet eine Website bei euch?</summary>
@@ -188,61 +191,61 @@
     </section>
 
     <!-- KONTAKT -->
-    <section class="section wrap contact" id="kontakt">
-      <div class="contact__intro">
-        <h2 class="h2 reveal">Lass uns <span class="red">reden.</span></h2>
-        <p class="reveal">Erzähl kurz, worum es geht. Du bekommst innerhalb von 24 Stunden eine persönliche Antwort.</p>
-        <p class="reveal contact__mail"><a href="mailto:hallo@leniheaf.de">hallo@leniheaf.de</a></p>
+    <section class="wrap section" id="kontakt">
+      <div class="panel contact">
+        <div class="contact__intro">
+          <h2 class="h2 reveal">lass uns reden</h2>
+          <p class="reveal">Erzähl kurz, worum es geht. Du bekommst innerhalb von 24 Stunden eine persönliche Antwort.</p>
+          <p class="reveal contact__mail"><a href="mailto:hallo@leniheaf.de">hallo@leniheaf.de</a></p>
+        </div>
+        <form class="form reveal" id="contact-form" novalidate>
+          <div class="field">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required>
+            <p class="field__error" id="name-error" aria-live="polite"></p>
+          </div>
+          <div class="field">
+            <label for="email">E-Mail</label>
+            <input id="email" name="email" type="email" autocomplete="email" required>
+            <p class="field__error" id="email-error" aria-live="polite"></p>
+          </div>
+          <div class="field">
+            <label for="service">Worum geht es?</label>
+            <select id="service" name="service">
+              <option>Branding</option>
+              <option>Website</option>
+              <option>Social Media</option>
+              <option>Alles aus einer Hand</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="message">Nachricht</label>
+            <textarea id="message" name="message" rows="5" required></textarea>
+            <p class="field__help">Ein paar Sätze reichen völlig.</p>
+            <p class="field__error" id="message-error" aria-live="polite"></p>
+          </div>
+          <div class="field field--check">
+            <input id="privacy" name="privacy" type="checkbox" required>
+            <label for="privacy">Ich habe die <a href="#">Datenschutzerklärung</a> gelesen und bin einverstanden.</label>
+          </div>
+          <p class="field__error" id="privacy-error" aria-live="polite"></p>
+          <button type="submit" class="btn">projekt anfragen</button>
+          <p class="form__status" id="form-status" role="status"></p>
+        </form>
       </div>
-      <form class="form reveal" id="contact-form" novalidate>
-        <div class="field">
-          <label for="name">Name</label>
-          <input id="name" name="name" type="text" autocomplete="name" required>
-          <p class="field__error" id="name-error" aria-live="polite"></p>
-        </div>
-        <div class="field">
-          <label for="email">E-Mail</label>
-          <input id="email" name="email" type="email" autocomplete="email" required>
-          <p class="field__error" id="email-error" aria-live="polite"></p>
-        </div>
-        <div class="field">
-          <label for="service">Worum geht es?</label>
-          <select id="service" name="service">
-            <option>Branding</option>
-            <option>Website</option>
-            <option>Social Media</option>
-            <option>Alles aus einer Hand</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="message">Nachricht</label>
-          <textarea id="message" name="message" rows="5" required></textarea>
-          <p class="field__help">Ein paar Sätze reichen völlig.</p>
-          <p class="field__error" id="message-error" aria-live="polite"></p>
-        </div>
-        <div class="field field--check">
-          <input id="privacy" name="privacy" type="checkbox" required>
-          <label for="privacy">Ich habe die <a href="#">Datenschutzerklärung</a> gelesen und bin einverstanden.</label>
-        </div>
-        <p class="field__error" id="privacy-error" aria-live="polite"></p>
-        <button type="submit" class="btn">Projekt anfragen</button>
-        <p class="form__status" id="form-status" role="status"></p>
-      </form>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="wrap">
-      <p class="footer__mark" aria-hidden="true">Leni Heaf</p>
-      <div class="footer__inner">
-        <ul class="footer__links">
-          <li><a href="https://instagram.com/" rel="noopener">Instagram</a></li>
-          <li><a href="https://linkedin.com/" rel="noopener">LinkedIn</a></li>
-          <li><a href="#">Impressum</a></li>
-          <li><a href="#">Datenschutz</a></li>
-        </ul>
-        <p class="footer__copy">© <span id="year">2026</span> Leni Heaf, Sonneberg</p>
-      </div>
+  <footer class="wrap footer">
+    <div class="panel footer__inner">
+      <a href="#top" class="logo">leni heaf</a>
+      <ul class="footer__links">
+        <li><a href="https://instagram.com/" rel="noopener">instagram</a></li>
+        <li><a href="https://linkedin.com/" rel="noopener">linkedin</a></li>
+        <li><a href="#">impressum</a></li>
+        <li><a href="#">datenschutz</a></li>
+      </ul>
+      <p class="footer__copy">© <span id="year">2026</span> leni heaf, sonneberg</p>
     </div>
   </footer>
 

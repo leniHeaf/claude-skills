@@ -87,35 +87,33 @@ Ein gutes Beispiel dafür ist Sarah Emmerich. Sie hat die Agentur Emmerich Relat
 
 ## 5. Visuelle Identität
 
-**Richtung:** Mode-Editorial trifft Plakat. Inspiriert von Jil Sander, Karl Lagerfeld, der Agentur-Identität „A*venue“ und editorialen Schwarz-Weiß-Plakaten. Übernommen wird die Haltung, nicht deren Gestaltung.
+**Richtung:** weich, hell und clean. Inspiriert von rhode: viel Weiß, warmes Hellgrau, ruhige Bilder, alles klein geschrieben. Übernommen wird die Stimmung, nicht die Gestaltung.
 
 **Die 5 Regeln des Looks**
-1. **Papier und Schwarz.** Helles Papierweiß als Grund, tiefes Schwarz für Schrift.
-2. **Schwarz-Weiß-Fotografie** mit Kontrast und leichtem Filmkorn. Keine bunten Stockfotos.
-3. **Plakat-Typo:** Überschriften fett, groß, in Großbuchstaben.
-4. **Ein Rot, sparsam.** Signalrot nur für ein Wort, einen Block oder die Unterschrift. Nie flächig überall.
-5. **Kleine Schreibmaschinen-Details** (z. B. „STUDIO SONNEBERG / BRANDING / WEB / SOCIAL“) als feine Ergänzung.
+1. **Weiß und warmes Hellgrau.** Inhalte liegen in weich abgerundeten Flächen.
+2. **Kleinschreibung** für Logo, Überschriften, Menü und Buttons. Fließtext normal.
+3. **Leistungen wie Produkte zeigen:** großer Name, Bild, kurze Beschreibung, Preis „ab …“.
+4. **Ruhige, helle Fotos** mit gedeckten Farben. Keine knalligen Stockfotos.
+5. **Keine Akzentfarbe.** Die Marke lebt von Graubraun, Luft und Ruhe.
 
 | Rolle | Farbe | Hex |
 | --- | --- | --- |
-| Hintergrund | Papierweiß | `#F3F2EE` |
-| Text, Flächen | Schwarz | `#111111` |
-| Akzent | Signalrot | `#D42A1F` |
-| Nebentext | Grau | `#55554F` |
+| Hintergrund | Weiß | `#FDFDFC` |
+| Flächen | Warmes Hellgrau | `#F1F0ED` |
+| Überschriften, Buttons | Dunkles Graubraun | `#3A3833` / `#4A4741` |
+| Fließtext | Graubraun | `#67645E` |
 
-**Schriften** (alle kostenlos über Google Fonts)
-- **Archivo**, fett und breit: Logo und Überschriften
-- **Archivo**, normal: Fließtext
-- **IBM Plex Mono**: kleine Detail-Labels
-- **Permanent Marker**: nur für die rote „Leni“-Unterschrift
+**Schriften** (kostenlos über Google Fonts)
+- **Rubik Bold**, klein geschrieben, eng gesetzt: Logo und Überschriften
+- **Hanken Grotesk**: Fließtext, Menü, Buttons
 
-**Logo:** Wortmarke `LENI HEAF` in Archivo Extra Bold, breit laufend, Großbuchstaben. Auf Papier schwarz, auf Schwarz weiß, auf Rot weiß.
-> Nächster Schritt: Wortmarke von einer Designerin final zeichnen lassen, damit sie einzigartig und markenrechtlich schützbar ist.
+**Logo:** Wortmarke `leni heaf` in Rubik Bold, klein geschrieben. Profilbild-Variante: `lh` auf Hellgrau mit runden Ecken.
+> Nächster Schritt: Wortmarke von einer Designerin final zeichnen lassen, damit sie einzigartig und schützbar ist.
 
 **Fotografie**
-- Porträt-Shooting im Studio vor hellem Hintergrund, Schwarz-Weiß, mit Haltung: direkter Blick, Bewegung, auch angeschnittene Bildausschnitte.
-- Mindestens: 1 Porträt Querformat (Startseite), 1 Hochformat (Über mich), 5 bis 10 Arbeitssituationen.
-- Für Social Media: dieselbe Bildsprache, damit dein Feed sofort als „Leni Heaf“ erkennbar ist.
+- Helles Studio, natürliches Licht, weiche Hauttöne, viel Weiß im Bild.
+- Mindestens: 1 Porträt Hochformat (Startseite), 1 weiteres Porträt (Über mich), 5 bis 10 Detail- und Arbeitsbilder (Laptop, Moodboards, Muster, Hände).
+- Social Media in derselben ruhigen Bildsprache, damit dein Feed sofort erkennbar ist.
 
 ---
 
