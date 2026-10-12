@@ -4,4 +4,4 @@ Disallow: /startseite-dunkel.html
 Disallow: /startseite-gerade.html
 Disallow: /vorschau/
 
-Sitemap: https://www.hochundglanz.de/sitemap.xml
+Sitemap: https://www.studio-x.de/sitemap.xml

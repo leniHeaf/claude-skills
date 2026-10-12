@@ -1,12 +1,172 @@
-// Typografie: Fließtext ruhiger (normale Stärke), Überschriften bleiben fett
+// ==========================================================================
+// Lade-Animation (erster Aufruf pro Sitzung): Löwe wird per Maske
+// freigelegt, wird kurz lebendig (Kopf, Pfote, Brust, Schwanz), wächst mit
+// leisem Licht dahinter – dann geht es durch die Löwen-Silhouette hindurch
+// in die Seite, der Hero baut sich zeitversetzt auf. Danach aus dem DOM.
+// ==========================================================================
 (() => {
-  if (!document.body.classList.contains("v5")) return;
-  document.querySelectorAll("main p, main li, main dd, main blockquote, main figcaption, main td, footer p, footer li").forEach((el) => {
-    const c = getComputedStyle(el);
-    if (parseFloat(c.fontSize) <= 22 && c.textTransform !== "uppercase" && el.textContent.trim().length > 40 && !el.querySelector("h1, h2, h3")) el.classList.add("t-body");
-  });
-})();
+  const html = document.documentElement;
+  let seen = false;
+  try { seen = sessionStorage.getItem("lion-load") === "1"; sessionStorage.setItem("lion-load", "1"); } catch (e) {}
+  if (seen) { html.classList.remove("ll-pre"); return; }
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const NS = "http://www.w3.org/2000/svg";
+  const D = {
+    body: "M26 40 L40 32 L40 24 L56 16 C70 17 82 21 92 27 L102 22 L102 34 C108 41 112 50 113 58 L124 58 L114 68 L162 68 C172 68 180 76 180 86 L196 136 L168 136 C168 129 173 124 180 124 L172 104 C158 116 140 120 124 120 C118 120 112 119 106 117 L80 136 L54 136 C54 129 60 124 68 124 L86 106 C76 96 72 84 72 72 C72 64 76 58 82 56 L82 52 L60 52 L52 60 L38 60 L26 52 Z",
+    hind: "M114 124 L146 124 C156 124 164 120 170 114 L180 132 L160 142 L114 142 C114 134 120 128 128 128 Z",
+    paw: "M72 88 L58 76 L50 76 C46 72 40 72 34 75 L50 90 L60 106 L71 106 C67 100 67 94 72 88 Z",
+    tail: "M160 68 L196 68 C206 68 212 60 212 50 C212 42 218 36 226 36 L226 46 C223 46 222 48 222 50 C222 66 210 78 196 78 L160 78 Z",
+    tuft: "M220 22 C229 22 236 29 236 38 L220 38 Z",
+    eye: "M46 38 L56 34 L56 40 L48 42 Z",
+  };
+  const BG = "#0a0a0a", INK = "#f2f2f2";
+  const ov = document.createElementNS(NS, "svg");
+  ov.setAttribute("class", "ll");
+  ov.setAttribute("aria-hidden", "true");
+  ov.innerHTML = `
+    <defs>
+      <clipPath id="ll-ch" clipPathUnits="userSpaceOnUse"><polygon points="0,0 125,0 125,62 100,66 82,64 76,68 0,68"/></clipPath>
+      <clipPath id="ll-cb" clipPathUnits="userSpaceOnUse"><polygon points="0,64 74,64 80,58 98,58 125,50 125,0 300,0 300,200 0,200"/></clipPath>
+      <linearGradient id="ll-lg" gradientUnits="userSpaceOnUse" x1="100" y1="150" x2="150" y2="4">
+        <stop class="ll-s1" offset="0" stop-color="#fff"/><stop class="ll-s2" offset="0" stop-color="#000"/>
+      </linearGradient>
+      <mask id="ll-rev" maskUnits="userSpaceOnUse" x="-20" y="-20" width="300" height="200"><rect x="-20" y="-20" width="300" height="200" fill="url(#ll-lg)"/></mask>
+      <radialGradient id="ll-gl"><stop offset="0" stop-color="#fff" stop-opacity=".085"/><stop offset=".45" stop-color="#fff" stop-opacity=".035"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+      <mask id="ll-veil" maskUnits="userSpaceOnUse" x="0" y="0" width="100%" height="100%">
+        <rect class="ll-vr" width="100%" height="100%" fill="#fff"/>
+        <g class="ll-hole" fill="#000" style="display:none"><path d="${D.body}"/><path d="${D.hind}"/><path d="${D.paw}"/><path d="${D.tail}"/><path d="${D.tuft}"/></g>
+      </mask>
+    </defs>
+    <rect class="ll-bg" width="100%" height="100%" fill="${BG}" mask="url(#ll-veil)"/>
+    <ellipse class="ll-glow" fill="url(#ll-gl)" opacity="0"/>
+    <g class="ll-lion" opacity="0"><g mask="url(#ll-rev)" fill="${INK}">
+      <path d="${D.hind}"/>
+      <g class="ll-tail"><path d="${D.tail}"/><path d="${D.tuft}"/></g>
+      <g class="ll-fore">
+        <path d="${D.body}" clip-path="url(#ll-cb)"/>
+        <path class="ll-paw" d="${D.paw}"/>
+        <g class="ll-head"><path d="${D.body}" clip-path="url(#ll-ch)"/><path d="${D.eye}" fill="${BG}"/></g>
+      </g>
+    </g></g>`;
+  document.body.appendChild(ov);
+  html.classList.remove("ll-pre");
 
+  const q = (s) => ov.querySelector(s);
+  const lion = q(".ll-lion"), hole = q(".ll-hole"), glow = q(".ll-glow"), bg = q(".ll-bg");
+  const head = q(".ll-head"), paw = q(".ll-paw"), fore = q(".ll-fore"), tail = q(".ll-tail");
+  const s1 = q(".ll-s1"), s2 = q(".ll-s2");
+  const L0 = [125, 79], F = [130, 96];
+  let W = 0, H = 0, u = 1;
+  const size = () => {
+    W = innerWidth; H = innerHeight;
+    ov.setAttribute("viewBox", `0 0 ${W} ${H}`);
+    u = Math.min(W * (W < 700 ? 0.62 : 0.42), 440, H * 0.46 * 230 / 150) / 230;
+  };
+  size(); addEventListener("resize", size);
+
+  // cubic-bezier(0.16, 1, 0.3, 1)
+  const bez = (x1, y1, x2, y2) => (x) => {
+    let t = x;
+    for (let i = 0; i < 6; i++) {
+      const cx = 3 * x1 * t * (1 - t) ** 2 + 3 * x2 * t * t * (1 - t) + t ** 3 - x;
+      const d = 3 * x1 * (1 - t) ** 2 + 6 * (x2 - x1) * t * (1 - t) + 3 * (1 - x2) * t * t;
+      if (Math.abs(d) < 1e-6) break; t -= cx / d;
+    }
+    t = Math.min(1, Math.max(0, t));
+    return 3 * y1 * t * (1 - t) ** 2 + 3 * y2 * t * t * (1 - t) + t ** 3;
+  };
+  const expo = bez(0.16, 1, 0.3, 1), io = bez(0.65, 0, 0.35, 1);
+  const c01 = (v) => Math.min(1, Math.max(0, v));
+  const seg = (t, a, b) => c01((t - a) / (b - a));
+  const place = (s, dy) => `translate(${(W / 2 + (F[0] - L0[0]) * u).toFixed(2)} ${(H / 2 + (F[1] - L0[1]) * u + dy).toFixed(2)}) scale(${(u * s).toFixed(5)}) translate(${-F[0]} ${-F[1]})`;
+
+  // Hero sanft aufbauen (bestehende Transforms bleiben erhalten: composite "add")
+  const heroIn = (delay) => {
+    const ease = "cubic-bezier(0.16, 1, 0.3, 1)";
+    const run = (el, from, dur, d) => {
+      if (!el) return;
+      try {
+        el.animate([{ transform: from }, { transform: "none" }], { duration: dur, delay: d, easing: ease, fill: "backwards", composite: "add" });
+        el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: dur, delay: d, easing: ease, fill: "backwards" });
+      } catch (e) {}
+    };
+    const main = document.querySelector("main");
+    const media = main && [...main.querySelectorAll("img, video")].find((m) => { const r = m.getBoundingClientRect(); return r.top < innerHeight && r.bottom > 0 && r.width > 200; });
+    if (media) try { media.animate([{ transform: "scale(1.04)" }, { transform: "none" }], { duration: 550, delay, easing: ease, fill: "backwards", composite: "add" }); } catch (e) {}
+    run(document.querySelector(".header"), "translateY(-15px)", 500, delay);
+    run(main && main.querySelector("h1"), "translateY(40px)", 450, delay + 100);
+  };
+
+  let ready = document.readyState === "complete";
+  addEventListener("load", () => { ready = true; });
+  const start = performance.now();
+  let hold = 0, last = start, heroDone = false, done = false;
+  const finish = () => { if (done) return; done = true; ov.remove(); removeEventListener("resize", size); };
+
+  const frame = (now) => {
+    if (done) return;
+    // Auf das vollständige Laden warten (höchstens 2,5 s zusätzlich)
+    if (now - start - hold >= 1800 && !ready && hold < 2500 && !heroDone) hold += now - last;
+    last = now;
+    const t = now - start - hold;
+
+    if (reduce) {
+      lion.setAttribute("transform", place(1, 0));
+      lion.setAttribute("opacity", seg(t, 150, 600).toFixed(3));
+      s1.setAttribute("offset", 1); s2.setAttribute("offset", 1);
+      ov.style.opacity = (1 - seg(t, 1100, 1500)).toFixed(3);
+      if (t > 1100) ov.style.pointerEvents = "none";
+      if (t >= 1550) return finish();
+      return requestAnimationFrame(frame);
+    }
+
+    // 2) Erscheinen: Maske legt frei, scale .92 → 1, leicht von unten
+    const r = expo(seg(t, 150, 950));
+    const m = seg(t, 150, 900);
+    s1.setAttribute("offset", (-0.25 + 1.5 * expo(m)).toFixed(4));
+    s2.setAttribute("offset", (-0.05 + 1.5 * expo(m)).toFixed(4));
+    let s = 0.92 + 0.08 * r;
+    const dy = 26 * (1 - r);
+
+    // 3) Mikrobewegung: Kopf hebt sich, Pfote, Brust atmet, Schwanz
+    const hd = 2.6 * io(seg(t, 1000, 1450));
+    head.setAttribute("transform", `rotate(${hd.toFixed(3)} 100 60)`);
+    const pw = 5 * Math.sin(Math.PI * io(seg(t, 1050, 1600)));
+    paw.setAttribute("transform", `rotate(${pw.toFixed(3)} 70 96)`);
+    const br = 0.014 * Math.sin(Math.PI * seg(t, 1000, 1750));
+    fore.setAttribute("transform", `translate(0 136) scale(1 ${(1 + br).toFixed(5)}) translate(0 -136)`);
+    const tl = 3.2 * Math.sin(2 * Math.PI * seg(t, 950, 1950)) * (1 - seg(t, 1500, 1950) * 0.6);
+    tail.setAttribute("transform", `rotate(${tl.toFixed(3)} 162 73)`);
+
+    // 4) Brand Impact: 1 → 1.08, leises Licht
+    s *= 1 + 0.08 * expo(seg(t, 1500, 1800));
+    let g = expo(seg(t, 1400, 1850));
+    if (hold > 0 && t >= 1799) g *= 0.85 + 0.15 * Math.sin(now / 420);
+
+    // 5) Durch den Löwen: Silhouette wird zum Fenster, zoomt nach vorn
+    const z = seg(t, 1800, 2350);
+    if (z > 0) {
+      if (!heroDone) { heroDone = true; hole.style.display = ""; heroIn(250); }
+      s *= Math.exp(Math.log(40 / 1.08) * z ** 3);
+      ov.style.pointerEvents = "none";
+    }
+    const lo = Math.min(r, 1 - seg(t, 1800, 1980));
+    lion.setAttribute("opacity", lo.toFixed(3));
+    lion.setAttribute("transform", place(s, dy));
+    hole.setAttribute("transform", place(s, dy));
+    g *= 1 - seg(t, 1800, 2000);
+    const gr = 230 * u * s;
+    glow.setAttribute("cx", W / 2 + (F[0] - L0[0]) * u); glow.setAttribute("cy", H / 2 + (F[1] - L0[1]) * u);
+    glow.setAttribute("rx", (gr * 0.95).toFixed(1)); glow.setAttribute("ry", (gr * 0.75).toFixed(1));
+    glow.setAttribute("opacity", g.toFixed(3));
+    bg.setAttribute("opacity", (1 - seg(t, 2050, 2350)).toFixed(3));
+
+    if (t >= 2600) return finish();
+    requestAnimationFrame(frame);
+  };
+  requestAnimationFrame(frame);
+  setTimeout(finish, 9000);
+})();
 
 (() => {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -945,7 +1105,7 @@
   const curtain = document.createElement("div");
   curtain.className = "m8-curtain";
   curtain.setAttribute("aria-hidden", "true");
-  curtain.innerHTML = '<span class="m8-curtain__mark">HOCH &amp; GLANZ</span>';
+  curtain.innerHTML = '<span class="m8-curtain__mark">STUDIO.X</span>';
   body.appendChild(curtain);
   requestAnimationFrame(() => requestAnimationFrame(() => curtain.classList.add("is-up")));
   window.addEventListener("pageshow", (e) => { if (e.persisted) { curtain.classList.remove("is-down"); curtain.classList.add("is-up"); } });
@@ -961,7 +1121,7 @@
     if (url.pathname === location.pathname && url.hash) return;
     e.preventDefault();
     curtain.classList.remove("is-up");
-    curtain.classList.add("is-down");
+    curtain.classList.add("is-down"); document.body.classList.add("bx-leaving");
     setTimeout(() => { location.href = a.href; }, 650);
   });
 
@@ -973,7 +1133,7 @@
 
   // Überschriften in Wortmasken teilen (Auszeichnungen bleiben erhalten)
   const heads = [...main.querySelectorAll("h1, h2")].filter((h) =>
-    !h.closest(".phone, .k-x, [data-split], .v2social__stage, .cs2, .cs3, .cs4, .w4, .hy, .mz") && h.textContent.trim());
+    !h.closest(".phone, .k-x, [data-split], .v2social__stage, .cs2, .cs3, .cs4, .w4") && h.textContent.trim());
   const splitText = (root, counter) => {
     [...root.childNodes].forEach((n) => {
       if (n.nodeType === 3) {
@@ -995,12 +1155,12 @@
 
   // Fließtext und Listen gleiten nach
   const texts = [...main.querySelectorAll("p, li, dt, dd, blockquote, .btn, .k-links, form")].filter((el) =>
-    !el.closest("[data-reveal], .phone, .v2social__stage, .k-cards, .m8-txt, nav, .hask, details, [hidden], .cs2, .cs3, .cs4, .w4, .hy, .mz") && !el.querySelector("img"));
+    !el.closest("[data-reveal], .phone, .v2social__stage, .k-cards, .m8-txt, nav, .hask, details, [hidden], .cs2, .cs3, .cs4, .w4") && !el.querySelector("img"));
   texts.forEach((el) => el.classList.add("m8-txt"));
 
   // Bilder: Vorhang von unten, darin leichte Parallaxe
   const imgs = [...main.querySelectorAll("img, .ph")].filter((el) =>
-    !el.closest(".phone, .k-hero, .v2social__stage, [data-r], .rw__row, .cs2, .cs3, .cs4, .w4, .hy, .mz") && !el.hasAttribute("data-r"));
+    !el.closest(".phone, .k-hero, .v2social__stage, [data-r], .rw__row, .cs2, .cs3, .cs4, .w4") && !el.hasAttribute("data-r"));
   imgs.forEach((el) => el.classList.add("m8-img"));
 
   const all = [...heads, ...texts, ...imgs];
@@ -1044,6 +1204,42 @@
   };
   requestAnimationFrame(tick);
 
+  if (!fine) return;
+
+  // 3D-Neigung für Karten mit Bild
+  const cards = [...main.querySelectorAll("a, article")].filter((c) =>
+    c.querySelector("img, .ph") && !c.closest(".k-cards, .phone, .v2social__stage, .k-tiles, .k-hero, .cs2, .cs3, .cs4, .w4") && c.offsetWidth > 160);
+  cards.forEach((c) => {
+    c.classList.add("m8-tilt");
+    c.addEventListener("pointermove", (e) => {
+      const r = c.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5, py = (e.clientY - r.top) / r.height - 0.5;
+      c.style.transform = `perspective(900px) rotateY(${px * 8}deg) rotateX(${-py * 8}deg) translateZ(0)`;
+    });
+    c.addEventListener("pointerleave", () => { c.style.transform = ""; });
+  });
+
+  // Cursor: Punkt, wird über Bildern zur Linse „Ansehen“
+  const cur = document.createElement("div");
+  cur.className = "m8-cursor";
+  cur.setAttribute("aria-hidden", "true");
+  cur.innerHTML = "<span>Projekt ansehen</span>";
+  body.appendChild(cur);
+  const pos = { x: -100, y: -100 }, cp = { x: -100, y: -100 };
+  window.addEventListener("pointermove", (e) => { pos.x = e.clientX; pos.y = e.clientY; }, { passive: true });
+  document.addEventListener("pointerover", (e) => {
+    const t = e.target;
+    cur.classList.toggle("is-view", !!t.closest(".m8-tilt, .k-cards a, .k-tile, .k-hero a"));
+    cur.classList.toggle("is-link", !!t.closest("a, button, input, select, textarea, label, summary"));
+  });
+  document.addEventListener("pointerleave", () => cur.classList.add("is-off"));
+  document.addEventListener("pointerenter", () => cur.classList.remove("is-off"));
+  const follow = () => {
+    cp.x += (pos.x - cp.x) * 0.2; cp.y += (pos.y - cp.y) * 0.2;
+    cur.style.transform = `translate3d(${cp.x}px, ${cp.y}px, 0)`;
+    requestAnimationFrame(follow);
+  };
+  requestAnimationFrame(follow);
 })();
 
 // ==========================================================================
@@ -1139,7 +1335,7 @@
   document.querySelectorAll(".k-hero__img, .k-split__img, .k-card__img, .k-tile, .rw__clip, .rw__story").forEach((f) => frames.add(f));
   document.querySelectorAll("main img").forEach((img) => {
     const p = img.parentElement;
-    if (p && !p.closest(".phone, .k-hero, .rw, .cs2, .cs3, .cs4, .w4, .hy, .mz") && img.getBoundingClientRect().width > 260) frames.add(p);
+    if (p && !p.closest(".phone, .k-hero, .rw, .cs2, .cs3, .cs4, .w4") && img.getBoundingClientRect().width > 260) frames.add(p);
   });
   frames.forEach((f) => {
     if (getComputedStyle(f).position === "static") f.style.position = "relative";
@@ -1152,9 +1348,65 @@
     if (f.querySelector(".m8-label") || !f.querySelector("img")) return;
     const l = document.createElement("span");
     l.className = "m8-label"; l.setAttribute("aria-hidden", "true");
-    l.textContent = String(++n).padStart(2, "0") + " — " + ((f.querySelector("img").alt || "").split(/[:\-–]/)[0].replace(/-$/, "").trim() || "Hoch &amp; Glanz");
+    l.textContent = String(++n).padStart(2, "0") + " — Run Club";
     if (getComputedStyle(f).position === "static") f.style.position = "relative";
     f.appendChild(l);
+  });
+})();
+
+// ==========================================================================
+// V9: Laufbänder mit Scrolltempo, magnetische Links
+// ==========================================================================
+(() => {
+  if (!document.body.classList.contains("v5")) return;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+
+  const make = (words, dark) => {
+    const m = document.createElement("div");
+    m.className = "m9-marq" + (dark ? " m9-marq--dark" : "");
+    m.setAttribute("aria-hidden", "true");
+    const t = document.createElement("div");
+    t.className = "m9-marq__track";
+    const set = words.map((w) => `<span>${w}<i>✕</i></span>`).join("");
+    t.innerHTML = set + set + set + set;
+    m.appendChild(t);
+    return m;
+  };
+  const bands = [];
+  const footer = document.querySelector("footer");
+  if (footer) { const m = make(["Strategie", "Design", "Roll-out", "Social"], false); footer.before(m); bands.push(m); }
+  const rw = document.querySelector(".rw");
+  if (rw) { const m = make(["Für den Feed", "Reels", "Stories", "Kampagnen"], true); rw.before(m); bands.push(m); }
+  if (reduce || !bands.length) return;
+
+  let x = 0, lastY = scrollY, vel = 0, dir = 1;
+  const tracks = bands.map((b) => b.querySelector(".m9-marq__track"));
+  const loop = () => {
+    const dy = scrollY - lastY; lastY = scrollY;
+    vel += (dy - vel) * 0.1;
+    if (Math.abs(dy) > 0.5) dir = dy > 0 ? 1 : -1;
+    x -= (0.6 + Math.min(Math.abs(vel) * 0.35, 14)) * dir;
+    tracks.forEach((t, k) => {
+      const w = t.scrollWidth / 4;
+      let p = (k % 2 ? -x : x) % w; if (p > 0) p -= w;
+      t.style.transform = `translate3d(${p}px, 0, 0)`;
+      t.style.setProperty("--rot", (x * 0.6) % 360 + "deg");
+    });
+    requestAnimationFrame(loop);
+  };
+  requestAnimationFrame(loop);
+
+  if (!fine) return;
+  document.querySelectorAll(".k-links a, .header__contact, .rw__more a, .footer__cta, main button[type=submit], .btn").forEach((el) => {
+    el.classList.add("m9-mag");
+    el.addEventListener("pointermove", (e) => {
+      const r = el.getBoundingClientRect();
+      const dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
+      el.classList.add("is-mag");
+      el.style.translate = `${dx * 0.25}px ${dy * 0.35}px`;
+    });
+    el.addEventListener("pointerleave", () => { el.classList.remove("is-mag"); el.style.translate = ""; });
   });
 })();
 
@@ -1248,7 +1500,7 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
   // Weiches Scrollen (nur Maus/Trackpad, lädt still nach; ohne Netz bleibt normales Scrollen)
   if (fine) {
     const s = document.createElement("script");
-    s.src = "assets/vendor/lenis.min.js";
+    s.src = "https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js";
     s.async = true;
     s.onload = () => {
       if (!window.Lenis) return;
@@ -1389,10 +1641,13 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
       document.querySelector(".m8-curtain")?.remove();
       const ov = document.createElement("div");
       ov.className = "bx4 is-load is-arrive";
-      ov.innerHTML = `<div class="bx4__load"><p class="bx4__logo">HOCH &amp; GLANZ</p><p class="bx4__sub bx-serif">Experience</p><p class="bx4__count">100</p></div>`;
+      ov.innerHTML = `<div class="bx4__load"><p class="bx4__logo">STUDIO.X</p><p class="bx4__sub bx-serif">Experience</p><p class="bx4__count">100</p></div>`;
       document.body.appendChild(ov);
       setTimeout(() => ov.classList.add("is-out"), 250);
       setTimeout(() => ov.remove(), 1500);
+    } else {
+      document.body.classList.add("bx-enter");
+      setTimeout(() => document.body.classList.remove("bx-enter"), 1400);
     }
   }
   if (reduce) return;
@@ -1429,7 +1684,7 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
     ov.className = "bx4";
     ov.style.setProperty("--bg", bg); ov.style.setProperty("--fg", fg);
     ov.style.setProperty("--cx", e.clientX + "px"); ov.style.setProperty("--cy", e.clientY + "px");
-    ov.innerHTML = `<div class="bx4__fill"></div>${img ? `<div class="bx4__thumb" style="background-image:url('${img.currentSrc || img.src}')"></div>` : ""}<p class="bx4__name"></p><div class="bx4__load"><p class="bx4__logo">HOCH &amp; GLANZ</p><p class="bx4__sub bx-serif"></p><p class="bx4__count">000</p></div>`;
+    ov.innerHTML = `<div class="bx4__fill"></div>${img ? `<div class="bx4__thumb" style="background-image:url('${img.currentSrc || img.src}')"></div>` : ""}<p class="bx4__name"></p><div class="bx4__load"><p class="bx4__logo">STUDIO.X</p><p class="bx4__sub bx-serif"></p><p class="bx4__count">000</p></div>`;
     document.body.appendChild(ov);
     const th = ov.querySelector(".bx4__thumb");
     const tw = Math.min(260, innerWidth * 0.36), thh = tw * 0.62;
@@ -1797,7 +2052,7 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
   const load = (cb) => {
     if (window.THREE) return cb();
     const s = document.createElement("script");
-    s.src = "assets/vendor/three.min.js";
+    s.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js";
     s.onload = cb; document.head.appendChild(s);
   };
   load(() => {
@@ -2180,8 +2435,8 @@ document.querySelectorAll(".c3-giant").forEach((g) => { const n = g.textContent.
       g.lineWidth = R * 0.14; g.beginPath(); for (let i = 1; i <= 6; i++) { const a = i / 6 * Math.PI * 2 + Math.PI / 6; const x = cx + Math.cos(a) * R * 0.55, y = cy + Math.sin(a) * R * 0.55; i === 1 ? g.moveTo(x, y) : g.lineTo(x, y); } g.stroke();
     } else {
       let fs = Math.min(W * 0.9 / Math.max(4, name.length) * 1.6, H * 0.3);
-      g.font = `900 ${fs}px Archivo, Arial, sans-serif`; g.textAlign = "center"; g.textBaseline = "middle";
-      while (g.measureText(name.toUpperCase()).width > W * 0.88) { fs -= 4; g.font = `900 ${fs}px Archivo, Arial, sans-serif`; }
+      g.font = `900 ${fs}px Montserrat, Arial, sans-serif`; g.textAlign = "center"; g.textBaseline = "middle";
+      while (g.measureText(name.toUpperCase()).width > W * 0.88) { fs -= 4; g.font = `900 ${fs}px Montserrat, Arial, sans-serif`; }
       g.fillText(name.toUpperCase(), W / 2, H * 0.46);
     }
     const data = g.getImageData(0, 0, W, H).data, step = Math.max(5, Math.round(Math.sqrt(W * H / 15000)));
@@ -2229,6 +2484,25 @@ document.querySelectorAll(".c3-giant").forEach((g) => { const n = g.textContent.
   if (g) { g.style.removeProperty("font-size"); const n = g.textContent.trim().length; g.style.setProperty("--gs", Math.min(19, 150 / Math.max(4, n)).toFixed(2) + "vw"); }
 })();
 
+const LION = {"vb": [10.0, 4.0, 230.0, 150.0], "t": [0, 0], "parts": [{"p": "body", "d": "M26 40 L40 32 L40 24 L56 16 C70 17 82 21 92 27 L102 22 L102 34 C108 41 112 50 113 58 L124 58 L114 68 L162 68 C172 68 180 76 180 86 L196 136 L168 136 C168 129 173 124 180 124 L172 104 C158 116 140 120 124 120 C118 120 112 119 106 117 L80 136 L54 136 C54 129 60 124 68 124 L86 106 C76 96 72 84 72 72 C72 64 76 58 82 56 L82 52 L60 52 L52 60 L38 60 L26 52 Z"}, {"p": "body2", "d": "M114 124 L146 124 C156 124 164 120 170 114 L180 132 L160 142 L114 142 C114 134 120 128 128 128 Z"}, {"p": "body2", "d": "M72 88 L58 76 L50 76 C46 72 40 72 34 75 L50 90 L60 106 L71 106 C67 100 67 94 72 88 Z"}, {"p": "tail", "d": "M160 68 L196 68 C206 68 212 60 212 50 C212 42 218 36 226 36 L226 46 C223 46 222 48 222 50 C222 66 210 78 196 78 L160 78 Z"}, {"p": "tail", "d": "M220 22 C229 22 236 29 236 38 L220 38 Z"}, {"p": "cut", "d": "M46 38 L56 34 L56 40 L48 42 Z"}]};
+// ==========================================================================
+// Studio-Logo: Löwe. 3D-Chrom-Intro (Startseite, einmal pro Besuch) +
+// Löwe im Header und im Ladebildschirm
+// ==========================================================================
+(() => {
+  if (!document.body.classList.contains("v5")) return;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const svg = (cls) => {
+    const [x, y, w, h] = LION.vb;
+    return `<svg class="${cls}" viewBox="${x} ${y} ${w} ${h}" aria-hidden="true"><g transform="translate(${LION.t[0]} ${LION.t[1]})">${LION.parts.map((p) => p.p === "line" ? `<path d="${p.d}" fill="none" stroke="var(--lion-cut,#fff)" stroke-width="2.5" stroke-linecap="round"/>` : `<path d="${p.d}" fill="${p.p === "cut" ? "var(--lion-cut,#fff)" : "currentColor"}"${p.p === "mane2" || p.p === "relief" || p.p === "body2" ? ' opacity=".55"' : ""}/>`).join("")}</g></svg>`;
+  };
+  // Header-Logo
+  document.querySelectorAll(".header .logo").forEach((l) => { if (!l.querySelector(".lion-mark")) l.insertAdjacentHTML("afterbegin", svg("lion-mark")); });
+  // Ladebildschirm im Projekt-Übergang
+  new MutationObserver(() => document.querySelectorAll(".bx4__load:not(.has-lion)").forEach((d) => { d.classList.add("has-lion"); d.insertAdjacentHTML("afterbegin", svg("lion-load")); })).observe(document.body, { childList: true });
+
+})();
+
 // Academy: Siegel je Thema statt Buchstaben, Nummer vor jeder Zeile
 (() => {
   if (!document.body.classList.contains("page-ac2")) return;
@@ -2271,74 +2545,4 @@ document.querySelectorAll(".c3-giant").forEach((g) => { const n = g.textContent.
     fl.style.setProperty("--rot", Math.max(-10, Math.min(10, (e.clientX - lx) * 0.5)).toFixed(1) + "deg");
     lx = e.clientX;
   });
-})();
-
-// ==========================================================================
-// HY-Stil: Kreis „Projekt anfragen“ folgt der Maus im Footer,
-// Showreel-Bild wächst beim Scrollen auf volle Breite
-// ==========================================================================
-(() => {
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-  const cta = document.querySelector("body.v5 .footer__cta");
-  if (cta) {
-    const ball = document.createElement("span");
-    ball.className = "hy-ball"; ball.setAttribute("aria-hidden", "true");
-    ball.innerHTML = "<span>[ Projekt anfragen ]</span>";
-    cta.appendChild(ball);
-    const home = () => { const r = cta.getBoundingClientRect(); return { x: r.width * (innerWidth < 760 ? 0.5 : 0.72), y: r.height * (innerWidth < 760 ? 0.72 : 0.42) }; };
-    let p = home(), t = home(), on = false;
-    const set = () => { ball.style.setProperty("--x", p.x.toFixed(1) + "px"); ball.style.setProperty("--y", p.y.toFixed(1) + "px"); };
-    set();
-    if (fine && !reduce) {
-      cta.addEventListener("pointermove", (e) => { const r = cta.getBoundingClientRect(), h = ball.offsetWidth / 2 + 8; t = { x: Math.min(r.width - h, Math.max(h, e.clientX - r.left)), y: Math.min(r.height - h, Math.max(h, e.clientY - r.top)) }; on = true; });
-      cta.addEventListener("pointerleave", () => { on = false; t = home(); });
-      const loop = () => { p.x += (t.x - p.x) * 0.12; p.y += (t.y - p.y) * 0.12; set(); requestAnimationFrame(loop); };
-      requestAnimationFrame(loop);
-    }
-    addEventListener("resize", () => { if (!on) { p = home(); t = home(); set(); } });
-  }
-  const reel = document.querySelector(".hy-reel__f");
-  if (reel && !reduce) {
-    let tick = false;
-    const upd = () => {
-      tick = false;
-      const r = reel.parentElement.getBoundingClientRect();
-      const k = Math.min(1, Math.max(0, (innerHeight - r.top) / (innerHeight * 1.1)));
-      reel.style.setProperty("--s", (0.86 + 0.14 * k).toFixed(4));
-    };
-    addEventListener("scroll", () => { if (!tick) { tick = true; requestAnimationFrame(upd); } }, { passive: true });
-    upd();
-  }
-})();
-
-// ==========================================================================
-// 90er: Camcorder-Overlay (REC, laufender Timecode, Datum, Bildnummer)
-// ==========================================================================
-(() => {
-  const M = ["JAN", "FEB", "MÄR", "APR", "MAI", "JUN", "JUL", "AUG", "SEP", "OKT", "NOV", "DEZ"];
-  const d = new Date();
-  const date = `${M[d.getMonth()]}. ${String(d.getDate()).padStart(2, "0")} ${d.getFullYear()}`;
-  const make = (host, n, rec) => {
-    if (!host || host.querySelector(".cam90")) return null;
-    const o = document.createElement("div");
-    o.className = "cam90"; o.setAttribute("aria-hidden", "true");
-    o.innerHTML = `${rec ? '<span class="cam90__rec"><i></i>REC</span>' : '<span class="cam90__rec">PLAY ▶</span>'}<span class="cam90__tc">0:00:00</span><span class="cam90__date">${date}</span><span class="cam90__no">SP · ${String(n).padStart(3, "0")}</span>`;
-    host.appendChild(o);
-    return o.querySelector(".cam90__tc");
-  };
-  const tcs = [];
-  const reel = document.querySelector(".hy-reel__f");
-  const t = make(reel, 1, true); if (t) tcs.push({ el: t, off: 0, always: true });
-  document.querySelectorAll(".hy-item__media").forEach((m, i) => {
-    m.dataset.frame = `▮ ${String(i + 12).padStart(2, "0")}A`;
-    const el = make(m, i + 2, false); if (el) tcs.push({ el, off: i * 37, host: m.closest("a") });
-  });
-  if (!tcs.length || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  const t0 = performance.now();
-  const fmt = (s) => `${Math.floor(s / 3600)}:${String(Math.floor(s / 60) % 60).padStart(2, "0")}:${String(Math.floor(s) % 60).padStart(2, "0")}`;
-  setInterval(() => {
-    const s = (performance.now() - t0) / 1000;
-    tcs.forEach((x) => { if (x.always || x.host?.matches(":hover")) x.el.textContent = fmt(s + x.off); });
-  }, 250);
 })();
