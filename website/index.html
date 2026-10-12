@@ -83,17 +83,30 @@
   <a class="skip" href="#main">Zum Inhalt springen</a>
 
   <header class="nav" id="top">
-    <a href="#top" class="nav__logo">Leni Heaf</a>
-    <nav aria-label="Hauptnavigation">
-      <ul class="nav__links">
-        <li><a href="#agentur">Agentur</a></li>
-        <li><a href="#leistungen">Leistungen</a></li>
-        <li><a href="#arbeiten">Arbeiten</a></li>
-        <li><a href="#leni">Leni</a></li>
-        <li><a href="#kontakt">Kontakt</a></li>
-      </ul>
-    </nav>
+    <a href="#top" class="nav__logo">Leni Heaf<sup>™</sup></a>
+    <div class="nav__right">
+      <a href="#kontakt" class="nav__pill">Projekt starten</a>
+      <button class="nav__menu" aria-expanded="false" aria-controls="menu">Menü</button>
+    </div>
   </header>
+
+  <!-- Vollbild-Menü -->
+  <div class="menu" id="menu" hidden>
+    <nav aria-label="Hauptnavigation">
+      <ol class="menu__links">
+        <li><a href="#agentur"><span>1.0</span>Agentur</a></li>
+        <li><a href="#leistungen"><span>2.0</span>Leistungen</a></li>
+        <li><a href="#arbeiten"><span>3.0</span>Projekte</a></li>
+        <li><a href="#leni"><span>5.0</span>Leni</a></li>
+        <li><a href="#kontakt"><span>6.0</span>Kontakt</a></li>
+      </ol>
+    </nav>
+    <div class="menu__foot">
+      <p>Leni Heaf Agentur<br>Sonneberg, Deutschland</p>
+      <p><a href="mailto:hallo@leniheaf.de">hallo@leniheaf.de</a><br><a href="https://instagram.com/" rel="noopener">Instagram</a> / <a href="https://linkedin.com/" rel="noopener">LinkedIn</a></p>
+      <span class="dot" aria-hidden="true"></span>
+    </div>
+  </div>
 
   <main id="main">
     <!-- 1.0 START: wie die Rue-Logoseite, links Foto mit weißem Logo, rechts hell mit schwarzem Logo -->
@@ -133,6 +146,22 @@
       </div>
     </section>
 
+    <!-- 1.1 INTRO: klare Ansage, was die Agentur macht -->
+    <section class="slide slide--light intro" id="agentur">
+      <div class="meta"><span>Leni Heaf</span><span>Agentur</span><span>2026</span></div>
+      <h2 class="intro__title">Wir bauen Marken, die man <span class="red">nicht übersieht.</span></h2>
+      <div class="intro__grid">
+        <p class="intro__text">Leni Heaf ist eine Full-Service-Agentur aus Sonneberg. Wir entwickeln Branding, Websites und Social Media aus einer Hand, für Unternehmen in Thüringen, Franken und ganz Deutschland.</p>
+        <ul class="intro__facts">
+          <li><b>03</b><span>Disziplinen</span></li>
+          <li><b>08+</b><span>Kund:innen</span></li>
+          <li><b>24 h</b><span>Antwortzeit</span></li>
+        </ul>
+        <div class="intro__cta"><a class="btn" href="#kontakt">Projekt starten</a><a class="textlink" href="#arbeiten">Projekte ansehen</a></div>
+      </div>
+      <p class="label"><span>1.1</span> Agentur</p>
+    </section>
+
     <!-- 1.2 VOLLBILD: wie die Rue-Website (Rue 006), gesperrte Buchstaben über Foto, roter Balken -->
     <section class="fullbleed" aria-label="Leni Heaf Agentur">
       <img class="fullbleed__img" src="img/1779398969106-4f254e207c5d-2000.webp" alt="" loading="lazy" width="2000" height="1300">
@@ -143,8 +172,8 @@
     </section>
 
     <!-- 1.1 HALTUNG: hellgrau, große dünne Aussage -->
-    <section class="slide slide--light" id="agentur">
-      <div class="meta"><span>Leni Heaf</span><span>Agentur</span><span>2026</span></div>
+    <section class="slide slide--light" id="haltung">
+      <div class="meta"><span>Leni Heaf</span><span>Haltung</span><span>2026</span></div>
       <div class="split">
         <div class="split__text">
           <p class="small-caps">Gute Unternehmen bleiben oft unsichtbar. Nicht wegen ihres Angebots, sondern wegen ihres Auftritts. Wir entwickeln Marken, Websites und Social Media, die zusammen wirken und mehr Anfragen bringen.</p>
@@ -154,7 +183,7 @@
           <img src="img/1508964801641-4b2410705b73-1000.webp" alt="" loading="lazy" width="1000" height="1200">
         </figure>
       </div>
-      <p class="label"><span>1.1</span> Haltung</p>
+      <p class="label"><span>1.3</span> Haltung</p>
     </section>
 
     <!-- 2.0 LEISTUNGEN: wie der Rue Services Guide, Espresso und Rost -->
@@ -208,27 +237,74 @@
       <p class="label"><span>2.1</span> Ablauf</p>
     </section>
 
-    <!-- 3.0 ARBEITEN: hellgrau, Liste mit Linien -->
-    <section class="slide slide--light" id="arbeiten">
-      <div class="meta"><span>Leni Heaf</span><span>Arbeiten</span><span>2026</span></div>
-      <div class="work">
-        <h2 class="headline">Kund:innen, die uns vertrauen</h2>
-        <!-- TODO: Leistungen pro Kund:in prüfen -->
-        <ul class="work__list">
-          <li data-img="img/1664515226058-03952a19bd76-700.webp"><span>Sonderpreis Baumarkt</span><span>Social Media, Content</span></li>
-          <li data-img="img/1721957786618-5584515a50d3-700.webp"><span>my baumarkt</span><span>Social Media</span></li>
-          <li data-img="img/1782357091589-a3382cabc067-700.webp"><span>Täubert Karosserie &amp; Lack</span><span>Branding, Logo, Instagram</span></li>
-          <li data-img="img/1779400204302-d2c3ed9d003d-700.webp"><span>Butter und Brot</span><span>Branding, Instagram</span></li>
-          <li data-img="img/1732210571867-2ee57557814c-700.webp"><span>Kühlkraft</span><span>Branding, Logo</span></li>
-          <li data-img="img/1668952135120-7d997b1b3778-700.webp"><span>Dogstar</span><span>Branding, Instagram</span></li>
-          <li data-img="img/1508964801641-4b2410705b73-700.webp"><span>Crea Response</span><span>Branding</span></li>
-          <li data-img="img/1657815929003-b97cc426cb3d-700.webp"><span>Yvonne Kleinle</span><span>Personal Branding</span></li>
-        </ul>
+    <!-- 3.0 PROJEKTE: Agentur-Raster mit großen Bildern -->
+    <!-- TODO: Bilder sind Platzhalter (Unsplash). Durch echte Projektbilder ersetzen und Texte pro Kund:in prüfen -->
+    <section class="slide slide--white work-grid" id="arbeiten">
+      <div class="meta"><span>Leni Heaf</span><span>Ausgewählte Projekte</span><span>2024 bis 2026</span></div>
+      <div class="work-grid__head">
+        <h2 class="work-grid__title">Projekte</h2>
+        <p class="small-caps">Ausgewählte Arbeiten für Handel, Handwerk und Selbstständige. Branding, Logo, Social Media und mehr Anfragen.</p>
       </div>
-      <p class="label"><span>3.0</span> Arbeiten</p>
+      <div class="cases">
+        <article class="case case--tall">
+          <a href="#kontakt" class="case__link" aria-label="Sonderpreis Baumarkt: ähnliches Projekt anfragen">
+            <figure class="case__img"><img src="img/case-sonderpreis.webp" alt="" loading="lazy"></figure>
+            <div class="case__meta"><span class="case__num">01</span><h3>Sonderpreis Baumarkt</h3><p class="case__tags">Social Media, Content</p></div>
+            <p class="case__text">Regelmäßiger Content für Instagram und Facebook, der Angebote und Aktionen sichtbar macht.</p>
+          </a>
+        </article>
+        <article class="case case--wide">
+          <a href="#kontakt" class="case__link" aria-label="Täubert Karosserie & Lack: ähnliches Projekt anfragen">
+            <figure class="case__img"><img src="img/case-taeubert.webp" alt="" loading="lazy"></figure>
+            <div class="case__meta"><span class="case__num">02</span><h3>Täubert Karosserie &amp; Lack</h3><p class="case__tags">Branding, Logo, Instagram</p></div>
+            <p class="case__text">Neuer Markenauftritt und Instagram-Kanal für einen Meisterbetrieb, gebaut für mehr Anfragen.</p>
+          </a>
+        </article>
+        <article class="case">
+          <a href="#kontakt" class="case__link" aria-label="Butter und Brot: ähnliches Projekt anfragen">
+            <figure class="case__img"><img src="img/case-butterbrot.webp" alt="" loading="lazy"></figure>
+            <div class="case__meta"><span class="case__num">03</span><h3>Butter und Brot</h3><p class="case__tags">Branding, Instagram</p></div>
+            <p class="case__text">Eine Marke, die so ehrlich ist wie das Handwerk dahinter.</p>
+          </a>
+        </article>
+        <article class="case case--tall">
+          <a href="#kontakt" class="case__link" aria-label="my baumarkt: ähnliches Projekt anfragen">
+            <figure class="case__img"><img src="img/case-mybaumarkt.webp" alt="" loading="lazy"></figure>
+            <div class="case__meta"><span class="case__num">04</span><h3>my baumarkt</h3><p class="case__tags">Social Media</p></div>
+            <p class="case__text">Social-Media-Betreuung mit klarer Bildsprache und Wiedererkennung.</p>
+          </a>
+        </article>
+        <article class="case">
+          <a href="#kontakt" class="case__link" aria-label="Dogstar: ähnliches Projekt anfragen">
+            <figure class="case__img"><img src="img/case-dogstar.webp" alt="" loading="lazy"></figure>
+            <div class="case__meta"><span class="case__num">05</span><h3>Dogstar</h3><p class="case__tags">Branding, Instagram</p></div>
+            <p class="case__text">Ein Auftritt mit Charakter, vom Logo bis zum Feed.</p>
+          </a>
+        </article>
+        <article class="case">
+          <a href="#kontakt" class="case__link" aria-label="Kühlkraft: ähnliches Projekt anfragen">
+            <figure class="case__img"><img src="img/case-kuehlkraft.webp" alt="" loading="lazy"></figure>
+            <div class="case__meta"><span class="case__num">06</span><h3>Kühlkraft</h3><p class="case__tags">Branding, Logo</p></div>
+            <p class="case__text">Ein klares Logo und Erscheinungsbild für einen Technik-Betrieb.</p>
+          </a>
+        </article>
+        <article class="case">
+          <a href="#kontakt" class="case__link" aria-label="Crea Response: ähnliches Projekt anfragen">
+            <figure class="case__img"><img src="img/case-crea.webp" alt="" loading="lazy"></figure>
+            <div class="case__meta"><span class="case__num">07</span><h3>Crea Response</h3><p class="case__tags">Branding</p></div>
+            <p class="case__text">Markenentwicklung für ein kreatives Unternehmen.</p>
+          </a>
+        </article>
+        <article class="case case--wide">
+          <a href="#kontakt" class="case__link" aria-label="Yvonne Kleinle: ähnliches Projekt anfragen">
+            <figure class="case__img"><img src="img/case-kleinle.webp" alt="" loading="lazy"></figure>
+            <div class="case__meta"><span class="case__num">08</span><h3>Yvonne Kleinle</h3><p class="case__tags">Personal Branding</p></div>
+            <p class="case__text">Personal Branding und Instagram-Auftritt für eine Selbstständige.</p>
+          </a>
+        </article>
+      </div>
+      <p class="label"><span>3.0</span> Projekte</p>
     </section>
-
-    <div class="cursor-img" aria-hidden="true"><img alt=""></div>
 
     <!-- 3.1 MOODBOARD: Fotoreihe wie im Rue-Lookbook -->
     <section class="slide slide--white mood">
@@ -274,6 +350,7 @@
         <div class="founder__text">
           <h2 class="headline">Hi, ich bin Leni</h2>
           <p>Ich habe diese Agentur gegründet, weil gute Unternehmen eine Marke verdienen, die man sofort wiedererkennt. Persönlich betreut, klar gedacht und ohne Agentur-Floskeln.</p>
+          <p>Für jedes Projekt arbeite ich mit einem festen Netzwerk aus Fotograf:innen, Entwickler:innen und Texter:innen. Du hast trotzdem immer nur eine Ansprechpartnerin: mich.</p>
           <p class="founder__links"><a href="https://linkedin.com/" rel="noopener">LinkedIn</a><a href="https://instagram.com/" rel="noopener">Instagram</a></p>
         </div>
       </div>
@@ -310,6 +387,14 @@
       </div>
       <p class="label"><span>5.1</span> Fragen</p>
     </section>
+
+    <!-- LAUFBAND-AUFRUF -->
+    <a class="cta-marquee" href="#kontakt" aria-label="Projekt starten">
+      <span class="cta-marquee__track" aria-hidden="true">
+        <span>Projekt starten</span><i></i><span>Lass uns reden</span><i></i><span>Projekt starten</span><i></i><span>Lass uns reden</span><i></i>
+        <span>Projekt starten</span><i></i><span>Lass uns reden</span><i></i><span>Projekt starten</span><i></i><span>Lass uns reden</span><i></i>
+      </span>
+    </a>
 
     <!-- 6.0 KONTAKT: schwarz -->
     <section class="slide slide--black contact" id="kontakt">

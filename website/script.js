@@ -36,6 +36,23 @@ if (preview && window.matchMedia("(hover: hover) and (min-width: 901px)").matche
   });
 }
 
+// Vollbild-Menü
+const menuBtn = document.querySelector(".nav__menu");
+const menuEl = document.getElementById("menu");
+if (menuBtn && menuEl) {
+  const setMenu = (open) => {
+    menuEl.hidden = !open;
+    menuBtn.setAttribute("aria-expanded", String(open));
+    menuBtn.textContent = open ? "Schließen" : "Menü";
+    document.body.classList.toggle("menu-open", open);
+    document.body.style.overflow = open ? "hidden" : "";
+    if (open) menuEl.querySelector("a").focus();
+  };
+  menuBtn.addEventListener("click", () => setMenu(menuEl.hidden));
+  menuEl.addEventListener("click", (e) => { if (e.target.closest("a")) setMenu(false); });
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !menuEl.hidden) { setMenu(false); menuBtn.focus(); } });
+}
+
 // Kontaktformular: Prüfung und Versand per E-Mail-Programm
 // Für echten Versand ohne E-Mail-Programm z. B. Formspree oder Netlify Forms anbinden.
 const form = document.getElementById("contact-form");
