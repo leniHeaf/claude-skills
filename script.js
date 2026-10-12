@@ -2566,3 +2566,67 @@ const LION = {"vb": [10.0, 4.0, 230.0, 150.0], "t": [0, 0], "parts": [{"p": "bod
   reset.addEventListener("click", () => { on.clear(); apply(); });
   apply();
 })();
+
+/* RUE – Blätter-Effekt: Seiten stapeln sich, Headlines und Bilder decken sich auf, Ansehen-Cursor */
+(() => {
+  const main = document.querySelector("main.ru");
+  if (!main) return;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const desk = matchMedia("(min-width: 801px)");
+  const pages = [...main.querySelectorAll(":scope > .ru-page")];
+  main.classList.add("ru-fx");
+  if (reduce) { main.classList.add("ru-fx--static"); return; }
+
+  // Aufdecken beim Hereinkommen
+  const io = new IntersectionObserver((es) => es.forEach((e) => {
+    if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); }
+  }), { threshold: 0.18 });
+  pages.forEach((p) => io.observe(p));
+
+  // Stapeln: jede Seite bleibt stehen, die nächste schiebt sich darüber
+  const hdr = document.querySelector(".header");
+  const head = () => Math.max(12, hdr ? hdr.getBoundingClientRect().bottom : 46);
+  let last = -1;
+  const layout = () => {
+    const hh = head(); last = hh;
+    pages.forEach((p) => {
+      if (!desk.matches) { p.style.top = ""; return; }
+      p.style.top = Math.min(hh, innerHeight - p.offsetHeight) + "px";
+    });
+  };
+  let tick = false;
+  const cover = () => {
+    tick = false;
+    if (!desk.matches) return;
+    if (Math.abs(head() - last) > 0.5) layout();
+    for (let i = 0; i < pages.length - 1; i++) {
+      const r = pages[i + 1].getBoundingClientRect();
+      const c = Math.min(1, Math.max(0, 1 - (r.top - head()) / innerHeight));
+      pages[i].style.setProperty("--cov", c.toFixed(3));
+    }
+  };
+  layout(); cover();
+  addEventListener("resize", () => { layout(); cover(); });
+  addEventListener("load", () => { layout(); cover(); });
+  addEventListener("scroll", () => { if (!tick) { tick = true; requestAnimationFrame(cover); } }, { passive: true });
+
+  // Ansehen-Cursor über Projekten
+  if (!matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+  const cur = document.createElement("div");
+  cur.className = "ru-cursor"; cur.setAttribute("aria-hidden", "true"); cur.textContent = "Ansehen";
+  document.body.appendChild(cur);
+  let x = 0, y = 0, cx = 0, cy = 0, raf = 0;
+  const loop = () => {
+    cx += (x - cx) * 0.2; cy += (y - cy) * 0.2;
+    cur.style.transform = `translate3d(${cx}px, ${cy}px, 0) translate(-50%, -50%)`;
+    raf = Math.abs(x - cx) + Math.abs(y - cy) > 0.3 ? requestAnimationFrame(loop) : 0;
+  };
+  const sel = "a.ru-page, a.ru-cell, .ru-look__img, .ru-strip a, .ru-index a, a[href^='projekt-']";
+  addEventListener("pointermove", (e) => {
+    x = e.clientX; y = e.clientY;
+    const t = e.target.closest && e.target.closest(sel);
+    cur.classList.toggle("is-on", !!(t && main.contains(t)));
+    if (!raf) raf = requestAnimationFrame(loop);
+  }, { passive: true });
+  document.addEventListener("pointerleave", () => cur.classList.remove("is-on"));
+})();

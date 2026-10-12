@@ -4139,3 +4139,21 @@ body.v5 .ru .ru-big--long { font-size: clamp(30px, 4.6vw, 78px) !important; }
 .ru-foot:has(.ru-big--long) { grid-template-columns: minmax(0, 2fr) auto minmax(0, .5fr); }
 @media (max-width: 800px) { body.v5 .ru .ru-big--long { font-size: clamp(24px, 8vw, 40px) !important; } .ru-foot:has(.ru-big--long) { grid-template-columns: 1fr auto; } }
 html body.page-ru .ru .ru-page.ru-page--next { background: #0b0b0b !important; color: #fff; }
+
+/* RUE – Blätter-Effekt */
+@media (min-width: 801px) {
+  .ru-fx:not(.ru-fx--static) > .ru-page { position: sticky; z-index: 1; }
+  .ru-fx:not(.ru-fx--static) > .ru-page::after { content: ""; position: absolute; inset: 0; z-index: 5; background: #000; opacity: calc(var(--cov, 0) * .55); pointer-events: none; }
+  .ru-fx:not(.ru-fx--static) > .ru-page > * { transform: scale(calc(1 - var(--cov, 0) * .04)); transform-origin: 50% 30%; }
+}
+/* Headlines steigen aus der Kante */
+.ru-fx:not(.ru-fx--static) .ru-big, .ru-fx:not(.ru-fx--static) .ru-h { clip-path: inset(0 0 100% 0); transform: translateY(.35em); transition: clip-path 1.1s cubic-bezier(.16,1,.3,1) .1s, transform 1.1s cubic-bezier(.16,1,.3,1) .1s; }
+.ru-fx .is-in .ru-big, .ru-fx .is-in .ru-h { clip-path: inset(-20% -5% -20% -5%); transform: none; }
+/* Bilder öffnen sich wie ein Vorhang */
+.ru-fx:not(.ru-fx--static) .ru-page img { clip-path: inset(0 0 100% 0); scale: 1.12; transition: clip-path 1.3s cubic-bezier(.77,0,.18,1), scale 1.8s cubic-bezier(.16,1,.3,1); }
+.ru-fx .ru-page.is-in img { clip-path: inset(0 0 0 0); scale: 1; }
+.ru-fx .ru-page.is-in .ru-cell:nth-child(3n+2) img, .ru-fx .ru-page.is-in .ru-strip a:nth-child(even) img { transition-delay: .12s; }
+.ru-fx .ru-page.is-in .ru-cell:nth-child(3n) img, .ru-fx .ru-page.is-in .ru-look__img + .ru-look__img img { transition-delay: .24s; }
+/* Ansehen-Cursor */
+.ru-cursor { position: fixed; left: 0; top: 0; z-index: 9999; display: grid; place-items: center; width: 104px; height: 104px; border-radius: 50%; background: var(--ru-brown); color: #fff; font: 800 12px/1 var(--ru-f); text-transform: uppercase; letter-spacing: .02em; pointer-events: none; scale: 0; transition: scale .45s cubic-bezier(.16,1,.3,1); }
+.ru-cursor.is-on { scale: 1; }
