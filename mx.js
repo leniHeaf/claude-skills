@@ -1,4 +1,4 @@
-/* STUDIO X – Klarheit von Helder, Haltung von Motto */
+/* BDE-3 – Klarheit von Helder, Haltung von Motto */
 (() => {
   document.documentElement.classList.add("mx-js");
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
