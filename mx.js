@@ -171,5 +171,54 @@
     box.querySelectorAll("[data-r]").forEach((x) => x.classList.add("in"));
   });
 
+  // Standort-Uhren
+  const clocks = [...document.querySelectorAll("[data-clock]")];
+  const opens = [...document.querySelectorAll("[data-open]")];
+  if (clocks.length) {
+    const tick = () => {
+      clocks.forEach((c) => { c.textContent = new Intl.DateTimeFormat("de-DE", { hour: "2-digit", minute: "2-digit", timeZone: c.dataset.clock }).format(new Date()); });
+      opens.forEach((o) => {
+        const p = new Intl.DateTimeFormat("de-DE", { hour: "numeric", weekday: "short", timeZone: o.dataset.open }).formatToParts(new Date());
+        const h = +p.find((x) => x.type === "hour").value, d = p.find((x) => x.type === "weekday").value;
+        const open = h >= 9 && h < 18 && !/Sa|So/.test(d);
+        o.classList.toggle("is-open", open);
+        o.textContent = open ? "Jetzt im Studio" : "Gerade geschlossen";
+      });
+    };
+    tick(); setInterval(tick, 20000);
+  }
+
+  // Cursor
+  if (fine && !reduce) {
+    const cur = document.createElement("div");
+    cur.className = "mx-cur"; cur.setAttribute("aria-hidden", "true"); cur.innerHTML = "<span>Ansehen</span>";
+    document.body.appendChild(cur);
+    let x = -50, y = -50, cx = -50, cy = -50;
+    addEventListener("pointermove", (e) => {
+      x = e.clientX; y = e.clientY;
+      const t = e.target.closest && e.target.closest(".mx-tile, .mx-reel__main, .mx-show, .mx-reel__more a");
+      cur.classList.toggle("is-big", !!t);
+    }, { passive: true });
+    const loop = () => { cx += (x - cx) * 0.22; cy += (y - cy) * 0.22; cur.style.transform = `translate3d(${cx}px, ${cy}px, 0)`; requestAnimationFrame(loop); };
+    loop();
+  }
+
+  // Seitenwechsel mit Vorhang
+  if (!reduce) {
+    const cu = document.createElement("div");
+    cu.className = "mx-curtain"; cu.setAttribute("aria-hidden", "true");
+    document.body.appendChild(cu);
+    document.addEventListener("click", (e) => {
+      const a = e.target.closest("a[href]");
+      if (!a || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || a.target === "_blank") return;
+      const u = new URL(a.href, location.href);
+      if (u.origin !== location.origin || u.pathname === location.pathname || !/\.html$|\/$/.test(u.pathname)) return;
+      e.preventDefault();
+      cu.className = "mx-curtain is-in";
+      setTimeout(() => { location.href = a.href; }, 520);
+    });
+    addEventListener("pageshow", () => { cu.className = "mx-curtain"; });
+  }
+
   document.querySelectorAll("[data-year]").forEach((e) => { e.textContent = new Date().getFullYear(); });
 })();
