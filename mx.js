@@ -15,7 +15,7 @@
   }
 
   // Kopfleiste ein-/ausblenden, schwebender Termin-Button
-  const head = document.querySelector(".mx-head-wrap");
+  const head = document.querySelector(".mx-hd") || document.querySelector(".mx-head-wrap");
   const float = document.querySelector(".mx-float");
   let lastY = scrollY;
   const onScroll = () => {
@@ -280,6 +280,34 @@
       requestAnimationFrame(loop);
     }
   }
+
+  // Menü-Bildvorschau
+  const mimg = document.querySelector(".mx-menu__img img");
+  document.querySelectorAll(".mx-menu__list a[data-img]").forEach((a) => a.addEventListener("pointerenter", () => {
+    if (!mimg || mimg.getAttribute("src") === a.dataset.img) return;
+    mimg.style.opacity = "0";
+    setTimeout(() => { mimg.src = a.dataset.img; mimg.style.opacity = "1"; }, 180);
+  }));
+
+  // Wiki-Suche
+  const search = document.querySelector("[data-search]");
+  if (search) {
+    const posts = [...document.querySelectorAll(".mx-post[data-cat]")];
+    const empty = document.querySelector("[data-empty]");
+    search.addEventListener("input", () => {
+      const q = search.value.trim().toLowerCase();
+      document.querySelectorAll(".mx-filter button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.cat === "alle")));
+      let n = 0;
+      posts.forEach((p) => { const hit = !q || p.textContent.toLowerCase().includes(q); p.hidden = !hit; if (hit) n++; });
+      if (empty) empty.hidden = n > 0;
+      if (q.length === 1) document.getElementById("wiki").scrollIntoView({ block: "start" });
+    });
+  }
+
+  // Link kopieren
+  document.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(location.href); b.textContent = "Kopiert ✓"; } catch (e) { b.textContent = location.href; }
+  }));
 
   document.querySelectorAll("[data-year]").forEach((e) => { e.textContent = new Date().getFullYear(); });
 })();
