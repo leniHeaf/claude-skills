@@ -3524,7 +3524,7 @@ body.v5 .bx4__sub { font-size: clamp(16px, 1.6vw, 22px) !important; letter-spaci
 body.v5 .bx4__sub span { letter-spacing: 0.3em !important; }
 body.v5 .bx4 .bx4__sub span { letter-spacing: 0.3em !important; }
 /* ==========================================================================
-   Studio-Logo Löwe: Header, Ladebildschirm, 3D-Intro
+   Studio-Zeichen Fahne: Header, Ladebildschirm
    ========================================================================== */
 .lion-mark { width: 1.5em; height: 1.5em; margin-right: 0.35em; vertical-align: -0.38em; color: currentColor; --lion-cut: #fff; transition: transform 700ms cubic-bezier(0.19, 1, 0.22, 1); }
 body.v5 .header .logo { display: inline-flex; align-items: center; }
@@ -3532,11 +3532,11 @@ body.v5 .header .logo:hover .lion-mark { transform: rotate(-8deg) scale(1.12); }
 .lion-load { width: clamp(90px, 10vw, 140px); height: auto; color: #fff; --lion-cut: #000; margin-bottom: 6px; animation: lion-in 900ms cubic-bezier(0.19, 1, 0.22, 1) both; }
 @keyframes lion-in { from { opacity: 0; transform: translateY(20px) scale(0.9); } }
 /* Preloader: Bilder-Stapel */
-/* Löwen-Intro nach dem Preloader: kurzer Einstieg */
+/* Intro nach dem Preloader: kurzer Einstieg */
 /* ==========================================================================
-   MOU – Kino-Intro: Schlüsselloch → Flug durch die Wolken → Löwe → MOU
+   MOU – Kino-Intro: Schlüsselloch → Flug durch die Wolken → MOU
    ========================================================================== */
-.lion-mark { width: 2.3em; height: 1.5em; }
+.lion-mark { width: 1.5em; height: 1.5em; }
 /* MOU: Schwarz – Rot – Weiß */
 /* Lade-Animation: Silber-Siegel */
 /* Siegel größer, Medaillon statt App-Icon, Kranz aus vielen kleinen Siegeln */
@@ -3634,7 +3634,7 @@ body.page-ac2 .ac2 h1, body.page-ac2 .ac2 h2, body.page-ac2 .ac2 h3, body.page-a
 /* Noch keine Bilder */
 /* Nächstes Projekt */
 /* Fortschritt oben */
-/* Lade-Animation Löwe */
+/* Lade-Animation */
 html.ll-pre { background: #0a0a0a; }
 html.ll-pre body { opacity: 0; animation: ll-safe 0s 4s forwards; }
 @keyframes ll-safe { to { opacity: 1; } }
