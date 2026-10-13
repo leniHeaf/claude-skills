@@ -116,5 +116,60 @@
     toc.forEach((a) => { const h = document.getElementById(a.getAttribute("href").slice(1)); if (h) to.observe(h); });
   }
 
+  // Showreel-Diashow im Einstieg
+  const show = document.querySelector("[data-show]");
+  if (show) {
+    const imgs = [...show.querySelectorAll(".mx-show__slides img")];
+    const n = show.querySelector("[data-show-n]"), nm = show.querySelector("[data-show-name]");
+    let i = 0;
+    if (imgs.length > 1 && !reduce) setInterval(() => {
+      if (document.hidden) return;
+      imgs[i].classList.remove("is-on");
+      i = (i + 1) % imgs.length;
+      imgs[i].classList.add("is-on");
+      if (n) n.textContent = String(i + 1).padStart(2, "0");
+      if (nm) nm.textContent = imgs[i].dataset.name || "";
+    }, 3800);
+  }
+
+  // Statement hellt sich Wort für Wort auf
+  const say = document.querySelector("[data-say]");
+  if (say && !reduce) {
+    const walk = (node) => [...node.childNodes].forEach((c) => {
+      if (c.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        c.textContent.split(/(\s+)/).forEach((w) => {
+          if (!w) return;
+          if (/^\s+$/.test(w)) frag.appendChild(document.createTextNode(w));
+          else { const s = document.createElement("span"); s.className = "wd"; s.textContent = w; frag.appendChild(s); }
+        });
+        c.replaceWith(frag);
+      } else if (c.nodeType === 1 && c.tagName !== "SUP") walk(c);
+    });
+    walk(say);
+    const wds = [...say.querySelectorAll(".wd")];
+    let tk = false;
+    const paint = () => {
+      tk = false;
+      const r = say.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, (innerHeight * 0.85 - r.top) / (r.height + innerHeight * 0.35)));
+      const k = Math.round(p * wds.length);
+      wds.forEach((w, j) => w.classList.toggle("on", j < k));
+    };
+    addEventListener("scroll", () => { if (!tk) { tk = true; requestAnimationFrame(paint); } }, { passive: true });
+    paint();
+  }
+
+  // Workview: Raster oder Liste
+  const views = document.querySelector(".mx-views");
+  const box = document.querySelector("[data-viewbox]");
+  if (views && box) views.addEventListener("click", (e) => {
+    const b = e.target.closest("button");
+    if (!b) return;
+    views.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    box.dataset.viewbox = b.dataset.view;
+    box.querySelectorAll("[data-r]").forEach((x) => x.classList.add("in"));
+  });
+
   document.querySelectorAll("[data-year]").forEach((e) => { e.textContent = new Date().getFullYear(); });
 })();
