@@ -4157,3 +4157,47 @@ html body.page-ru .ru .ru-page.ru-page--next { background: #0b0b0b !important; c
 /* Ansehen-Cursor */
 .ru-cursor { position: fixed; left: 0; top: 0; z-index: 9999; display: grid; place-items: center; width: 104px; height: 104px; border-radius: 50%; background: var(--ru-brown); color: #fff; font: 800 12px/1 var(--ru-f); text-transform: uppercase; letter-spacing: .02em; pointer-events: none; scale: 0; transition: scale .45s cubic-bezier(.16,1,.3,1); }
 .ru-cursor.is-on { scale: 1; }
+
+/* RUE – Kopfleiste, Rückseite, Altlasten aus */
+html body.page-ru .header .lion-mark { display: none !important; }
+html body.page-ru .header .logo { font: 900 clamp(17px, 1.4vw, 22px)/1 var(--ru-f) !important; font-stretch: 125% !important; letter-spacing: -0.02em !important; color: #111 !important; }
+html body.page-ru .header .logo::after { content: "™"; font-size: .4em; align-self: flex-start; margin-left: .15em; }
+html body.page-ru .header .nav__toggle, html body.page-ru .header .nav__toggle * { font: 500 10.5px/1 var(--ru-f) !important; letter-spacing: .01em !important; text-transform: uppercase; }
+html body.page-ru .header .kl-cta { background: var(--ru-brown) !important; color: #fff !important; border-radius: 0 !important; font: 800 10.5px/1 var(--ru-f) !important; text-transform: uppercase; letter-spacing: .01em !important; }
+html body.page-ru .header .kl-cta * { color: #fff !important; font: inherit !important; }
+html body.page-ru :is(.ticker, .m9-marq, .mcursor, .m8-cursor) { display: none !important; }
+html body.page-ru .m8-progress { background: var(--ru-brown) !important; height: 3px !important; }
+html body.page-ru .ru .m8-grain::after { display: none !important; }
+html body.page-ru .ru-page::before { content: none !important; }
+
+html body.page-ru .footer { background: var(--ru-brown) !important; color: #fff !important; margin: 0 14px 14px; padding: clamp(12px, 1.4vw, 20px) !important; display: grid; grid-template-rows: auto 1fr auto; gap: clamp(30px, 6vw, 90px); min-height: calc(100svh - 74px); }
+html body.page-ru .footer * { color: #fff !important; font-family: var(--ru-f) !important; }
+html body.page-ru .footer .footer__cta { display: grid; font: 800 clamp(48px, 8vw, 140px)/.86 var(--ru-f) !important; letter-spacing: -0.05em !important; text-transform: uppercase; }
+html body.page-ru .footer .footer__cta .line, html body.page-ru .footer .footer__cta .line span { font: inherit !important; letter-spacing: inherit !important; }
+html body.page-ru .footer .footer__cta:hover { opacity: .8; }
+html body.page-ru .footer .footer__grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; align-self: end; border-top: 1px solid rgba(255,255,255,.5); padding-top: 12px; }
+html body.page-ru .footer .footer__grid h4 { margin: 0 0 8px; font: 800 10.5px/1.2 var(--ru-f) !important; text-transform: uppercase; }
+html body.page-ru .footer .footer__grid p, html body.page-ru .footer .footer__grid a { font: 500 10.5px/1.5 var(--ru-f) !important; text-transform: uppercase; }
+html body.page-ru .footer .footer__bottom { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 16px; }
+html body.page-ru .footer .footer__bottom .logo { font: 900 clamp(70px, 17vw, 300px)/.8 var(--ru-f) !important; font-stretch: 125% !important; letter-spacing: -0.04em !important; text-transform: uppercase !important; white-space: nowrap; }
+html body.page-ru .footer .footer__bottom > span:last-child { font: 500 10.5px/1.2 var(--ru-f) !important; text-transform: uppercase; }
+html body.page-ru .footer .footer__bottom > span:last-child::after { content: ". All Rights Reserved"; }
+@media (max-width: 800px) {
+  html body.page-ru .footer { margin: 0 8px 8px; min-height: 0; }
+  html body.page-ru .footer .footer__grid { grid-template-columns: 1fr 1fr; }
+  html body.page-ru .footer .footer__bottom { grid-template-columns: 1fr; }
+  html body.page-ru .footer .footer__bottom .logo { font-size: 15vw !important; }
+}
+html body.page-ru .footer .footer__bottom .logo .m8c { font: inherit !important; letter-spacing: inherit !important; }
+html body.page-ru .footer .footer__cta { display: grid !important; }
+html body.page-ru .footer .footer__cta .line { display: block; overflow: visible !important; }
+html body.page-ru .footer .footer__cta .line span { display: block; transform: none !important; opacity: 1 !important; }
+html body.page-ru .footer .footer__grid { margin: 0 !important; padding: 12px 0 0 !important; max-width: none !important; width: 100%; }
+html body.page-ru .footer .footer__grid h4 { opacity: .7; }
+html body.page-ru .footer { box-shadow: none !important; }
+html body.page-ru .footer::before, html body.page-ru .footer::after { content: none !important; }
+html body.page-ru footer.footer { grid-template-columns: minmax(0, 1fr) !important; }
+html body.page-ru footer.footer > * { grid-column: 1 / -1 !important; margin-left: 0 !important; margin-right: 0 !important; max-width: none !important; }
+html body.page-ru footer.footer .footer__grid h4 { color: #fff !important; -webkit-text-fill-color: #fff; }
+html body.page-ru footer.footer { position: relative; z-index: 2; }
+html body.page-ru .m8-progress { mix-blend-mode: normal !important; }
