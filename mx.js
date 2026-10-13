@@ -323,3 +323,21 @@
     tiles.forEach((t) => t.classList.toggle("is-hidden", c !== "alle" && t.dataset.cat !== c));
   }));
 })();
+
+/* Ehemalige Unterseiten: Moodboard-Filter und Formulare */
+(() => {
+  const chips = document.querySelectorAll(".chips [data-filter]");
+  chips.forEach((b) => b.addEventListener("click", () => {
+    chips.forEach((x) => x.classList.toggle("is-active", x === b));
+    const f = b.dataset.filter;
+    document.querySelectorAll(".mood__item").forEach((it) => it.classList.toggle("is-hidden", f !== "*" && it.dataset.cat !== f));
+  }));
+  document.querySelectorAll("form[data-form], form[data-newsletter]").forEach((form) => form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const st = form.querySelector(".form__status");
+    const bad = [...form.querySelectorAll("[required]")].find((el) => !el.value.trim() || (el.type === "email" && !/^\S+@\S+\.\S+$/.test(el.value)));
+    if (bad) { if (st) st.textContent = "Bitte füllt alle Pflichtfelder korrekt aus."; bad.focus(); return; }
+    if (st) st.textContent = form.matches("[data-newsletter]") ? "Danke! Wir melden uns, sobald es losgeht." : "Danke! Wir melden uns innerhalb von zwei Werktagen.";
+    form.reset();
+  }));
+})();
