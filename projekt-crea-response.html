@@ -26,50 +26,58 @@
   <!-- /SEO -->
   <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="mx.css">
+  <style>.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}</style>
 </head>
 <body class="mx mx-project">
   <a class="mx-skip" href="#main">Zum Inhalt springen</a>
-  <p class="mx-bar">Neu: der Marken-Kompass<sup>®</sup> Workshop – eure Marke auf einer Seite.<a href="leistung-marken-kompass.html">Mehr erfahren →</a></p>
+  <p class="mx-bar">Neu: der Marken-Kompass<sup>®</sup> Workshop – eure Marke auf einer Seite.<a href="leistung-marken-kompass.html">Mehr erfahren</a></p>
   <div class="mx-head-wrap">
     <header class="mx-nav">
-      <a class="mx-logo" href="index.html" aria-label="Studio X – Startseite"><i aria-hidden="true"></i><span>Studio X<sup>®</sup></span></a>
-      <nav class="mx-nav__links" aria-label="Hauptnavigation"><a href="work.html">Arbeiten</a><a href="index.html#leistungen">Leistungen</a><a href="index.html#methode">Methode</a><a href="prozess.html">Prozess</a><a href="academy.html">Academy</a><a class="mx-btn" href="kontakt.html">Kontakt</a></nav>
-      <button class="mx-burger" type="button" aria-expanded="false" aria-controls="mx-menu" aria-label="Menü"><span></span><span></span></button>
+      <a class="mx-logo" href="index.html" aria-label="Studio X – Startseite">Studio X<sup>®</sup></a>
+      <nav class="mx-nav__links" aria-label="Hauptnavigation"><a href="work.html">Arbeiten</a><a href="index.html#leistungen">Leistungen</a><a href="index.html#methode">Methode</a><a href="academy.html">Academy</a></nav>
+      <div class="mx-nav__right"><a class="mx-ul" href="kontakt.html">Projekt anfragen</a><button class="mx-burger" type="button" aria-expanded="false" aria-controls="mx-menu"><span class="sr">Menü</span></button></div>
     </header>
   </div>
-  <nav class="mx-menu" id="mx-menu" aria-label="Menü"><a href="work.html">Arbeiten</a><a href="index.html#leistungen">Leistungen</a><a href="index.html#methode">Methode</a><a href="prozess.html">Prozess</a><a href="academy.html">Academy</a><a href="kontakt.html">Kontakt</a></nav>
+  <nav class="mx-menu" id="mx-menu" aria-label="Menü">
+    <div class="mx-menu__list"><a href="work.html">Arbeiten</a><a href="index.html#leistungen">Leistungen</a><a href="index.html#methode">Methode</a><a href="academy.html">Academy</a><a href="kontakt.html">Kontakt</a></div>
+    <div class="mx-menu__foot"><span>hallo@example.com</span><span>Köln · Saalbach-Hinterglemm · Sonneberg</span></div>
+  </nav>
   <main id="main">
-    <section class="mx-phero mx-dark" aria-label="Crea Response">
+    <section class="mx-sec mx-phero" aria-label="Crea Response">
       <div class="mx-wrap">
-        <p class="mx-label" style="color:#9a9a9e">Case Study 03 · Branding · Website · Brand Book · Architektur</p>
+        <p class="mx-label">Case Study 03</p>
         <h1>Crea Response</h1>
         <p class="mx-phero__sub">Ideen werden Wirkung.</p>
-        <div class="mx-phero__img"><img src="assets/crea-response/wandlogo.webp" alt="Violett beleuchtetes Crea-Response-Logo an einer dunklen Steinwand" fetchpriority="high" decoding="async"></div>
       </div>
+      <div class="mx-phero__img"><img src="assets/crea-response/wandlogo.webp" alt="Violett beleuchtetes Crea-Response-Logo an einer dunklen Steinwand" fetchpriority="high" decoding="async"></div>
     </section>
-    <section class="mx-sec" aria-label="Projekt">
+    <section class="mx-sec mx-light" aria-label="Projekt">
       <div class="mx-wrap">
-        <dl class="mx-facts" data-r><div><dt class="mx-label">Kunde</dt><dd>Crea Response GmbH</dd></div><div><dt class="mx-label">Ort</dt><dd>Sonneberg</dd></div><div><dt class="mx-label">Leistungen</dt><dd>Branding, Brand Book, Website, Leitsystem, Recruiting</dd></div></dl>
+        <dl class="mx-facts" data-r><div><dt class="mx-label no-par">Kunde</dt><dd>Crea Response GmbH</dd></div><div><dt class="mx-label no-par">Ort</dt><dd>Sonneberg</dd></div><div><dt class="mx-label no-par">Leistungen</dt><dd>Branding, Brand Book, Website, Leitsystem, Recruiting</dd></div><div><dt class="mx-label no-par">Disziplinen</dt><dd>Branding · Website · Brand Book · Architektur</dd></div></dl>
         <div class="mx-intro">
-          <div data-r><p class="mx-label">Das Projekt</p><h2 class="mx-h2" style="margin-top:14px">Ideen werden Wirkung.</h2></div>
+          <div data-r><h2 class="mx-h2">Ideen werden Wirkung.</h2></div>
           <div data-r style="--d:.08s"><p>Crea Response verbindet Daten, Technologie und Menschen – für Unternehmen, die wirklich vorankommen wollen. Strategie, Technologie, Daten, Menschen und Wachstum bilden die Haltung der Marke. Der Auftritt ist dunkel und architektonisch, mit einem Zeichen aus gebrochenen Linien und Violett als einziger Akzentfarbe.</p></div>
         </div>
+      </div>
+    </section>
+    <section class="mx-sec" style="padding-top:0" aria-label="Kapitel">
+      <div class="mx-wrap">
         <div class="mx-chap">
-          <div class="mx-chap__head" data-r><span>01</span><h2>Website</h2><p>„Work with us“: Die Website stellt Menschen und Haltung nach vorn, darunter die vier Leistungen Strategie, Technologie, Daten und Wachstum – auf dem Laptop genauso klar wie auf dem Smartphone.</p></div>
+          <div class="mx-chap__head" data-r><span class="mx-label">01</span><h2>Website</h2><p>„Work with us“: Die Website stellt Menschen und Haltung nach vorn, darunter die vier Leistungen Strategie, Technologie, Daten und Wachstum – auf dem Laptop genauso klar wie auf dem Smartphone.</p></div>
           <figure class="mx-fig" data-r><img src="assets/crea-response/website-app.webp" alt="Crea-Response-Website „Work with us“ auf Laptop und Smartphone" loading="lazy" decoding="async"></figure>
         </div>
         <div class="mx-chap">
-          <div class="mx-chap__head" data-r><span>02</span><h2>Brand Book</h2><p>„Klarheit schafft Perspektiven“: Das Brand Book hält Marke, Logo, Farbwelt, Typografie und Bilderwelt fest. Vier Farben – Purple #7C3AED, Black #0B0B0F, Graphite #1F1F27 und Light #EBEBEB –, die Schrift Söhne und eine Bildsprache aus Architektur, Licht und Menschen.</p></div>
+          <div class="mx-chap__head" data-r><span class="mx-label">02</span><h2>Brand Book</h2><p>„Klarheit schafft Perspektiven“: Das Brand Book hält Marke, Logo, Farbwelt, Typografie und Bilderwelt fest. Vier Farben – Purple #7C3AED, Black #0B0B0F, Graphite #1F1F27 und Light #EBEBEB –, die Schrift Söhne und eine Bildsprache aus Architektur, Licht und Menschen.</p></div>
           <figure class="mx-fig" data-r><img src="assets/crea-response/brandbook.webp" alt="Aufgeschlagenes Crea-Response-Brand-Book mit Logo, Farbwelt, Typografie und Bilderwelt" loading="lazy" decoding="async"></figure>
         </div>
         <div class="mx-chap">
-          <div class="mx-chap__head" data-r><span>03</span><h2>Raum &amp; Recruiting</h2><p>Im Empfang wird das Zeichen zum beleuchteten Wandlogo, die fünf Begriffe stehen daneben, „Ideen werden Wirkung“ auf der Glaswand. Draußen sucht dieselbe Sprache nach neuen Kolleginnen und Kollegen: „Menschen mit Haltung gesucht“.</p></div>
+          <div class="mx-chap__head" data-r><span class="mx-label">03</span><h2>Raum &amp; Recruiting</h2><p>Im Empfang wird das Zeichen zum beleuchteten Wandlogo, die fünf Begriffe stehen daneben, „Ideen werden Wirkung“ auf der Glaswand. Draußen sucht dieselbe Sprache nach neuen Kolleginnen und Kollegen: „Menschen mit Haltung gesucht“.</p></div>
           <div class="mx-pair"><figure class="mx-fig" data-r><img src="assets/crea-response/empfang.webp" alt="Empfangsbereich mit beleuchtetem Crea-Response-Logo und der Glaswand „Ideen werden Wirkung“" loading="lazy" decoding="async"></figure><figure class="mx-fig" data-r><img src="assets/crea-response/recruiting.webp" alt="Beleuchtetes Recruiting-Plakat „Menschen mit Haltung gesucht“ bei Nacht" loading="lazy" decoding="async"></figure></div>
         </div>
       </div>
     </section>
-    <section class="mx-sec mx-sec--white" aria-label="Lösung und Prozess"><div class="mx-wrap"><p class="mx-label" data-r>Lösung &amp; Prozess</p><p class="mx-quote" data-r style="margin-top:20px">Am Anfang stand ein Name, der nach Bewegung klingt, und ein Thema, das man nicht sehen kann: Daten und Technologie. Das Zeichen übersetzt das in Architektur – ein C aus gebrochenen Linien, das zugleich wie ein Raum, ein Baustein und ein Pfeil gelesen werden kann. Daraus entsteht ein Linienmuster, das sich über Visitenkarten, Plakate und Glaswände zieht. Die Farbwelt bleibt dunkel und ruhig, ein einziges Violett setzt die Akzente. Fünf Begriffe – Strategie, Technologie, Daten, Menschen, Wachstum – stehen als feste Leiste auf jedem Medium. So wirkt der Auftritt im Gebäude genauso klar wie auf dem Bildschirm.</p></div></section>
-    <a class="mx-next" href="projekt-medaesthetic.html"><span class="mx-wrap" style="display:block"><span class="mx-label" style="color:#9a9a9e">Nächstes Projekt</span><h2>med.aesthetic →</h2></span></a>
+    <section class="mx-sec mx-light" aria-label="Lösung und Prozess"><div class="mx-wrap"><div class="mx-head" data-r><p class="mx-label">Lösung &amp; Prozess</p><p class="mx-quote">Am Anfang stand ein Name, der nach Bewegung klingt, und ein Thema, das man nicht sehen kann: Daten und Technologie. Das Zeichen übersetzt das in Architektur – ein C aus gebrochenen Linien, das zugleich wie ein Raum, ein Baustein und ein Pfeil gelesen werden kann. Daraus entsteht ein Linienmuster, das sich über Visitenkarten, Plakate und Glaswände zieht. Die Farbwelt bleibt dunkel und ruhig, ein einziges Violett setzt die Akzente. Fünf Begriffe – Strategie, Technologie, Daten, Menschen, Wachstum – stehen als feste Leiste auf jedem Medium. So wirkt der Auftritt im Gebäude genauso klar wie auf dem Bildschirm.</p></div></div></section>
+    <a class="mx-next" href="projekt-medaesthetic.html"><span class="mx-wrap" style="display:block"><span class="mx-label">Nächstes Projekt</span><h2>med.aesthetic →</h2></span></a>
   </main>
   <footer class="mx-foot">
     <div class="mx-wrap">

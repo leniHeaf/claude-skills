@@ -24,142 +24,81 @@
   <link rel="icon" href="assets/brand/loewe.svg" type="image/svg+xml">
   <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "ProfessionalService", "@id": "https://www.studio-x.de/#org", "name": "STUDIO.X", "url": "https://www.studio-x.de/", "logo": "https://www.studio-x.de/assets/brand/loewe.svg", "image": "https://www.studio-x.de/assets/runclub/plakatwand.webp", "description": "Branding-Agentur mit Standorten in Köln, Saalbach-Hinterglemm und Sonneberg: Markenstrategie, Corporate Design, Website und Social Media aus einer Hand.", "email": "hallo@example.com", "telephone": "+49 000 000 00", "areaServed": ["DE", "AT"], "knowsAbout": ["Branding", "Markenstrategie", "Corporate Design", "Webdesign", "Social Media"], "address": [{"@type": "PostalAddress", "addressLocality": "Köln", "addressRegion": "Nordrhein-Westfalen", "addressCountry": "DE"}, {"@type": "PostalAddress", "addressLocality": "Saalbach-Hinterglemm", "addressRegion": "Salzburg", "addressCountry": "AT"}, {"@type": "PostalAddress", "addressLocality": "Sonneberg", "addressRegion": "Thüringen", "addressCountry": "DE"}], "location": [{"@type": "Place", "name": "STUDIO.X Köln", "address": {"@type": "PostalAddress", "addressLocality": "Köln", "addressRegion": "Nordrhein-Westfalen", "addressCountry": "DE"}}, {"@type": "Place", "name": "STUDIO.X Saalbach-Hinterglemm", "address": {"@type": "PostalAddress", "addressLocality": "Saalbach-Hinterglemm", "addressRegion": "Salzburg", "addressCountry": "AT"}}, {"@type": "Place", "name": "STUDIO.X Sonneberg", "address": {"@type": "PostalAddress", "addressLocality": "Sonneberg", "addressRegion": "Thüringen", "addressCountry": "DE"}}], "sameAs": []}, {"@type": "WebSite", "@id": "https://www.studio-x.de/#site", "url": "https://www.studio-x.de/", "name": "STUDIO.X", "inLanguage": "de-DE", "publisher": {"@id": "https://www.studio-x.de/#org"}}, {"@type": "Article", "@id": "https://www.studio-x.de/academy-webdesign.html#page", "url": "https://www.studio-x.de/academy-webdesign.html", "name": "Webdesign für Marken | STUDIO.X Branding-Agentur", "description": "Eine Marken-Website muss zwei Dinge gleichzeitig leisten: eine Haltung zeigen und Besuchende schnell ans Ziel bringen.", "inLanguage": "de-DE", "isPartOf": {"@id": "https://www.studio-x.de/#site"}, "image": "https://www.studio-x.de/assets/runclub/plakatwand.webp", "headline": "Webdesign für Marken", "author": {"@id": "https://www.studio-x.de/#org"}, "publisher": {"@id": "https://www.studio-x.de/#org"}, "datePublished": "2026-01-15", "dateModified": "2026-10-06", "mainEntityOfPage": "https://www.studio-x.de/academy-webdesign.html"}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Start", "item": "https://www.studio-x.de/"}, {"@type": "ListItem", "position": 2, "name": "Academy", "item": "https://www.studio-x.de/academy.html"}, {"@type": "ListItem", "position": 3, "name": "Webdesign für Marken", "item": "https://www.studio-x.de/academy-webdesign.html"}]}]}</script>
   <!-- /SEO -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <script>try{if(sessionStorage.getItem("lion-load")!=="1")document.documentElement.classList.add("ll-pre")}catch(e){}</script>
+  <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="mx.css">
+  <style>.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}</style>
 </head>
-<body class="page-academy v5 v6 lux">
-  <a class="skip" href="#main">Zum Inhalt springen</a>
-
-  <!-- Laufband -->
-  <div class="ticker" aria-label="Neuigkeiten">
-    <div class="ticker__track">
-      <ul class="ticker__list"><li>Kostenloses Erstgespräch – <a href="kontakt.html">jetzt Termin sichern</a></li></ul>
-    </div>
+<body class="mx mx-article">
+  <a class="mx-skip" href="#main">Zum Inhalt springen</a>
+  <p class="mx-bar">Neu: der Marken-Kompass<sup>®</sup> Workshop – eure Marke auf einer Seite.<a href="leistung-marken-kompass.html">Mehr erfahren</a></p>
+  <div class="mx-head-wrap">
+    <header class="mx-nav">
+      <a class="mx-logo" href="index.html" aria-label="Studio X – Startseite">Studio X<sup>®</sup></a>
+      <nav class="mx-nav__links" aria-label="Hauptnavigation"><a href="work.html">Arbeiten</a><a href="index.html#leistungen">Leistungen</a><a href="index.html#methode">Methode</a><a href="academy.html">Academy</a></nav>
+      <div class="mx-nav__right"><a class="mx-ul" href="kontakt.html">Projekt anfragen</a><button class="mx-burger" type="button" aria-expanded="false" aria-controls="mx-menu"><span class="sr">Menü</span></button></div>
+    </header>
   </div>
-
-  <!-- Header -->
-  <header class="header" data-header>
-    <a class="logo" href="index.html#top" aria-label="Studio X – Startseite">STUDIO.X</a>
-    <p class="header__claim">Ein Kreativstudio<br>aus Köln, Saalbach-Hinterglemm und Sonneberg</p>
-    <nav class="nav" aria-label="Hauptnavigation">
-      <ul>
-        <li class="has-sub" data-sec="work"><button type="button" class="nav__toggle" aria-expanded="false">Arbeiten<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></button><div class="sub"><div><p class="label-s">Projekte</p><a href="projekt-runclub.html">Run Club</a><a href="projekt-taeubert.html">Täubert Karosserie &amp; Lack</a><a href="projekt-medaesthetic.html">med.aesthetic</a><a href="projekt-kuehlkraft.html">kühlkraft Vitalstudio</a></div><div><p class="label-s">&nbsp;</p><a href="projekt-mybaumarkt.html">Baumarkt Gnoien</a><a href="projekt-crea-response.html">Crea Response</a><a href="projekt-dogstar.html">Dogstar</a></div><div><p class="label-s">Übersicht</p><a href="work.html">Alle Arbeiten</a><a href="stories.html">Success Stories</a></div></div></li>
-        <li class="has-sub" data-sec="leistung"><button type="button" class="nav__toggle" aria-expanded="false">Leistungen<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></button><div class="sub"><div><p class="label-s">Strategie</p><a href="leistung-markenstrategie.html">Markenstrategie</a><a href="leistung-markenworkshop.html">Markenworkshop</a><a href="leistung-marken-kompass.html">Marken-Kompass</a><a href="leistung-naming.html">Naming</a></div><div><p class="label-s">Design</p><a href="leistung-brand-design.html">Brand Design</a><a href="leistung-brand-story.html">Brand Story</a></div><div><p class="label-s">Kommunikation</p><a href="leistung-markenkommunikation.html">Markenkommunikation</a><a href="index.html#social">Social Media &amp; Content</a></div><div><p class="label-s">Ablauf</p><a href="prozess.html">So arbeiten wir</a></div></div></li>
-        <li class="has-sub" data-sec="studio"><button type="button" class="nav__toggle" aria-expanded="false">Studio<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></button><div class="sub"><div><p class="label-s">Über uns</p><a href="index.html#about">Das Studio</a><a href="prozess.html">Prozess</a><a href="stories.html">Success Stories</a></div><div><p class="label-s">Mitmachen</p><a href="jobs.html">Jobs</a><a href="openspace.html">Open Space</a><a href="moodboard.html">Moodboard</a></div></div></li>
-        <li class="has-sub" data-sec="academy"><button type="button" class="nav__toggle" aria-expanded="false">Academy<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></button><div class="sub"><div><p class="label-s">Marken-Wiki</p><a href="academy.html#wiki">Alle Artikel</a><a href="academy.html#identitaet">Identität</a><a href="academy.html#strategie">Strategie</a><a href="academy.html#design">Design</a></div><div><p class="label-s">Lernen</p><a href="academy-training.html">Strategie-Training</a><a href="academy-ebook.html">Strategie-eBook</a><a href="academy-toolkit.html">Workshop-Toolkit</a><a href="academy-templates.html">Branding-Vorlagen</a><a href="academy-newsletter.html">Newsletter</a></div></div></li>
-      </ul>
-    </nav>
-    <span class="header__year">© <span data-year>2026</span></span>
-    <a class="header__contact" href="kontakt.html">Kontakt
-      <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="9"/><path d="M6 10h8M10.5 6.5 14 10l-3.5 3.5"/></svg>
-    </a>
-    <button class="burger" type="button" aria-expanded="false" aria-controls="menu" data-burger>
-      <span></span><span></span><span class="sr">Menü</span>
-    </button>
-  </header>
-
-  <!-- Mobiles Menü -->
-  <div class="menu" id="menu" data-menu hidden>
-    <ul class="mnav">
-      <li><details><summary>Arbeiten</summary><div><a href="projekt-runclub.html">Run Club</a><a href="projekt-taeubert.html">Täubert Karosserie &amp; Lack</a><a href="projekt-medaesthetic.html">med.aesthetic</a><a href="projekt-kuehlkraft.html">kühlkraft Vitalstudio</a><a href="projekt-mybaumarkt.html">Baumarkt Gnoien</a><a href="projekt-crea-response.html">Crea Response</a><a href="projekt-dogstar.html">Dogstar</a><a href="work.html">Alle Arbeiten</a><a href="stories.html">Success Stories</a></div></details></li>
-      <li><details><summary>Leistungen</summary><div><a href="leistung-markenstrategie.html">Markenstrategie</a><a href="leistung-markenworkshop.html">Markenworkshop</a><a href="leistung-marken-kompass.html">Marken-Kompass</a><a href="leistung-naming.html">Naming</a><a href="leistung-brand-design.html">Brand Design</a><a href="leistung-brand-story.html">Brand Story</a><a href="leistung-markenkommunikation.html">Markenkommunikation</a><a href="index.html#social">Social Media &amp; Content</a><a href="prozess.html">So arbeiten wir</a></div></details></li>
-      <li><details><summary>Studio</summary><div><a href="index.html#about">Das Studio</a><a href="prozess.html">Prozess</a><a href="stories.html">Success Stories</a><a href="jobs.html">Jobs</a><a href="openspace.html">Open Space</a><a href="moodboard.html">Moodboard</a></div></details></li>
-      <li><details><summary>Academy</summary><div><a href="academy.html#wiki">Alle Artikel</a><a href="academy.html#identitaet">Identität</a><a href="academy.html#strategie">Strategie</a><a href="academy.html#design">Design</a><a href="academy-training.html">Strategie-Training</a><a href="academy-ebook.html">Strategie-eBook</a><a href="academy-toolkit.html">Workshop-Toolkit</a><a href="academy-templates.html">Branding-Vorlagen</a><a href="academy-newsletter.html">Newsletter</a></div></details></li>
-    </ul>
-    <a class="mnav__cta" href="kontakt.html">Projekt anfragen</a>
-    <p class="mnav__meta"><a href="mailto:hallo@example.com">hallo@example.com</a><br><a href="tel:+490000000">+49 000 000 00</a></p>
-  </div>
-
-  <p class="rue-crumb rue-crumb--page"><a href="index.html">Home</a><span>/</span><a href="academy.html">Academy</a><span>/</span><span>Webdesign für Marken</span></p>
+  <nav class="mx-menu" id="mx-menu" aria-label="Menü">
+    <div class="mx-menu__list"><a href="work.html">Arbeiten</a><a href="index.html#leistungen">Leistungen</a><a href="index.html#methode">Methode</a><a href="academy.html">Academy</a><a href="kontakt.html">Kontakt</a></div>
+    <div class="mx-menu__foot"><span>hallo@example.com</span><span>Köln · Saalbach-Hinterglemm · Sonneberg</span></div>
+  </nav>
   <main id="main">
-    <article class="lart">
-      <header class="lart__intro">
-        <div>
-          <p class="label-s"><a href="academy.html#wiki">Marken-Wiki</a> · <a href="academy.html#design">Design</a> · 2 Min. Lesezeit</p>
+    <article>
+      <header class="mx-sec mx-art__head" aria-label="Webdesign für Marken">
+        <div class="mx-wrap">
+          <p class="mx-art__meta mx-label no-par"><a href="academy.html">Academy</a> · Design · 2 Min. Lesezeit</p>
           <h1>Webdesign für Marken</h1>
-          <p class="lart__def">Eine Marken-Website muss zwei Dinge gleichzeitig leisten: eine Haltung zeigen und Besuchende schnell ans Ziel bringen.</p>
+          <p class="mx-art__def">Eine Marken-Website muss zwei Dinge gleichzeitig leisten: eine Haltung zeigen und Besuchende schnell ans Ziel bringen.</p>
         </div>
-        <span class="icon icon--xl" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><rect x="14" y="20" width="72" height="48"/><path d="M40 80h20M50 68v12"/></svg></span>
       </header>
-      <nav class="lart__toc" aria-label="Inhaltsverzeichnis">
-        <p class="label-s">Inhaltsverzeichnis</p>
-        <ol><li><a class="ulink" href="#s1">1. Die doppelte Aufgabe <span aria-hidden="true">→</span></a></li><li><a class="ulink" href="#s2">2. Mit Inhalten beginnen <span aria-hidden="true">→</span></a></li><li><a class="ulink" href="#s3">3. Grundregeln <span aria-hidden="true">→</span></a></li><li><a class="ulink" href="#s4">4. Barrierefreiheit <span aria-hidden="true">→</span></a></li><li><a class="ulink" href="#s5">5. Messen und verbessern <span aria-hidden="true">→</span></a></li><li><a class="ulink" href="#s6">6. Checkliste <span aria-hidden="true">→</span></a></li><li><a class="ulink" href="#faq">7. Häufige Fragen <span aria-hidden="true">→</span></a></li></ol>
-      </nav>
-      <div class="lart__body">
-        <h2 id="s1">Die doppelte Aufgabe</h2>
+      <div class="mx-sec mx-light">
+        <div class="mx-wrap mx-art">
+          <nav class="mx-toc" aria-label="Inhaltsverzeichnis"><p class="mx-label">Inhalt</p><ol><li><a href="#s1">Die doppelte Aufgabe </a></li><li><a href="#s2">Mit Inhalten beginnen </a></li><li><a href="#s3">Grundregeln </a></li><li><a href="#s4">Barrierefreiheit </a></li><li><a href="#s5">Messen und verbessern </a></li><li><a href="#s6">Checkliste </a></li><li><a href="#faq">Häufige Fragen </a></li></ol></nav>
+          <div class="mx-body"><h2 id="s1">Die doppelte Aufgabe</h2>
         <p>Eine Marken-Website muss zwei Dinge gleichzeitig leisten: Sie soll zeigen, wofür eine Marke steht, und Besuchende schnell an ihr Ziel bringen. Typografie, Bildsprache und Bewegung geben der Website Charakter. Navigation, Lesbarkeit und Ladezeit sorgen dafür, dass dieser Charakter nicht im Weg steht.</p>
         <h2 id="s2">Mit Inhalten beginnen</h2>
         <p>Gute Websites beginnen nicht mit Layouts, sondern mit Fragen: Wer kommt auf die Seite, was sucht diese Person, und was soll sie danach tun? Daraus ergeben sich Struktur und Inhalte. Erst dann lohnt es sich, über Gestaltung zu sprechen.</p>
         <h2 id="s3">Grundregeln</h2>
-        <ol class="steps"><li>Auf jeder Seite ist klar, was der nächste Schritt ist.</li><li>Texte sind kurz, gut gegliedert und gut lesbar.</li><li>Die Seite lädt auch mobil schnell.</li><li>Kontraste und Schriftgrößen sind ausreichend.</li><li>Animationen unterstützen die Orientierung und lassen sich reduzieren.</li></ol>
+        <ol ><li>Auf jeder Seite ist klar, was der nächste Schritt ist.</li><li>Texte sind kurz, gut gegliedert und gut lesbar.</li><li>Die Seite lädt auch mobil schnell.</li><li>Kontraste und Schriftgrößen sind ausreichend.</li><li>Animationen unterstützen die Orientierung und lassen sich reduzieren.</li></ol>
         <h2 id="s4">Barrierefreiheit</h2>
         <p>Eine barrierefreie Website ist für alle besser nutzbar: klare Überschriften, Alternativtexte für Bilder, Tastaturbedienung, ausreichende Kontraste und verständliche Sprache. In vielen Fällen ist Barrierefreiheit inzwischen auch gesetzlich vorgeschrieben.</p>
         <h2 id="s5">Messen und verbessern</h2>
         <p>Nach dem Start beginnt die eigentliche Arbeit. Beobachtet, welche Seiten besucht werden, wo Menschen abspringen und welche Wege zu Anfragen führen. Kleine, regelmäßige Verbesserungen bringen oft mehr als ein großer Relaunch alle fünf Jahre.</p>
         <p><a class="ulink" href="academy-website-relaunch.html">Website-Relaunch ohne Stillstand <span aria-hidden="true">→</span></a></p>
         <h2 id="s6">Checkliste</h2>
-        <ol class="steps"><li>Zielgruppen und ihre wichtigsten Fragen sind bekannt.</li><li>Jede Seite hat ein klares Ziel.</li><li>Die Website ist auf dem Smartphone gut nutzbar.</li><li>Grundlagen der Barrierefreiheit sind erfüllt.</li><li>Es gibt Kennzahlen, die regelmäßig betrachtet werden.</li></ol>
+        <ol ><li>Zielgruppen und ihre wichtigsten Fragen sind bekannt.</li><li>Jede Seite hat ein klares Ziel.</li><li>Die Website ist auf dem Smartphone gut nutzbar.</li><li>Grundlagen der Barrierefreiheit sind erfüllt.</li><li>Es gibt Kennzahlen, die regelmäßig betrachtet werden.</li></ol>
         <h2 id="faq">Häufige Fragen</h2>
-        <div class="faq__list lfaq"><details class="faq__item"><summary><span>Welches System sollten wir verwenden?</span><i aria-hidden="true"></i></summary><div class="faq__body"><p>Das hängt davon ab, wer die Inhalte pflegt. Wichtiger als das System ist, dass das Team selbstständig arbeiten kann.</p></div></details><details class="faq__item"><summary><span>Wie oft sollte man eine Website erneuern?</span><i aria-hidden="true"></i></summary><div class="faq__body"><p>Laufend in kleinen Schritten. Ein kompletter Relaunch ist meist nur nötig, wenn sich Marke oder Angebot grundlegend ändern.</p></div></details></div>
+        <div><details class="faq__item"><summary><span>Welches System sollten wir verwenden?</span><i aria-hidden="true"></i></summary><div class="faq__body"><p>Das hängt davon ab, wer die Inhalte pflegt. Wichtiger als das System ist, dass das Team selbstständig arbeiten kann.</p></div></details><details class="faq__item"><summary><span>Wie oft sollte man eine Website erneuern?</span><i aria-hidden="true"></i></summary><div class="faq__body"><p>Laufend in kleinen Schritten. Ein kompletter Relaunch ist meist nur nötig, wenn sich Marke oder Angebot grundlegend ändern.</p></div></details></div></div>
+        </div>
       </div>
     </article>
-    <section class="lrel">
-      <p class="label-s">Weiterlesen</p>
-      <ul class="lgrid">
-      <li class="wcard-l" data-cat="Design" data-reveal>
-        <a href="academy-logo-briefing.html">
-          <span class="icon icon--sm" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><rect x="22" y="22" width="40" height="40"/><rect x="38" y="38" width="40" height="40"/></svg></span>
-          <span class="label-s">Design · 2 Min.</span>
-          <h3>Das bessere Logo-Briefing</h3>
-          <p>Die meisten Logo-Briefings beschreiben Geschmack. Ein gutes Briefing beschreibt stattdessen, wo das Zeichen funktionieren muss.</p>
-          <span class="ulink">Lesen <span aria-hidden="true">→</span></span>
-        </a>
-      </li>
-      <li class="wcard-l" data-cat="Design" data-reveal>
-        <a href="academy-kampagnen-raster.html">
-          <span class="icon icon--sm" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 50c10-16 24-24 38-24s28 8 38 24c-10 16-24 24-38 24S22 66 12 50z"/><circle cx="50" cy="50" r="10"/></svg></span>
-          <span class="label-s">Design · 2 Min.</span>
-          <h3>Ein Raster für jede Kampagne</h3>
-          <p>Wiedererkennung entsteht nicht durch ein einzelnes starkes Motiv, sondern durch Wiederholung. Ein festes Raster macht genau das einfach.</p>
-          <span class="ulink">Lesen <span aria-hidden="true">→</span></span>
-        </a>
-      </li>
-      <li class="wcard-l" data-cat="Design" data-reveal>
-        <a href="academy-website-relaunch.html">
-          <span class="icon icon--sm" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 70 46 42l14 14 22-26"/><path d="M66 30h16v16"/></svg></span>
-          <span class="label-s">Design · 2 Min.</span>
-          <h3>Website-Relaunch ohne Stillstand</h3>
-          <p>Ein Relaunch muss kein Großprojekt sein, das ein Jahr lang alles blockiert. In kleinen Schritten geht es schneller und mit weniger Risiko.</p>
-          <span class="ulink">Lesen <span aria-hidden="true">→</span></span>
-        </a>
-      </li>
-      </ul>
+    <section class="mx-sec" aria-label="Weiterlesen">
+      <div class="mx-wrap">
+        <div class="mx-head" data-r><p class="mx-label no-par">(→) Weiterlesen</p><div><h2 class="mx-h2">Mehr aus der Academy.</h2></div></div>
+        <div class="mx-posts"><a class="mx-post" href="academy-bildstil.html" data-cat="Design"><span class="mx-post__meta"><span>Design</span><span>2 Min.</span></span><h3>Einen eigenen Bildstil entwickeln</h3><p>Ein Bildstil sorgt dafür, dass man eure Fotos erkennt, bevor man das Logo sieht.</p></a><a class="mx-post" href="academy-brand-design.html" data-cat="Design"><span class="mx-post__meta"><span>Design</span><span>2 Min.</span></span><h3>Was ist Brand Design?</h3><p>Brand Design übersetzt eine Markenstrategie in ein sichtbares System aus Formen, Farben, Schrift und Bildern.</p></a><a class="mx-post" href="academy-brand-guidelines.html" data-cat="Design"><span class="mx-post__meta"><span>Design</span><span>2 Min.</span></span><h3>Brand Guidelines, die genutzt werden</h3><p>Gute Guidelines beantworten die Fragen, die im Alltag wirklich gestellt werden – nicht nur die, die Designer:innen interessant finden.</p></a></div>
+      </div>
+    </section>
+    <section class="mx-sec mx-light" aria-label="Kontakt">
+      <div class="mx-wrap">
+        <div class="mx-head" data-r><p class="mx-label no-par">(?) Klingt passend?</p><div><h2 class="mx-h2">Lasst uns über eure Marke sprechen.</h2><p class="mx-lead">Erzählt uns in einem kurzen Gespräch, wo eure Marke gerade steht. Wir melden uns innerhalb von zwei Werktagen.</p></div></div>
+        <div class="mx-btns"><a class="mx-btn" href="kontakt.html">Termin buchen</a></div>
+      </div>
     </section>
   </main>
-
-  <a class="book" href="kontakt.html"><span class="book__faces" aria-hidden="true"><i></i><i></i><i></i></span>Termin buchen</a>
-  <footer class="footer" id="contact">
-    <a class="footer__cta" href="mailto:hallo@example.com">
-      <span class="line"><span>Lass uns</span></span>
-      <span class="line"><span>reden →</span></span>
-    </a>
-    <div class="footer__grid">
-      <div><h4>Studio</h4><p><a href="work.html">Arbeiten</a><br><a href="jobs.html">Jobs</a><br><a href="moodboard.html">Moodboard</a><br><a href="openspace.html">Open Space</a></p></div>
-      <div><h4>Standorte</h4><p>Köln<br>Saalbach-Hinterglemm<br>Sonneberg</p></div>
-      <div><h4>Kontakt</h4><p><a href="mailto:hallo@example.com">hallo@example.com</a><br><a href="tel:+490000000">+49 000 000 00</a></p></div>
-      <div><h4>Social</h4><p><a href="#">Instagram</a><br><a href="#">LinkedIn</a></p></div>
-      <div><h4>Rechtliches</h4><p><a href="#">Impressum</a><br><a href="#">Datenschutz</a></p></div>
-    </div>
-    <div class="footer__bottom">
-      <span class="logo logo--big" aria-hidden="true">Studio X</span>
-      <span>© <span data-year>2026</span> Studio X</span>
+  <footer class="mx-foot">
+    <div class="mx-wrap">
+      <div class="mx-foot__grid">
+        <div><h4 class="mx-label">Studio X</h4><p>Branding &amp; Marketing<br>aus Köln, Saalbach-Hinterglemm<br>und Sonneberg.</p></div>
+        <div><h4 class="mx-label">Studio</h4><a href="work.html">Arbeiten</a><a href="prozess.html">Prozess</a><a href="jobs.html">Jobs</a></div>
+        <div><h4 class="mx-label">Wissen</h4><a href="academy.html">Academy</a><a href="academy-ebook.html">Strategie-eBook</a><a href="academy-training.html">Training</a></div>
+        <div><h4 class="mx-label">Kontakt</h4><a href="mailto:hallo@example.com">hallo@example.com</a><a href="tel:+490000000">+49 000 000 00</a></div>
+        <div><h4 class="mx-label">Rechtliches</h4><a href="#">Impressum</a><a href="#">Datenschutz</a></div>
+      </div>
+      <p class="mx-foot__big" aria-hidden="true">Studio X<sup>®</sup></p>
+      <div class="mx-foot__bar"><span>© <span data-year>2026</span> Studio X</span><span>Strategie. Design. Umsetzung.</span></div>
     </div>
   </footer>
-
-  <div class="mcursor" aria-hidden="true"><span></span></div>
-  <script src="script.js" defer></script>
+  <a class="mx-float" href="kontakt.html"><i aria-hidden="true">LH</i>Termin buchen</a>
+  <script src="mx.js" defer></script>
 </body>
 </html>

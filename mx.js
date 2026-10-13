@@ -81,5 +81,40 @@
     addEventListener("pointermove", (e) => { x = e.clientX; y = e.clientY; if (!raf) raf = requestAnimationFrame(loop); }, { passive: true });
   }
 
+  // Showreel: wächst beim Scrollen auf volle Breite (Motto)
+  const reel = document.querySelector(".mx-reel__main");
+  if (reel && !reduce) {
+    let t = false;
+    const grow = () => {
+      t = false;
+      const r = reel.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, 1 - r.top / innerHeight));
+      reel.style.setProperty("--s", (0.92 + p * 0.08).toFixed(4));
+    };
+    addEventListener("scroll", () => { if (!t) { t = true; requestAnimationFrame(grow); } }, { passive: true });
+    grow();
+  }
+
+  // Blog-Filter
+  const filter = document.querySelector(".mx-filter");
+  if (filter) {
+    const posts = [...document.querySelectorAll(".mx-post[data-cat]")];
+    filter.addEventListener("click", (e) => {
+      const b = e.target.closest("button");
+      if (!b) return;
+      filter.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      posts.forEach((p) => { p.hidden = b.dataset.cat !== "alle" && p.dataset.cat !== b.dataset.cat; });
+    });
+  }
+
+  // Inhaltsverzeichnis im Artikel
+  const toc = [...document.querySelectorAll(".mx-toc a")];
+  if (toc.length && "IntersectionObserver" in window) {
+    const to = new IntersectionObserver((es) => es.forEach((e) => {
+      if (e.isIntersecting) toc.forEach((a) => a.classList.toggle("is-on", a.getAttribute("href") === "#" + e.target.id));
+    }), { rootMargin: "-20% 0px -70% 0px" });
+    toc.forEach((a) => { const h = document.getElementById(a.getAttribute("href").slice(1)); if (h) to.observe(h); });
+  }
+
   document.querySelectorAll("[data-year]").forEach((e) => { e.textContent = new Date().getFullYear(); });
 })();
