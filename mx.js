@@ -20,7 +20,7 @@
   let lastY = scrollY;
   const onScroll = () => {
     const y = scrollY;
-    if (head && !document.body.classList.contains("menu-open")) head.classList.toggle("is-hidden", y > lastY && y > 300);
+    if (head && !document.body.classList.contains("menu-open")) { head.classList.toggle("is-hidden", y > lastY && y > 300); head.classList.toggle("is-scrolled", y > 60); }
     if (float) float.classList.toggle("is-on", y > innerHeight * 0.8 && y < document.documentElement.scrollHeight - innerHeight * 1.6);
     lastY = y;
   };
