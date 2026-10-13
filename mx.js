@@ -311,3 +311,15 @@
 
   document.querySelectorAll("[data-year]").forEach((e) => { e.textContent = new Date().getFullYear(); });
 })();
+
+/* Arbeiten: Branchen-Filter */
+(() => {
+  const pills = document.querySelectorAll(".mo-pills button");
+  if (!pills.length) return;
+  const tiles = document.querySelectorAll(".mo-work[data-cat]");
+  pills.forEach((b) => b.addEventListener("click", () => {
+    const c = b.dataset.cat;
+    pills.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    tiles.forEach((t) => t.classList.toggle("is-hidden", c !== "alle" && t.dataset.cat !== c));
+  }));
+})();

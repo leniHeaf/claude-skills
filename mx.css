@@ -890,3 +890,49 @@ body.mx .mx-hd { mix-blend-mode: difference; color: #f2f2f2; }
 body.mx .mx-hd .mo-link { color: #f2f2f2 !important; }
 body.menu-open.mx .mx-hd { mix-blend-mode: normal; color: #f2f2f2 !important; }
 .mo-w { white-space: nowrap; } .mo-row { grid-template-columns: auto minmax(0, 1fr) auto; }
+
+/* ===== MOTTO – Arbeiten & Projekte ===== */
+.mo-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: clamp(40px, 5vw, 80px); }
+.mo-pills button { font: 500 15px/1 var(--f); text-transform: uppercase; letter-spacing: 0; padding: 12px 20px; border: 1px solid var(--mo-ink); border-radius: 999px; background: transparent; color: var(--mo-ink); cursor: pointer; transition: background .25s, color .25s; }
+.mo-pills button:hover, .mo-pills button[aria-pressed="true"] { background: var(--mo-ink); color: var(--mo-bg); }
+.mo-work.is-hidden { display: none; }
+.mo-w--mute { color: #b4b4b4; }
+.mo-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 30px 24px; padding: clamp(60px, 9vw, 160px) var(--mo-pad) 40px; border-top: 1px solid var(--mo-line); }
+.mo-meta p { margin-top: 12px; font: 500 18px/1.35 var(--f); letter-spacing: -0.015em; }
+.mo-reel--still { background: #e4e4e4; height: 88svh; }
+.mo-reel--still img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mo-reel--still .mx-phero__type { display: grid; place-items: center; height: 100%; font: 500 clamp(48px, 9vw, 160px)/1 var(--f); text-transform: uppercase; color: var(--mo-ink); }
+.mo-chap { padding: clamp(80px, 10vw, 160px) var(--mo-pad) 0; display: grid; gap: 24px; }
+.mo-chap__head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 20px 40px; padding-top: 22px; border-top: 1px solid var(--mo-line); margin-bottom: clamp(30px, 4vw, 60px); }
+.mo-chap__t { grid-column: 2; margin: 0; font: 500 clamp(40px, 5.4vw, 96px)/.95 var(--f); letter-spacing: -0.035em; text-transform: uppercase; }
+.mo-chap__head p { grid-column: 2; max-width: 46ch; font: 500 20px/1.45 var(--f); letter-spacing: -0.015em; color: var(--mo-mute); }
+.mo-chap__head .mo-label { grid-row: 1; }
+.mo-fig { margin: 0; overflow: hidden; background: #e4e4e4; }
+.mo-fig img { width: 100%; height: auto; display: block; transition: transform 1.2s cubic-bezier(.2,.7,.2,1); }
+.mo-fig:hover img { transform: scale(1.03); }
+.mo-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.mo-pair .mo-fig img { height: 100%; object-fit: cover; }
+.mo-next { display: block; margin-top: clamp(100px, 12vw, 200px); padding: 30px var(--mo-pad) clamp(60px, 8vw, 120px); border-top: 1px solid var(--mo-line); color: var(--mo-ink); text-decoration: none; }
+.mo-next__row { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 30px; margin-top: 30px; }
+.mo-next__t { font: 500 clamp(52px, 10vw, 190px)/.9 var(--f); letter-spacing: -0.04em; text-transform: uppercase; color: #b4b4b4; transition: color .4s; overflow-wrap: anywhere; }
+.mo-next__img { width: 0; height: clamp(90px, 9vw, 160px); overflow: hidden; transition: width .6s cubic-bezier(.2,.7,.2,1); }
+.mo-next__img img { width: clamp(140px, 14vw, 240px); height: 100%; object-fit: cover; display: block; }
+.mo-next__img .mx-tile__type { display: none; }
+.mo-next__arr { font: 500 clamp(52px, 8vw, 150px)/1 var(--f); transition: transform .4s; }
+.mo-next:hover .mo-next__t { color: var(--mo-ink); }
+.mo-next:hover .mo-next__img { width: clamp(140px, 14vw, 240px); }
+.mo-next:hover .mo-next__arr { transform: translateX(14px); }
+body.mx-project .mo-hero .mo-label { align-self: end; }
+@media (max-width: 760px) {
+  .mo-chap__head { grid-template-columns: 1fr; }
+  .mo-chap__t, .mo-chap__head p { grid-column: 1; }
+  .mo-chap__head .mo-label { grid-row: auto; }
+  .mo-pair { grid-template-columns: 1fr; }
+  .mo-reel--still { height: 60svh; min-height: 0; }
+  .mo-next__arr { display: none; }
+  .mo-next__row { grid-template-columns: minmax(0, 1fr); }
+  .mo-meta { grid-template-columns: 1fr 1fr; }
+}
+.mo-chap__t { hyphens: auto; overflow-wrap: anywhere; } .mo-chap, .mo-chap__head { min-width: 0; } .mo-chap__head > * { min-width: 0; }
+.mo-hero__foot > .mo-label:first-child { justify-self: start; }
+body.mx-project .mo-row--2 { grid-template-columns: minmax(0,1fr) auto !important; } body.mx-project .mo-row--2 > :last-child { justify-self: end; } body.mx-project .mo-meta { padding-top: clamp(40px, 6vw, 100px); }
