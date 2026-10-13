@@ -508,3 +508,23 @@ a.mx-card:hover p, .mx-card--hover:hover p, a.mx-card:hover .mx-card__no { color
 }
 @media (hover: none), (pointer: coarse) { .mx-cur { display: none; } }
 @media (prefers-reduced-motion: reduce) { .mx-curtain { display: none; } }
+
+/* Fahne */
+.mx-flag { display: inline-block; color: currentColor; line-height: 0; }
+.mx-flag__svg { width: 100%; height: auto; overflow: visible; }
+.mx-logo { display: inline-flex; align-items: center; gap: 10px; }
+.mx-flag--logo { width: 22px; margin-top: 6px; }
+.mx-show__flag { position: absolute; z-index: 1; right: var(--pad); top: clamp(80px, 9vw, 140px); width: clamp(110px, 13vw, 230px); color: #fff; }
+.mx-rally { padding: clamp(100px, 12vw, 200px) 0; background: var(--off); color: var(--ink); --mute: #6f6f73; --line: rgba(27,27,28,.16); --fg: var(--ink); --bg: var(--off); }
+.mx-rally__in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: clamp(40px, 6vw, 110px); align-items: center; }
+.mx-rally__flag { width: min(100%, 460px); justify-self: center; cursor: pointer; }
+.mx-rally__h { margin-top: 24px; font: 600 clamp(52px, 7.4vw, 136px)/.88 var(--f); letter-spacing: -0.065em; }
+.mx-rally__h em { font-style: normal; color: #9a9a9e; }
+.mx-rally__h sup { font-size: .25em; vertical-align: 2.3em; }
+.mx-curtain { display: grid; place-items: center; color: var(--off); }
+.mx-curtain__flag { width: 120px; }
+@media (max-width: 900px) {
+  .mx-rally__in { grid-template-columns: 1fr; }
+  .mx-rally__flag { width: 220px; justify-self: start; }
+  .mx-show__flag { width: 90px; bottom: auto; top: 70px; }
+}

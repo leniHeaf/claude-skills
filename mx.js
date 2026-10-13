@@ -207,6 +207,7 @@
   if (!reduce) {
     const cu = document.createElement("div");
     cu.className = "mx-curtain"; cu.setAttribute("aria-hidden", "true");
+    cu.innerHTML = '<span class="mx-flag mx-curtain__flag" data-flag data-amp="9" data-speed="1.6"></span>';
     document.body.appendChild(cu);
     document.addEventListener("click", (e) => {
       const a = e.target.closest("a[href]");
@@ -218,6 +219,66 @@
       setTimeout(() => { location.href = a.href; }, 520);
     });
     addEventListener("pageshow", () => { cu.className = "mx-curtain"; });
+  }
+
+  // Wehende Fahne (Motto-Markenzeichen)
+  const flags = [...document.querySelectorAll("[data-flag]")];
+  const NS = "http://www.w3.org/2000/svg";
+  const mkFlag = (el) => {
+    const W = 100, H = 62, N = el.dataset.flag === "s" ? 10 : 28;
+    const svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("viewBox", "-6 -4 " + (W + 14) + " 150");
+    svg.setAttribute("aria-hidden", "true");
+    svg.classList.add("mx-flag__svg");
+    const pole = document.createElementNS(NS, "rect");
+    pole.setAttribute("x", "-4"); pole.setAttribute("y", "-2"); pole.setAttribute("width", "4"); pole.setAttribute("height", "150");
+    pole.setAttribute("fill", "currentColor");
+    svg.appendChild(pole);
+    const base = document.createElementNS(NS, "polygon");
+    base.setAttribute("fill", "currentColor");
+    svg.appendChild(base);
+    const strips = [];
+    for (let i = 0; i < N; i++) {
+      const p = document.createElementNS(NS, "polygon");
+      p.setAttribute("fill", "#000");
+      svg.appendChild(p); strips.push(p);
+    }
+    el.appendChild(svg);
+    const amp = +(el.dataset.amp || 7), speed = +(el.dataset.speed || 1);
+    let wind = 1;
+    el.addEventListener("pointerenter", () => { wind = 2.2; });
+    el.addEventListener("pointerleave", () => { wind = 1; });
+    const draw = (t) => {
+      const pts = [];
+      for (let i = 0; i <= N; i++) {
+        const x = (i / N) * W;
+        const f = i / N;
+        const ph = f * 6.2 - t * 0.0032 * speed * wind;
+        const dy = Math.sin(ph) * amp * f * wind ** 0.6;
+        const dx = -Math.abs(Math.sin(ph)) * 2.2 * f;
+        pts.push([x + dx, dy, H + dy * 1.15 + f * 3, Math.cos(ph)]);
+      }
+      base.setAttribute("points", pts.map((q) => q[0].toFixed(2) + "," + q[1].toFixed(2)).join(" ") + " " + pts.slice().reverse().map((q) => q[0].toFixed(2) + "," + q[2].toFixed(2)).join(" "));
+      for (let i = 0; i < N; i++) {
+        const a = pts[i], b = pts[i + 1];
+        strips[i].setAttribute("points", `${a[0].toFixed(2)},${a[1].toFixed(2)} ${b[0].toFixed(2)},${b[1].toFixed(2)} ${b[0].toFixed(2)},${b[2].toFixed(2)} ${a[0].toFixed(2)},${a[2].toFixed(2)}`);
+        strips[i].setAttribute("fill-opacity", (0.16 * (1 - (a[3] + 1) / 2)).toFixed(3));
+      }
+    };
+    return draw;
+  };
+  if (flags.length) {
+    const draws = flags.map(mkFlag);
+    if (reduce) draws.forEach((d) => d(0));
+    else {
+      const vis = new Set(flags);
+      if ("IntersectionObserver" in window) {
+        const fo = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting ? vis.add(e.target) : vis.delete(e.target)));
+        flags.forEach((f) => fo.observe(f));
+      }
+      const loop = (t) => { flags.forEach((f, i) => { if (vis.has(f) || f.closest(".mx-curtain")) draws[i](t); }); requestAnimationFrame(loop); };
+      requestAnimationFrame(loop);
+    }
   }
 
   document.querySelectorAll("[data-year]").forEach((e) => { e.textContent = new Date().getFullYear(); });
