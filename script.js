@@ -1491,7 +1491,7 @@ document.querySelectorAll("[data-cs-slider]").forEach((sl) => {
   // Bildschirm, das Bild schrumpft in die Mitte, der Projektname mischt
   // sich aus zwei Schriften zusammen, danach Ladebildschirm mit Zähler
   const BRAND = { "crea-response": ["#7c3aed", "#fff"], taeubert: ["#f2f2f2", "#0a0a0a"], runclub: ["#ffe100", "#000"], medaesthetic: ["#e8ddd2", "#1c1c1c"], kuehlkraft: ["#cfe8f1", "#0f2a33"], mybaumarkt: ["#2f8a5f", "#fff"], dogstar: ["#fff1b8", "#10101a"] };
-  const NAMES = { "crea-response": "Crea Response", taeubert: "Täubert", runclub: "Run Club", medaesthetic: "med.aesthetic", kuehlkraft: "kühlkraft", mybaumarkt: "Baumarkt Gnoien", dogstar: "Dogstar" };
+  const NAMES = { "crea-response": "Crea Response", taeubert: "Täubert", runclub: "Run Club", medaesthetic: "med.aesthetic", kuehlkraft: "kühlkraft", mybaumarkt: "My Baumarkt", dogstar: "Dogstar" };
   const scramble = (el, text, dur) => {
     const pool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     const t0 = performance.now();
