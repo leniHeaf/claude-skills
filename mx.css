@@ -936,3 +936,20 @@ body.mx-project .mo-hero .mo-label { align-self: end; }
 .mo-chap__t { hyphens: auto; overflow-wrap: anywhere; } .mo-chap, .mo-chap__head { min-width: 0; } .mo-chap__head > * { min-width: 0; }
 .mo-hero__foot > .mo-label:first-child { justify-self: start; }
 body.mx-project .mo-row--2 { grid-template-columns: minmax(0,1fr) auto !important; } body.mx-project .mo-row--2 > :last-child { justify-self: end; } body.mx-project .mo-meta { padding-top: clamp(40px, 6vw, 100px); }
+
+/* Footer-Navigation wie Motto: drei Gruppen, große graue Links */
+.mo-foot__grid { grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr); gap: clamp(50px, 6vw, 90px) clamp(30px, 4vw, 70px); }
+.mo-foot__nav { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 60px 30px; }
+.mo-foot__nav p { margin-bottom: clamp(26px, 2.4vw, 38px); font: 500 clamp(20px, 1.7vw, 26px)/1.2 var(--f); letter-spacing: -0.02em; color: #f2f2f2; }
+.mo-foot__nav a { padding: 0; font: 500 clamp(20px, 1.7vw, 26px)/1.5 var(--f); letter-spacing: -0.02em; color: #8c8c8c; }
+.mo-foot__nav a:hover { color: #fff; }
+@media (max-width: 900px) {
+  .mo-foot__grid { grid-template-columns: 1fr; }
+  .mo-foot__news { grid-column: auto; }
+}
+@media (max-width: 560px) {
+  .mo-foot__nav { grid-template-columns: 1fr 1fr; row-gap: 70px; }
+}
+@media (max-width: 560px) { .mo-foot__nav { column-gap: 18px; } .mo-foot__nav a, .mo-foot__nav p { font-size: clamp(17px, 4.6vw, 20px); } .mo-foot__nav > div { min-width: 0; } }
+@media (max-width: 900px) { .mo-foot__grid { grid-template-columns: minmax(0, 1fr) !important; } .mo-foot__nav { grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); } } @media (max-width: 560px) { .mo-foot__nav { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.mo-foot__news { min-width: 0; } .mo-foot__news input { min-width: 0; width: 100%; }
