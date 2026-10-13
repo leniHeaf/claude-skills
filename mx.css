@@ -1075,3 +1075,30 @@ body.mx .mo-reel--still .mx-phero__type::before, body.mx .mo-work__img .mx-tile_
 body.mx .mo-reel--still .mx-phero__type::after, body.mx .mo-work__img .mx-tile__type::after { content: "(Bilder folgen)"; position: absolute; right: 22px; bottom: 20px; font: 500 13px/1 var(--f); letter-spacing: 0; color: #8c8c8c; }
 body.mx .mo-work:hover .mx-tile__type { letter-spacing: -0.02em; }
 body.mx .mo-reel--still .mx-phero__type::before { left: var(--mo-pad); top: 28px; } body.mx .mo-reel--still .mx-phero__type::after { right: var(--mo-pad); bottom: 28px; }
+
+/* Typo-Platzhalter, Moodboard-Kacheln */
+body.mx-legacy .mo-tb { position: relative; display: grid; place-items: center; width: 100%; aspect-ratio: 16 / 9; padding: 60px 24px; background: #0a0a0a; color: #f2f2f2; text-align: center; }
+body.mx-legacy .card .mo-tb { aspect-ratio: 1; }
+body.mx-legacy .mo-tb b { max-width: 18ch; font: 500 clamp(30px, 4.4vw, 80px)/.95 var(--f); letter-spacing: -0.04em; text-transform: uppercase; }
+body.mx-legacy .card .mo-tb b { font-size: clamp(26px, 2.6vw, 42px); }
+body.mx-legacy .mo-tb__l, body.mx-legacy .mo-tb__f { position: absolute; font: 500 13px/1 var(--f); text-transform: uppercase; color: #8c8c8c; }
+body.mx-legacy .mo-tb__l { left: 22px; top: 20px; } body.mx-legacy .mo-tb__f { right: 22px; bottom: 20px; }
+body.mx-legacy .mood__btn img { display: block; }
+.mo-sw { position: relative; display: block; width: 100%; }
+.mo-sw b { position: absolute; left: 16px; bottom: 14px; font: 500 15px/1 var(--f); letter-spacing: 0; }
+.mo-spec { display: grid; place-items: center; width: 100%; padding: 20px; background: #e4e4e4; color: var(--mo-ink); text-align: center; overflow: hidden; }
+.mo-spec b { font: 500 clamp(40px, 6vw, 110px)/.95 var(--f); letter-spacing: -0.05em; }
+.mo-spec--1 b sup { font-size: .35em; vertical-align: 1.2em; }
+.mo-spec--2 b { font-size: clamp(28px, 2.8vw, 46px); text-transform: uppercase; letter-spacing: -0.035em; }
+.mo-spec--0 { background: #0a0a0a; color: #f2f2f2; }
+.mo-mo { position: relative; display: grid; place-items: center; width: 100%; background: #0a0a0a; color: #f2f2f2; overflow: hidden; }
+.mo-mo__flag { width: 34%; color: #f2f2f2; }
+.mo-mo--spin i { width: 46%; aspect-ratio: 1; border: 1.5px solid #f2f2f2; border-radius: 50%; border-top-color: transparent; animation: mo-spin 3.2s linear infinite; }
+.mo-mo--bar i { display: block; width: 60%; height: 2px; background: #f2f2f2; transform-origin: left; animation: mo-bar 2.4s cubic-bezier(.7,0,.3,1) infinite; }
+.mo-mo--marq span { white-space: nowrap; font: 500 clamp(40px, 5vw, 80px)/1 var(--f); letter-spacing: -0.04em; text-transform: uppercase; animation: mo-marq 7s linear infinite; }
+@keyframes mo-spin { to { transform: rotate(360deg); } }
+@keyframes mo-bar { 0% { transform: scaleX(0); } 50% { transform: scaleX(1); } 100% { transform: scaleX(0); transform-origin: right; } }
+@keyframes mo-marq { from { transform: translateX(30%); } to { transform: translateX(-70%); } }
+@media (prefers-reduced-motion: reduce) { .mo-mo--spin i, .mo-mo--bar i, .mo-mo--marq span { animation: none; } }
+body.mx-legacy .mo-works { margin-inline: 0; }
+body.mx-legacy .card__tag { display: none; } body.mx-legacy .card__meta { justify-content: flex-start; gap: 18px; }
