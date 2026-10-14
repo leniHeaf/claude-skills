@@ -1693,3 +1693,19 @@ body.mx-hb .mo-band--cta { margin-top: 0; }
 .hb-chap__txt { grid-column: 1 / span 2; }
 .hb-chap__media--1 .hb-f--r { margin-top: -120px; }
 @media (max-width: 900px) { .hb-chap__media--1 .hb-f--r { margin-top: 0; } }
+
+/* ===== Unterseiten im Hochburg-Aufbau ===== */
+body.mx-legacy { --hb-l: clamp(24px, 13.9vw, 200px); }
+body.mx-legacy .mo-lsec, body.mx-legacy .mo-sec.mo-manifest, body.mx-legacy .mo-sec.mo-think { position: relative; padding-left: var(--hb-l); }
+body.mx-legacy .mo-lsec > .hb-rail, body.mx-legacy .mo-sec > .hb-rail { top: calc(var(--sp) + 24px); }
+body.mx-legacy .mo-lhead { grid-template-columns: 1fr; border-top: 0; padding-top: 0; }
+body.mx-legacy .mo-lhead > .mo-label { display: none; }
+body.mx-legacy .mo-lh2 { text-transform: none; letter-spacing: -0.03em; font-size: clamp(40px, 5vw, 84px); line-height: 1; }
+body.mx-legacy .mo-lhead__p { margin-top: 18px; }
+body.mx-legacy .mo-hero, body.mx-legacy .mo-lhero { position: relative; }
+.hb-kick { display: block; margin: 0 0 18px; font: 500 17px/1.2 var(--f); letter-spacing: .01em; text-transform: none; color: var(--mo-ink); }
+body.mx-legacy .mo-lcta { padding-left: var(--hb-l); }
+@media (max-width: 900px) {
+  body.mx-legacy { --hb-l: var(--mo-pad); }
+  body.mx-legacy .hb-rail { display: none; }
+}

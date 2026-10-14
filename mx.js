@@ -634,3 +634,17 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
   const run = () => { t = false; const r = mw.querySelector(".mw__day").getBoundingClientRect(); const p = Math.max(0, Math.min(1, (innerHeight * 0.62 - r.top) / r.height)); set(p); };
   addEventListener("scroll", () => { if (!t) { t = true; requestAnimationFrame(run); } }, { passive: true }); run();
 })();
+
+/* Unterseiten: hochkant gesetzte Abschnittsnamen + Kicker */
+(() => {
+  if (!document.body.classList.contains("mx-legacy")) return;
+  const rail = (t) => { const r = document.createElement("span"); r.className = "hb-rail"; r.setAttribute("aria-hidden", "true"); r.innerHTML = `<span></span><i></i>`; r.firstChild.textContent = t; return r; };
+  document.querySelectorAll("main .mo-lsec, main .mo-sec.mo-manifest, main .mo-sec.mo-think").forEach((s) => {
+    if (s.querySelector(":scope > .hb-rail")) return;
+    const h = s.querySelector(".mo-lh2") || s.querySelector(".mo-think__l") || s.querySelector(".mo-label");
+    const t = h ? h.textContent.replace(/[()]/g, "").replace(/\.$/, "").trim() : "";
+    if (t) s.prepend(rail(t.length > 22 ? t.slice(0, 22) + "…" : t));
+    const lab = s.querySelector(".mo-lhead > .mo-label");
+    if (lab) { const k = document.createElement("span"); k.className = "hb-kick"; const pg = (document.querySelector(".mo-hero .mo-label, .mo-lhero__top .mo-label") || { textContent: "" }).textContent.replace(/[()]/g, "").trim(); k.textContent = "/ " + lab.textContent.replace(/[()]/g, "").trim() + (pg ? " — " + pg : ""); s.querySelector(".mo-lhead > div, .mo-lhead > .mo-lh2")?.before?.(k); }
+  });
+})();
