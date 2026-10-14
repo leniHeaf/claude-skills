@@ -616,3 +616,21 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
     st.addEventListener("pointerup", up); st.addEventListener("pointercancel", up);
   });
 })();
+
+/* Markenworkshop: Tagesablauf läuft mit, Kompass füllt sich */
+(() => {
+  const mw = document.querySelector(".mw"); if (!mw) return;
+  const steps = [...mw.querySelectorAll(".mw-step")], fields = [...mw.querySelectorAll(".mw-f")], line = mw.querySelector(".mw__line i");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const set = (p) => {
+    const n = Math.round(p * (steps.length - 1));
+    steps.forEach((s, i) => s.classList.toggle("on", i <= n));
+    fields.forEach((f) => f.classList.toggle("on", n >= +f.dataset.at));
+    if (line) line.style.setProperty("--p", p.toFixed(3));
+    mw.classList.toggle("done", n >= steps.length - 1);
+  };
+  if (reduce) return set(1);
+  let t = false;
+  const run = () => { t = false; const r = mw.querySelector(".mw__day").getBoundingClientRect(); const p = Math.max(0, Math.min(1, (innerHeight * 0.62 - r.top) / r.height)); set(p); };
+  addEventListener("scroll", () => { if (!t) { t = true; requestAnimationFrame(run); } }, { passive: true }); run();
+})();
