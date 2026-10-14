@@ -492,9 +492,6 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
     if (!a.getAttribute("href").startsWith("#main")) a.addEventListener("click", (e) => { const el = document.querySelector(a.getAttribute("href")); if (el) { e.preventDefault(); el.scrollIntoView({ behavior: "smooth" }); } });
     l.replaceWith(a);
   });
-  // Sticker im Hero der Startseite
-  const hero = document.querySelector("body.mx-home .mo-hero");
-  if (hero) { const s = document.createElement("span"); s.className = "mo-sticker"; s.setAttribute("aria-hidden", "true"); s.innerHTML = "<b>Marken</b> <em>mit Haltung.</em>"; hero.appendChild(s); }
   // Hochkant-Codes auf Projektkacheln
   document.querySelectorAll(".mo-work:not(.mo-work--all) .mo-work__img").forEach((im, k) => {
     const c = document.createElement("span"); c.className = "mo-code"; c.setAttribute("aria-hidden", "true");
