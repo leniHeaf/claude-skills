@@ -1412,3 +1412,87 @@ body.mx-home .mo-method .mo-band { margin-bottom: 0; }
 body.mx-project .mo-band { margin-top: var(--sp); }
 @media (prefers-reduced-motion: reduce) { .mo-band__track { animation: none; } }
 .mo-band--cta { margin-top: 0; }
+
+/* ===== Grafik-Set (Atypica + Industrie) ===== */
+:root { --grad: linear-gradient(90deg, #6a1bff 0%, #5f5fd0 35%, #2fc77a 70%, #00ff38 100%); --plus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cpath d='M32 26v12M26 32h12' stroke='%23f2f2f2' stroke-width='1.6' opacity='.55'/%3E%3C/svg%3E"); --stripes: repeating-linear-gradient(-45deg, #f2f2f2 0 18px, transparent 18px 44px); }
+/* Sterne im Laufband */
+.mo-star { height: clamp(40px, 5.4vw, 98px); width: auto; flex: none; fill: none; stroke: currentColor; stroke-width: 2; vector-effect: non-scaling-stroke; animation: mo-spin 14s linear infinite; }
+.mo-star--f { fill: currentColor; stroke: none; animation-duration: 10s; animation-direction: reverse; }
+/* Smiley im Footer */
+.mo-foot__loc { display: inline-flex; align-items: center; gap: 12px; }
+.mo-smile { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 7; stroke-linecap: round; transition: transform .6s var(--e-out); }
+.mo-foot__loc:hover .mo-smile { transform: rotate(-20deg) scale(1.15); }
+/* Verlauf als einziger Farbakzent */
+.mo-progress { position: fixed; left: 0; top: 0; z-index: 70; height: 3px; width: 100%; background: var(--grad); transform-origin: left; transform: scaleX(0); pointer-events: none; }
+.mo-hs__bar i, .mo-ov__bar { background: var(--grad) !important; }
+::selection { background: #00ff38; color: #0a0a0a; }
+/* Drehender Text-Kreis */
+.mo-badge { position: relative; display: inline-grid; place-items: center; width: clamp(110px, 9vw, 150px); aspect-ratio: 1; color: var(--mo-ink); text-decoration: none; }
+.mo-badge svg { position: absolute; inset: 0; width: 100%; height: 100%; animation: mo-spin 16s linear infinite; }
+.mo-badge text { font: 500 10.5px var(--f); letter-spacing: .14em; text-transform: uppercase; fill: currentColor; }
+.mo-badge__c { width: 28%; height: 28%; fill: currentColor; transition: transform .6s var(--e-out); }
+.mo-badge:hover .mo-badge__c { transform: rotate(45deg) scale(1.15); }
+.mo-badge:hover svg { animation-duration: 5s; }
+.mo-hero__foot > .mo-badge { justify-self: end; align-self: end; }
+/* Sticker */
+.mo-sticker { position: absolute; z-index: 3; display: inline-flex; align-items: center; gap: .3em; padding: .55em 1.3em; border: 2px solid var(--mo-ink); border-radius: 50%; background: var(--mo-bg); font: 400 clamp(18px, 1.7vw, 28px)/1 var(--f); letter-spacing: -0.02em; color: var(--mo-ink); transform: rotate(-9deg); animation: mo-bob 5s ease-in-out infinite; white-space: nowrap; }
+.mo-sticker b { font-weight: 700; } .mo-sticker em { font-style: italic; }
+@keyframes mo-bob { 50% { transform: rotate(-5deg) translateY(-6px); } }
+body.mx-home .mo-hero { position: relative; }
+body.mx-home .mo-sticker { left: 8%; bottom: 13%; }
+/* Eck-Klammern über Projektbildern */
+.mo-work__img { position: relative; }
+.mo-work__img::before, .mo-work__img::after { content: ""; position: absolute; z-index: 2; width: 34px; height: 34px; border: 2px solid #f2f2f2; opacity: 0; transition: opacity .35s, transform .5s var(--e-out); pointer-events: none; }
+.mo-work__img::before { left: 16px; top: 16px; border-right: 0; border-bottom: 0; border-top-left-radius: 10px; transform: translate(10px, 10px); }
+.mo-work__img::after { right: 16px; bottom: 16px; border-left: 0; border-top: 0; border-bottom-right-radius: 10px; transform: translate(-10px, -10px); }
+.mo-work:hover .mo-work__img::before, .mo-work:hover .mo-work__img::after { opacity: 1; transform: none; }
+/* Plus-Raster auf schwarzen Flächen */
+.mo-lcta, .mo-claim, .mo-foot__top { background-image: var(--plus); background-size: 64px 64px; }
+/* Diagonale Streifen */
+.mo-claim { position: relative; overflow: hidden; padding-bottom: calc(clamp(50px, 6vw, 100px) + 46px); }
+.mo-claim::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 30px; background: repeating-linear-gradient(-45deg, #f2f2f2 0 14px, transparent 14px 34px); animation: mo-stripe 2.4s linear infinite; background-size: 48px 48px; }
+@keyframes mo-stripe { to { background-position: 48px 0; } }
+body.mx .mo-work__img .mx-tile__type, body.mx .mo-reel--still .mx-phero__type { background-image: repeating-linear-gradient(-45deg, rgba(242,242,242,.07) 0 22px, transparent 22px 52px); }
+/* Hochkant-Code auf Projektkacheln */
+.mo-code { position: absolute; z-index: 2; right: 14px; top: 14px; writing-mode: vertical-rl; font: 500 11px/1.2 ui-monospace, "SFMono-Regular", Menlo, monospace; letter-spacing: .12em; text-transform: uppercase; color: #f2f2f2; mix-blend-mode: difference; pointer-events: none; }
+.mo-code b { font: 700 22px/1 var(--logo); letter-spacing: 0; margin-bottom: 8px; display: block; }
+@media (prefers-reduced-motion: reduce) { .mo-star, .mo-badge svg, .mo-sticker, .mo-claim::after { animation: none; } }
+@media (max-width: 760px) { body.mx-home .mo-sticker { left: auto; right: 6%; bottom: 6%; font-size: 16px; } .mo-badge { width: 96px; } }
+.mo-badge svg.mo-badge__c { position: static; inset: auto; width: 26%; height: 26%; animation: none; }
+.mo-foot__top { background-image: none; }
+@media (max-width: 760px) { body.mx-home .mo-sticker { left: 5%; right: auto; bottom: 4%; } }
+
+/* ===== Deutschlandkarte ===== */
+.mo-locmap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(30px, 5vw, 90px); align-items: center; }
+.mo-locmap .mx-locs { grid-template-columns: 1fr !important; }
+.mo-locmap .mx-locs li { border-left: 0 !important; padding-left: 0 !important; border-top: 1px solid var(--mo-line); padding-top: 22px; }
+.mo-map { margin: 0; position: relative; }
+.mo-map svg { width: 100%; height: auto; display: block; overflow: visible; }
+.mo-map__grid path { stroke: var(--mo-ink); stroke-width: 1; opacity: .18; }
+.mo-map__de { fill: #0a0a0a; stroke: #0a0a0a; stroke-width: 1; }
+.mo-map__at { fill: none; stroke: var(--mo-ink); stroke-width: 1.2; stroke-dasharray: 4 5; opacity: .6; }
+.mo-map__route { fill: none; stroke: url(#none); stroke: #00ff38; stroke-width: 2.5; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.mo-map.in .mo-map__route { animation: mo-draw 2.2s var(--e-out) .5s forwards; }
+@keyframes mo-draw { to { stroke-dashoffset: 0; } }
+.mo-map__pin line { stroke: #f2f2f2; stroke-width: 1.2; }
+.mo-map__pin text { font: 600 17px var(--f); letter-spacing: .02em; fill: #f2f2f2; paint-order: stroke; stroke: #0a0a0a; stroke-width: 4px; }
+.mo-map__pin .mo-map__sub { font: 500 12px var(--f); fill: #b4b4b4; }
+.mo-map__dot { fill: #00ff38; }
+.mo-map__pulse { fill: none; stroke: #00ff38; stroke-width: 2; transform-origin: center; animation: mo-ping 2.4s ease-out infinite; animation-delay: calc(var(--k) * .6s); }
+@keyframes mo-ping { 0% { transform: scale(.6); opacity: 1; } 100% { transform: scale(3.2); opacity: 0; } }
+/* Saalbach liegt in Österreich (außerhalb der schwarzen Fläche): dunkle Schrift */
+.mo-map__pin:nth-of-type(3) text { fill: var(--mo-ink); stroke: var(--mo-bg); }
+.mo-map__pin:nth-of-type(3) line { stroke: var(--mo-ink); }
+.mo-map figcaption { display: flex; justify-content: space-between; margin-top: 14px; }
+@media (max-width: 900px) { .mo-locmap { grid-template-columns: 1fr; } .mo-map { max-width: 520px; } }
+@media (prefers-reduced-motion: reduce) { .mo-map__pulse { animation: none; } .mo-map__route { stroke-dashoffset: 0; } }
+.mo-map svg { overflow: hidden; }
+.mo-map__pulse { transform-box: fill-box; transform-origin: 50% 50%; }
+.mo-map__pin text { stroke-width: 0; font-size: 18px; }
+.mo-map__pin:nth-of-type(3) text { stroke-width: 0; }
+/* Weltkugel */
+.mo-globe-c { display: none; width: 100%; aspect-ratio: 1; cursor: grab; touch-action: pan-y; }
+.mo-globe-c:active { cursor: grabbing; }
+.mo-globe-wrap.is-globe .mo-globe-c { display: block; }
+.mo-globe-wrap.is-globe .mo-map__flat { display: none; }
+.mo-globe-wrap figcaption { margin-top: 18px; }

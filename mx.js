@@ -475,3 +475,104 @@
 
 /* Globen: bei reduzierter Bewegung anhalten */
 if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelectorAll("svg.mo-globe").forEach((s) => { try { s.pauseAnimations(); } catch (e) {} });
+
+/* Grafik-Set: Lesefortschritt, Text-Kreis, Sticker, Kachel-Codes */
+(() => {
+  // Lesefortschritt (Verlauf violett → grün)
+  const bar = document.createElement("i"); bar.className = "mo-progress"; bar.setAttribute("aria-hidden", "true"); document.body.appendChild(bar);
+  let t = false;
+  const upd = () => { t = false; const h = document.documentElement.scrollHeight - innerHeight; bar.style.transform = `scaleX(${h > 0 ? Math.min(1, scrollY / h).toFixed(4) : 0})`; };
+  addEventListener("scroll", () => { if (!t) { t = true; requestAnimationFrame(upd); } }, { passive: true }); upd();
+  // Text-Kreis statt "(Scroll)"
+  const target = document.querySelector("#arbeiten, .mo-sec, .mo-lsec, main > section:nth-of-type(2)");
+  document.querySelectorAll(".mo-hero__foot .mo-label").forEach((l) => {
+    if (!/scroll/i.test(l.textContent)) return;
+    const a = document.createElement("a"); a.className = "mo-badge"; a.href = target && target.id ? "#" + target.id : "#main"; a.setAttribute("aria-label", "Weiter scrollen");
+    a.innerHTML = '<svg viewBox="0 0 120 120" aria-hidden="true"><defs><path id="mo-c" d="M60 60m-48 0a48 48 0 1 1 96 0a48 48 0 1 1-96 0"/></defs><text><textPath href="#mo-c">Scroll ✳ B3DE ✳ Scroll ✳ B3DE ✳ </textPath></text></svg><svg class="mo-badge__c" viewBox="0 0 100 100" aria-hidden="true" style="position:static;animation:none"><path d="M46 8h8v74l22-22 6 6-32 32-32-32 6-6 22 22z"/></svg>';
+    if (!a.getAttribute("href").startsWith("#main")) a.addEventListener("click", (e) => { const el = document.querySelector(a.getAttribute("href")); if (el) { e.preventDefault(); el.scrollIntoView({ behavior: "smooth" }); } });
+    l.replaceWith(a);
+  });
+  // Sticker im Hero der Startseite
+  const hero = document.querySelector("body.mx-home .mo-hero");
+  if (hero) { const s = document.createElement("span"); s.className = "mo-sticker"; s.setAttribute("aria-hidden", "true"); s.innerHTML = "<b>Marken</b> <em>mit Haltung.</em>"; hero.appendChild(s); }
+  // Hochkant-Codes auf Projektkacheln
+  document.querySelectorAll(".mo-work:not(.mo-work--all) .mo-work__img").forEach((im, k) => {
+    const c = document.createElement("span"); c.className = "mo-code"; c.setAttribute("aria-hidden", "true");
+    c.innerHTML = `<b>${String(k + 1).padStart(3, "0")}</b>B3DE / 2026 / ${(im.closest(".mo-work").querySelector("em") || { textContent: "" }).textContent.replace(/[()]/g, "")}`;
+    im.appendChild(c);
+  });
+})();
+
+/* Drehende Weltkugel mit Standorten (lädt d3-geo erst bei Sichtbarkeit) */
+(() => {
+  const fig = document.querySelector("[data-globe]");
+  if (!fig || !("IntersectionObserver" in window)) return;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const start = () => {
+    const d3 = window.d3, topo = window.topojson, W = window.B3_WORLD;
+    if (!d3 || !topo || !W) return;
+    fig.classList.add("is-globe");
+    const cv = fig.querySelector("canvas"), ctx = cv.getContext("2d");
+    const land = topo.feature(W, W.objects.countries);
+    const de = land.features.find((f) => f.properties.name === "Germany");
+    const at = land.features.find((f) => f.properties.name === "Austria");
+    const borders = topo.mesh(W, W.objects.countries, (a, b) => a !== b);
+    const pins = [["KÖLN", 6.96, 50.94], ["SONNEBERG", 11.17, 50.36], ["SAALBACH", 12.64, 47.39]];
+    const proj = d3.geoOrthographic().clipAngle(90);
+    const path = d3.geoPath(proj, ctx);
+    const grat = d3.geoGraticule10();
+    let size = 0, dpr = 1;
+    const resize = () => { dpr = Math.min(2, devicePixelRatio || 1); size = fig.clientWidth; cv.width = size * dpr; cv.height = size * dpr; cv.style.height = size + "px"; proj.translate([size / 2, size / 2]).scale(size / 2 - 4); };
+    resize(); addEventListener("resize", resize);
+    const target = [-10.5, -49.5]; // Deutschland vorn
+    let lam = 0, phi = -22, visible = true, dragging = false, last = 0, spin = 0, base = 1;
+    const ink = "#0a0a0a", bg = "#f2f2f2", acc = "#00ff38";
+    const ease = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+    const draw = (now) => {
+      // Scroll-Fortschritt: 0 = ganze Kugel dreht sich, 1 = Zoom auf Deutschland
+      const r = fig.getBoundingClientRect(), vh = innerHeight;
+      const raw = Math.max(0, Math.min(1, (vh - r.top) / (vh * 0.95)));
+      const e = ease(raw);
+      if (!dragging && !reduce) spin += 0.12 * (1 - e) + 0.01;
+      const sl = target[0] + 180 + spin;
+      let dl = ((target[0] - sl) % 360 + 540) % 360 - 180;
+      lam = sl + dl * e; phi = -22 + (target[1] + 22) * e;
+      const z = ease(Math.max(0, Math.min(1, (raw - .45) / .55)));
+      base = 1 + 3.4 * z;
+      proj.scale((size / 2 - 4) * base);
+      const lab = z > .8;
+      proj.rotate([lam, phi]);
+      const s = size;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, s, s); ctx.save(); ctx.beginPath(); ctx.arc(s / 2, s / 2, s / 2 - 3, 0, 7); ctx.clip();
+      ctx.beginPath(); path({ type: "Sphere" }); ctx.fillStyle = bg; ctx.fill(); ctx.lineWidth = 1.5; ctx.strokeStyle = ink; ctx.stroke();
+      ctx.beginPath(); path(grat); ctx.lineWidth = .6; ctx.strokeStyle = "rgba(10,10,10,.22)"; ctx.stroke();
+      ctx.beginPath(); path(land); ctx.fillStyle = "rgba(10,10,10,.12)"; ctx.fill();
+      ctx.beginPath(); path(borders); ctx.lineWidth = .5; ctx.strokeStyle = "rgba(10,10,10,.35)"; ctx.stroke();
+      ctx.beginPath(); path(at); ctx.setLineDash([3, 3]); ctx.lineWidth = 1; ctx.strokeStyle = ink; ctx.stroke(); ctx.setLineDash([]);
+      ctx.beginPath(); path(de); ctx.fillStyle = ink; ctx.fill();
+      // Route
+      ctx.beginPath(); path({ type: "LineString", coordinates: pins.map((p) => [p[1], p[2]]) }); ctx.lineWidth = 2; ctx.strokeStyle = acc; ctx.stroke();
+      const pulse = (now / 1600) % 1;
+      pins.forEach(([n, lo, la], i) => {
+        const c = d3.geoDistance([lo, la], [-lam, -phi]); if (c > Math.PI / 2) return;
+        const [x, y] = proj([lo, la]);
+        ctx.beginPath(); ctx.arc(x, y, 4 + ((pulse + i / 3) % 1) * 14, 0, 7); ctx.strokeStyle = `rgba(0,255,56,${1 - (pulse + i / 3) % 1})`; ctx.lineWidth = 1.5; ctx.stroke();
+        ctx.beginPath(); ctx.arc(x, y, 4, 0, 7); ctx.fillStyle = acc; ctx.fill();
+        if (lab) { ctx.globalAlpha = Math.min(1, (z - .8) / .15); const fs = Math.max(11, s / 46); ctx.font = `600 ${fs}px Inter, sans-serif`; const tw = ctx.measureText(n).width; const lx = i === 1 ? x + 12 : x - tw - 20, ly = i === 2 ? y + 14 : y - fs - 14; ctx.fillStyle = ink; ctx.fillRect(lx, ly, tw + 12, fs + 10); ctx.fillStyle = "#f2f2f2"; ctx.fillText(n, lx + 6, ly + fs + 2); ctx.globalAlpha = 1; }
+      });
+      ctx.restore(); ctx.beginPath(); ctx.arc(s / 2, s / 2, s / 2 - 3, 0, 7); ctx.lineWidth = 1.5; ctx.strokeStyle = ink; ctx.stroke();
+      if (visible) requestAnimationFrame(draw);
+    };
+    new IntersectionObserver((es) => es.forEach((en) => { const was = visible; visible = en.isIntersecting; if (visible && !was) requestAnimationFrame(draw); })).observe(fig);
+    // Ziehen zum Drehen
+    cv.addEventListener("pointerdown", (ev) => { dragging = true; last = ev.clientX; cv.setPointerCapture(ev.pointerId); });
+    cv.addEventListener("pointermove", (ev) => { if (!dragging) return; spin += (ev.clientX - last) * 0.4; last = ev.clientX; });
+    cv.addEventListener("pointerup", () => { dragging = false; });
+    requestAnimationFrame(draw);
+  };
+  const io = new IntersectionObserver((es) => { if (!es.some((e) => e.isIntersecting)) return; io.disconnect();
+    if (window.d3 && window.d3.geoOrthographic) return start();
+    const sc = document.createElement("script"); sc.src = "assets/globe/globe-lib.js"; sc.onload = start; document.head.appendChild(sc);
+  }, { rootMargin: "400px 0px" });
+  io.observe(fig);
+})();
