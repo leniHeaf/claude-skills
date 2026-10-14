@@ -1745,3 +1745,19 @@ body.mx-home .mo-hero + .mo-bird { padding-top: clamp(30px, 4vw, 60px); }
 .mo-bird__p--img .mo-bird__url { display: none; }
 .mo-bird:hover .mo-vmarq__t { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) { .mo-reel3 img { transition: opacity .3s; transform: none !important; } .mo-reel3__bar i.run b { animation: none; transform: scaleX(1); } }
+
+/* Showreel mobil: wischbare Reihe, keine Verschiebung */
+.mo-bird__url { z-index: 3; }
+.mo-bird__p--white .mo-bird__url { background: #fff; padding: 4px 6px; margin: -4px -6px; }
+.mo-bird__dots { display: none; }
+@media (max-width: 760px) {
+  .mo-bird { display: flex !important; grid-template-columns: none; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 24px var(--mo-pad) 0; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .mo-bird::-webkit-scrollbar { display: none; }
+  .mo-bird__p { flex: 0 0 78vw; aspect-ratio: 9 / 14 !important; max-height: none; scroll-snap-align: center; transform: none !important; }
+  .mo-bird__p--black { grid-column: auto; }
+  .mo-bird__p--black .mo-bird__v--txt { writing-mode: vertical-rl; transform: rotate(180deg); left: auto; right: 12%; bottom: 10%; white-space: nowrap; font-size: clamp(26px, 8vw, 40px); line-height: .95; }
+  .mo-vmarq__t span { font-size: clamp(90px, 30vw, 140px); }
+  .mo-bird__dots { display: flex; justify-content: center; gap: 8px; padding: 14px 0 0; }
+  .mo-bird__dots i { width: 6px; height: 6px; border-radius: 50%; background: #c4c4c4; transition: background .3s, width .3s; }
+  .mo-bird__dots i.on { width: 20px; border-radius: 3px; background: #0a0a0a; }
+}

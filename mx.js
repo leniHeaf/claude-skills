@@ -373,7 +373,7 @@
   // 4 Scroll-gekoppelt
   const gi = document.querySelectorAll(".mo-giant > span");
   gi.forEach((s, k) => s.setAttribute("data-px", `x:${k % 2 ? 1 : -1}`));
-  document.querySelectorAll(".mo-bird__p").forEach((p, k) => p.setAttribute("data-px", `y:${[-1, 0.6, -0.4][k] || 0}`));
+  if (!matchMedia("(max-width: 760px)").matches) document.querySelectorAll(".mo-bird__p").forEach((p, k) => p.setAttribute("data-px", `y:${[-1, 0.6, -0.4][k] || 0}`));
   
   const px = [...document.querySelectorAll("[data-px]")].map((el) => { const [ax, f] = el.getAttribute("data-px").split(":"); return { el, ax, f: parseFloat(f) }; });
   const marqs = document.querySelectorAll(".mo-marq");
@@ -716,7 +716,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
   // Wechselnde Claims im schwarzen Feld
   const t = bird.querySelector(".mo-bird__v--txt");
   if (t && !reduce) {
-    const claims = ["Finde die Stimme\ndeiner Marke", "Marken bauen\nmit Haltung", "Klarheit statt\nLautstärke", "Strategie, die\nman versteht"];
+    const claims = ["Finde die Stimme\ndeiner Marke", "Mutig. Klar.\nEigen.", "Klarheit statt\nLautstärke", "Strategie, die\nman versteht"];
     t.setAttribute("aria-label", claims.map((c) => c.replace("\n", " ")).join(" · "));
     const run = () => {
       const out = t.querySelector(".mo-ty"); if (!out) return setTimeout(run, 400);
@@ -731,4 +731,15 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
     };
     run();
   }
+})();
+
+/* Showreel mobil: Punkte unter der Wischreihe */
+(() => {
+  const bird = document.querySelector(".mo-bird"); if (!bird) return;
+  const ps = [...bird.querySelectorAll(".mo-bird__p")];
+  const dots = document.createElement("div"); dots.className = "mo-bird__dots"; dots.setAttribute("aria-hidden", "true");
+  dots.innerHTML = ps.map((_, i) => `<i${i ? "" : ' class="on"'}></i>`).join(""); bird.after(dots);
+  const ds = dots.querySelectorAll("i");
+  bird.addEventListener("scroll", () => { const c = bird.scrollLeft + bird.clientWidth / 2; let best = 0, bd = 1e9; ps.forEach((p, i) => { const d = Math.abs(p.offsetLeft + p.offsetWidth / 2 - c); if (d < bd) { bd = d; best = i; } }); ds.forEach((d, i) => d.classList.toggle("on", i === best)); }, { passive: true });
+  if (matchMedia("(max-width: 760px)").matches) ps.forEach((p) => p.removeAttribute("data-px"));
 })();
