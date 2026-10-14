@@ -465,15 +465,17 @@
 (() => {
   const hero = document.querySelector("body.mx-home .mo-hero");
   if (!hero || !matchMedia("(hover: hover) and (pointer: fine)").matches || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  const srcs = [...document.querySelectorAll(".mx-show__slides img")].map((i) => i.currentSrc || i.src).filter(Boolean);
+  const srcs = [...new Set([...document.querySelectorAll(".mx-show__slides img, .mo-work__img img, .mo-bird img")].map((i) => i.getAttribute("src")).filter(Boolean))];
   if (!srcs.length) return;
   const pk = document.createElement("div"); pk.className = "mo-peek"; pk.innerHTML = `<img alt="" src="${srcs[0]}">`;
   document.body.appendChild(pk);
   const img = pk.firstChild; let k = 0, x = 0, y = 0, tx = 0, ty = 0, on = false, timer = 0, raf = 0;
   const loop = () => { x += (tx - x) * 0.14; y += (ty - y) * 0.14; pk.style.transform = `translate3d(${x}px,${y}px,0) translate(-50%,-50%) rotate(${((tx - x) * 0.04).toFixed(2)}deg)`; raf = on || Math.abs(tx - x) > 0.5 ? requestAnimationFrame(loop) : 0; };
-  hero.addEventListener("mouseenter", (e) => { on = true; x = tx = e.clientX; y = ty = e.clientY; pk.classList.add("on"); timer = setInterval(() => { k = (k + 1) % srcs.length; img.src = srcs[k]; }, 800); if (!raf) raf = requestAnimationFrame(loop); });
+  hero.addEventListener("mouseenter", (e) => { if (!e.clientX && !e.clientY) return; on = true; x = tx = e.clientX; y = ty = e.clientY; pk.classList.add("on"); timer = setInterval(() => { k = (k + 1) % srcs.length; img.src = srcs[k]; }, 800); if (!raf) raf = requestAnimationFrame(loop); });
   hero.addEventListener("mousemove", (e) => { tx = e.clientX; ty = e.clientY; });
   hero.addEventListener("mouseleave", () => { on = false; pk.classList.remove("on"); clearInterval(timer); });
+  addEventListener("scroll", () => { if (on) { on = false; pk.classList.remove("on"); clearInterval(timer); } }, { passive: true });
+  hero.addEventListener("mousemove", () => { if (!on) { on = true; pk.classList.add("on"); clearInterval(timer); timer = setInterval(() => { k = (k + 1) % srcs.length; img.src = srcs[k]; }, 800); if (!raf) raf = requestAnimationFrame(loop); } });
 })();
 
 /* Globen: bei reduzierter Bewegung anhalten */
@@ -647,4 +649,33 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
     const lab = s.querySelector(".mo-lhead > .mo-label");
     if (lab) { const k = document.createElement("span"); k.className = "hb-kick"; const pg = (document.querySelector(".mo-hero .mo-label, .mo-lhero__top .mo-label") || { textContent: "" }).textContent.replace(/[()]/g, "").trim(); k.textContent = "/ " + lab.textContent.replace(/[()]/g, "").trim() + (pg ? " — " + pg : ""); s.querySelector(".mo-lhead > div, .mo-lhead > .mo-lh2")?.before?.(k); }
   });
+})();
+
+/* Hochformat-Felder: Laufband, Buchstaben, Schreibmaschine */
+(() => {
+  const bird = document.querySelector(".mo-bird"); if (!bird) return;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // Feld 1: Buchstaben einzeln
+  const v = bird.querySelector(".mo-bird__v--s");
+  if (v) v.innerHTML = [...v.textContent].map((c, k) => `<span style="--k:${k}">${c}</span>`).join("");
+  // Feld 2: senkrechtes Endlos-Laufband
+  const w = bird.querySelector(".mo-bird__p--white");
+  const lock = w && w.querySelector(".mo-lock");
+  if (w && lock) { lock.remove(); const m = document.createElement("div"); m.className = "mo-vmarq"; m.setAttribute("aria-hidden", "true"); m.innerHTML = `<div class="mo-vmarq__t">${"<span>B3DE</span>".repeat(8)}</div>`; w.prepend(m); }
+  // Feld 3: Schreibmaschine
+  const t = bird.querySelector(".mo-bird__v--txt");
+  let typed = false;
+  const full = t ? t.innerText.replace(/\r/g, "") : "";
+  const type = () => {
+    if (!t || typed) return; typed = true;
+    if (reduce) return;
+    t.setAttribute("aria-label", full.replace(/\n/g, " "));
+    t.innerHTML = '<span class="mo-ty"></span><i class="mo-cur"></i>';
+    const out = t.firstChild; let i = 0;
+    const step = () => { out.textContent = full.slice(0, ++i); if (i < full.length) setTimeout(step, full[i - 1] === "\n" ? 260 : 55); };
+    setTimeout(step, 900);
+  };
+  if (!("IntersectionObserver" in window)) { bird.classList.add("in-view"); return; }
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { bird.classList.add("in-view"); type(); io.disconnect(); } }), { threshold: 0.3 });
+  io.observe(bird);
 })();
