@@ -316,7 +316,7 @@
 (() => {
   const pills = document.querySelectorAll(".mo-pills button");
   if (!pills.length) return;
-  const tiles = document.querySelectorAll(".mo-work[data-cat]");
+  const tiles = document.querySelectorAll(".mo-work[data-cat], .hb-card[data-cat]");
   pills.forEach((b) => b.addEventListener("click", () => {
     const c = b.dataset.cat;
     pills.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
