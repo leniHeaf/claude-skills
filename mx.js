@@ -408,3 +408,67 @@
   setTimeout(() => ov.classList.add("out"), 1500);
   setTimeout(() => ov.remove(), 2600);
 })();
+
+/* Startseite: Showreel wächst beim Scrollen, Arbeiten fahren seitlich durch */
+(() => {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const clamp = (v) => Math.max(0, Math.min(1, v));
+  const reel = document.querySelector(".mo-reel[data-show]");
+  const slides = reel && reel.querySelector(".mx-show__slides");
+  if (reel) reel.classList.add("mo-grow");
+  let hs = null;
+  const sec = document.querySelector("#arbeiten");
+  if (sec && document.body.classList.contains("mx-home") && matchMedia("(min-width: 1000px)").matches) {
+    const grid = sec.querySelector(".mo-works"), head = sec.querySelector(".mo-headrow");
+    const n = grid.querySelectorAll(".mo-work").length;
+    const wrap = document.createElement("div"); wrap.className = "mo-hs";
+    const pin = document.createElement("div"); pin.className = "mo-hs__pin";
+    const foot = document.createElement("div"); foot.className = "mo-hs__foot";
+    foot.innerHTML = `<span class="mo-hs__count">(01 / ${String(n).padStart(2, "0")})</span><span class="mo-hs__bar"><i></i></span><span class="mo-hs__count">(Scroll)</span>`;
+    grid.classList.add("mo-works--row");
+    const all = document.createElement("a"); all.className = "mo-work mo-work--all"; all.href = "work.html";
+    all.innerHTML = '<span class="mo-work__img"><span class="mo-all__t">Alle<br>Case<br>Studies</span><span class="mo-all__a" aria-hidden="true">→</span></span><span class="mo-work__cap"><span><b>Alle Projekte</b><span>Strategie, Design und Umsetzung</span></span><em>(07)</em></span>';
+    grid.appendChild(all);
+    sec.style.padding = "0";
+    sec.insertBefore(wrap, head); pin.append(head, grid, foot); wrap.append(pin);
+    const size = () => { const dist = Math.max(0, grid.scrollWidth - innerWidth); wrap.style.height = `${dist + innerHeight}px`; return dist; };
+    hs = { wrap, grid, bar: foot.querySelector("i"), cnt: foot.querySelector(".mo-hs__count"), n, dist: size() };
+    addEventListener("resize", () => { hs.dist = size(); });
+  }
+  let busy = false;
+  const run = () => {
+    busy = false;
+    const vh = innerHeight;
+    if (reel) {
+      const r = reel.getBoundingClientRect();
+      const p = clamp(1 - r.top / (vh * 0.85));
+      const ix = (1 - p) * 7, iy = (1 - p) * 6;
+      reel.style.clipPath = `inset(${iy}% ${ix}% ${iy}% ${ix}%)`;
+      if (slides) slides.style.transform = `scale(${(1 + (1 - p) * 0.14).toFixed(3)})`;
+    }
+    if (hs) {
+      const r = hs.wrap.getBoundingClientRect();
+      const p = hs.dist ? clamp(-r.top / hs.dist) : 0;
+      hs.grid.style.transform = `translate3d(${(-p * hs.dist).toFixed(1)}px,0,0)`;
+      hs.bar.style.transform = `scaleX(${p.toFixed(4)})`;
+      hs.cnt.textContent = `(${String(Math.min(hs.n, Math.floor(p * hs.n) + 1)).padStart(2, "0")} / ${String(hs.n).padStart(2, "0")})`;
+    }
+  };
+  addEventListener("scroll", () => { if (!busy) { busy = true; requestAnimationFrame(run); } }, { passive: true });
+  run();
+})();
+
+/* Hero: Projektbild folgt der Maus */
+(() => {
+  const hero = document.querySelector("body.mx-home .mo-hero");
+  if (!hero || !matchMedia("(hover: hover) and (pointer: fine)").matches || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const srcs = [...document.querySelectorAll(".mx-show__slides img")].map((i) => i.currentSrc || i.src).filter(Boolean);
+  if (!srcs.length) return;
+  const pk = document.createElement("div"); pk.className = "mo-peek"; pk.innerHTML = `<img alt="" src="${srcs[0]}">`;
+  document.body.appendChild(pk);
+  const img = pk.firstChild; let k = 0, x = 0, y = 0, tx = 0, ty = 0, on = false, timer = 0, raf = 0;
+  const loop = () => { x += (tx - x) * 0.14; y += (ty - y) * 0.14; pk.style.transform = `translate3d(${x}px,${y}px,0) translate(-50%,-50%) rotate(${((tx - x) * 0.04).toFixed(2)}deg)`; raf = on || Math.abs(tx - x) > 0.5 ? requestAnimationFrame(loop) : 0; };
+  hero.addEventListener("mouseenter", (e) => { on = true; x = tx = e.clientX; y = ty = e.clientY; pk.classList.add("on"); timer = setInterval(() => { k = (k + 1) % srcs.length; img.src = srcs[k]; }, 800); if (!raf) raf = requestAnimationFrame(loop); });
+  hero.addEventListener("mousemove", (e) => { tx = e.clientX; ty = e.clientY; });
+  hero.addEventListener("mouseleave", () => { on = false; pk.classList.remove("on"); clearInterval(timer); });
+})();
