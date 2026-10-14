@@ -1316,3 +1316,58 @@ body.mx .mo-foot__top { justify-content: flex-start; }
 .mo-mo--dot i { width: 18%; aspect-ratio: 1; border-radius: 50%; background: #f2f2f2; animation: mo-pulse 1.8s ease-in-out infinite; }
 @keyframes mo-pulse { 50% { transform: scale(1.6); opacity: .5; } }
 @media (prefers-reduced-motion: reduce) { .mo-mo--dot i { animation: none; } }
+
+/* ===== Bewegung (Motto-Stil) ===== */
+:root { --e-out: cubic-bezier(.16, 1, .3, 1); }
+/* 1 Seitenstart: Zeilen steigen aus der Maske */
+@keyframes mo-rise { from { transform: translateY(70%); clip-path: inset(0 0 100% 0); } to { transform: none; clip-path: inset(-10% -5% -25% -5%); } }
+@keyframes mo-line { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes mo-fade { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.mx-js .mo-anim-rise { animation: mo-rise 1.15s var(--e-out) both; animation-delay: calc(var(--i, 0) * 95ms + 120ms); }
+.mx-js .mo-anim-fade { animation: mo-fade 1s var(--e-out) both; animation-delay: calc(var(--i, 0) * 95ms + 520ms); }
+body.mx .mo-hero .mo-row { position: relative; border-top-color: transparent; }
+body.mx .mo-hero .mo-row::before { content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 1px; background: var(--mo-line); transform-origin: left; animation: mo-line 1.4s var(--e-out) both; animation-delay: calc(var(--r, 0) * 140ms); }
+/* 2 Überschriften beim Scrollen */
+.mx-js .mo-up { clip-path: inset(0 0 100% 0); transform: translateY(45%); transition: clip-path 1.1s var(--e-out), transform 1.1s var(--e-out); transition-delay: var(--d, 0s); }
+.mx-js .mo-up.in { clip-path: inset(-10% -5% -25% -5%); transform: none; }
+/* 3 Bilder: Vorhang + Zoom */
+.mx-js .mo-img { clip-path: inset(100% 0 0 0); transition: clip-path 1.4s var(--e-out); transition-delay: var(--d, 0s); }
+.mx-js .mo-img img { transform: scale(1.22); transition: transform 1.8s var(--e-out); transition-delay: var(--d, 0s); }
+.mx-js .mo-img.in { clip-path: inset(0 0 0 0); }
+.mx-js .mo-img.in img { transform: scale(1); }
+.mo-work:hover .mo-work__img.in img { transform: scale(1.04); transition-duration: 1.2s; transition-delay: 0s; }
+/* 4 Links: Unterstrich wischt */
+body.mx .mo-link, body.mx .mx-btn { border-bottom: 0 !important; background-image: linear-gradient(currentColor, currentColor) !important; background-size: 100% 1px !important; background-position: 100% 100% !important; background-repeat: no-repeat !important; transition: background-size .6s var(--e-out), opacity .3s; }
+body.mx .mo-link:hover, body.mx .mx-btn:hover { animation: mo-wipe .9s var(--e-out); }
+@keyframes mo-wipe { 0% { background-size: 100% 1px; background-position: 100% 100%; } 45% { background-size: 0 1px; background-position: 100% 100%; } 46% { background-position: 0 100%; } 100% { background-size: 100% 1px; background-position: 0 100%; } }
+body.mx .mx-btn::after { transition: transform .5s var(--e-out); }
+body.mx .mx-btn:hover::after, body.mx .mo-link:hover::after { transform: translateX(5px); }
+/* 5 Scroll-gekoppelt */
+[data-px] { will-change: transform; }
+.mo-marq { transition: transform .5s var(--e-out); }
+@media (prefers-reduced-motion: reduce) {
+  .mx-js .mo-anim-rise, .mx-js .mo-anim-fade, body.mx .mo-hero .mo-row::before { animation: none; }
+  .mx-js .mo-up, .mx-js .mo-img, .mx-js .mo-img img { clip-path: none; transform: none; transition: none; }
+  body.mx .mo-link:hover, body.mx .mx-btn:hover { animation: none; }
+  [data-px] { transform: none !important; }
+}
+
+/* Intro beim ersten Besuch */
+html.mo-pre body::after { content: ""; position: fixed; inset: 0; z-index: 300; background: #0a0a0a; }
+.mo-ov { position: fixed; inset: 0; z-index: 300; display: grid; place-items: center; background: #0a0a0a; color: #f2f2f2; transition: transform 1s cubic-bezier(.76, 0, .24, 1); }
+.mo-ov.out { transform: translateY(-100%); }
+.mo-ov__w { display: flex; overflow: hidden; font: 700 clamp(80px, 22vw, 360px)/.9 var(--logo); letter-spacing: -0.03em; }
+.mo-ov__w span { display: block; transform: translateY(105%); animation: mo-ovrise .9s var(--e-out) forwards; animation-delay: calc(var(--i) * 80ms + 100ms); }
+.mo-ov__c { position: absolute; left: var(--mo-pad, 24px); right: var(--mo-pad, 24px); bottom: 28px; display: flex; justify-content: space-between; font: 500 13px/1 var(--f); text-transform: uppercase; color: #8c8c8c; }
+.mo-ov__bar { position: absolute; left: 0; bottom: 0; height: 2px; width: 100%; background: #f2f2f2; transform-origin: left; transform: scaleX(0); animation: mo-line 1.3s var(--e-out) .2s forwards; }
+@keyframes mo-ovrise { to { transform: none; } }
+/* Programme stapeln sich, Phasen-Titel bleiben stehen */
+@media (min-width: 901px) {
+  body.mx-pages3 .mo-prog { position: sticky; top: 70px; background: var(--mo-bg); }
+  body.mx-pages3 .mo-prog:hover { background: #e9e9e9; }
+  body.mx .mo-phase__t { position: sticky; top: 110px; align-self: start; }
+  body.mx .mo-phase { min-height: 70svh; }
+}
+.mx-js .mo-img { overflow: hidden; }
+body.mx .mo-giant { overflow-x: clip; }
+@media (max-width: 760px) { body.mx .mo-giant > span[data-px] { transform: none !important; } }

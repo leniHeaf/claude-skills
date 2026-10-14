@@ -350,3 +350,61 @@
   if (!key) return;
   document.querySelectorAll(".mx-hd__nav a, .mo-menu__list a").forEach((a) => { if (a.getAttribute("href") === key) a.setAttribute("aria-current", "page"); });
 })();
+
+/* Bewegung: Intro-Masken, Überschriften, Bildvorhänge, Scroll-Parallaxe */
+(() => {
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // 1 Seitenstart
+  document.querySelectorAll(".mo-hero, .mo-lhero, .mo-book").forEach((h) => {
+    let i = 0;
+    h.querySelectorAll(".mo-w, .mo-lhero__t, .mo-book__t").forEach((w) => { w.classList.add("mo-anim-rise"); w.style.setProperty("--i", i++); });
+    h.querySelectorAll(".mo-row").forEach((r, k) => r.style.setProperty("--r", k));
+    let j = 0;
+    h.querySelectorAll(".mo-hero__foot > *, .mo-meta > div, .mo-lhero__top .mo-label, .mo-row .mo-label, .mo-book__p, .mo-book__txt > p:last-child").forEach((x) => { x.classList.add("mo-anim-fade"); x.style.setProperty("--i", j++); });
+  });
+  if (reduce || !("IntersectionObserver" in window)) return;
+  // 2 Überschriften + 3 Bilder
+  const heads = document.querySelectorAll(".mo-lh2, .mo-h2, .mo-lcta__t, .mo-phase__t, .mo-prog__t, .mo-chap__t, .mx-h2, .mo-manifest__t, .mo-claim__t, .mo-next__t, .mo-think__h, .mo-foot__mark");
+  heads.forEach((h) => h.classList.add("mo-up"));
+  const imgs = document.querySelectorAll(".mo-work__img, .mo-fig, .mo-bird__p, .mo-reel--still, .mo-post__img, .mood__btn, .story-feature img, .mo-cover");
+  imgs.forEach((m, k) => { m.classList.add("mo-img"); });
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" });
+  heads.forEach((h) => io.observe(h)); imgs.forEach((m) => io.observe(m));
+  // 4 Scroll-gekoppelt
+  const gi = document.querySelectorAll(".mo-giant > span");
+  gi.forEach((s, k) => s.setAttribute("data-px", `x:${k % 2 ? 1 : -1}`));
+  document.querySelectorAll(".mo-bird__p").forEach((p, k) => p.setAttribute("data-px", `y:${[-1, 0.6, -0.4][k] || 0}`));
+  
+  const px = [...document.querySelectorAll("[data-px]")].map((el) => { const [ax, f] = el.getAttribute("data-px").split(":"); return { el, ax, f: parseFloat(f) }; });
+  const marqs = document.querySelectorAll(".mo-marq");
+  let lastY = scrollY, vel = 0, tick = false;
+  const run = () => {
+    tick = false;
+    const vh = innerHeight;
+    px.forEach(({ el, ax, f }) => {
+      const r = el.getBoundingClientRect();
+      const p = Math.max(-1, Math.min(1, (r.top + r.height / 2 - vh / 2) / vh)); // -1 oben … 1 unten
+      el.style.transform = ax === "x" ? `translate3d(${(p * f * 9).toFixed(2)}vw,0,0)` : `translate3d(0,${(p * f * 60).toFixed(1)}px,0)`;
+    });
+    const y = scrollY; vel = vel * 0.8 + (y - lastY) * 0.2; lastY = y;
+    const sk = Math.max(-8, Math.min(8, vel * 0.25));
+    marqs.forEach((m) => { m.style.transform = `skewX(${(-sk).toFixed(2)}deg)`; });
+    if (Math.abs(vel) > 0.1) { tick = true; requestAnimationFrame(run); }
+  };
+  addEventListener("scroll", () => { if (!tick) { tick = true; requestAnimationFrame(run); } }, { passive: true });
+  run();
+})();
+
+/* Intro: B3DE steigt Buchstabe für Buchstabe, dann hebt sich der Vorhang */
+(() => {
+  const root = document.documentElement;
+  if (!root.classList.contains("mo-pre")) return;
+  try { sessionStorage.setItem("b3-intro", "1"); } catch (e) {}
+  const ov = document.createElement("div");
+  ov.className = "mo-ov"; ov.setAttribute("aria-hidden", "true");
+  ov.innerHTML = '<div class="mo-ov__w">' + "B3DE".split("").map((c, i) => `<span style="--i:${i}">${c}</span>`).join("") + '</div><div class="mo-ov__c"><span>Marken, für die man einsteht</span><span>Köln · Saalbach · Sonneberg</span></div><i class="mo-ov__bar"></i>';
+  document.body.appendChild(ov);
+  root.classList.remove("mo-pre");
+  setTimeout(() => ov.classList.add("out"), 1500);
+  setTimeout(() => ov.remove(), 2600);
+})();
