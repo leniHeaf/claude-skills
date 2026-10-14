@@ -1259,3 +1259,50 @@ body.mx .mo-giant > span { padding-bottom: .04em; }
 body.mx .mo-giant { grid-template-columns: auto auto; justify-content: space-between; column-gap: .3em; white-space: nowrap; }
 @media (max-width: 560px) { body.mx .mo-giant { font-size: clamp(30px, 10.2vw, 60px); } }
 body.mx .mo-giant { font-size: clamp(30px, 10.2vw, 196px); }
+
+/* Wortmarke B3DE: Helvetica/Arial Bold wie vorgegeben */
+:root { --logo: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif; }
+body.mx .mo-hd__word, .mo-foot__mark, .mo-bird__v--s, .mo-bird__v--xl, .mo-cover__l { font-family: var(--logo) !important; font-weight: 700 !important; letter-spacing: -0.02em !important; -webkit-text-stroke: 0 !important; }
+body.mx .mo-hd__word { font-size: 1em; }
+.mo-foot__mark { letter-spacing: -0.03em !important; }
+.mo-bird__v--xl { letter-spacing: -0.03em !important; }
+
+/* Feinschliff */
+body.mx .mo-model .mx-ico { width: 34px; height: 34px; background: var(--mo-ink); }
+body.mx .mo-model .mx-ico--half { background: linear-gradient(90deg, var(--mo-ink) 50%, transparent 50%); border: 1.5px solid var(--mo-ink); }
+body.mx .mo-model .mx-ico--pill { border-radius: 999px; width: 52px; }
+body.mx .mo-model li { align-content: start; gap: 12px !important; padding: 24px 0 30px !important; }
+body.mx .mo-model h3 { margin-top: 6px; }
+body.mx .mo-model p { color: var(--mo-mute); }
+.mo-foot__mark sup { font-size: .16em !important; vertical-align: 3.6em !important; font-weight: 400; }
+.mo-foot__news small { font-size: 13px; letter-spacing: 0; }
+body.mx .mo-model .mx-ico--half { background: var(--mo-ink); border: 0; border-radius: 34px 34px 0 0; height: 17px; margin-top: 17px; }
+body.mx .mo-model .mx-ico--pill { width: 34px; background: transparent; border: 2px solid var(--mo-ink); border-radius: 50%; }
+body.mx .mo-model .mx-ico--pill::after { inset: 8px; background: var(--mo-ink); }
+@media (max-width: 560px) { body.mx .mo-h2 { font-size: clamp(34px, 11vw, 64px); } }
+@media (max-width: 560px) { body.mx-project .mo-hero .mo-w { font-size: clamp(28px, 9.2vw, 56px) !important; } }
+
+/* B1RD-Prinzip: Bildmarke + hochkant gestellte Wortmarke */
+.mo-lock { display: inline-flex; align-items: flex-start; gap: .08em; color: var(--mo-ink); line-height: 1; }
+.mo-lock__sym { width: .62em; height: 1.02em; fill: currentColor; flex: none; }
+.mo-lock__w { writing-mode: vertical-rl; font: 700 .58em/.82 var(--logo); letter-spacing: -0.02em; text-transform: uppercase; margin-top: -.02em; }
+.mo-lock--xl { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: clamp(170px, 22vw, 380px); }
+.mo-lock--s { font-size: clamp(90px, 9vw, 150px); color: #f2f2f2; }
+/* Wortmarke liest von oben nach unten, Claims von unten nach oben */
+.mo-bird__v--s { transform: none; }
+.mo-bird__v--txt { font-weight: 300 !important; letter-spacing: -0.01em; }
+.mo-bird__p--black .mo-bird__url { color: #8c8c8c; mix-blend-mode: normal; }
+.mo-bird__p--white .mo-bird__url { color: #0a0a0a; mix-blend-mode: normal; }
+.mo-claim { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 40px; margin: var(--sp-s) var(--mo-pad) 0; padding: clamp(50px, 6vw, 100px) clamp(24px, 4vw, 70px); background: #0a0a0a; color: #f2f2f2; }
+.mo-claim__t { margin: 0; font: 300 clamp(40px, 6.4vw, 118px)/.98 var(--f); letter-spacing: -0.02em; text-transform: uppercase; }
+@media (max-width: 760px) {
+  .mo-lock--xl { font-size: clamp(110px, 34vw, 190px); }
+  .mo-claim { grid-template-columns: 1fr; }
+  .mo-lock--s { font-size: 80px; }
+}
+.mo-lock__sym { height: 1.42em; width: .86em; }
+.mo-lock { gap: .1em; }
+@media (max-width: 760px) { .mo-bird__p--black .mo-bird__v--txt { bottom: 22%; } .mo-claim__t { font-size: clamp(34px, 10vw, 52px); } }
+.mo-lock--xl { font-size: clamp(120px, 15.5vw, 280px); }
+@media (max-width: 760px) { .mo-lock--xl { font-size: clamp(90px, 25vw, 150px); } }
+@media (max-width: 760px) { .mo-lock--xl { font-size: clamp(80px, 21vw, 130px); } }
