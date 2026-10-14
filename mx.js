@@ -341,3 +341,12 @@
     form.reset();
   }));
 })();
+
+/* Navigation: aktuelle Seite markieren */
+(() => {
+  const here = location.pathname.split("/").pop() || "index.html";
+  const map = { "work.html": "work.html", "leistungen.html": "leistungen.html", "methode.html": "methode.html", "ueber-uns.html": "ueber-uns.html", "academy.html": "academy.html" };
+  const key = here.startsWith("projekt-") ? "work.html" : here.startsWith("academy") || here === "buch.html" ? "academy.html" : here.startsWith("leistung-") ? "leistungen.html" : map[here];
+  if (!key) return;
+  document.querySelectorAll(".mx-hd__nav a, .mo-menu__list a").forEach((a) => { if (a.getAttribute("href") === key) a.setAttribute("aria-current", "page"); });
+})();
