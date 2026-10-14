@@ -1306,3 +1306,13 @@ body.mx .mo-model .mx-ico--pill::after { inset: 8px; background: var(--mo-ink); 
 .mo-lock--xl { font-size: clamp(120px, 15.5vw, 280px); }
 @media (max-width: 760px) { .mo-lock--xl { font-size: clamp(90px, 25vw, 150px); } }
 @media (max-width: 760px) { .mo-lock--xl { font-size: clamp(80px, 21vw, 130px); } }
+
+/* Ohne Fahne: Zeilen sauber verteilen */
+body.mx .mo-row { display: flex !important; flex-wrap: wrap; justify-content: space-between; align-items: center; column-gap: .3em; }
+body.mx .mo-row > .mo-w:nth-child(2) { justify-self: auto; }
+body.mx .mo-row > .mo-label { align-self: center; }
+body.mx .mo-lhero__top { justify-content: flex-end; min-height: 0; padding-top: 20px; }
+body.mx .mo-foot__top { justify-content: flex-start; }
+.mo-mo--dot i { width: 18%; aspect-ratio: 1; border-radius: 50%; background: #f2f2f2; animation: mo-pulse 1.8s ease-in-out infinite; }
+@keyframes mo-pulse { 50% { transform: scale(1.6); opacity: .5; } }
+@media (prefers-reduced-motion: reduce) { .mo-mo--dot i { animation: none; } }

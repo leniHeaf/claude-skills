@@ -2324,7 +2324,7 @@ document.querySelectorAll(".c3-giant").forEach((g) => { const n = g.textContent.
 // ==========================================================================
 (() => {
   if (!document.body.classList.contains("v5")) return;
-  const svg = (cls) => `<svg class="${cls}" viewBox="0 0 32 32" aria-hidden="true"><path d="M8 5h2.2v23H8z" fill="currentColor"/><path d="M10.2 6c3-1.6 6.2 1.4 9.4 0 1.8-.8 3.2-.9 4.4-.4v11.2c-1.2-.5-2.6-.4-4.4.4-3.2 1.4-6.4-1.6-9.4 0z" fill="currentColor"/></svg>`;
+  const svg = () => "";
   // Header-Logo
   document.querySelectorAll(".header .logo").forEach((l) => { if (!l.querySelector(".lion-mark")) l.insertAdjacentHTML("afterbegin", svg("lion-mark")); });
   // Ladebildschirm im Projekt-Übergang
