@@ -1496,3 +1496,17 @@ body.mx .mo-work__img .mx-tile__type, body.mx .mo-reel--still .mx-phero__type { 
 .mo-globe-wrap.is-globe .mo-globe-c { display: block; }
 .mo-globe-wrap.is-globe .mo-map__flat { display: none; }
 .mo-globe-wrap figcaption { margin-top: 18px; }
+
+/* ===== UX ===== */
+html { scroll-padding-top: 90px; }
+:focus-visible { outline: 2px solid #00ff38; outline-offset: 3px; border-radius: 2px; }
+.mo-band:focus-visible, .mo-foot :focus-visible, .mo-menu :focus-visible, .mo-lcta :focus-visible { outline-color: #00ff38; }
+.mx-skip:focus { position: fixed; left: 16px; top: 16px; z-index: 400; padding: 12px 18px; background: #0a0a0a; color: #f2f2f2; }
+@media (max-width: 760px) {
+  .mo-foot__nav a { padding: 6px 0; }
+  body.mx-legacy .field input, body.mx-legacy .field textarea { font-size: max(16px, 1em); }
+}
+.mo-ov { cursor: pointer; }
+.mo-ov__skip { position: absolute; right: var(--mo-pad, 24px); top: 26px; font: 500 13px/1 var(--f); text-transform: uppercase; color: #8c8c8c; }
+@media (hover: none) { .mo-work__img::before, .mo-work__img::after { display: none; } }
+.mx-hd :focus-visible { outline-color: currentColor; }

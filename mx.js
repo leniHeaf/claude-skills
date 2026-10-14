@@ -405,8 +405,11 @@
   ov.innerHTML = '<div class="mo-ov__w">' + "B3DE".split("").map((c, i) => `<span style="--i:${i}">${c}</span>`).join("") + '</div><div class="mo-ov__c"><span>Marken, für die man einsteht</span><span>Köln · Saalbach · Sonneberg</span></div><i class="mo-ov__bar"></i>';
   document.body.appendChild(ov);
   root.classList.remove("mo-pre");
-  setTimeout(() => ov.classList.add("out"), 1500);
-  setTimeout(() => ov.remove(), 2600);
+  ov.insertAdjacentHTML("beforeend", '<span class="mo-ov__skip">(Klicken zum Überspringen)</span>');
+  let done = false;
+  const out = () => { if (done) return; done = true; ov.classList.add("out"); setTimeout(() => ov.remove(), 1100); removeEventListener("keydown", out); };
+  ov.addEventListener("click", out); addEventListener("keydown", out); addEventListener("wheel", out, { once: true, passive: true });
+  setTimeout(out, 1500);
 })();
 
 /* Startseite: Showreel wächst beim Scrollen, Arbeiten fahren seitlich durch */
@@ -572,4 +575,16 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
     const sc = document.createElement("script"); sc.src = "assets/globe/globe-lib.js"; sc.onload = start; document.head.appendChild(sc);
   }, { rootMargin: "400px 0px" });
   io.observe(fig);
+})();
+
+/* UX: Tastatur in der horizontalen Projektreihe, Kugel beschriften, externe Links */
+(() => {
+  const hs = document.querySelector(".mo-hs");
+  if (hs) hs.addEventListener("focusin", (e) => {
+    const tiles = [...hs.querySelectorAll(".mo-work")]; const i = tiles.indexOf(e.target.closest(".mo-work")); if (i < 0) return;
+    const r = hs.getBoundingClientRect(); const dist = hs.offsetHeight - innerHeight;
+    scrollTo({ top: scrollY + r.top + dist * (i / Math.max(1, tiles.length - 1)), behavior: "smooth" });
+  });
+  const g = document.querySelector("[data-globe]"); if (g) { g.setAttribute("role", "img"); g.setAttribute("aria-label", "Weltkugel mit den Standorten Köln, Sonneberg und Saalbach-Hinterglemm"); }
+  document.querySelectorAll('a[target="_blank"]').forEach((a) => { if (!/noopener/.test(a.rel)) a.rel = (a.rel + " noopener").trim(); if (!a.querySelector(".sr")) a.insertAdjacentHTML("beforeend", '<span class="sr"> (öffnet in neuem Tab)</span>'); });
 })();

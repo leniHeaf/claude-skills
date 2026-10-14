@@ -1,0 +1,16 @@
+{
+ "name": "B3DE – Agentur für Branding und Marketing",
+ "short_name": "B3DE",
+ "lang": "de",
+ "start_url": "/",
+ "display": "standalone",
+ "background_color": "#f2f2f2",
+ "theme_color": "#0a0a0a",
+ "icons": [
+  {
+   "src": "assets/brand/b3de.svg",
+   "sizes": "any",
+   "type": "image/svg+xml"
+  }
+ ]
+}
