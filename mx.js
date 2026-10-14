@@ -539,17 +539,33 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
       lam = sl + dl * e; phi = -22 + (target[1] + 22) * e;
       const z = ease(Math.max(0, Math.min(1, (raw - .45) / .55)));
       base = 1 + 3.4 * z;
-      proj.scale((size / 2 - 4) * base);
+      const s = size, R = s / 2 - 4;
+      const off = R * 0.24 * (1 - z), Rm = R * (0.76 + 0.24 * z), cx = s / 2 + off;
+      proj.scale(Rm * base);
       const lab = z > .8;
-      proj.rotate([lam, phi]);
-      const s = size;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, s, s); ctx.save(); ctx.beginPath(); ctx.arc(s / 2, s / 2, s / 2 - 3, 0, 7); ctx.clip();
-      ctx.beginPath(); path({ type: "Sphere" }); ctx.fillStyle = bg; ctx.fill(); ctx.lineWidth = 1.5; ctx.strokeStyle = ink; ctx.stroke();
-      ctx.beginPath(); path(grat); ctx.lineWidth = .6; ctx.strokeStyle = "rgba(10,10,10,.22)"; ctx.stroke();
-      ctx.beginPath(); path(land); ctx.fillStyle = "rgba(10,10,10,.12)"; ctx.fill();
-      ctx.beginPath(); path(borders); ctx.lineWidth = .5; ctx.strokeStyle = "rgba(10,10,10,.35)"; ctx.stroke();
-      ctx.beginPath(); path(at); ctx.setLineDash([3, 3]); ctx.lineWidth = 1; ctx.strokeStyle = ink; ctx.stroke(); ctx.setLineDash([]);
-      ctx.beginPath(); path(de); ctx.fillStyle = ink; ctx.fill();
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, s, s);
+      const W2 = "#f2f2f2";
+      // Zweite Kugel (läuft gegenläufig, blendet beim Zoom aus)
+      const ghost = 1 - Math.min(1, z * 1.6);
+      if (ghost > 0.01) {
+        const p2 = d3.geoOrthographic().clipAngle(90).translate([s / 2 - off * 1.05, s / 2]).scale(R * 0.74).rotate([-lam * 1.3 + 120, -18]);
+        const g2 = d3.geoPath(p2, ctx);
+        ctx.globalAlpha = ghost;
+        ctx.beginPath(); g2({ type: "Sphere" }); ctx.fillStyle = "#050505"; ctx.fill(); ctx.lineWidth = 1.4; ctx.strokeStyle = W2; ctx.stroke();
+        ctx.beginPath(); g2(grat); ctx.lineWidth = .7; ctx.strokeStyle = "rgba(242,242,242,.55)"; ctx.stroke();
+        ctx.beginPath(); g2(land); ctx.fillStyle = "rgba(242,242,242,.85)"; ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+      proj.rotate([lam, phi]).translate([cx, s / 2]);
+      ctx.save(); ctx.beginPath(); ctx.arc(cx, s / 2, Rm, 0, 7); ctx.clip();
+      ctx.beginPath(); path({ type: "Sphere" }); ctx.fillStyle = "#050505"; ctx.fill();
+      ctx.shadowColor = "rgba(255,255,255,.55)"; ctx.shadowBlur = 6;
+      ctx.beginPath(); path(grat); ctx.lineWidth = .8; ctx.strokeStyle = "rgba(242,242,242,.6)"; ctx.stroke();
+      ctx.beginPath(); path(land); ctx.fillStyle = "rgba(242,242,242,.88)"; ctx.fill();
+      ctx.shadowBlur = 0;
+      ctx.beginPath(); path(borders); ctx.lineWidth = .5; ctx.strokeStyle = "rgba(5,5,5,.55)"; ctx.stroke();
+      ctx.beginPath(); path(at); ctx.setLineDash([3, 3]); ctx.lineWidth = 1.2; ctx.strokeStyle = "#0a0a0a"; ctx.stroke(); ctx.setLineDash([]);
+      ctx.beginPath(); path(de); ctx.fillStyle = "#8b6bf0"; ctx.fill();
       // Route
       ctx.beginPath(); path({ type: "LineString", coordinates: pins.map((p) => [p[1], p[2]]) }); ctx.lineWidth = 2; ctx.strokeStyle = acc; ctx.stroke();
       const pulse = (now / 1600) % 1;
@@ -560,7 +576,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
         ctx.beginPath(); ctx.arc(x, y, 4, 0, 7); ctx.fillStyle = acc; ctx.fill();
         if (lab) { ctx.globalAlpha = Math.min(1, (z - .8) / .15); const fs = Math.max(11, s / 46); ctx.font = `600 ${fs}px Inter, sans-serif`; const tw = ctx.measureText(n).width; const lx = i === 1 ? x + 12 : x - tw - 20, ly = i === 2 ? y + 14 : y - fs - 14; ctx.fillStyle = ink; ctx.fillRect(lx, ly, tw + 12, fs + 10); ctx.fillStyle = "#f2f2f2"; ctx.fillText(n, lx + 6, ly + fs + 2); ctx.globalAlpha = 1; }
       });
-      ctx.restore(); ctx.beginPath(); ctx.arc(s / 2, s / 2, s / 2 - 3, 0, 7); ctx.lineWidth = 1.5; ctx.strokeStyle = ink; ctx.stroke();
+      ctx.restore(); ctx.beginPath(); ctx.arc(cx, s / 2, Rm, 0, 7); ctx.shadowColor = "rgba(255,255,255,.7)"; ctx.shadowBlur = 10; ctx.lineWidth = 1.6; ctx.strokeStyle = "#f2f2f2"; ctx.stroke(); ctx.shadowBlur = 0;
       if (visible) requestAnimationFrame(draw);
     };
     new IntersectionObserver((es) => es.forEach((en) => { const was = visible; visible = en.isIntersecting; if (visible && !was) requestAnimationFrame(draw); })).observe(fig);
@@ -587,4 +603,16 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
   });
   const g = document.querySelector("[data-globe]"); if (g) { g.setAttribute("role", "img"); g.setAttribute("aria-label", "Weltkugel mit den Standorten Köln, Sonneberg und Saalbach-Hinterglemm"); }
   document.querySelectorAll('a[target="_blank"]').forEach((a) => { if (!/noopener/.test(a.rel)) a.rel = (a.rel + " noopener").trim(); if (!a.querySelector(".sr")) a.insertAdjacentHTML("beforeend", '<span class="sr"> (öffnet in neuem Tab)</span>'); });
+})();
+
+/* eBook-Cover: Sticker lassen sich verschieben */
+(() => {
+  const box = document.querySelector("[data-stickers]"); if (!box) return;
+  box.querySelectorAll(".mo-st").forEach((st) => {
+    let sx = 0, sy = 0, ox = 0, oy = 0, on = false;
+    st.addEventListener("pointerdown", (e) => { on = true; st.setPointerCapture(e.pointerId); st.classList.add("is-drag"); sx = e.clientX; sy = e.clientY; ox = st.offsetLeft; oy = st.offsetTop; st.style.animation = "none"; });
+    st.addEventListener("pointermove", (e) => { if (!on) return; const W = box.clientWidth, H = box.clientHeight; st.style.left = Math.max(-5, Math.min(95, (ox + e.clientX - sx) / W * 100)) + "%"; st.style.top = Math.max(0, Math.min(95, (oy + e.clientY - sy) / H * 100)) + "%"; });
+    const up = () => { on = false; st.classList.remove("is-drag"); };
+    st.addEventListener("pointerup", up); st.addEventListener("pointercancel", up);
+  });
 })();

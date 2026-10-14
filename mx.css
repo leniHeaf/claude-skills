@@ -1510,3 +1510,39 @@ html { scroll-padding-top: 90px; }
 .mo-ov__skip { position: absolute; right: var(--mo-pad, 24px); top: 26px; font: 500 13px/1 var(--f); text-transform: uppercase; color: #8c8c8c; }
 @media (hover: none) { .mo-work__img::before, .mo-work__img::after { display: none; } }
 .mx-hd :focus-visible { outline-color: currentColor; }
+
+/* ===== Sticker-Cover (eBook) ===== */
+.mo-cover--st { width: min(100%, 520px); aspect-ratio: 3 / 4; padding: 0; transform: rotate(-3deg); background-color: #2a2a2e; background-image: linear-gradient(rgba(255,255,255,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.07) 1px, transparent 1px); background-size: 8.333% 6.25%; box-shadow: 30px 40px 70px rgba(0,0,0,.3), inset 14px 0 0 rgba(0,0,0,.25); overflow: hidden; display: block; container-type: inline-size; }
+.mo-book__art:hover .mo-cover--st { transform: rotate(-1deg); }
+.mo-cover--st .mo-cover__l { position: absolute; left: 6%; top: 3.5%; font-size: 3.6cqw; color: #f2f2f2; }
+.mo-cover__h { position: absolute; left: 5%; right: 5%; top: 8%; font: 800 11.4cqw/1 var(--logo); letter-spacing: -0.03em; color: #f2f2f2; text-transform: lowercase; }
+.mo-cover__hint { position: absolute; right: 5%; top: 3.5%; font: 500 2.4cqw/1 var(--f); text-transform: uppercase; color: #9a9a9a; }
+.mo-st { position: absolute; transform: rotate(var(--r)); touch-action: none; cursor: grab; animation: ms-pop .7s cubic-bezier(.34,1.56,.64,1) both; animation-delay: calc(var(--i) * 60ms + 200ms); }
+.mo-st:active { cursor: grabbing; }
+.mo-st.is-drag { z-index: 5; }
+.mo-st.is-drag .ms { transform: scale(1.08); box-shadow: 0 12px 24px rgba(0,0,0,.35); }
+@keyframes ms-pop { from { opacity: 0; transform: rotate(var(--r)) scale(.3); } }
+.ms { display: inline-flex; align-items: center; justify-content: center; white-space: nowrap; transition: transform .25s; user-select: none; }
+.ms--pill { padding: 1.3cqw 3.4cqw 1.7cqw; border-radius: 999px; font: 500 5.6cqw/1 var(--f); letter-spacing: -0.02em; }
+.ms--big { font-size: 7cqw; font-weight: 700; }
+.ms--v { background: #8b6bf0; color: #0a0a0a; }
+.ms--l { background: #d8f25a; color: #0a0a0a; }
+.ms--o { border: .45cqw solid #f2f2f2; color: #f2f2f2; }
+.ms--burst { position: relative; width: 14cqw; height: 14cqw; }
+.ms--burst svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.ms--burst.ms--v polygon { fill: #8b6bf0; } .ms--burst.ms--l polygon { fill: #d8f25a; }
+.ms--burst { background: none !important; }
+.ms--burst b { position: relative; font: 700 4.6cqw/1 var(--f); color: #0a0a0a; transform: rotate(-12deg); }
+.ms--s { width: 10cqw; height: 10cqw; }
+.ms--ic { width: 9cqw; height: 9cqw; border-radius: 50%; }
+.ms--ic svg { width: 60%; height: 60%; fill: none; stroke: currentColor; stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; }
+.ms--ic.ms--w { background: #f2f2f2; color: #0a0a0a; }
+.ms--ic.ms--l { color: #0a0a0a; }
+.ms--ic.ms--line { border: .45cqw solid #f2f2f2; color: #f2f2f2; }
+.ms--tri { width: 9cqw; height: 9cqw; } .ms--tri svg { width: 100%; height: 100%; fill: #d8f25a; }
+.mo-book__sub { display: block; font-size: .42em; letter-spacing: -0.03em; color: #8b6bf0; }
+@media (prefers-reduced-motion: reduce) { .mo-st { animation: none; } }
+body.mx .mo-book__t { font-size: clamp(48px, 7.2vw, 132px); overflow-wrap: normal; hyphens: manual; }
+/* Weltkugel-Bühne schwarz */
+.mo-globe-wrap.is-globe { background: #0a0a0a; padding: clamp(16px, 2.4vw, 36px); }
+.mo-globe-wrap.is-globe figcaption .mo-label { color: #9a9a9a; }
