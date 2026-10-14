@@ -1395,3 +1395,20 @@ body.mx .mo-works--row .mo-work__img { aspect-ratio: 4 / 3; max-height: 50svh; }
 .mo-peek img { width: 100%; height: 100%; object-fit: cover; display: block; }
 body.mx-home .mo-hero { cursor: crosshair; }
 body.mx .mo-works--row .mo-work__img .mx-tile__type { font-size: clamp(28px, 3.3vw, 56px); }
+
+/* ===== Schwarzes Laufband mit Drahtgitter-Globen ===== */
+.mo-band { display: block; overflow: hidden; background: #0a0a0a; color: #f2f2f2; text-decoration: none; padding: clamp(10px, 1.4vw, 22px) 0; border-top: 1px solid #222; border-bottom: 1px solid #222; }
+.mo-band__track { display: flex; align-items: center; gap: clamp(20px, 2.4vw, 44px); width: max-content; padding-left: clamp(20px, 2.4vw, 44px); animation: mx-marq 26s linear infinite; }
+.mo-band__t { font: 400 clamp(44px, 6.4vw, 118px)/1 var(--f); letter-spacing: -0.03em; text-transform: uppercase; white-space: nowrap; }
+.mo-globe { height: clamp(44px, 6vw, 108px); width: auto; flex: none; fill: none; stroke: currentColor; stroke-width: 2; vector-effect: non-scaling-stroke; }
+.mo-globe * { vector-effect: non-scaling-stroke; }
+.mo-globe--w { height: clamp(40px, 5.2vw, 94px); }
+a.mo-band:hover .mo-band__track { animation-play-state: paused; }
+a.mo-band:hover { color: #fff; }
+a.mo-band .mo-band__t { transition: opacity .4s; }
+a.mo-band:hover .mo-band__t { opacity: .75; }
+.mo-band--cta { margin-top: var(--sp); }
+body.mx-home .mo-method .mo-band { margin-bottom: 0; }
+body.mx-project .mo-band { margin-top: var(--sp); }
+@media (prefers-reduced-motion: reduce) { .mo-band__track { animation: none; } }
+.mo-band--cta { margin-top: 0; }

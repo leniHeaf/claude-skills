@@ -472,3 +472,6 @@
   hero.addEventListener("mousemove", (e) => { tx = e.clientX; ty = e.clientY; });
   hero.addEventListener("mouseleave", () => { on = false; pk.classList.remove("on"); clearInterval(timer); });
 })();
+
+/* Globen: bei reduzierter Bewegung anhalten */
+if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelectorAll("svg.mo-globe").forEach((s) => { try { s.pauseAnimations(); } catch (e) {} });
