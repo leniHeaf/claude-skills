@@ -679,3 +679,56 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
   const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { bird.classList.add("in-view"); type(); io.disconnect(); } }), { threshold: 0.3 });
   io.observe(bird);
 })();
+
+/* Showreel: Projekte im Foto-Feld, wechselnde Claims */
+(() => {
+  const bird = document.querySelector(".mo-bird"); if (!bird) return;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const fig = bird.querySelector(".mo-bird__p--img");
+  const items = [...document.querySelectorAll(".mo-works .mo-work[href^='projekt-'], .hb-grid .hb-card")].map((a) => {
+    const img = a.querySelector("img"); if (!img) return null;
+    return { src: img.getAttribute("src"), href: a.getAttribute("href"), name: (a.querySelector(".mo-work__cap b, .hb-card__cap b") || {}).textContent || "", cat: ((a.querySelector("em") || {}).textContent || "").replace(/[()]/g, "") };
+  }).filter(Boolean);
+  const extra = [["assets/runclub/merch.webp", "projekt-runclub.html", "Run Club"], ["assets/taeubert/visitenkarten.webp", "projekt-taeubert.html", "Täubert"], ["assets/crea-response/brandbook.webp", "projekt-crea-response.html", "Crea Response"], ["assets/runclub/haltestelle.webp", "projekt-runclub.html", "Run Club"], ["assets/taeubert/flyer-boxenstopp.webp", "projekt-taeubert.html", "Täubert"], ["assets/crea-response/recruiting.webp", "projekt-crea-response.html", "Crea Response"]].map(([src, href, name]) => ({ src, href, name }));
+  const seen = new Set(); const list = items.concat(extra).filter((x) => !seen.has(x.src) && seen.add(x.src)).slice(0, 8);
+  let paused = false; bird.addEventListener("mouseenter", () => paused = true); bird.addEventListener("mouseleave", () => paused = false);
+  if (fig && list.length > 1) {
+    const old = fig.querySelector("img"); if (old) old.remove();
+    const DUR = 3800;
+    const a = document.createElement("a"); a.className = "mo-reel3"; a.href = list[0].href;
+    a.innerHTML = list.map((x, i) => `<img src="${x.src}" alt="${x.name}" loading="lazy" decoding="async"${i === 0 ? ' class="on"' : ""}>`).join("") +
+      `<span class="mo-reel3__cap"><span data-n>01 / ${String(list.length).padStart(2, "0")}</span><span data-name>${list[0].name}</span></span>` +
+      `<span class="mo-reel3__bar" style="--dur:${DUR}ms">${list.map(() => "<i><b></b></i>").join("")}</span><span class="mo-reel3__go">Zum Projekt →</span>`;
+    fig.prepend(a);
+    const imgs = a.querySelectorAll("img"), bars = a.querySelectorAll(".mo-reel3__bar i"), n = a.querySelector("[data-n]"), nm = a.querySelector("[data-name]");
+    let k = 0, t0 = performance.now(), acc = 0;
+    const show = (i) => {
+      imgs.forEach((im, j) => im.classList.toggle("on", j === i));
+      bars.forEach((b, j) => { b.classList.toggle("done", j < i); b.classList.remove("run"); });
+      void bars[i].offsetWidth; if (!reduce) bars[i].classList.add("run"); else bars[i].classList.add("done");
+      n.textContent = `${String(i + 1).padStart(2, "0")} / ${String(list.length).padStart(2, "0")}`; nm.textContent = list[i].name; a.href = list[i].href;
+    };
+    show(0);
+    let last = performance.now();
+    const tick = (now) => { const dt = now - last; last = now; if (!paused && !document.hidden) acc += dt; if (acc >= DUR) { acc = 0; k = (k + 1) % list.length; show(k); } requestAnimationFrame(tick); };
+    requestAnimationFrame(tick);
+  }
+  // Wechselnde Claims im schwarzen Feld
+  const t = bird.querySelector(".mo-bird__v--txt");
+  if (t && !reduce) {
+    const claims = ["Finde die Stimme\ndeiner Marke", "Marken bauen\nmit Haltung", "Klarheit statt\nLautstärke", "Strategie, die\nman versteht"];
+    t.setAttribute("aria-label", claims.map((c) => c.replace("\n", " ")).join(" · "));
+    const run = () => {
+      const out = t.querySelector(".mo-ty"); if (!out) return setTimeout(run, 400);
+      let ci = 0, i = claims[0].length, dir = -1;
+      const step = () => {
+        if (paused) return setTimeout(step, 200);
+        const c = claims[ci];
+        if (dir < 0) { i--; out.textContent = c.slice(0, Math.max(0, i)); if (i <= 0) { dir = 1; ci = (ci + 1) % claims.length; return setTimeout(step, 350); } return setTimeout(step, 28); }
+        const n2 = claims[ci]; i++; out.textContent = n2.slice(0, i); if (i >= n2.length) { dir = -1; return setTimeout(step, 2600); } setTimeout(step, n2[i - 1] === "\n" ? 220 : 55);
+      };
+      setTimeout(step, 4200);
+    };
+    run();
+  }
+})();
