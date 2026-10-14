@@ -1102,3 +1102,9 @@ body.mx-legacy .mood__btn img { display: block; }
 @media (prefers-reduced-motion: reduce) { .mo-mo--spin i, .mo-mo--bar i, .mo-mo--marq span { animation: none; } }
 body.mx-legacy .mo-works { margin-inline: 0; }
 body.mx-legacy .card__tag { display: none; } body.mx-legacy .card__meta { justify-content: flex-start; gap: 18px; }
+
+/* Wortmarke B3DE – fett wie B1RD */
+body.mx .mo-hd__word { font-weight: 700; letter-spacing: -0.045em; -webkit-text-stroke: .035em currentColor; paint-order: stroke fill; font-size: 1.12em; }
+body.mx .mo-hd__word sup { -webkit-text-stroke: 0; font-weight: 600; }
+.mo-foot__mark { font-weight: 700; letter-spacing: -0.055em; -webkit-text-stroke: .02em currentColor; }
+.mo-foot__mark sup { -webkit-text-stroke: 0; }
