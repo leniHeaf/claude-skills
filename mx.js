@@ -743,3 +743,63 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
   bird.addEventListener("scroll", () => { const c = bird.scrollLeft + bird.clientWidth / 2; let best = 0, bd = 1e9; ps.forEach((p, i) => { const d = Math.abs(p.offsetLeft + p.offsetWidth / 2 - c); if (d < bd) { bd = d; best = i; } }); ds.forEach((d, i) => d.classList.toggle("on", i === best)); }, { passive: true });
   if (matchMedia("(max-width: 760px)").matches) ps.forEach((p) => p.removeAttribute("data-px"));
 })();
+
+/* Showreel (Hochburg-Aufbau): Feld mit Kreis-Cursor, Play startet den Schnitt */
+(() => {
+  const box = document.querySelector(".hr-reel__box"); if (!box) return;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const stage = box.querySelector(".hr-reel__stage"), cur = box.querySelector(".hr-reel__cur"), lbl = box.querySelector("[data-lbl]"), curLbl = cur.querySelector("span");
+  const tc = box.querySelector("[data-tc]"), nm = box.querySelector("[data-nm]"), bar = box.querySelector(".hr-reel__bar b");
+  // Clips: Projektbilder, dazwischen Text-Tafeln
+  const works = [...document.querySelectorAll(".mo-works .mo-work[href^='projekt-']")].map((a) => {
+    const img = a.querySelector("img"); return img ? { src: img.getAttribute("src"), name: (a.querySelector(".mo-work__cap b") || {}).textContent || "" } : null;
+  }).filter(Boolean);
+  const extra = [["assets/runclub/plakatwand.webp", "Run Club"], ["assets/taeubert/visitenkarten.webp", "Täubert"], ["assets/crea-response/brandbook.webp", "Crea Response"], ["assets/runclub/merch.webp", "Run Club"], ["assets/taeubert/flyer-boxenstopp.webp", "Täubert"], ["assets/crea-response/recruiting.webp", "Crea Response"], ["assets/runclub/haltestelle.webp", "Run Club"]].map(([src, name]) => ({ src, name }));
+  const seen = new Set(); const pics = works.concat(extra).filter((x) => !seen.has(x.src) && seen.add(x.src)).slice(0, 9);
+  const slates = [["Mutig.", ""], ["Klar.", "w"], ["Eigen.", ""], ["B3DE", "w"]];
+  const clips = []; let si = 0;
+  pics.forEach((p, i) => { clips.push({ img: p, d: 1700 }); if (i % 2 === 1 && si < slates.length) clips.push({ slate: slates[si++], d: 1100 }); });
+  while (si < slates.length) clips.push({ slate: slates[si++], d: 1100 });
+  const els = clips.map((c, i) => {
+    let el;
+    if (c.img) { el = document.createElement("img"); el.alt = ""; el.decoding = "async"; el.loading = "lazy"; el.dataset.src = c.img.src; el.style.setProperty("--x", (i % 2 ? "-" : "") + "2%"); }
+    else { el = document.createElement("span"); el.className = "hr-slate" + (c.slate[1] ? " hr-slate--w" : ""); el.textContent = c.slate[0]; }
+    el.style.setProperty("--d", c.d + "ms"); stage.appendChild(el); return el;
+  });
+  const total = clips.reduce((s, c) => s + c.d, 0);
+  const load = () => els.forEach((e) => { if (e.dataset.src) { e.src = e.dataset.src; delete e.dataset.src; } });
+  let on = false, t = 0, idx = -1, last = 0, raf = 0;
+  const fmt = (ms) => { const s = Math.floor(ms / 1000), f = Math.floor((ms % 1000) / 40); return `00:${String(s).padStart(2, "0")}:${String(f).padStart(2, "0")}`; };
+  const show = (i) => { if (i === idx) return; els.forEach((e, j) => e.classList.toggle("on", j === i)); const e = els[i]; e.style.animation = "none"; void e.offsetWidth; e.style.animation = ""; idx = i; nm.textContent = clips[i].img ? clips[i].img.name : "B3DE — Showreel 26"; };
+  const frame = (now) => {
+    if (!on) return; t += Math.min(now - last, 100); last = now;
+    if (t >= total) { stop(); return; }
+    let acc = 0, i = 0; while (i < clips.length - 1 && t >= acc + clips[i].d) acc += clips[i++].d;
+    show(i); tc.textContent = fmt(t); bar.parentNode.style.setProperty("--prog", (t / total).toFixed(4)); bar.style.transform = `scaleX(${(t / total).toFixed(4)})`;
+    raf = requestAnimationFrame(frame);
+  };
+  const setLbl = () => { lbl.textContent = on ? "Pause" : (t > 0 ? "Weiter abspielen" : "Play Showreel"); curLbl.textContent = on ? "Pause" : "Play"; box.setAttribute("aria-label", on ? "Showreel pausieren" : "Showreel abspielen"); };
+  const play = () => { load(); on = true; box.classList.add("is-on"); last = performance.now(); setLbl(); raf = requestAnimationFrame(frame); };
+  const pause = () => { on = false; cancelAnimationFrame(raf); setLbl(); };
+  function stop() { on = false; cancelAnimationFrame(raf); t = 0; idx = -1; els.forEach((e) => e.classList.remove("on")); box.classList.remove("is-on"); bar.style.transform = "scaleX(0)"; tc.textContent = fmt(0); setLbl(); }
+  const toggle = () => (on ? pause() : play());
+  box.addEventListener("click", toggle);
+  box.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } if (e.key === "Escape") stop(); });
+  // Nicht sichtbar: anhalten
+  new IntersectionObserver(([e]) => { if (!e.isIntersecting && on) pause(); }, { threshold: 0.15 }).observe(box);
+  // Kreis-Cursor mit Nachlauf
+  let cx = 0, cy = 0, tx = 0, ty = 0, moving = false;
+  const rest = () => { const r = box.getBoundingClientRect(); tx = r.width * 0.846; ty = r.height * 0.264; };
+  rest(); cx = tx; cy = ty; cur.style.setProperty("--cx", cx + "px"); cur.style.setProperty("--cy", cy + "px");
+  const follow = () => { cx += (tx - cx) * (reduce ? 1 : 0.18); cy += (ty - cy) * (reduce ? 1 : 0.18); cur.style.setProperty("--cx", cx.toFixed(1) + "px"); cur.style.setProperty("--cy", cy.toFixed(1) + "px"); if (Math.abs(tx - cx) + Math.abs(ty - cy) > 0.3) requestAnimationFrame(follow); else moving = false; };
+  const kick = () => { if (!moving) { moving = true; requestAnimationFrame(follow); } };
+  box.addEventListener("pointermove", (e) => { if (e.pointerType !== "mouse") return; const r = box.getBoundingClientRect(); tx = e.clientX - r.left; ty = e.clientY - r.top; box.classList.add("is-in"); kick(); });
+  box.addEventListener("pointerleave", () => { box.classList.remove("is-in"); rest(); kick(); });
+  addEventListener("resize", () => { if (!box.classList.contains("is-in")) { rest(); kick(); } });
+  // Beim Hereinscrollen aufziehen
+  if (!reduce) {
+    let tk = false;
+    const upd = () => { tk = false; const r = box.getBoundingClientRect(), vh = innerHeight; const p = Math.min(1, Math.max(0, (vh - r.top) / (vh * 0.75))); box.style.setProperty("--p", p.toFixed(3)); };
+    addEventListener("scroll", () => { if (!tk) { tk = true; requestAnimationFrame(upd); } }, { passive: true }); upd();
+  }
+})();
