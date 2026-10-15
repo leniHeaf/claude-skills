@@ -2126,3 +2126,33 @@ html.mo-cur body::after { content: ""; position: fixed; inset: 0; z-index: 9998;
 .b-book em { position: absolute; right: 8%; bottom: 6%; font: 500 max(8px, calc(var(--u) * 1.3))/1 var(--f); font-style: normal; }
 .s-m--p.s-m--book { background: linear-gradient(180deg, #1a1a1a, #0a0a0a); }
 .s-m--p .b-book { background: #111; color: #bbb; } .s-m--p .b-chev { background: linear-gradient(90deg, #6a1bff, #ff3fa4); }
+
+/* Projektseite: Mockup-Film (schneller Wechsel, Logo bleibt mittig) */
+.hb-film { padding-right: var(--mo-pad); }
+.hb-film__box { position: relative; aspect-ratio: 16 / 10; max-height: 90svh; overflow: hidden; background: #0a0a0a; }
+.hb-film__box img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; }
+.hb-film__box img.on { opacity: 1; animation: s-mz .42s linear both; }
+.hb-film__tag, .hb-film__n { position: absolute; top: clamp(14px, 2vw, 28px); z-index: 2; font: 500 11px/1 var(--f); letter-spacing: .14em; text-transform: uppercase; color: #fff; mix-blend-mode: difference; }
+.hb-film__tag { left: clamp(14px, 2vw, 28px); } .hb-film__n { right: clamp(14px, 2vw, 28px); font-variant-numeric: tabular-nums; }
+@media (max-width: 760px) { .hb-film__box { aspect-ratio: 4 / 5; } }
+.s-m--img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* Über B3DE: Text oben, drei gleich große Bilder darunter */
+.mo-ab__head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 30px clamp(30px, 5vw, 90px); align-items: start; }
+.mo-ab__txt p { margin: 0 0 28px; font: 500 clamp(24px, 2.4vw, 40px)/1.15 var(--f); letter-spacing: -0.035em; }
+.mo-ab__txt sup { font-size: .5em; }
+.mo-ab__row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 1.8vw, 24px); margin-top: clamp(50px, 6vw, 90px); }
+.mo-ab__f { display: block; color: inherit; text-decoration: none; }
+.mo-ab__f:nth-child(2) { margin-top: clamp(30px, 5vw, 80px); }
+.mo-ab__img { display: block; aspect-ratio: 4 / 5; overflow: hidden; background: #e2e2e2; }
+.mo-ab__img img { width: 100%; height: 100% !important; object-fit: cover; display: block; transition: transform .9s var(--ease); }
+.mo-ab__f:hover .mo-ab__img img { transform: scale(1.04); }
+.mo-ab__cap { display: flex; justify-content: space-between; gap: 10px; margin-top: 12px; font: 500 15px/1.3 var(--f); }
+.mo-ab__cap em { font-style: normal; color: var(--mo-mute); text-transform: uppercase; font-size: 13px; }
+@media (max-width: 760px) {
+  .mo-ab__head { grid-template-columns: 1fr; }
+  .mo-ab__row { grid-template-columns: 1fr 1fr; }
+  .mo-ab__f:nth-child(2) { margin-top: 0; }
+  .mo-ab__f:nth-child(3) { grid-column: 1 / -1; }
+  .mo-ab__f:nth-child(3) .mo-ab__img { aspect-ratio: 16 / 10; }
+}

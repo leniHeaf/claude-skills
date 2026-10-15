@@ -769,6 +769,9 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
     { c: "match", n: "Mockups — Signet", d: 3960, cut: 360, cuts: [
       ["wall", "#8e8e8e", 1], ["pill", "#fff"], ["cards", "#fff", 1], ["tote", "#0a0a0a", 1], ["wall s-m--d", "#d0d0d0"], ["icons", "#fff"],
       ["tote s-m--d", "#f2f2f2"], ["book", "#fff", 1], ["cards s-m--p", "#fff", 1], ["book s-m--p", "#fff", 1], ["pill s-m--p", "#0a0a0a", 1]] },
+    { c: "brands", n: "Mockups — med.aesthetic · Täubert", d: 4800, cut: 400, imgs: [
+      ["assets/medaesthetic/mockup-schild.webp", 1], ["assets/medaesthetic/mockup-pill.webp", 1], ["assets/medaesthetic/mockup-karten.webp", 1], ["assets/medaesthetic/mockup-tasche.webp", 1], ["assets/medaesthetic/mockup-broschuere.webp", 1], ["assets/medaesthetic/mockup-box.webp", 1],
+      ["assets/taeubert/mockup-fassade.webp", 1], ["assets/taeubert/mockup-pill.webp"], ["assets/taeubert/mockup-karten.webp"], ["assets/taeubert/mockup-tasche.webp"], ["assets/taeubert/mockup-tor.webp"], ["assets/taeubert/mockup-flyer.webp", 1]] },
     { c: "notes", n: "Markenworkshop — Ideenwand", d: 2800, h: notes.map(([w, x, y, r, col], k) => `<span class="s-note s-note--${col}" style="--x:${x};--y:${y};--r:${r}deg;--k:${k}">${w}</span>`).join("") + `<svg class="s-notes__ring" viewBox="0 0 100 100" preserveAspectRatio="none"><ellipse cx="18" cy="28" rx="13" ry="9" pathLength="1"/></svg>` },
     { c: "phone", n: "Mockup — App", d: 2600, h: `<div class="s-phone"><div class="s-phone__scr"><div class="s-phone__in"><b class="s-phone__logo">B3DE</b><p>Marken, für die man einsteht.</p>${["Strategie", "Identität", "Workshop", "Kampagne", "Wissen", "Kontakt"].map((x, i) => `<span class="s-phone__card${i % 3 === 1 ? " s-phone__card--g" : ""}"><b>0${i + 1}</b>${x}</span>`).join("")}</div></div></div>` },
     { c: "words", l: 1, n: "B3DE — Haltung", d: 1900, h: `<p class="s-words"><span>Mutig.</span><span>Klar.</span><span>Eigen.</span></p>` },
@@ -787,7 +790,9 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
     icons: '<div class="i-row"><span></span><span></span><span class="i-me"></span><span></span><span></span></div>',
     book: '<span class="b-book"><i class="b-chev"></i><em>b3de.de</em></span>',
   };
-  scenes.forEach((s) => { if (s.cuts) s.h = s.cuts.map(([k]) => `<div class="s-m s-m--${k}">${MK[k.split(" ")[0]]}</div>`).join("") + '<b class="s-mc__logo">B3DE</b>'; });
+  scenes.forEach((s) => { if (s.imgs) { s.cuts = s.imgs.map(([src, l]) => ["img", "", l]); s.h = s.imgs.map(([src]) => `<div class="s-m s-m--img"><img alt="" decoding="async" data-src="${src}"></div>`).join(""); } });
+  const loadImgs = () => stage.querySelectorAll("img[data-src]").forEach((im) => { im.src = im.dataset.src; im.removeAttribute("data-src"); });
+  scenes.forEach((s) => { if (s.cuts && !s.imgs) s.h = s.cuts.map(([k]) => `<div class="s-m s-m--${k}">${MK[k.split(" ")[0]]}</div>`).join("") + '<b class="s-mc__logo">B3DE</b>'; });
   const els = scenes.map((s) => { const el = document.createElement("div"); el.className = `hr-s hr-s--${s.c}`; el.innerHTML = s.h; stage.appendChild(el); return el; });
   const total = scenes.reduce((a, s) => a + s.d, 0);
   let on = false, t = 0, idx = -1, last = 0, raf = 0;
@@ -801,13 +806,13 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
     const sc = scenes[i];
     if (sc.cuts) {
       const k = Math.min(sc.cuts.length - 1, Math.floor((t - acc) / sc.cut)), el = els[i];
-      if (el._k !== k) { el._k = k; el.querySelectorAll(".s-m").forEach((m, j) => m.classList.toggle("on", j === k)); el.querySelector(".s-mc__logo").style.color = sc.cuts[k][1]; box.classList.toggle("is-light", !!sc.cuts[k][2]); }
+      if (el._k !== k) { el._k = k; el.querySelectorAll(".s-m").forEach((m, j) => m.classList.toggle("on", j === k)); const lg = el.querySelector(".s-mc__logo"); if (lg) lg.style.color = sc.cuts[k][1]; box.classList.toggle("is-light", !!sc.cuts[k][2]); }
     }
     tc.textContent = fmt(t); bar.style.transform = `scaleX(${(t / total).toFixed(4)})`;
     raf = requestAnimationFrame(frame);
   };
   const setLbl = () => { lbl.textContent = on ? "Pause" : (t > 0 ? "Weiter abspielen" : "Play Showreel"); curLbl.textContent = on ? "Pause" : "Play"; box.setAttribute("aria-label", on ? "Showreel pausieren" : "Showreel abspielen"); box.classList.toggle("is-paused", !on && t > 0); };
-  const play = () => { on = true; box.classList.add("is-on"); last = performance.now(); setLbl(); raf = requestAnimationFrame(frame); };
+  const play = () => { loadImgs(); on = true; box.classList.add("is-on"); last = performance.now(); setLbl(); raf = requestAnimationFrame(frame); };
   const pause = () => { on = false; cancelAnimationFrame(raf); setLbl(); };
   function stop() { on = false; cancelAnimationFrame(raf); t = 0; idx = -1; els.forEach((e) => e.classList.remove("on")); box.classList.remove("is-on", "is-light"); bar.style.transform = "scaleX(0)"; tc.textContent = fmt(0); setLbl(); }
   const toggle = () => (on ? pause() : play());
@@ -832,4 +837,18 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
     const upd = () => { tk = false; const r = box.getBoundingClientRect(), vh = innerHeight; const p = Math.min(1, Math.max(0, (vh - r.top) / (vh * 0.75))); box.style.setProperty("--p", p.toFixed(3)); };
     addEventListener("scroll", () => { if (!tk) { tk = true; requestAnimationFrame(upd); } }, { passive: true }); upd();
   }
+})();
+
+/* Projektseite: Mockup-Film */
+(() => {
+  const box = document.querySelector("[data-film]"); if (!box) return;
+  const imgs = [...box.querySelectorAll("img")], n = box.querySelector(".hb-film__n"); if (imgs.length < 2) return;
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  let k = 0, vis = false, t = 0;
+  new IntersectionObserver(([e]) => { vis = e.isIntersecting; if (vis) imgs.forEach((i) => i.loading = "eager"); }, { threshold: .25 }).observe(box);
+  const step = (now) => {
+    if (vis && !document.hidden && now - t > 420) { t = now; imgs[k].classList.remove("on"); k = (k + 1) % imgs.length; imgs[k].classList.add("on"); if (n) n.textContent = `${String(k + 1).padStart(2, "0")} / ${String(imgs.length).padStart(2, "0")}`; }
+    requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
 })();
