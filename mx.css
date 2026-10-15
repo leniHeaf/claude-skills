@@ -2156,3 +2156,30 @@ html.mo-cur body::after { content: ""; position: fixed; inset: 0; z-index: 9998;
   .mo-ab__f:nth-child(3) { grid-column: 1 / -1; }
   .mo-ab__f:nth-child(3) .mo-ab__img { aspect-ratio: 16 / 10; }
 }
+
+/* FAQ-Abschnitt (alle Seitentypen) */
+.mo-faq { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 30px clamp(30px, 5vw, 90px); }
+body.mx-hb .mo-faq { padding-left: var(--hb-l, var(--mo-pad)); padding-right: var(--mo-pad); }
+.mo-faq .mo-h2 { margin: 10px 0 0; }
+.mo-faq .faq__item { border-top: 1px solid var(--mo-line); }
+.mo-faq .faq__item:last-child { border-bottom: 1px solid var(--mo-line); }
+.mo-faq .faq__item summary { display: flex; justify-content: space-between; gap: 20px; padding: 22px 0; cursor: pointer; list-style: none; font: 500 clamp(18px, 1.6vw, 24px)/1.25 var(--f); letter-spacing: -0.02em; }
+.mo-faq .faq__item summary::-webkit-details-marker { display: none; }
+.mo-faq .faq__item summary i::before { content: "+"; font-style: normal; display: inline-block; transition: transform .3s; }
+.mo-faq .faq__item[open] summary i::before { transform: rotate(45deg); }
+.mo-faq .faq__body p { margin: 0 0 24px; max-width: 62ch; font: 400 17px/1.6 var(--f); color: #333; }
+.mo-faq .faq__body a, .mo-loc__list a { color: inherit; }
+@media (max-width: 760px) { .mo-faq { grid-template-columns: 1fr; } }
+/* Standortseiten & Rechtliches */
+.mo-loc__h { margin: 0 0 14px; font: 500 clamp(22px, 2vw, 30px)/1.2 var(--f); letter-spacing: -0.02em; }
+.mo-loc__list { list-style: none; margin: 24px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 12px 26px; }
+.hb-info__text a:not(.hb-btn) { color: inherit; }
+.hb-ready .hb-kicker a { color: inherit; }
+.hb-legal { display: block; }
+.hb-legal__rows { display: grid; gap: 0; max-width: 900px; }
+.hb-legal__rows > div { display: grid; grid-template-columns: minmax(160px, 1fr) 2fr; gap: 20px; padding: 22px 0; border-top: 1px solid var(--mo-line); font: 400 17px/1.6 var(--f); }
+.hb-legal__rows b { font-weight: 600; }
+@media (max-width: 760px) { .hb-legal__rows > div { grid-template-columns: 1fr; gap: 6px; } }
+.mo-foot__loc a, .mx-locs b a { color: inherit; text-decoration: none; }
+.mo-foot__loc a:hover, .mx-locs b a:hover { text-decoration: underline; }
+.mo-faq .mo-h2 { font-size: clamp(34px, 4.2vw, 68px); line-height: 1; overflow-wrap: anywhere; hyphens: auto; }
