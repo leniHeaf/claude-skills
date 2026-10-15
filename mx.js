@@ -744,48 +744,48 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
   if (matchMedia("(max-width: 760px)").matches) ps.forEach((p) => p.removeAttribute("data-px"));
 })();
 
-/* Showreel (Hochburg-Aufbau): Feld mit Kreis-Cursor, Play startet den Schnitt */
+/* Showreel (Hochburg-Aufbau): Feld mit Kreis-Cursor, Play startet animierte Szenen */
 (() => {
   const box = document.querySelector(".hr-reel__box"); if (!box) return;
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const stage = box.querySelector(".hr-reel__stage"), cur = box.querySelector(".hr-reel__cur"), lbl = box.querySelector("[data-lbl]"), curLbl = cur.querySelector("span");
   const tc = box.querySelector("[data-tc]"), nm = box.querySelector("[data-nm]"), bar = box.querySelector(".hr-reel__bar b");
-  // Clips: Projektbilder, dazwischen Text-Tafeln
-  const works = [...document.querySelectorAll(".mo-works .mo-work[href^='projekt-']")].map((a) => {
-    const img = a.querySelector("img"); return img ? { src: img.getAttribute("src"), name: (a.querySelector(".mo-work__cap b") || {}).textContent || "" } : null;
-  }).filter(Boolean);
-  const extra = [["assets/runclub/plakatwand.webp", "Run Club"], ["assets/taeubert/visitenkarten.webp", "Täubert"], ["assets/crea-response/brandbook.webp", "Crea Response"], ["assets/runclub/merch.webp", "Run Club"], ["assets/taeubert/flyer-boxenstopp.webp", "Täubert"], ["assets/crea-response/recruiting.webp", "Crea Response"], ["assets/runclub/haltestelle.webp", "Run Club"]].map(([src, name]) => ({ src, name }));
-  const seen = new Set(); const pics = works.concat(extra).filter((x) => !seen.has(x.src) && seen.add(x.src)).slice(0, 9);
-  const slates = [["Mutig.", ""], ["Klar.", "w"], ["Eigen.", ""], ["B3DE", "w"]];
-  const clips = []; let si = 0;
-  pics.forEach((p, i) => { clips.push({ img: p, d: 1700 }); if (i % 2 === 1 && si < slates.length) clips.push({ slate: slates[si++], d: 1100 }); });
-  while (si < slates.length) clips.push({ slate: slates[si++], d: 1100 });
-  const els = clips.map((c, i) => {
-    let el;
-    if (c.img) { el = document.createElement("img"); el.alt = ""; el.decoding = "async"; el.loading = "lazy"; el.dataset.src = c.img.src; el.style.setProperty("--x", (i % 2 ? "-" : "") + "2%"); }
-    else { el = document.createElement("span"); el.className = "hr-slate" + (c.slate[1] ? " hr-slate--w" : ""); el.textContent = c.slate[0]; }
-    el.style.setProperty("--d", c.d + "ms"); stage.appendChild(el); return el;
-  });
-  const total = clips.reduce((s, c) => s + c.d, 0);
-  const load = () => els.forEach((e) => { if (e.dataset.src) { e.src = e.dataset.src; delete e.dataset.src; } });
+  const L = (w) => [...w].map((c, i) => `<span style="--k:${i}"><b>${c}</b></span>`).join("");
+  const notes = [["Haltung", 18, 28, -6, "y"], ["Warum?", 44, 22, 4, "w"], ["Zielgruppe", 72, 30, -3, "g"], ["Werte", 26, 56, 5, "w"], ["Stimme", 52, 50, -4, "y"], ["Mut", 76, 60, 7, "w"], ["Klarheit", 40, 78, -2, "g"]];
+  const dots = [[24, 66], [34, 58], [30, 74], [62, 70], [70, 62], [18, 40], [40, 30]];
+  const scenes = [
+    { c: "logo", n: "Logoanimation", d: 2600, h: `<div class="s-logo">${L("B3DE")}<sup>®</sup></div><i class="s-logo__bar"></i>` },
+    { c: "mono", l: 1, n: "Logoanimation — Signet", d: 2600, h: `<svg class="s-mono__ring" viewBox="0 0 200 200"><circle cx="100" cy="100" r="62" pathLength="1"/></svg><svg class="s-mono__txt" viewBox="0 0 200 200"><defs><path id="hr-c" d="M100,100 m-84,0 a84,84 0 1,1 168,0 a84,84 0 1,1 -168,0"/></defs><text><textPath href="#hr-c">B3DE ✳ BRANDING ✳ STRATEGIE ✳ DESIGN ✳ HALTUNG ✳</textPath></text></svg><b class="s-mono__b">B3</b>` },
+    { c: "cards", l: 1, n: "Mockup — Visitenkarten", d: 2600, h: `<div class="s-cards"><div class="s-card s-card--b"><b>B3DE</b><span>b3de.de</span></div><div class="s-card s-card--w"><b>Lena Muster</b><span>Strategie &amp; Branding</span><i></i><i></i><i></i><em>B3DE</em></div></div>` },
+    { c: "notes", n: "Markenworkshop — Ideenwand", d: 2800, h: notes.map(([w, x, y, r, col], k) => `<span class="s-note s-note--${col}" style="--x:${x};--y:${y};--r:${r}deg;--k:${k}">${w}</span>`).join("") + `<svg class="s-notes__ring" viewBox="0 0 100 100" preserveAspectRatio="none"><ellipse cx="18" cy="28" rx="13" ry="9" pathLength="1"/></svg>` },
+    { c: "phone", n: "Mockup — App", d: 2600, h: `<div class="s-phone"><div class="s-phone__scr"><div class="s-phone__in"><b class="s-phone__logo">B3DE</b><p>Marken, für die man einsteht.</p>${["Strategie", "Identität", "Workshop", "Kampagne", "Wissen", "Kontakt"].map((x, i) => `<span class="s-phone__card${i % 3 === 1 ? " s-phone__card--g" : ""}"><b>0${i + 1}</b>${x}</span>`).join("")}</div></div></div>` },
+    { c: "words", l: 1, n: "B3DE — Haltung", d: 1900, h: `<p class="s-words"><span>Mutig.</span><span>Klar.</span><span>Eigen.</span></p>` },
+    { c: "compass", l: 1, n: "Markenworkshop — Positionierung", d: 2800, h: `<div class="s-comp"><i class="s-comp__x"></i><i class="s-comp__y"></i><em class="t">mutig</em><em class="b">vorsichtig</em><em class="l">klassisch</em><em class="r">modern</em>${dots.map(([x, y], k) => `<span class="s-comp__d" style="--x:${x};--y:${y};--k:${k}"></span>`).join("")}<span class="s-comp__me"><b>B3DE</b></span></div>` },
+    { c: "poster", l: 1, n: "Mockup — Plakate", d: 2600, h: `<div class="s-posters"><div class="s-poster s-poster--b"><b>B3DE</b><span>b3de.de</span></div><div class="s-poster s-poster--g"><b>Mutig.<br>Klar.<br>Eigen.</b></div><div class="s-poster s-poster--w"><i>✳</i><span>Marken, für die man einsteht®</span></div></div>` },
+    { c: "day", n: "Markenworkshop — Ablauf", d: 3000, h: `<p class="s-day__t">Markenworkshop <span>· 1 Tag</span></p><div class="s-day"><i class="s-day__line"><b></b></i>${[["09:00", "Kick-off"], ["11:00", "Werte"], ["14:00", "Positionierung"], ["16:30", "Stimme"]].map(([a, b], k) => `<span class="s-day__s" style="--k:${k}"><em>${a}</em><b>${b}</b></span>`).join("")}</div>` },
+    { c: "guide", l: 1, n: "Mockup — Brand Guidelines", d: 2700, h: `<div class="s-guide"><div class="s-guide__type"><b>Aa</b><span>Helvetica Bold<br>Inter Regular</span></div><div class="s-guide__sw">${[["#0a0a0a", "Schwarz"], ["#f2f2f2", "Papier"], ["#00ff38", "Signal"], ["var(--grad)", "Verlauf"]].map(([c, n], k) => `<span style="--c:${c};--k:${k}"><em>${n}</em></span>`).join("")}</div></div>` },
+    { c: "grid", n: "Logoanimation — Varianten", d: 2400, h: `<div class="s-grid">${["s-t--b", "s-t--w", "s-t--g", "s-t--o"].map((m, k) => `<span class="s-t ${m}" style="--k:${k}"><b>${k === 3 ? "B3" : "B3DE"}</b></span>`).join("")}</div>` },
+    { c: "end", n: "B3DE — Showreel 26", d: 3000, h: `<div class="s-end"><b>B3DE</b><span>Showreel 26 — b3de.de</span></div>` },
+  ];
+  const els = scenes.map((s) => { const el = document.createElement("div"); el.className = `hr-s hr-s--${s.c}`; el.innerHTML = s.h; stage.appendChild(el); return el; });
+  const total = scenes.reduce((a, s) => a + s.d, 0);
   let on = false, t = 0, idx = -1, last = 0, raf = 0;
   const fmt = (ms) => { const s = Math.floor(ms / 1000), f = Math.floor((ms % 1000) / 40); return `00:${String(s).padStart(2, "0")}:${String(f).padStart(2, "0")}`; };
-  const show = (i) => { if (i === idx) return; els.forEach((e, j) => e.classList.toggle("on", j === i)); const e = els[i]; e.style.animation = "none"; void e.offsetWidth; e.style.animation = ""; idx = i; nm.textContent = clips[i].img ? clips[i].img.name : "B3DE — Showreel 26"; };
+  const show = (i) => { if (i === idx) return; els.forEach((e) => e.classList.remove("on")); void stage.offsetWidth; els[i].classList.add("on"); box.classList.toggle("is-light", !!scenes[i].l); idx = i; nm.textContent = scenes[i].n; };
   const frame = (now) => {
     if (!on) return; t += Math.min(now - last, 100); last = now;
     if (t >= total) { stop(); return; }
-    let acc = 0, i = 0; while (i < clips.length - 1 && t >= acc + clips[i].d) acc += clips[i++].d;
-    show(i); tc.textContent = fmt(t); bar.parentNode.style.setProperty("--prog", (t / total).toFixed(4)); bar.style.transform = `scaleX(${(t / total).toFixed(4)})`;
+    let acc = 0, i = 0; while (i < scenes.length - 1 && t >= acc + scenes[i].d) acc += scenes[i++].d;
+    show(i); tc.textContent = fmt(t); bar.style.transform = `scaleX(${(t / total).toFixed(4)})`;
     raf = requestAnimationFrame(frame);
   };
-  const setLbl = () => { lbl.textContent = on ? "Pause" : (t > 0 ? "Weiter abspielen" : "Play Showreel"); curLbl.textContent = on ? "Pause" : "Play"; box.setAttribute("aria-label", on ? "Showreel pausieren" : "Showreel abspielen"); };
-  const play = () => { load(); on = true; box.classList.add("is-on"); last = performance.now(); setLbl(); raf = requestAnimationFrame(frame); };
+  const setLbl = () => { lbl.textContent = on ? "Pause" : (t > 0 ? "Weiter abspielen" : "Play Showreel"); curLbl.textContent = on ? "Pause" : "Play"; box.setAttribute("aria-label", on ? "Showreel pausieren" : "Showreel abspielen"); box.classList.toggle("is-paused", !on && t > 0); };
+  const play = () => { on = true; box.classList.add("is-on"); last = performance.now(); setLbl(); raf = requestAnimationFrame(frame); };
   const pause = () => { on = false; cancelAnimationFrame(raf); setLbl(); };
-  function stop() { on = false; cancelAnimationFrame(raf); t = 0; idx = -1; els.forEach((e) => e.classList.remove("on")); box.classList.remove("is-on"); bar.style.transform = "scaleX(0)"; tc.textContent = fmt(0); setLbl(); }
+  function stop() { on = false; cancelAnimationFrame(raf); t = 0; idx = -1; els.forEach((e) => e.classList.remove("on")); box.classList.remove("is-on", "is-light"); bar.style.transform = "scaleX(0)"; tc.textContent = fmt(0); setLbl(); }
   const toggle = () => (on ? pause() : play());
   box.addEventListener("click", toggle);
   box.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } if (e.key === "Escape") stop(); });
-  // Nicht sichtbar: anhalten
   new IntersectionObserver(([e]) => { if (!e.isIntersecting && on) pause(); }, { threshold: 0.15 }).observe(box);
   // Kreis-Cursor mit Nachlauf
   let cx = 0, cy = 0, tx = 0, ty = 0, moving = false;
@@ -796,6 +796,9 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
   box.addEventListener("pointermove", (e) => { if (e.pointerType !== "mouse") return; const r = box.getBoundingClientRect(); tx = e.clientX - r.left; ty = e.clientY - r.top; box.classList.add("is-in"); kick(); });
   box.addEventListener("pointerleave", () => { box.classList.remove("is-in"); rest(); kick(); });
   addEventListener("resize", () => { if (!box.classList.contains("is-in")) { rest(); kick(); } });
+  // Logo im Ruhezustand: Buchstaben steigen beim Hereinscrollen auf
+  const mark = box.querySelector(".hr-reel__mark");
+  if (mark && !reduce) { mark.innerHTML = L(mark.textContent.trim()); new IntersectionObserver(([e], o) => { if (e.isIntersecting) { mark.classList.add("in"); o.disconnect(); } }, { threshold: 0.4 }).observe(box); } else if (mark) mark.classList.add("in");
   // Beim Hereinscrollen aufziehen
   if (!reduce) {
     let tk = false;
