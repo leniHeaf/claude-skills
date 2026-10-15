@@ -766,7 +766,9 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
     { c: "logo", n: "Logoanimation", d: 2600, h: `<div class="s-logo">${L("B3DE")}<sup>®</sup></div><i class="s-logo__bar"></i>` },
     { c: "claim", n: "B3DE — Haltung", d: 3200, h: `<p class="s-claim"><span>Marken bauen</span><span>mit Haltung</span><span>und Leidenschaft.</span></p><b class="s-claim__v">B3DE</b><i class="s-claim__st"></i>` },
     { c: "mono", l: 1, n: "Logoanimation — Signet", d: 2600, h: `<svg class="s-mono__ring" viewBox="0 0 200 200"><circle cx="100" cy="100" r="62" pathLength="1"/></svg><svg class="s-mono__txt" viewBox="0 0 200 200"><defs><path id="hr-c" d="M100,100 m-84,0 a84,84 0 1,1 168,0 a84,84 0 1,1 -168,0"/></defs><text><textPath href="#hr-c">B3DE ✳ BRANDING ✳ STRATEGIE ✳ DESIGN ✳ HALTUNG ✳</textPath></text></svg><b class="s-mono__b">B3</b>` },
-    { c: "cards", l: 1, n: "Mockup — Visitenkarten", d: 2600, h: `<div class="s-cards"><div class="s-card s-card--b"><b>B3DE</b><span>b3de.de</span></div><div class="s-card s-card--w"><b>Lena Muster</b><span>Strategie &amp; Branding</span><i></i><i></i><i></i><em>B3DE</em></div></div>` },
+    { c: "match", n: "Mockups — Signet", d: 3960, cut: 360, cuts: [
+      ["wall", "#8e8e8e", 1], ["pill", "#fff"], ["cards", "#fff", 1], ["tote", "#0a0a0a", 1], ["wall s-m--d", "#d0d0d0"], ["icons", "#fff"],
+      ["tote s-m--d", "#f2f2f2"], ["book", "#fff", 1], ["cards s-m--p", "#fff", 1], ["book s-m--p", "#fff", 1], ["pill s-m--p", "#0a0a0a", 1]] },
     { c: "notes", n: "Markenworkshop — Ideenwand", d: 2800, h: notes.map(([w, x, y, r, col], k) => `<span class="s-note s-note--${col}" style="--x:${x};--y:${y};--r:${r}deg;--k:${k}">${w}</span>`).join("") + `<svg class="s-notes__ring" viewBox="0 0 100 100" preserveAspectRatio="none"><ellipse cx="18" cy="28" rx="13" ry="9" pathLength="1"/></svg>` },
     { c: "phone", n: "Mockup — App", d: 2600, h: `<div class="s-phone"><div class="s-phone__scr"><div class="s-phone__in"><b class="s-phone__logo">B3DE</b><p>Marken, für die man einsteht.</p>${["Strategie", "Identität", "Workshop", "Kampagne", "Wissen", "Kontakt"].map((x, i) => `<span class="s-phone__card${i % 3 === 1 ? " s-phone__card--g" : ""}"><b>0${i + 1}</b>${x}</span>`).join("")}</div></div></div>` },
     { c: "words", l: 1, n: "B3DE — Haltung", d: 1900, h: `<p class="s-words"><span>Mutig.</span><span>Klar.</span><span>Eigen.</span></p>` },
@@ -777,16 +779,31 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
     { c: "grid", n: "Logoanimation — Varianten", d: 2400, h: `<div class="s-grid">${["s-t--b", "s-t--w", "s-t--g", "s-t--o"].map((m, k) => `<span class="s-t ${m}" style="--k:${k}"><b>${k === 3 ? "B3" : "B3DE"}</b></span>`).join("")}</div>` },
     { c: "end", n: "B3DE — Showreel 26", d: 3000, h: `<div class="s-end"><b>B3DE</b><span>Showreel 26 — b3de.de</span></div>` },
   ];
+  const MK = {
+    wall: '<i class="w-pil"></i><span class="w-plate"></span>',
+    pill: '<span class="p-pill"></span>',
+    cards: '<div class="c-iso">' + ["a", "k", "a", "w", "m", "w", "k", "a", "k"].map((x) => `<span class="c-c c-c--${x}">${x === "w" ? "<b>Lena Muster</b><i>Strategie &amp; Branding</i>" : x === "k" ? "<b>Lena Muster</b><i>b3de.de</i>" : ""}</span>`).join("") + "</div>",
+    tote: '<span class="t-bag"><em>Marken, für die man einsteht</em><em>b3de.de →</em></span>',
+    icons: '<div class="i-row"><span></span><span></span><span class="i-me"></span><span></span><span></span></div>',
+    book: '<span class="b-book"><i class="b-chev"></i><em>b3de.de</em></span>',
+  };
+  scenes.forEach((s) => { if (s.cuts) s.h = s.cuts.map(([k]) => `<div class="s-m s-m--${k}">${MK[k.split(" ")[0]]}</div>`).join("") + '<b class="s-mc__logo">B3DE</b>'; });
   const els = scenes.map((s) => { const el = document.createElement("div"); el.className = `hr-s hr-s--${s.c}`; el.innerHTML = s.h; stage.appendChild(el); return el; });
   const total = scenes.reduce((a, s) => a + s.d, 0);
   let on = false, t = 0, idx = -1, last = 0, raf = 0;
   const fmt = (ms) => { const s = Math.floor(ms / 1000), f = Math.floor((ms % 1000) / 40); return `00:${String(s).padStart(2, "0")}:${String(f).padStart(2, "0")}`; };
-  const show = (i) => { if (i === idx) return; els.forEach((e) => e.classList.remove("on")); void stage.offsetWidth; els[i].classList.add("on"); box.classList.toggle("is-light", !!scenes[i].l); idx = i; nm.textContent = scenes[i].n; };
+  const show = (i) => { if (i === idx) return; els.forEach((e) => { e.classList.remove("on"); e._k = -1; }); void stage.offsetWidth; els[i].classList.add("on"); box.classList.toggle("is-light", !!scenes[i].l); idx = i; nm.textContent = scenes[i].n; };
   const frame = (now) => {
     if (!on) return; t += Math.min(now - last, 100); last = now;
     if (t >= total) { stop(); return; }
     let acc = 0, i = 0; while (i < scenes.length - 1 && t >= acc + scenes[i].d) acc += scenes[i++].d;
-    show(i); tc.textContent = fmt(t); bar.style.transform = `scaleX(${(t / total).toFixed(4)})`;
+    show(i);
+    const sc = scenes[i];
+    if (sc.cuts) {
+      const k = Math.min(sc.cuts.length - 1, Math.floor((t - acc) / sc.cut)), el = els[i];
+      if (el._k !== k) { el._k = k; el.querySelectorAll(".s-m").forEach((m, j) => m.classList.toggle("on", j === k)); el.querySelector(".s-mc__logo").style.color = sc.cuts[k][1]; box.classList.toggle("is-light", !!sc.cuts[k][2]); }
+    }
+    tc.textContent = fmt(t); bar.style.transform = `scaleX(${(t / total).toFixed(4)})`;
     raf = requestAnimationFrame(frame);
   };
   const setLbl = () => { lbl.textContent = on ? "Pause" : (t > 0 ? "Weiter abspielen" : "Play Showreel"); curLbl.textContent = on ? "Pause" : "Play"; box.setAttribute("aria-label", on ? "Showreel pausieren" : "Showreel abspielen"); box.classList.toggle("is-paused", !on && t > 0); };
