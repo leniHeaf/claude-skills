@@ -207,7 +207,8 @@
   if (!reduce) {
     const cu = document.createElement("div");
     cu.className = "mx-curtain"; cu.setAttribute("aria-hidden", "true");
-    cu.innerHTML = '<span class="mx-flag mx-curtain__flag" data-flag data-amp="9" data-speed="1.6"></span>';
+    cu.innerHTML = '<span class="mx-curtain__w">' + "B3DE".split("").map((c, i) => `<span style="--i:${i}"><b>${c}</b></span>`).join("") + '</span><i class="mx-curtain__bar"></i><span class="mx-curtain__to"></span><span class="mx-curtain__star">✳</span>';
+    const to = cu.querySelector(".mx-curtain__to");
     document.body.appendChild(cu);
     document.addEventListener("click", (e) => {
       const a = e.target.closest("a[href]");
@@ -215,10 +216,18 @@
       const u = new URL(a.href, location.href);
       if (u.origin !== location.origin || u.pathname === location.pathname || !/\.html$|\/$/.test(u.pathname)) return;
       e.preventDefault();
+      to.textContent = ((a.getAttribute("aria-label") || a.textContent || "").replace(/[→←↗]/g, "").trim().split("\n")[0] || "").slice(0, 40);
       cu.className = "mx-curtain is-in";
-      setTimeout(() => { location.href = a.href; }, 520);
+      try { sessionStorage.setItem("b3-cur", "1"); } catch (err) {}
+      setTimeout(() => { location.href = a.href; }, 760);
     });
-    addEventListener("pageshow", () => { cu.className = "mx-curtain"; });
+    addEventListener("pageshow", (e) => { if (e.persisted) cu.className = "mx-curtain"; });
+    // Ankunft: Vorhang liegt noch über der Seite und hebt sich
+    let came = false; try { came = !!sessionStorage.getItem("b3-cur"); sessionStorage.removeItem("b3-cur"); } catch (err) {}
+    if (came) {
+      cu.className = "mx-curtain is-hold"; document.documentElement.classList.remove("mo-cur");
+      requestAnimationFrame(() => requestAnimationFrame(() => { setTimeout(() => { cu.className = "mx-curtain is-out"; setTimeout(() => { cu.className = "mx-curtain"; }, 800); }, 120); }));
+    }
   }
 
   // Wehende Fahne (Motto-Markenzeichen)
