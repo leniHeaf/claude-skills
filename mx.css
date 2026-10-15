@@ -2018,3 +2018,23 @@ body.mx-home .mo-hero + .mo-bird { padding-top: clamp(30px, 4vw, 60px); }
 .is-on.is-light .hr-reel__bar { background: rgba(10,10,10,.12); } .is-on.is-light .hr-reel__bar b { background: #0a0a0a; }
 .is-on.is-light .hr-reel__cur { border-color: #0a0a0a; }
 .is-on.is-light.is-in .hr-reel__cur { background: #0a0a0a; } .is-on.is-light.is-in .hr-reel__cur span { color: #fff; }
+
+/* Szene: Claim-Block (Plus-Raster, senkrechtes Logo, laufende Streifen) */
+.hr-s--claim { --g: calc(var(--u) * 6.4); background: #0a0a0a url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Cpath d='M32 28v8M28 32h8' stroke='%23f2f2f2' stroke-width='1' opacity='.22'/%3E%3C/svg%3E") 0 0 / var(--g) var(--g); color: #f2f2f2; }
+.s-claim { position: absolute; left: 7%; top: 44%; transform: translateY(-50%); margin: 0; font: 300 calc(var(--u) * 8.4)/.98 var(--f); letter-spacing: -.02em; text-transform: uppercase; }
+.s-claim span { display: block; white-space: nowrap; }
+.on .s-claim span { animation: s-line .7s var(--e) both; }
+.on .s-claim span:nth-child(2) { animation-delay: .22s; } .on .s-claim span:nth-child(3) { animation-delay: .44s; }
+@keyframes s-line { from { clip-path: inset(0 0 100% 0); transform: translateY(45%); } to { clip-path: inset(0 0 -10% 0); transform: none; } }
+.s-claim__v { position: absolute; right: 6%; top: 44%; transform: translateY(-50%); writing-mode: vertical-rl; font: 700 calc(var(--u) * 5.2)/1 var(--lg); letter-spacing: -.02em; }
+.on .s-claim__v { animation: s-vin .8s var(--e) .7s both; }
+@keyframes s-vin { from { opacity: 0; transform: translateY(-20%); } }
+.s-claim__st { position: absolute; left: 0; right: 0; bottom: 0; height: calc(var(--u) * 3.4); --s: calc(var(--u) * 4.4);
+  background: linear-gradient(-45deg, transparent 0 25%, #f2f2f2 25% 50%, transparent 50% 75%, #f2f2f2 75%) 0 0 / var(--s) var(--s); transform-origin: 0 50%; }
+.on .s-claim__st { animation: s-grow .8s var(--e) .9s both, s-stripe 1.2s linear infinite; }
+@keyframes s-stripe { to { background-position: var(--s) 0; } }
+@container (aspect-ratio < 1) {
+  .s-claim { top: 16%; transform: none; font-size: calc(var(--u) * 7.6); }
+  .s-claim__v { top: auto; bottom: 16%; transform: none; font-size: calc(var(--u) * 11); }
+  .on .s-claim__v { animation-name: s-fade; }
+}
