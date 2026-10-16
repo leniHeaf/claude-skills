@@ -2363,3 +2363,13 @@ body.mx-academy .mx-phero h1 { font-size: clamp(46px, 6.4vw, 104px); line-height
   .mo-fw__grid { grid-template-columns: 1fr; } .mo-fw__t { min-height: 0; } .mo-fw__t:last-child { min-height: 0; }
 }
 .mo-entry .mo-h2, .mo-fw .mo-h2 { font-size: clamp(40px, 5.4vw, 92px); line-height: .98; padding-bottom: .06em; }
+/* Markenworkshop: Knopf in Markenfarbe, Kennzahlen mobil sauber */
+.mw__cta { background: #00ff38; color: #0a0a0a; }
+.mw__cta:hover { background: #f2f2f2; }
+@media (max-width: 760px) {
+  .mw__facts { display: grid; grid-template-columns: 1fr; gap: 0; width: 100%; }
+  .mw__facts li { display: grid; grid-template-columns: 92px 1fr; align-items: center; gap: 16px; padding: 14px 0; border-top: 1px solid rgba(255,255,255,.14); }
+  .mw__facts li:last-child { border-bottom: 1px solid rgba(255,255,255,.14); }
+  .mw__facts b { font-size: 52px; }
+  .mw__facts span { font-size: 13px; letter-spacing: .04em; }
+}
