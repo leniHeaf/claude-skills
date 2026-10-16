@@ -904,3 +904,81 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
   const bar = document.querySelector(".mo-foot__bar") || document.body; bar.appendChild(b);
   set(still);
 })();
+
+/* Academy: Marken-Check, Lernpfade, Lesefortschritt */
+(() => {
+  const el = document.getElementById("b3-academy"); if (!el) return;
+  let D; try { D = JSON.parse(el.textContent); } catch (e) { return; }
+  const KEY = "b3-read";
+  const get = () => { try { return JSON.parse(localStorage.getItem(KEY) || "[]"); } catch (e) { return []; } };
+  const put = (a) => { try { localStorage.setItem(KEY, JSON.stringify(a)); } catch (e) {} };
+  const here = location.pathname.split("/").pop();
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  // Artikel als gelesen markieren (60 % gescrollt oder 25 s)
+  const isArticle = here.startsWith("academy-") && D.paths.some((p) => p.items.some((i) => i.f === here)) || (here.startsWith("academy-") && document.querySelector(".mx-blk"));
+  if (isArticle) {
+    let done = get().includes(here);
+    const mark = () => { if (done) return; done = true; const a = get(); if (!a.includes(here)) { a.push(here); put(a); } toast(); paint(); };
+    setTimeout(mark, 25000);
+    addEventListener("scroll", () => { const h = document.documentElement; if ((scrollY + innerHeight) / h.scrollHeight > 0.6) mark(); }, { passive: true });
+    // Lernpfad-Box am Artikelende
+    const path = D.paths.find((p) => p.items.some((i) => i.f === here));
+    const anchor = document.querySelector('section[aria-label="Weiterlesen"]');
+    let box;
+    const paint = () => {
+      if (!path || !anchor) return;
+      const read = get(), idx = path.items.findIndex((i) => i.f === here);
+      const n = path.items.filter((i) => read.includes(i.f)).length;
+      const next = path.items.slice(idx + 1).concat(path.items.slice(0, idx)).find((i) => !read.includes(i.f));
+      if (!box) { box = document.createElement("section"); box.className = "ac-next"; box.setAttribute("aria-label", "Lernpfad"); anchor.before(box); }
+      box.innerHTML = `<div class="ac-next__in"><p class="mo-label">(Lernpfad · ${esc(path.name)})</p>
+        <p class="ac-next__dots" aria-label="${n} von ${path.items.length} gelesen">${path.items.map((i) => `<a href="${i.f}" title="${esc(i.t)}" class="${read.includes(i.f) ? "on" : ""}${i.f === here ? " cur" : ""}"></a>`).join("")}</p>
+        <p class="ac-next__n">${n} von ${path.items.length} Artikeln gelesen</p>
+        ${next ? `<a class="ac-next__go" href="${next.f}"><span>Als Nächstes</span><b>${esc(next.t)}</b><em>→</em></a>` : `<p class="ac-next__done">✓ Lernpfad abgeschlossen. Stark! <a href="academy.html#lernpfade">Nächsten Pfad wählen →</a></p>`}</div>`;
+    };
+    paint();
+    function toast() {
+      const t = document.createElement("div"); t.className = "ac-toast"; t.setAttribute("role", "status");
+      t.textContent = `✓ Gelesen · ${get().length} von ${D.total} Artikeln`; document.body.appendChild(t);
+      requestAnimationFrame(() => t.classList.add("on")); setTimeout(() => { t.classList.remove("on"); setTimeout(() => t.remove(), 500); }, 3200);
+    }
+  }
+  // Übersicht: Fortschritt, gelesene Artikel, Pfade
+  const read = get();
+  document.querySelectorAll(".mx-post[href]").forEach((a) => { if (read.includes(a.getAttribute("href"))) a.classList.add("is-read"); });
+  const me = document.querySelector("[data-me]");
+  if (me && read.length) { me.hidden = false; me.innerHTML = `<b>${read.length}</b> von ${D.total} Artikeln gelesen <i style="--p:${(read.length / D.total * 100).toFixed(1)}%"></i>`; }
+  document.querySelectorAll("[data-path]").forEach((card) => {
+    const p = D.paths.find((x) => x.id === card.dataset.path); if (!p) return;
+    const n = p.items.filter((i) => read.includes(i.f)).length, next = p.items.find((i) => !read.includes(i.f));
+    card.querySelectorAll(".ac-path__dots i").forEach((d, k) => d.classList.toggle("on", read.includes(p.items[k].f)));
+    card.querySelector("[data-count]").textContent = `${n} / ${p.items.length} gelesen`;
+    card.querySelector("[data-cta]").textContent = n === p.items.length ? "✓ Abgeschlossen" : n ? "Weiterlernen →" : "Pfad starten →";
+    card.classList.toggle("is-done", n === p.items.length);
+    if (next) card.href = next.f;
+  });
+  // Marken-Check
+  const qz = document.querySelector("[data-quiz]"); if (!qz) return;
+  const Q = D.quiz, ans = []; let k = 0;
+  const qn = qz.querySelector("[data-qn]"), qq = qz.querySelector("[data-q]"), bar = qz.querySelector(".ac-quiz__bar b"), res = qz.querySelector("[data-res]"), btns = qz.querySelector(".ac-quiz__a");
+  const show = () => { qn.textContent = `Frage ${k + 1} von ${Q.length}`; qq.textContent = Q[k].q; bar.style.transform = `scaleX(${k / Q.length})`; qq.classList.remove("in"); void qq.offsetWidth; qq.classList.add("in"); };
+  btns.addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-v]"); if (!b) return;
+    ans[k] = +b.dataset.v; k++;
+    if (k < Q.length) return show();
+    bar.style.transform = "scaleX(1)";
+    const score = ans.reduce((a, b) => a + b, 0), max = Q.length * 2;
+    const lvl = score <= 3 ? ["Fundament legen", "Eure Marke hat Potenzial, aber noch kein festes Fundament. Startet mit den Grundlagen – oder legt es an einem Tag im Markenworkshop."]
+      : score <= 7 ? ["Schärfen", "Die Basis steht, an einigen Stellen ist eure Marke noch unscharf. Mit den Artikeln unten schließt ihr die Lücken gezielt."]
+      : ["Ausbauen", "Stark! Eure Marke ist klar und konsistent. Jetzt geht es darum, sie sichtbarer zu machen und im Team zu verankern."];
+    const recs = []; Q.forEach((q, i) => { if (ans[i] < 2) q.rec.forEach((r) => { if (!recs.some((x) => x.f === r.f)) recs.push(r); }); });
+    const weakest = Q[ans.indexOf(Math.min(...ans))].path, wp = D.paths.find((p) => p.id === weakest);
+    qn.hidden = true; qq.hidden = true; btns.hidden = true; res.hidden = false;
+    res.innerHTML = `<div class="ac-res__score" style="--p:${score / max}"><b>${score}</b><span>/ ${max}</span></div>
+      <p class="mo-label">(Ergebnis)</p><h3>${lvl[0]}</h3><p>${lvl[1]}</p>
+      ${recs.length ? `<p class="ac-res__l">Für euch empfohlen:</p><ul>${recs.slice(0, 5).map((r) => `<li><a href="${r.f}">${esc(r.t)} →</a></li>`).join("")}</ul>` : ""}
+      <div class="ac-res__cta"><a class="mx-btn" href="${wp.items[0].f}">Lernpfad „${esc(wp.name)}“ starten</a><a class="mo-link" href="leistung-markenworkshop.html">Lieber gemeinsam: Markenworkshop →</a><button type="button" class="ac-res__again">Nochmal</button></div>`;
+    try { localStorage.setItem("b3-check", String(score)); } catch (e) {}
+    res.querySelector(".ac-res__again").addEventListener("click", () => { ans.length = 0; k = 0; qn.hidden = false; qq.hidden = false; btns.hidden = false; res.hidden = true; show(); });
+  });
+})();
