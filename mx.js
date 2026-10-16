@@ -347,6 +347,7 @@
   document.querySelectorAll("form[data-form], form[data-newsletter]").forEach((form) => {
     const st = form.querySelector(".form__status");
     const steps = [...form.querySelectorAll(".step")], bar = [...form.querySelectorAll(".steps__bar li")];
+    if (location.hash === "#kennenlernen") { const c = form.querySelector('input[value^="Kurzes Kennenlernen"]'); if (c) c.checked = true; setTimeout(() => form.scrollIntoView({ behavior: "smooth", block: "start" }), 300); }
     let cur = 0;
     const go = (i) => { cur = i; steps.forEach((s, k) => s.classList.toggle("is-on", k === i)); bar.forEach((b, k) => b.classList.toggle("on", k <= i)); const f = steps[i] && steps[i].querySelector("input, textarea, button"); if (f) f.focus({ preventScroll: true }); form.scrollIntoView({ behavior: "smooth", block: "start" }); };
     form.addEventListener("click", (e) => {
