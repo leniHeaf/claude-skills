@@ -341,14 +341,43 @@
     const f = b.dataset.filter;
     document.querySelectorAll(".mood__item").forEach((it) => it.classList.toggle("is-hidden", f !== "*" && it.dataset.cat !== f));
   }));
-  document.querySelectorAll("form[data-form], form[data-newsletter]").forEach((form) => form.addEventListener("submit", (e) => {
-    e.preventDefault();
+  // Formulare: echter Versand (Endpoint) oder vorausgefüllte E-Mail
+  const MAIL = "hallo@b3de.de";
+  const valid = (el) => el.value.trim() && (el.type !== "email" || /^\S+@\S+\.\S+$/.test(el.value));
+  document.querySelectorAll("form[data-form], form[data-newsletter]").forEach((form) => {
     const st = form.querySelector(".form__status");
-    const bad = [...form.querySelectorAll("[required]")].find((el) => !el.value.trim() || (el.type === "email" && !/^\S+@\S+\.\S+$/.test(el.value)));
-    if (bad) { if (st) st.textContent = "Bitte füllt alle Pflichtfelder korrekt aus."; bad.focus(); return; }
-    if (st) st.textContent = form.matches("[data-newsletter]") ? "Danke! Wir melden uns, sobald es losgeht." : "Danke! Wir melden uns innerhalb von zwei Werktagen.";
-    form.reset();
-  }));
+    const steps = [...form.querySelectorAll(".step")], bar = [...form.querySelectorAll(".steps__bar li")];
+    let cur = 0;
+    const go = (i) => { cur = i; steps.forEach((s, k) => s.classList.toggle("is-on", k === i)); bar.forEach((b, k) => b.classList.toggle("on", k <= i)); const f = steps[i] && steps[i].querySelector("input, textarea, button"); if (f) f.focus({ preventScroll: true }); form.scrollIntoView({ behavior: "smooth", block: "start" }); };
+    form.addEventListener("click", (e) => {
+      if (e.target.closest("[data-next]")) {
+        const bad = [...steps[cur].querySelectorAll("[required]")].find((el) => !valid(el));
+        if (bad) { if (st) st.textContent = "Bitte füllt das Feld aus."; bad.focus(); return; }
+        if (st) st.textContent = ""; go(Math.min(cur + 1, steps.length - 1));
+      }
+      if (e.target.closest("[data-prev]")) go(Math.max(cur - 1, 0));
+    });
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const bad = [...form.querySelectorAll("[required]")].find((el) => !valid(el));
+      if (bad) { if (st) st.textContent = "Bitte füllt alle Pflichtfelder korrekt aus."; const s = bad.closest(".step"); if (s) go(steps.indexOf(s)); bad.focus(); return; }
+      const fd = new FormData(form), lines = [];
+      for (const [k, v] of fd.entries()) if (String(v).trim()) lines.push(`${k}: ${v}`);
+      const nl = form.matches("[data-newsletter]");
+      const ep = form.dataset.endpoint || "";
+      if (ep) {
+        try {
+          const r = await fetch(ep, { method: "POST", body: fd, headers: { Accept: "application/json" } });
+          if (!r.ok) throw new Error();
+          if (st) st.textContent = nl ? "Danke! Ihr seid angemeldet." : "Danke! Wir melden uns so schnell wie möglich.";
+          form.reset(); if (steps.length) go(0); return;
+        } catch (err) { /* Fallback: E-Mail */ }
+      }
+      const subj = nl ? "Newsletter-Anmeldung" : "Projektanfrage über die Website";
+      location.href = `mailto:${MAIL}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(lines.join("\n"))}`;
+      if (st) st.textContent = "Euer E-Mail-Programm öffnet sich mit allen Angaben – nur noch absenden.";
+    });
+  });
 })();
 
 /* Navigation: aktuelle Seite markieren */
@@ -544,7 +573,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
       const r = fig.getBoundingClientRect(), vh = innerHeight;
       const raw = Math.max(0, Math.min(1, (vh - r.top) / (vh * 0.95)));
       const e = ease(raw);
-      if (!dragging && !reduce) spin += 0.12 * (1 - e) + 0.01;
+      if (!dragging && !reduce && !window.B3_STILL) spin += 0.12 * (1 - e) + 0.01;
       const sl = target[0] + 180 + spin;
       let dl = ((target[0] - sl) % 360 + 540) % 360 - 180;
       lam = sl + dl * e; phi = -22 + (target[1] + 22) * e;
@@ -851,4 +880,27 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
     requestAnimationFrame(step);
   };
   requestAnimationFrame(step);
+})();
+
+/* Handy: fester Anfrage-Knopf nach dem Einstieg */
+(() => {
+  if (/kontakt\.html$/.test(location.pathname)) return;
+  const a = document.createElement("a"); a.className = "mx-sticky"; a.href = "kontakt.html"; a.innerHTML = "Kostenloses Erstgespräch <span aria-hidden=\"true\">→</span>";
+  document.body.appendChild(a);
+  const foot = document.querySelector(".mo-foot, footer"); let footIn = false;
+  if (foot) new IntersectionObserver(([e]) => { footIn = e.isIntersecting; upd(); }).observe(foot);
+  let tk = false;
+  function upd() { tk = false; a.classList.toggle("on", scrollY > innerHeight * 0.9 && !footIn); }
+  addEventListener("scroll", () => { if (!tk) { tk = true; requestAnimationFrame(upd); } }, { passive: true }); upd();
+})();
+
+/* Animationen pausieren (WCAG 2.2.2) */
+(() => {
+  const root = document.documentElement;
+  let still = false; try { still = localStorage.getItem("b3-still") === "1"; } catch (e) {}
+  const b = document.createElement("button"); b.type = "button"; b.className = "mx-still";
+  const set = (v) => { still = v; root.classList.toggle("is-still", v); window.B3_STILL = v; b.setAttribute("aria-pressed", String(v)); b.textContent = v ? "▶ Bewegung an" : "❚❚ Bewegung aus"; try { localStorage.setItem("b3-still", v ? "1" : "0"); } catch (e) {} };
+  b.addEventListener("click", () => set(!still));
+  const bar = document.querySelector(".mo-foot__bar") || document.body; bar.appendChild(b);
+  set(still);
 })();

@@ -2183,3 +2183,47 @@ body.mx-hb .mo-faq { padding-left: var(--hb-l, var(--mo-pad)); padding-right: va
 .mo-foot__loc a, .mx-locs b a { color: inherit; text-decoration: none; }
 .mo-foot__loc a:hover, .mx-locs b a:hover { text-decoration: underline; }
 .mo-faq .mo-h2 { font-size: clamp(34px, 4.2vw, 68px); line-height: 1; overflow-wrap: anywhere; hyphens: auto; }
+
+/* Startseite gestrafft: Links unter Leistungen, Wischreihen auf dem Handy */
+.mo-sm-links { display: flex; flex-wrap: wrap; gap: 14px 30px; margin: 40px 0 0; }
+@media (max-width: 760px) {
+  body.mx-home .mo-works, body.mx-home .mo-posts { display: flex !important; grid-template-columns: none; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; margin-right: calc(-1 * var(--mo-pad)); padding-right: var(--mo-pad); scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  body.mx-home .mo-works::-webkit-scrollbar, body.mx-home .mo-posts::-webkit-scrollbar { display: none; }
+  body.mx-home .mo-works > *, body.mx-home .mo-posts > * { flex: 0 0 82%; min-width: 0; scroll-snap-align: start; margin-top: 0 !important; }
+}
+
+/* Fester Anfrage-Knopf (Handy) */
+.mx-sticky { display: none; }
+@media (max-width: 760px) {
+  .mx-sticky { position: fixed; left: 16px; right: 16px; bottom: calc(14px + env(safe-area-inset-bottom)); z-index: 90; display: flex; justify-content: center; align-items: center; gap: 8px; padding: 16px 20px; border-radius: 999px; background: #0a0a0a; color: #fff; font: 500 16px/1 var(--f); text-decoration: none; box-shadow: 0 10px 30px rgba(0,0,0,.25); transform: translateY(140%); transition: transform .45s cubic-bezier(.2,.8,.2,1); }
+  .mx-sticky.on { transform: none; }
+  .mx-sticky span { color: #00ff38; }
+  .mx-float { display: none !important; }
+}
+/* Animationen pausieren */
+.mx-still { margin-left: 18px; padding: 6px 12px; border: 1px solid currentColor; border-radius: 999px; background: transparent; color: inherit; font: 500 12px/1 var(--f); letter-spacing: .04em; cursor: pointer; opacity: .8; }
+.mx-still:hover, .mx-still:focus-visible { opacity: 1; }
+html.is-still *, html.is-still *::before, html.is-still *::after { animation-play-state: paused !important; }
+/* Anfrage-Formular in Schritten */
+.form--steps .step { display: none; border: 0; margin: 0; padding: 0; min-width: 0; }
+.form--steps .step.is-on { display: grid; gap: 22px; animation: mo-stepin .45s cubic-bezier(.2,.8,.2,1); }
+@keyframes mo-stepin { from { opacity: 0; transform: translateY(12px); } }
+.step__t { padding: 0; margin: 0 0 4px; font: 500 13px/1 var(--f); letter-spacing: .14em; text-transform: uppercase; color: var(--mo-mute, #6b6b6b); }
+.steps__bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; list-style: none; margin: 0 0 28px; padding: 0; counter-reset: s; }
+.steps__bar li { padding-top: 10px; border-top: 3px solid rgba(10,10,10,.12); font: 500 13px/1.2 var(--f); color: var(--mo-mute, #6b6b6b); transition: border-color .3s, color .3s; }
+.steps__bar li.on { border-color: #0a0a0a; color: #0a0a0a; }
+.chips--wrap { display: flex; flex-wrap: wrap; gap: 10px; }
+.step__nav { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-top: 6px; }
+.step__nav .submit:only-child { margin-left: auto; }
+.step__back { background: none; border: 0; padding: 10px 0; font: 500 15px/1 var(--f); color: inherit; cursor: pointer; }
+.form__note { margin: 0; font: 400 13px/1.5 var(--f); color: var(--mo-mute, #6b6b6b); }
+.form__note a { color: inherit; }
+.chips--wrap .chip { position: relative; padding: 0; border: 0; cursor: pointer; }
+.chips--wrap .chip input { position: absolute; opacity: 0; pointer-events: none; }
+.chips--wrap .chip span { display: inline-block; padding: 12px 20px; border: 1px solid var(--mo-ink); border-radius: 999px; font: 500 15px/1 var(--f); text-transform: none; transition: background .2s, color .2s; }
+.chips--wrap .chip input:checked + span { background: var(--mo-ink); color: var(--mo-bg); }
+.chips--wrap .chip input:checked + span::before { content: "✓ "; }
+.chips--wrap .chip input:focus-visible + span { outline: 2px solid var(--mo-ink); outline-offset: 2px; }
+.step__nav .submit[type="submit"] { font-size: clamp(18px, 1.8vw, 24px); text-align: right; }
+@media (max-width: 760px) { .mx-still { margin: 14px 0 0; align-self: flex-start; } .step__nav { flex-wrap: wrap; } }
+.form--steps .chips--wrap .chip { border: 0 !important; padding: 0 !important; background: none !important; border-radius: 0; }
