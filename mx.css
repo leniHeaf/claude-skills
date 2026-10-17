@@ -2571,3 +2571,6 @@ body.mx-home .mx-caps h3 { font-size: clamp(26px, 2.5vw, 40px); overflow-wrap: a
 .mo-goal__l a:hover, .mo-goal__l a:focus-visible { background: #00ff38; color: #0a0a0a; }
 @media (max-width: 1000px) { .mo-goals { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 640px) { .mo-goals { grid-template-columns: 1fr; } }
+@media (min-width: 1200px) { .mx-pages3 .mo-caps { grid-template-columns: repeat(5, minmax(0, 1fr)); } .mx-pages3 .mo-caps__col a { font-size: clamp(17px, 1.35vw, 21px); } }
+@media (min-width: 1001px) { .mo-goal:last-child:nth-child(3n+1) { grid-column: 1 / -1; } }
+@media (min-width: 641px) and (max-width: 1000px) { .mo-goal:last-child:nth-child(2n+1) { grid-column: 1 / -1; } }
