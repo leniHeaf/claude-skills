@@ -983,3 +983,53 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
     res.querySelector(".ac-res__again").addEventListener("click", () => { ans.length = 0; k = 0; qn.hidden = false; qq.hidden = false; btns.hidden = false; res.hidden = true; show(); });
   });
 })();
+
+/* Heute / In 6 Monaten */
+(() => {
+  const sw = document.querySelector(".mo-vs__sw"); if (!sw) return;
+  const list = document.querySelector(".mo-vs__list");
+  const set = (v) => { list.dataset.vsl = v; sw.dataset.on = v; sw.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.vs === v))); };
+  sw.addEventListener("click", (e) => { const b = e.target.closest("button[data-vs]"); if (b) set(b.dataset.vs); });
+  // Beim ersten Sichtkontakt automatisch einmal umschalten (Kontrast erleben)
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    new IntersectionObserver(([e], o) => { if (e.isIntersecting) { o.disconnect(); setTimeout(() => { if (list.dataset.vsl === "a") set("b"); }, 2600); } }, { threshold: 0.55 }).observe(list);
+  }
+})();
+
+/* Wert-Rechner */
+(() => {
+  const box = document.querySelector("[data-val]"); if (!box) return;
+  const nf = new Intl.NumberFormat("de-DE");
+  const i = (k) => +box.querySelector(`[data-i="${k}"]`).value, o = (k) => box.querySelector(`[data-o="${k}"]`);
+  const res = box.querySelector("[data-res]"); let shown = 0, raf = 0;
+  const calc = () => {
+    const req = i("req"), val = i("val"), rate = i("rate") / 100, up = i("up") / 100;
+    o("req").textContent = req; o("val").textContent = nf.format(val) + " €"; o("rate").textContent = Math.round(rate * 100) + " %"; o("up").textContent = "+" + Math.round(up * 100) + " %";
+    box.querySelector('[data-i="up"]').closest("label").querySelector("span").textContent = `Wenn nur ${Math.round(up * 100)} % mehr passende Anfragen kommen …`;
+    const target = Math.round(req * up * rate * val * 12);
+    cancelAnimationFrame(raf); const from = shown, t0 = performance.now();
+    const step = (now) => { const k = Math.min(1, (now - t0) / 500); shown = Math.round(from + (target - from) * (1 - Math.pow(1 - k, 3))); res.textContent = nf.format(shown) + " €"; if (k < 1) raf = requestAnimationFrame(step); };
+    raf = requestAnimationFrame(step);
+  };
+  box.addEventListener("input", calc); calc();
+})();
+
+/* Sanfter Hinweis beim Verlassen (einmal pro Besuch, nur Desktop) */
+(() => {
+  if (!matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+  if (/kontakt\.html$/.test(location.pathname)) return;
+  let seen = false; try { seen = sessionStorage.getItem("b3-exit") === "1"; } catch (e) {}
+  if (seen) return;
+  const t0 = Date.now();
+  const show = () => {
+    if (seen || Date.now() - t0 < 12000) return; seen = true; try { sessionStorage.setItem("b3-exit", "1"); } catch (e) {}
+    const d = document.createElement("div"); d.className = "ex"; d.setAttribute("role", "dialog"); d.setAttribute("aria-modal", "true"); d.setAttribute("aria-label", "Bevor ihr geht");
+    d.innerHTML = `<div class="ex__card"><button type="button" class="ex__x" aria-label="Schließen">×</button><p class="mo-label">(Bevor ihr geht)</p><h2>Wie stark ist eure Marke wirklich?</h2><p>Fünf Fragen, 60 Sekunden, sofort ein ehrliches Ergebnis – kostenlos und ohne Anmeldung.</p><div class="ex__a"><a class="mx-btn" href="academy.html#marken-check">Marken-Check starten</a><button type="button" class="ex__no">Nein danke</button></div></div>`;
+    document.body.appendChild(d); requestAnimationFrame(() => d.classList.add("on"));
+    const close = () => { d.classList.remove("on"); setTimeout(() => d.remove(), 400); removeEventListener("keydown", esc); };
+    const esc = (e) => { if (e.key === "Escape") close(); };
+    d.addEventListener("click", (e) => { if (e.target === d || e.target.closest(".ex__x, .ex__no")) close(); });
+    addEventListener("keydown", esc); d.querySelector(".mx-btn").focus();
+  };
+  document.addEventListener("mouseout", (e) => { if (!e.relatedTarget && e.clientY <= 0) show(); });
+})();
