@@ -1159,3 +1159,108 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
   if (rs && la) { rs.hidden = false; rs.innerHTML = `<a href="${la.f}"><small>Weiter, wo du aufgehört hast</small><b>${esc(la.t)}</b><em>→</em></a>`; }
   if (isAcad) setTimeout(checkBadges, 600);
 })();
+/* Mega-Menü Leistungen */
+(function () {
+  var t = document.querySelector('.mx-mega-t'), m = document.getElementById('mx-mega');
+  if (!t || !m) return;
+  var timer;
+  function open() {
+    clearTimeout(timer);
+    if (!m.hidden) return;
+    m.hidden = false; t.setAttribute('aria-expanded', 'true');
+    requestAnimationFrame(function () { m.classList.add('is-open'); });
+  }
+  function close(now) {
+    clearTimeout(timer);
+    timer = setTimeout(function () {
+      m.classList.remove('is-open'); t.setAttribute('aria-expanded', 'false');
+      setTimeout(function () { if (!m.classList.contains('is-open')) m.hidden = true; }, 220);
+    }, now ? 0 : 220);
+  }
+  var wide = matchMedia('(min-width: 1101px) and (hover: hover)');
+  t.addEventListener('mouseenter', function () { if (wide.matches) open(); });
+  t.addEventListener('mouseleave', function () { close(); });
+  m.addEventListener('mouseenter', function () { clearTimeout(timer); });
+  m.addEventListener('mouseleave', function () { close(); });
+  t.addEventListener('focus', function () { if (matchMedia('(min-width: 1101px)').matches) open(); });
+  [t, m].forEach(function (el) {
+    el.addEventListener('focusout', function (e) { if (!e.relatedTarget || (!m.contains(e.relatedTarget) && e.relatedTarget !== t)) close(true); });
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !m.hidden) { close(true); t.focus(); } });
+  window.addEventListener('scroll', function () { if (!m.hidden && !m.matches(':hover')) close(true); }, { passive: true });
+})();
+/* Leistungs-Finder */
+(function () {
+  var G = {
+    anfragen: [['leistung-webdesign.html', 'Website'], ['leistung-landingpages.html', 'Landingpages'], ['leistung-performance-marketing.html', 'Google & Meta Ads']],
+    lokal: [['leistung-google-profil.html', 'Google-Profil & Bewertungen'], ['leistung-seo.html', 'Local SEO'], ['leistung-print.html', 'Print & Beschriftung']],
+    shop: [['leistung-online-shop.html', 'Online-Shop'], ['leistung-email-marketing.html', 'Newsletter & E-Mail'], ['leistung-ki-content.html', 'KI-Content']],
+    preise: [['leistung-markenstrategie.html', 'Markenstrategie'], ['leistung-brand-design.html', 'Brand Design'], ['leistung-art-direction.html', 'Foto & Art Direction']],
+    team: [['leistung-employer-branding.html', 'Employer Branding'], ['leistung-landingpages.html', 'Karriere-Landingpage'], ['leistung-social-media.html', 'Social Media']],
+    zeit: [['leistung-automatisierung.html', 'Termine & Automatisierung'], ['leistung-ki-assistent.html', 'KI-Assistent'], ['leistung-marketing-abo.html', 'Marketing-Abo']],
+    ki: [['leistung-ki-workshop.html', 'KI-Workshop'], ['leistung-ki-assistent.html', 'KI-Assistent'], ['leistung-ki-sichtbarkeit.html', 'Sichtbar in ChatGPT']]
+  };
+  var PRE = { neu: ['leistung-markenworkshop.html', 'Markenworkshop'], alt: ['leistung-rebranding.html', 'Rebranding'] };
+  var TXT = {
+    Start: 'Ihr legt das Fundament: Positionierung, Design und erste Sichtbarkeit – in wenigen Wochen.',
+    Auftritt: 'Euer Auftritt wird neu aufgestellt: Strategie, Design und Website aus einem Guss.',
+    Wachstum: 'Ein Team, das jeden Monat dranbleibt – mit Plan, Umsetzung und Zahlen.',
+    lernen: 'Ein Workshop bringt in kurzer Zeit Klarheit. Danach entscheidet ihr, was ihr selbst macht und was wir übernehmen.',
+    gezielt: 'Eure Marke steht. Jetzt lohnen sich gezielte Leistungen für genau euer Ziel – ohne Paket.'
+  };
+  function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+  document.querySelectorAll('[data-finder]').forEach(function (root) {
+    var steps = root.querySelectorAll('.fd-step'), res = root.querySelector('.fd-res'), bar = root.querySelector('.fd-bar i'), a = {}, cur = 0;
+    steps.forEach(function (st, i) {
+      if (i > 0) {
+        var b = document.createElement('button'); b.type = 'button'; b.className = 'fd-back'; b.textContent = '← Zurück';
+        b.addEventListener('click', function () { show(i - 1); });
+        st.appendChild(b);
+      }
+    });
+    function show(i) {
+      cur = i;
+      steps.forEach(function (st, k) { st.hidden = k !== i; });
+      res.hidden = i < steps.length;
+      bar.style.transform = 'scaleX(' + Math.min(i, steps.length) / steps.length + ')';
+      var f = i < steps.length ? steps[i].querySelector('.fd-opt') : res.querySelector('h3');
+      if (f && root.dataset.touched) { f.setAttribute('tabindex', f.tabIndex < 0 ? '-1' : f.tabIndex); f.focus({ preventScroll: true }); }
+    }
+    root.addEventListener('click', function (e) {
+      var o = e.target.closest('.fd-opt'); if (!o) return;
+      root.dataset.touched = '1';
+      a[o.dataset.k] = o.dataset.v;
+      o.parentNode.querySelectorAll('.fd-opt').forEach(function (x) { x.setAttribute('aria-pressed', x === o ? 'true' : 'false'); });
+      if (cur + 1 < steps.length) show(cur + 1); else { render(); show(steps.length); }
+    });
+    function render() {
+      var pkg = null, key;
+      if (a.mode === 'laufend') pkg = 'Wachstum';
+      else if (a.mode === 'projekt') pkg = a.stage === 'neu' ? 'Start' : a.stage === 'alt' ? 'Auftritt' : null;
+      var list = [];
+      if (a.mode === 'lernen') list.push(a.goal === 'ki' ? ['leistung-ki-workshop.html', 'KI-Workshop'] : ['leistung-markenworkshop.html', 'Markenworkshop']);
+      if (PRE[a.stage]) list.push(PRE[a.stage]);
+      (G[a.goal] || []).forEach(function (x) { list.push(x); });
+      var seen = {}; list = list.filter(function (x) { return seen[x[0]] ? false : (seen[x[0]] = 1); }).slice(0, 4);
+      key = pkg || (a.mode === 'lernen' ? 'lernen' : 'gezielt');
+      var head = pkg ? 'Paket ' + pkg : (a.mode === 'lernen' ? list[0][1] + ' als Einstieg' : 'Gezielte Leistungen');
+      var sum = 'Empfehlung aus dem Leistungs-Finder: ' + head + ' – ' + list.map(function (x) { return x[1]; }).join(', ') + '.';
+      res.innerHTML = '<p class="mo-label">(Eure Empfehlung)</p><h3>' + esc(head) + '</h3><p>' + TXT[key] + '</p>' +
+        '<ul class="fd-list">' + list.map(function (x) { return '<li><a href="' + x[0] + '">' + esc(x[1]) + ' <span aria-hidden="true">→</span></a></li>'; }).join('') + '</ul>' +
+        '<div class="fd-cta"><a class="mx-btn" href="kontakt.html?empfehlung=' + encodeURIComponent(sum) + '">Erstgespräch mit dieser Empfehlung</a>' +
+        (pkg ? '<a class="mo-link" href="pakete.html#pakete">Paket ' + pkg + ' ansehen</a>' : '') +
+        '<button type="button" class="fd-again">Neu starten</button></div>';
+      res.querySelector('h3').setAttribute('tabindex', '-1');
+      res.querySelector('.fd-again').addEventListener('click', function () { a = {}; root.querySelectorAll('.fd-opt').forEach(function (x) { x.removeAttribute('aria-pressed'); }); show(0); });
+    }
+  });
+})();
+/* Kontakt: Paket oder Finder-Empfehlung vorausfüllen */
+(function () {
+  var msg = document.querySelector('form textarea[name="message"]'); if (!msg || msg.value) return;
+  try {
+    var q = new URLSearchParams(location.search), p = q.get('paket'), e = q.get('empfehlung');
+    if (p && /^(Start|Auftritt|Wachstum)$/.test(p)) msg.value = 'Wir interessieren uns für das Paket ' + p + '. ';
+    else if (e) msg.value = e.slice(0, 400) + ' ';
+  } catch (err) {}
+})();
