@@ -2560,3 +2560,14 @@ body.mx-home .mx-caps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .kt-next b { font: 600 16px/1.2 var(--f); } .kt-next span { font: 400 14px/1.4 var(--f); color: #555; }
 @media (max-width: 760px) { .kt-next ol { grid-template-columns: 1fr; } }
 body.mx-home .mx-caps h3 { font-size: clamp(26px, 2.5vw, 40px); overflow-wrap: anywhere; hyphens: auto; }
+/* Leistungen nach Ziel */
+.mo-goals { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.mo-goal { display: flex; flex-direction: column; gap: 10px; padding: 24px 22px; border-radius: 4px; background: #fff; border: 1px solid var(--mo-line); min-width: 0; }
+.mo-goal h3 { margin: 4px 0 0; font: 600 clamp(22px, 1.9vw, 30px)/1.1 var(--f); letter-spacing: -.02em; overflow-wrap: anywhere; hyphens: auto; }
+.mo-goal__p { margin: 0; font: 400 16px/1.45 var(--f); color: #555; }
+.mo-goal__r { margin: 0; font: 400 16px/1.45 var(--f); }
+.mo-goal__l { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 10px; }
+.mo-goal__l a { padding: 7px 12px; border-radius: 99px; background: #0a0a0a; color: #f2f2f2; font: 500 14px/1.2 var(--f); text-decoration: none; transition: background .25s, color .25s; }
+.mo-goal__l a:hover, .mo-goal__l a:focus-visible { background: #00ff38; color: #0a0a0a; }
+@media (max-width: 1000px) { .mo-goals { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .mo-goals { grid-template-columns: 1fr; } }
