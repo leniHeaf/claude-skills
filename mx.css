@@ -2513,3 +2513,50 @@ body.mx-home #marken-check-start { margin-top: clamp(60px, 7vw, 110px); }
   .gx-badge b { font-size: 15px; }
 }
 body.mx-article h1, body.mx-hb .hb-h1, .mo-lhero__t, .ac-h2, .br-h2 { hyphens: auto; -webkit-hyphens: auto; overflow-wrap: break-word; }
+
+/* Full-Service: vier Spalten auf der Startseite */
+body.mx-home .mx-caps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 1100px) { body.mx-home .mx-caps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 760px) { body.mx-home .mx-caps { grid-template-columns: 1fr; } }
+/* Mensch statt Massenware */
+.mo-ki__head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px clamp(30px, 5vw, 90px); align-items: end; }
+.mo-ki__head .mo-label { grid-column: 1 / -1; }
+.mo-ki__head .ac-h2 { margin: 0; }
+.mo-ki__head p:not(.mo-label) { margin: 0; font: 400 18px/1.55 var(--f); color: #444; }
+.mo-ki__wrap { margin-top: 36px; overflow-x: auto; }
+.mo-ki__t { width: 100%; border-collapse: collapse; font: 400 17px/1.4 var(--f); }
+.mo-ki__t th, .mo-ki__t td { padding: 20px 18px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--mo-line); }
+.mo-ki__t thead th { font: 600 13px/1 var(--f); letter-spacing: .14em; text-transform: uppercase; border-bottom: 2px solid #0a0a0a; }
+.mo-ki__t thead th:nth-child(3) { background: #0a0a0a; color: #00ff38; border-radius: 4px 4px 0 0; }
+.mo-ki__t tbody th { width: 18%; font: 600 15px/1.3 var(--f); }
+.mo-ki__t td:nth-child(2) { color: #8a8a8a; text-decoration: line-through; text-decoration-color: rgba(10,10,10,.25); }
+.mo-ki__t td:nth-child(3) { background: #0a0a0a; color: #f2f2f2; font-weight: 500; border-bottom-color: #2a2a2a; }
+.mo-ki__t tbody tr:last-child td:nth-child(3) { border-radius: 0 0 4px 4px; }
+.mo-ki__t td:nth-child(3)::before { content: "✓ "; color: #00ff38; }
+.mo-ki__foot { margin: 22px 0 0; font: 400 16px/1.5 var(--f); color: #444; }
+@media (max-width: 760px) {
+  .mo-ki__head { grid-template-columns: 1fr; }
+  .mo-ki__t thead { display: none; }
+  .mo-ki__t, .mo-ki__t tbody, .mo-ki__t tr, .mo-ki__t th, .mo-ki__t td { display: block; width: auto; }
+  .mo-ki__t tr { margin-bottom: 14px; border: 1px solid var(--mo-line); border-radius: 4px; overflow: hidden; }
+  .mo-ki__t tbody th { padding: 12px 16px 4px; border: 0; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+  .mo-ki__t td { padding: 8px 16px 12px; border: 0; }
+  .mo-ki__t td:nth-child(2)::before { content: "KI: "; font-weight: 600; text-decoration: none; display: inline; }
+  .mo-ki__t td:nth-child(3) { border-radius: 0 !important; padding-top: 12px; }
+}
+/* Kontextuelle Angebotsbox in Artikeln */
+.ctx-cta { margin: 40px 0; padding: 28px; border-radius: 6px; background: #0a0a0a var(--plus); color: #f2f2f2; }
+.ctx-cta .mo-label { color: #00ff38; }
+.ctx-cta b { display: block; margin: 10px 0 8px; font: 600 clamp(22px, 2vw, 30px)/1.15 var(--f); letter-spacing: -.02em; }
+.ctx-cta p:not(.mo-label) { margin: 0 0 18px; color: #cfcfcf; font: 400 17px/1.5 var(--f); }
+.ctx-cta div { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; }
+.ctx-cta .mx-btn { background: #00ff38; color: #0a0a0a; border-color: #00ff38; }
+.ctx-cta .mo-link { color: #f2f2f2; }
+/* Kontaktseite: So geht es weiter */
+.kt-next { margin-bottom: 30px; }
+.kt-next ol { list-style: none; counter-reset: k; margin: 12px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.kt-next li { counter-increment: k; padding: 16px; border-radius: 4px; background: #fff; border: 1px solid var(--mo-line); display: grid; gap: 4px; }
+.kt-next li::before { content: counter(k); width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: #00ff38; font: 700 14px/1 var(--f); margin-bottom: 6px; }
+.kt-next b { font: 600 16px/1.2 var(--f); } .kt-next span { font: 400 14px/1.4 var(--f); color: #555; }
+@media (max-width: 760px) { .kt-next ol { grid-template-columns: 1fr; } }
+body.mx-home .mx-caps h3 { font-size: clamp(26px, 2.5vw, 40px); overflow-wrap: anywhere; hyphens: auto; }

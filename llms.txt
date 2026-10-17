@@ -1,11 +1,11 @@
 # B3DE
 
-> B3DE ist eine Branding-Agentur in Köln, Saalbach-Hinterglemm und Sonneberg: Markenstrategie, Naming, Corporate Design, Websites und Kampagnen aus einer Hand. Gegründet und geführt von Leni Heaf. Kontakt: hallo@b3de.de.
+> B3DE ist eine Full-Service-Agentur für Branding und Marketing in Köln, Saalbach-Hinterglemm und Sonneberg: Strategie, Design, Website, SEO und Kampagnen aus einer Hand. Gegründet und geführt von Leni Heaf. Kontakt: hallo@b3de.de.
 
 
 ## Start & Studio
 
-- [B3DE – Branding-Agentur in Köln, Saalbach & Sonneberg](https://www.b3de.de/): B3DE ist eine Branding-Agentur in Köln, Saalbach-Hinterglemm und Sonneberg: Markenstrategie, Naming, Corporate Design, Websites und Kampagnen aus einer Hand.
+- [B3DE – Full-Service-Agentur für Branding & Marketing](https://www.b3de.de/): B3DE ist eine Full-Service-Agentur für Branding und Marketing in Köln, Saalbach-Hinterglemm und Sonneberg: Strategie, Design, Website, SEO und Kampagnen aus …
 - [Strategie-eBook zur Markenstrategie | B3DE](https://www.b3de.de/academy-ebook.html): Auf rund 80 Seiten erklären wir Schritt für Schritt, wie eine Markenstrategie entsteht – mit Beispielen, Checklisten und Vorlagen zum Ausfüllen.
 - [Marken-Newsletter: einmal im Monat | B3DE](https://www.b3de.de/academy-newsletter.html): Ein neuer Wiki-Artikel, eine Methode zum Ausprobieren und ein Blick hinter die Kulissen unserer Projekte. Kein Spam, jederzeit abbestellbar.
 - [Branding-Vorlagen für den Marken-Alltag | B3DE](https://www.b3de.de/academy-templates.html): Präsentationen, Social-Media-Raster, Briefing-Vorlagen und Checklisten – direkt einsetzbar und an eure Marke anpassbar.
@@ -32,9 +32,11 @@
 ## Leistungen
 
 - [Bildsprache, Fotografie & Art Direction | B3DE](https://www.b3de.de/leistung-art-direction.html): Bildsprache und Art Direction: B3DE entwickelt euren Bildstil, begleitet Shootings und erstellt Mockups, die sofort nach eurer Marke aussehen.
+- [Website-Betreuung & Markenpflege | B3DE](https://www.b3de.de/leistung-betreuung.html): Website-Betreuung und Markenpflege zum festen Monatspreis: Updates, Sicherheit, neue Inhalte und ein Ansprechpartner, der eure Marke kennt.
 - [Brand Design & Corporate Design | B3DE](https://www.b3de.de/leistung-brand-design.html): Wir übersetzen eure Strategie in ein visuelles System aus Logo, Farben, Schrift und Bildstil – und machen es mit Vorlagen und Guidelines alltagstauglich.
 - [Brand Guidelines & Designsystem | B3DE](https://www.b3de.de/leistung-brand-guidelines.html): Brand Guidelines und Designsystem: Regeln, Beispiele und Vorlagen, damit euer ganzes Team die Marke einheitlich und gern anwendet.
 - [Brand Story & Storytelling für Marken | B3DE](https://www.b3de.de/leistung-brand-story.html): Wir entwickeln eure Markengeschichte in drei Längen – vom Satz für die Bio bis zur Seite für die Website – und einen Ton, der dazu passt.
+- [Content, Foto & Video für Marken | B3DE](https://www.b3de.de/leistung-content-video.html): Content, Foto und Video: Shootings, Reels und Texte, die nach eurer Marke aussehen und klingen – geplant mit Strategie, produziert mit Sorgfalt.
 - [Employer Branding: Arbeitgebermarke | B3DE](https://www.b3de.de/leistung-employer-branding.html): Employer Branding von B3DE: Arbeitgebermarke, Karriereseite und Recruiting-Kampagnen, damit die richtigen Menschen sich bewerben und bleiben.
 - [Logo & Wortmarke entwickeln lassen | B3DE](https://www.b3de.de/leistung-logo.html): Logo und Wortmarke entwickeln lassen: B3DE gestaltet Zeichen, die zur Strategie passen, in jeder Größe funktionieren und lange halten.
 - [Marken-Kompass: Positionierung auf 1 Seite | B3DE](https://www.b3de.de/leistung-marken-kompass.html): Der Marken-Kompass ist unser Modell, das alle strategischen Grundlagen einer Marke auf einer Seite zusammenführt: von der Haltung bis zur Tonalität.
@@ -42,8 +44,10 @@
 - [Markenstrategie entwickeln lassen | B3DE](https://www.b3de.de/leistung-markenstrategie.html): Wir klären mit euch, wofür eure Marke steht, für wen sie da ist und worin sie sich unterscheidet – kompakt genug, um sie im Alltag wirklich zu nutzen.
 - [Markenworkshop für Teams – 1 Tag | B3DE](https://www.b3de.de/leistung-markenworkshop.html): Im Markenworkshop legt ihr gemeinsam die Grundlagen eurer Marke fest. Wir bereiten vor, moderieren und halten die Ergebnisse so fest, dass sie …
 - [Naming: Markennamen entwickeln lassen | B3DE](https://www.b3de.de/leistung-naming.html): Wir entwickeln Namen für Unternehmen, Produkte und Angebote – mit klaren Kriterien, breiter Ideensammlung und sorgfältiger Prüfung.
+- [Performance Marketing: Google & Meta Ads | B3DE](https://www.b3de.de/leistung-performance-marketing.html): Performance Marketing: Google Ads, Meta und LinkedIn Ads im Design eurer Marke – mit sauberem Tracking und verständlichem Monatsbericht.
 - [Personal Branding für Selbstständige | B3DE](https://www.b3de.de/leistung-personal-branding.html): Personal Branding für Selbstständige, Coaches und Führungskräfte: Positionierung, Auftritt, Fotos und LinkedIn – sichtbar als die Person, die ihr seid.
 - [Rebranding & Markenrelaunch | B3DE](https://www.b3de.de/leistung-rebranding.html): Rebranding mit B3DE: Markenaudit, Neuausrichtung und Roll-out – eure Marke erneuern, so viel wie nötig und so wenig wie möglich.
+- [SEO-Agentur: Local SEO & Sichtbarkeit | B3DE](https://www.b3de.de/leistung-seo.html): SEO von B3DE: technische Optimierung, Inhalte mit Kaufabsicht und Local SEO mit Google-Unternehmensprofil – damit euch die richtigen Menschen finden.
 - [Social Media & Content für Marken | B3DE](https://www.b3de.de/leistung-social-media.html): Social Media für Marken: Strategie, feste Formate und Vorlagen in eurem Design – damit ihr regelmäßig sichtbar seid, ohne jedes Mal neu anzufangen.
 - [Webdesign & Website-Entwicklung | B3DE](https://www.b3de.de/leistung-webdesign.html): Webdesign von B3DE: Websites, die eure Marke spürbar machen und Anfragen bringen – mit Konzept, individuellem Design, schnellem Code und SEO.
 
