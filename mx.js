@@ -441,7 +441,7 @@
   try { sessionStorage.setItem("b3-intro", "1"); } catch (e) {}
   const ov = document.createElement("div");
   ov.className = "mo-ov"; ov.setAttribute("aria-hidden", "true");
-  ov.innerHTML = '<div class="mo-ov__w">' + "B3DE".split("").map((c, i) => `<span style="--i:${i}">${c}</span>`).join("") + '</div><div class="mo-ov__c"><span>Marken, für die man einsteht</span><span>Köln · Saalbach · Sonneberg</span></div><i class="mo-ov__bar"></i>';
+  ov.innerHTML = '<div class="mo-ov__w">' + "B3DE".split("").map((c, i) => `<span style="--i:${i}">${c}</span>`).join("") + '</div><div class="mo-ov__c"><span>Marken, für die man einsteht</span><span>Studio in Sonneberg</span></div><i class="mo-ov__bar"></i>';
   document.body.appendChild(ov);
   root.classList.remove("mo-pre");
   ov.insertAdjacentHTML("beforeend", '<span class="mo-ov__skip">(Klicken zum Überspringen)</span>');
@@ -556,9 +556,9 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
     const cv = fig.querySelector("canvas"), ctx = cv.getContext("2d");
     const land = topo.feature(W, W.objects.countries);
     const de = land.features.find((f) => f.properties.name === "Germany");
-    const at = land.features.find((f) => f.properties.name === "Austria");
+    // Österreich wird nicht mehr hervorgehoben (nur Studio Sonneberg)
     const borders = topo.mesh(W, W.objects.countries, (a, b) => a !== b);
-    const pins = [["KÖLN", 6.96, 50.94], ["SONNEBERG", 11.17, 50.36], ["SAALBACH", 12.64, 47.39]];
+    const pins = [["SONNEBERG", 11.17, 50.36]];
     const proj = d3.geoOrthographic().clipAngle(90);
     const path = d3.geoPath(proj, ctx);
     const grat = d3.geoGraticule10();
@@ -605,7 +605,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
       ctx.beginPath(); path(land); ctx.fillStyle = "rgba(242,242,242,.88)"; ctx.fill();
       ctx.shadowBlur = 0;
       ctx.beginPath(); path(borders); ctx.lineWidth = .5; ctx.strokeStyle = "rgba(5,5,5,.55)"; ctx.stroke();
-      ctx.beginPath(); path(at); ctx.setLineDash([3, 3]); ctx.lineWidth = 1.2; ctx.strokeStyle = "#0a0a0a"; ctx.stroke(); ctx.setLineDash([]);
+
       ctx.beginPath(); path(de); ctx.fillStyle = "#8b6bf0"; ctx.fill();
       // Route
       ctx.beginPath(); path({ type: "LineString", coordinates: pins.map((p) => [p[1], p[2]]) }); ctx.lineWidth = 2; ctx.strokeStyle = acc; ctx.stroke();
@@ -642,7 +642,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
     const r = hs.getBoundingClientRect(); const dist = hs.offsetHeight - innerHeight;
     scrollTo({ top: scrollY + r.top + dist * (i / Math.max(1, tiles.length - 1)), behavior: "smooth" });
   });
-  const g = document.querySelector("[data-globe]"); if (g) { g.setAttribute("role", "img"); g.setAttribute("aria-label", "Weltkugel mit den Standorten Köln, Sonneberg und Saalbach-Hinterglemm"); }
+  const g = document.querySelector("[data-globe]"); if (g) { g.setAttribute("role", "img"); g.setAttribute("aria-label", "Weltkugel mit dem Studio in Sonneberg"); }
   document.querySelectorAll('a[target="_blank"]').forEach((a) => { if (!/noopener/.test(a.rel)) a.rel = (a.rel + " noopener").trim(); if (!a.querySelector(".sr")) a.insertAdjacentHTML("beforeend", '<span class="sr"> (öffnet in neuem Tab)</span>'); });
 })();
 

@@ -1,6 +1,10 @@
 # B3DE – Server-Einstellungen (Apache)
 Options -Indexes
 ErrorDocument 404 /404.html
+
+# Frühere Standortseiten (Köln, Saalbach) dauerhaft auf Sonneberg umleiten
+Redirect 301 /branding-agentur-koeln.html /branding-agentur-sonneberg.html
+Redirect 301 /branding-agentur-saalbach.html /branding-agentur-sonneberg.html
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml text/plain application/xml application/manifest+json
 </IfModule>

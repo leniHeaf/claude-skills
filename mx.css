@@ -2690,3 +2690,5 @@ body.mx .pk-t { font: 600 clamp(34px, 3.4vw, 52px)/1 var(--f); letter-spacing: -
 .mx-blk__c { min-width: 0; }
 body.mx .sv-tldr { color: var(--mo-ink, #0a0a0a); }
 .art-tbl td { white-space: nowrap; } @media (max-width: 560px) { .art-tbl td { white-space: normal; } }
+.mo-map__ring { fill: rgba(0,255,56,.12); stroke: #00ff38; stroke-width: 1.5; stroke-dasharray: 4 4; }
+.mo-map__town { fill: currentColor; opacity: .7; }
