@@ -919,7 +919,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
   const isArticle = here.startsWith("academy-") && D.paths.some((p) => p.items.some((i) => i.f === here)) || (here.startsWith("academy-") && document.querySelector(".mx-blk"));
   if (isArticle) {
     let done = get().includes(here);
-    const mark = () => { if (done) return; done = true; const a = get(); if (!a.includes(here)) { a.push(here); put(a); } toast(); paint(); };
+    const mark = () => { if (done) return; done = true; const a = get(); if (!a.includes(here)) { a.push(here); put(a); } paint(); document.dispatchEvent(new CustomEvent("b3:read", { detail: here })); };
     setTimeout(mark, 25000);
     addEventListener("scroll", () => { const h = document.documentElement; if ((scrollY + innerHeight) / h.scrollHeight > 0.6) mark(); }, { passive: true });
     // Lernpfad-Box am Artikelende
@@ -980,6 +980,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
       ${recs.length ? `<p class="ac-res__l">Für euch empfohlen:</p><ul>${recs.slice(0, 5).map((r) => `<li><a href="${r.f}">${esc(r.t)} →</a></li>`).join("")}</ul>` : ""}
       <div class="ac-res__cta"><a class="mx-btn" href="${wp.items[0].f}">Lernpfad „${esc(wp.name)}“ starten</a><a class="mo-link" href="leistung-markenworkshop.html">Lieber gemeinsam: Markenworkshop →</a><button type="button" class="ac-res__again">Nochmal</button></div>`;
     try { localStorage.setItem("b3-check", String(score)); } catch (e) {}
+    document.dispatchEvent(new CustomEvent("b3:check", { detail: score }));
     res.querySelector(".ac-res__again").addEventListener("click", () => { ans.length = 0; k = 0; qn.hidden = false; qq.hidden = false; btns.hidden = false; res.hidden = true; show(); });
   });
 })();
@@ -1032,4 +1033,129 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
     addEventListener("keydown", esc); d.querySelector(".mx-btn").focus();
   };
   document.addEventListener("mouseout", (e) => { if (!e.relatedTarget && e.clientY <= 0) show(); });
+})();
+
+/* Academy-Spiel: XP, Level, Abzeichen, Schnelltests, Profi-Tipps, Serie */
+(() => {
+  const el = document.getElementById("b3-academy"); if (!el) return;
+  let D; try { D = JSON.parse(el.textContent); } catch (e) { return; }
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const L = { get: (k, d) => { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } }, set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  const here = location.pathname.split("/").pop() || "index.html";
+  const isAcad = here.startsWith("academy");
+  const art = D.arts.find((a) => a.f === here);
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const LEVELS = [[0, "Neugierig"], [50, "Entdecker:in"], [150, "Markendenker:in"], [300, "Strateg:in"], [500, "Markenprofi"], [800, "Markenmeister:in"]];
+  const lvl = (xp) => { let i = 0; LEVELS.forEach((l, k) => { if (xp >= l[0]) i = k; }); const n = LEVELS[i + 1]; return { i, name: LEVELS[i][1], from: LEVELS[i][0], to: n ? n[0] : LEVELS[i][0] + 1, next: n ? n[1] : null }; };
+  const TIPS = ["Sprecht euren Claim laut aus. Wenn ihr dabei Luft holen müsst, ist er zu lang.", "Testet euer Logo winzig klein – als Favicon zeigt sich, ob es wirklich trägt.", "Fragt fünf Kund:innen, warum sie euch gewählt haben. Die Antworten sind eure Positionierung.", "Eine Schriftfamilie mit zwei Schnitten reicht für fast alles.", "Schreibt Werte als Verhalten: nicht ‚ehrlich‘, sondern ‚Wir sagen Nein, wenn es nicht passt.‘", "Eine Akzentfarbe, sparsam eingesetzt, wird zum Signal.", "Prüft jede Überschrift: Würde ein Kunde das genau so sagen?", "Echte Teamfotos schlagen jedes Stockfoto. Vertrauen beginnt bei Gesichtern.", "Ein Moodboard mit drei klaren Richtungen spart zehn Korrekturschleifen.", "Euer Markenkern passt auf einen Bierdeckel – oder er ist noch nicht fertig.", "Wiederholt euch. Was euch langweilt, haben andere gerade erst bemerkt.", "Bevor ihr Neues gestaltet: Räumt erst auf, was schon da ist."];
+  const PATHS = D.paths;
+  const st = () => {
+    const read = L.get("b3-read", []), quiz = L.get("b3-quiz", {}), tips = L.get("b3-tips", []), streak = L.get("b3-streak", { n: 0, last: "" });
+    const good = Object.values(quiz).filter(Boolean).length;
+    return { xp: L.get("b3-xp", 0), read, quiz, good, tips, streak, check: L.get("b3-check", null) !== null, paths: PATHS.map((p) => p.items.every((i) => read.includes(i.f))) };
+  };
+  const BADGES = [
+    ["b1", "Erster Artikel", "Den ersten Artikel gelesen", (s) => s.read.length >= 1],
+    ["b5", "Fünf gelesen", "Fünf Artikel gelesen", (s) => s.read.length >= 5],
+    ["b10", "Zehn gelesen", "Zehn Artikel gelesen", (s) => s.read.length >= 10],
+    ["b25", "Halbzeit", "25 Artikel gelesen", (s) => s.read.length >= 25],
+    ["b50", "Alles gelesen", "Alle 50 Artikel gelesen", (s) => s.read.length >= D.total],
+    ...PATHS.map((p, k) => ["p" + k, p.name, "Lernpfad abgeschlossen", (s) => s.paths[k]]),
+    ["q1", "Erster Treffer", "Einen Schnelltest richtig gelöst", (s) => s.good >= 1],
+    ["q10", "Quiz-Ass", "Zehn Schnelltests richtig gelöst", (s) => s.good >= 10],
+    ["mc", "Selbsttest", "Den Marken-Check gemacht", (s) => s.check],
+    ["s3", "Drei-Tage-Serie", "Drei Tage in Folge gelernt", (s) => s.streak.n >= 3],
+    ["t6", "Tipp-Sammler:in", "Sechs Profi-Tipps gesammelt", (s) => s.tips.length >= 6],
+  ];
+  // Konfetti
+  const confetti = (n = 90, x = innerWidth / 2, y = innerHeight / 3) => {
+    if (reduce) return;
+    const c = document.createElement("canvas"); c.className = "gx-cf"; c.width = innerWidth; c.height = innerHeight; document.body.appendChild(c);
+    const g = c.getContext("2d"), cols = ["#00ff38", "#6a1bff", "#0a0a0a", "#ffe94d", "#ff3fa4", "#ffffff"];
+    const P = Array.from({ length: n }, () => ({ x, y, vx: (Math.random() - .5) * 14, vy: -Math.random() * 13 - 4, r: Math.random() * 6 + 4, a: Math.random() * 6, va: (Math.random() - .5) * .4, c: cols[(Math.random() * cols.length) | 0] }));
+    const t0 = performance.now();
+    const f = (now) => { const k = now - t0; g.clearRect(0, 0, c.width, c.height);
+      P.forEach((p) => { p.vy += .38; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.a += p.va; g.save(); g.translate(p.x, p.y); g.rotate(p.a); g.fillStyle = p.c; g.globalAlpha = Math.max(0, 1 - k / 1800); g.fillRect(-p.r / 2, -p.r / 4, p.r, p.r / 2); g.restore(); });
+      if (k < 1800) requestAnimationFrame(f); else c.remove(); };
+    requestAnimationFrame(f);
+  };
+  // HUD
+  let hud;
+  const paintHud = () => {
+    const s = st(), l = lvl(s.xp), pr = Math.min(1, (s.xp - l.from) / (l.to - l.from));
+    if (!hud) { hud = document.createElement("a"); hud.className = "gx-hud"; hud.href = "academy.html#sammlung"; document.body.appendChild(hud); }
+    hud.innerHTML = `<span class="gx-ring" style="--p:${pr}"><b>${l.i + 1}</b></span><span class="gx-hud__t"><b>${esc(l.name)}</b><i>${s.xp} XP${l.next ? ` · noch ${l.to - s.xp} bis ${esc(l.next)}` : ""}</i></span>${s.streak.n > 1 ? `<em title="Tage in Folge">✦ ${s.streak.n}</em>` : ""}`;
+    hud.setAttribute("aria-label", `Level ${l.i + 1}, ${l.name}, ${s.xp} XP`);
+  };
+  const float = (txt) => { const f = document.createElement("span"); f.className = "gx-float"; f.textContent = txt; document.body.appendChild(f); setTimeout(() => f.remove(), 1600); };
+  const pop = (cls, html, ms = 4200) => { const d = document.createElement("div"); d.className = cls; d.setAttribute("role", "status"); d.innerHTML = html; document.body.appendChild(d); requestAnimationFrame(() => d.classList.add("on")); const x = d.querySelector("[data-x]"); const cl = () => { d.classList.remove("on"); setTimeout(() => d.remove(), 500); }; if (x) x.addEventListener("click", cl); setTimeout(cl, ms); return d; };
+  const checkBadges = () => {
+    const s = st(), have = L.get("b3-badges", []); let fresh = [];
+    BADGES.forEach(([id, t, d, ok]) => { if (!have.includes(id) && ok(s)) { have.push(id); fresh.push(t); } });
+    if (fresh.length) { L.set("b3-badges", have); setTimeout(() => { confetti(120); pop("gx-badge", `<span class="gx-badge__i">★</span><span><small>Abzeichen freigeschaltet</small><b>${esc(fresh.join(" · "))}</b></span>`); }, 900); }
+    paintColl();
+  };
+  const award = (xp, why) => {
+    const before = lvl(L.get("b3-xp", 0)).i, nx = L.get("b3-xp", 0) + xp; L.set("b3-xp", nx);
+    float(`+${xp} XP · ${why}`); paintHud();
+    const after = lvl(nx);
+    if (after.i > before) setTimeout(() => { confetti(160); pop("gx-lvl", `<button type="button" class="gx-x" data-x aria-label="Schließen">×</button><small>Level ${after.i + 1} erreicht</small><b>${esc(after.name)}</b><p>${after.next ? `Nächstes Ziel: ${esc(after.next)} bei ${after.to} XP.` : "Höchstes Level. Respekt!"}</p>`, 5000); }, 500);
+    checkBadges();
+  };
+  // Serie (einmal pro Tag)
+  if (isAcad) {
+    const d = new Date(), today = d.toISOString().slice(0, 10), y = new Date(d - 864e5).toISOString().slice(0, 10);
+    const s = L.get("b3-streak", { n: 0, last: "" });
+    if (s.last !== today) { const n = s.last === y ? s.n + 1 : 1; L.set("b3-streak", { n, last: today }); if (n > 1) setTimeout(() => award(5, `${n}-Tage-Serie`), 1500); }
+    paintHud();
+  }
+  // Artikel: zuletzt gelesen merken, Tipp & XP beim Lesen
+  if (art) {
+    L.set("b3-last", here);
+    document.addEventListener("b3:read", () => {
+      award(10, "Artikel gelesen");
+      const s = st(), left = TIPS.map((_, i) => i).filter((i) => !s.tips.includes(i));
+      if (left.length) {
+        const i = left[(Math.random() * left.length) | 0]; s.tips.push(i); L.set("b3-tips", s.tips);
+        setTimeout(() => pop("gx-tip", `<button type="button" class="gx-x" data-x aria-label="Schließen">×</button><div class="gx-tip__card"><div class="gx-tip__back">?</div><div class="gx-tip__front"><small>Profi-Tipp ${s.tips.length} / ${TIPS.length} freigeschaltet</small><p>${esc(TIPS[i])}</p></div></div>`, 9000), 1400);
+        checkBadges();
+      }
+      const p = PATHS.find((p) => p.items.some((it) => it.f === here));
+      if (p && p.items.every((it) => s.read.includes(it.f))) setTimeout(() => { confetti(200); award(50, "Lernpfad geschafft"); }, 2600);
+    });
+    // Schnelltest
+    const anchor = document.querySelector('section[aria-label="Weiterlesen"]');
+    if (anchor) {
+      const others = D.arts.filter((a) => a.f !== here && a.d !== art.d).sort(() => Math.random() - .5).slice(0, 2);
+      const opts = [{ d: art.d, ok: true }, ...others.map((o) => ({ d: o.d, ok: false }))].sort(() => Math.random() - .5);
+      const q = /\?$/.test(art.t) ? art.t : `Worum geht es bei „${art.t}“?`;
+      const box = document.createElement("section"); box.className = "gx-quiz"; box.setAttribute("aria-label", "Schnelltest");
+      const prev = L.get("b3-quiz", {})[here];
+      box.innerHTML = `<div class="gx-quiz__in"><p class="mo-label">(Schnelltest · +5 XP)</p><h2>${esc(q)}</h2><div class="gx-quiz__o">${opts.map((o, k) => `<button type="button" data-ok="${o.ok ? 1 : 0}"><span>${"ABC"[k]}</span>${esc(o.d)}</button>`).join("")}</div><p class="gx-quiz__fb" aria-live="polite">${prev === undefined ? "" : prev ? "✓ Schon gelöst – stark." : "Beim letzten Mal knapp daneben. Neuer Versuch?"}</p></div>`;
+      anchor.before(box);
+      box.addEventListener("click", (e) => {
+        const b = e.target.closest("button[data-ok]"); if (!b || box.classList.contains("done")) return;
+        const ok = b.dataset.ok === "1", fb = box.querySelector(".gx-quiz__fb"), quiz = L.get("b3-quiz", {});
+        box.querySelectorAll("button").forEach((x) => x.classList.toggle("is-ok", x.dataset.ok === "1"));
+        b.classList.add(ok ? "is-hit" : "is-miss"); box.classList.add("done");
+        if (ok) { const first = !quiz[here]; quiz[here] = true; L.set("b3-quiz", quiz); fb.textContent = first ? "Richtig! +5 XP" : "Richtig!"; const r = b.getBoundingClientRect(); confetti(50, r.left + r.width / 2, r.top); if (first) award(5, "Schnelltest"); }
+        else { if (quiz[here] === undefined) { quiz[here] = false; L.set("b3-quiz", quiz); } fb.innerHTML = 'Fast. Die richtige Antwort ist markiert – <button type="button" class="gx-again">nochmal</button>'; }
+      });
+      box.addEventListener("click", (e) => { if (e.target.closest(".gx-again")) { box.classList.remove("done"); box.querySelectorAll("button[data-ok]").forEach((x) => x.classList.remove("is-ok", "is-hit", "is-miss")); box.querySelector(".gx-quiz__fb").textContent = ""; } });
+    }
+  }
+  document.addEventListener("b3:check", () => { if (!L.get("b3-check-xp", false)) { L.set("b3-check-xp", true); award(20, "Marken-Check"); } else checkBadges(); });
+  // Übersicht: Sammlung, Statistik, Weiterlesen
+  function paintColl() {
+    const bx = document.querySelector("[data-badges]"); if (!bx) return;
+    const s = st(), have = L.get("b3-badges", []), l = lvl(s.xp);
+    bx.innerHTML = BADGES.map(([id, t, d]) => `<div class="gx-b ${have.includes(id) ? "on" : ""}"><span class="gx-b__i" aria-hidden="true">${have.includes(id) ? "★" : "?"}</span><b>${esc(t)}</b><small>${esc(d)}</small></div>`).join("");
+    document.querySelector("[data-gstats]").innerHTML = `<div><b>${s.xp}</b><span>XP · Level ${l.i + 1} ${esc(l.name)}</span></div><div><b>${s.read.length}/${D.total}</b><span>Artikel gelesen</span></div><div><b>${s.good}</b><span>Schnelltests gelöst</span></div><div><b>${s.streak.n || 0}</b><span>Tage in Folge</span></div><div><b>${have.length}/${BADGES.length}</b><span>Abzeichen</span></div>`;
+    document.querySelector("[data-tipcount]").textContent = `${s.tips.length} / ${TIPS.length}`;
+    document.querySelector("[data-tips]").innerHTML = TIPS.map((t, i) => s.tips.includes(i) ? `<p class="gx-t on">${esc(t)}</p>` : `<p class="gx-t"><span>?</span>Lies einen Artikel, um diesen Tipp freizuschalten.</p>`).join("");
+  }
+  paintColl();
+  const rs = document.querySelector("[data-resume]"), last = L.get("b3-last", null), la = last && D.arts.find((a) => a.f === last);
+  if (rs && la) { rs.hidden = false; rs.innerHTML = `<a href="${la.f}"><small>Weiter, wo du aufgehört hast</small><b>${esc(la.t)}</b><em>→</em></a>`; }
+  if (isAcad) setTimeout(checkBadges, 600);
 })();
