@@ -1264,3 +1264,13 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
     else if (e) msg.value = e.slice(0, 400) + ' ';
   } catch (err) {}
 })();
+/* Fakten-Seite: Kurzbeschreibungen kopieren */
+(function () {
+  document.querySelectorAll('[data-copy]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var t = b.parentNode.querySelector('blockquote').innerText.trim();
+      var done = function () { b.textContent = 'Kopiert ✓'; b.classList.add('is-done'); setTimeout(function () { b.textContent = 'Kopieren'; b.classList.remove('is-done'); }, 2000); };
+      if (navigator.clipboard) navigator.clipboard.writeText(t).then(done, function () {}); else { var r = document.createRange(); r.selectNodeContents(b.parentNode.querySelector('blockquote')); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+    });
+  });
+})();

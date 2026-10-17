@@ -11,8 +11,9 @@
 - [Branding-Vorlagen für den Marken-Alltag | B3DE](https://www.b3de.de/academy-templates.html): Präsentationen, Social-Media-Raster, Briefing-Vorlagen und Checklisten – direkt einsetzbar und an eure Marke anpassbar.
 - [Workshop-Toolkit für Markenworkshops | B3DE](https://www.b3de.de/academy-toolkit.html): Agenda, Methoden, Vorlagen und Moderationshinweise für einen Tag, an dem ein Team gemeinsam die Grundlagen seiner Marke festlegt.
 - [Strategie-Training: Markenstrategie lernen | B3DE](https://www.b3de.de/academy-training.html): Ein Online-Training in kurzen Lektionen: von der Analyse über die Positionierung bis zum fertigen Marken-Kompass. Mit Übungen und Vorlagen.
-- [Marken-Wiki: 50 Artikel zu Branding & Strategie | B3DE](https://www.b3de.de/academy.html): Das Marken-Wiki von B3DE: 50 kurze Artikel zu Markenidentität, Markenstrategie und Design – verständlich erklärt, aus der Praxis.
+- [Marken-Wiki: 54 Artikel zu Branding & Strategie | B3DE](https://www.b3de.de/academy.html): Das Marken-Wiki von B3DE: 50 kurze Artikel zu Markenidentität, Markenstrategie und Design – verständlich erklärt, aus der Praxis.
 - [Markenstrategie ohne Bauchweh – das eBook | B3DE](https://www.b3de.de/buch.html): Markenstrategie ohne Bauchweh: das kostenlose Strategie-eBook von B3DE. Sieben Kapitel, Checklisten und Vorlagen für eine Marke, für die man einsteht.
+- [B3DE auf einen Blick: Fakten & Standorte | B3DE](https://www.b3de.de/fakten.html): Fakten über B3DE: Full-Service-Agentur für Branding und Marketing in Köln, Saalbach-Hinterglemm und Sonneberg, gegründet von Leni Heaf.
 - [Branding für Gründer:innen & Start-ups | B3DE](https://www.b3de.de/fuer-gruender.html): Branding für Gründer:innen und Start-ups: Story, Name, Logo und Landingpage in wenigen Wochen – schnell sichtbar mit festem Fundament.
 - [Branding für Handwerk & Mittelstand | B3DE](https://www.b3de.de/fuer-handwerk.html): Branding für Handwerksbetriebe und Mittelstand: ein klares Profil, ein Auftritt aus einem Guss und mehr passende Anfragen und Bewerbungen.
 - [Branding für Hotels & Tourismus | B3DE](https://www.b3de.de/fuer-hotels.html): Branding für Hotels, Gastronomie und Tourismus: Positionierung, Bildwelt und Website für mehr Direktbuchungen – plus Arbeitgebermarke.
@@ -85,6 +86,7 @@
 
 ## Marken-Wiki
 
+- [Agentur oder Freelancer? Der Vergleich | B3DE](https://www.b3de.de/academy-agentur-oder-freelancer.html): Agentur oder Freelancer für Branding und Website? Preise, Stärken und Risiken im Vergleich – plus die richtigen Fragen fürs Erstgespräch.
 - [Was ist ein Alleinstellungsmerkmal? | B3DE Branding-Agentur](https://www.b3de.de/academy-alleinstellungsmerkmal.html): Ein Alleinstellungsmerkmal ist der Grund, warum sich jemand für euch entscheidet – und der bei keinem anderen Anbieter genauso gilt.
 - [B2B-Branding: Marken für Fachpublikum | B3DE](https://www.b3de.de/academy-b2b-branding.html): Auch im B2B entscheiden Menschen – B2B-Branding verbindet sachliche Argumente mit einem klaren, vertrauenswürdigen Auftritt.
 - [Einen eigenen Bildstil entwickeln | B3DE Branding-Agentur](https://www.b3de.de/academy-bildstil.html): Einen eigenen Bildstil entwickeln: wie Fotografie, Licht und Motive eine Marke wiedererkennbar machen – mit Beispielen und Checkliste.
@@ -103,6 +105,7 @@
 - [Employer Branding: Marke als Arbeitgeber | B3DE](https://www.b3de.de/academy-employer-branding.html): Employer Branding macht sichtbar, warum Menschen gern bei euch arbeiten – und hilft, die passenden Talente zu finden und zu halten.
 - [Ein Farbklima für eure Marke | B3DE Branding-Agentur](https://www.b3de.de/academy-farbklima.html): Ein Farbklima ist mehr als eine Hausfarbe: Es legt fest, welche Farben wie oft und in welchem Verhältnis vorkommen.
 - [Farbpsychologie im Branding | B3DE Branding-Agentur](https://www.b3de.de/academy-farbpsychologie.html): Farben wecken Gefühle und Erwartungen – doch ihre Wirkung hängt stark von Kultur, Branche und Kombination ab. Erklärt vom Marken-Wiki der Branding-Agentur …
+- [Was ist GEO? Von ChatGPT empfohlen werden | B3DE](https://www.b3de.de/academy-geo-ki-sichtbarkeit.html): GEO erklärt: wie ChatGPT, Perplexity und Google-KI Anbieter auswählen – und mit welchen sieben Maßnahmen ihr empfohlen werdet.
 - [Der Golden Circle: Warum, Wie, Was | B3DE Branding-Agentur](https://www.b3de.de/academy-golden-circle.html): Der Golden Circle ist ein einfaches Modell aus drei Kreisen, das zeigt: Starke Marken beginnen beim Warum, nicht beim Was.
 - [Icons als Teil der Marke | B3DE Branding-Agentur](https://www.b3de.de/academy-ikonografie.html): Ein eigenes Icon-Set macht Oberflächen und Unterlagen sofort wiedererkennbar – wenn es konsequent gestaltet ist.
 - [Ein Raster für jede Kampagne | B3DE Branding-Agentur](https://www.b3de.de/academy-kampagnen-raster.html): Wiedererkennung entsteht nicht durch ein einzelnes starkes Motiv, sondern durch Wiederholung. Ein festes Raster macht genau das einfach.
@@ -131,6 +134,8 @@
 - [Typografie für Marken | B3DE Branding-Agentur](https://www.b3de.de/academy-typografie.html): Typografie ist die Stimme einer Marke auf Papier und Bildschirm – sie prägt den Eindruck oft stärker als das Logo.
 - [Value Proposition einfach erklärt | B3DE Branding-Agentur](https://www.b3de.de/academy-value-proposition.html): Die Value Proposition beschreibt, welchen konkreten Nutzen ein Angebot für eine bestimmte Zielgruppe stiftet – und warum es besser passt als die Alternativen.
 - [Ein Vision Statement schreiben | B3DE Branding-Agentur](https://www.b3de.de/academy-vision-statement.html): Eine Vision beschreibt die Welt, die ihr mitgestalten wollt – so konkret, dass man sich darunter etwas vorstellen kann.
+- [Was kostet Branding? Preise im Überblick | B3DE](https://www.b3de.de/academy-was-kostet-branding.html): Was kostet Branding? Typische Preise für Logo, Corporate Design, Markenstrategie und komplettes Branding – bei Freelancern und Agenturen.
+- [Was kostet eine Website für Handwerker? | B3DE](https://www.b3de.de/academy-was-kostet-website-handwerker.html): Was kostet eine Website für Handwerksbetriebe? Einmalige und laufende Kosten von Baukasten bis Agentur – und was für Aufträge zählt.
 - [Webdesign für Marken | B3DE Branding-Agentur](https://www.b3de.de/academy-webdesign.html): Eine Marken-Website muss zwei Dinge gleichzeitig leisten: eine Haltung zeigen und Besuchende schnell ans Ziel bringen.
 - [Website-Relaunch ohne Stillstand | B3DE Branding-Agentur](https://www.b3de.de/academy-website-relaunch.html): Ein Relaunch muss kein Großprojekt sein, das ein Jahr lang alles blockiert. In kleinen Schritten geht es schneller und mit weniger Risiko.
 - [Wettbewerbsanalyse für Marken | B3DE Branding-Agentur](https://www.b3de.de/academy-wettbewerbsanalyse.html): Eine Wettbewerbsanalyse zeigt, wie andere Marken im Markt auftreten – und wo noch Platz für eine eigenständige Position ist.
