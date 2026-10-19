@@ -207,7 +207,7 @@
   if (!reduce) {
     const cu = document.createElement("div");
     cu.className = "mx-curtain"; cu.setAttribute("aria-hidden", "true");
-    cu.innerHTML = '<span class="mx-curtain__w">' + "B3DE".split("").map((c, i) => `<span style="--i:${i}"><b>${c}</b></span>`).join("") + '</span><i class="mx-curtain__bar"></i><span class="mx-curtain__to"></span><span class="mx-curtain__star">✳</span>';
+    cu.innerHTML = '<span class="mx-curtain__w">' + "B3DE".split("").map((c, i) => `<span style="--i:${i}"><b>${c}</b></span>`).join("") + '</span><i class="mx-curtain__bar"></i><span class="mx-curtain__to"></span><span class="mx-curtain__star"></span>';
     const to = cu.querySelector(".mx-curtain__to");
     document.body.appendChild(cu);
     document.addEventListener("click", (e) => {
@@ -315,7 +315,7 @@
 
   // Link kopieren
   document.querySelectorAll("[data-copy]").forEach((b) => b.addEventListener("click", async () => {
-    try { await navigator.clipboard.writeText(location.href); b.textContent = "Kopiert ✓"; } catch (e) { b.textContent = location.href; }
+    try { await navigator.clipboard.writeText(location.href); b.textContent = "Kopiert"; } catch (e) { b.textContent = location.href; }
   }));
 
   document.querySelectorAll("[data-year]").forEach((e) => { e.textContent = new Date().getFullYear(); });
@@ -469,7 +469,7 @@
     foot.innerHTML = `<span class="mo-hs__count">(01 / ${String(n).padStart(2, "0")})</span><span class="mo-hs__bar"><i></i></span><span class="mo-hs__count">(Scroll)</span>`;
     grid.classList.add("mo-works--row");
     const all = document.createElement("a"); all.className = "mo-work mo-work--all"; all.href = "work.html";
-    all.innerHTML = '<span class="mo-work__img"><span class="mo-all__t">Alle<br>Case<br>Studies</span><span class="mo-all__a" aria-hidden="true">→</span></span><span class="mo-work__cap"><span><b>Alle Projekte</b><span>Strategie, Design und Umsetzung</span></span><em>(07)</em></span>';
+    all.innerHTML = '<span class="mo-work__img"><span class="mo-all__t">Alle<br>Case<br>Studies</span><span class="mo-all__a" aria-hidden="true"></span></span><span class="mo-work__cap"><span><b>Alle Projekte</b><span>Strategie, Design und Umsetzung</span></span><em>(07)</em></span>';
     grid.appendChild(all);
     sec.style.padding = "0";
     sec.insertBefore(wrap, head); pin.append(head, grid, foot); wrap.append(pin);
@@ -522,7 +522,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
 
 /* Grafik-Set: Lesefortschritt, Text-Kreis, Sticker, Kachel-Codes */
 (() => {
-  // Lesefortschritt (Verlauf violett → grün)
+  // Lesefortschritt (Verlauf violett grün)
   const bar = document.createElement("i"); bar.className = "mo-progress"; bar.setAttribute("aria-hidden", "true"); document.body.appendChild(bar);
   let t = false;
   const upd = () => { t = false; const h = document.documentElement.scrollHeight - innerHeight; bar.style.transform = `scaleX(${h > 0 ? Math.min(1, scrollY / h).toFixed(4) : 0})`; };
@@ -532,7 +532,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
   document.querySelectorAll(".mo-hero__foot .mo-label").forEach((l) => {
     if (!/scroll/i.test(l.textContent)) return;
     const a = document.createElement("a"); a.className = "mo-badge"; a.href = target && target.id ? "#" + target.id : "#main"; a.setAttribute("aria-label", "Weiter scrollen");
-    a.innerHTML = '<svg viewBox="0 0 120 120" aria-hidden="true"><defs><path id="mo-c" d="M60 60m-48 0a48 48 0 1 1 96 0a48 48 0 1 1-96 0"/></defs><text><textPath href="#mo-c">Scroll ✳ B3DE ✳ Scroll ✳ B3DE ✳ </textPath></text></svg><svg class="mo-badge__c" viewBox="0 0 100 100" aria-hidden="true" style="position:static;animation:none"><path d="M46 8h8v74l22-22 6 6-32 32-32-32 6-6 22 22z"/></svg>';
+    a.innerHTML = '<svg viewBox="0 0 120 120" aria-hidden="true"><defs><path id="mo-c" d="M60 60m-48 0a48 48 0 1 1 96 0a48 48 0 1 1-96 0"/></defs><text><textPath href="#mo-c">Scroll · B3DE · Scroll · B3DE · </textPath></text></svg><svg class="mo-badge__c" viewBox="0 0 100 100" aria-hidden="true" style="position:static;animation:none"><path d="M46 8h8v74l22-22 6 6-32 32-32-32 6-6 22 22z"/></svg>';
     if (!a.getAttribute("href").startsWith("#main")) a.addEventListener("click", (e) => { const el = document.querySelector(a.getAttribute("href")); if (el) { e.preventDefault(); el.scrollIntoView({ behavior: "smooth" }); } });
     l.replaceWith(a);
   });
@@ -737,7 +737,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
     const a = document.createElement("a"); a.className = "mo-reel3"; a.href = list[0].href;
     a.innerHTML = list.map((x, i) => `<img src="${x.src}" alt="${x.name}" loading="lazy" decoding="async"${i === 0 ? ' class="on"' : ""}>`).join("") +
       `<span class="mo-reel3__cap"><span data-n>01 / ${String(list.length).padStart(2, "0")}</span><span data-name>${list[0].name}</span></span>` +
-      `<span class="mo-reel3__bar" style="--dur:${DUR}ms">${list.map(() => "<i><b></b></i>").join("")}</span><span class="mo-reel3__go">Zum Projekt →</span>`;
+      `<span class="mo-reel3__bar" style="--dur:${DUR}ms">${list.map(() => "<i><b></b></i>").join("")}</span><span class="mo-reel3__go">Zum Projekt</span>`;
     fig.prepend(a);
     const imgs = a.querySelectorAll("img"), bars = a.querySelectorAll(".mo-reel3__bar i"), n = a.querySelector("[data-n]"), nm = a.querySelector("[data-name]");
     let k = 0, t0 = performance.now(), acc = 0;
@@ -816,7 +816,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
     wall: '<i class="w-pil"></i><span class="w-plate"></span>',
     pill: '<span class="p-pill"></span>',
     cards: '<div class="c-iso">' + ["a", "k", "a", "w", "m", "w", "k", "a", "k"].map((x) => `<span class="c-c c-c--${x}">${x === "w" ? "<b>Lena Muster</b><i>Strategie &amp; Branding</i>" : x === "k" ? "<b>Lena Muster</b><i>b3de.de</i>" : ""}</span>`).join("") + "</div>",
-    tote: '<span class="t-bag"><em>Marken, für die man einsteht</em><em>b3de.de →</em></span>',
+    tote: '<span class="t-bag"><em>Marken, für die man einsteht</em><em>b3de.de</em></span>',
     icons: '<div class="i-row"><span></span><span></span><span class="i-me"></span><span></span><span></span></div>',
     book: '<span class="b-book"><i class="b-chev"></i><em>b3de.de</em></span>',
   };
@@ -886,7 +886,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
 /* Handy: fester Anfrage-Knopf nach dem Einstieg */
 (() => {
   if (/kontakt\.html$/.test(location.pathname)) return;
-  const a = document.createElement("a"); a.className = "mx-sticky"; a.href = "kontakt.html"; a.innerHTML = "Kostenloses Erstgespräch <span aria-hidden=\"true\">→</span>";
+  const a = document.createElement("a"); a.className = "mx-sticky"; a.href = "kontakt.html"; a.innerHTML = "Kostenloses Erstgespräch <span aria-hidden=\"true\"></span>";
   document.body.appendChild(a);
   const foot = document.querySelector(".mo-foot, footer"); let footIn = false;
   if (foot) new IntersectionObserver(([e]) => { footIn = e.isIntersecting; upd(); }).observe(foot);
@@ -900,7 +900,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
   const root = document.documentElement;
   let still = false; try { still = localStorage.getItem("b3-still") === "1"; } catch (e) {}
   const b = document.createElement("button"); b.type = "button"; b.className = "mx-still";
-  const set = (v) => { still = v; root.classList.toggle("is-still", v); window.B3_STILL = v; b.setAttribute("aria-pressed", String(v)); b.textContent = v ? "▶ Bewegung an" : "❚❚ Bewegung aus"; try { localStorage.setItem("b3-still", v ? "1" : "0"); } catch (e) {} };
+  const set = (v) => { still = v; root.classList.toggle("is-still", v); window.B3_STILL = v; b.setAttribute("aria-pressed", String(v)); b.textContent = v ? "Bewegung an" : "Bewegung aus"; try { localStorage.setItem("b3-still", v ? "1" : "0"); } catch (e) {} };
   b.addEventListener("click", () => set(!still));
   const bar = document.querySelector(".mo-foot__bar") || document.body; bar.appendChild(b);
   set(still);
@@ -935,12 +935,12 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
       box.innerHTML = `<div class="ac-next__in"><p class="mo-label">(Lernpfad · ${esc(path.name)})</p>
         <p class="ac-next__dots" aria-label="${n} von ${path.items.length} gelesen">${path.items.map((i) => `<a href="${i.f}" title="${esc(i.t)}" class="${read.includes(i.f) ? "on" : ""}${i.f === here ? " cur" : ""}"></a>`).join("")}</p>
         <p class="ac-next__n">${n} von ${path.items.length} Artikeln gelesen</p>
-        ${next ? `<a class="ac-next__go" href="${next.f}"><span>Als Nächstes</span><b>${esc(next.t)}</b><em>→</em></a>` : `<p class="ac-next__done">✓ Lernpfad abgeschlossen. Stark! <a href="academy.html#lernpfade">Nächsten Pfad wählen →</a></p>`}</div>`;
+        ${next ? `<a class="ac-next__go" href="${next.f}"><span>Als Nächstes</span><b>${esc(next.t)}</b><em></em></a>` : `<p class="ac-next__done">Lernpfad abgeschlossen. Stark! <a href="academy.html#lernpfade">Nächsten Pfad wählen</a></p>`}</div>`;
     };
     paint();
     function toast() {
       const t = document.createElement("div"); t.className = "ac-toast"; t.setAttribute("role", "status");
-      t.textContent = `✓ Gelesen · ${get().length} von ${D.total} Artikeln`; document.body.appendChild(t);
+      t.textContent = `Gelesen · ${get().length} von ${D.total} Artikeln`; document.body.appendChild(t);
       requestAnimationFrame(() => t.classList.add("on")); setTimeout(() => { t.classList.remove("on"); setTimeout(() => t.remove(), 500); }, 3200);
     }
   }
@@ -954,7 +954,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
     const n = p.items.filter((i) => read.includes(i.f)).length, next = p.items.find((i) => !read.includes(i.f));
     card.querySelectorAll(".ac-path__dots i").forEach((d, k) => d.classList.toggle("on", read.includes(p.items[k].f)));
     card.querySelector("[data-count]").textContent = `${n} / ${p.items.length} gelesen`;
-    card.querySelector("[data-cta]").textContent = n === p.items.length ? "✓ Abgeschlossen" : n ? "Weiterlernen →" : "Pfad starten →";
+    card.querySelector("[data-cta]").textContent = n === p.items.length ? "Abgeschlossen" : n ? "Weiterlernen" : "Pfad starten";
     card.classList.toggle("is-done", n === p.items.length);
     if (next) card.href = next.f;
   });
@@ -977,8 +977,8 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
     qn.hidden = true; qq.hidden = true; btns.hidden = true; res.hidden = false;
     res.innerHTML = `<div class="ac-res__score" style="--p:${score / max}"><b>${score}</b><span>/ ${max}</span></div>
       <p class="mo-label">(Ergebnis)</p><h3>${lvl[0]}</h3><p>${lvl[1]}</p>
-      ${recs.length ? `<p class="ac-res__l">Für euch empfohlen:</p><ul>${recs.slice(0, 5).map((r) => `<li><a href="${r.f}">${esc(r.t)} →</a></li>`).join("")}</ul>` : ""}
-      <div class="ac-res__cta"><a class="mx-btn" href="${wp.items[0].f}">Lernpfad „${esc(wp.name)}“ starten</a><a class="mo-link" href="leistung-markenworkshop.html">Lieber gemeinsam: Markenworkshop →</a><button type="button" class="ac-res__again">Nochmal</button></div>`;
+      ${recs.length ? `<p class="ac-res__l">Für euch empfohlen:</p><ul>${recs.slice(0, 5).map((r) => `<li><a href="${r.f}">${esc(r.t)}</a></li>`).join("")}</ul>` : ""}
+      <div class="ac-res__cta"><a class="mx-btn" href="${wp.items[0].f}">Lernpfad „${esc(wp.name)}“ starten</a><a class="mo-link" href="leistung-markenworkshop.html">Lieber gemeinsam: Markenworkshop</a><button type="button" class="ac-res__again">Nochmal</button></div>`;
     try { localStorage.setItem("b3-check", String(score)); } catch (e) {}
     document.dispatchEvent(new CustomEvent("b3:check", { detail: score }));
     res.querySelector(".ac-res__again").addEventListener("click", () => { ans.length = 0; k = 0; qn.hidden = false; qq.hidden = false; btns.hidden = false; res.hidden = true; show(); });
@@ -1088,7 +1088,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
   const paintHud = () => {
     const s = st(), l = lvl(s.xp), pr = Math.min(1, (s.xp - l.from) / (l.to - l.from));
     if (!hud) { hud = document.createElement("a"); hud.className = "gx-hud"; hud.href = "academy.html#sammlung"; document.body.appendChild(hud); }
-    hud.innerHTML = `<span class="gx-ring" style="--p:${pr}"><b>${l.i + 1}</b></span><span class="gx-hud__t"><b>${esc(l.name)}</b><i>${s.xp} XP${l.next ? ` · noch ${l.to - s.xp} bis ${esc(l.next)}` : ""}</i></span>${s.streak.n > 1 ? `<em title="Tage in Folge">✦ ${s.streak.n}</em>` : ""}`;
+    hud.innerHTML = `<span class="gx-ring" style="--p:${pr}"><b>${l.i + 1}</b></span><span class="gx-hud__t"><b>${esc(l.name)}</b><i>${s.xp} XP${l.next ? ` · noch ${l.to - s.xp} bis ${esc(l.next)}` : ""}</i></span>${s.streak.n > 1 ? `<em title="Tage in Folge">Serie ${s.streak.n}</em>` : ""}`;
     hud.setAttribute("aria-label", `Level ${l.i + 1}, ${l.name}, ${s.xp} XP`);
   };
   const float = (txt) => { const f = document.createElement("span"); f.className = "gx-float"; f.textContent = txt; document.body.appendChild(f); setTimeout(() => f.remove(), 1600); };
@@ -1096,7 +1096,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
   const checkBadges = () => {
     const s = st(), have = L.get("b3-badges", []); let fresh = [];
     BADGES.forEach(([id, t, d, ok]) => { if (!have.includes(id) && ok(s)) { have.push(id); fresh.push(t); } });
-    if (fresh.length) { L.set("b3-badges", have); setTimeout(() => { confetti(120); pop("gx-badge", `<span class="gx-badge__i">★</span><span><small>Abzeichen freigeschaltet</small><b>${esc(fresh.join(" · "))}</b></span>`); }, 900); }
+    if (fresh.length) { L.set("b3-badges", have); setTimeout(() => { confetti(120); pop("gx-badge", `<span class="gx-badge__i"></span><span><small>Abzeichen freigeschaltet</small><b>${esc(fresh.join(" · "))}</b></span>`); }, 900); }
     paintColl();
   };
   const award = (xp, why) => {
@@ -1136,7 +1136,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
       const q = /\?$/.test(art.t) ? art.t : `Worum geht es bei „${art.t}“?`;
       const box = document.createElement("section"); box.className = "gx-quiz"; box.setAttribute("aria-label", "Schnelltest");
       const prev = L.get("b3-quiz", {})[here];
-      box.innerHTML = `<div class="gx-quiz__in"><p class="mo-label">(Schnelltest · +5 XP)</p><h2>${esc(q)}</h2><div class="gx-quiz__o">${opts.map((o, k) => `<button type="button" data-ok="${o.ok ? 1 : 0}"><span>${"ABC"[k]}</span>${esc(o.d)}</button>`).join("")}</div><p class="gx-quiz__fb" aria-live="polite">${prev === undefined ? "" : prev ? "✓ Schon gelöst – stark." : "Beim letzten Mal knapp daneben. Neuer Versuch?"}</p></div>`;
+      box.innerHTML = `<div class="gx-quiz__in"><p class="mo-label">(Schnelltest · +5 XP)</p><h2>${esc(q)}</h2><div class="gx-quiz__o">${opts.map((o, k) => `<button type="button" data-ok="${o.ok ? 1 : 0}"><span>${"ABC"[k]}</span>${esc(o.d)}</button>`).join("")}</div><p class="gx-quiz__fb" aria-live="polite">${prev === undefined ? "" : prev ? "Schon gelöst – stark." : "Beim letzten Mal knapp daneben. Neuer Versuch?"}</p></div>`;
       anchor.before(box);
       box.addEventListener("click", (e) => {
         const b = e.target.closest("button[data-ok]"); if (!b || box.classList.contains("done")) return;
@@ -1154,14 +1154,14 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
   function paintColl() {
     const bx = document.querySelector("[data-badges]"); if (!bx) return;
     const s = st(), have = L.get("b3-badges", []), l = lvl(s.xp);
-    bx.innerHTML = BADGES.map(([id, t, d]) => `<div class="gx-b ${have.includes(id) ? "on" : ""}"><span class="gx-b__i" aria-hidden="true">${have.includes(id) ? "★" : "?"}</span><b>${esc(t)}</b><small>${esc(d)}</small></div>`).join("");
+    bx.innerHTML = BADGES.map(([id, t, d]) => `<div class="gx-b ${have.includes(id) ? "on" : ""}"><span class="gx-b__i" aria-hidden="true">${have.includes(id) ? "" : ""}</span><b>${esc(t)}</b><small>${esc(d)}</small></div>`).join("");
     document.querySelector("[data-gstats]").innerHTML = `<div><b>${s.xp}</b><span>XP · Level ${l.i + 1} ${esc(l.name)}</span></div><div><b>${s.read.length}/${D.total}</b><span>Artikel gelesen</span></div><div><b>${s.good}</b><span>Schnelltests gelöst</span></div><div><b>${s.streak.n || 0}</b><span>Tage in Folge</span></div><div><b>${have.length}/${BADGES.length}</b><span>Abzeichen</span></div>`;
     document.querySelector("[data-tipcount]").textContent = `${s.tips.length} / ${TIPS.length}`;
     document.querySelector("[data-tips]").innerHTML = TIPS.map((t, i) => s.tips.includes(i) ? `<p class="gx-t on">${esc(t)}</p>` : `<p class="gx-t"><span>?</span>Lies einen Artikel, um diesen Tipp freizuschalten.</p>`).join("");
   }
   paintColl();
   const rs = document.querySelector("[data-resume]"), last = L.get("b3-last", null), la = last && D.arts.find((a) => a.f === last);
-  if (rs && la) { rs.hidden = false; rs.innerHTML = `<a href="${la.f}"><small>Weiter, wo du aufgehört hast</small><b>${esc(la.t)}</b><em>→</em></a>`; }
+  if (rs && la) { rs.hidden = false; rs.innerHTML = `<a href="${la.f}"><small>Weiter, wo du aufgehört hast</small><b>${esc(la.t)}</b><em></em></a>`; }
   if (isAcad) setTimeout(checkBadges, 600);
 })();
 /* Mega-Menü Leistungen */
@@ -1218,7 +1218,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
     var steps = root.querySelectorAll('.fd-step'), res = root.querySelector('.fd-res'), bar = root.querySelector('.fd-bar i'), a = {}, cur = 0;
     steps.forEach(function (st, i) {
       if (i > 0) {
-        var b = document.createElement('button'); b.type = 'button'; b.className = 'fd-back'; b.textContent = '← Zurück';
+        var b = document.createElement('button'); b.type = 'button'; b.className = 'fd-back'; b.textContent = 'Zurück';
         b.addEventListener('click', function () { show(i - 1); });
         st.appendChild(b);
       }
@@ -1251,7 +1251,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
       var head = pkg ? 'Paket ' + pkg : (a.mode === 'lernen' ? list[0][1] + ' als Einstieg' : 'Gezielte Leistungen');
       var sum = 'Empfehlung aus dem Leistungs-Finder: ' + head + ' – ' + list.map(function (x) { return x[1]; }).join(', ') + '.';
       res.innerHTML = '<p class="mo-label">(Eure Empfehlung)</p><h3>' + esc(head) + '</h3><p>' + TXT[key] + '</p>' +
-        '<ul class="fd-list">' + list.map(function (x) { return '<li><a href="' + x[0] + '">' + esc(x[1]) + ' <span aria-hidden="true">→</span></a></li>'; }).join('') + '</ul>' +
+        '<ul class="fd-list">' + list.map(function (x) { return '<li><a href="' + x[0] + '">' + esc(x[1]) + ' <span aria-hidden="true"></span></a></li>'; }).join('') + '</ul>' +
         '<div class="fd-cta"><a class="mx-btn" href="kontakt.html?empfehlung=' + encodeURIComponent(sum) + '">Erstgespräch mit dieser Empfehlung</a>' +
         (pkg ? '<a class="mo-link" href="pakete.html#pakete">Paket ' + pkg + ' ansehen</a>' : '') +
         '<button type="button" class="fd-again">Neu starten</button></div>';
@@ -1274,7 +1274,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
   document.querySelectorAll('[data-copytext]').forEach(function (b) {
     b.addEventListener('click', function () {
       var t = b.parentNode.querySelector('blockquote').innerText.trim();
-      var done = function () { b.textContent = 'Kopiert ✓'; b.classList.add('is-done'); setTimeout(function () { b.textContent = 'Kopieren'; b.classList.remove('is-done'); }, 2000); };
+      var done = function () { b.textContent = 'Kopiert'; b.classList.add('is-done'); setTimeout(function () { b.textContent = 'Kopieren'; b.classList.remove('is-done'); }, 2000); };
       if (navigator.clipboard) navigator.clipboard.writeText(t).then(done, function () {}); else { var r = document.createRange(); r.selectNodeContents(b.parentNode.querySelector('blockquote')); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
     });
   });
@@ -1357,7 +1357,7 @@ const B3T = (() => {
     bar.style.transform = `scaleX(${i / D.q.length})`;
     if (i >= D.q.length) return result();
     const [q, opts] = D.q[i];
-    qEl.innerHTML = `<fieldset class="fd-step"><legend><span class="mo-label">(Frage ${i + 1} von ${D.q.length})</span>${esc(q)}</legend><div class="fd-opts">${opts.map((o, k) => `<button type="button" class="fd-opt" data-o="${k}"><b>${esc(o[0])}</b></button>`).join("")}</div>${i ? '<button type="button" class="fd-back">← Zurück</button>' : ""}</fieldset>`;
+    qEl.innerHTML = `<fieldset class="fd-step"><legend><span class="mo-label">(Frage ${i + 1} von ${D.q.length})</span>${esc(q)}</legend><div class="fd-opts">${opts.map((o, k) => `<button type="button" class="fd-opt" data-o="${k}"><b>${esc(o[0])}</b></button>`).join("")}</div>${i ? '<button type="button" class="fd-back">Zurück</button>' : ""}</fieldset>`;
     qEl.hidden = false; res.hidden = true;
     if (box.dataset.touched) qEl.querySelector(".fd-opt").focus({ preventScroll: true });
   };
@@ -1380,7 +1380,7 @@ const B3T = (() => {
     res.onclick = async (e) => {
       const t = e.target.closest("[data-at]"); if (!t) return;
       if (t.dataset.at === "again") { i = 0; score = {}; picks = []; history.replaceState(null, "", location.pathname); return show(); }
-      if (t.dataset.at === "share") { const txt = `Unsere Marke ist „${A[0]}“ – ${A[1]} Welcher Archetyp ist eure?`; try { if (navigator.share) await navigator.share({ title: "Markenarchetypen-Test", text: txt, url }); else { await navigator.clipboard.writeText(txt + " " + url); t.textContent = "Link kopiert ✓"; } } catch (err) {} return; }
+      if (t.dataset.at === "share") { const txt = `Unsere Marke ist „${A[0]}“ – ${A[1]} Welcher Archetyp ist eure?`; try { if (navigator.share) await navigator.share({ title: "Markenarchetypen-Test", text: txt, url }); else { await navigator.clipboard.writeText(txt + " " + url); t.textContent = "Link kopiert"; } } catch (err) {} return; }
       if (t.dataset.at === "png") {
         await ready(); const W = 1080, H = 1350, c = document.createElement("canvas"); c.width = W; c.height = H; const g = c.getContext("2d");
         g.fillStyle = "#0a0a0a"; g.fillRect(0, 0, W, H); g.fillStyle = "#00ff38"; g.fillRect(0, 0, 14, H);
@@ -1491,7 +1491,7 @@ const B3T = (() => {
       const onp = like.getAttribute("aria-pressed") !== "true"; like.setAttribute("aria-pressed", String(onp));
       if (!onp || reduce) return;
       const r = like.getBoundingClientRect();
-      for (let k = 0; k < 14; k++) { const h = document.createElement("span"); h.className = "sm-heart"; h.textContent = "♥"; h.style.left = r.left + r.width / 2 + "px"; h.style.top = r.top + "px"; h.style.setProperty("--dx", (Math.random() - .5) * 160 + "px"); h.style.setProperty("--dy", -(Math.random() * 180 + 80) + "px"); h.style.setProperty("--r", (Math.random() - .5) * 80 + "deg"); h.style.animationDelay = k * 25 + "ms"; document.body.appendChild(h); setTimeout(() => h.remove(), 1400); }
+      for (let k = 0; k < 14; k++) { const h = document.createElement("span"); h.className = "sm-heart"; h.textContent = "Gefällt"; h.style.left = r.left + r.width / 2 + "px"; h.style.top = r.top + "px"; h.style.setProperty("--dx", (Math.random() - .5) * 160 + "px"); h.style.setProperty("--dy", -(Math.random() * 180 + 80) + "px"); h.style.setProperty("--r", (Math.random() - .5) * 80 + "deg"); h.style.animationDelay = k * 25 + "ms"; document.body.appendChild(h); setTimeout(() => h.remove(), 1400); }
     });
   });
 })();
@@ -1528,7 +1528,7 @@ const B3T = (() => {
     pass.querySelector("[data-pass-xp]").textContent = band ? `${xp} XP · ${read.length} von ${D.total} Acts gesehen` : "Holt euch euer Bändchen und sammelt Stempel.";
     pass.querySelectorAll("[data-stamp]").forEach((s) => { const p = D.paths.find((x) => x.id === s.dataset.stamp); const n = p ? p.items.filter((i) => read.includes(i.f)).length : 0; s.classList.toggle("on", band && n > 0); s.classList.toggle("full", band && p && n === p.items.length); });
     document.querySelectorAll("[data-slot]").forEach((a) => a.classList.toggle("is-seen", read.includes(a.dataset.slot)));
-    const b = document.querySelector("[data-band]"); if (b) b.textContent = band ? "Mein Bändchen ↓" : "Bändchen holen";
+    const b = document.querySelector("[data-band]"); if (b) b.textContent = band ? "Mein Bändchen" : "Bändchen holen";
   };
   const btn = document.querySelector("[data-band]");
   if (btn) btn.addEventListener("click", () => {
@@ -1566,7 +1566,7 @@ const B3S = (() => {
       g.innerHTML = `<div class="fx-ticket"><span class="fx-ticket__l">ADMIT ONE</span><b>B3DE ACADEMY</b><span>Das Marken-Festival · 4 Bühnen · ${D.total} Acts</span><i class="fx-ticket__scan"></i><em data-gs>Ticket wird gescannt …</em></div><button type="button" class="fx-gate-skip">Überspringen</button>`;
       document.body.appendChild(g); document.documentElement.classList.add("fx-lock");
       const close = () => { if (!g.isConnected) return; g.classList.add("open"); document.documentElement.classList.remove("fx-lock"); setTimeout(() => g.remove(), 900); };
-      setTimeout(() => { const s = g.querySelector("[data-gs]"); if (s) { s.textContent = "✓ Willkommen auf dem Festival!"; g.classList.add("ok"); B3S.play("beep"); } }, 1300);
+      setTimeout(() => { const s = g.querySelector("[data-gs]"); if (s) { s.textContent = "Willkommen auf dem Festival!"; g.classList.add("ok"); B3S.play("beep"); } }, 1300);
       setTimeout(close, 2300);
       g.addEventListener("click", close); addEventListener("keydown", (e) => { if (e.key === "Escape") close(); }, { once: true });
     }
@@ -1580,7 +1580,7 @@ const B3S = (() => {
     const pi = D.paths.findIndex((p) => p.items.some((i) => i.f === here)), p = D.paths[pi];
     const st = p ? STG[p.id] : ["Line-up", "#f2f2f2"], k = p ? p.items.findIndex((i) => i.f === here) : -1, nx = p && p.items[k + 1];
     const bar = document.createElement("div"); bar.className = "fx-actbar"; bar.style.setProperty("--c", st[1]);
-    bar.innerHTML = `<span class="fx-actbar__live"><i></i>Live</span><b>${esc(st[0])}</b><span>${p ? `Act ${k + 1} von ${p.items.length} · ${esc(p.name)}` : "Act aus dem Programm"}</span>${nx ? `<a href="${nx.f}">Nächster Act: ${esc(nx.t)} →</a>` : `<a href="academy.html#lernpfade">Zum Timetable →</a>`}`;
+    bar.innerHTML = `<span class="fx-actbar__live"><i></i>Live</span><b>${esc(st[0])}</b><span>${p ? `Act ${k + 1} von ${p.items.length} · ${esc(p.name)}` : "Act aus dem Programm"}</span>${nx ? `<a href="${nx.f}">Nächster Act: ${esc(nx.t)}</a>` : `<a href="academy.html#lernpfade">Zum Timetable</a>`}`;
     const main = document.getElementById("main"); if (main) main.prepend(bar);
     mkSound(bar);
     document.addEventListener("b3:read", () => {
@@ -1645,10 +1645,10 @@ const B3S = (() => {
     let body = "";
     if (c.k === "quiz") body = `<p class="st-q">„${esc(c.text)}“</p><div class="st-opts">${c.opts.map(([t, ok], k) => `<button type="button" data-opt="${ok ? 1 : 0}">${esc(t)}</button>`).join("")}</div>`;
     else body = `<p class="st-text">${esc(c.text)}</p>`;
-    const cta = c.href ? `<a class="st-cta" href="${c.href}">${esc(c.cta || "Ganzen Act lesen")} →</a>` : "";
+    const cta = c.href ? `<a class="st-cta" href="${c.href}">${esc(c.cta || "Ganzen Act lesen")}</a>` : "";
     const end = c.k === "end" ? `<div class="st-stamp">Gesehen<small>${esc(S.name)}</small></div>` : "";
-    const nextS = c.k === "end" && si < ids.length - 1 ? `<button type="button" class="st-cta st-next">Nächste Story →</button>` : "";
-    const react = c.k === "act" ? `<div class="st-react">${["🔥", "💡", "❤️", "🤘"].map((e) => `<button type="button" data-react="${e}" aria-label="Reagieren ${e}">${e}</button>`).join("")}</div>` : "";
+    const nextS = c.k === "end" && si < ids.length - 1 ? `<button type="button" class="st-cta st-next">Nächste Story</button>` : "";
+    const react = c.k === "act" ? `<div class="st-react">${["Stark", "Aha", "Liebe", "Laut"].map((e) => `<button type="button" data-react="${e}" aria-label="Reagieren ${e}">${e}</button>`).join("")}</div>` : "";
     ov.querySelector(".st-card").innerHTML = `<div class="st-bars">${bars}</div>
       <div class="st-top"><span class="st-av" style="--c:${S.c}">${esc(S.name.slice(0, 1))}</span><b>${esc(S.name)}</b><span>B3DE Academy</span><button type="button" class="st-x" aria-label="Story schließen">×</button></div>
       <div class="st-body st-body--${c.k}${dark ? " st-dark" : ""}" style="--c:${c.c}"><span class="st-kick">${esc(c.kicker)}</span><h3>${esc(c.title)}</h3>${body}${c.foot ? `<p class="st-foot">${esc(c.foot)}</p>` : ""}${end}<div class="st-actions">${cta}${nextS}</div>${react}</div>
@@ -1740,8 +1740,7 @@ const B3S = (() => {
 })();
 /* Academy (Social-Layout): keine Icon-Glyphen im Text */
 (() => {
-  if (!document.body.classList.contains("mx-social")) return;
-  const RX = /\s?[→←↗↓✓♥♫🔊🔈✚▶]️?/g;
+  const RX = /\s?[→←↗↓↑✓✕★✦✳♥❤♫🔊🔈✚▶❚]️?/g;
   const strip = (root) => { const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); let n; while ((n = w.nextNode())) if (RX.test(n.nodeValue)) { RX.lastIndex = 0; n.nodeValue = n.nodeValue.replace(RX, ""); } RX.lastIndex = 0; };
   strip(document.body);
   let t; new MutationObserver(() => { clearTimeout(t); t = setTimeout(() => strip(document.body), 30); }).observe(document.body, { childList: true, subtree: true, characterData: true });
