@@ -1052,20 +1052,23 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
   const st = () => {
     const read = L.get("b3-read", []), quiz = L.get("b3-quiz", {}), tips = L.get("b3-tips", []), streak = L.get("b3-streak", { n: 0, last: "" });
     const good = Object.values(quiz).filter(Boolean).length;
-    return { xp: L.get("b3-xp", 0), read, quiz, good, tips, streak, check: L.get("b3-check", null) !== null, paths: PATHS.map((p) => p.items.every((i) => read.includes(i.f))) };
+    return { xp: L.get("b3-xp", 0), read, quiz, good, tips, streak, check: L.get("b3-check", null) !== null, kompass: L.get("b3-kompass", null) !== null, arch: L.get("b3-arch", null) !== null, cert: L.get("b3-cert", null) !== null, paths: PATHS.map((p) => p.items.every((i) => read.includes(i.f))) };
   };
   const BADGES = [
     ["b1", "Erster Artikel", "Den ersten Artikel gelesen", (s) => s.read.length >= 1],
     ["b5", "Fünf gelesen", "Fünf Artikel gelesen", (s) => s.read.length >= 5],
     ["b10", "Zehn gelesen", "Zehn Artikel gelesen", (s) => s.read.length >= 10],
     ["b25", "Halbzeit", "25 Artikel gelesen", (s) => s.read.length >= 25],
-    ["b50", "Alles gelesen", "Alle 50 Artikel gelesen", (s) => s.read.length >= D.total],
+    ["b50", "Alles gelesen", "Alle Artikel gelesen", (s) => s.read.length >= D.total],
     ...PATHS.map((p, k) => ["p" + k, p.name, "Lernpfad abgeschlossen", (s) => s.paths[k]]),
     ["q1", "Erster Treffer", "Einen Schnelltest richtig gelöst", (s) => s.good >= 1],
     ["q10", "Quiz-Ass", "Zehn Schnelltests richtig gelöst", (s) => s.good >= 10],
     ["mc", "Selbsttest", "Den Marken-Check gemacht", (s) => s.check],
     ["s3", "Drei-Tage-Serie", "Drei Tage in Folge gelernt", (s) => s.streak.n >= 3],
     ["t6", "Tipp-Sammler:in", "Sechs Profi-Tipps gesammelt", (s) => s.tips.length >= 6],
+    ["kk", "Kompass-Bauer:in", "Den eigenen Marken-Kompass erstellt", (s) => s.kompass],
+    ["ar", "Archetyp entdeckt", "Den Archetypen-Test gemacht", (s) => s.arch],
+    ["fs", "Marken-Führerschein", "Einen Lernnachweis erstellt", (s) => s.cert],
   ];
   // Konfetti
   const confetti = (n = 90, x = innerWidth / 2, y = innerHeight / 3) => {
@@ -1102,6 +1105,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
     if (after.i > before) setTimeout(() => { confetti(160); pop("gx-lvl", `<button type="button" class="gx-x" data-x aria-label="Schließen">×</button><small>Level ${after.i + 1} erreicht</small><b>${esc(after.name)}</b><p>${after.next ? `Nächstes Ziel: ${esc(after.next)} bei ${after.to} XP.` : "Höchstes Level. Respekt!"}</p>`, 5000); }, 500);
     checkBadges();
   };
+  window.B3G = { award, confetti, st, L, PATHS, esc, checkBadges };
   // Serie (einmal pro Tag)
   if (isAcad) {
     const d = new Date(), today = d.toISOString().slice(0, 10), y = new Date(d - 864e5).toISOString().slice(0, 10);
@@ -1273,4 +1277,160 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
       if (navigator.clipboard) navigator.clipboard.writeText(t).then(done, function () {}); else { var r = document.createRange(); r.selectNodeContents(b.parentNode.querySelector('blockquote')); var s = getSelection(); s.removeAllRanges(); s.addRange(r); }
     });
   });
+})();
+/* Academy-Werkzeuge: gemeinsame Helfer */
+const B3T = (() => {
+  const F = '"Inter", "Helvetica Neue", Arial, sans-serif';
+  const wrap = (g, text, x, y, maxW, lh, maxLines = 6) => {
+    const words = String(text).split(/\s+/); let line = "", n = 0;
+    for (let i = 0; i < words.length; i++) {
+      const t = line ? line + " " + words[i] : words[i];
+      if (g.measureText(t).width > maxW && line) { g.fillText(line, x, y); y += lh; line = words[i]; if (++n >= maxLines - 1) { line = words.slice(i).join(" "); while (g.measureText(line + "…").width > maxW && line.length) line = line.slice(0, -1); g.fillText(line + (i < words.length ? "…" : ""), x, y); return y + lh; } }
+      else line = t;
+    }
+    if (line) { g.fillText(line, x, y); y += lh; }
+    return y;
+  };
+  const save = (canvas, name) => { const a = document.createElement("a"); a.download = name; a.href = canvas.toDataURL("image/png"); document.body.appendChild(a); a.click(); a.remove(); };
+  const ready = () => (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve());
+  const L = { get: (k, d) => { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } }, set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const award = (k, xp, why) => { if (L.get(k + "-xp", false)) return; L.set(k + "-xp", true); if (window.B3G) window.B3G.award(xp, why); };
+  const brand = (g, W, H) => { g.fillStyle = "#00ff38"; g.fillRect(0, 0, 14, H); g.fillStyle = "#0a0a0a"; g.font = `600 30px ${F}`; g.fillText("B3DE", W - 140, H - 50); };
+  return { F, wrap, save, ready, L, esc, award, brand };
+})();
+
+/* Marken-Kompass Generator */
+(() => {
+  const form = document.getElementById("kg-form"); if (!form) return;
+  const { F, wrap, save, ready, L, award } = B3T;
+  const sheet = document.getElementById("kg-sheet"), meter = document.querySelector("[data-kg-meter]"), bar = document.querySelector(".kg-meter i"), next = document.querySelector(".kg-next");
+  const fields = [...form.querySelectorAll("[data-k]")];
+  const EX = { name: "Tischlerei Berger", haltung: "Wir bauen Möbel, die Generationen überdauern.", zielgruppe: "Familien, die lieber einmal gut kaufen als dreimal billig.", versprechen: "Maßanfertigung in vier Wochen – mit Festpreis.", werte: "Sorgfalt · Ehrlichkeit · Nähe", ton: "ruhig · warm · direkt" };
+  const LABEL = { haltung: "Haltung", zielgruppe: "Zielgruppe", versprechen: "Versprechen", werte: "Werte", ton: "Tonalität" };
+  const data = () => Object.fromEntries(fields.map((f) => [f.dataset.k, f.value.trim()]));
+  const today = new Date().toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" });
+  document.querySelector("[data-kg-date]").textContent = today;
+  const paint = () => {
+    const d = data(), n = Object.values(d).filter(Boolean).length;
+    sheet.querySelector("[data-pv-name]").textContent = d.name || "Eure Marke";
+    sheet.querySelectorAll("[data-pv]").forEach((x) => { const b = x.querySelector("b"), v = d[x.dataset.pv]; b.textContent = v || b.dataset.ph; x.classList.toggle("is-set", !!v); });
+    meter.textContent = `${n} von 6 Feldern`; bar.style.setProperty("--p", n / 6);
+    L.set("b3-kompass-draft", d);
+    if (n === 6) { next.hidden = false; if (!L.get("b3-kompass", null)) { L.set("b3-kompass", d); award("b3-kompass", 30, "Marken-Kompass erstellt"); if (window.B3G) window.B3G.confetti(140); } else L.set("b3-kompass", d);
+      const c = next.querySelector("[data-kg-contact]"); c.href = "kontakt.html?empfehlung=" + encodeURIComponent(`Mein Marken-Kompass (${d.name}): ${d.haltung} Zielgruppe: ${d.zielgruppe} Versprechen: ${d.versprechen}`.slice(0, 380)); }
+  };
+  const draft = L.get("b3-kompass-draft", null); if (draft) fields.forEach((f) => { if (draft[f.dataset.k]) f.value = draft[f.dataset.k]; });
+  form.addEventListener("input", paint);
+  form.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-kg]"); if (!b) return;
+    if (b.dataset.kg === "example") fields.forEach((f) => (f.value = EX[f.dataset.k]));
+    if (b.dataset.kg === "clear") { fields.forEach((f) => (f.value = "")); fields[0].focus(); }
+    paint();
+  });
+  document.querySelector('[data-kg="print"]').addEventListener("click", () => window.print());
+  document.querySelector('[data-kg="png"]').addEventListener("click", async () => {
+    await ready(); const d = data(), W = 1080, H = 1350, c = document.createElement("canvas"); c.width = W; c.height = H; const g = c.getContext("2d");
+    g.fillStyle = "#f4f4f2"; g.fillRect(0, 0, W, H); B3T.brand(g, W, H);
+    g.fillStyle = "#0a0a0a"; g.font = `500 26px ${F}`; g.fillText("MARKEN-KOMPASS", 80, 110);
+    g.font = `600 72px ${F}`; wrap(g, d.name || "Eure Marke", 80, 200, W - 160, 80, 2);
+    let y = 330;
+    Object.keys(LABEL).forEach((k) => {
+      g.fillStyle = "#0a0a0a"; g.fillRect(80, y - 40, W - 160, 2);
+      g.font = `500 22px ${F}`; g.fillStyle = "#6a6a6a"; g.fillText(LABEL[k].toUpperCase(), 80, y);
+      g.font = `400 34px ${F}`; g.fillStyle = "#0a0a0a"; y = wrap(g, d[k] || "–", 80, y + 50, W - 160, 44, 3) + 40;
+    });
+    g.fillStyle = "#00ff38"; g.fillRect(80, H - 92, 260, 44); g.fillStyle = "#0a0a0a"; g.font = `500 20px ${F}`; g.fillText("Erstellt am " + today, 96, H - 63);
+    save(c, "marken-kompass.png");
+  });
+  paint();
+})();
+
+/* Archetypen-Test */
+(() => {
+  const box = document.querySelector("[data-arch]"), src = document.getElementById("b3-arch"); if (!box || !src) return;
+  const { F, wrap, save, ready, L, esc, award } = B3T; const D = JSON.parse(src.textContent);
+  const qEl = box.querySelector(".at-q"), res = box.querySelector(".at-res"), bar = box.querySelector(".fd-bar i");
+  let i = 0, score = {}, picks = [];
+  const show = () => {
+    bar.style.transform = `scaleX(${i / D.q.length})`;
+    if (i >= D.q.length) return result();
+    const [q, opts] = D.q[i];
+    qEl.innerHTML = `<fieldset class="fd-step"><legend><span class="mo-label">(Frage ${i + 1} von ${D.q.length})</span>${esc(q)}</legend><div class="fd-opts">${opts.map((o, k) => `<button type="button" class="fd-opt" data-o="${k}"><b>${esc(o[0])}</b></button>`).join("")}</div>${i ? '<button type="button" class="fd-back">← Zurück</button>' : ""}</fieldset>`;
+    qEl.hidden = false; res.hidden = true;
+    if (box.dataset.touched) qEl.querySelector(".fd-opt").focus({ preventScroll: true });
+  };
+  qEl.addEventListener("click", (e) => {
+    if (e.target.closest(".fd-back")) { const last = picks.pop(); last.forEach((a) => (score[a] -= 1)); i--; return show(); }
+    const o = e.target.closest(".fd-opt"); if (!o) return; box.dataset.touched = "1";
+    const ws = D.q[i][1][+o.dataset.o][1]; ws.forEach((a) => (score[a] = (score[a] || 0) + 1)); picks.push(ws); i++; show();
+  });
+  const top2 = () => { const order = Object.keys(D.a); return order.slice().sort((a, b) => (score[b] || 0) - (score[a] || 0) || order.indexOf(a) - order.indexOf(b)).slice(0, 2); };
+  const result = (pre) => {
+    const [a, b] = pre || top2(), A = D.a[a], B = D.a[b];
+    qEl.hidden = true; res.hidden = false; bar.style.transform = "scaleX(1)";
+    res.innerHTML = `<p class="mo-label">(${pre ? "Geteiltes Ergebnis" : "Euer Archetyp"})</p><h3>${esc(A[0])}</h3><p class="at-motto">„${esc(A[1])}“</p><p>${esc(A[2])}</p>
+      <dl class="at-dl"><div><dt>Stärke</dt><dd>${esc(A[3])}</dd></div><div><dt>Achtung</dt><dd>${esc(A[4])}</dd></div><div><dt>Tonalität</dt><dd>${esc(A[5])}</dd></div><div><dt>Bildwelt</dt><dd>${esc(A[6])}</dd></div></dl>
+      <p class="at-second">Zweiter Einfluss: <b>${esc(B[0])}</b> – ${esc(B[1])}</p>
+      <div class="fd-cta">${pre ? '<button type="button" class="mx-btn" data-at="again">Test selbst machen</button>' : '<button type="button" class="mx-btn" data-at="png">Ergebnis-Karte laden</button><button type="button" class="mo-link" data-at="share">Teilen</button>'}<a class="mo-link" href="leistung-markenworkshop.html">Archetyp im Workshop schärfen</a>${pre ? "" : '<button type="button" class="fd-again" data-at="again">Neu starten</button>'}</div>`;
+    res.querySelector("h3").setAttribute("tabindex", "-1"); if (box.dataset.touched) res.querySelector("h3").focus({ preventScroll: true });
+    if (!pre) { L.set("b3-arch", [a, b]); award("b3-arch", 20, "Archetyp entdeckt"); if (window.B3G) window.B3G.confetti(120); }
+    const url = location.origin + location.pathname + `?a=${a}&b=${b}`;
+    res.onclick = async (e) => {
+      const t = e.target.closest("[data-at]"); if (!t) return;
+      if (t.dataset.at === "again") { i = 0; score = {}; picks = []; history.replaceState(null, "", location.pathname); return show(); }
+      if (t.dataset.at === "share") { const txt = `Unsere Marke ist „${A[0]}“ – ${A[1]} Welcher Archetyp ist eure?`; try { if (navigator.share) await navigator.share({ title: "Markenarchetypen-Test", text: txt, url }); else { await navigator.clipboard.writeText(txt + " " + url); t.textContent = "Link kopiert ✓"; } } catch (err) {} return; }
+      if (t.dataset.at === "png") {
+        await ready(); const W = 1080, H = 1350, c = document.createElement("canvas"); c.width = W; c.height = H; const g = c.getContext("2d");
+        g.fillStyle = "#0a0a0a"; g.fillRect(0, 0, W, H); g.fillStyle = "#00ff38"; g.fillRect(0, 0, 14, H);
+        g.font = `500 26px ${F}`; g.fillText("UNSER MARKEN-ARCHETYP", 80, 120);
+        g.font = `600 104px ${F}`; let y = wrap(g, A[0], 80, 250, W - 160, 108, 2);
+        g.fillStyle = "#f2f2f2"; g.font = `400 44px ${F}`; y = wrap(g, `„${A[1]}“`, 80, y + 30, W - 160, 56, 3);
+        g.fillStyle = "#bdbdbd"; g.font = `400 32px ${F}`; y = wrap(g, A[2], 80, y + 40, W - 160, 44, 5);
+        [["STÄRKE", A[3]], ["TONALITÄT", A[5]]].forEach(([k, v]) => { y += 40; g.fillStyle = "#00ff38"; g.font = `500 22px ${F}`; g.fillText(k, 80, y); g.fillStyle = "#f2f2f2"; g.font = `400 34px ${F}`; y = wrap(g, v, 80, y + 46, W - 160, 44, 2); });
+        g.fillStyle = "#00ff38"; g.font = `500 24px ${F}`; g.fillText("Welcher Archetyp seid ihr? · B3DE Academy", 80, H - 70);
+        save(c, "marken-archetyp.png");
+      }
+    };
+  };
+  const q = new URLSearchParams(location.search), pa = q.get("a"), pb = q.get("b");
+  if (pa && D.a[pa] && pb && D.a[pb]) result([pa, pb]); else show();
+})();
+
+/* Marken-Führerschein */
+(() => {
+  const wrapEl = document.querySelector("[data-fs-paths]"), src = document.getElementById("b3-academy"); if (!wrapEl || !src) return;
+  const { F, wrap, save, ready, L, esc, award } = B3T; const D = JSON.parse(src.textContent);
+  const read = L.get("b3-read", []), cert = document.querySelector("[data-fs-cert]"), cv = cert.querySelector("canvas"), nameIn = document.getElementById("fs-name");
+  const done = D.paths.map((p) => p.items.filter((it) => read.includes(it.f)).length);
+  let sel = done.findIndex((n, k) => n === D.paths[k].items.length);
+  wrapEl.innerHTML = D.paths.map((p, k) => {
+    const n = done[k], all = p.items.length, ok = n === all, nextIt = p.items.find((it) => !read.includes(it.f));
+    return `<div class="fs-path${ok ? " is-done" : ""}"><p class="mo-label">(Klasse ${String.fromCharCode(65 + k)})</p><b>${esc(p.name)}</b><span class="fs-bar"><i style="--p:${n / all}"></i></span><span class="fs-n">${n} / ${all} Artikel</span>${ok ? `<button type="button" class="mx-btn" data-fs-pick="${k}">Nachweis erstellen</button>` : `<a class="mo-link" href="${nextIt.f}">${n ? "Weiterlesen" : "Starten"}: ${esc(nextIt.t)}</a>`}<ul>${p.items.map((it) => `<li class="${read.includes(it.f) ? "on" : ""}"><a href="${it.f}">${esc(it.t)}</a></li>`).join("")}</ul></div>`;
+  }).join("");
+  const draw = async () => {
+    await ready(); const g = cv.getContext("2d"), W = cv.width, H = cv.height, p = D.paths[sel], nm = nameIn.value.trim() || "Euer Name";
+    const date = new Date().toLocaleDateString("de-DE", { day: "2-digit", month: "long", year: "numeric" });
+    g.fillStyle = "#f4f4f2"; g.fillRect(0, 0, W, H); g.strokeStyle = "#0a0a0a"; g.lineWidth = 3; g.strokeRect(50, 50, W - 100, H - 100);
+    g.fillStyle = "#00ff38"; g.fillRect(50, 50, W - 100, 20);
+    g.fillStyle = "#0a0a0a"; g.textAlign = "center";
+    g.font = `500 28px ${F}`; g.fillText("B3DE ACADEMY · LERNNACHWEIS", W / 2, 190);
+    g.font = `600 110px ${F}`; g.fillText("Marken-Führerschein", W / 2, 330);
+    g.font = `400 34px ${F}`; g.fillStyle = "#555"; g.fillText(`Klasse ${String.fromCharCode(65 + sel)} · ${p.name}`, W / 2, 400);
+    g.fillStyle = "#0a0a0a"; g.font = `400 30px ${F}`; g.fillText("ausgestellt für", W / 2, 510);
+    g.font = `600 84px ${F}`; g.fillText(nm, W / 2, 610, W - 300); g.fillRect(W / 2 - 360, 640, 720, 3);
+    g.font = `400 28px ${F}`; g.fillStyle = "#333"; wrap(g, `hat alle ${p.items.length} Artikel des Lernpfads „${p.name}“ in der B3DE Academy gelesen und die Grundlagen dieses Themas kennengelernt.`, W / 2, 720, W - 420, 40, 3);
+    g.textAlign = "left"; g.fillStyle = "#0a0a0a"; g.font = `500 24px ${F}`; g.fillText(date, 160, H - 150); g.fillRect(160, H - 135, 300, 2); g.font = `400 20px ${F}`; g.fillStyle = "#666"; g.fillText("Datum", 160, H - 105);
+    g.textAlign = "right"; g.fillStyle = "#0a0a0a"; g.font = `italic 400 40px ${F}`; g.fillText("Leni Heaf", W - 160, H - 150); g.fillRect(W - 460, H - 135, 300, 2); g.font = `400 20px ${F}`; g.fillStyle = "#666"; g.fillText("Leni Heaf, B3DE", W - 160, H - 105);
+    g.textAlign = "center"; g.fillStyle = "#00ff38"; g.beginPath(); g.arc(W / 2, H - 150, 62, 0, Math.PI * 2); g.fill(); g.fillStyle = "#0a0a0a"; g.font = `600 30px ${F}`; g.fillText("B3DE", W / 2, H - 140); g.textAlign = "left";
+  };
+  const open = (k) => { sel = k; cert.hidden = false; nameIn.value = L.get("b3-cert-name", ""); draw(); };
+  wrapEl.addEventListener("click", (e) => { const b = e.target.closest("[data-fs-pick]"); if (b) { open(+b.dataset.fsPick); cert.scrollIntoView({ behavior: "smooth", block: "start" }); } });
+  nameIn.addEventListener("input", () => { L.set("b3-cert-name", nameIn.value.trim()); draw(); });
+  cert.addEventListener("click", async (e) => {
+    const b = e.target.closest("[data-fs]"); if (!b) return;
+    if (b.dataset.fs === "png") { await draw(); save(cv, "marken-fuehrerschein.png"); if (!L.get("b3-cert", null)) { L.set("b3-cert", { path: sel, at: Date.now() }); award("b3-cert", 40, "Marken-Führerschein"); if (window.B3G) window.B3G.confetti(180); } }
+    if (b.dataset.fs === "share") { const url = location.origin + location.pathname.replace(/[^/]*$/, "academy-fuehrerschein.html"); const txt = `Ich habe den Marken-Führerschein der B3DE Academy gemacht (Klasse ${String.fromCharCode(65 + sel)} · ${D.paths[sel].name}).`; try { if (navigator.share) await navigator.share({ title: "Marken-Führerschein", text: txt, url }); else { await navigator.clipboard.writeText(txt + " " + url); b.textContent = "Text kopiert ✓"; } } catch (err) {} }
+  });
+  if (sel >= 0) open(sel);
 })();
