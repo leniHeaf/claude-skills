@@ -1052,7 +1052,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
   const st = () => {
     const read = L.get("b3-read", []), quiz = L.get("b3-quiz", {}), tips = L.get("b3-tips", []), streak = L.get("b3-streak", { n: 0, last: "" });
     const good = Object.values(quiz).filter(Boolean).length;
-    return { xp: L.get("b3-xp", 0), read, quiz, good, tips, streak, check: L.get("b3-check", null) !== null, kompass: L.get("b3-kompass", null) !== null, arch: L.get("b3-arch", null) !== null, cert: L.get("b3-cert", null) !== null, paths: PATHS.map((p) => p.items.every((i) => read.includes(i.f))) };
+    return { xp: L.get("b3-xp", 0), read, quiz, good, tips, streak, check: L.get("b3-check", null) !== null, golden: L.get("b3-golden", []).length > 0, kompass: L.get("b3-kompass", null) !== null, arch: L.get("b3-arch", null) !== null, cert: L.get("b3-cert", null) !== null, paths: PATHS.map((p) => p.items.every((i) => read.includes(i.f))) };
   };
   const BADGES = [
     ["b1", "Erster Artikel", "Den ersten Artikel gelesen", (s) => s.read.length >= 1],
@@ -1069,6 +1069,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
     ["kk", "Kompass-Bauer:in", "Den eigenen Marken-Kompass erstellt", (s) => s.kompass],
     ["ar", "Archetyp entdeckt", "Den Archetypen-Test gemacht", (s) => s.arch],
     ["fs", "Marken-Führerschein", "Einen Lernnachweis erstellt", (s) => s.cert],
+    ["gt", "Goldenes Ticket", "Ein goldenes Ticket gefunden", (s) => s.golden],
   ];
   // Konfetti
   const confetti = (n = 90, x = innerWidth / 2, y = innerHeight / 3) => {
@@ -1536,4 +1537,68 @@ const B3T = (() => {
     document.getElementById("pass").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
   });
   paint();
+})();
+
+/* ===== Festival-Erlebnis: Sound, Einlass, Lichtshow, Bühnen-Banner, Stempel-Moment, goldenes Ticket ===== */
+const B3S = (() => {
+  let ctx; const on = () => { try { return localStorage.getItem("b3-sound") === "1"; } catch (e) { return false; } };
+  const tone = (f, t, d, type = "sine", g = .12, when = 0) => { const o = ctx.createOscillator(), v = ctx.createGain(); o.type = type; o.frequency.setValueAtTime(f, ctx.currentTime + when); if (t) o.frequency.exponentialRampToValueAtTime(t, ctx.currentTime + when + d); v.gain.setValueAtTime(g, ctx.currentTime + when); v.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + when + d); o.connect(v).connect(ctx.destination); o.start(ctx.currentTime + when); o.stop(ctx.currentTime + when + d + .02); };
+  const noise = (d, g = .2) => { const b = ctx.createBuffer(1, ctx.sampleRate * d, ctx.sampleRate), x = b.getChannelData(0); for (let i = 0; i < x.length; i++) x[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / x.length, 2); const s = ctx.createBufferSource(), v = ctx.createGain(), f = ctx.createBiquadFilter(); f.type = "bandpass"; f.frequency.value = 1200; v.gain.value = g; s.buffer = b; s.connect(f).connect(v).connect(ctx.destination); s.start(); };
+  const P = { beep: () => { tone(1320, 0, .09, "square", .05); tone(1760, 0, .12, "square", .05, .1); }, stamp: () => { tone(140, 50, .25, "sine", .5); noise(.12, .25); }, chime: () => { [660, 880, 1320].forEach((f, i) => tone(f, 0, .5, "triangle", .08, i * .09)); }, crowd: () => { noise(1.4, .12); tone(520, 700, .6, "sawtooth", .015); } };
+  return { on, set(v) { try { localStorage.setItem("b3-sound", v ? "1" : "0"); } catch (e) {} if (v) this.play("chime"); }, play(n) { if (!on()) return; try { ctx = ctx || new (window.AudioContext || window.webkitAudioContext)(); if (ctx.state === "suspended") ctx.resume(); P[n] && P[n](); } catch (e) {} } };
+})();
+(() => {
+  const src = document.getElementById("b3-academy"); if (!src) return;
+  const D = JSON.parse(src.textContent), here = location.pathname.split("/").pop() || "index.html";
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const STG = { marke: ["Main Stage", "#00ff38"], identitaet: ["Neon Tent", "#ff3fa4"], sichtbar: ["Loud Stage", "#1a56ff"], team: ["Campfire", "#ffe94d"] };
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const G = () => window.B3G;
+  // Sound-Schalter (Festival-Seite und Artikel)
+  const sub = document.querySelector(".fx-subnav > div");
+  const mkSound = (host) => { const b = document.createElement("button"); b.type = "button"; b.className = "fx-sound"; const paint = () => { b.textContent = B3S.on() ? "🔊 Sound an" : "🔈 Sound aus"; b.setAttribute("aria-pressed", String(B3S.on())); }; paint(); b.addEventListener("click", () => { B3S.set(!B3S.on()); paint(); }); host.appendChild(b); };
+  if (sub) mkSound(sub);
+  // Einlass mit Ticket-Scan (einmal pro Sitzung)
+  if (document.body.classList.contains("mx-fest") && !reduce) {
+    let seen = false; try { seen = sessionStorage.getItem("b3-gate") === "1"; sessionStorage.setItem("b3-gate", "1"); } catch (e) {}
+    if (!seen) {
+      const g = document.createElement("div"); g.className = "fx-gate-ov"; g.setAttribute("role", "dialog"); g.setAttribute("aria-label", "Einlass");
+      g.innerHTML = `<div class="fx-ticket"><span class="fx-ticket__l">ADMIT ONE</span><b>B3DE ACADEMY</b><span>Das Marken-Festival · 4 Bühnen · ${D.total} Acts</span><i class="fx-ticket__scan"></i><em data-gs>Ticket wird gescannt …</em></div><button type="button" class="fx-gate-skip">Überspringen</button>`;
+      document.body.appendChild(g); document.documentElement.classList.add("fx-lock");
+      const close = () => { if (!g.isConnected) return; g.classList.add("open"); document.documentElement.classList.remove("fx-lock"); setTimeout(() => g.remove(), 900); };
+      setTimeout(() => { const s = g.querySelector("[data-gs]"); if (s) { s.textContent = "✓ Willkommen auf dem Festival!"; g.classList.add("ok"); B3S.play("beep"); } }, 1300);
+      setTimeout(close, 2300);
+      g.addEventListener("click", close); addEventListener("keydown", (e) => { if (e.key === "Escape") close(); }, { once: true });
+    }
+  }
+  // Lichtshow: Strahler folgen der Maus
+  const hero = document.querySelector(".fx-hero");
+  if (hero && !reduce && matchMedia("(pointer: fine)").matches) hero.addEventListener("mousemove", (e) => { const r = hero.getBoundingClientRect(); hero.style.setProperty("--mx", ((e.clientX - r.left) / r.width - .5).toFixed(3)); });
+  // Artikel = Act auf einer Bühne
+  const art = D.arts.find((a) => a.f === here);
+  if (art) {
+    const pi = D.paths.findIndex((p) => p.items.some((i) => i.f === here)), p = D.paths[pi];
+    const st = p ? STG[p.id] : ["Line-up", "#f2f2f2"], k = p ? p.items.findIndex((i) => i.f === here) : -1, nx = p && p.items[k + 1];
+    const bar = document.createElement("div"); bar.className = "fx-actbar"; bar.style.setProperty("--c", st[1]);
+    bar.innerHTML = `<span class="fx-actbar__live"><i></i>Live</span><b>${esc(st[0])}</b><span>${p ? `Act ${k + 1} von ${p.items.length} · ${esc(p.name)}` : "Act aus dem Programm"}</span>${nx ? `<a href="${nx.f}">Nächster Act: ${esc(nx.t)} →</a>` : `<a href="academy.html#lernpfade">Zum Timetable →</a>`}`;
+    const main = document.getElementById("main"); if (main) main.prepend(bar);
+    mkSound(bar);
+    document.addEventListener("b3:read", () => {
+      const sw = document.createElement("div"); sw.className = "fx-stampov"; sw.style.setProperty("--c", st[1]);
+      sw.innerHTML = `<div class="fx-bigstamp"><small>B3DE Academy</small><b>Gesehen</b><span>${esc(st[0])}</span></div>`;
+      document.body.appendChild(sw); B3S.play("stamp"); setTimeout(() => B3S.play("crowd"), 250);
+      setTimeout(() => sw.classList.add("out"), 1500); setTimeout(() => sw.remove(), 2100);
+    });
+  }
+  // Goldenes Ticket: pro Tag in einem anderen Artikel versteckt
+  if (art) {
+    const day = new Date().toISOString().slice(0, 10); let h = 0; for (const c of day) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+    const pick = D.arts[h % D.arts.length].f; let got = []; try { got = JSON.parse(localStorage.getItem("b3-golden") || "[]"); } catch (e) {}
+    if (pick === here && !got.includes(day)) {
+      const t = document.createElement("button"); t.type = "button"; t.className = "fx-golden"; t.setAttribute("aria-label", "Goldenes Ticket einsammeln"); t.innerHTML = "<b>Golden</b><span>Ticket</span>";
+      let shown = false;
+      addEventListener("scroll", () => { if (!shown && scrollY > (document.body.scrollHeight - innerHeight) * .55) { shown = true; document.body.appendChild(t); requestAnimationFrame(() => t.classList.add("on")); } }, { passive: true });
+      t.addEventListener("click", () => { got.push(day); try { localStorage.setItem("b3-golden", JSON.stringify(got)); } catch (e) {} t.classList.add("got"); B3S.play("chime"); if (G()) { G().confetti(220); G().award(25, "Goldenes Ticket gefunden"); } setTimeout(() => t.remove(), 900); });
+    }
+  }
 })();
