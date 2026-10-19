@@ -1556,7 +1556,7 @@ const B3S = (() => {
   const G = () => window.B3G;
   // Sound-Schalter (Festival-Seite und Artikel)
   const sub = document.querySelector(".fx-subnav > div");
-  const mkSound = (host) => { const b = document.createElement("button"); b.type = "button"; b.className = "fx-sound"; const paint = () => { b.textContent = B3S.on() ? "🔊 Sound an" : "🔈 Sound aus"; b.setAttribute("aria-pressed", String(B3S.on())); }; paint(); b.addEventListener("click", () => { B3S.set(!B3S.on()); paint(); }); host.appendChild(b); };
+  const mkSound = (host) => { const b = document.createElement("button"); b.type = "button"; b.className = "fx-sound"; const paint = () => { b.textContent = B3S.on() ? "Sound an" : "Sound aus"; b.setAttribute("aria-pressed", String(B3S.on())); }; paint(); b.addEventListener("click", () => { B3S.set(!B3S.on()); paint(); }); host.appendChild(b); };
   if (sub) mkSound(sub);
   // Einlass mit Ticket-Scan (einmal pro Sitzung)
   if (document.body.classList.contains("mx-fest") && !reduce) {
@@ -1703,7 +1703,7 @@ const B3S = (() => {
     r.querySelector("[data-like]").setAttribute("aria-pressed", String(likes.includes(f))); r.querySelector("[data-save]").setAttribute("aria-pressed", String(saved.includes(f))); });
   const toggle = (key, f, btn, xp, why) => { const a = L(key, []), on = !a.includes(f); S(key, on ? [...a, f] : a.filter((x) => x !== f)); btn.setAttribute("aria-pressed", String(on));
     if (on) { const done = L(key + "-xp", []); if (!done.includes(f)) { S(key + "-xp", [...done, f]); if (G()) G().award(xp, why); } const b = btn.getBoundingClientRect(); if (G()) G().confetti(30, b.left + b.width / 2, b.top); snd(key === "b3-likes" ? "beep" : "stamp"); } return on; };
-  const burst = (r) => { const h = document.createElement("span"); h.className = "rl-burst"; h.textContent = "♥"; r.appendChild(h); setTimeout(() => h.remove(), 850); };
+  const burst = (r) => { const h = document.createElement("span"); h.className = "rl-burst"; h.textContent = "Gefeiert"; r.appendChild(h); setTimeout(() => h.remove(), 850); };
   const open = (r) => { sec.classList.add("is-full"); document.documentElement.classList.add("rl-lock"); r.scrollIntoView({ block: "start" }); snd("crowd"); sec.querySelector("[data-reels-close]").focus({ preventScroll: true }); };
   const close = () => { const r = [...tr.querySelectorAll(".rl")].find((x) => x.classList.contains("is-on")); sec.classList.remove("is-full"); document.documentElement.classList.remove("rl-lock"); if (r) r.scrollIntoView({ block: "nearest", inline: "start" }); };
   let tap = 0;
@@ -1717,4 +1717,32 @@ const B3S = (() => {
     const now = Date.now(); if (now - tap < 320) { const b = r.querySelector("[data-like]"); if (b.getAttribute("aria-pressed") !== "true") toggle("b3-likes", f, b, 2, "Act gefeiert"); burst(r); tap = 0; } else tap = now; });
   sec.querySelector("[data-reels-close]").addEventListener("click", close);
   document.addEventListener("keydown", (e) => { if (!sec.classList.contains("is-full")) return; if (e.key === "Escape") close(); if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); tr.scrollBy({ top: (e.key === "ArrowDown" ? 1 : -1) * innerHeight, behavior: "smooth" }); } });
+})();
+/* Academy-Feed: Feiern, Merken, Teilen, Mehr laden, Tabs */
+(() => {
+  const feed = document.querySelector(".sm-feed"); if (!feed) return;
+  const L = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) || d; } catch (e) { return d; } }, S = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+  const G = () => window.B3G, snd = (n) => { if (window.B3S) B3S.play(n); };
+  const read = L("b3-read", []);
+  feed.querySelectorAll(".sm-post").forEach((p) => { const f = p.dataset.post; p.classList.toggle("is-seen", read.includes(f));
+    p.querySelector("[data-like]").setAttribute("aria-pressed", String(L("b3-likes", []).includes(f))); p.querySelector("[data-save]").setAttribute("aria-pressed", String(L("b3-saved", []).includes(f))); });
+  const toggle = (key, f, btn, xp, why) => { const a = L(key, []), on = !a.includes(f); S(key, on ? [...a, f] : a.filter((x) => x !== f)); btn.setAttribute("aria-pressed", String(on));
+    if (on) { const done = L(key + "-xp", []); if (!done.includes(f)) { S(key + "-xp", [...done, f]); if (G()) G().award(xp, why); } const b = btn.getBoundingClientRect(); if (G()) G().confetti(26, b.left + b.width / 2, b.top); snd(key === "b3-likes" ? "beep" : "stamp"); } };
+  feed.addEventListener("click", (e) => { const p = e.target.closest(".sm-post"); if (!p) return; const f = p.dataset.post;
+    const lk = e.target.closest("[data-like]"), sv = e.target.closest("[data-save]"), sh = e.target.closest("[data-share]");
+    if (lk) toggle("b3-likes", f, lk, 2, "Act gefeiert");
+    else if (sv) toggle("b3-saved", f, sv, 2, "Act gemerkt");
+    else if (sh) { const u = new URL(f, location.href).href, t = p.querySelector(".sm-post__media b").textContent; if (navigator.share) navigator.share({ title: t, url: u }).catch(() => {}); else if (navigator.clipboard) navigator.clipboard.writeText(u).then(() => { sh.textContent = "Link kopiert"; setTimeout(() => sh.textContent = "Teilen", 1500); }); } });
+  const more = feed.querySelector("[data-more]"); if (more) more.addEventListener("click", () => { feed.classList.add("is-all"); snd("chime"); });
+  const tabs = [...document.querySelectorAll(".sm-tabs a")];
+  if ("IntersectionObserver" in window && tabs.length) { const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) tabs.forEach((a) => a.classList.toggle("is-on", a.getAttribute("href") === "#" + e.target.id)); }), { rootMargin: "-40% 0px -55% 0px" });
+    tabs.forEach((a) => { const t = document.getElementById(a.getAttribute("href").slice(1)); if (t) io.observe(t); }); }
+})();
+/* Academy (Social-Layout): keine Icon-Glyphen im Text */
+(() => {
+  if (!document.body.classList.contains("mx-social")) return;
+  const RX = /\s?[→←↗↓✓♥♫🔊🔈✚▶]️?/g;
+  const strip = (root) => { const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); let n; while ((n = w.nextNode())) if (RX.test(n.nodeValue)) { RX.lastIndex = 0; n.nodeValue = n.nodeValue.replace(RX, ""); } RX.lastIndex = 0; };
+  strip(document.body);
+  let t; new MutationObserver(() => { clearTimeout(t); t = setTimeout(() => strip(document.body), 30); }).observe(document.body, { childList: true, subtree: true, characterData: true });
 })();
