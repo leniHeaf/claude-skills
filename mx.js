@@ -1746,3 +1746,11 @@ const B3S = (() => {
   strip(document.body);
   let t; new MutationObserver(() => { clearTimeout(t); t = setTimeout(() => strip(document.body), 30); }).observe(document.body, { childList: true, subtree: true, characterData: true });
 })();
+/* Academy-Feed: Posts beim Scrollen einblenden */
+(() => {
+  const ps = document.querySelectorAll(".sm-post"); if (!ps.length) return;
+  if (!("IntersectionObserver" in window)) { ps.forEach((p) => p.classList.add("is-in")); return; }
+  const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } }), { threshold: .15 });
+  ps.forEach((p) => io.observe(p));
+  document.addEventListener("click", (e) => { if (e.target.closest("[data-more]")) setTimeout(() => document.querySelectorAll(".sm-post.is-x").forEach((p) => io.observe(p)), 50); });
+})();
