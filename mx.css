@@ -3280,3 +3280,50 @@ body.mx-riso .fx-gate-skip { border-color: #1d1a1a; color: #1d1a1a; }
 @media (max-width: 760px) { .rz-sticker--2, .rz-sticker--3 { display: none; } .rz-sticker--1 { top: 18%; right: 4%; width: 84px; font-size: 13px; } body.mx-riso .fx-hero::before { width: 90vw; right: -30vw; top: 30vw; } }
 @media (prefers-reduced-motion: reduce) { body.mx-riso .fx-h1 .rz::after, .rz-sticker--1 { animation: none; } .st-card, .st-stamp { animation: none; } }
 @media (max-width: 760px) { body.mx-riso .fx-crowd { height: 54px; opacity: .45; } }
+/* ===== B3DE-Farben fürs Festival ===== */
+body.mx-riso { --paper: #f2f2f2; --ink: #0a0a0a; --pink: #6a1bff; --blue: #0a0a0a; --yel: #00ff38; --grn: #00ff38; --org: #6a1bff; --vio: #6a1bff; --grad: linear-gradient(90deg, #6a1bff 0%, #5f5fd0 35%, #2fc77a 70%, #00ff38 100%); }
+body.mx-riso .fx-h1 .rz { color: var(--ink); }
+body.mx-riso .fx-h1 .rz::after { color: var(--grn); left: .04em; top: .03em; }
+body.mx-riso .fx-h1 .rz--2 { color: var(--vio); }
+body.mx-riso .fx-h1 .rz--2::after { color: var(--grn); left: -.035em; top: .035em; }
+body.mx-riso .fx-hero::before { background: radial-gradient(circle, var(--grn) 34%, transparent 36%) 0 0 / 14px 14px; }
+body.mx-riso .fx-hero::after { background: radial-gradient(circle, var(--vio) 30%, transparent 33%) 0 0 / 11px 11px; opacity: .45; }
+.rz-sticker--1 { background: var(--grn); }
+.rz-sticker--2 { background: var(--vio); color: #f2f2f2; }
+.rz-sticker--3::before { background: rgba(0,255,56,.7); }
+body.mx-riso .fx-l1 { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; mix-blend-mode: normal; }
+body.mx-riso .fx-band-btn { background: var(--grn); }
+body.mx-riso .fx-tick { background: var(--ink); color: var(--grn); }
+body.mx-riso .fx-tick span::before { color: var(--vio); }
+body.mx-riso .ac-sub a.is-on { background: var(--ink); color: var(--grn); }
+body.mx-riso .fx-crowd i { background: var(--ink); mix-blend-mode: normal; opacity: .92; }
+body.mx-riso .fx-crowd i:nth-child(4n) { background: var(--vio); }
+body.mx-riso .fx-band { background: repeating-linear-gradient(135deg, #0a0a0a 0 14px, #1c1c1c 14px 28px); color: #f2f2f2; }
+body.mx-riso .fx-band.is-on { background: repeating-linear-gradient(135deg, #00ff38 0 14px, #00e533 14px 28px); color: var(--ink); }
+body.mx-riso .fx-band__hole { background: #f2f2f2; }
+body.mx-riso .fx-head .mo-label { color: var(--vio); }
+body.mx-riso .fx-map { background: radial-gradient(circle, rgba(106,27,255,.14) 30%, transparent 33%) 0 0 / 16px 16px, #fafafa; }
+body.mx-riso .fx-road { stroke: var(--grn); }
+body.mx-riso .fx-spot[href="#lernpfade"]:nth-of-type(3) text, body.mx-riso .fx-spot[href="#lernpfade"]:nth-of-type(4) text { fill: #f2f2f2; }
+body.mx-riso .fx-stage:nth-child(2) .fx-stage__head, body.mx-riso .fx-stage:nth-child(3) .fx-stage__head { color: #f2f2f2; }
+body.mx-riso .fx-stage:nth-child(2) .fx-stage__head { background: radial-gradient(circle, rgba(255,255,255,.12) 28%, transparent 31%) 0 0 / 8px 8px, var(--c); }
+body.mx-riso .fx-stage:nth-child(3) .fx-stage__head { background: radial-gradient(circle, rgba(0,255,56,.22) 28%, transparent 31%) 0 0 / 8px 8px, #0a0a0a; }
+body.mx-riso .fx-stage:nth-child(2) .ac-path__dots i.on, body.mx-riso .fx-stage:nth-child(3) .ac-path__dots i.on { background: #00ff38; }
+body.mx-riso .fx-stage:nth-child(2) .ac-path__dots i, body.mx-riso .fx-stage:nth-child(3) .ac-path__dots i { background: rgba(255,255,255,.22); }
+body.mx-riso .fx-stage:nth-child(2) .fx-tt time, body.mx-riso .fx-stage:nth-child(3) .fx-tt time { color: #f2f2f2; }
+body.mx-riso .fx-stage:nth-child(3) .fx-tt time { color: #00ff38; }
+body.mx-riso .fx-stage:nth-child(4) .fx-stage__head { background: radial-gradient(circle, rgba(106,27,255,.18) 28%, transparent 31%) 0 0 / 8px 8px, #f2f2f2; }
+body.mx-riso .fx-tt time { border: 1px solid var(--ink); }
+body.mx-riso .ac-tool--b { background: var(--vio); color: #f2f2f2; }
+body.mx-riso .ac-tool--b .mo-label { color: var(--grn); }
+.st-ring { background: var(--grad, linear-gradient(90deg, #6a1bff, #00ff38)); }
+body.mx-riso .st-ring { background: conic-gradient(#6a1bff, #00ff38, #6a1bff); }
+.st-item[data-story="sichtbar"] .st-av, .st-item[data-story="identitaet"] .st-av { color: #f2f2f2; }
+.st-item[data-story="sichtbar"] .st-av { color: #00ff38; }
+.st-dark .st-kick { background: #00ff38; color: #0a0a0a; }
+.st-dark .st-bars i, .st-ov .st-dark ~ .st-bars i { background: linear-gradient(90deg, #f2f2f2 calc(var(--p) * 100%), rgba(242,242,242,.25) 0); }
+.st-dark { background: radial-gradient(circle, rgba(0,255,56,.16) 28%, transparent 31%) 0 0 / 9px 9px, var(--c) !important; }
+.st-dark::before { background: #00ff38; mix-blend-mode: soft-light; opacity: .35; }
+body.mx-riso .fx-ticket { background: #00ff38; }
+body.mx-riso .fx-ticket__scan { background: #6a1bff; box-shadow: 0 0 18px 6px rgba(106,27,255,.6); }
+body.mx-riso .ac-sub { background: rgba(242,242,242,.94); } body.mx-riso .ac-sub a:hover { background: #e2e2e2; }

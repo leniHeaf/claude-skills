@@ -1551,7 +1551,7 @@ const B3S = (() => {
   const src = document.getElementById("b3-academy"); if (!src) return;
   const D = JSON.parse(src.textContent), here = location.pathname.split("/").pop() || "index.html";
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const STG = { marke: ["Main Stage", "#00ff38"], identitaet: ["Neon Tent", "#ff48b0"], sichtbar: ["Loud Stage", "#0078bf"], team: ["Campfire", "#ffe800"] };
+  const STG = { marke: ["Main Stage", "#00ff38"], identitaet: ["Neon Tent", "#6a1bff"], sichtbar: ["Loud Stage", "#0a0a0a"], team: ["Campfire", "#f2f2f2"] };
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const G = () => window.B3G;
   // Sound-Schalter (Festival-Seite und Artikel)
@@ -1609,7 +1609,7 @@ const B3S = (() => {
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const L = { get: (k, d) => { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } }, set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  const STG = { marke: ["Main Stage", "#00ff38", "Die großen Fragen zuerst."], identitaet: ["Neon Tent", "#ff48b0", "Wo Marken Gesicht bekommen."], sichtbar: ["Loud Stage", "#0078bf", "Damit euch alle hören."], team: ["Campfire", "#ffe800", "Wo Marken von innen leuchten."] };
+  const STG = { marke: ["Main Stage", "#00ff38", "Die großen Fragen zuerst."], identitaet: ["Neon Tent", "#6a1bff", "Wo Marken Gesicht bekommen."], sichtbar: ["Loud Stage", "#0a0a0a", "Damit euch alle hören."], team: ["Campfire", "#f2f2f2", "Wo Marken von innen leuchten."] };
   const shuffle = (a) => a.map((x) => [Math.random(), x]).sort((p, q) => p[0] - q[0]).map((x) => x[1]);
   const build = (id) => {
     if (STG[id]) {
@@ -1621,16 +1621,16 @@ const B3S = (() => {
       cards.push({ k: "end", c, kicker: name, title: "Bühne gesehen!", text: "Stempel aufs Bändchen. Lust auf mehr? Die nächste Bühne wartet.", id });
       return { id, name, c, cards };
     }
-    if (id === "tools") return { id, name: "Workshops", c: "#ff6c2f", cards: [
-      { k: "intro", c: "#ff6c2f", kicker: "Workshop-Zelt", title: "Mitmachen statt zuhören.", text: "Drei Werkzeuge, mit denen ihr eure Marke sofort greifbar macht.", foot: "3 Workshops" },
-      { k: "act", c: "#ff6c2f", kicker: "Workshop 01", title: "Marken-Kompass Generator", text: "Fünf Fragen, eine Seite – euer Kompass zum Herunterladen.", href: "academy-kompass.html", cta: "Kompass bauen" },
-      { k: "act", c: "#ff6c2f", kicker: "Workshop 02", title: "Welcher Archetyp seid ihr?", text: "Zehn Fragen, zwölf Archetypen, eine Ergebnis-Karte zum Teilen.", href: "academy-archetypen-test.html", cta: "Test starten" },
-      { k: "act", c: "#ff6c2f", kicker: "Workshop 03", title: "Marken-Führerschein", text: "Bühne komplett gesehen? Holt euch euren Lernnachweis.", href: "academy-fuehrerschein.html", cta: "Führerschein holen" },
-      { k: "end", c: "#ff6c2f", kicker: "Workshop-Zelt", title: "Bis gleich im Zelt!", text: "Alle Werkzeuge sind kostenlos.", id }] };
-    return { id, name: "Einlass", c: "#f4efe6", cards: [
-      { k: "intro", c: "#f4efe6", kicker: "Einlass-Check", title: "Wie stark ist eure Marke?", text: "Fünf ehrliche Fragen, 60 Sekunden – und ihr wisst, welche Bühne ihr zuerst besuchen solltet.", foot: "60 Sekunden" },
-      { k: "act", c: "#f4efe6", kicker: "Los geht’s", title: "Marken-Check starten", text: "Ihr bekommt sofort ein Ergebnis und passende Acts.", href: "#marken-check", cta: "Zum Check" },
-      { k: "end", c: "#f4efe6", kicker: "Einlass", title: "Ihr seid drin!", text: "Viel Spaß auf dem Festival.", id }] };
+    if (id === "tools") return { id, name: "Workshops", c: "#00ff38", cards: [
+      { k: "intro", c: "#00ff38", kicker: "Workshop-Zelt", title: "Mitmachen statt zuhören.", text: "Drei Werkzeuge, mit denen ihr eure Marke sofort greifbar macht.", foot: "3 Workshops" },
+      { k: "act", c: "#00ff38", kicker: "Workshop 01", title: "Marken-Kompass Generator", text: "Fünf Fragen, eine Seite – euer Kompass zum Herunterladen.", href: "academy-kompass.html", cta: "Kompass bauen" },
+      { k: "act", c: "#00ff38", kicker: "Workshop 02", title: "Welcher Archetyp seid ihr?", text: "Zehn Fragen, zwölf Archetypen, eine Ergebnis-Karte zum Teilen.", href: "academy-archetypen-test.html", cta: "Test starten" },
+      { k: "act", c: "#00ff38", kicker: "Workshop 03", title: "Marken-Führerschein", text: "Bühne komplett gesehen? Holt euch euren Lernnachweis.", href: "academy-fuehrerschein.html", cta: "Führerschein holen" },
+      { k: "end", c: "#00ff38", kicker: "Workshop-Zelt", title: "Bis gleich im Zelt!", text: "Alle Werkzeuge sind kostenlos.", id }] };
+    return { id, name: "Einlass", c: "#f2f2f2", cards: [
+      { k: "intro", c: "#f2f2f2", kicker: "Einlass-Check", title: "Wie stark ist eure Marke?", text: "Fünf ehrliche Fragen, 60 Sekunden – und ihr wisst, welche Bühne ihr zuerst besuchen solltet.", foot: "60 Sekunden" },
+      { k: "act", c: "#f2f2f2", kicker: "Los geht’s", title: "Marken-Check starten", text: "Ihr bekommt sofort ein Ergebnis und passende Acts.", href: "#marken-check", cta: "Zum Check" },
+      { k: "end", c: "#f2f2f2", kicker: "Einlass", title: "Ihr seid drin!", text: "Viel Spaß auf dem Festival.", id }] };
   };
   const ids = [...row.querySelectorAll("[data-story]")].map((b) => b.dataset.story);
   const paintSeen = () => { const seen = L.get("b3-stories", {}); row.querySelectorAll("[data-story]").forEach((b) => b.classList.toggle("is-seen", !!seen[b.dataset.story])); };
@@ -1640,7 +1640,7 @@ const B3S = (() => {
   const close = () => { if (!ov) return; cancelAnimationFrame(raf); ov.classList.add("out"); document.documentElement.classList.remove("fx-lock"); const o = ov; ov = null; setTimeout(() => o.remove(), 300); paintSeen(); };
   const done = (id) => { const seen = L.get("b3-stories", {}); if (seen[id]) return; seen[id] = true; L.set("b3-stories", seen); if (window.B3G) { window.B3G.award(15, "Story gesehen"); window.B3G.confetti(160); } if (window.B3S) B3S.play("stamp"); };
   const card = () => {
-    const c = S.cards[ci], dark = c.c === "#0078bf";
+    const c = S.cards[ci], dark = c.c === "#0a0a0a" || c.c === "#6a1bff";
     const bars = S.cards.map((_, k) => `<i style="--p:${k < ci ? 1 : 0}"></i>`).join("");
     let body = "";
     if (c.k === "quiz") body = `<p class="st-q">„${esc(c.text)}“</p><div class="st-opts">${c.opts.map(([t, ok], k) => `<button type="button" data-opt="${ok ? 1 : 0}">${esc(t)}</button>`).join("")}</div>`;
