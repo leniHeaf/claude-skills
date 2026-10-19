@@ -1270,7 +1270,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
 })();
 /* Fakten-Seite: Kurzbeschreibungen kopieren */
 (function () {
-  document.querySelectorAll('[data-copy]').forEach(function (b) {
+  document.querySelectorAll('[data-copytext]').forEach(function (b) {
     b.addEventListener('click', function () {
       var t = b.parentNode.querySelector('blockquote').innerText.trim();
       var done = function () { b.textContent = 'Kopiert ✓'; b.classList.add('is-done'); setTimeout(function () { b.textContent = 'Kopieren'; b.classList.remove('is-done'); }, 2000); };
@@ -1493,4 +1493,23 @@ const B3T = (() => {
       for (let k = 0; k < 14; k++) { const h = document.createElement("span"); h.className = "sm-heart"; h.textContent = "♥"; h.style.left = r.left + r.width / 2 + "px"; h.style.top = r.top + "px"; h.style.setProperty("--dx", (Math.random() - .5) * 160 + "px"); h.style.setProperty("--dy", -(Math.random() * 180 + 80) + "px"); h.style.setProperty("--r", (Math.random() - .5) * 80 + "deg"); h.style.animationDelay = k * 25 + "ms"; document.body.appendChild(h); setTimeout(() => h.remove(), 1400); }
     });
   });
+})();
+
+/* Wissen: kompakte Artikelliste, Unternavigation, Sammlung */
+(() => {
+  const short = document.querySelector("[data-short]"); if (!short) return;
+  const more = document.querySelector("[data-more]");
+  const all = () => { short.classList.remove("ac-short"); if (more) more.parentNode.hidden = true; };
+  if (more) more.addEventListener("click", all);
+  document.querySelectorAll(".mx-filter button").forEach((b) => b.addEventListener("click", all));
+  const q = document.querySelector("[data-search]"); if (q) q.addEventListener("input", () => { if (q.value.trim()) all(); });
+  const coll = document.querySelector("[data-coll]");
+  const openColl = () => { if (coll && location.hash === "#sammlung") coll.open = true; };
+  openColl(); addEventListener("hashchange", openColl);
+  document.querySelectorAll('a[href="#sammlung"]').forEach((a) => a.addEventListener("click", () => { if (coll) coll.open = true; }));
+  const links = [...document.querySelectorAll(".ac-sub a")];
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) links.forEach((a) => a.classList.toggle("is-on", a.getAttribute("href") === "#" + e.target.id)); }), { rootMargin: "-35% 0px -60% 0px" });
+    links.forEach((a) => { const t = document.getElementById(a.getAttribute("href").slice(1)); if (t) io.observe(t); });
+  }
 })();
