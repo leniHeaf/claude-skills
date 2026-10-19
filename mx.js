@@ -460,7 +460,7 @@
   if (reel) reel.classList.add("mo-grow");
   let hs = null;
   const sec = document.querySelector("#arbeiten");
-  if (sec && document.body.classList.contains("mx-home") && matchMedia("(min-width: 1000px)").matches) {
+  if (sec && sec.querySelector(".mo-works") && document.body.classList.contains("mx-home") && matchMedia("(min-width: 1000px)").matches) {
     const grid = sec.querySelector(".mo-works"), head = sec.querySelector(".mo-headrow");
     const n = grid.querySelectorAll(".mo-work").length;
     const wrap = document.createElement("div"); wrap.className = "mo-hs";
@@ -1433,4 +1433,64 @@ const B3T = (() => {
     if (b.dataset.fs === "share") { const url = location.origin + location.pathname.replace(/[^/]*$/, "academy-fuehrerschein.html"); const txt = `Ich habe den Marken-Führerschein der B3DE Academy gemacht (Klasse ${String.fromCharCode(65 + sel)} · ${D.paths[sel].name}).`; try { if (navigator.share) await navigator.share({ title: "Marken-Führerschein", text: txt, url }); else { await navigator.clipboard.writeText(txt + " " + url); b.textContent = "Text kopiert ✓"; } } catch (err) {} }
   });
   if (sel >= 0) open(sel);
+})();
+/* Projekt-Bühne: Karussell, Bilder-Daumenkino, Cursor-Blase */
+(() => {
+  const root = document.querySelector(".ps"); if (!root) return;
+  const track = root.querySelector("[data-ps-track]"), cards = [...track.querySelectorAll("[data-ps]")], cur = root.querySelector("[data-ps-cur]"), bar = root.querySelector("[data-ps-bar]");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches, fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const step = () => (cards[1] ? cards[1].offsetLeft - cards[0].offsetLeft : track.clientWidth);
+  const go = (d) => track.scrollBy({ left: d * step(), behavior: reduce ? "auto" : "smooth" });
+  root.querySelector("[data-ps-prev]").addEventListener("click", () => go(-1));
+  root.querySelector("[data-ps-next]").addEventListener("click", () => go(1));
+  track.addEventListener("keydown", (e) => { if (e.key === "ArrowRight") { e.preventDefault(); go(1); } if (e.key === "ArrowLeft") { e.preventDefault(); go(-1); } });
+  const upd = () => { const max = track.scrollWidth - track.clientWidth, p = max > 0 ? track.scrollLeft / max : 0; bar.style.transform = `scaleX(${Math.max(0.08, p)})`; const i = Math.round(track.scrollLeft / step()); cur.textContent = String(Math.min(cards.length, i + 1)).padStart(2, "0"); };
+  track.addEventListener("scroll", upd, { passive: true }); upd();
+  // Ziehen mit der Maus
+  let down = false, sx = 0, sl = 0, moved = false;
+  track.addEventListener("pointerdown", (e) => { if (e.pointerType !== "mouse") return; down = true; moved = false; sx = e.clientX; sl = track.scrollLeft; track.classList.add("is-drag"); });
+  addEventListener("pointermove", (e) => { if (!down) return; const dx = e.clientX - sx; if (Math.abs(dx) > 4) moved = true; track.scrollLeft = sl - dx; });
+  addEventListener("pointerup", () => { if (!down) return; down = false; track.classList.remove("is-drag"); });
+  track.addEventListener("click", (e) => { if (moved) { e.preventDefault(); moved = false; } }, true);
+  // Daumenkino
+  const flip = (c) => { const ims = c.querySelectorAll(".ps-media img"), dots = c.querySelectorAll(".ps-dots i"); if (ims.length < 2) return null; let i = 0; dots[0] && dots[0].classList.add("on");
+    return { next() { ims[i].classList.remove("is-on"); dots[i] && dots[i].classList.remove("on"); i = (i + 1) % ims.length; ims[i].classList.add("is-on"); dots[i] && dots[i].classList.add("on"); } }; };
+  if (!reduce) cards.forEach((c) => {
+    const f = flip(c); if (!f) return; let t;
+    if (fine) { c.addEventListener("mouseenter", () => { f.next(); t = setInterval(f.next, 700); }); c.addEventListener("mouseleave", () => clearInterval(t)); }
+    else new IntersectionObserver(([en]) => { clearInterval(t); if (en.isIntersecting && en.intersectionRatio > .6) t = setInterval(f.next, 1600); }, { threshold: [0, .6, 1] }).observe(c);
+  });
+  // Cursor-Blase
+  if (fine && !reduce) {
+    const bub = document.createElement("span"); bub.className = "ps-cursor"; bub.textContent = "Ansehen"; bub.setAttribute("aria-hidden", "true"); document.body.appendChild(bub);
+    let x = 0, y = 0, tx = 0, ty = 0, raf;
+    const loop = () => { x += (tx - x) * .22; y += (ty - y) * .22; bub.style.transform = `translate(${x}px, ${y}px)`; raf = requestAnimationFrame(loop); };
+    track.addEventListener("mouseenter", () => { bub.classList.add("on"); raf = requestAnimationFrame(loop); });
+    track.addEventListener("mouseleave", () => { bub.classList.remove("on"); cancelAnimationFrame(raf); });
+    track.addEventListener("mousemove", (e) => { tx = e.clientX; ty = e.clientY; bub.textContent = track.classList.contains("is-drag") ? "Ziehen" : "Ansehen"; });
+  }
+})();
+/* Social-Media-Schaufenster: Stories laufen, Herzen fliegen */
+(() => {
+  const phones = document.querySelectorAll("[data-sm]"); if (!phones.length) return;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches, DUR = 3200;
+  phones.forEach((ph) => {
+    const ims = ph.querySelectorAll(".sm-slides img"), bars = ph.querySelectorAll(".sm-bars i"); let i = 0, t0 = 0, raf, on = false, paused = false, el = 0;
+    const show = (n) => { ims[i].classList.remove("is-on"); bars.forEach((b, k) => b.style.setProperty("--p", k < n ? 1 : 0)); i = (n + ims.length) % ims.length; if (i === 0) bars.forEach((b) => b.style.setProperty("--p", 0)); ims[i].classList.add("is-on"); el = 0; t0 = performance.now(); };
+    const tick = (now) => { if (!paused) { el = now - t0; bars[i] && bars[i].style.setProperty("--p", Math.min(1, el / DUR)); if (el >= DUR) show(i + 1); } else t0 = now - el; raf = requestAnimationFrame(tick); };
+    const start = () => { if (on || reduce) return; on = true; t0 = performance.now() - el; raf = requestAnimationFrame(tick); };
+    const stop = () => { on = false; cancelAnimationFrame(raf); };
+    new IntersectionObserver(([en]) => (en.isIntersecting ? start() : stop()), { threshold: .4 }).observe(ph);
+    const scr = ph.querySelector(".sm-slides");
+    scr.addEventListener("click", (e) => { const r = scr.getBoundingClientRect(); show(e.clientX - r.left < r.width / 3 ? i - 1 : i + 1); });
+    ph.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") paused = true; });
+    ph.addEventListener("pointerleave", () => (paused = false));
+    const like = ph.querySelector(".sm-like");
+    like.addEventListener("click", () => {
+      const onp = like.getAttribute("aria-pressed") !== "true"; like.setAttribute("aria-pressed", String(onp));
+      if (!onp || reduce) return;
+      const r = like.getBoundingClientRect();
+      for (let k = 0; k < 14; k++) { const h = document.createElement("span"); h.className = "sm-heart"; h.textContent = "♥"; h.style.left = r.left + r.width / 2 + "px"; h.style.top = r.top + "px"; h.style.setProperty("--dx", (Math.random() - .5) * 160 + "px"); h.style.setProperty("--dy", -(Math.random() * 180 + 80) + "px"); h.style.setProperty("--r", (Math.random() - .5) * 80 + "deg"); h.style.animationDelay = k * 25 + "ms"; document.body.appendChild(h); setTimeout(() => h.remove(), 1400); }
+    });
+  });
 })();
