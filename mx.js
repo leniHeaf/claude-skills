@@ -1551,7 +1551,7 @@ const B3S = (() => {
   const src = document.getElementById("b3-academy"); if (!src) return;
   const D = JSON.parse(src.textContent), here = location.pathname.split("/").pop() || "index.html";
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const STG = { marke: ["Main Stage", "#00ff38"], identitaet: ["Neon Tent", "#ff3fa4"], sichtbar: ["Loud Stage", "#1a56ff"], team: ["Campfire", "#ffe94d"] };
+  const STG = { marke: ["Main Stage", "#00ff38"], identitaet: ["Neon Tent", "#ff48b0"], sichtbar: ["Loud Stage", "#0078bf"], team: ["Campfire", "#ffe800"] };
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const G = () => window.B3G;
   // Sound-Schalter (Festival-Seite und Artikel)
@@ -1601,4 +1601,94 @@ const B3S = (() => {
       t.addEventListener("click", () => { got.push(day); try { localStorage.setItem("b3-golden", JSON.stringify(got)); } catch (e) {} t.classList.add("got"); B3S.play("chime"); if (G()) { G().confetti(220); G().award(25, "Goldenes Ticket gefunden"); } setTimeout(() => t.remove(), 900); });
     }
   }
+})();
+/* Festival-Stories: Player zum Tippen, Wischen und Halten */
+(() => {
+  const row = document.querySelector("[data-stories]"), src = document.getElementById("b3-academy"); if (!row || !src) return;
+  const D = JSON.parse(src.textContent), A = Object.fromEntries(D.arts.map((a) => [a.f, a]));
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const L = { get: (k, d) => { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } }, set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const STG = { marke: ["Main Stage", "#00ff38", "Die großen Fragen zuerst."], identitaet: ["Neon Tent", "#ff48b0", "Wo Marken Gesicht bekommen."], sichtbar: ["Loud Stage", "#0078bf", "Damit euch alle hören."], team: ["Campfire", "#ffe800", "Wo Marken von innen leuchten."] };
+  const shuffle = (a) => a.map((x) => [Math.random(), x]).sort((p, q) => p[0] - q[0]).map((x) => x[1]);
+  const build = (id) => {
+    if (STG[id]) {
+      const p = D.paths.find((x) => x.id === id), [name, c, tag] = STG[id];
+      const cards = [{ k: "intro", c, kicker: name, title: p.name, text: tag + " " + p.desc, foot: `${p.items.length} Acts · tippen zum Starten` }];
+      p.items.forEach((it, n) => { const a = A[it.f] || { d: "" }; cards.push({ k: "act", c, kicker: `Act ${String(n + 1).padStart(2, "0")} · ${name}`, title: it.t, text: a.d, href: it.f }); });
+      const right = p.items[(Math.random() * p.items.length) | 0], opts = shuffle([right, ...shuffle(p.items.filter((x) => x !== right)).slice(0, 2)]);
+      cards.push({ k: "quiz", c, kicker: "Kurzer Check", title: "Welcher Act war das?", text: (A[right.f] || {}).d || "", opts: opts.map((o) => [o.t, o === right]) });
+      cards.push({ k: "end", c, kicker: name, title: "Bühne gesehen!", text: "Stempel aufs Bändchen. Lust auf mehr? Die nächste Bühne wartet.", id });
+      return { id, name, c, cards };
+    }
+    if (id === "tools") return { id, name: "Workshops", c: "#ff6c2f", cards: [
+      { k: "intro", c: "#ff6c2f", kicker: "Workshop-Zelt", title: "Mitmachen statt zuhören.", text: "Drei Werkzeuge, mit denen ihr eure Marke sofort greifbar macht.", foot: "3 Workshops" },
+      { k: "act", c: "#ff6c2f", kicker: "Workshop 01", title: "Marken-Kompass Generator", text: "Fünf Fragen, eine Seite – euer Kompass zum Herunterladen.", href: "academy-kompass.html", cta: "Kompass bauen" },
+      { k: "act", c: "#ff6c2f", kicker: "Workshop 02", title: "Welcher Archetyp seid ihr?", text: "Zehn Fragen, zwölf Archetypen, eine Ergebnis-Karte zum Teilen.", href: "academy-archetypen-test.html", cta: "Test starten" },
+      { k: "act", c: "#ff6c2f", kicker: "Workshop 03", title: "Marken-Führerschein", text: "Bühne komplett gesehen? Holt euch euren Lernnachweis.", href: "academy-fuehrerschein.html", cta: "Führerschein holen" },
+      { k: "end", c: "#ff6c2f", kicker: "Workshop-Zelt", title: "Bis gleich im Zelt!", text: "Alle Werkzeuge sind kostenlos.", id }] };
+    return { id, name: "Einlass", c: "#f4efe6", cards: [
+      { k: "intro", c: "#f4efe6", kicker: "Einlass-Check", title: "Wie stark ist eure Marke?", text: "Fünf ehrliche Fragen, 60 Sekunden – und ihr wisst, welche Bühne ihr zuerst besuchen solltet.", foot: "60 Sekunden" },
+      { k: "act", c: "#f4efe6", kicker: "Los geht’s", title: "Marken-Check starten", text: "Ihr bekommt sofort ein Ergebnis und passende Acts.", href: "#marken-check", cta: "Zum Check" },
+      { k: "end", c: "#f4efe6", kicker: "Einlass", title: "Ihr seid drin!", text: "Viel Spaß auf dem Festival.", id }] };
+  };
+  const ids = [...row.querySelectorAll("[data-story]")].map((b) => b.dataset.story);
+  const paintSeen = () => { const seen = L.get("b3-stories", {}); row.querySelectorAll("[data-story]").forEach((b) => b.classList.toggle("is-seen", !!seen[b.dataset.story])); };
+  paintSeen();
+  let ov, S, si = 0, ci = 0, t0 = 0, el = 0, raf, paused = false, holdT;
+  const DUR = 7000;
+  const close = () => { if (!ov) return; cancelAnimationFrame(raf); ov.classList.add("out"); document.documentElement.classList.remove("fx-lock"); const o = ov; ov = null; setTimeout(() => o.remove(), 300); paintSeen(); };
+  const done = (id) => { const seen = L.get("b3-stories", {}); if (seen[id]) return; seen[id] = true; L.set("b3-stories", seen); if (window.B3G) { window.B3G.award(15, "Story gesehen"); window.B3G.confetti(160); } if (window.B3S) B3S.play("stamp"); };
+  const card = () => {
+    const c = S.cards[ci], dark = c.c === "#0078bf";
+    const bars = S.cards.map((_, k) => `<i style="--p:${k < ci ? 1 : 0}"></i>`).join("");
+    let body = "";
+    if (c.k === "quiz") body = `<p class="st-q">„${esc(c.text)}“</p><div class="st-opts">${c.opts.map(([t, ok], k) => `<button type="button" data-opt="${ok ? 1 : 0}">${esc(t)}</button>`).join("")}</div>`;
+    else body = `<p class="st-text">${esc(c.text)}</p>`;
+    const cta = c.href ? `<a class="st-cta" href="${c.href}">${esc(c.cta || "Ganzen Act lesen")} →</a>` : "";
+    const end = c.k === "end" ? `<div class="st-stamp">Gesehen<small>${esc(S.name)}</small></div>` : "";
+    const nextS = c.k === "end" && si < ids.length - 1 ? `<button type="button" class="st-cta st-next">Nächste Story →</button>` : "";
+    const react = c.k === "act" ? `<div class="st-react">${["🔥", "💡", "❤️", "🤘"].map((e) => `<button type="button" data-react="${e}" aria-label="Reagieren ${e}">${e}</button>`).join("")}</div>` : "";
+    ov.querySelector(".st-card").innerHTML = `<div class="st-bars">${bars}</div>
+      <div class="st-top"><span class="st-av" style="--c:${S.c}">${esc(S.name.slice(0, 1))}</span><b>${esc(S.name)}</b><span>B3DE Academy</span><button type="button" class="st-x" aria-label="Story schließen">×</button></div>
+      <div class="st-body st-body--${c.k}${dark ? " st-dark" : ""}" style="--c:${c.c}"><span class="st-kick">${esc(c.kicker)}</span><h3>${esc(c.title)}</h3>${body}${c.foot ? `<p class="st-foot">${esc(c.foot)}</p>` : ""}${end}<div class="st-actions">${cta}${nextS}</div>${react}</div>
+      <button type="button" class="st-nav st-nav--l" aria-label="Zurück"></button><button type="button" class="st-nav st-nav--r" aria-label="Weiter"></button>`;
+    el = 0; t0 = performance.now(); paused = c.k === "quiz" || c.k === "end";
+    if (c.k === "end") done(S.id);
+    ov.querySelector(".st-card").setAttribute("aria-label", `${S.name}: ${c.title}`);
+  };
+  const go = (d) => { const n = ci + d; if (n < 0) { if (si > 0) open(si - 1, true); return; } if (n >= S.cards.length) { if (si < ids.length - 1) open(si + 1); else close(); return; } ci = n; card(); };
+  const tick = (now) => { if (!ov) return; if (!paused && !reduce) { el = now - t0; const b = ov.querySelectorAll(".st-bars i")[ci]; if (b) b.style.setProperty("--p", Math.min(1, el / DUR)); if (el >= DUR) go(1); } else t0 = now - el; raf = requestAnimationFrame(tick); };
+  const open = (i, last) => {
+    si = i; S = build(ids[i]); ci = last ? S.cards.length - 1 : 0;
+    if (!ov) {
+      ov = document.createElement("div"); ov.className = "st-ov"; ov.setAttribute("role", "dialog"); ov.setAttribute("aria-modal", "true"); ov.innerHTML = '<div class="st-card" tabindex="-1"></div>';
+      document.body.appendChild(ov); document.documentElement.classList.add("fx-lock");
+      let sx = 0, sy = 0, st = 0;
+      ov.addEventListener("pointerdown", (e) => { sx = e.clientX; sy = e.clientY; st = Date.now(); holdT = setTimeout(() => { paused = true; ov.classList.add("hold"); }, 220); });
+      ov.addEventListener("pointerup", (e) => {
+        clearTimeout(holdT); const wasHold = ov.classList.contains("hold"); ov.classList.remove("hold");
+        const c = S.cards[ci]; if (wasHold) { paused = c.k === "quiz" || c.k === "end"; return; }
+        const dx = e.clientX - sx, dy = e.clientY - sy;
+        if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)) { if (dx < 0 && si < ids.length - 1) open(si + 1); else if (dx > 0 && si > 0) open(si - 1); return; }
+        if (dy > 90) { close(); return; }
+      });
+      ov.addEventListener("click", (e) => {
+        if (e.target === ov || e.target.closest(".st-x")) return close();
+        const o = e.target.closest("[data-opt]");
+        if (o) { const ok = o.dataset.opt === "1"; o.classList.add(ok ? "ok" : "no"); ov.querySelectorAll("[data-opt]").forEach((b) => { b.disabled = true; if (b.dataset.opt === "1") b.classList.add("ok"); }); if (ok) { if (window.B3G) { window.B3G.award(5, "Story-Quiz richtig"); window.B3G.confetti(90); } if (window.B3S) B3S.play("chime"); } setTimeout(() => go(1), 1300); return; }
+        const r = e.target.closest("[data-react]");
+        if (r) { for (let k = 0; k < 8; k++) { const f = document.createElement("span"); f.className = "st-fly"; f.textContent = r.dataset.react; const b = r.getBoundingClientRect(); f.style.left = b.left + b.width / 2 + "px"; f.style.top = b.top + "px"; f.style.setProperty("--dx", (Math.random() - .5) * 120 + "px"); f.style.animationDelay = k * 40 + "ms"; document.body.appendChild(f); setTimeout(() => f.remove(), 1300); } return; }
+        if (e.target.closest(".st-next")) return open(si + 1);
+        if (e.target.closest(".st-cta")) { if (e.target.closest('a[href^="#"]')) close(); return; }
+        if (e.target.closest(".st-nav--l")) return go(-1);
+        if (e.target.closest(".st-nav--r")) return go(1);
+      });
+      addEventListener("keydown", function k(e) { if (!ov) return removeEventListener("keydown", k); if (e.key === "Escape") close(); if (e.key === "ArrowRight") go(1); if (e.key === "ArrowLeft") go(-1); });
+      raf = requestAnimationFrame(tick);
+    }
+    ov.style.setProperty("--c", S.c);
+    card(); ov.querySelector(".st-card").focus({ preventScroll: true });
+  };
+  row.addEventListener("click", (e) => { const b = e.target.closest("[data-story]"); if (b) open(ids.indexOf(b.dataset.story)); });
 })();
