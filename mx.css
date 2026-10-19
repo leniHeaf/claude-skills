@@ -3389,7 +3389,7 @@ body.mx-techno .st-item.is-seen .st-av { animation: none; }
 body.mx-techno .st-body, body.mx-techno .st-dark { background: radial-gradient(120% 70% at 80% 10%, color-mix(in srgb, var(--c) 45%, transparent), transparent 60%), repeating-linear-gradient(0deg, rgba(255,255,255,.035) 0 1px, transparent 1px 3px), #050505 !important; color: #f2f2f2; }
 body.mx-techno .st-body::before { display: none; }
 body.mx-techno .st-kick { background: var(--c); color: #050505; font-family: var(--mono); }
-body.mx-techno .st-body[style*="#0a0a0a"] .st-kick { background: #00ff38; }
+body.mx-techno .st-body--dark .st-kick { background: #00ff38; }
 body.mx-techno .st-card { background: #050505; border: 1px solid #222; box-shadow: 0 0 60px color-mix(in srgb, var(--c) 35%, transparent); }
 body.mx-techno .st-bars i { background: linear-gradient(90deg, #00ff38 calc(var(--p) * 100%), rgba(242,242,242,.2) 0); }
 body.mx-techno .st-top { color: #f2f2f2; }
@@ -3511,3 +3511,67 @@ body.mx-riso main > section.rl-sec { background: #050505 !important; color: #f2f
 .rl .rl-hook { overflow-wrap: break-word; font-size: 9cqw; right: 12%; }
 .rl-fx .rl-crowd { height: 36%; }
 body.mx-academy .rl-sec:not(.is-full) .rl-track { padding-left: max(16px, calc((100% - 1200px) / 2)); padding-right: 16px; scroll-padding-left: max(16px, calc((100% - 1200px) / 2)); }
+/* ===== Techno: durchgehend dunkles Festivalgelände ===== */
+body.mx-techno { background: #050505; color: #f2f2f2; }
+body.mx-techno main { --paper: #050505; --ink: #f2f2f2; --mo-bg: #050505; --mo-ink: #f2f2f2; --mo-mute: #9a9a9a; --mo-line: rgba(242,242,242,.13); }
+body.mx-techno main > section:not(.fx-hero) { background: #050505 !important; color: #f2f2f2; }
+body.mx-techno main > section:nth-of-type(even):not(.fx-hero):not(.rl-sec) { background: #0b0b0b !important; }
+/* Hero: sauberer Glitch ohne Kasten */
+body.mx-techno .fx-h1 .rz::before, body.mx-techno .fx-h1 .rz::after { text-shadow: none; }
+body.mx-techno .fx-h1 .rz--2 { animation: none; text-shadow: 0 0 40px rgba(0,255,56,.35); }
+body.mx-techno .fx-h1 .rz--2::after { color: #6a1bff; opacity: .9; }
+/* Geländeplan: dunkle Bühne sichtbar, Texte passen in die Kreise */
+body.mx-techno .fx-spot text { font-family: var(--f); fill: #0a0a0a; }
+body.mx-techno .fx-spot .fx-spot__s { font-size: 8.5px; font-weight: 600; }
+body.mx-techno .fx-spot--dark circle:first-child { fill: #0a0a0a; stroke: #00ff38; stroke-width: 3; }
+body.mx-techno .fx-spot--dark .fx-spot__p { stroke: #00ff38; }
+body.mx-techno .fx-spot--dark text { fill: #f2f2f2; }
+body.mx-techno .fx-spot--vio text { fill: #f2f2f2; }
+/* Überschriften im Festival-Stil */
+body.mx-techno main .mx-h2 { font-weight: 800; letter-spacing: -.05em; text-transform: uppercase; }
+body.mx-techno main .mx-label { color: #00ff38; font-family: ui-monospace, Menlo, monospace; letter-spacing: .12em; }
+/* Einlass-Check */
+body.mx-techno .ac-check > *, body.mx-techno .ac-check .mx-wrap { background: transparent; }
+body.mx-techno .ac-quiz { background: #0d0d0d; color: #f2f2f2; border: 1px solid rgba(0,255,56,.45); box-shadow: 0 0 60px -20px rgba(0,255,56,.5); }
+body.mx-techno .ac-quiz__bar { background: rgba(242,242,242,.12); } body.mx-techno .ac-quiz__bar b { background: #00ff38; }
+body.mx-techno .ac-quiz__n { color: #00ff38; font-family: ui-monospace, Menlo, monospace; }
+body.mx-techno .ac-quiz__a button { background: transparent; color: #f2f2f2; border-color: rgba(242,242,242,.35); transition: background .2s, color .2s, border-color .2s; }
+body.mx-techno .ac-quiz__a button:hover, body.mx-techno .ac-quiz__a button:focus-visible { background: #00ff38; color: #000; border-color: #00ff38; }
+/* Line-up: Acts als Künstlerkarten */
+body.mx-techno .mx-post { background: #0b0b0b; border-color: rgba(242,242,242,.1) !important; transition: background .25s, box-shadow .25s; }
+body.mx-techno .mx-post:hover { background: #111; box-shadow: inset 0 0 0 1px #00ff38, 0 0 40px -12px rgba(0,255,56,.6); }
+body.mx-techno .mx-post__ico { background: transparent !important; color: #00ff38 !important; box-shadow: inset 0 0 0 1px rgba(0,255,56,.6); }
+body.mx-techno .mx-post[data-cat="Identität"] .mx-post__ico { color: #b48cff !important; box-shadow: inset 0 0 0 1px rgba(106,27,255,.8); }
+body.mx-techno .mx-post__meta span:first-child { color: #00ff38; font-family: ui-monospace, Menlo, monospace; text-transform: uppercase; letter-spacing: .1em; font-size: 11px; }
+body.mx-techno .mx-post[data-cat="Identität"] .mx-post__meta span:first-child { color: #b48cff; }
+body.mx-techno .mx-post p { color: #9a9a9a; }
+body.mx-techno main [data-cat-btn], body.mx-techno main .mx-chips button, body.mx-techno main .mx-filter button { background: transparent; color: #f2f2f2; border-color: rgba(242,242,242,.25); }
+body.mx-techno main .mx-filter button[aria-pressed="true"], body.mx-techno main .mx-chips button[aria-pressed="true"], body.mx-techno main .mx-filter .is-on, body.mx-techno main .mx-chips .is-on { background: #00ff38; color: #000; border-color: #00ff38; }
+/* Infostand A–Z */
+body.mx-techno .mx-az__nav a { background: transparent; color: #f2f2f2; border-color: rgba(242,242,242,.2); font-family: ui-monospace, Menlo, monospace; transition: background .2s, color .2s; }
+body.mx-techno .mx-az__nav a:hover { background: #00ff38; color: #000; border-color: #00ff38; }
+/* Merch-Stand */
+body.mx-techno .ac-take__book, body.mx-techno .ac-take .mx-book, body.mx-techno .ac-take__grid > div:first-child { background: #0d0d0d !important; color: #f2f2f2; box-shadow: inset 0 0 0 1px rgba(242,242,242,.1); }
+body.mx-techno .ac-take__news { color: #000; }
+body.mx-techno .ac-take__news .mx-label, body.mx-techno .ac-take__news h3, body.mx-techno .ac-take__news label, body.mx-techno .ac-take__news a, body.mx-techno .ac-take__news span, body.mx-techno .ac-take__news button { color: #000 !important; }
+body.mx-techno .ac-take__news input { color: #000; border-color: #000 !important; }
+body.mx-techno .ac-take__news input::placeholder { color: rgba(0,0,0,.55); }
+/* Schwebender Termin-Button im Festival-Look */
+body.mx-techno .mx-float { background: #00ff38; color: #000; box-shadow: 0 0 40px -8px rgba(0,255,56,.7); }
+body.mx-techno .mx-float i { background: #000; color: #00ff38; }
+body.mx-techno main button[data-cat] { background: transparent; color: #f2f2f2; border-color: rgba(242,242,242,.25); }
+body.mx-techno main button[data-cat][aria-pressed="true"] { background: #00ff38; color: #000; border-color: #00ff38; }
+body.mx-techno main { background: #050505; }
+body.mx-techno main .mx-h2 { font-weight: 800 !important; letter-spacing: -.05em !important; }
+/* Glitch-Ebenen hinter die Schrift: keine Mischfarben */
+body.mx-techno .fx-h1 .rz { isolation: isolate; }
+body.mx-techno .fx-h1 .rz::before, body.mx-techno .fx-h1 .rz::after { z-index: -1; mix-blend-mode: normal; opacity: 1; }
+.ac-take__book .mx-book__cover { padding: 18px; overflow: hidden; }
+.ac-take__book .mx-book__cover b { font-size: clamp(20px, 2.1vw, 30px); overflow-wrap: break-word; }
+@media (max-width: 760px) { .ac-take__book .mx-book__cover { width: 170px; } }
+body.mx-techno .mx-hd.is-scrolled { background: rgba(5,5,5,.88); color: #f2f2f2; box-shadow: 0 1px 0 rgba(242,242,242,.1); }
+body.mx-techno .mx-hd.is-scrolled a, body.mx-techno .mx-hd.is-scrolled button { color: #f2f2f2; }
+body.mx-techno .fx-maplist a.fx-ml--dark { background: #0a0a0a; color: #f2f2f2; box-shadow: inset 0 0 0 2px #00ff38; }
+body.mx-techno .fx-maplist a.fx-ml--dark * { color: #f2f2f2; }
+html body.mx-techno { background: #050505 !important; }
+body.mx-techno .fx-maplist a.fx-ml--vio, body.mx-techno .fx-maplist a.fx-ml--vio * { color: #fff; }
