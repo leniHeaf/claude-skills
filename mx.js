@@ -1513,3 +1513,27 @@ const B3T = (() => {
     links.forEach((a) => { const t = document.getElementById(a.getAttribute("href").slice(1)); if (t) io.observe(t); });
   }
 })();
+/* Marken-Festival: Bändchen, Stempel, Timetable */
+(() => {
+  const pass = document.querySelector("[data-pass]"), src = document.getElementById("b3-academy"); if (!pass || !src) return;
+  const D = JSON.parse(src.textContent);
+  const L = { get: (k, d) => { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } }, set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  const LV = [[0, "Neugierig"], [50, "Entdecker:in"], [150, "Markendenker:in"], [300, "Strateg:in"], [500, "Markenprofi"], [800, "Markenmeister:in"]];
+  const paint = () => {
+    const read = L.get("b3-read", []), xp = L.get("b3-xp", 0), band = L.get("b3-band", false);
+    let li = 0; LV.forEach((l, k) => { if (xp >= l[0]) li = k; });
+    pass.classList.toggle("is-on", band);
+    pass.querySelector("[data-pass-lvl]").textContent = band ? `Level ${li + 1} · ${LV[li][1]}` : "Gast";
+    pass.querySelector("[data-pass-xp]").textContent = band ? `${xp} XP · ${read.length} von ${D.total} Acts gesehen` : "Holt euch euer Bändchen und sammelt Stempel.";
+    pass.querySelectorAll("[data-stamp]").forEach((s) => { const p = D.paths.find((x) => x.id === s.dataset.stamp); const n = p ? p.items.filter((i) => read.includes(i.f)).length : 0; s.classList.toggle("on", band && n > 0); s.classList.toggle("full", band && p && n === p.items.length); });
+    document.querySelectorAll("[data-slot]").forEach((a) => a.classList.toggle("is-seen", read.includes(a.dataset.slot)));
+    const b = document.querySelector("[data-band]"); if (b) b.textContent = band ? "Mein Bändchen ↓" : "Bändchen holen";
+  };
+  const btn = document.querySelector("[data-band]");
+  if (btn) btn.addEventListener("click", () => {
+    if (!L.get("b3-band", false)) { L.set("b3-band", true); if (window.B3G) { window.B3G.award(10, "Willkommen auf dem Festival"); window.B3G.confetti(160); } }
+    paint(); pass.classList.add("is-new"); setTimeout(() => pass.classList.remove("is-new"), 1200);
+    document.getElementById("pass").scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
+  });
+  paint();
+})();
