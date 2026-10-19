@@ -1692,3 +1692,29 @@ const B3S = (() => {
   };
   row.addEventListener("click", (e) => { const b = e.target.closest("[data-story]"); if (b) open(ids.indexOf(b.dataset.story)); });
 })();
+/* Academy-Reels: Vollbild-Feed, Feiern, Merken, Teilen */
+(() => {
+  const sec = document.querySelector(".rl-sec"); if (!sec) return;
+  const tr = sec.querySelector("[data-reels]"), L = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) || d; } catch (e) { return d; } }, S = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+  const G = () => window.B3G, snd = (n) => { if (window.B3S) B3S.play(n); };
+  const io = "IntersectionObserver" in window ? new IntersectionObserver((es) => es.forEach((e) => e.target.classList.toggle("is-on", e.isIntersecting)), { threshold: .55 }) : null;
+  tr.querySelectorAll(".rl").forEach((r) => { if (io) io.observe(r); else r.classList.add("is-on");
+    const f = r.dataset.reel, likes = L("b3-likes", []), saved = L("b3-saved", []);
+    r.querySelector("[data-like]").setAttribute("aria-pressed", String(likes.includes(f))); r.querySelector("[data-save]").setAttribute("aria-pressed", String(saved.includes(f))); });
+  const toggle = (key, f, btn, xp, why) => { const a = L(key, []), on = !a.includes(f); S(key, on ? [...a, f] : a.filter((x) => x !== f)); btn.setAttribute("aria-pressed", String(on));
+    if (on) { const done = L(key + "-xp", []); if (!done.includes(f)) { S(key + "-xp", [...done, f]); if (G()) G().award(xp, why); } const b = btn.getBoundingClientRect(); if (G()) G().confetti(30, b.left + b.width / 2, b.top); snd(key === "b3-likes" ? "beep" : "stamp"); } return on; };
+  const burst = (r) => { const h = document.createElement("span"); h.className = "rl-burst"; h.textContent = "♥"; r.appendChild(h); setTimeout(() => h.remove(), 850); };
+  const open = (r) => { sec.classList.add("is-full"); document.documentElement.classList.add("rl-lock"); r.scrollIntoView({ block: "start" }); snd("crowd"); sec.querySelector("[data-reels-close]").focus({ preventScroll: true }); };
+  const close = () => { const r = [...tr.querySelectorAll(".rl")].find((x) => x.classList.contains("is-on")); sec.classList.remove("is-full"); document.documentElement.classList.remove("rl-lock"); if (r) r.scrollIntoView({ block: "nearest", inline: "start" }); };
+  let tap = 0;
+  tr.addEventListener("click", (e) => { const r = e.target.closest(".rl"); if (!r) return; const f = r.dataset.reel;
+    const lk = e.target.closest("[data-like]"), sv = e.target.closest("[data-save]"), sh = e.target.closest("[data-share]");
+    if (lk) { if (toggle("b3-likes", f, lk, 2, "Act gefeiert")) burst(r); return; }
+    if (sv) { toggle("b3-saved", f, sv, 2, "Act gemerkt"); return; }
+    if (sh) { const u = new URL(f, location.href).href, t = r.querySelector(".rl-hook").textContent; if (navigator.share) navigator.share({ title: t, url: u }).catch(() => {}); else if (navigator.clipboard) navigator.clipboard.writeText(u).then(() => { sh.querySelector("span").textContent = "Kopiert"; setTimeout(() => sh.querySelector("span").textContent = "Teilen", 1500); }); return; }
+    if (e.target.closest("a")) return;
+    if (!sec.classList.contains("is-full")) { open(r); return; }
+    const now = Date.now(); if (now - tap < 320) { const b = r.querySelector("[data-like]"); if (b.getAttribute("aria-pressed") !== "true") toggle("b3-likes", f, b, 2, "Act gefeiert"); burst(r); tap = 0; } else tap = now; });
+  sec.querySelector("[data-reels-close]").addEventListener("click", close);
+  document.addEventListener("keydown", (e) => { if (!sec.classList.contains("is-full")) return; if (e.key === "Escape") close(); if (e.key === "ArrowDown" || e.key === "ArrowUp") { e.preventDefault(); tr.scrollBy({ top: (e.key === "ArrowDown" ? 1 : -1) * innerHeight, behavior: "smooth" }); } });
+})();
