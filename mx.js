@@ -1769,8 +1769,8 @@ const B3S = (() => {
 /* Social-Media-Wand: Spalten laufen beim Scrollen unterschiedlich schnell */
 (() => {
   const walls = document.querySelectorAll("[data-sw]"); if (!walls.length || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  const SP = [-0.18, 0.06, -0.3, -0.08]; let raf = 0;
-  const run = () => { raf = 0; walls.forEach((w) => { const r = w.getBoundingClientRect(); if (r.bottom < -200 || r.top > innerHeight + 200) return; const p = innerHeight - r.top; w.querySelectorAll("[data-swc]").forEach((c) => c.style.setProperty("--y", (p * SP[+c.dataset.swc]).toFixed(1) + "px")); }); };
+  const SP = [-0.16, 0.1, -0.24, 0.05]; let raf = 0;
+  const run = () => { raf = 0; walls.forEach((w) => { const r = w.getBoundingClientRect(); if (r.bottom < -200 || r.top > innerHeight + 200) return; const p = innerHeight / 2 - (r.top + r.height / 2); w.querySelectorAll("[data-swc]").forEach((c) => c.style.setProperty("--y", (p * SP[+c.dataset.swc]).toFixed(1) + "px")); }); };
   addEventListener("scroll", () => { if (!raf) raf = requestAnimationFrame(run); }, { passive: true }); run();
 })();
 
