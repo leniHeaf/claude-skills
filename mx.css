@@ -4060,3 +4060,83 @@ body.mx-premium .rl-fx .rl-crowd { filter: none; }
 .pr-ph img, .pr-ph:nth-child(even) img { aspect-ratio: 3 / 2; margin-top: 0; }
 @media (max-width: 760px) { .pr-ph { width: 82vw; } }
 .pr-ph img { height: auto !important; max-width: none; }
+/* ===== Festival zum Anfassen: Absperrband, Stempel, Stoffbändchen, Ticket, Timetable, Schilder, Polaroids ===== */
+/* Stempel auf dem Plakat */
+body.mx-premium .pr-poster .rz-sticker--2, body.mx-premium .pr-poster .rz-sticker--3 { display: none !important; }
+body.mx-premium .pr-poster .fx-hero__in { position: relative; }
+body.mx-premium .pr-poster .rz-sticker--1 { display: grid !important; place-items: center; position: absolute; right: 2%; top: 30%; width: 150px; height: 150px; padding: 0 !important; border-radius: 50% !important; background: transparent !important; color: #6a1bff !important; border: 4px solid #6a1bff !important; box-shadow: inset 0 0 0 4px #00ff38, inset 0 0 0 7px #6a1bff !important; font: 800 22px/1 var(--f) !important; letter-spacing: .02em !important; text-transform: uppercase; text-align: center; transform: rotate(-14deg) !important; opacity: .9; mix-blend-mode: multiply; animation: none !important; -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='r'%3E%3CfeTurbulence baseFrequency='.8' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -2.2 1.6'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23r)'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='r'%3E%3CfeTurbulence baseFrequency='.8' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -2.2 1.6'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23r)'/%3E%3C/svg%3E"); }
+/* Absperrband statt Laufschrift */
+body.mx-premium .pr-poster .fx-tick { position: relative; z-index: 2; margin: clamp(50px, 6vw, 80px) -2vw -18px; padding: 0; background: #050505 !important; transform: rotate(-1.4deg); border: 0 !important; box-shadow: 0 6px 0 rgba(0,0,0,.25); }
+body.mx-premium .pr-poster .fx-tick::before, body.mx-premium .pr-poster .fx-tick::after { content: ""; position: absolute; left: 0; right: 0; height: 9px; background: repeating-linear-gradient(-45deg, #00ff38 0 12px, #050505 12px 24px); }
+body.mx-premium .pr-poster .fx-tick::before { top: 0; } body.mx-premium .pr-poster .fx-tick::after { bottom: 0; }
+body.mx-premium .pr-poster .fx-tick div { padding: 21px 0; }
+body.mx-premium .pr-poster .fx-tick span { color: #f2f2f2 !important; font-weight: 800 !important; letter-spacing: .14em !important; }
+body.mx-premium .pr-poster .fx-tick span::before { width: 10px; height: 10px; border-radius: 0; background: #00ff38; transform: rotate(45deg); }
+/* Stoffbändchen mit Clip */
+body.mx-premium .fx-pass { padding-top: 70px !important; }
+body.mx-premium .fx-band { border-radius: 6px !important; border: 0 !important; color: #050505 !important; background: repeating-linear-gradient(0deg, rgba(0,0,0,.07) 0 1px, transparent 1px 3px), repeating-linear-gradient(90deg, rgba(255,255,255,.08) 0 2px, transparent 2px 5px), #00ff38 !important; box-shadow: 0 2px 0 rgba(0,0,0,.25), 0 18px 30px -18px rgba(0,0,0,.8) !important; transform: rotate(-1deg) !important; }
+body.mx-premium .fx-band::before { content: "B3DE ACADEMY · ALL ACCESS · B3DE ACADEMY · ALL ACCESS · B3DE ACADEMY · ALL ACCESS · B3DE ACADEMY · ALL ACCESS · B3DE ACADEMY · ALL ACCESS"; position: absolute; left: 0; right: 0; top: 6px; overflow: hidden; white-space: nowrap; font: 800 9px/1 var(--f); letter-spacing: .3em; color: rgba(5,5,5,.35); pointer-events: none; }
+body.mx-premium .fx-band::after { content: none !important; }
+body.mx-premium .fx-band__hole { width: 46px !important; height: 46px !important; border-radius: 8px !important; border: 0 !important; background: linear-gradient(145deg, #3a3a3a, #111) !important; box-shadow: inset 0 0 0 2px rgba(255,255,255,.12), 0 3px 6px rgba(0,0,0,.4) !important; }
+body.mx-premium .fx-band__hole::after { content: ""; position: absolute; inset: 15px; border-radius: 50%; background: #050505; box-shadow: inset 0 0 0 2px #555; }
+body.mx-premium .fx-band__hole { position: relative; }
+body.mx-premium .fx-band__main b, body.mx-premium .fx-band__main span, body.mx-premium .fx-band__brand, body.mx-premium .fx-band__more { color: #050505 !important; }
+body.mx-premium .fx-band__brand { font-weight: 800 !important; }
+body.mx-premium .fx-stamp { border-color: rgba(5,5,5,.5) !important; color: rgba(5,5,5,.6) !important; }
+body.mx-premium .fx-stamp.on { background: #050505 !important; color: #00ff38 !important; border-style: solid !important; transform: rotate(-8deg); }
+body.mx-premium .fx-band.is-on { background: repeating-linear-gradient(0deg, rgba(0,0,0,.08) 0 1px, transparent 1px 3px), repeating-linear-gradient(90deg, rgba(255,255,255,.08) 0 2px, transparent 2px 5px), #6a1bff !important; }
+body.mx-premium .fx-band.is-on *, body.mx-premium .fx-band.is-on::before { color: #fff !important; }
+/* Einlass-Check als Ticket mit Abriss */
+body.mx-premium .ac-quiz { position: relative; border-radius: 10px !important; border: 0 !important; background: #f2f2f2 !important; color: #050505 !important; padding-left: clamp(70px, 9vw, 110px) !important; -webkit-mask: radial-gradient(circle 14px at 0 50%, transparent 98%, #000) left / 51% 100% no-repeat, radial-gradient(circle 14px at 100% 50%, transparent 98%, #000) right / 51% 100% no-repeat; mask: radial-gradient(circle 14px at 0 50%, transparent 98%, #000) left / 51% 100% no-repeat, radial-gradient(circle 14px at 100% 50%, transparent 98%, #000) right / 51% 100% no-repeat; }
+body.mx-premium .ac-quiz::before { content: "EINLASS · ADMIT ONE"; position: absolute; left: 0; top: 0; bottom: 0; width: clamp(54px, 7vw, 86px); display: grid; place-items: center; writing-mode: vertical-rl; transform: rotate(180deg); background: #050505; color: #00ff38; font: 800 13px/1 var(--f); letter-spacing: .3em; border-right: 2px dashed #f2f2f2; }
+body.mx-premium .ac-quiz * { color: #050505 !important; }
+body.mx-premium .ac-quiz__n { color: #6a1bff !important; font-weight: 700; }
+body.mx-premium .ac-quiz__bar { background: rgba(5,5,5,.12) !important; } body.mx-premium .ac-quiz__bar b { background: #050505 !important; }
+body.mx-premium .ac-quiz__a button { background: transparent !important; border: 2px solid #050505 !important; border-radius: 0 !important; color: #050505 !important; font-weight: 700 !important; }
+body.mx-premium .ac-quiz__a button:hover { background: #050505 !important; color: #00ff38 !important; }
+body.mx-premium .ac-quiz .ac-res a, body.mx-premium .ac-quiz__res a { color: #050505 !important; }
+/* Timetable mit farbigen Bühnenköpfen */
+body.mx-premium .fx-stage { border-radius: 0 !important; border: 2px solid #f2f2f2 !important; background: #050505 !important; }
+body.mx-premium .fx-stage__head { border-top: 0 !important; background: var(--c) !important; }
+body.mx-premium .fx-stage__head, body.mx-premium .fx-stage__head * { color: #050505 !important; }
+body.mx-premium .fx-stage[style*="#6a1bff"] .fx-stage__head, body.mx-premium .fx-stage[style*="#6a1bff"] .fx-stage__head * { color: #fff !important; }
+body.mx-premium .fx-stage[style*="#0a0a0a"] .fx-stage__head { background: #050505 !important; border-bottom: 2px solid #f2f2f2; }
+body.mx-premium .fx-stage[style*="#0a0a0a"] .fx-stage__head * { color: #f2f2f2 !important; } body.mx-premium .fx-stage[style*="#0a0a0a"] .fx-stage__n { color: #00ff38 !important; }
+body.mx-premium .fx-stage__n { font-weight: 800 !important; }
+body.mx-premium .fx-stage__head .ac-path__d { opacity: .8; }
+body.mx-premium .fx-tt li + li { border-top: 1px dashed rgba(242,242,242,.18); }
+body.mx-premium .fx-tt time { color: #f2f2f2 !important; font-weight: 800 !important; font-size: 14px !important; }
+body.mx-premium .fx-stages__grid { gap: 0 !important; }
+body.mx-premium .fx-stage + .fx-stage { margin-left: -2px; }
+body.mx-premium .fx-stage:hover { transform: none; box-shadow: none !important; }
+/* Bereiche als Wegweiser-Schilder */
+body.mx-premium .fx-maplist { gap: 12px; background: transparent; border: 0; }
+body.mx-premium .fx-maplist a { border-radius: 4px !important; background: #050505 !important; box-shadow: inset 0 0 0 3px #f2f2f2 !important; padding-top: 70px !important; }
+body.mx-premium .fx-maplist a::before { top: 22px; left: 22px; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; background: #f2f2f2; color: #050505; font-weight: 800; letter-spacing: 0; }
+body.mx-premium .fx-maplist a::after { top: 0; right: 0; width: 100%; height: 12px; border-radius: 4px 4px 0 0; box-shadow: none; }
+body.mx-premium .fx-maplist a b { text-transform: uppercase !important; font-size: clamp(24px, 2.6vw, 36px) !important; font-weight: 800 !important; }
+body.mx-premium .fx-maplist a:hover { background: #111 !important; }
+/* Backstage-Wand: Polaroids mit Klebeband */
+body.mx-premium .pr-photos__row { gap: 28px; padding-top: 24px !important; padding-bottom: 30px !important; }
+body.mx-premium .pr-ph { position: relative; padding: 12px 12px 0; background: #f2f2f2; color: #050505; transform: rotate(-2deg); box-shadow: 0 14px 30px -14px rgba(0,0,0,.9); transition: transform .3s; }
+body.mx-premium .pr-ph:nth-child(even) { transform: rotate(1.8deg) translateY(14px); }
+body.mx-premium .pr-ph:nth-child(3n) { transform: rotate(-.8deg); }
+body.mx-premium .pr-ph:hover { transform: rotate(0) translateY(-4px); }
+body.mx-premium .pr-ph::before { content: ""; position: absolute; z-index: 2; top: -12px; left: 50%; width: 96px; height: 26px; margin-left: -48px; background: rgba(0,255,56,.75); transform: rotate(-4deg); }
+body.mx-premium .pr-ph:nth-child(even)::before { background: rgba(106,27,255,.7); transform: rotate(5deg); }
+body.mx-premium .pr-ph span { padding: 12px 2px 16px; margin: 0; color: #555; font-size: 13px; }
+body.mx-premium .pr-ph b { color: #050505; }
+@media (max-width: 760px) {
+  body.mx-premium .pr-poster .rz-sticker--1 { position: absolute; right: -6px; top: 140px; width: 96px; height: 96px; font-size: 14px !important; }
+  body.mx-premium .ac-quiz { padding-left: 62px !important; } body.mx-premium .ac-quiz::before { width: 46px; font-size: 10px; }
+  body.mx-premium .fx-stage + .fx-stage { margin: 16px 0 0; }
+  body.mx-premium .fx-maplist { gap: 8px; } body.mx-premium .fx-maplist a { padding-top: 64px !important; }
+}
+body.mx-premium .ac-quiz::before { background: #00ff38; color: #050505; border-right: 3px dashed #050505; }
+body.mx-premium .fx-stage .fx-stage__head .ac-path__d { color: inherit !important; opacity: .78; }
+body.mx-premium .fx-stage[style*="#00ff38"] .fx-stage__head .ac-path__d, body.mx-premium .fx-stage[style*="#f2f2f2"] .fx-stage__head .ac-path__d { color: #050505 !important; }
+body.mx-premium .fx-stage[style*="#6a1bff"] .fx-stage__head .ac-path__d { color: #fff !important; }
+body.mx-premium .fx-stage[style*="#0a0a0a"] .fx-stage__head .ac-path__d { color: #cfcfcf !important; }
+body.mx-premium .fx-stage[style*="#f2f2f2"] .fx-stage__n { color: #050505 !important; }
+body.mx-premium .fx-band::before { top: auto; bottom: 7px; }
+@media (max-width: 760px) { body.mx-premium .pr-poster .rz-sticker--1 { position: relative; right: auto; top: auto; margin: 22px auto 0; width: 92px; height: 92px; font-size: 13px !important; } }
