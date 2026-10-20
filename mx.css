@@ -4427,3 +4427,36 @@ body.mx-hy .mx-hd { background: #121212; }
 body.mx-hy .hy-grid3 h3, body.mx-hy .hy-h2, body.mx-hy .hy-h1 { font-family: var(--hy-c) !important; font-weight: 400 !important; letter-spacing: .005em !important; }
 body.mx-hy .hy-grid3 h3 { font-size: clamp(20px, 1.8vw, 26px) !important; line-height: 1.05 !important; text-transform: uppercase !important; }
 @media (max-width: 760px) { body.mx-hy .nv-crumb { position: static; padding: 18px 16px 0; } body.mx-hy .hy-hero { padding-top: 40px; } body.mx-hy .sp-tick { margin-top: 72px; } }
+/* ===== Social-Media-Seite: hyam-Aufbau im B3DE-Design ===== */
+.hy-hero, .hy-txt, .hy-cols, .hy-proj, .hy-quote, .hy-row { color: var(--mo-ink, #0a0a0a); }
+.hy-hero { text-align: left; max-width: 1400px; padding-top: clamp(150px, 14vw, 210px); }
+.hy-hero .mo-label { margin-bottom: 22px; }
+.hy-h1 { font: 500 clamp(44px, 7vw, 120px)/.9 var(--f); letter-spacing: -.025em; text-transform: uppercase; max-width: 14ch; }
+.hy-lead { margin: 28px 0 0; max-width: 46ch; font: 400 clamp(18px, 1.4vw, 21px)/1.45 var(--f); color: #3a3a3a; }
+.hy-hero .mx-btn, .hy-proj .mx-btn { margin-top: 28px; display: inline-block; }
+.hy-names { justify-content: flex-start; gap: 12px 40px; padding-top: 28px; border-top: 1px solid var(--mo-line, rgba(10,10,10,.13)); }
+.hy-names span { font: 500 clamp(18px, 1.6vw, 24px)/1 var(--f); letter-spacing: -.02em; color: #6b6b6b; opacity: 1; text-transform: none; }
+.hy-h2 { font: 500 clamp(36px, 5vw, 84px)/.92 var(--f); letter-spacing: -.025em; text-transform: uppercase; margin: 14px 0 20px; }
+.hy-c { text-align: left; }
+.hy-txt { grid-template-columns: minmax(0, 640px); justify-content: start; max-width: 1400px; }
+.hy-txt p, .hy-grid3 p { font: 400 17px/1.55 var(--f); color: #3a3a3a; }
+.hy-grid3 { border-top: 1px solid var(--mo-line, rgba(10,10,10,.13)); padding-top: 30px; }
+.hy-grid3 h3 { font: 500 clamp(20px, 1.7vw, 26px)/1.1 var(--f); letter-spacing: -.02em; text-transform: none; margin-bottom: 10px; }
+.hy-grid3 em { font: 500 12px/1 var(--f); font-style: normal; letter-spacing: .02em; color: #0a0a0a; padding: 4px 8px; border: 1px solid currentColor; border-radius: 999px; margin-left: 6px; vertical-align: 1px; }
+.hy-quote { text-align: left; max-width: 1400px; }
+.hy-quote blockquote { font: 500 clamp(32px, 4.6vw, 76px)/.95 var(--f); letter-spacing: -.025em; text-transform: uppercase; max-width: 18ch; }
+.hy-quote p { font: 400 14px/1 var(--f); letter-spacing: .02em; color: #6b6b6b; }
+.hy-proj { text-align: left; max-width: 1400px; }
+.hy-pc { color: var(--mo-ink, #0a0a0a); }
+.hy-pm { font: 500 12px/1.35 var(--f); letter-spacing: .02em; text-transform: none; color: #6b6b6b; }
+.hy-pm b { color: #0a0a0a; font-weight: 600; }
+.hy-pm span:first-child::before { background: #0a0a0a; }
+.hy-row { max-width: 1400px; }
+.hy-st { border-radius: 0; }
+.hy-st span { font: 400 12px/1.3 var(--f); }
+.hy-st b { font-weight: 600; letter-spacing: 0; text-transform: none; font-size: 13px; }
+/* keine Zoom-, Parallax- oder Laufband-Effekte */
+.hy-st:hover img, .hy-pc:hover .hy-pi img, .sw-t:hover img, .sp-card:hover .sp-img img { transform: none; }
+.hy-st img, .hy-pi img, .sw-t img { transition: none; }
+.sw-col { transform: none !important; }
+.hy-cols, .hy-row, .hy-txt, .hy-proj, .hy-quote, .hy-hero { max-width: 1400px; margin-left: auto; margin-right: auto; padding-left: var(--mo-pad, 24px); padding-right: var(--mo-pad, 24px); }
