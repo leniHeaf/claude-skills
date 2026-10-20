@@ -2,9 +2,7 @@
 Options -Indexes
 ErrorDocument 404 /404.html
 
-# Frühere Standortseiten (Köln, Saalbach) dauerhaft auf Sonneberg umleiten
-Redirect 301 /branding-agentur-koeln.html /branding-agentur-sonneberg.html
-Redirect 301 /branding-agentur-saalbach.html /branding-agentur-sonneberg.html
+# Frühere Standortseite Saalbach dauerhaft umleiten
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml text/plain application/xml application/manifest+json
 </IfModule>
@@ -25,3 +23,4 @@ Redirect 301 /branding-agentur-saalbach.html /branding-agentur-sonneberg.html
   Header set X-Frame-Options "SAMEORIGIN"
   Header set Permissions-Policy "camera=(), microphone=(), geolocation=()"
 </IfModule>
+Redirect 301 /leni-heaf.html /lena-hofmann.html

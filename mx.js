@@ -441,7 +441,7 @@
   try { sessionStorage.setItem("b3-intro", "1"); } catch (e) {}
   const ov = document.createElement("div");
   ov.className = "mo-ov"; ov.setAttribute("aria-hidden", "true");
-  ov.innerHTML = '<div class="mo-ov__w">' + "B3DE".split("").map((c, i) => `<span style="--i:${i}">${c}</span>`).join("") + '</div><div class="mo-ov__c"><span>Marken, für die man einsteht</span><span>Studio in Sonneberg</span></div><i class="mo-ov__bar"></i>';
+  ov.innerHTML = '<div class="mo-ov__w">' + "B3DE".split("").map((c, i) => `<span style="--i:${i}">${c}</span>`).join("") + '</div><div class="mo-ov__c"><span>Marken, für die man einsteht</span><span>Studio in Köln</span></div><i class="mo-ov__bar"></i>';
   document.body.appendChild(ov);
   root.classList.remove("mo-pre");
   ov.insertAdjacentHTML("beforeend", '<span class="mo-ov__skip">(Klicken zum Überspringen)</span>');
@@ -642,7 +642,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
     const r = hs.getBoundingClientRect(); const dist = hs.offsetHeight - innerHeight;
     scrollTo({ top: scrollY + r.top + dist * (i / Math.max(1, tiles.length - 1)), behavior: "smooth" });
   });
-  const g = document.querySelector("[data-globe]"); if (g) { g.setAttribute("role", "img"); g.setAttribute("aria-label", "Weltkugel mit dem Studio in Sonneberg"); }
+  const g = document.querySelector("[data-globe]"); if (g) { g.setAttribute("role", "img"); g.setAttribute("aria-label", "Weltkugel mit dem Studio in Köln"); }
   document.querySelectorAll('a[target="_blank"]').forEach((a) => { if (!/noopener/.test(a.rel)) a.rel = (a.rel + " noopener").trim(); if (!a.querySelector(".sr")) a.insertAdjacentHTML("beforeend", '<span class="sr"> (öffnet in neuem Tab)</span>'); });
 })();
 
@@ -1422,7 +1422,7 @@ const B3T = (() => {
     g.font = `600 84px ${F}`; g.fillText(nm, W / 2, 610, W - 300); g.fillRect(W / 2 - 360, 640, 720, 3);
     g.font = `400 28px ${F}`; g.fillStyle = "#333"; wrap(g, `hat alle ${p.items.length} Artikel des Lernpfads „${p.name}“ in der B3DE Academy gelesen und die Grundlagen dieses Themas kennengelernt.`, W / 2, 720, W - 420, 40, 3);
     g.textAlign = "left"; g.fillStyle = "#0a0a0a"; g.font = `500 24px ${F}`; g.fillText(date, 160, H - 150); g.fillRect(160, H - 135, 300, 2); g.font = `400 20px ${F}`; g.fillStyle = "#666"; g.fillText("Datum", 160, H - 105);
-    g.textAlign = "right"; g.fillStyle = "#0a0a0a"; g.font = `italic 400 40px ${F}`; g.fillText("Leni Heaf", W - 160, H - 150); g.fillRect(W - 460, H - 135, 300, 2); g.font = `400 20px ${F}`; g.fillStyle = "#666"; g.fillText("Leni Heaf, B3DE", W - 160, H - 105);
+    g.textAlign = "right"; g.fillStyle = "#0a0a0a"; g.font = `italic 400 40px ${F}`; g.fillText("Lena Hofmann", W - 160, H - 150); g.fillRect(W - 460, H - 135, 300, 2); g.font = `400 20px ${F}`; g.fillStyle = "#666"; g.fillText("Lena Hofmann, B3DE", W - 160, H - 105);
     g.textAlign = "center"; g.fillStyle = "#00ff38"; g.beginPath(); g.arc(W / 2, H - 150, 62, 0, Math.PI * 2); g.fill(); g.fillStyle = "#0a0a0a"; g.font = `600 30px ${F}`; g.fillText("B3DE", W / 2, H - 140); g.textAlign = "left";
   };
   const open = (k) => { sel = k; cert.hidden = false; nameIn.value = L.get("b3-cert-name", ""); draw(); };
@@ -1752,4 +1752,17 @@ const B3S = (() => {
   const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } }), { threshold: .15 });
   ps.forEach((p) => io.observe(p));
   document.addEventListener("click", (e) => { if (e.target.closest("[data-more]")) setTimeout(() => document.querySelectorAll(".sm-post.is-x").forEach((p) => io.observe(p)), 50); });
+})();
+/* Marken-Wiki: Suche, Themenfilter */
+(() => {
+  const list = document.querySelector("[data-wlist]"); if (!list) return;
+  const q = document.querySelector("[data-wq]"), btns = [...document.querySelectorAll("[data-wc]")], none = list.querySelector("[data-wnone]");
+  let cat = "";
+  const run = () => {
+    const t = (q.value || "").trim().toLowerCase(); let any = 0;
+    list.querySelectorAll(".hw-g").forEach((g) => { let n = 0; g.querySelectorAll(".hw-e").forEach((e) => { const ok = (!cat || e.dataset.cat === cat) && (!t || e.dataset.q.includes(t)); e.hidden = !ok; if (ok) n++; }); g.hidden = !n; any += n; });
+    none.hidden = !!any;
+  };
+  q.addEventListener("input", run);
+  btns.forEach((b) => b.addEventListener("click", () => { cat = b.dataset.wc; btns.forEach((x) => x.setAttribute("aria-pressed", String(x === b))); run(); }));
 })();
