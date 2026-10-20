@@ -4349,3 +4349,20 @@ body .sp-tick ~ .nv-crumb { top: clamp(112px, 9vw, 130px); }
 body .sp-tick ~ .nv-crumb { top: calc(clamp(76px, 7vw, 92px) + 56px); }
 .sp-tick ~ .sp-hero { padding-top: clamp(110px, 11vw, 160px) !important; }
 @media (max-width: 760px) { .sp-tick ~ .sp-hero { padding-top: 120px !important; } body .sp-tick ~ .nv-crumb { top: 136px; } }
+/* Marken-Check auf der Wiki-Seite */
+body.mx-wiki .hw-check { margin: 0 auto; max-width: 1400px; padding: clamp(80px, 9vw, 140px) var(--mo-pad, 24px); background: transparent; color: #0a0a0a; }
+body.mx-wiki .hw-check .ac-quiz { background: #fff; color: #0a0a0a; border: 1px solid rgba(10,10,10,.12); }
+/* Social-Media-Seite: Ablauf wie Bausteine */
+.sp-sec .phases { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid rgba(10,10,10,.15); counter-reset: ph; }
+.sp-sec .phases li { display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: 14px; padding: 28px 28px 36px 0; border-bottom: 1px solid rgba(10,10,10,.15); counter-increment: ph; }
+.sp-sec .phases li > div { display: grid; gap: 10px; }
+.sp-sec .phases h3 { margin: 0; font: 700 clamp(22px, 2vw, 28px)/1.1 var(--f) !important; letter-spacing: -.02em !important; text-transform: none !important; }
+.sp-sec .phases h3::before { content: counter(ph, decimal-leading-zero); display: block; margin-bottom: 14px; font: 600 14px/1 var(--f); color: #8a8a8a; }
+.sp-sec .phases p { margin: 0; color: #3a3a3a; line-height: 1.55; font-size: 16px !important; }
+.sp-sec .phases .label-s { order: -1; align-self: flex-start; padding: 6px 12px; border-radius: 999px; background: #0a0a0a; color: #f2f2f2; font: 600 12px/1 var(--f) !important; letter-spacing: .04em; text-transform: none !important; }
+@media (max-width: 900px) { .sp-sec .phases { grid-template-columns: 1fr; } }
+.sp-grid { margin-bottom: 60px; }
+.sp-sec .phases li { display: block !important; grid-template-columns: none !important; }
+.sp-sec .phases h3::before { content: none !important; }
+.sp-sec .phases .label-s { display: inline-block !important; margin-bottom: 18px; white-space: nowrap; }
+.sp-sec .phases li > div { padding: 0 !important; }
