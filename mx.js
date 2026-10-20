@@ -1778,7 +1778,7 @@ const B3S = (() => {
 (() => {
   const rows = document.querySelectorAll(".hy-row"); if (!rows.length || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   let raf = 0;
-  const run = () => { raf = 0; rows.forEach((r, k) => { const b = r.getBoundingClientRect(); if (b.bottom < 0 || b.top > innerHeight) return; const t = r.querySelector(".hy-track"); const over = Math.max(0, t.scrollWidth - r.clientWidth); const p = Math.min(1, Math.max(0, (innerHeight - b.top) / (innerHeight + b.height))); const x = k % 2 ? -over * (1 - p) : -over * p; t.style.transform = `translate3d(${x.toFixed(1)}px,0,0)`; }); };
+  const run = () => { raf = 0; rows.forEach((r, k) => { const b = r.getBoundingClientRect(); if (b.bottom < 0 || b.top > innerHeight) return; const t = r.querySelector(".hy-track"); const over = Math.max(0, t.scrollWidth - r.clientWidth); t.style.transition = over ? "" : "none"; const p = Math.min(1, Math.max(0, (innerHeight - b.top) / (innerHeight + b.height))); const x = over ? (k % 2 ? -over * (1 - p) : -over * p) : 0; t.style.transform = `translate3d(${x.toFixed(1)}px,0,0)`; }); };
   addEventListener("scroll", () => { if (!raf) raf = requestAnimationFrame(run); }, { passive: true }); addEventListener("resize", run); run();
 })();
 /* Reel-Kacheln: Video spielt nur, wenn sichtbar */

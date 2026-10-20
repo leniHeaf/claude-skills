@@ -4571,3 +4571,10 @@ a.rl2::after { inset: 40% 0 0 !important; background: linear-gradient(transparen
   .sw-t .rl2-cap em, .sw-t .rl2-cap small, .sw-t .rl2-snd { display: none !important; }
   .sw-t .rl2-cap { right: 42px !important; font-size: 11px !important; }
 }
+/* Story-Bänder mittig, wenn alle Kacheln Platz haben */
+@media (min-width: 761px) { .hy-track { margin: 0 auto; } }
+@media (min-width: 761px) {
+  .hy-st { flex-basis: clamp(180px, 15vw, 250px) !important; }
+  .hy-track { gap: clamp(16px, 2vw, 32px); }
+}
+@media (min-width: 761px) { .hy-rh { max-width: calc(5 * clamp(180px, 15vw, 250px) + 4 * clamp(16px, 2vw, 32px)); padding: 0; } }
