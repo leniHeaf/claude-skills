@@ -1771,5 +1771,13 @@ const B3S = (() => {
   const walls = document.querySelectorAll("[data-sw]"); if (!walls.length || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   const SP = [-0.18, 0.06, -0.3, -0.08]; let raf = 0;
   const run = () => { raf = 0; walls.forEach((w) => { const r = w.getBoundingClientRect(); if (r.bottom < -200 || r.top > innerHeight + 200) return; const p = innerHeight - r.top; w.querySelectorAll("[data-swc]").forEach((c) => c.style.setProperty("--y", (p * SP[+c.dataset.swc]).toFixed(1) + "px")); }); };
-  /* Parallaxe deaktiviert */
+  addEventListener("scroll", () => { if (!raf) raf = requestAnimationFrame(run); }, { passive: true }); run();
+})();
+
+/* Story-Bänder: gleiten beim Scrollen seitlich (wie hyam) */
+(() => {
+  const rows = document.querySelectorAll(".hy-row"); if (!rows.length || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  let raf = 0;
+  const run = () => { raf = 0; rows.forEach((r, k) => { const b = r.getBoundingClientRect(); if (b.bottom < 0 || b.top > innerHeight) return; const t = r.querySelector(".hy-track"); const over = Math.max(0, t.scrollWidth - r.clientWidth); const p = Math.min(1, Math.max(0, (innerHeight - b.top) / (innerHeight + b.height))); const x = k % 2 ? -over * (1 - p) : -over * p; t.style.transform = `translate3d(${x.toFixed(1)}px,0,0)`; }); };
+  addEventListener("scroll", () => { if (!raf) raf = requestAnimationFrame(run); }, { passive: true }); addEventListener("resize", run); run();
 })();

@@ -4464,3 +4464,20 @@ body.mx-hy .hy-grid3 h3 { font-size: clamp(20px, 1.8vw, 26px) !important; line-h
 .hy-st.mo-img, .sw-t.mo-img { overflow: hidden; }
 .mx-js .hy-st.mo-img img, .mx-js .hy-pi.mo-img img, .mx-js .sw-t.mo-img img, .mx-js .sp-visual.mo-img img { transition: transform 1.8s var(--e-out); transition-delay: var(--d, 0s); }
 .hy-hero .hy-names span.mo-anim-fade { display: inline-block; }
+/* Story-Bänder wie hyam: große 9:16-Kacheln, gleiten seitlich */
+.hy-row { max-width: none !important; padding: clamp(50px, 6vw, 90px) 0 !important; overflow: hidden; display: block; }
+.hy-track { display: flex; gap: clamp(24px, 3.4vw, 54px); width: max-content; padding: 0 var(--mo-pad, 24px); will-change: transform; }
+.hy-st { flex: 0 0 clamp(200px, 17vw, 260px) !important; aspect-ratio: 9 / 16 !important; margin-top: 0 !important; }
+.hy-st:nth-child(2) { margin-top: 0 !important; }
+/* Wand: Bewegung wieder an */
+.sw-col { transform: translateY(var(--y, 0px)) !important; }
+@media (max-width: 760px) { .hy-row { overflow-x: auto; } .hy-st { flex-basis: 58vw !important; } }
+@media (prefers-reduced-motion: reduce) { .sw-col { transform: none !important; } }
+/* Hero zentriert wie hyam, B3DE-Typo */
+.hy-hero { text-align: center !important; }
+.hy-h1 { margin-left: auto !important; margin-right: auto !important; max-width: 16ch; }
+.hy-lead { margin-left: auto !important; margin-right: auto !important; }
+.hy-names { justify-content: center !important; border-top: 0 !important; }
+.hy-hero .mo-label { text-align: center; }
+/* Wand ohne eigene Kopfzeile auf der Social-Media-Seite: nur Kacheln */
+.hy-hero + .sw { padding-top: 40px; }
