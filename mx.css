@@ -4481,3 +4481,29 @@ body.mx-hy .hy-grid3 h3 { font-size: clamp(20px, 1.8vw, 26px) !important; line-h
 .hy-hero .mo-label { text-align: center; }
 /* Wand ohne eigene Kopfzeile auf der Social-Media-Seite: nur Kacheln */
 .hy-hero + .sw { padding-top: 40px; }
+/* ===== Reel-Kacheln (Social-Media-Oberfläche) ===== */
+.rl2 { position: relative; display: block; overflow: hidden; background: #111; color: #fff; text-decoration: none; isolation: isolate; }
+.rl2 video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; }
+.rl2::after { content: ""; position: absolute; inset: 45% 0 0; z-index: -1; background: linear-gradient(transparent, rgba(0,0,0,.65)); }
+.rl2 > img { display: none; }
+.rl2-snd { position: absolute; top: 10px; right: 10px; padding: 3px 7px; border-radius: 999px; background: rgba(0,0,0,.35); font: 500 10px/1.2 var(--f); letter-spacing: .02em; }
+.rl2-rail { position: absolute; right: 8px; bottom: 74px; display: grid; justify-items: center; gap: 10px; }
+.rl2-av { position: relative; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; background: #f2f2f2; color: #0a0a0a; font: 700 12px/1 var(--f); margin-bottom: 6px; }
+.rl2-av i { position: absolute; bottom: -9px; left: 50%; transform: translateX(-50%); padding: 2px 5px; border-radius: 999px; background: #0a0a0a; color: #fff; font: 600 8px/1.2 var(--f); font-style: normal; white-space: nowrap; }
+.rl2-b { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,.18); backdrop-filter: blur(6px); font: 600 7.5px/1 var(--f); text-align: center; }
+.rl2-cap { position: absolute; left: 10px; right: 58px; bottom: 10px; display: grid; gap: 3px; font: 400 11.5px/1.35 var(--f); text-shadow: 0 1px 3px rgba(0,0,0,.4); }
+.rl2-cap b { font-weight: 700; font-size: 13px; }
+.rl2-cap em { font-style: normal; font-weight: 600; }
+.rl2-cap small { font-size: 10px; opacity: .85; }
+.sw-t.rl2 { aspect-ratio: var(--ar, 9 / 16); }
+.sw-t.rl2 .sw-av, .sw-t.rl2 .sw-n { display: none; }
+@media (max-width: 760px) { .rl2-rail { transform: scale(.85); transform-origin: right bottom; } }
+/* Reel-Oberfläche gegen alte Kachel-Stile absichern */
+a.rl2 span { position: static; inset: auto; left: auto; right: auto; bottom: auto; display: block; font: inherit; }
+a.rl2::after { inset: 45% 0 0 !important; }
+a.rl2 > .rl2-snd { position: absolute; top: 10px; right: 10px; left: auto; bottom: auto; padding: 3px 7px; border-radius: 999px; background: rgba(0,0,0,.35); font: 500 10px/1.2 var(--f); }
+a.rl2 > .rl2-rail { position: absolute; right: 8px; bottom: 74px; left: auto; display: grid; justify-items: center; gap: 10px; }
+a.rl2 .rl2-av { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; background: #f2f2f2; color: #0a0a0a; font: 700 12px/1 var(--f); position: relative; margin-bottom: 6px; }
+a.rl2 .rl2-b { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,.18); font: 600 7.5px/1 var(--f); }
+a.rl2 > .rl2-cap { position: absolute; left: 10px; right: 58px; bottom: 10px; display: grid; gap: 3px; font: 400 11.5px/1.35 var(--f); }
+a.rl2 .rl2-cap span { font: inherit; }

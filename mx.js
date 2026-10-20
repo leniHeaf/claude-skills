@@ -1781,3 +1781,10 @@ const B3S = (() => {
   const run = () => { raf = 0; rows.forEach((r, k) => { const b = r.getBoundingClientRect(); if (b.bottom < 0 || b.top > innerHeight) return; const t = r.querySelector(".hy-track"); const over = Math.max(0, t.scrollWidth - r.clientWidth); const p = Math.min(1, Math.max(0, (innerHeight - b.top) / (innerHeight + b.height))); const x = k % 2 ? -over * (1 - p) : -over * p; t.style.transform = `translate3d(${x.toFixed(1)}px,0,0)`; }); };
   addEventListener("scroll", () => { if (!raf) raf = requestAnimationFrame(run); }, { passive: true }); addEventListener("resize", run); run();
 })();
+/* Reel-Kacheln: Video spielt nur, wenn sichtbar */
+(() => {
+  const vs = document.querySelectorAll(".rl2 video"); if (!vs.length) return;
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
+  const io = new IntersectionObserver((es) => es.forEach((e) => { const v = e.target; if (e.isIntersecting) { if (v.preload === "none") v.preload = "auto"; const p = v.play(); if (p) p.catch(() => {}); } else v.pause(); }), { threshold: 0.35 });
+  vs.forEach((v) => io.observe(v));
+})();
