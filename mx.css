@@ -4317,3 +4317,35 @@ body.mx section.sm .sm-head a, body.mx section.sm .sm-head a * { color: #f2f2f2 
 @media (max-width: 560px) { .sp-blocks { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) { .sp-marq div { animation: none; } }
 .sp-list a > * { justify-self: start; text-align: left; } .sp-list em { justify-self: end; text-align: right; }
+/* hyam-näher: Projekt-Laufband, Bild, Kacheln, Zitat */
+.sp-tick { position: relative; z-index: 60; overflow: hidden; background: #0a0a0a; color: #f2f2f2; font-size: 13px; }
+.sp-tick div { display: flex; width: max-content; animation: sp-marq 60s linear infinite; }
+.sp-tick a { padding: 10px 28px; color: inherit; text-decoration: none; white-space: nowrap; border-right: 1px solid rgba(242,242,242,.15); }
+.sp-tick a:hover { text-decoration: underline; }
+body .sp-tick ~ .nv-crumb { top: clamp(112px, 9vw, 130px); }
+.sp-visual { margin: 0 0 clamp(60px, 7vw, 100px); }
+.sp-visual img { display: block; width: 100%; height: clamp(320px, 62vw, 820px); object-fit: cover; }
+.sp-visual figcaption { padding: 12px var(--mo-pad, 24px) 0; font-size: 13px; color: #6b6b6b; }
+.sp-pr { margin-top: clamp(80px, 9vw, 140px); background: #121212; color: #f2f2f2; }
+.sp-pr__in { max-width: 1400px; margin: 0 auto; padding: clamp(80px, 9vw, 140px) var(--mo-pad, 24px); }
+.sp-pr .sp-k { color: #9a9a9a; }
+.sp-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(20px, 3vw, 44px); margin-bottom: 50px; }
+.sp-card { display: grid; gap: 14px; color: inherit; text-decoration: none; }
+.sp-card:nth-child(even) { margin-top: clamp(40px, 8vw, 120px); }
+.sp-img { display: block; aspect-ratio: 4 / 5; max-width: 100%; overflow: hidden; background: #1e1e1e; }
+.sp-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .9s cubic-bezier(.16,1,.3,1); }
+.sp-card:hover .sp-img img { transform: scale(1.04); }
+.sp-ph { display: grid; place-items: center; height: 100%; padding: 20px; font: 700 clamp(28px, 4vw, 56px)/1 var(--f); letter-spacing: -.04em; color: #f2f2f2; background: #1e1e1e; text-align: center; }
+.sp-meta { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; align-items: baseline; }
+.sp-meta .sp-code { grid-row: span 2; color: #8a8a8a; }
+.sp-meta b { font: 700 clamp(20px, 2vw, 28px)/1.1 var(--f); letter-spacing: -.02em; }
+.sp-meta .sp-pt { color: #bdbdbd; }
+.sp-quote { max-width: 1400px; margin: 0 auto; padding: clamp(100px, 12vw, 180px) var(--mo-pad, 24px); text-align: center; }
+.sp-quote blockquote { margin: 0 auto; max-width: 18ch; font: 600 clamp(40px, 6.4vw, 104px)/.98 var(--f); letter-spacing: -.05em; text-wrap: balance; }
+.sp-quote p { margin: 26px 0 0; color: #6b6b6b; font-size: 14px; text-transform: uppercase; letter-spacing: .08em; }
+@media (max-width: 760px) { .sp-grid { grid-template-columns: 1fr; } .sp-card:nth-child(even) { margin-top: 0; } }
+@media (prefers-reduced-motion: reduce) { .sp-tick div { animation: none; } }
+.sp-tick { z-index: 1; margin-top: clamp(76px, 7vw, 92px); }
+body .sp-tick ~ .nv-crumb { top: calc(clamp(76px, 7vw, 92px) + 56px); }
+.sp-tick ~ .sp-hero { padding-top: clamp(110px, 11vw, 160px) !important; }
+@media (max-width: 760px) { .sp-tick ~ .sp-hero { padding-top: 120px !important; } body .sp-tick ~ .nv-crumb { top: 136px; } }
