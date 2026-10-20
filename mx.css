@@ -4507,3 +4507,7 @@ a.rl2 .rl2-av { display: grid; place-items: center; width: 38px; height: 38px; b
 a.rl2 .rl2-b { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,.18); font: 600 7.5px/1 var(--f); }
 a.rl2 > .rl2-cap { position: absolute; left: 10px; right: 58px; bottom: 10px; display: grid; gap: 3px; font: 400 11.5px/1.35 var(--f); }
 a.rl2 .rl2-cap span { font: inherit; }
+/* Instagram-Icons in der Reel-Seitenleiste */
+a.rl2 .rl2-b { width: 30px; height: 30px; background: none; }
+a.rl2 .rl2-i { width: 26px; height: 26px; color: #fff; filter: drop-shadow(0 1px 2px rgba(0,0,0,.5)); }
+a.rl2 > .rl2-rail { gap: 14px; bottom: 70px; }
