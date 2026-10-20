@@ -4578,3 +4578,16 @@ a.rl2::after { inset: 40% 0 0 !important; background: linear-gradient(transparen
   .hy-track { gap: clamp(16px, 2vw, 32px); }
 }
 @media (min-width: 761px) { .hy-rh { max-width: calc(5 * clamp(180px, 15vw, 250px) + 4 * clamp(16px, 2vw, 32px)); padding: 0; } }
+/* Story-Bänder schmal: wischen, mittige Einrastpunkte, Start auf der mittleren Kachel */
+@media (max-width: 1100px) {
+  .hy-row { overflow-x: auto !important; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .hy-row::-webkit-scrollbar { display: none; }
+  .hy-track { transform: none !important; margin: 0; }
+  .hy-st { scroll-snap-align: center; }
+}
+@media (max-width: 1100px) {
+  .hy-row { overflow: visible !important; scroll-snap-type: none; }
+  .hy-track { width: auto !important; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .hy-track::-webkit-scrollbar { display: none; }
+}
+@media (max-width: 1100px) { .hy-rh { max-width: none !important; padding: 0 var(--mo-pad, 24px) !important; } }
