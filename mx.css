@@ -4460,3 +4460,7 @@ body.mx-hy .hy-grid3 h3 { font-size: clamp(20px, 1.8vw, 26px) !important; line-h
 .hy-st img, .hy-pi img, .sw-t img { transition: none; }
 .sw-col { transform: none !important; }
 .hy-cols, .hy-row, .hy-txt, .hy-proj, .hy-quote, .hy-hero { max-width: 1400px; margin-left: auto; margin-right: auto; padding-left: var(--mo-pad, 24px); padding-right: var(--mo-pad, 24px); }
+/* B3DE-Animationen auf neuen Elementen */
+.hy-st.mo-img, .sw-t.mo-img { overflow: hidden; }
+.mx-js .hy-st.mo-img img, .mx-js .hy-pi.mo-img img, .mx-js .sw-t.mo-img img, .mx-js .sp-visual.mo-img img { transition: transform 1.8s var(--e-out); transition-delay: var(--d, 0s); }
+.hy-hero .hy-names span.mo-anim-fade { display: inline-block; }

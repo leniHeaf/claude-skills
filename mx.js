@@ -394,19 +394,19 @@
 (() => {
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   // 1 Seitenstart
-  document.querySelectorAll(".mo-hero, .mo-lhero, .mo-book").forEach((h) => {
+  document.querySelectorAll(".mo-hero, .mo-lhero, .mo-book, .hy-hero").forEach((h) => {
     let i = 0;
-    h.querySelectorAll(".mo-w, .mo-lhero__t, .mo-book__t").forEach((w) => { w.classList.add("mo-anim-rise"); w.style.setProperty("--i", i++); });
+    h.querySelectorAll(".mo-w, .mo-lhero__t, .mo-book__t, .hy-h1").forEach((w) => { w.classList.add("mo-anim-rise"); w.style.setProperty("--i", i++); });
     h.querySelectorAll(".mo-row").forEach((r, k) => r.style.setProperty("--r", k));
     let j = 0;
-    h.querySelectorAll(".mo-hero__foot > *, .mo-meta > div, .mo-lhero__top .mo-label, .mo-row .mo-label, .mo-book__p, .mo-book__txt > p:last-child").forEach((x) => { x.classList.add("mo-anim-fade"); x.style.setProperty("--i", j++); });
+    h.querySelectorAll(".hy-hero > .mo-label, .hy-lead, .hy-hero > .mx-btn, .hy-names span, .mo-hero__foot > *, .mo-meta > div, .mo-lhero__top .mo-label, .mo-row .mo-label, .mo-book__p, .mo-book__txt > p:last-child").forEach((x) => { x.classList.add("mo-anim-fade"); x.style.setProperty("--i", j++); });
   });
   if (reduce || !("IntersectionObserver" in window)) return;
   // 2 Überschriften + 3 Bilder
-  const heads = document.querySelectorAll(".mo-lh2, .mo-h2, .mo-lcta__t, .mo-phase__t, .mo-prog__t, .mo-chap__t, .mx-h2, .mo-manifest__t, .mo-claim__t, .mo-next__t, .mo-think__h, .mo-foot__mark");
+  const heads = document.querySelectorAll(".mo-lh2, .mo-h2, .mo-lcta__t, .mo-phase__t, .mo-prog__t, .mo-chap__t, .mx-h2, .mo-manifest__t, .mo-claim__t, .mo-next__t, .mo-think__h, .mo-foot__mark, .hy-h2, .hy-quote blockquote, .sw-h");
   heads.forEach((h) => h.classList.add("mo-up"));
-  const imgs = document.querySelectorAll(".mo-work__img, .mo-fig, .mo-bird__p, .mo-reel--still, .mo-post__img, .mood__btn, .story-feature img, .mo-cover");
-  imgs.forEach((m, k) => { m.classList.add("mo-img"); });
+  const imgs = document.querySelectorAll(".mo-work__img, .mo-fig, .mo-bird__p, .mo-reel--still, .mo-post__img, .mood__btn, .story-feature img, .mo-cover, .hy-st, .hy-pi, .sw-t, .sp-visual");
+  imgs.forEach((m, k) => { m.classList.add("mo-img"); const sib = m.parentElement && [...m.parentElement.children].indexOf(m); if (m.matches(".hy-st, .sw-t") && sib > 0) m.style.setProperty("--d", (sib * .12).toFixed(2) + "s"); });
   const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" });
   heads.forEach((h) => io.observe(h)); imgs.forEach((m) => io.observe(m));
   // 4 Scroll-gekoppelt
