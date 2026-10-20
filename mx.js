@@ -567,7 +567,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
     resize(); addEventListener("resize", resize);
     const target = [-10.5, -49.5]; // Deutschland vorn
     let lam = 0, phi = -22, visible = true, dragging = false, last = 0, spin = 0, base = 1;
-    const ink = "#0a0a0a", bg = "#f2f2f2", acc = "#ff7a5c";
+    const ink = "#0a0a0a", bg = "#f2f2f2", acc = "#5c3a21";
     const ease = (x) => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
     const draw = (now) => {
       // Scroll-Fortschritt: 0 = ganze Kugel dreht sich, 1 = Zoom auf Deutschland
@@ -613,7 +613,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
       pins.forEach(([n, lo, la], i) => {
         const c = d3.geoDistance([lo, la], [-lam, -phi]); if (c > Math.PI / 2) return;
         const [x, y] = proj([lo, la]);
-        ctx.beginPath(); ctx.arc(x, y, 4 + ((pulse + i / 3) % 1) * 14, 0, 7); ctx.strokeStyle = `rgba(255,122,92,${1 - (pulse + i / 3) % 1})`; ctx.lineWidth = 1.5; ctx.stroke();
+        ctx.beginPath(); ctx.arc(x, y, 4 + ((pulse + i / 3) % 1) * 14, 0, 7); ctx.strokeStyle = `rgba(92,58,33,${1 - (pulse + i / 3) % 1})`; ctx.lineWidth = 1.5; ctx.stroke();
         ctx.beginPath(); ctx.arc(x, y, 4, 0, 7); ctx.fillStyle = acc; ctx.fill();
         if (lab) { ctx.globalAlpha = Math.min(1, (z - .8) / .15); const fs = Math.max(11, s / 46); ctx.font = `600 ${fs}px Inter, sans-serif`; const tw = ctx.measureText(n).width; const lx = i === 1 ? x + 12 : x - tw - 20, ly = i === 2 ? y + 14 : y - fs - 14; ctx.fillStyle = ink; ctx.fillRect(lx, ly, tw + 12, fs + 10); ctx.fillStyle = "#f2f2f2"; ctx.fillText(n, lx + 6, ly + fs + 2); ctx.globalAlpha = 1; }
       });
@@ -808,7 +808,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
     { c: "compass", l: 1, n: "Markenworkshop — Positionierung", d: 2800, h: `<div class="s-comp"><i class="s-comp__x"></i><i class="s-comp__y"></i><em class="t">mutig</em><em class="b">vorsichtig</em><em class="l">klassisch</em><em class="r">modern</em>${dots.map(([x, y], k) => `<span class="s-comp__d" style="--x:${x};--y:${y};--k:${k}"></span>`).join("")}<span class="s-comp__me"><b>B3DE</b></span></div>` },
     { c: "poster", l: 1, n: "Mockup — Plakate", d: 2600, h: `<div class="s-posters"><div class="s-poster s-poster--b"><b>B3DE</b><span>b3de.de</span></div><div class="s-poster s-poster--g"><b>Mutig.<br>Klar.<br>Eigen.</b></div><div class="s-poster s-poster--w"><i></i><span>Marken, für die man einsteht</span></div></div>` },
     { c: "day", n: "Markenworkshop — Ablauf", d: 3000, h: `<p class="s-day__t">Markenworkshop <span>· 1 Tag</span></p><div class="s-day"><i class="s-day__line"><b></b></i>${[["09:00", "Kick-off"], ["11:00", "Werte"], ["14:00", "Positionierung"], ["16:30", "Stimme"]].map(([a, b], k) => `<span class="s-day__s" style="--k:${k}"><em>${a}</em><b>${b}</b></span>`).join("")}</div>` },
-    { c: "guide", l: 1, n: "Mockup — Brand Guidelines", d: 2700, h: `<div class="s-guide"><div class="s-guide__type"><b>Aa</b><span>Helvetica Bold<br>Inter Regular</span></div><div class="s-guide__sw">${[["#0a0a0a", "Schwarz"], ["#f2f2f2", "Papier"], ["#ff7a5c", "Signal"], ["var(--grad)", "Verlauf"]].map(([c, n], k) => `<span style="--c:${c};--k:${k}"><em>${n}</em></span>`).join("")}</div></div>` },
+    { c: "guide", l: 1, n: "Mockup — Brand Guidelines", d: 2700, h: `<div class="s-guide"><div class="s-guide__type"><b>Aa</b><span>Helvetica Bold<br>Inter Regular</span></div><div class="s-guide__sw">${[["#0a0a0a", "Schwarz"], ["#f2f2f2", "Papier"], ["#5c3a21", "Signal"], ["var(--grad)", "Verlauf"]].map(([c, n], k) => `<span style="--c:${c};--k:${k}"><em>${n}</em></span>`).join("")}</div></div>` },
     { c: "grid", n: "Logoanimation — Varianten", d: 2400, h: `<div class="s-grid">${["s-t--b", "s-t--w", "s-t--g", "s-t--o"].map((m, k) => `<span class="s-t ${m}" style="--k:${k}"><b>${k === 3 ? "B3" : "B3DE"}</b></span>`).join("")}</div>` },
     { c: "end", n: "B3DE — Showreel 26", d: 3000, h: `<div class="s-end"><b>B3DE</b><span>Showreel 26 — b3de.de</span></div>` },
   ];
@@ -1075,7 +1075,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
   const confetti = (n = 90, x = innerWidth / 2, y = innerHeight / 3) => {
     if (reduce) return;
     const c = document.createElement("canvas"); c.className = "gx-cf"; c.width = innerWidth; c.height = innerHeight; document.body.appendChild(c);
-    const g = c.getContext("2d"), cols = ["#ff7a5c", "#13696d", "#0a0a0a", "#ffe94d", "#ff3fa4", "#ffffff"];
+    const g = c.getContext("2d"), cols = ["#5c3a21", "#6a1bff", "#0a0a0a", "#ffe94d", "#ff3fa4", "#ffffff"];
     const P = Array.from({ length: n }, () => ({ x, y, vx: (Math.random() - .5) * 14, vy: -Math.random() * 13 - 4, r: Math.random() * 6 + 4, a: Math.random() * 6, va: (Math.random() - .5) * .4, c: cols[(Math.random() * cols.length) | 0] }));
     const t0 = performance.now();
     const f = (now) => { const k = now - t0; g.clearRect(0, 0, c.width, c.height);
@@ -1297,7 +1297,7 @@ const B3T = (() => {
   const L = { get: (k, d) => { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } }, set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const award = (k, xp, why) => { if (L.get(k + "-xp", false)) return; L.set(k + "-xp", true); if (window.B3G) window.B3G.award(xp, why); };
-  const brand = (g, W, H) => { g.fillStyle = "#ff7a5c"; g.fillRect(0, 0, 14, H); g.fillStyle = "#0a0a0a"; g.font = `600 30px ${F}`; g.fillText("B3DE", W - 140, H - 50); };
+  const brand = (g, W, H) => { g.fillStyle = "#5c3a21"; g.fillRect(0, 0, 14, H); g.fillStyle = "#0a0a0a"; g.font = `600 30px ${F}`; g.fillText("B3DE", W - 140, H - 50); };
   return { F, wrap, save, ready, L, esc, award, brand };
 })();
 
@@ -1341,7 +1341,7 @@ const B3T = (() => {
       g.font = `500 22px ${F}`; g.fillStyle = "#6a6a6a"; g.fillText(LABEL[k].toUpperCase(), 80, y);
       g.font = `400 34px ${F}`; g.fillStyle = "#0a0a0a"; y = wrap(g, d[k] || "–", 80, y + 50, W - 160, 44, 3) + 40;
     });
-    g.fillStyle = "#ff7a5c"; g.fillRect(80, H - 92, 260, 44); g.fillStyle = "#0a0a0a"; g.font = `500 20px ${F}`; g.fillText("Erstellt am " + today, 96, H - 63);
+    g.fillStyle = "#5c3a21"; g.fillRect(80, H - 92, 260, 44); g.fillStyle = "#0a0a0a"; g.font = `500 20px ${F}`; g.fillText("Erstellt am " + today, 96, H - 63);
     save(c, "marken-kompass.png");
   });
   paint();
@@ -1383,13 +1383,13 @@ const B3T = (() => {
       if (t.dataset.at === "share") { const txt = `Unsere Marke ist „${A[0]}“ – ${A[1]} Welcher Archetyp ist eure?`; try { if (navigator.share) await navigator.share({ title: "Markenarchetypen-Test", text: txt, url }); else { await navigator.clipboard.writeText(txt + " " + url); t.textContent = "Link kopiert"; } } catch (err) {} return; }
       if (t.dataset.at === "png") {
         await ready(); const W = 1080, H = 1350, c = document.createElement("canvas"); c.width = W; c.height = H; const g = c.getContext("2d");
-        g.fillStyle = "#0a0a0a"; g.fillRect(0, 0, W, H); g.fillStyle = "#ff7a5c"; g.fillRect(0, 0, 14, H);
+        g.fillStyle = "#0a0a0a"; g.fillRect(0, 0, W, H); g.fillStyle = "#5c3a21"; g.fillRect(0, 0, 14, H);
         g.font = `500 26px ${F}`; g.fillText("UNSER MARKEN-ARCHETYP", 80, 120);
         g.font = `600 104px ${F}`; let y = wrap(g, A[0], 80, 250, W - 160, 108, 2);
         g.fillStyle = "#f2f2f2"; g.font = `400 44px ${F}`; y = wrap(g, `„${A[1]}“`, 80, y + 30, W - 160, 56, 3);
         g.fillStyle = "#bdbdbd"; g.font = `400 32px ${F}`; y = wrap(g, A[2], 80, y + 40, W - 160, 44, 5);
-        [["STÄRKE", A[3]], ["TONALITÄT", A[5]]].forEach(([k, v]) => { y += 40; g.fillStyle = "#ff7a5c"; g.font = `500 22px ${F}`; g.fillText(k, 80, y); g.fillStyle = "#f2f2f2"; g.font = `400 34px ${F}`; y = wrap(g, v, 80, y + 46, W - 160, 44, 2); });
-        g.fillStyle = "#ff7a5c"; g.font = `500 24px ${F}`; g.fillText("Welcher Archetyp seid ihr? · B3DE Academy", 80, H - 70);
+        [["STÄRKE", A[3]], ["TONALITÄT", A[5]]].forEach(([k, v]) => { y += 40; g.fillStyle = "#5c3a21"; g.font = `500 22px ${F}`; g.fillText(k, 80, y); g.fillStyle = "#f2f2f2"; g.font = `400 34px ${F}`; y = wrap(g, v, 80, y + 46, W - 160, 44, 2); });
+        g.fillStyle = "#5c3a21"; g.font = `500 24px ${F}`; g.fillText("Welcher Archetyp seid ihr? · B3DE Academy", 80, H - 70);
         save(c, "marken-archetyp.png");
       }
     };
@@ -1413,7 +1413,7 @@ const B3T = (() => {
     await ready(); const g = cv.getContext("2d"), W = cv.width, H = cv.height, p = D.paths[sel], nm = nameIn.value.trim() || "Euer Name";
     const date = new Date().toLocaleDateString("de-DE", { day: "2-digit", month: "long", year: "numeric" });
     g.fillStyle = "#f4f4f2"; g.fillRect(0, 0, W, H); g.strokeStyle = "#0a0a0a"; g.lineWidth = 3; g.strokeRect(50, 50, W - 100, H - 100);
-    g.fillStyle = "#ff7a5c"; g.fillRect(50, 50, W - 100, 20);
+    g.fillStyle = "#5c3a21"; g.fillRect(50, 50, W - 100, 20);
     g.fillStyle = "#0a0a0a"; g.textAlign = "center";
     g.font = `500 28px ${F}`; g.fillText("B3DE ACADEMY · LERNNACHWEIS", W / 2, 190);
     g.font = `600 110px ${F}`; g.fillText("Marken-Führerschein", W / 2, 330);
@@ -1423,7 +1423,7 @@ const B3T = (() => {
     g.font = `400 28px ${F}`; g.fillStyle = "#333"; wrap(g, `hat alle ${p.items.length} Artikel des Lernpfads „${p.name}“ in der B3DE Academy gelesen und die Grundlagen dieses Themas kennengelernt.`, W / 2, 720, W - 420, 40, 3);
     g.textAlign = "left"; g.fillStyle = "#0a0a0a"; g.font = `500 24px ${F}`; g.fillText(date, 160, H - 150); g.fillRect(160, H - 135, 300, 2); g.font = `400 20px ${F}`; g.fillStyle = "#666"; g.fillText("Datum", 160, H - 105);
     g.textAlign = "right"; g.fillStyle = "#0a0a0a"; g.font = `italic 400 40px ${F}`; g.fillText("Lena Hofmann", W - 160, H - 150); g.fillRect(W - 460, H - 135, 300, 2); g.font = `400 20px ${F}`; g.fillStyle = "#666"; g.fillText("Lena Hofmann, B3DE", W - 160, H - 105);
-    g.textAlign = "center"; g.fillStyle = "#ff7a5c"; g.beginPath(); g.arc(W / 2, H - 150, 62, 0, Math.PI * 2); g.fill(); g.fillStyle = "#0a0a0a"; g.font = `600 30px ${F}`; g.fillText("B3DE", W / 2, H - 140); g.textAlign = "left";
+    g.textAlign = "center"; g.fillStyle = "#5c3a21"; g.beginPath(); g.arc(W / 2, H - 150, 62, 0, Math.PI * 2); g.fill(); g.fillStyle = "#0a0a0a"; g.font = `600 30px ${F}`; g.fillText("B3DE", W / 2, H - 140); g.textAlign = "left";
   };
   const open = (k) => { sel = k; cert.hidden = false; nameIn.value = L.get("b3-cert-name", ""); draw(); };
   wrapEl.addEventListener("click", (e) => { const b = e.target.closest("[data-fs-pick]"); if (b) { open(+b.dataset.fsPick); cert.scrollIntoView({ behavior: "smooth", block: "start" }); } });
@@ -1551,7 +1551,7 @@ const B3S = (() => {
   const src = document.getElementById("b3-academy"); if (!src) return;
   const D = JSON.parse(src.textContent), here = location.pathname.split("/").pop() || "index.html";
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const STG = { marke: ["Main Stage", "#ff7a5c"], identitaet: ["Neon Tent", "#13696d"], sichtbar: ["Loud Stage", "#0a0a0a"], team: ["Campfire", "#f2f2f2"] };
+  const STG = { marke: ["Main Stage", "#5c3a21"], identitaet: ["Neon Tent", "#6a1bff"], sichtbar: ["Loud Stage", "#0a0a0a"], team: ["Campfire", "#f2f2f2"] };
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const G = () => window.B3G;
   // Sound-Schalter (Festival-Seite und Artikel)
@@ -1609,7 +1609,7 @@ const B3S = (() => {
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const L = { get: (k, d) => { try { const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } }, set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  const STG = { marke: ["Main Stage", "#ff7a5c", "Die großen Fragen zuerst."], identitaet: ["Neon Tent", "#13696d", "Wo Marken Gesicht bekommen."], sichtbar: ["Loud Stage", "#0a0a0a", "Damit euch alle hören."], team: ["Campfire", "#f2f2f2", "Wo Marken von innen leuchten."] };
+  const STG = { marke: ["Main Stage", "#5c3a21", "Die großen Fragen zuerst."], identitaet: ["Neon Tent", "#6a1bff", "Wo Marken Gesicht bekommen."], sichtbar: ["Loud Stage", "#0a0a0a", "Damit euch alle hören."], team: ["Campfire", "#f2f2f2", "Wo Marken von innen leuchten."] };
   const shuffle = (a) => a.map((x) => [Math.random(), x]).sort((p, q) => p[0] - q[0]).map((x) => x[1]);
   const build = (id) => {
     if (STG[id]) {
@@ -1621,12 +1621,12 @@ const B3S = (() => {
       cards.push({ k: "end", c, kicker: name, title: "Bühne gesehen!", text: "Stempel aufs Bändchen. Lust auf mehr? Die nächste Bühne wartet.", id });
       return { id, name, c, cards };
     }
-    if (id === "tools") return { id, name: "Workshops", c: "#ff7a5c", cards: [
-      { k: "intro", c: "#ff7a5c", kicker: "Workshop-Zelt", title: "Mitmachen statt zuhören.", text: "Drei Werkzeuge, mit denen ihr eure Marke sofort greifbar macht.", foot: "3 Workshops" },
-      { k: "act", c: "#ff7a5c", kicker: "Workshop 01", title: "Marken-Kompass Generator", text: "Fünf Fragen, eine Seite – euer Kompass zum Herunterladen.", href: "academy-kompass.html", cta: "Kompass bauen" },
-      { k: "act", c: "#ff7a5c", kicker: "Workshop 02", title: "Welcher Archetyp seid ihr?", text: "Zehn Fragen, zwölf Archetypen, eine Ergebnis-Karte zum Teilen.", href: "academy-archetypen-test.html", cta: "Test starten" },
-      { k: "act", c: "#ff7a5c", kicker: "Workshop 03", title: "Marken-Führerschein", text: "Bühne komplett gesehen? Holt euch euren Lernnachweis.", href: "academy-fuehrerschein.html", cta: "Führerschein holen" },
-      { k: "end", c: "#ff7a5c", kicker: "Workshop-Zelt", title: "Bis gleich im Zelt!", text: "Alle Werkzeuge sind kostenlos.", id }] };
+    if (id === "tools") return { id, name: "Workshops", c: "#5c3a21", cards: [
+      { k: "intro", c: "#5c3a21", kicker: "Workshop-Zelt", title: "Mitmachen statt zuhören.", text: "Drei Werkzeuge, mit denen ihr eure Marke sofort greifbar macht.", foot: "3 Workshops" },
+      { k: "act", c: "#5c3a21", kicker: "Workshop 01", title: "Marken-Kompass Generator", text: "Fünf Fragen, eine Seite – euer Kompass zum Herunterladen.", href: "academy-kompass.html", cta: "Kompass bauen" },
+      { k: "act", c: "#5c3a21", kicker: "Workshop 02", title: "Welcher Archetyp seid ihr?", text: "Zehn Fragen, zwölf Archetypen, eine Ergebnis-Karte zum Teilen.", href: "academy-archetypen-test.html", cta: "Test starten" },
+      { k: "act", c: "#5c3a21", kicker: "Workshop 03", title: "Marken-Führerschein", text: "Bühne komplett gesehen? Holt euch euren Lernnachweis.", href: "academy-fuehrerschein.html", cta: "Führerschein holen" },
+      { k: "end", c: "#5c3a21", kicker: "Workshop-Zelt", title: "Bis gleich im Zelt!", text: "Alle Werkzeuge sind kostenlos.", id }] };
     return { id, name: "Einlass", c: "#f2f2f2", cards: [
       { k: "intro", c: "#f2f2f2", kicker: "Einlass-Check", title: "Wie stark ist eure Marke?", text: "Fünf ehrliche Fragen, 60 Sekunden – und ihr wisst, welche Bühne ihr zuerst besuchen solltet.", foot: "60 Sekunden" },
       { k: "act", c: "#f2f2f2", kicker: "Los geht’s", title: "Marken-Check starten", text: "Ihr bekommt sofort ein Ergebnis und passende Acts.", href: "#marken-check", cta: "Zum Check" },
@@ -1640,7 +1640,7 @@ const B3S = (() => {
   const close = () => { if (!ov) return; cancelAnimationFrame(raf); ov.classList.add("out"); document.documentElement.classList.remove("fx-lock"); const o = ov; ov = null; setTimeout(() => o.remove(), 300); paintSeen(); };
   const done = (id) => { const seen = L.get("b3-stories", {}); if (seen[id]) return; seen[id] = true; L.set("b3-stories", seen); if (window.B3G) { window.B3G.award(15, "Story gesehen"); window.B3G.confetti(160); } if (window.B3S) B3S.play("stamp"); };
   const card = () => {
-    const c = S.cards[ci], dark = c.c === "#0a0a0a" || c.c === "#13696d";
+    const c = S.cards[ci], dark = c.c === "#0a0a0a" || c.c === "#6a1bff";
     const bars = S.cards.map((_, k) => `<i style="--p:${k < ci ? 1 : 0}"></i>`).join("");
     let body = "";
     if (c.k === "quiz") body = `<p class="st-q">„${esc(c.text)}“</p><div class="st-opts">${c.opts.map(([t, ok], k) => `<button type="button" data-opt="${ok ? 1 : 0}">${esc(t)}</button>`).join("")}</div>`;
