@@ -216,7 +216,7 @@
       const u = new URL(a.href, location.href);
       if (u.origin !== location.origin || u.pathname === location.pathname || !/\.html$|\/$/.test(u.pathname)) return;
       e.preventDefault();
-      to.textContent = ((a.getAttribute("aria-label") || a.textContent || "").replace(/[→←↗]/g, "").trim().split("\n")[0] || "").slice(0, 40);
+      to.textContent = ((a.getAttribute("aria-label") || a.textContent || "").replace(/[\u2190-\u21FF]/g, "").trim().split("\n")[0] || "").slice(0, 40);
       cu.className = "mx-curtain is-in";
       try { sessionStorage.setItem("b3-cur", "1"); } catch (err) {}
       setTimeout(() => { location.href = a.href; }, 760);
@@ -795,7 +795,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
   const scenes = [
     { c: "logo", n: "Logoanimation", d: 2600, h: `<div class="s-logo">${L("B3DE")}</div><i class="s-logo__bar"></i>` },
     { c: "claim", n: "B3DE — Haltung", d: 3200, h: `<p class="s-claim"><span>Marken bauen</span><span>mit Haltung</span><span>und Leidenschaft.</span></p><b class="s-claim__v">B3DE</b><i class="s-claim__st"></i>` },
-    { c: "mono", l: 1, n: "Logoanimation — Signet", d: 2600, h: `<svg class="s-mono__ring" viewBox="0 0 200 200"><circle cx="100" cy="100" r="62" pathLength="1"/></svg><svg class="s-mono__txt" viewBox="0 0 200 200"><defs><path id="hr-c" d="M100,100 m-84,0 a84,84 0 1,1 168,0 a84,84 0 1,1 -168,0"/></defs><text><textPath href="#hr-c">B3DE ✳ BRANDING ✳ STRATEGIE ✳ DESIGN ✳ HALTUNG ✳</textPath></text></svg><b class="s-mono__b">B3</b>` },
+    { c: "mono", l: 1, n: "Logoanimation — Signet", d: 2600, h: `<svg class="s-mono__ring" viewBox="0 0 200 200"><circle cx="100" cy="100" r="62" pathLength="1"/></svg><svg class="s-mono__txt" viewBox="0 0 200 200"><defs><path id="hr-c" d="M100,100 m-84,0 a84,84 0 1,1 168,0 a84,84 0 1,1 -168,0"/></defs><text><textPath href="#hr-c">B3DE · BRANDING · STRATEGIE · DESIGN · HALTUNG ·</textPath></text></svg><b class="s-mono__b">B3</b>` },
     { c: "match", n: "Mockups — Signet", d: 3960, cut: 360, cuts: [
       ["wall", "#8e8e8e", 1], ["pill", "#fff"], ["cards", "#fff", 1], ["tote", "#0a0a0a", 1], ["wall s-m--d", "#d0d0d0"], ["icons", "#fff"],
       ["tote s-m--d", "#f2f2f2"], ["book", "#fff", 1], ["cards s-m--p", "#fff", 1], ["book s-m--p", "#fff", 1], ["pill s-m--p", "#0a0a0a", 1]] },
@@ -806,7 +806,7 @@ if (matchMedia("(prefers-reduced-motion: reduce)").matches) document.querySelect
     { c: "phone", n: "Mockup — App", d: 2600, h: `<div class="s-phone"><div class="s-phone__scr"><div class="s-phone__in"><b class="s-phone__logo">B3DE</b><p>Marken, für die man einsteht.</p>${["Strategie", "Identität", "Workshop", "Kampagne", "Wissen", "Kontakt"].map((x, i) => `<span class="s-phone__card${i % 3 === 1 ? " s-phone__card--g" : ""}"><b>0${i + 1}</b>${x}</span>`).join("")}</div></div></div>` },
     { c: "words", l: 1, n: "B3DE — Haltung", d: 1900, h: `<p class="s-words"><span>Mutig.</span><span>Klar.</span><span>Eigen.</span></p>` },
     { c: "compass", l: 1, n: "Markenworkshop — Positionierung", d: 2800, h: `<div class="s-comp"><i class="s-comp__x"></i><i class="s-comp__y"></i><em class="t">mutig</em><em class="b">vorsichtig</em><em class="l">klassisch</em><em class="r">modern</em>${dots.map(([x, y], k) => `<span class="s-comp__d" style="--x:${x};--y:${y};--k:${k}"></span>`).join("")}<span class="s-comp__me"><b>B3DE</b></span></div>` },
-    { c: "poster", l: 1, n: "Mockup — Plakate", d: 2600, h: `<div class="s-posters"><div class="s-poster s-poster--b"><b>B3DE</b><span>b3de.de</span></div><div class="s-poster s-poster--g"><b>Mutig.<br>Klar.<br>Eigen.</b></div><div class="s-poster s-poster--w"><i>✳</i><span>Marken, für die man einsteht</span></div></div>` },
+    { c: "poster", l: 1, n: "Mockup — Plakate", d: 2600, h: `<div class="s-posters"><div class="s-poster s-poster--b"><b>B3DE</b><span>b3de.de</span></div><div class="s-poster s-poster--g"><b>Mutig.<br>Klar.<br>Eigen.</b></div><div class="s-poster s-poster--w"><i></i><span>Marken, für die man einsteht</span></div></div>` },
     { c: "day", n: "Markenworkshop — Ablauf", d: 3000, h: `<p class="s-day__t">Markenworkshop <span>· 1 Tag</span></p><div class="s-day"><i class="s-day__line"><b></b></i>${[["09:00", "Kick-off"], ["11:00", "Werte"], ["14:00", "Positionierung"], ["16:30", "Stimme"]].map(([a, b], k) => `<span class="s-day__s" style="--k:${k}"><em>${a}</em><b>${b}</b></span>`).join("")}</div>` },
     { c: "guide", l: 1, n: "Mockup — Brand Guidelines", d: 2700, h: `<div class="s-guide"><div class="s-guide__type"><b>Aa</b><span>Helvetica Bold<br>Inter Regular</span></div><div class="s-guide__sw">${[["#0a0a0a", "Schwarz"], ["#f2f2f2", "Papier"], ["#00ff38", "Signal"], ["var(--grad)", "Verlauf"]].map(([c, n], k) => `<span style="--c:${c};--k:${k}"><em>${n}</em></span>`).join("")}</div></div>` },
     { c: "grid", n: "Logoanimation — Varianten", d: 2400, h: `<div class="s-grid">${["s-t--b", "s-t--w", "s-t--g", "s-t--o"].map((m, k) => `<span class="s-t ${m}" style="--k:${k}"><b>${k === 3 ? "B3" : "B3DE"}</b></span>`).join("")}</div>` },
@@ -1431,7 +1431,7 @@ const B3T = (() => {
   cert.addEventListener("click", async (e) => {
     const b = e.target.closest("[data-fs]"); if (!b) return;
     if (b.dataset.fs === "png") { await draw(); save(cv, "marken-fuehrerschein.png"); if (!L.get("b3-cert", null)) { L.set("b3-cert", { path: sel, at: Date.now() }); award("b3-cert", 40, "Marken-Führerschein"); if (window.B3G) window.B3G.confetti(180); } }
-    if (b.dataset.fs === "share") { const url = location.origin + location.pathname.replace(/[^/]*$/, "academy-fuehrerschein.html"); const txt = `Ich habe den Marken-Führerschein der B3DE Academy gemacht (Klasse ${String.fromCharCode(65 + sel)} · ${D.paths[sel].name}).`; try { if (navigator.share) await navigator.share({ title: "Marken-Führerschein", text: txt, url }); else { await navigator.clipboard.writeText(txt + " " + url); b.textContent = "Text kopiert ✓"; } } catch (err) {} }
+    if (b.dataset.fs === "share") { const url = location.origin + location.pathname.replace(/[^/]*$/, "academy-fuehrerschein.html"); const txt = `Ich habe den Marken-Führerschein der B3DE Academy gemacht (Klasse ${String.fromCharCode(65 + sel)} · ${D.paths[sel].name}).`; try { if (navigator.share) await navigator.share({ title: "Marken-Führerschein", text: txt, url }); else { await navigator.clipboard.writeText(txt + " " + url); b.textContent = "Text kopiert"; } } catch (err) {} }
   });
   if (sel >= 0) open(sel);
 })();
@@ -1740,7 +1740,7 @@ const B3S = (() => {
 })();
 /* Academy (Social-Layout): keine Icon-Glyphen im Text */
 (() => {
-  const RX = /\s?[→←↗↓↑✓✕★✦✳♥❤♫🔊🔈✚▶❚]️?/g;
+  const RX = /\s?[\u2190-\u21FF\u2600-\u27BF\u2B00-\u2BFF\u25A0-\u25FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDEFF]|\uD83E[\uDD00-\uDEFF]|\uFE0F/g;
   const strip = (root) => { const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); let n; while ((n = w.nextNode())) if (RX.test(n.nodeValue)) { RX.lastIndex = 0; n.nodeValue = n.nodeValue.replace(RX, ""); } RX.lastIndex = 0; };
   strip(document.body);
   let t; new MutationObserver(() => { clearTimeout(t); t = setTimeout(() => strip(document.body), 30); }).observe(document.body, { childList: true, subtree: true, characterData: true });

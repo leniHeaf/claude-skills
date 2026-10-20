@@ -4140,3 +4140,9 @@ body.mx-premium .fx-stage[style*="#0a0a0a"] .fx-stage__head .ac-path__d { color:
 body.mx-premium .fx-stage[style*="#f2f2f2"] .fx-stage__n { color: #050505 !important; }
 body.mx-premium .fx-band::before { top: auto; bottom: 7px; }
 @media (max-width: 760px) { body.mx-premium .pr-poster .rz-sticker--1 { position: relative; right: auto; top: auto; margin: 22px auto 0; width: 92px; height: 92px; font-size: 13px !important; } }
+/* iOS: keine blauen Systemfarben, keine Emoji-Darstellung */
+button, input, select, textarea { color: inherit; -webkit-tap-highlight-color: transparent; }
+button { -webkit-appearance: none; appearance: none; }
+a[x-apple-data-detectors], a[href^="tel"], a[href^="x-apple"] { color: inherit !important; text-decoration: inherit !important; font: inherit !important; }
+html { font-variant-emoji: text; -webkit-text-size-adjust: 100%; }
+@media (max-width: 760px) { body.mx-premium .st-bar { padding-left: 16px !important; padding-right: 0 !important; } }
