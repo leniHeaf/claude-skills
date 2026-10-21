@@ -1,11 +1,9 @@
 # Bilder
 
-Noch fehlende Dateien (37). Abschnitte ohne Bild zeigen bis dahin nur Text.
+Noch fehlende Dateien (34). Abschnitte ohne Bild zeigen bis dahin nur Text.
 
 - 05aec4a8-410c-4309-a1e1-ac39cf6f5274.jpg
-- 1.png
 - 1_cbd74079-c307-4241-a782-b0dd6ee7fa1e.png
-- 2.png
 - 2_88827fa0-1bf3-4cfe-8709-ded76ccef89d.png
 - 3.png
 - 3_2ea6a6f2-811b-44c9-8f4e-bd608a0f80dd.png
@@ -26,7 +24,6 @@ Noch fehlende Dateien (37). Abschnitte ohne Bild zeigen bis dahin nur Text.
 - IMG_7537_3.jpg
 - T_ubert_Karosserie_und_Lack_in_Sonneberg_Fuhrparkserive.png
 - T_ubert_Karosserie_und_Lack_in_Sonneberg_Mitarbeiter.jpg
-- Toni_1180.jpg
 - Zwischenueberschrifthinzufuegen_4f3aba19-39ab-4622-bff8-b6bb210faca7.png
 - hf_20260210_173745_ff161ba7-667a-48f1-94c2-32318dd67326.jpg
 - pexels-aida-shukuhi-914628252-20281832.jpg
