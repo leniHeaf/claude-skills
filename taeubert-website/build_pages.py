@@ -649,6 +649,19 @@ def seo_head(title, desc, slug, image=None):
 <meta name="twitter:card" content="summary_large_image">'''
 
 
+def sync_images(page):
+    """Fehlende Bilddateien nicht anfragen (keine 404): src <-> data-missing-src je nach Vorhandensein."""
+    def fix(m):
+        attr, path = m.group(1), m.group(2)
+        exists = os.path.exists(os.path.join(SITE, path))
+        return f'{"src" if exists else "data-missing-src"}="{path}"'
+    page = re.sub(r'\b(src|data-missing-src)="(images/[^"]+)"', fix, page)
+    # og:image nur, wenn die Datei existiert
+    def og(m):
+        return m.group(0) if os.path.exists(os.path.join(SITE, m.group(1))) else ""
+    return re.sub(r'<meta property="og:image" content="https://www\.taeubert-karosserie-lack\.de/(images/[^"]+)">\n?', og, page)
+
+
 def write_seo_files(slugs):
     urls = [f"{DOMAIN}/"] + [f"{DOMAIN}/{x}.html" for x in slugs]
     sm = "\n".join(f"  <url><loc>{u}</loc></url>" for u in urls)
@@ -716,9 +729,13 @@ def main():
 </body>
 </html>
 """
-        open(os.path.join(SITE, f"{slug}.html"), "w", encoding="utf-8").write(page)
+        open(os.path.join(SITE, f"{slug}.html"), "w", encoding="utf-8").write(sync_images(page))
         built.append(slug)
     write_seo_files(built)
+    for extra in ("index.html", "impressum.html", "datenschutz.html"):
+        fp = os.path.join(SITE, extra)
+        content = sync_images(open(fp, encoding="utf-8").read())
+        open(fp, "w", encoding="utf-8").write(content)
     print("\n".join(built))
 
 
