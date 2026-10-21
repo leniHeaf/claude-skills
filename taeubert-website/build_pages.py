@@ -609,6 +609,7 @@ def booking_cta(slug, place):
     <p>Wählen Sie Ihren Wunschtermin direkt online – oder rufen Sie uns an. Wir schauen uns Ihr Fahrzeug an und sagen Ihnen ehrlich, was Sinn macht.</p>
     <div class="btns">
       <a class="btn btn-light" href="{BOOKING}">Termin online buchen</a>
+      <a class="btn btn-outline-light" href="schaden-melden.html">Schaden per Foto melden</a>
       <a class="btn btn-outline-light" href="tel:+4936754289606">03675 4289606</a>
       <a class="btn btn-outline-light" href="https://wa.me/4936754289606" target="_blank" rel="noopener">WhatsApp</a>
     </div>
@@ -842,6 +843,133 @@ def render_overview():
 </section>'''
 
 
+DAMAGE_FORM = """<section class="sub-hero" style="--h:420px;--mh:380px">
+  <div class="media"></div><div class="overlay" style="opacity:0"></div>
+  <div class="sub-hero-content" style="max-width:960px">
+    <h1 class="overline">Schaden melden – Kostenvoranschlag per Foto</h1>
+    <p class="heading h-8">Foto schicken. Einschätzung bekommen.</p>
+    <div class="rte"><p>Laden Sie bis zu drei Fotos Ihres Schadens hoch. Wir melden uns mit einer ersten Einschätzung und einem Terminvorschlag.</p></div>
+  </div>
+</section>
+<section class="sec" style="padding:60px 0">
+  <div class="page-width"><div class="contact-form" style="max-width:720px">
+    <form class="damage-form" name="schadensmeldung" method="POST" action="danke.html" enctype="multipart/form-data" data-netlify="true" netlify-honeypot="firma">
+      <input type="hidden" name="form-name" value="schadensmeldung">
+      <p class="hp"><label>Nicht ausfüllen: <input name="firma" tabindex="-1" autocomplete="off"></label></p>
+      <div class="mail-form">
+        <label class="f half">Name *<input name="name" autocomplete="name" required></label>
+        <label class="f half">Telefon *<input name="telefon" type="tel" autocomplete="tel" required></label>
+        <label class="f half">E-Mail<input name="email" type="email" autocomplete="email"></label>
+        <label class="f half">Fahrzeug<input name="fahrzeug" placeholder="z. B. VW Golf, 2019"></label>
+        <label class="f half">Art des Schadens
+          <select name="schaden">
+            <option>Unfallschaden</option><option>Parkschaden / Delle</option><option>Kratzer / Lackschaden</option>
+            <option>Hagelschaden</option><option>Stoßstange</option><option>Leasingrückgabe</option><option>Sonstiges</option>
+          </select>
+        </label>
+        <label class="f half">Wer zahlt voraussichtlich?
+          <select name="kostentraeger">
+            <option>Weiß ich noch nicht</option><option>Gegnerische Versicherung</option><option>Eigene Versicherung (Kasko)</option><option>Ich selbst</option>
+          </select>
+        </label>
+        <label class="f">Fotos (bis zu 3) *
+          <input name="foto1" type="file" accept="image/*" required>
+          <input name="foto2" type="file" accept="image/*">
+          <input name="foto3" type="file" accept="image/*">
+          <small>Tipp: ein Foto aus etwa 2 m Abstand, eines aus der Nähe und eines vom ganzen Fahrzeug. Die Fotos werden vor dem Senden automatisch verkleinert.</small>
+        </label>
+        <label class="f">Kurze Beschreibung<textarea name="nachricht" rows="5" placeholder="Was ist passiert? Wann passt Ihnen ein Termin?"></textarea></label>
+        <label class="f consent"><input type="checkbox" name="einwilligung" required> Ich bin einverstanden, dass meine Angaben und Fotos zur Bearbeitung der Anfrage gespeichert werden (siehe <a href="datenschutz.html">Datenschutz</a>). *</label>
+      </div>
+      <div class="btns"><button class="btn btn-dark" type="submit">Schaden senden</button></div>
+      <p class="form-status" role="status"></p>
+    </form>
+    <div class="rte" style="margin-top:30px"><p>Lieber direkt? <a href="https://wa.me/4936754289606" target="_blank" rel="noopener">Fotos per WhatsApp schicken</a> oder anrufen: <a href="tel:+4936754289606">03675 4289606</a>.</p></div>
+  </div></div>
+</section>"""
+
+THANKS = """<section class="sec" style="padding:100px 0">
+  <div class="page-width"><div class="rich-inner" style="max-width:640px;margin:0 auto;text-align:center">
+    <h1 class="h-6">Danke – Ihre Meldung ist da.</h1>
+    <div class="rte"><p>Wir sehen uns die Fotos an und melden uns schnellstmöglich bei Ihnen. Eilt es? Rufen Sie uns an: <a href="tel:+4936754289606">03675 4289606</a>.</p></div>
+    <div class="btns" style="justify-content:center"><a class="btn btn-dark" href="index.html">Zur Startseite</a><a class="btn btn-outline-dark" href="https://terminbuchungtaeubert.de">Termin online buchen</a></div>
+  </div></div>
+</section>"""
+
+DAMAGE_CSS = """
+  .hp { position: absolute; left: -9999px; }
+  .damage-form select { font: inherit; padding: 13px 14px; border: 1px solid var(--line); background: var(--white); }
+  .damage-form input[type=file] { padding: 10px; background: var(--grey); border: 1px dashed #999; margin-top: 6px; }
+  .damage-form small { font-weight: 400; color: #555; }
+  .damage-form .consent { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; }
+  .damage-form .consent input { margin-top: 5px; }
+  .damage-form .consent a { text-decoration: underline; }
+  .form-status { margin-top: 14px; font-weight: 600; }
+  .form-status.err { color: #b00020; }
+"""
+
+DAMAGE_JS = r"""
+  // Schadensmeldung: Fotos verkleinern und an Netlify Forms senden
+  document.querySelectorAll('.damage-form').forEach(form => form.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    const status = form.querySelector('.form-status'), btn = form.querySelector('button[type=submit]');
+    const say = (t, err) => { status.textContent = t; status.classList.toggle('err', !!err); };
+    if (location.protocol === 'file:') { say('Das Formular funktioniert erst auf der veröffentlichten Seite. Bitte schicken Sie die Fotos so lange per WhatsApp.', true); return; }
+    btn.disabled = true; say('Fotos werden vorbereitet …');
+    const shrink = file => new Promise(res => {
+      if (!file || !file.size || !file.type.startsWith('image/')) return res(file);
+      const img = new Image(), url = URL.createObjectURL(file);
+      img.onload = () => {
+        const s = Math.min(1, 1600 / Math.max(img.width, img.height));
+        const c = document.createElement('canvas'); c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
+        c.toBlob(b => res(b ? new File([b], file.name.replace(/\.[^.]+$/, '') + '.jpg', { type: 'image/jpeg' }) : file), 'image/jpeg', 0.82);
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); res(file); };
+      img.src = url;
+    });
+    const data = new FormData(form);
+    for (const k of ['foto1', 'foto2', 'foto3']) { const f = data.get(k); if (f && f.size) data.set(k, await shrink(f)); else data.delete(k); }
+    say('Wird gesendet …');
+    try {
+      const r = await fetch('/', { method: 'POST', body: data });
+      if (!r.ok) throw new Error(r.status);
+      location.href = 'danke.html';
+    } catch (err) {
+      btn.disabled = false;
+      say('Senden hat nicht geklappt. Bitte schicken Sie die Fotos per WhatsApp oder rufen Sie uns an: 03675 4289606.', true);
+    }
+  }));
+"""
+
+
+def simple_page(slug, title, desc, body_html, style, head_links, top, footer, js, ld, robots=""):
+    return f"""<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{esc(title)} | Täubert Karosserie &amp; Lack</title>
+{robots}{seo_head(title + " – Täubert Karosserie & Lack", desc, slug)}
+{head_links}
+<style>{style}{EXTRA_CSS}{DAMAGE_CSS}</style>
+{ld}
+{breadcrumb_ld(slug, title)}
+</head>
+<body>
+{top}
+<main id="inhalt">
+{body_html}
+</main>
+{footer}
+<script>
+{js}{DAMAGE_JS}</script>
+</body>
+</html>
+"""
+
+
 def write_seo_files(slugs):
     urls = [f"{DOMAIN}/"] + [f"{DOMAIN}/{x}.html" for x in slugs]
     sm = "\n".join(f"  <url><loc>{u}</loc></url>" for u in urls)
@@ -972,6 +1100,14 @@ def main():
 """
     open(os.path.join(SITE, "leistungen.html"), "w", encoding="utf-8").write(sync_images(page))
     built.insert(0, "leistungen")
+    open(os.path.join(SITE, "schaden-melden.html"), "w", encoding="utf-8").write(sync_images(simple_page(
+        "schaden-melden", "Schaden melden",
+        "Schaden per Foto melden: Fotos hochladen und eine erste Einschätzung von Täubert Karosserie & Lack in Sonneberg erhalten.",
+        DAMAGE_FORM, style, head_links, top, footer, js, ld)))
+    built.insert(1, "schaden-melden")
+    open(os.path.join(SITE, "danke.html"), "w", encoding="utf-8").write(simple_page(
+        "danke", "Danke", "Ihre Schadensmeldung ist bei uns eingegangen.", THANKS, style, head_links, top, footer, js, ld,
+        robots='<meta name="robots" content="noindex, follow">\n'))
     write_seo_files(built)
     for extra in ("index.html", "impressum.html", "datenschutz.html"):
         fp = os.path.join(SITE, extra)
