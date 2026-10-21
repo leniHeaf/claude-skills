@@ -1,6 +1,6 @@
 # Bilder
 
-Noch fehlende Dateien (50). Abschnitte ohne Bild zeigen bis dahin nur Text.
+Noch fehlende Dateien (45). Abschnitte ohne Bild zeigen bis dahin nur Text.
 
 - 05aec4a8-410c-4309-a1e1-ac39cf6f5274.jpg
 - 1.png
@@ -30,19 +30,14 @@ Noch fehlende Dateien (50). Abschnitte ohne Bild zeigen bis dahin nur Text.
 - ElevenLabs_image_nano-banana_diese_drei_f..._2026-01-13T08_47_36.png
 - ElevenLabs_image_nano-banana_diese_drei_f..._2026-01-13T08_47_37-2.png
 - ElevenLabs_image_nano-banana_dieses_Foto_..._2026-01-13T08_50_21.png
-- IMG-20130123-WA0005.jpg
 - IMG_4342_2.jpg
-- IMG_4674.heic
-- IMG_4978.heic
 - IMG_7537_3.jpg
 - T_ubert_Karosserie_und_Lack_in_Sonneberg_Fuhrparkserive.png
 - T_ubert_Karosserie_und_Lack_in_Sonneberg_Mitarbeiter.jpg
 - Toni_1180.jpg
-- Toni_4145.jpg
 - Zwischenueberschrifthinzufuegen_4f3aba19-39ab-4622-bff8-b6bb210faca7.png
 - hf_20260210_173745_ff161ba7-667a-48f1-94c2-32318dd67326.jpg
 - pexels-aida-shukuhi-914628252-20281832.jpg
-- pexels-artempodrez-8986139.jpg
 - pexels-borta-2790256-30787396.jpg
 - pexels-bulat843-1243575272-31389821.jpg
 - pexels-glv-visuals-859366-28611341.jpg
