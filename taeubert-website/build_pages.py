@@ -335,12 +335,27 @@ EXTRA_CSS = """
   .iwt > *, .mc-grid > * { min-width: 0; }
   .sub-hero-content, .slide-content > div { max-width: 100%; overflow-wrap: break-word; }
   .scroll-sec { overflow: hidden; }
-  main h1, main h2, main h3, .faq summary { overflow-wrap: break-word; hyphens: auto; }
+  main h1, main h2, main h3, main .heading, .faq summary { overflow-wrap: break-word; hyphens: auto; }
   .faq summary span { flex: 1; min-width: 0; }
   .rte p { margin-bottom: 12px; } .rte ul, .rte ol { margin: 0 0 12px 22px; } .rte li { margin-bottom: 4px; }
   .rte h2, .rte h3 { margin: 22px 0 12px; font-size: clamp(22px, 2.4vw, 30px); }
   .rte a { text-decoration: underline; }
   .rte table { border-collapse: collapse; width: 100%; margin: 12px 0; } .rte td, .rte th { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
+  .booking-cta { background: var(--black); color: var(--white); padding: 70px 0; text-align: center; }
+  .booking-cta h2 { font-size: clamp(30px, 4vw, 46px); }
+  .booking-cta p { max-width: 620px; margin: 14px auto 0; color: rgba(255,255,255,.8); }
+  .booking-cta .btns { justify-content: center; }
+  .btn-outline-light { background: transparent; color: var(--white); border-color: rgba(255,255,255,.6); }
+  .btn-outline-light:hover { border-color: var(--white); background: var(--white); color: var(--black); }
+  .related { background: var(--grey); padding: 50px 0; }
+  .related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .related h2 { font-size: 18px; margin-bottom: 14px; }
+  .related ul { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; }
+  .related a { display: inline-block; padding: 9px 14px; background: var(--white); border: 1px solid var(--line); font-size: 15px; transition: border-color .2s; }
+  .related a:hover { border-color: var(--black); }
+  @media (max-width: 760px) { .related-grid { grid-template-columns: 1fr; } }
+  .sub-hero h1.overline { font-family: Inter, sans-serif; text-transform: uppercase; letter-spacing: .14em; font-size: 13px; font-weight: 600; line-height: 1.5; margin-bottom: 12px; }
+  .sec h1.overline, .rich-sub h1.overline { font-family: Inter, sans-serif; letter-spacing: .14em; font-size: 13px; font-weight: 600; margin-bottom: 12px; }
   .rte table.compare { margin: 18px 0 20px; font-size: 15px; }
   .compare thead th { background: var(--black); color: var(--white); font-weight: 700; border-color: var(--black); }
   .compare thead th:nth-child(2) { background: var(--red); border-color: var(--red); }
@@ -481,6 +496,107 @@ def first_heading(d):
     return ""
 
 
+
+# SEO für Leistungs- und Standortseiten: Titel, Beschreibung, H1 (Leistung + Ort)
+SERVICES = {
+    "karosserie": ("Karosserie Sonneberg & Neustadt bei Coburg", "Karosseriearbeiten",
+                   "Karosseriereparatur in Sonneberg & Neustadt bei Coburg: Richtbank, präzise Vermessung, Reparatur nach Herstellervorgaben – Lack direkt im Haus."),
+    "lackierarbeiten": ("Lackierarbeiten Sonneberg & Neustadt bei Coburg", "Lackierarbeiten",
+                        "Autolackierung in Sonneberg: digitale Farbtonmessung, staubfreie Lackierkabine, Spot Repair und Komplettlackierung – ohne sichtbaren Unterschied."),
+    "unfallinstandsetzung": ("Unfallinstandsetzung Sonneberg & Neustadt bei Coburg", "Unfallinstandsetzung",
+                             "Unfallreparatur in Sonneberg & Neustadt bei Coburg: Karosserie, Lack und Abwicklung mit Versicherung und Gutachter aus einer Hand."),
+    "smartrepair": ("Smart Repair Sonneberg – Dellen entfernen ohne Lackieren", "Smart Repair",
+                    "Smart Repair in Sonneberg: Dellen und kleine Schäden ohne Neulackierung entfernen – Originallack bleibt, oft in wenigen Stunden erledigt."),
+    "kleinschaden": ("Kleinschaden-Reparatur Sonneberg & Neustadt bei Coburg", "Kleinschaden-Reparatur",
+                     "Parkschaden, Kratzer oder Delle? Kleinschaden-Reparatur in Sonneberg & Neustadt bei Coburg – schnell, günstig und mit Originallack."),
+    "kratzer": ("Kratzer im Auto entfernen – Sonneberg", "Kratzer entfernen",
+                "Kratzer im Lack entfernen lassen in Sonneberg: vom oberflächlichen Kratzer bis zur Tiefe – mit exakter Farbtonanpassung."),
+    "leasingrueckgabe": ("Leasingrückgabe vorbereiten – Sonneberg", "Leasingrückgabe",
+                         "Leasingrückgabe in Sonneberg vorbereiten: Schäden vorab günstig beseitigen und teure Nachzahlungen beim Leasinggeber vermeiden."),
+    "fahrzeugaufbereitung": ("Fahrzeugaufbereitung Sonneberg & Neustadt bei Coburg", "Fahrzeugaufbereitung",
+                             "Fahrzeugaufbereitung in Sonneberg: Politur, Innenraumreinigung und Lackpflege – ideal vor Verkauf oder Leasingrückgabe."),
+    "reifenservice": ("Reifenservice Sonneberg & Neustadt bei Coburg", "Reifenservice",
+                      "Reifenwechsel, Räderwechsel und Rädereinlagerung in Sonneberg & Neustadt bei Coburg – Termin online buchen."),
+    "unfall": ("Unfall gehabt? Unfallreparatur Sonneberg", "Unfallreparatur",
+               "Unfall gehabt? Täubert in Sonneberg kümmert sich um Reparatur, Versicherung und Gutachten – direkte Abrechnung mit der Versicherung."),
+    "unfall-oder-kratzer": ("Unfall oder Kratzer – wer zahlt die Reparatur?", "Ratgeber Reparaturkosten",
+                            "Wer übernimmt die Reparaturkosten nach Unfall oder Kratzer? Antworten zu Versicherung, Gutachter und Ersatzwagen von Täubert in Sonneberg."),
+    "auto-lackieren-kosten": ("Auto lackieren Kosten – Preise & Beispiele", "Ratgeber Lackierkosten",
+                              "Was kostet es, ein Auto lackieren zu lassen? Preise und Beispiele für Teil- und Komplettlackierung von Täubert in Sonneberg."),
+}
+LOCATIONS = {
+    "sonneberg": ("Lackierer & Karosserie Sonneberg", "Sonneberg",
+                  "Ihr Lackierer und Karosseriebauer in Sonneberg: Unfallreparatur, Lackierung, Smart Repair und Versicherungsabwicklung – Bettelhecker Straße 15."),
+    "neustadt": ("Lackierer & Karosserie Neustadt bei Coburg", "Neustadt bei Coburg",
+                 "Lackierer nahe Neustadt bei Coburg: Unfallreparatur, Lackierung und Smart Repair bei Täubert – nur wenige Minuten entfernt in Sonneberg."),
+    "coburg": ("Lackierer & Karosserie Coburg", "Coburg",
+               "Karosserie und Lackierung für Autofahrer aus Coburg: Unfallreparatur, Lackierarbeiten und Abwicklung mit der Versicherung bei Täubert."),
+    "roedental": ("Lackierer & Karosserie Rödental", "Rödental",
+                  "Karosserie und Lackierung für Rödental: Unfallreparatur, Parkrempler und Smart Repair bei Täubert Karosserie & Lack in Sonneberg."),
+    "kronach": ("Lackierer & Karosserie Kronach", "Kronach",
+                "Lackierer für Kronach: Unfallreparatur, Lackierung und Smart Repair bei Täubert Karosserie & Lack in Sonneberg."),
+    "bamberg": ("Lackierer & Karosserie Bamberg", "Bamberg",
+                "Karosserie und Lackierung für Autofahrer aus Bamberg: Unfallreparatur, Lackierarbeiten und Smart Repair bei Täubert in Sonneberg."),
+}
+SERVICE_LINKS = [("karosserie", "Karosserie"), ("lackierarbeiten", "Lackierarbeiten"), ("unfallinstandsetzung", "Unfallinstandsetzung"),
+                 ("smartrepair", "Smart Repair"), ("kleinschaden", "Kleinschaden"), ("kratzer", "Kratzer entfernen"),
+                 ("leasingrueckgabe", "Leasingrückgabe"), ("fahrzeugaufbereitung", "Fahrzeugaufbereitung"), ("reifenservice", "Reifenservice")]
+LOCATION_LINKS = [("sonneberg", "Sonneberg"), ("neustadt", "Neustadt bei Coburg"), ("coburg", "Coburg"),
+                  ("roedental", "Rödental"), ("kronach", "Kronach"), ("bamberg", "Bamberg")]
+
+
+def keyword_h1(body_html, h1):
+    """Keyword-H1 als Zeile über der großen Überschrift; die bisherige Überschrift bleibt optisch gleich."""
+    m = re.search(r"<section.*?</section>", body_html, re.S)
+    first = m.group(0)
+    new = re.sub(r'<p class="overline">.*?</p>', "", first, count=1, flags=re.S)
+    new = re.sub(r"<h2 class=\"([^\"]*)\">(.*?)</h2>", r'<p class="heading \1">\2</p>', new, count=1, flags=re.S)
+    new = re.sub(r'(<p class="heading )', f'<h1 class="overline">{esc(h1)}</h1>\\1', new, count=1)
+    if "<h1" not in new:
+        new = new.replace(">", f'><h1 class="overline">{esc(h1)}</h1>', 1)
+    return body_html.replace(first, new, 1)
+
+
+def booking_cta(slug, place):
+    svc = "".join(f'<li><a href="{x}.html">{esc(n)}</a></li>' for x, n in SERVICE_LINKS if x != slug)
+    loc = "".join(f'<li><a href="{x}.html">{esc(n)}</a></li>' for x, n in LOCATION_LINKS if x != slug)
+    return f'''<section class="booking-cta">
+  <div class="page-width">
+    <h2>Termin online buchen</h2>
+    <p>Wählen Sie Ihren Wunschtermin direkt online – oder rufen Sie uns an. Wir schauen uns Ihr Fahrzeug an und sagen Ihnen ehrlich, was Sinn macht.</p>
+    <div class="btns">
+      <a class="btn btn-light" href="{BOOKING}">Termin online buchen</a>
+      <a class="btn btn-outline-light" href="tel:+4936754289606">03675 4289606</a>
+      <a class="btn btn-outline-light" href="https://wa.me/4936754289606" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </div>
+</section>
+<nav class="related" aria-label="Weitere Leistungen und Standorte">
+  <div class="page-width related-grid">
+    <div><h2>Weitere Leistungen</h2><ul>{svc}</ul></div>
+    <div><h2>Für Kunden aus</h2><ul>{loc}</ul></div>
+  </div>
+</nav>'''
+
+
+def faq_ld(body_html):
+    qa = []
+    for m in re.finditer(r"<details[^>]*><summary><span>(.*?)</span></summary><div class=\"rte\">(.*?)</div></details>", body_html, re.S):
+        q, a = plain(m.group(1)), plain(m.group(2))
+        if q and a:
+            qa.append({"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}})
+    if not qa:
+        return ""
+    return '<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": qa}, ensure_ascii=False) + "</script>"
+
+
+def service_ld(slug, name, desc):
+    data = {"@context": "https://schema.org", "@type": "Service", "name": name, "description": desc,
+            "url": f"{DOMAIN}/{slug}.html", "provider": {"@type": "AutoBodyShop", "name": "Täubert Karosserie und Lack GmbH", "url": f"{DOMAIN}/"},
+            "areaServed": [n for _, n in LOCATION_LINKS]}
+    return '<script type="application/ld+json">' + json.dumps(data, ensure_ascii=False) + "</script>"
+
+
 # Inhalte, die im Shopify-Editor zusammengelaufen sind, wieder lesbar machen
 FIXES = [
     ("<p>Smart RepairKlassische Lackierung1–3 Stunden Reparaturmehrere Tage Werkstattdeutlich günstigerdeutlich teurer"
@@ -495,6 +611,7 @@ FIXES = [
 </tbody>
 </table>'''),
     ("<h2></h2>", ""),
+    ('<p class="overline">Overline</p>', ""),
 ]
 
 
@@ -561,19 +678,32 @@ def main():
             r = RENDER.get(s["type"])
             if r:
                 body.append(r(s))
-        body_html = first_h1(apply_fixes(chr(10).join(b for b in body if b)))
+        body_html = apply_fixes(chr(10).join(b for b in body if b))
         title = first_heading(d) or slug.replace("-", " ").title()
+        meta = SERVICES.get(slug) or LOCATIONS.get(slug)
+        extra_ld = ""
+        if meta:
+            seo_title, short, desc = meta
+            body_html = keyword_h1(body_html, seo_title) + booking_cta(slug, short)
+            title = seo_title
+            if slug in SERVICES:
+                extra_ld = service_ld(slug, short, desc)
+        else:
+            body_html = first_h1(body_html)
+            desc = None
+        extra_ld += faq_ld(body_html)
         og = re.search(r'src="images/([^"]+)"', body_html)
         page = f"""<!doctype html>
 <html lang="de">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{esc(title)} – Täubert Karosserie &amp; Lack</title>
-{seo_head(f"{title} – Täubert Karosserie & Lack", description(body_html), slug, og.group(1) if og else None)}
+<title>{esc(title)} | Täubert Karosserie &amp; Lack</title>
+{seo_head(f"{title} – Täubert Karosserie & Lack", desc or description(body_html), slug, og.group(1) if og else None)}
 {head_links}
 <style>{style}{EXTRA_CSS}</style>
 {ld}
+{extra_ld}
 </head>
 <body>
 {top}
