@@ -1,6 +1,6 @@
 # Bilder
 
-Noch fehlende Dateien (34). Abschnitte ohne Bild zeigen bis dahin nur Text.
+Noch fehlende Dateien (32). Abschnitte ohne Bild zeigen bis dahin nur Text.
 
 - 05aec4a8-410c-4309-a1e1-ac39cf6f5274.jpg
 - 1_cbd74079-c307-4241-a782-b0dd6ee7fa1e.png
@@ -16,11 +16,9 @@ Noch fehlende Dateien (34). Abschnitte ohne Bild zeigen bis dahin nur Text.
 - Bildschirmfoto_2026-01-09_um_15.26.40.png
 - DSC00347_2.jpg
 - DSC06286.jpg
-- Design_ohne_Titel-46.png
 - ElevenLabs_image_nano-banana-pro_diesesbild..._2026-01-12T09_12_54.png
 - ElevenLabs_image_nano-banana_diese_drei_f..._2026-01-13T08_47_37-2.png
 - ElevenLabs_image_nano-banana_dieses_Foto_..._2026-01-13T08_50_21.png
-- IMG_4342_2.jpg
 - IMG_7537_3.jpg
 - T_ubert_Karosserie_und_Lack_in_Sonneberg_Fuhrparkserive.png
 - T_ubert_Karosserie_und_Lack_in_Sonneberg_Mitarbeiter.jpg
