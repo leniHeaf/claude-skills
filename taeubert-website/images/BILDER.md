@@ -1,21 +1,16 @@
 # Bilder
 
-Diese Dateien aus Shopify (Admin → Inhalte → Dateien) mit exakt diesem Namen in diesen Ordner legen:
+Noch fehlende Dateien (74). Aus Shopify (Admin → Inhalte → Dateien) mit exakt diesem Namen in diesen Ordner legen:
 
 - 05aec4a8-410c-4309-a1e1-ac39cf6f5274.jpg
 - 1.png
-- 1_6f36b140-2e90-4499-9343-be0cf20702fe.png
 - 1_cbd74079-c307-4241-a782-b0dd6ee7fa1e.png
 - 2.png
 - 2_88827fa0-1bf3-4cfe-8709-ded76ccef89d.png
-- 2_9055a4a8-269a-440a-9cfa-9d6825da7a83.png
 - 3.png
 - 3_2ea6a6f2-811b-44c9-8f4e-bd608a0f80dd.png
-- 3_508b5dcd-775e-48c9-a539-2a98aafa4f6b.png
 - 4.png
-- 4_12352486-8bba-4930-ab08-035bdc1e181b.png
 - 5.png
-- 5_0d3fd80b-a1b9-4eed-b1cf-aacb5850c2fe.png
 - 6.png
 - 67e549c407d1178e2b3bce51_efbe816a-9ffc-4884-9130-5d9c05c3814c.jpg
 - 67e54e24950565cf808d4ff0_D299D140-703F-4533-93A9-6A85108009BE.jpg
@@ -24,7 +19,6 @@ Diese Dateien aus Shopify (Admin → Inhalte → Dateien) mit exakt diesem Namen
 - Bildschirmfoto_2026-01-09_um_15.29.30.png
 - DSC00347_2.jpg
 - DSC06286.jpg
-- Design_ohne_Titel-38.png
 - Design_ohne_Titel-46.png
 - ElevenLabs_image_nano-banana-pro_diesesbild..._2026-01-12T09_12_54.png
 - ElevenLabs_image_nano-banana_Auto_faehrt_2026-01-13T08_54_47.png
@@ -42,19 +36,15 @@ Diese Dateien aus Shopify (Admin → Inhalte → Dateien) mit exakt diesem Namen
 - Header_Banner_for_Blog.png
 - IMG-20130123-WA0005.jpg
 - IMG-20140509-WA0003.jpg
-- IMG_1396.jpg
 - IMG_4342_2.jpg
 - IMG_4674.heic
 - IMG_4978.heic
 - IMG_7537_3.jpg
-- Kopie_von_Kein_Titel_1400_x_250_px_-8.png
-- LOGO_TAeUBERT_l_Wiederhergestellt.png
 - TAeUBERT-2.png
 - T_ubert_Karosserie_und_Lack_in_Sonneberg_Fuhrparkserive.png
 - T_ubert_Karosserie_und_Lack_in_Sonneberg_Mitarbeiter.jpg
 - Toni_1180.jpg
 - Toni_4145.jpg
-- Zwischenueberschrifthinzufuegen.png
 - hf_20260210_173745_ff161ba7-667a-48f1-94c2-32318dd67326.jpg
 - hf_20260210_173801_c09630de-aae3-46b1-9460-d37b19053b9d_1.png
 - hf_20260210_173808_364c1669-6822-493e-9baa-db18c7f4d18c.jpg
