@@ -1,6 +1,6 @@
 # Bilder
 
-Noch fehlende Dateien (9). Abschnitte ohne Bild zeigen bis dahin nur Text.
+Noch fehlende Dateien (7). Abschnitte ohne Bild zeigen bis dahin nur Text.
 
 - Bildschirmfoto_2026-01-09_um_14.26.45.png
 - DSC00347_2.jpg
@@ -9,5 +9,3 @@ Noch fehlende Dateien (9). Abschnitte ohne Bild zeigen bis dahin nur Text.
 - T_ubert_Karosserie_und_Lack_in_Sonneberg_Mitarbeiter.jpg
 - pexels-aida-shukuhi-914628252-20281832.jpg
 - pexels-borta-2790256-30787396.jpg
-- pexels-trishin-rambajan-1564695-11329078.jpg
-- pexels-uiliamnornberg-24960483_2971c584-81f6-4dd4-bf60-f58213b7bd8b.jpg
