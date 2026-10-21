@@ -1,6 +1,6 @@
 # Bilder
 
-Noch fehlende Dateien (53). Abschnitte ohne Bild zeigen bis dahin nur Text.
+Noch fehlende Dateien (50). Abschnitte ohne Bild zeigen bis dahin nur Text.
 
 - 05aec4a8-410c-4309-a1e1-ac39cf6f5274.jpg
 - 1.png
@@ -43,11 +43,8 @@ Noch fehlende Dateien (53). Abschnitte ohne Bild zeigen bis dahin nur Text.
 - hf_20260210_173745_ff161ba7-667a-48f1-94c2-32318dd67326.jpg
 - pexels-aida-shukuhi-914628252-20281832.jpg
 - pexels-artempodrez-8986139.jpg
-- pexels-austin-briones-2158818052-36202185.jpg
 - pexels-borta-2790256-30787396.jpg
 - pexels-bulat843-1243575272-31389821.jpg
-- pexels-dante-juhasz-62201650-10880630.jpg
-- pexels-enis-yavuz-3516387-5260115.jpg
 - pexels-glv-visuals-859366-28611341.jpg
 - pexels-griffinw-2657960.jpg
 - pexels-markusspiske-1729999.jpg
