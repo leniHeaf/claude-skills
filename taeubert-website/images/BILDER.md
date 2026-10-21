@@ -1,6 +1,6 @@
 # Bilder
 
-Noch fehlende Dateien (74). Aus Shopify (Admin → Inhalte → Dateien) mit exakt diesem Namen in diesen Ordner legen:
+Noch fehlende Dateien (72). Aus Shopify (Admin → Inhalte → Dateien) mit exakt diesem Namen in diesen Ordner legen:
 
 - 05aec4a8-410c-4309-a1e1-ac39cf6f5274.jpg
 - 1.png
@@ -16,7 +16,6 @@ Noch fehlende Dateien (74). Aus Shopify (Admin → Inhalte → Dateien) mit exak
 - 67e54e24950565cf808d4ff0_D299D140-703F-4533-93A9-6A85108009BE.jpg
 - 67e54e9e6a50c47dbfeb5962_03_DSC_0367_2-p-3200.jpg
 - Bildschirmfoto_2026-01-09_um_14.26.45.png
-- Bildschirmfoto_2026-01-09_um_15.29.30.png
 - DSC00347_2.jpg
 - DSC06286.jpg
 - Design_ohne_Titel-46.png
@@ -40,7 +39,6 @@ Noch fehlende Dateien (74). Aus Shopify (Admin → Inhalte → Dateien) mit exak
 - IMG_4674.heic
 - IMG_4978.heic
 - IMG_7537_3.jpg
-- TAeUBERT-2.png
 - T_ubert_Karosserie_und_Lack_in_Sonneberg_Fuhrparkserive.png
 - T_ubert_Karosserie_und_Lack_in_Sonneberg_Mitarbeiter.jpg
 - Toni_1180.jpg
