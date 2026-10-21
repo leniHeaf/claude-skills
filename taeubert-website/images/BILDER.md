@@ -1,6 +1,6 @@
 # Bilder
 
-Noch fehlende Dateien (58). Abschnitte ohne Bild zeigen bis dahin nur Text.
+Noch fehlende Dateien (53). Abschnitte ohne Bild zeigen bis dahin nur Text.
 
 - 05aec4a8-410c-4309-a1e1-ac39cf6f5274.jpg
 - 1.png
@@ -42,21 +42,16 @@ Noch fehlende Dateien (58). Abschnitte ohne Bild zeigen bis dahin nur Text.
 - Zwischenueberschrifthinzufuegen_4f3aba19-39ab-4622-bff8-b6bb210faca7.png
 - hf_20260210_173745_ff161ba7-667a-48f1-94c2-32318dd67326.jpg
 - pexels-aida-shukuhi-914628252-20281832.jpg
-- pexels-amar-11157437.jpg
 - pexels-artempodrez-8986139.jpg
 - pexels-austin-briones-2158818052-36202185.jpg
 - pexels-borta-2790256-30787396.jpg
 - pexels-bulat843-1243575272-31389821.jpg
-- pexels-bylukemiller-14231669.jpg
 - pexels-dante-juhasz-62201650-10880630.jpg
 - pexels-enis-yavuz-3516387-5260115.jpg
 - pexels-glv-visuals-859366-28611341.jpg
 - pexels-griffinw-2657960.jpg
-- pexels-hellochemo-28960715.jpg
 - pexels-markusspiske-1729999.jpg
-- pexels-tima-miroshnichenko-6872570.jpg
 - pexels-trishin-rambajan-1564695-11329078.jpg
 - pexels-uiliamnornberg-24960483_2971c584-81f6-4dd4-bf60-f58213b7bd8b.jpg
-- pexels-vadutskevich-13249371.jpg
 - pexels-wavyvisuals-377312923-20051451.jpg
 - u3431668588_Side_view_of_a_futuristic_motorcycle_with_a_pure__2654a9a3-dc27-41a6-bc98-e30af5d4ec04_0.png
