@@ -1,6 +1,6 @@
 # Bilder
 
-Noch fehlende Dateien (65). Abschnitte ohne Bild zeigen bis dahin nur Text.
+Noch fehlende Dateien (58). Abschnitte ohne Bild zeigen bis dahin nur Text.
 
 - 05aec4a8-410c-4309-a1e1-ac39cf6f5274.jpg
 - 1.png
@@ -14,7 +14,6 @@ Noch fehlende Dateien (65). Abschnitte ohne Bild zeigen bis dahin nur Text.
 - 6.png
 - 67e549c407d1178e2b3bce51_efbe816a-9ffc-4884-9130-5d9c05c3814c.jpg
 - 67e54e24950565cf808d4ff0_D299D140-703F-4533-93A9-6A85108009BE.jpg
-- 67e54e9e6a50c47dbfeb5962_03_DSC_0367_2-p-3200.jpg
 - Bildschirmfoto_2025-12-03_um_16.41.11.png
 - Bildschirmfoto_2026-01-09_um_14.26.45.png
 - Bildschirmfoto_2026-01-09_um_15.02.22.png
@@ -23,21 +22,15 @@ Noch fehlende Dateien (65). Abschnitte ohne Bild zeigen bis dahin nur Text.
 - DSC06286.jpg
 - Design_ohne_Titel-46.png
 - ElevenLabs_image_nano-banana-pro_diesesbild..._2026-01-12T09_12_54.png
-- ElevenLabs_image_nano-banana_Auto_faehrt_2026-01-13T08_54_47.png
-- ElevenLabs_image_nano-banana_Auto_komplet..._2026-01-13T08_54_05.png
 - ElevenLabs_image_nano-banana_Nahaufnahmen..._2026-01-13T08_52_06-2.png
 - ElevenLabs_image_nano-banana_Nahaufnahmen..._2026-01-13T08_52_06.png
-- ElevenLabs_image_nano-banana_Porsche_rast..._2026-01-13T08_49_41.png
 - ElevenLabs_image_nano-banana_auto_rast_au..._2026-01-13T08_52_45.png
 - ElevenLabs_image_nano-banana_diese_Fotos_..._2026-01-13T08_51_10-2.png
 - ElevenLabs_image_nano-banana_diese_Fotos_..._2026-01-13T08_51_10.png
 - ElevenLabs_image_nano-banana_diese_drei_f..._2026-01-13T08_47_36.png
 - ElevenLabs_image_nano-banana_diese_drei_f..._2026-01-13T08_47_37-2.png
-- ElevenLabs_image_nano-banana_dieses_Foto_..._2026-01-13T08_45_01.png
 - ElevenLabs_image_nano-banana_dieses_Foto_..._2026-01-13T08_50_21.png
-- Header_Banner_for_Blog.png
 - IMG-20130123-WA0005.jpg
-- IMG-20140509-WA0003.jpg
 - IMG_4342_2.jpg
 - IMG_4674.heic
 - IMG_4978.heic
