@@ -40,7 +40,17 @@ def esc(s):
 
 
 def img_name(ref):
-    return ref.split("/")[-1] if ref else ""
+    """Dateiname aus der Shopify-Referenz; liegt das Bild mit anderer Endung in images/, diese nehmen."""
+    if not ref:
+        return ""
+    name = ref.split("/")[-1]
+    stem = os.path.splitext(name)[0]
+    img_dir = os.path.join(SITE, "images")
+    if not os.path.exists(os.path.join(img_dir, name)) and os.path.isdir(img_dir):
+        for f in os.listdir(img_dir):
+            if os.path.splitext(f)[0] == stem:
+                return f
+    return name
 
 
 def link(url, label=""):
