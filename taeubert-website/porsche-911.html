@@ -4,6 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PORSCHE 911 – Täubert Karosserie &amp; Lack</title>
+<meta name="description" content="Projektleiter: Toni I Projektjahr: 2015 I Leistung: Karosserie &amp; Lack – Komplettinstandsetzung I Anspruch: Originalzustand. Ohne Kompromisse.">
+<link rel="canonical" href="https://www.taeubert-karosserie-lack.de/porsche-911.html">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_DE">
+<meta property="og:site_name" content="Täubert Karosserie &amp; Lack">
+<meta property="og:title" content="PORSCHE 911 – Täubert Karosserie &amp; Lack">
+<meta property="og:description" content="Projektleiter: Toni I Projektjahr: 2015 I Leistung: Karosserie &amp; Lack – Komplettinstandsetzung I Anspruch: Originalzustand. Ohne Kompromisse.">
+<meta property="og:url" content="https://www.taeubert-karosserie-lack.de/porsche-911.html">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="images/TAeUBERT-2.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -83,7 +92,7 @@
   .hero .overlay { opacity: .2; }
   .hero-content { position: absolute; left: 0; right: 0; bottom: 0; padding-bottom: 70px; }
   .hero-content .inner { max-width: 700px; }
-  .hero h2 { font-size: clamp(38px, 5.4vw, 72px); }
+  .hero h1 { font-size: clamp(38px, 5.4vw, 72px); }
   .hero p { font-size: 18px; margin: 18px 0 28px; max-width: 600px; }
   .btns { display: flex; flex-wrap: wrap; gap: 12px; }
   .reveal-text { opacity: 0; transform: translateY(24px); animation: rise .9s cubic-bezier(.2,.8,.2,1) .2s forwards; }
@@ -179,6 +188,18 @@
   .hours dt { font-weight: 700; }
   .foot-bottom { margin-top: 44px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.2); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 13px; color: rgba(255,255,255,.7); }
 
+  /* UX: Fokus, Sprunglink, Header-Button, Aktionsleiste */
+  :focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+  .skip { position: absolute; left: 12px; top: -60px; z-index: 200; background: var(--black); color: var(--white); padding: 10px 16px; font-weight: 600; }
+  .skip:focus { top: 12px; }
+  .btn-header { padding: 10px 18px; font-size: 14px; background: var(--black); color: var(--white); border-color: var(--black); margin-right: 6px; }
+  .btn-header:hover { background: transparent; color: inherit; border-color: currentColor; }
+  .header.transparent .btn-header { background: var(--white); color: var(--black); border-color: var(--white); }
+  .header.transparent .btn-header:hover { background: transparent; color: var(--white); }
+  .hide-desktop { display: none; }
+  .action-bar { display: none; }
+  .fl-inner.no-showcase { grid-template-columns: 1fr; }
+  .fl-inner.no-showcase .showcase { display: none; }
   @media (prefers-reduced-motion: reduce) {
     .marquee-track { animation: none; } .reveal-text { animation: none; opacity: 1; transform: none; }
     .slide { transition: none; } html { scroll-behavior: auto; }
@@ -196,6 +217,14 @@
     .showcase { max-width: 480px; }
     .blog-grid { grid-template-columns: 1fr; }
     .foot-grid { grid-template-columns: 1fr 1fr; gap: 36px 20px; }
+  }
+  @media (max-width: 760px) {
+    .btn-header { display: none; }
+    .hide-desktop { display: inline-flex; }
+    .action-bar { display: grid; grid-template-columns: 1fr 1fr 1.2fr; position: fixed; left: 0; right: 0; bottom: 0; z-index: 70; background: var(--black); border-top: 1px solid rgba(255,255,255,.15); padding-bottom: env(safe-area-inset-bottom); }
+    .action-bar a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-height: 60px; color: var(--white); font-size: 12px; font-weight: 600; }
+    .action-bar a.primary { background: var(--white); color: var(--black); }
+    body { padding-bottom: 64px; }
   }
   @media (max-width: 600px) {
     :root { --gutter: 16px; --announce-h: 40px; }
@@ -224,7 +253,7 @@
   .iwt > *, .mc-grid > * { min-width: 0; }
   .sub-hero-content, .slide-content > div { max-width: 100%; overflow-wrap: break-word; }
   .scroll-sec { overflow: hidden; }
-  main h1, main h2, main h3, .faq summary { overflow-wrap: anywhere; hyphens: auto; }
+  main h1, main h2, main h3, .faq summary { overflow-wrap: break-word; hyphens: auto; }
   .faq summary span { flex: 1; min-width: 0; }
   .rte p { margin-bottom: 12px; } .rte ul, .rte ol { margin: 0 0 12px 22px; } .rte li { margin-bottom: 4px; }
   .rte h2, .rte h3 { margin: 22px 0 12px; font-size: clamp(22px, 2.4vw, 30px); }
@@ -292,8 +321,10 @@
     .map iframe { height: 300px; }
   }
 </style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "AutoBodyShop", "name": "Täubert Karosserie und Lack GmbH", "url": "https://www.taeubert-karosserie-lack.de/", "logo": "https://www.taeubert-karosserie-lack.de/images/Taeubert_Logo.png", "telephone": "+49 3675 4289606", "email": "hallo@taeubert-karosserie-lack.de", "address": {"@type": "PostalAddress", "streetAddress": "Bettelhecker Straße 15", "postalCode": "96515", "addressLocality": "Sonneberg", "addressRegion": "Thüringen", "addressCountry": "DE"}, "areaServed": ["Sonneberg", "Neustadt bei Coburg", "Coburg", "Rödental", "Kronach", "Bamberg"], "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"], "opens": "08:00", "closes": "17:00"}, {"@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "08:00", "closes": "14:30"}], "sameAs": ["https://www.facebook.com/ToniTaeubert/", "https://www.instagram.com/taeubert_karosserieundlack/"]}</script>
 </head>
 <body>
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
 <div class="announce">
   <strong><a href="mailto:hallo@taeubert-karosserie-lack.de">hallo@taeubert-karosserie-lack.de</a> I <a href="tel:+4936754289606">03675 4289606</a></strong>
 </div>
@@ -310,10 +341,11 @@
       <img src="images/Taeubert_Logo.png" alt="TÄUBERT Karosserie &amp; Lack" onerror="this.outerHTML='<span class=&quot;logo-fallback&quot;>TÄUBERT</span>'">
     </a>
     <div class="header-right">
-      <a class="icon-btn" href="https://terminbuchungtaeubert.de" aria-label="Termin buchen">
+      <a class="btn btn-header" href="https://terminbuchungtaeubert.de">Termin buchen</a>
+      <a class="icon-btn hide-desktop" href="https://terminbuchungtaeubert.de" aria-label="Termin buchen">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="1"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
       </a>
-      <a class="icon-btn" href="#kontakt" aria-label="Kontakt">
+      <a class="icon-btn" href="tel:+4936754289606" aria-label="Anrufen: 03675 4289606">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
       </a>
     </div>
@@ -332,8 +364,8 @@
     <details>
       <summary>Über Täubert</summary>
       <div class="promos">
-        <a class="promo" href="history.html"><div class="media"><img src="images/1.png" alt=""></div><div class="overlay"></div><span>History</span></a>
-        <a class="promo" href="azubi.html"><div class="media"><img src="images/6.png" alt=""></div><div class="overlay"></div><span>Azubi</span></a>
+        <a class="promo" href="history.html"><div class="media"><img src="images/1.png" alt="History von Täubert"></div><div class="overlay"></div><span>History</span></a>
+        <a class="promo" href="azubi.html"><div class="media"><img src="images/6.png" alt="Ausbildung bei Täubert"></div><div class="overlay"></div><span>Azubi</span></a>
       </div>
     </details>
     <details>
@@ -371,10 +403,10 @@
     <a href="https://wa.me/message/BWRVH4RG3XVDH1" aria-label="WhatsApp" target="_blank" rel="noopener"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.3.8 3.2.7.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.4-.3z"/></svg></a>
   </div>
 </aside>
-<main>
+<main id="inhalt">
 <section class="sub-hero" style="--h:650px;--mh:450px">
-  <div class="media"><img src="images/ElevenLabs_image_nano-banana_Porsche_rast..._2026-01-13T08_49_41.png" alt="" loading="lazy"></div><div class="overlay" style="opacity:0.2"></div>
-  <div class="sub-hero-content" style="max-width:600px"><h2 class="h-8">PORSCHE 911</h2>
+  <div class="media"></div><div class="overlay" style="opacity:0.2"></div>
+  <div class="sub-hero-content" style="max-width:960px"><h1 class="h-8">PORSCHE 911</h1>
 <div class="rte"><p><strong>2015 Projektjahr I :</strong> 2-Schicht im Originalfarbton<br/><br/><br/></p></div>
 <div class="btns"><a class="btn btn-light" href="https://terminbuchungtaeubert.de">Jetzt buchen</a></div></div>
 </section>
@@ -383,18 +415,18 @@
 <div class="rte"><p><br/></p><p><strong> Projektleiter:</strong> Toni I <strong>Projektjahr:</strong> 2015 I <strong>Leistung:</strong> Karosserie & Lack – Komplettinstandsetzung I <strong>Anspruch:</strong> Originalzustand. Ohne Kompromisse.<br/><br/></p></div></div></div>
 </section>
 <section class="sec" style="padding:50px 0 50px">
-  <div class="page-width iwt media-right" style="--cols:50fr 50fr"><div class="iwt-text" style="max-width:500px"><h2 class="h-1">Ausgangslage</h2>
-<div class="rte"><h2></h2><p>Der Porsche 911 wurde uns in einem Zustand übergeben, der Handlungsbedarf klar machte. Sichtbare Rostschäden an Schweller, Radläufen und Kotflügeln waren bereits deutlich ausgeprägt. Bei näherer Betrachtung zeigte sich schnell, dass auch tragende Bereiche betroffen waren.</p><p>Die Karosseriestruktur wies altersbedingte Schwächen auf. Frühere Instandsetzungen, Feuchtigkeit und Materialermüdung hatten ihre Spuren hinterlassen. Optisch wirkte das Fahrzeug noch geschlossen, technisch war die Substanz jedoch gefährdet.</p><p>Das Ziel war daher nicht kosmetische Aufbereitung, sondern eine nachhaltige Restauration. Die Basis musste wieder stimmen – strukturell, handwerklich und im Sinne des Originalzustands.</p><p>Nur so lässt sich der Charakter eines Klassikers bewahren</p></div></div><div class="iwt-media" style="aspect-ratio:auto"><img src="images/67e54e9e6a50c47dbfeb5962_03_DSC_0367_2-p-3200.jpg" alt="" loading="lazy"></div></div>
+  <div class="page-width"><div class="rich-inner" style="max-width:760px"><h2 class="h-1">Ausgangslage</h2>
+<div class="rte"><h2></h2><p>Der Porsche 911 wurde uns in einem Zustand übergeben, der Handlungsbedarf klar machte. Sichtbare Rostschäden an Schweller, Radläufen und Kotflügeln waren bereits deutlich ausgeprägt. Bei näherer Betrachtung zeigte sich schnell, dass auch tragende Bereiche betroffen waren.</p><p>Die Karosseriestruktur wies altersbedingte Schwächen auf. Frühere Instandsetzungen, Feuchtigkeit und Materialermüdung hatten ihre Spuren hinterlassen. Optisch wirkte das Fahrzeug noch geschlossen, technisch war die Substanz jedoch gefährdet.</p><p>Das Ziel war daher nicht kosmetische Aufbereitung, sondern eine nachhaltige Restauration. Die Basis musste wieder stimmen – strukturell, handwerklich und im Sinne des Originalzustands.</p><p>Nur so lässt sich der Charakter eines Klassikers bewahren</p></div></div></div>
 </section>
 <section class="sec rich-sub" style="padding:50px 0 50px">
   <div class="page-width"><div class="rich-inner" style="max-width:650px;text-align:center;margin:0 auto"><div class="rte"><h3>Vorgehensweise</h3><h3>Karosserie-Restauration mit Respekt vor dem Original</h3><p>Dieser Porsche 911 kam mit deutlich sichtbaren Rostschäden zu uns. Kein Alltagsfahrzeug, sondern ein Klassiker mit Geschichte. Besonders die tragenden Bereiche – Schweller, Radläufe und Kotflügel – waren stark angegriffen. Unser Anspruch war von Beginn an klar: Die Karosserie originalgetreu restaurieren, ohne den Charakter des Fahrzeugs zu verfälschen.</p><p>Zu Beginn wurde das Fahrzeug vollständig zerlegt. Jedes Bauteil, jede Schadstelle und jede strukturelle Auffälligkeit wurde dokumentiert. Diese Zustandsanalyse bildete die Grundlage für alle weiteren Entscheidungen. Nicht, um Aufwand zu erzeugen, sondern um Substanz zu sichern.</p><p>Die Entrostung erfolgte konsequent. Befallene Bereiche wurden vollständig entfernt, nicht überdeckt. Beschädigte Bleche ersetzten wir durch passgenaue Neuteile, die originalgetreu angepasst wurden. Spaltmaße und Linienführung hatten dabei oberste Priorität. Ein Klassiker verzeiht keine Abweichung.</p><p>Verzogene Partien korrigierten wir auf unserer Richtbank. Die Karosseriestruktur wurde stabilisiert und auf Werksniveau zurückgeführt. Ziel war nicht optische Korrektur, sondern strukturelle Ehrlichkeit. Erst wenn die Basis stimmt, lohnt sich der nächste Schritt.</p><p>Nach der Blechbearbeitung folgte die sorgfältige Lackvorbereitung. Grundierung, Glättung und Übergänge wurden so ausgeführt, dass der spätere Lackaufbau ruhig und stimmig wirkt. Unebenheiten wurden nicht kaschiert, sondern beseitigt.</p><p>Die Lackierung erfolgte im originalgetreuen Farbton, zweischichtig aufgebaut. Tief, klar und mit dauerhaftem UV-Schutz. Keine Effekte. Keine Interpretation. Sondern Respekt vor dem Original.</p><p>Zum Abschluss wurde der Porsche vollständig montiert. Anbauteile, neue Dichtungen und Zierleisten fügten sich wieder zu einem Gesamtbild zusammen. Das Ergebnis ist kein modernisierter Klassiker, sondern ein 911, der wieder so dasteht, wie er gedacht war.</p><p>Nicht neu. Sondern richtig.</p></div>
 <div class="btns"><a class="btn btn-dark" href="contact.html">Jetzt Termin vereinbaren</a></div></div></div>
 </section>
 <section class="" style="">
-  <div class="slider" data-interval="6000" style="--h:750px;--mh:650px"><div class="slide"><div class="media"><img src="images/ElevenLabs_image_nano-banana_dieses_Foto_..._2026-01-13T08_45_01.png" alt="" loading="lazy"></div><div class="overlay" style="opacity:0.2"></div><div class="slide-content"><div style="max-width:700px"></div></div></div><div class="slide"><div class="media"><img src="images/ElevenLabs_image_nano-banana_diese_drei_f..._2026-01-13T08_47_37-2.png" alt="" loading="lazy"></div><div class="overlay" style="opacity:0.2"></div><div class="slide-content"><div style="max-width:700px"></div></div></div><div class="slide"><div class="media"><img src="images/67e54e24950565cf808d4ff0_D299D140-703F-4533-93A9-6A85108009BE.jpg" alt="" loading="lazy"></div><div class="overlay" style="opacity:0.2"></div><div class="slide-content"><div style="max-width:700px"></div></div></div><div class="slide"><div class="media"><img src="images/ElevenLabs_image_nano-banana_diese_drei_f..._2026-01-13T08_47_36.png" alt="" loading="lazy"></div><div class="overlay" style="opacity:0.2"></div><div class="slide-content"><div style="max-width:700px"></div></div></div><div class="slide"><div class="media"><img src="images/ElevenLabs_image_nano-banana_Porsche_rast..._2026-01-13T08_49_41.png" alt="" loading="lazy"></div><div class="overlay" style="opacity:0.2"></div><div class="slide-content"><div style="max-width:700px"><p>Tell your brand's story through images</p></div></div></div><div class="arrows"><button data-dir="-1" aria-label="Vorheriger Slide"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button><button data-dir="1" aria-label="Nächster Slide"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button></div><div class="dots"></div></div>
+  <div class="slider" data-interval="6000" style="--h:750px;--mh:650px"><div class="slide"><div class="media"></div><div class="overlay" style="opacity:0.2"></div><div class="slide-content"><div style="max-width:700px"><p>Tell your brand's story through images</p></div></div></div></div>
 </section>
 <section class="sec" style="padding:50px 0 50px">
-  <div class="page-width"><h2 class="sec-head">Mehr Projekte</h2><div class="mc-grid" style="--n:3"><div class="mc-col"><div class="mc-media"><div class="media"><img src="images/ElevenLabs_image_nano-banana_Auto_komplet..._2026-01-13T08_54_05.png" alt="" loading="lazy"></div></div><h3>VW Bulli T2</h3><div class="rte"><p>„Fräulein Ida“ – Frontpartie-Überarbeitung<br/>Die Frontpartie dieses VW Bulli T2 wurde gezielt überarbeitet, um Substanz und Originalcharme zu bewahren. Vorbereitung, Lackaufbau und Farbton orientierten sich konsequent am Original. Das Ergebnis ist eine ruhige, ehrliche Oberfläche mit Charakter.<br/><br/></p></div></div><div class="mc-col"><div class="mc-media"><div class="media"><img src="images/ElevenLabs_image_nano-banana_dieses_Foto_..._2026-01-13T08_45_01.png" alt="" loading="lazy"></div></div><h3>Porsche 911</h3><div class="rte"><p>Karosserie-Restauration Dieser Porsche 911 kam mit erheblichen Rostschäden an tragenden Karosseriebereichen zu uns. Ziel war eine konsequente Entrostung und originalgetreue Wiederherstellung der Substanz, ohne den Charakter des Klassikers zu verändern. Heute steht der 911 wieder stabil, stimmig und authentisch da.</p></div></div><div class="mc-col"><div class="mc-media"><div class="media"><img src="images/ElevenLabs_image_nano-banana_diese_Fotos_..._2026-01-13T08_51_10-2.png" alt="" loading="lazy"></div></div><h3>Porsche Cayenne</h3><div class="rte"><p>Komplettinstandsetzung Front Nach einem massiven Frontunfall wurde die komplette Frontpartie dieses Porsche Cayenne strukturell und optisch instandgesetzt. Karosserie, Sicherheitssysteme und Lackierung wurden auf Originalniveau zurückgeführt. Das Ergebnis ist ein Fahrzeug, das nicht repariert wirkt, sondern wieder stimmt.</p></div></div></div></div>
+  <div class="page-width"><h2 class="sec-head">Mehr Projekte</h2><div class="mc-grid" style="--n:3"><div class="mc-col"><h3>VW Bulli T2</h3><div class="rte"><p>„Fräulein Ida“ – Frontpartie-Überarbeitung<br/>Die Frontpartie dieses VW Bulli T2 wurde gezielt überarbeitet, um Substanz und Originalcharme zu bewahren. Vorbereitung, Lackaufbau und Farbton orientierten sich konsequent am Original. Das Ergebnis ist eine ruhige, ehrliche Oberfläche mit Charakter.<br/><br/></p></div></div><div class="mc-col"><h3>Porsche 911</h3><div class="rte"><p>Karosserie-Restauration Dieser Porsche 911 kam mit erheblichen Rostschäden an tragenden Karosseriebereichen zu uns. Ziel war eine konsequente Entrostung und originalgetreue Wiederherstellung der Substanz, ohne den Charakter des Klassikers zu verändern. Heute steht der 911 wieder stabil, stimmig und authentisch da.</p></div></div><div class="mc-col"><h3>Porsche Cayenne</h3><div class="rte"><p>Komplettinstandsetzung Front Nach einem massiven Frontunfall wurde die komplette Frontpartie dieses Porsche Cayenne strukturell und optisch instandgesetzt. Karosserie, Sicherheitssysteme und Lackierung wurden auf Originalniveau zurückgeführt. Das Ergebnis ist ein Fahrzeug, das nicht repariert wirkt, sondern wieder stimmt.</p></div></div></div></div>
 </section>
 </main>
 <footer>
@@ -440,6 +472,11 @@
     <span>© <span id="year">2026</span> Täubert Karosserie &amp; Lack</span>
     <span>Bettelhecker Straße 15 · 96515 Sonneberg</span>
   </div>
+  <nav class="action-bar" aria-label="Schnellkontakt">
+    <a href="tel:+4936754289606"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg><span>Anrufen</span></a>
+    <a href="https://wa.me/4936754289606" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg><span>WhatsApp</span></a>
+    <a href="https://terminbuchungtaeubert.de" class="primary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="1"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>Termin</span></a>
+  </nav>
 </footer>
 <script>
   // Menü-Drawer
@@ -449,9 +486,23 @@
   document.getElementById('menu-close').onclick = () => setMenu(false);
   document.getElementById('backdrop').onclick = () => setMenu(false);
   addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
-  // Fehlende Bilddateien ausblenden (grauer Hintergrund bleibt)
+  // Fehlende Bilddateien: Bild ausblenden; Slides ohne Bild und Text entfernen
+  const dropSlide = slide => {
+    if (slides.length < 2) return;
+    const i = slides.indexOf(slide);
+    slide.remove(); slides.splice(i, 1); dots.children[i].remove();
+    [...dots.children].forEach((d, j) => d.onclick = () => go(j));
+    document.querySelector('#slider .dots').hidden = document.querySelector('#slider .arrows').hidden = slides.length < 2;
+    go(0);
+  };
   document.querySelectorAll('img').forEach(img => {
-    const hide = () => { img.style.visibility = 'hidden'; };
+    const hide = () => {
+      img.style.visibility = 'hidden';
+      const slide = img.closest('#slider .slide');
+      if (slide && !slide.querySelector('.slide-content')) dropSlide(slide);
+      if (img.closest('#showcase') && [...document.querySelectorAll('#showcase img')].every(i => i.complete && !i.naturalWidth))
+        document.querySelector('.fl-inner').classList.add('no-showcase');
+    };
     if (img.complete && !img.naturalWidth) hide(); else img.addEventListener('error', hide);
   });
 

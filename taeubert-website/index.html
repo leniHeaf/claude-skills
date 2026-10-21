@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Täubert Karosserie &amp; Lack – Karosseriebau &amp; KFZ-Lackiererei Sonneberg</title>
 <meta name="description" content="Unfall gehabt? Wir kümmern uns um alles – Reparatur, Versicherung und Gutachten. Karosseriebau & KFZ-Lackiererei Sonneberg, Neustadt & Coburg.">
+<link rel="canonical" href="https://www.taeubert-karosserie-lack.de/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_DE">
+<meta property="og:site_name" content="Täubert Karosserie &amp; Lack">
+<meta property="og:title" content="Täubert Karosserie &amp; Lack – Karosseriebau &amp; KFZ-Lackiererei Sonneberg">
+<meta property="og:description" content="Unfall gehabt? Wir kümmern uns um alles – Reparatur, Versicherung und Gutachten. Karosseriebau &amp; KFZ-Lackiererei Sonneberg, Neustadt &amp; Coburg.">
+<meta property="og:url" content="https://www.taeubert-karosserie-lack.de/">
+<meta property="og:image" content="https://www.taeubert-karosserie-lack.de/images/hf_20260210_181531_cb41fa11-8f63-4e1a-93b7-0ea0ed24e5f9.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="images/TAeUBERT-2.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -84,7 +93,7 @@
   .hero .overlay { opacity: .2; }
   .hero-content { position: absolute; left: 0; right: 0; bottom: 0; padding-bottom: 70px; }
   .hero-content .inner { max-width: 700px; }
-  .hero h2 { font-size: clamp(38px, 5.4vw, 72px); }
+  .hero h1 { font-size: clamp(38px, 5.4vw, 72px); }
   .hero p { font-size: 18px; margin: 18px 0 28px; max-width: 600px; }
   .btns { display: flex; flex-wrap: wrap; gap: 12px; }
   .reveal-text { opacity: 0; transform: translateY(24px); animation: rise .9s cubic-bezier(.2,.8,.2,1) .2s forwards; }
@@ -180,6 +189,18 @@
   .hours dt { font-weight: 700; }
   .foot-bottom { margin-top: 44px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.2); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 13px; color: rgba(255,255,255,.7); }
 
+  /* UX: Fokus, Sprunglink, Header-Button, Aktionsleiste */
+  :focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+  .skip { position: absolute; left: 12px; top: -60px; z-index: 200; background: var(--black); color: var(--white); padding: 10px 16px; font-weight: 600; }
+  .skip:focus { top: 12px; }
+  .btn-header { padding: 10px 18px; font-size: 14px; background: var(--black); color: var(--white); border-color: var(--black); margin-right: 6px; }
+  .btn-header:hover { background: transparent; color: inherit; border-color: currentColor; }
+  .header.transparent .btn-header { background: var(--white); color: var(--black); border-color: var(--white); }
+  .header.transparent .btn-header:hover { background: transparent; color: var(--white); }
+  .hide-desktop { display: none; }
+  .action-bar { display: none; }
+  .fl-inner.no-showcase { grid-template-columns: 1fr; }
+  .fl-inner.no-showcase .showcase { display: none; }
   @media (prefers-reduced-motion: reduce) {
     .marquee-track { animation: none; } .reveal-text { animation: none; opacity: 1; transform: none; }
     .slide { transition: none; } html { scroll-behavior: auto; }
@@ -198,6 +219,14 @@
     .blog-grid { grid-template-columns: 1fr; }
     .foot-grid { grid-template-columns: 1fr 1fr; gap: 36px 20px; }
   }
+  @media (max-width: 760px) {
+    .btn-header { display: none; }
+    .hide-desktop { display: inline-flex; }
+    .action-bar { display: grid; grid-template-columns: 1fr 1fr 1.2fr; position: fixed; left: 0; right: 0; bottom: 0; z-index: 70; background: var(--black); border-top: 1px solid rgba(255,255,255,.15); padding-bottom: env(safe-area-inset-bottom); }
+    .action-bar a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-height: 60px; color: var(--white); font-size: 12px; font-weight: 600; }
+    .action-bar a.primary { background: var(--white); color: var(--black); }
+    body { padding-bottom: 64px; }
+  }
   @media (max-width: 600px) {
     :root { --gutter: 16px; --announce-h: 40px; }
     .announce { font-size: 12px; }
@@ -214,9 +243,11 @@
     .foot-grid { grid-template-columns: 1fr; }
   }
 </style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "AutoBodyShop", "name": "Täubert Karosserie und Lack GmbH", "url": "https://www.taeubert-karosserie-lack.de/", "logo": "https://www.taeubert-karosserie-lack.de/images/Taeubert_Logo.png", "telephone": "+49 3675 4289606", "email": "hallo@taeubert-karosserie-lack.de", "address": {"@type": "PostalAddress", "streetAddress": "Bettelhecker Straße 15", "postalCode": "96515", "addressLocality": "Sonneberg", "addressRegion": "Thüringen", "addressCountry": "DE"}, "areaServed": ["Sonneberg", "Neustadt bei Coburg", "Coburg", "Rödental", "Kronach", "Bamberg"], "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"], "opens": "08:00", "closes": "17:00"}, {"@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "08:00", "closes": "14:30"}], "sameAs": ["https://www.facebook.com/ToniTaeubert/", "https://www.instagram.com/taeubert_karosserieundlack/"]}</script>
 </head>
 <body class="home">
 
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
 <div class="announce">
   <strong><a href="mailto:hallo@taeubert-karosserie-lack.de">hallo@taeubert-karosserie-lack.de</a> I <a href="tel:+4936754289606">03675 4289606</a></strong>
 </div>
@@ -233,10 +264,11 @@
       <img src="images/Taeubert_Logo.png" alt="TÄUBERT Karosserie &amp; Lack" onerror="this.outerHTML='<span class=&quot;logo-fallback&quot;>TÄUBERT</span>'">
     </a>
     <div class="header-right">
-      <a class="icon-btn" href="https://terminbuchungtaeubert.de" aria-label="Termin buchen">
+      <a class="btn btn-header" href="https://terminbuchungtaeubert.de">Termin buchen</a>
+      <a class="icon-btn hide-desktop" href="https://terminbuchungtaeubert.de" aria-label="Termin buchen">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="1"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
       </a>
-      <a class="icon-btn" href="#kontakt" aria-label="Kontakt">
+      <a class="icon-btn" href="tel:+4936754289606" aria-label="Anrufen: 03675 4289606">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
       </a>
     </div>
@@ -255,8 +287,8 @@
     <details>
       <summary>Über Täubert</summary>
       <div class="promos">
-        <a class="promo" href="history.html"><div class="media"><img src="images/1.png" alt=""></div><div class="overlay"></div><span>History</span></a>
-        <a class="promo" href="azubi.html"><div class="media"><img src="images/6.png" alt=""></div><div class="overlay"></div><span>Azubi</span></a>
+        <a class="promo" href="history.html"><div class="media"><img src="images/1.png" alt="History von Täubert"></div><div class="overlay"></div><span>History</span></a>
+        <a class="promo" href="azubi.html"><div class="media"><img src="images/6.png" alt="Ausbildung bei Täubert"></div><div class="overlay"></div><span>Azubi</span></a>
       </div>
     </details>
     <details>
@@ -295,15 +327,15 @@
   </div>
 </aside>
 
-<main>
+<main id="inhalt">
   <!-- Slideshow 1 (aktiver Slide) -->
   <section class="hero" id="hero">
-    <div class="media"><img src="images/hf_20260210_181531_cb41fa11-8f63-4e1a-93b7-0ea0ed24e5f9.jpg" alt="" fetchpriority="high"></div>
+    <div class="media"><img src="images/hf_20260210_181531_cb41fa11-8f63-4e1a-93b7-0ea0ed24e5f9.jpg" alt="Frisch instand gesetztes Fahrzeug bei Täubert Karosserie &amp; Lack" fetchpriority="high"></div>
     <div class="overlay"></div>
     <div class="hero-content">
       <div class="page-width">
         <div class="inner">
-          <h2 class="reveal-text"><strong>Wir bringen Fahrzeuge zurück in Bestform</strong></h2>
+          <h1 class="reveal-text"><strong>Wir bringen Fahrzeuge zurück in Bestform</strong></h1>
           <p class="reveal-text d2">Unfallreparatur, Lackierung, Smart Repair, Oldtimer und Fahrzeugaufbereitung alles aus einer Hand.</p>
           <div class="btns reveal-text d3">
             <a href="https://terminbuchungtaeubert.de" class="btn btn-light">Termin buchen</a>
@@ -346,7 +378,7 @@
         <div class="grid-item w66">
           <div class="marquee" aria-hidden="true"><div class="marquee-track" data-text="Trending now"></div></div>
           <a class="tile big" href="https://terminbuchungtaeubert.de">
-            <div class="media"><img src="images/hf_20260210_181354_b287ca50-bc5a-4edc-a818-d8872a4dc8c6.png" alt="" loading="lazy"></div>
+            <div class="media"><img src="images/hf_20260210_181354_b287ca50-bc5a-4edc-a818-d8872a4dc8c6.png" alt="Service bei Täubert Karosserie &amp; Lack" loading="lazy"></div>
             <div class="overlay"></div>
             <div class="tile-content"><h3><strong>service</strong></h3><span class="btn btn-light">Jetzt Termin buchen</span></div>
           </a>
@@ -354,7 +386,7 @@
         <div class="grid-item w33">
           <div class="marquee" aria-hidden="true" style="visibility:hidden"><div class="marquee-track"><span>&nbsp;</span></div></div>
           <a class="tile" href="history.html">
-            <div class="media"><img src="images/1.png" alt="" loading="lazy"></div>
+            <div class="media"><img src="images/1.png" alt="History von Täubert" loading="lazy"></div>
             <div class="overlay"></div>
             <div class="tile-content"><h3><strong>History</strong></h3><span class="btn btn-light">mehr dazu</span></div>
           </a>
@@ -362,7 +394,7 @@
         <div class="grid-item w100">
           <div class="marquee" aria-hidden="true"><div class="marquee-track" data-text="TEAMTÄUBERT"></div></div>
           <a class="tile" href="boxenstopp.html">
-            <div class="media"><img src="images/Header_Banner_for_Blog.png" alt="" loading="lazy"></div>
+            <div class="media"><img src="images/Header_Banner_for_Blog.png" alt="Boxenstopp-Event bei Täubert" loading="lazy"></div>
             <div class="overlay"></div>
             <div class="tile-content"><h3><strong>26.09.2026 Boxenstopp</strong></h3><span class="btn btn-light">Termin sichern!</span></div>
           </a>
@@ -375,16 +407,16 @@
   <section class="slides-section">
     <div class="slider" id="slider">
       <div class="slide active">
-        <div class="media"><img src="images/hf_20260210_173808_364c1669-6822-493e-9baa-db18c7f4d18c.jpg" alt="" loading="lazy"></div>
+        <div class="media"><img src="images/hf_20260210_173808_364c1669-6822-493e-9baa-db18c7f4d18c.jpg" alt="Klassiker nach der Lackierung"></div>
         <div class="overlay"></div>
         <div class="slide-content"><div><h2><strong>Klassiker </strong></h2><a class="btn btn-light" href="https://taeubertcustomize.de/" target="_blank" rel="noopener">Täubert custom</a></div></div>
       </div>
       <div class="slide">
-        <div class="media"><img src="images/hf_20260210_173801_c09630de-aae3-46b1-9460-d37b19053b9d_1.png" alt="" loading="lazy"></div>
+        <div class="media"><img src="images/hf_20260210_173801_c09630de-aae3-46b1-9460-d37b19053b9d_1.png" alt="Klassiker in der Werkstatt"></div>
         <div class="overlay"></div>
       </div>
       <div class="slide">
-        <div class="media"><img src="images/hf_20260210_173745_ff161ba7-667a-48f1-94c2-32318dd67326.jpg" alt="" loading="lazy"></div>
+        <div class="media"><img src="images/hf_20260210_173745_ff161ba7-667a-48f1-94c2-32318dd67326.jpg" alt="Restaurierter Klassiker"></div>
         <div class="overlay"></div>
       </div>
       <div class="arrows">
@@ -408,9 +440,9 @@
         <a href="https://terminbuchungtaeubert.de" class="btn btn-dark">Termin buchen</a>
       </div>
       <div class="showcase" id="showcase">
-        <div class="media active"><img src="images/hf_20260210_174234_03b93839-672b-4ba9-b742-8e3397346ee1.png" alt="Klassiker in Braun" loading="lazy"></div>
-        <div class="media"><img src="images/hf_20260210_174113_8bd7f253-8826-4ed4-89ed-56b117c21301.jpg" alt="Klassiker in Zitronengelb" loading="lazy"></div>
-        <div class="media"><img src="images/hf_20260210_174125_ad38590c-eeea-4e3b-ae46-15b828359911.jpg" alt="Klassiker in Weiß" loading="lazy"></div>
+        <div class="media active"><img src="images/hf_20260210_174234_03b93839-672b-4ba9-b742-8e3397346ee1.png" alt="Klassiker in Braun"></div>
+        <div class="media"><img src="images/hf_20260210_174113_8bd7f253-8826-4ed4-89ed-56b117c21301.jpg" alt="Klassiker in Zitronengelb"></div>
+        <div class="media"><img src="images/hf_20260210_174125_ad38590c-eeea-4e3b-ae46-15b828359911.jpg" alt="Klassiker in Weiß"></div>
       </div>
     </div>
   </section>
@@ -474,6 +506,11 @@
     <span>© <span id="year">2026</span> Täubert Karosserie &amp; Lack</span>
     <span>Bettelhecker Straße 15 · 96515 Sonneberg</span>
   </div>
+  <nav class="action-bar" aria-label="Schnellkontakt">
+    <a href="tel:+4936754289606"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg><span>Anrufen</span></a>
+    <a href="https://wa.me/4936754289606" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg><span>WhatsApp</span></a>
+    <a href="https://terminbuchungtaeubert.de" class="primary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="1"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>Termin</span></a>
+  </nav>
 </footer>
 
 <script>
@@ -499,7 +536,7 @@
   });
 
   // Slideshow 2 (6 Sekunden, Iris-Übergang)
-  const slides = [...document.querySelectorAll('#slider .slide')];
+  let slides = [...document.querySelectorAll('#slider .slide')];
   const dots = document.getElementById('dots');
   let cur = 0, timer;
   slides.forEach((_, i) => {
@@ -525,9 +562,23 @@
     showcase.forEach((m, j) => m.classList.toggle('active', j === +a.dataset.i));
   }));
 
-  // Fehlende Bilddateien ausblenden (grauer Hintergrund bleibt)
+  // Fehlende Bilddateien: Bild ausblenden; Slides ohne Bild und Text entfernen
+  const dropSlide = slide => {
+    if (slides.length < 2) return;
+    const i = slides.indexOf(slide);
+    slide.remove(); slides.splice(i, 1); dots.children[i].remove();
+    [...dots.children].forEach((d, j) => d.onclick = () => go(j));
+    document.querySelector('#slider .dots').hidden = document.querySelector('#slider .arrows').hidden = slides.length < 2;
+    go(0);
+  };
   document.querySelectorAll('img').forEach(img => {
-    const hide = () => { img.style.visibility = 'hidden'; };
+    const hide = () => {
+      img.style.visibility = 'hidden';
+      const slide = img.closest('#slider .slide');
+      if (slide && !slide.querySelector('.slide-content')) dropSlide(slide);
+      if (img.closest('#showcase') && [...document.querySelectorAll('#showcase img')].every(i => i.complete && !i.naturalWidth))
+        document.querySelector('.fl-inner').classList.add('no-showcase');
+    };
     if (img.complete && !img.naturalWidth) hide(); else img.addEventListener('error', hide);
   });
 

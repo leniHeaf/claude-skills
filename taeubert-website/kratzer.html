@@ -4,6 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kratzer im Auto? Wir lassen ihn wieder verschwinden. – Täubert Karosserie &amp; Lack</title>
+<meta name="description" content="Es passiert schneller, als man denkt: Beim Einparken, auf dem Supermarktparkplatz oder in der Waschanlage — plötzlich ist ein Kratzer im Lack. Viele …">
+<link rel="canonical" href="https://www.taeubert-karosserie-lack.de/kratzer.html">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_DE">
+<meta property="og:site_name" content="Täubert Karosserie &amp; Lack">
+<meta property="og:title" content="Kratzer im Auto? Wir lassen ihn wieder verschwinden. – Täubert Karosserie &amp; Lack">
+<meta property="og:description" content="Es passiert schneller, als man denkt: Beim Einparken, auf dem Supermarktparkplatz oder in der Waschanlage — plötzlich ist ein Kratzer im Lack. Viele …">
+<meta property="og:url" content="https://www.taeubert-karosserie-lack.de/kratzer.html">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="images/TAeUBERT-2.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -83,7 +92,7 @@
   .hero .overlay { opacity: .2; }
   .hero-content { position: absolute; left: 0; right: 0; bottom: 0; padding-bottom: 70px; }
   .hero-content .inner { max-width: 700px; }
-  .hero h2 { font-size: clamp(38px, 5.4vw, 72px); }
+  .hero h1 { font-size: clamp(38px, 5.4vw, 72px); }
   .hero p { font-size: 18px; margin: 18px 0 28px; max-width: 600px; }
   .btns { display: flex; flex-wrap: wrap; gap: 12px; }
   .reveal-text { opacity: 0; transform: translateY(24px); animation: rise .9s cubic-bezier(.2,.8,.2,1) .2s forwards; }
@@ -179,6 +188,18 @@
   .hours dt { font-weight: 700; }
   .foot-bottom { margin-top: 44px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.2); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 13px; color: rgba(255,255,255,.7); }
 
+  /* UX: Fokus, Sprunglink, Header-Button, Aktionsleiste */
+  :focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+  .skip { position: absolute; left: 12px; top: -60px; z-index: 200; background: var(--black); color: var(--white); padding: 10px 16px; font-weight: 600; }
+  .skip:focus { top: 12px; }
+  .btn-header { padding: 10px 18px; font-size: 14px; background: var(--black); color: var(--white); border-color: var(--black); margin-right: 6px; }
+  .btn-header:hover { background: transparent; color: inherit; border-color: currentColor; }
+  .header.transparent .btn-header { background: var(--white); color: var(--black); border-color: var(--white); }
+  .header.transparent .btn-header:hover { background: transparent; color: var(--white); }
+  .hide-desktop { display: none; }
+  .action-bar { display: none; }
+  .fl-inner.no-showcase { grid-template-columns: 1fr; }
+  .fl-inner.no-showcase .showcase { display: none; }
   @media (prefers-reduced-motion: reduce) {
     .marquee-track { animation: none; } .reveal-text { animation: none; opacity: 1; transform: none; }
     .slide { transition: none; } html { scroll-behavior: auto; }
@@ -196,6 +217,14 @@
     .showcase { max-width: 480px; }
     .blog-grid { grid-template-columns: 1fr; }
     .foot-grid { grid-template-columns: 1fr 1fr; gap: 36px 20px; }
+  }
+  @media (max-width: 760px) {
+    .btn-header { display: none; }
+    .hide-desktop { display: inline-flex; }
+    .action-bar { display: grid; grid-template-columns: 1fr 1fr 1.2fr; position: fixed; left: 0; right: 0; bottom: 0; z-index: 70; background: var(--black); border-top: 1px solid rgba(255,255,255,.15); padding-bottom: env(safe-area-inset-bottom); }
+    .action-bar a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-height: 60px; color: var(--white); font-size: 12px; font-weight: 600; }
+    .action-bar a.primary { background: var(--white); color: var(--black); }
+    body { padding-bottom: 64px; }
   }
   @media (max-width: 600px) {
     :root { --gutter: 16px; --announce-h: 40px; }
@@ -224,7 +253,7 @@
   .iwt > *, .mc-grid > * { min-width: 0; }
   .sub-hero-content, .slide-content > div { max-width: 100%; overflow-wrap: break-word; }
   .scroll-sec { overflow: hidden; }
-  main h1, main h2, main h3, .faq summary { overflow-wrap: anywhere; hyphens: auto; }
+  main h1, main h2, main h3, .faq summary { overflow-wrap: break-word; hyphens: auto; }
   .faq summary span { flex: 1; min-width: 0; }
   .rte p { margin-bottom: 12px; } .rte ul, .rte ol { margin: 0 0 12px 22px; } .rte li { margin-bottom: 4px; }
   .rte h2, .rte h3 { margin: 22px 0 12px; font-size: clamp(22px, 2.4vw, 30px); }
@@ -292,8 +321,10 @@
     .map iframe { height: 300px; }
   }
 </style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "AutoBodyShop", "name": "Täubert Karosserie und Lack GmbH", "url": "https://www.taeubert-karosserie-lack.de/", "logo": "https://www.taeubert-karosserie-lack.de/images/Taeubert_Logo.png", "telephone": "+49 3675 4289606", "email": "hallo@taeubert-karosserie-lack.de", "address": {"@type": "PostalAddress", "streetAddress": "Bettelhecker Straße 15", "postalCode": "96515", "addressLocality": "Sonneberg", "addressRegion": "Thüringen", "addressCountry": "DE"}, "areaServed": ["Sonneberg", "Neustadt bei Coburg", "Coburg", "Rödental", "Kronach", "Bamberg"], "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"], "opens": "08:00", "closes": "17:00"}, {"@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "08:00", "closes": "14:30"}], "sameAs": ["https://www.facebook.com/ToniTaeubert/", "https://www.instagram.com/taeubert_karosserieundlack/"]}</script>
 </head>
 <body>
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
 <div class="announce">
   <strong><a href="mailto:hallo@taeubert-karosserie-lack.de">hallo@taeubert-karosserie-lack.de</a> I <a href="tel:+4936754289606">03675 4289606</a></strong>
 </div>
@@ -310,10 +341,11 @@
       <img src="images/Taeubert_Logo.png" alt="TÄUBERT Karosserie &amp; Lack" onerror="this.outerHTML='<span class=&quot;logo-fallback&quot;>TÄUBERT</span>'">
     </a>
     <div class="header-right">
-      <a class="icon-btn" href="https://terminbuchungtaeubert.de" aria-label="Termin buchen">
+      <a class="btn btn-header" href="https://terminbuchungtaeubert.de">Termin buchen</a>
+      <a class="icon-btn hide-desktop" href="https://terminbuchungtaeubert.de" aria-label="Termin buchen">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="1"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
       </a>
-      <a class="icon-btn" href="#kontakt" aria-label="Kontakt">
+      <a class="icon-btn" href="tel:+4936754289606" aria-label="Anrufen: 03675 4289606">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
       </a>
     </div>
@@ -332,8 +364,8 @@
     <details>
       <summary>Über Täubert</summary>
       <div class="promos">
-        <a class="promo" href="history.html"><div class="media"><img src="images/1.png" alt=""></div><div class="overlay"></div><span>History</span></a>
-        <a class="promo" href="azubi.html"><div class="media"><img src="images/6.png" alt=""></div><div class="overlay"></div><span>Azubi</span></a>
+        <a class="promo" href="history.html"><div class="media"><img src="images/1.png" alt="History von Täubert"></div><div class="overlay"></div><span>History</span></a>
+        <a class="promo" href="azubi.html"><div class="media"><img src="images/6.png" alt="Ausbildung bei Täubert"></div><div class="overlay"></div><span>Azubi</span></a>
       </div>
     </details>
     <details>
@@ -371,10 +403,10 @@
     <a href="https://wa.me/message/BWRVH4RG3XVDH1" aria-label="WhatsApp" target="_blank" rel="noopener"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.3.8 3.2.7.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.4-.3z"/></svg></a>
   </div>
 </aside>
-<main>
+<main id="inhalt">
 <section class="sub-hero" style="--h:650px;--mh:450px">
   <div class="media"></div><div class="overlay" style="opacity:0.2"></div>
-  <div class="sub-hero-content" style="max-width:600px"><h2 class="h-6">Kratzer im Auto? Wir lassen ihn wieder verschwinden.</h2></div>
+  <div class="sub-hero-content" style="max-width:960px"><h1 class="h-6">Kratzer im Auto? Wir lassen ihn wieder verschwinden.</h1></div>
 </section>
 <section class="sec rich-sub" style="padding:50px 0 50px">
   <div class="page-width"><div class="rich-inner" style="max-width:650px;text-align:left;"><div class="rte"><p>Es passiert schneller, als man denkt:<br/><br/>Beim Einparken, auf dem Supermarktparkplatz oder in der Waschanlage — plötzlich ist ein Kratzer im Lack.</p><p>Viele Autofahrer fragen sich dann:</p><ul><li>Muss das komplett lackiert werden?<br/></li><li>Was kostet das?<br/></li><li>Rostet das jetzt?<br/></li></ul><p>Die wichtigste Info zuerst:<br/><br/><strong>Ein Lackschaden sollte möglichst schnell repariert werden</strong>, denn freiliegendes Metall kann rosten und der Schaden wird größer.</p><p>Täubert Karosserie & Lack in Sonneberg beseitigt Kratzer fachgerecht und so schonend wie möglich für Ihr Fahrzeug.</p><p></p><p></p><p></p><p></p></div>
@@ -384,19 +416,19 @@
   <div class="page-width"><h2 class="sec-head">Welche Kratzer können repariert werden?</h2><div class="rte sec-sub">Nicht jeder Kratzer ist gleich. Wir unterscheiden:</div><div class="mc-grid" style="--n:3"><div class="mc-col"><h3>Oberflächliche Kratzer (Klarlack beschädigt)</h3><div class="rte"><ul><li>häufig durch Waschanlagen oder Äste<br/></li><li>oft polierbar<br/></li><li>schnelle Reparatur</li></ul></div></div><div class="mc-col"><h3>Mittlere Lackschäden (Basislack betroffen)</h3><div class="rte"><ul><li>sichtbar heller oder dunkler<br/></li><li>punktuelle Lackierung möglich</li></ul></div></div><div class="mc-col"><h3>Tiefe Kratzer (bis zur Grundierung oder Metall)</h3><div class="rte"><ul><li>Schutz fehlt → Rostgefahr<br/></li><li>professionelle Lackierung notwendig</li></ul></div></div></div></div>
 </section>
 <section class="sec" style="padding:50px 0 50px">
-  <div class="page-width iwt media-right" style="--cols:50fr 50fr"><div class="iwt-text" style="max-width:500px"><h2 class="h-4">Unsere Reparaturmethoden</h2>
-<div class="rte"><p>Je nach Schaden nutzen wir verschiedene Verfahren:</p><p><strong>Politur & Aufbereitung</strong><br/><br/>für feine Kratzer und Schlieren</p><p><strong>Spot-Repair (Teillackierung)</strong><br/><br/>für kleine bis mittlere Lackschäden</p><p><strong>Komplettlackierung von Bauteilen</strong><br/><br/>bei tieferen Beschädigungen</p><p>Unser Ziel: Nur so viel reparieren wie nötig – nicht so viel wie möglich.</p></div></div><div class="iwt-media empty"></div></div>
+  <div class="page-width"><div class="rich-inner" style="max-width:760px"><h2 class="h-4">Unsere Reparaturmethoden</h2>
+<div class="rte"><p>Je nach Schaden nutzen wir verschiedene Verfahren:</p><p><strong>Politur & Aufbereitung</strong><br/><br/>für feine Kratzer und Schlieren</p><p><strong>Spot-Repair (Teillackierung)</strong><br/><br/>für kleine bis mittlere Lackschäden</p><p><strong>Komplettlackierung von Bauteilen</strong><br/><br/>bei tieferen Beschädigungen</p><p>Unser Ziel: Nur so viel reparieren wie nötig – nicht so viel wie möglich.</p></div></div></div>
 </section>
 <section class="sec" style="padding:50px 0 50px">
-  <div class="page-width iwt" style="--cols:50fr 50fr"><div class="iwt-media empty"></div><div class="iwt-text" style="max-width:500px"><h2 class="h-4">Farbton exakt wie vorher</h2>
+  <div class="page-width"><div class="rich-inner" style="max-width:760px"><h2 class="h-4">Farbton exakt wie vorher</h2>
 <div class="rte"><h2></h2><p>Eine häufige Sorge ist:</p><p>„Sieht man den reparierten Bereich später?“Nein. Wir arbeiten mit digitaler Farbtonmessung und gleichen den Lack exakt an den Originallack Ihres Fahrzeugs an. Der Übergang wird verlaufend lackiert und anschließend poliert.</p><p>Das Ergebnis: Der Schaden ist nicht mehr zu erkennen.</p></div></div></div>
 </section>
 <section class="sec" style="padding:50px 0 50px">
-  <div class="page-width iwt media-right" style="--cols:50fr 50fr"><div class="iwt-text" style="max-width:500px"><h2 class="h-4">Was kostet es, einen Kratzer zu entfernen?</h2>
-<div class="rte"><h2></h2><p>Das hängt von drei Faktoren ab:</p><ul><li>Größe des Schadens<br/></li><li>Tiefe des Kratzers<br/></li><li>Position am Fahrzeug<br/></li></ul><p>Viele Kunden sind überrascht: Kleine Lackschäden sind oft deutlich günstiger als erwartet.</p><p>Sie erhalten bei uns <strong>vor der Reparatur eine ehrliche Einschätzung</strong>, damit Sie entscheiden können.</p></div></div><div class="iwt-media empty"></div></div>
+  <div class="page-width"><div class="rich-inner" style="max-width:760px"><h2 class="h-4">Was kostet es, einen Kratzer zu entfernen?</h2>
+<div class="rte"><h2></h2><p>Das hängt von drei Faktoren ab:</p><ul><li>Größe des Schadens<br/></li><li>Tiefe des Kratzers<br/></li><li>Position am Fahrzeug<br/></li></ul><p>Viele Kunden sind überrascht: Kleine Lackschäden sind oft deutlich günstiger als erwartet.</p><p>Sie erhalten bei uns <strong>vor der Reparatur eine ehrliche Einschätzung</strong>, damit Sie entscheiden können.</p></div></div></div>
 </section>
 <section class="sec" style="padding:50px 0 50px">
-  <div class="page-width iwt" style="--cols:50fr 50fr"><div class="iwt-media empty"></div><div class="iwt-text" style="max-width:500px"><h2 class="h-4">Zahlt die Versicherung?</h2>
+  <div class="page-width"><div class="rich-inner" style="max-width:760px"><h2 class="h-4">Zahlt die Versicherung?</h2>
 <div class="rte"><p>Bei Fremdverschulden: <strong>Ja.</strong></p><p>Bei selbst verursachten Schäden lohnt sich die Versicherung häufig nicht, da eine Rückstufung teurer sein kann.<br/><br/>Wir beraten Sie transparent, was für Sie sinnvoll ist.</p></div></div></div>
 </section>
 <section class="sec" style="padding:50px 0 50px">
@@ -446,6 +478,11 @@
     <span>© <span id="year">2026</span> Täubert Karosserie &amp; Lack</span>
     <span>Bettelhecker Straße 15 · 96515 Sonneberg</span>
   </div>
+  <nav class="action-bar" aria-label="Schnellkontakt">
+    <a href="tel:+4936754289606"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg><span>Anrufen</span></a>
+    <a href="https://wa.me/4936754289606" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg><span>WhatsApp</span></a>
+    <a href="https://terminbuchungtaeubert.de" class="primary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="1"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>Termin</span></a>
+  </nav>
 </footer>
 <script>
   // Menü-Drawer
@@ -455,9 +492,23 @@
   document.getElementById('menu-close').onclick = () => setMenu(false);
   document.getElementById('backdrop').onclick = () => setMenu(false);
   addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
-  // Fehlende Bilddateien ausblenden (grauer Hintergrund bleibt)
+  // Fehlende Bilddateien: Bild ausblenden; Slides ohne Bild und Text entfernen
+  const dropSlide = slide => {
+    if (slides.length < 2) return;
+    const i = slides.indexOf(slide);
+    slide.remove(); slides.splice(i, 1); dots.children[i].remove();
+    [...dots.children].forEach((d, j) => d.onclick = () => go(j));
+    document.querySelector('#slider .dots').hidden = document.querySelector('#slider .arrows').hidden = slides.length < 2;
+    go(0);
+  };
   document.querySelectorAll('img').forEach(img => {
-    const hide = () => { img.style.visibility = 'hidden'; };
+    const hide = () => {
+      img.style.visibility = 'hidden';
+      const slide = img.closest('#slider .slide');
+      if (slide && !slide.querySelector('.slide-content')) dropSlide(slide);
+      if (img.closest('#showcase') && [...document.querySelectorAll('#showcase img')].every(i => i.complete && !i.naturalWidth))
+        document.querySelector('.fl-inner').classList.add('no-showcase');
+    };
     if (img.complete && !img.naturalWidth) hide(); else img.addEventListener('error', hide);
   });
 

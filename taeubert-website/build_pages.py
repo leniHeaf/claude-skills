@@ -6,6 +6,7 @@ import html, json, os, re, sys
 
 THEME, SITE = sys.argv[1], sys.argv[2]
 BOOKING = "https://terminbuchungtaeubert.de"
+DOMAIN = "https://www.taeubert-karosserie-lack.de"
 
 # Vorlage -> Dateiname (nur Seiten mit eigenem Inhalt, keine Theme-Demo-Vorlagen)
 PAGES = {
@@ -82,8 +83,16 @@ def button(url, label, cls="btn-dark"):
     return f'<a class="btn {cls}" {a_attrs(href)}>{esc(label)}</a>'
 
 
+def has_img(ref):
+    return bool(ref) and os.path.exists(os.path.join(SITE, "images", img_name(ref)))
+
+
+def plain(html_text):
+    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", html_text or ""))).strip()
+
+
 def media(ref, extra=""):
-    if not ref:
+    if not has_img(ref):
         return f'<div class="media{extra}"></div>'
     return f'<div class="media{extra}"><img src="images/{esc(img_name(ref))}" alt="" loading="lazy"></div>'
 
@@ -125,7 +134,7 @@ def r_image_hero(sec):
     op = st.get("overlay_opacity", 20) / 100
     return f'''<section class="sub-hero" style="--h:{esc(h)};--mh:{esc(mh)}">
   {media(st.get("image"))}<div class="overlay" style="opacity:{op}"></div>
-  <div class="sub-hero-content" style="max-width:{st.get("content_width", 500) + 100}px">{text_blocks(sec, "btn-light")}</div>
+  <div class="sub-hero-content" style="max-width:{max(st.get("content_width", 500) + 100, 960)}px">{text_blocks(sec, "btn-light")}</div>
 </section>'''
 
 
@@ -140,16 +149,23 @@ def r_rich_text(sec):
 
 def r_image_with_text(sec):
     st = sec["settings"]
+    pad = f'padding:{st.get("top_padding", 50)}px 0 {st.get("bottom_padding", 50)}px'
+    cls = f'sec{SCHEME.get(st.get("color_scheme"), "")}'
+    img = st.get("image")
+    heading = next((plain(b.get("heading")) for t, b in blocks(sec) if t == "heading" and b.get("heading")), "")
+    if not has_img(img):
+        # Bild fehlt: Abschnitt nur mit Text statt leerer Fläche
+        return f'''<section class="{cls}" style="{pad}">
+  <div class="page-width"><div class="rich-inner" style="max-width:760px">{text_blocks(sec)}</div></div>
+</section>'''
     mw = st.get("desktop_media_width", 50)
     right = st.get("desktop_media_position") == "right"
     ar = {"portrait-alt": "4 / 5", "portrait": "2 / 3", "square": "1 / 1", "landscape": "4 / 3"}.get(st.get("aspect_ratio"), "auto")
-    img = st.get("image")
-    pic = (f'<div class="iwt-media" style="aspect-ratio:{ar}"><img src="images/{esc(img_name(img))}" alt="" loading="lazy"></div>'
-           if img else '<div class="iwt-media empty"></div>')
+    pic = f'<div class="iwt-media" style="aspect-ratio:{ar}"><img src="images/{esc(img_name(img))}" alt="{esc(heading)}" loading="lazy"></div>'
     txt = f'<div class="iwt-text" style="max-width:{st.get("custom_width", 500)}px">{text_blocks(sec)}</div>'
     cols = f"{100 - mw}fr {mw}fr" if right else f"{mw}fr {100 - mw}fr"
     inner = txt + pic if right else pic + txt
-    return f'''<section class="sec{SCHEME.get(st.get("color_scheme"), "")}" style="padding:{st.get("top_padding", 50)}px 0 {st.get("bottom_padding", 50)}px">
+    return f'''<section class="{cls}" style="{pad}">
   <div class="page-width iwt{" media-right" if right else ""}" style="--cols:{cols}">{inner}</div>
 </section>'''
 
@@ -170,6 +186,8 @@ def r_slideshow(sec):
         bs = button(s.get("button_1_link"), s.get("button_1_label"), "btn-light") + button(s.get("button_2_link"), s.get("button_2_label"), "btn-light")
         if bs:
             parts.append(f'<div class="btns" style="justify-content:center">{bs}</div>')
+        if not has_img(s.get("image")) and not parts:
+            continue
         op = s.get("overlay_opacity", 20) / 100
         slides.append(f'<div class="slide">{media(s.get("image"))}<div class="overlay" style="opacity:{op}"></div>'
                       f'<div class="slide-content"><div style="max-width:{s.get("content_max_width", 700)}px">{"".join(parts)}</div></div></div>')
@@ -190,7 +208,7 @@ def r_multi_column(sec):
     st = sec["settings"]
     cols = []
     for _, s in blocks(sec):
-        img = f'<div class="mc-media">{media(s.get("image"))}</div>' if s.get("display_media", True) and s.get("image") else ""
+        img = f'<div class="mc-media">{media(s.get("image"))}</div>' if s.get("display_media", True) and has_img(s.get("image")) else ""
         b = button(s.get("button_link"), s.get("button_label"), "btn-dark")
         cols.append(f'<div class="mc-col">{img}<h3>{esc(s.get("heading", ""))}</h3><div class="rte">{s.get("text", "")}</div>{b}</div>')
     head = f'<h2 class="sec-head">{esc(st["section_header_heading"])}</h2>' if st.get("section_header_heading") else ""
@@ -317,7 +335,7 @@ EXTRA_CSS = """
   .iwt > *, .mc-grid > * { min-width: 0; }
   .sub-hero-content, .slide-content > div { max-width: 100%; overflow-wrap: break-word; }
   .scroll-sec { overflow: hidden; }
-  main h1, main h2, main h3, .faq summary { overflow-wrap: anywhere; hyphens: auto; }
+  main h1, main h2, main h3, .faq summary { overflow-wrap: break-word; hyphens: auto; }
   .faq summary span { flex: 1; min-width: 0; }
   .rte p { margin-bottom: 12px; } .rte ul, .rte ol { margin: 0 0 12px 22px; } .rte li { margin-bottom: 4px; }
   .rte h2, .rte h3 { margin: 22px 0 12px; font-size: clamp(22px, 2.4vw, 30px); }
@@ -436,7 +454,7 @@ def shell():
     src = open(os.path.join(SITE, "index.html"), encoding="utf-8").read()
     style = re.search(r"<style>(.*?)</style>", src, re.S).group(1)
     head_links = re.search(r'(<link rel="icon".*?rel="stylesheet">)', src, re.S).group(1)
-    top = re.search(r'(<div class="announce">.*?</aside>)', src, re.S).group(1)
+    top = re.search(r'(<a class="skip".*?</aside>)', src, re.S).group(1)
     top = top.replace('class="header transparent"', 'class="header"')
     footer = re.search(r"(<footer>.*?</footer>)", src, re.S).group(1)
     js = re.search(r"<script>(.*?)</script>", src, re.S).group(1)
@@ -457,8 +475,52 @@ def first_heading(d):
     return ""
 
 
+def description(body_html):
+    """Erster Fließtext der Seite, auf ~155 Zeichen gekürzt."""
+    for m in re.finditer(r'<div class="rte">(.*?)</div>', body_html, re.S):
+        t = plain(m.group(1))
+        if len(t) > 60:
+            return t if len(t) <= 155 else t[:152].rsplit(" ", 1)[0] + " …"
+    return "Täubert Karosserie & Lack – Karosseriebau und KFZ-Lackiererei in Sonneberg, Neustadt bei Coburg und Coburg."
+
+
+def first_h1(body_html):
+    """Erste H2 der Seite zur H1 machen (eine H1 pro Seite)."""
+    return re.sub(r"<h2([^>]*)>(.*?)</h2>", r"<h1\1>\2</h1>", body_html, count=1, flags=re.S)
+
+
+def seo_head(title, desc, slug, image=None):
+    url = f"{DOMAIN}/" if slug == "index" else f"{DOMAIN}/{slug}.html"
+    og_img = f'\n<meta property="og:image" content="{DOMAIN}/images/{esc(image)}">' if image else ""
+    return f'''<meta name="description" content="{esc(desc)}">
+<link rel="canonical" href="{url}">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_DE">
+<meta property="og:site_name" content="Täubert Karosserie &amp; Lack">
+<meta property="og:title" content="{esc(title)}">
+<meta property="og:description" content="{esc(desc)}">
+<meta property="og:url" content="{url}">{og_img}
+<meta name="twitter:card" content="summary_large_image">'''
+
+
+def write_seo_files(slugs):
+    urls = [f"{DOMAIN}/"] + [f"{DOMAIN}/{x}.html" for x in slugs]
+    sm = "\n".join(f"  <url><loc>{u}</loc></url>" for u in urls)
+    open(os.path.join(SITE, "sitemap.xml"), "w", encoding="utf-8").write(
+        f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{sm}\n</urlset>\n')
+    open(os.path.join(SITE, "robots.txt"), "w", encoding="utf-8").write(
+        f"User-agent: *\nAllow: /\n\nSitemap: {DOMAIN}/sitemap.xml\n")
+    # 301-Weiterleitungen von den alten Shopify-Adressen (/pages/<handle>), Netlify-Format
+    lines = [f"/pages/{h}  /{f}.html  301" for h, f in HANDLES.items()]
+    lines += [f"/pages/{x}  /{x}.html  301" for x in slugs if x not in HANDLES]
+    lines += ["/collections/*  https://terminbuchungtaeubert.de  301", "/products/*  https://terminbuchungtaeubert.de  301"]
+    open(os.path.join(SITE, "_redirects"), "w", encoding="utf-8").write("\n".join(dict.fromkeys(lines)) + "\n")
+
+
 def main():
     style, head_links, top, footer, js = shell()
+    ld = re.search(r'(<script type="application/ld\+json">.*?</script>)', open(os.path.join(SITE, "index.html"), encoding="utf-8").read(), re.S)
+    ld = ld.group(1) if ld else ""
     built = []
     for tpl, slug in PAGES.items():
         d = load(os.path.join(THEME, "templates", f"page.{tpl}.json"))
@@ -470,20 +532,24 @@ def main():
             r = RENDER.get(s["type"])
             if r:
                 body.append(r(s))
+        body_html = first_h1(chr(10).join(b for b in body if b))
         title = first_heading(d) or slug.replace("-", " ").title()
+        og = re.search(r'src="images/([^"]+)"', body_html)
         page = f"""<!doctype html>
 <html lang="de">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{esc(title)} – Täubert Karosserie &amp; Lack</title>
+{seo_head(f"{title} – Täubert Karosserie & Lack", description(body_html), slug, og.group(1) if og else None)}
 {head_links}
 <style>{style}{EXTRA_CSS}</style>
+{ld}
 </head>
 <body>
 {top}
-<main>
-{chr(10).join(b for b in body if b)}
+<main id="inhalt">
+{body_html}
 </main>
 {footer}
 <script>
@@ -493,6 +559,7 @@ def main():
 """
         open(os.path.join(SITE, f"{slug}.html"), "w", encoding="utf-8").write(page)
         built.append(slug)
+    write_seo_files(built)
     print("\n".join(built))
 
 
