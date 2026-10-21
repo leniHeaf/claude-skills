@@ -426,7 +426,6 @@ EXTRA_CSS = """
   .mail-form input, .mail-form textarea { font: inherit; font-weight: 400; padding: 13px 14px; border: 1px solid var(--line); background: var(--white); }
   .mail-form input:focus, .mail-form textarea:focus { outline: 2px solid var(--black); outline-offset: -1px; }
   .scroll-sec .marquee { margin: 0; }
-  .marquee-track.slow { animation-duration: 45s; }
   .map iframe { display: block; width: 100%; height: 450px; border: 0; }
   .map-consent { min-height: 450px; display: grid; place-content: center; text-align: center; gap: 10px; padding: 40px 20px; background: var(--grey); }
   .map-consent p { max-width: 560px; margin: 0 auto; }
@@ -479,10 +478,10 @@ PAGE_JS = """
   });
 
   // Laufschrift
-  document.querySelectorAll('.marquee-track[data-text]').forEach(t => {
-    const unit = `<span>${t.dataset.text}</span>`;
-    t.innerHTML = unit.repeat(8);
-  });
+  const runMarquees = () => document.querySelectorAll('.marquee-track[data-text]').forEach(t => startMarquee(t, `<span>${t.dataset.text}</span>`));
+  runMarquees();
+  if (document.fonts) document.fonts.ready.then(runMarquees);
+  let mqTimer; addEventListener('resize', () => { clearTimeout(mqTimer); mqTimer = setTimeout(runMarquees, 250); });
 
   // Google-Karte erst nach Zustimmung laden
   document.querySelectorAll('[data-load-map]').forEach(btn => btn.addEventListener('click', () => {
@@ -521,9 +520,10 @@ def shell():
     top = top.replace('class="header transparent"', 'class="header"')
     footer = re.search(r"(<footer>.*?</footer>)", src, re.S).group(1)
     js = re.search(r"<script>(.*?)</script>", src, re.S).group(1)
+    marquee_js = re.search(r"(  // Laufschrift: zwei identische.*?\n  \})\n", js, re.S).group(1) + "\n"
     menu_js = re.search(r"(  // Menü-Drawer.*?addEventListener\('keydown'.*?\n)", js, re.S).group(1)
     img_js = re.search(r"(  // Fehlende Bilddateien.*?\n  \}\);\n)", js, re.S).group(1)
-    return style, head_links, top, footer, menu_js + img_js + PAGE_JS + "  document.getElementById('year').textContent = new Date().getFullYear();\n"
+    return style, head_links, top, footer, menu_js + img_js + marquee_js + PAGE_JS + "  document.getElementById('year').textContent = new Date().getFullYear();\n"
 
 
 def first_heading(d):

@@ -133,7 +133,10 @@
   .tile h3 { font-size: 30px; margin-bottom: 16px; }
   .tile.big h3 { font-size: 38px; }
   .marquee { overflow: hidden; white-space: nowrap; margin-bottom: 20px; }
-  .marquee-track { display: inline-flex; align-items: center; gap: 28px; animation: marquee 10s linear infinite; }
+  .marquee-track { display: inline-flex; align-items: center; animation: marquee 30s linear infinite; will-change: transform; }
+  .marquee-track > * { flex: none; margin-right: clamp(20px, 3vw, 40px); }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  .mq-sep { width: clamp(24px, 3vw, 40px); height: auto; }
   .marquee-track span { font-family: "Archivo Black"; text-transform: uppercase; font-size: clamp(28px, 4vw, 52px); }
   .marquee-track svg { flex: none; }
   @keyframes marquee { to { transform: translateX(-50%); } }
@@ -415,7 +418,7 @@
     <div class="page-width">
       <div class="grid">
         <div class="grid-item w66">
-          <div class="marquee" aria-hidden="true"><div class="marquee-track" data-text="Trending now"></div></div>
+          <div class="marquee" aria-hidden="true"><div class="marquee-track" data-text="Jetzt Termin buchen"></div></div>
           <a class="tile big" href="https://terminbuchungtaeubert.de">
             <div class="media"><img src="images/hf_20260210_181354_b287ca50-bc5a-4edc-a818-d8872a4dc8c6.webp" srcset="images/hf_20260210_181354_b287ca50-bc5a-4edc-a818-d8872a4dc8c6-700.webp 700w, images/hf_20260210_181354_b287ca50-bc5a-4edc-a818-d8872a4dc8c6.webp 1024w" sizes="(max-width: 760px) 100vw, 60vw" alt="Service bei Täubert Karosserie &amp; Lack" loading="lazy"></div>
             <div class="overlay"></div>
@@ -558,12 +561,22 @@
   document.getElementById('backdrop').onclick = () => setMenu(false);
   addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
 
-  // Laufschrift mit Smiley-Trenner
-  const smile = '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="M9 9h.01M15 9h.01"/></svg>';
-  document.querySelectorAll('.marquee-track[data-text]').forEach(t => {
-    const unit = `<span>${t.dataset.text}</span>${smile}`;
-    t.innerHTML = unit.repeat(12);
-  });
+
+  // Laufschrift: zwei identische Hälften, ruhiges konstantes Tempo, Pause beim Drüberfahren
+  function startMarquee(t, unit) {
+    t.innerHTML = unit;
+    const one = t.scrollWidth || 1;
+    const n = Math.max(2, Math.ceil((window.innerWidth * 1.2) / one));
+    const half = unit.repeat(n);
+    t.innerHTML = half + half;
+    const speed = window.innerWidth < 760 ? 45 : 70; // Pixel pro Sekunde
+    t.style.animationDuration = (t.scrollWidth / 2 / speed).toFixed(1) + 's';
+  }
+  const smile = '<svg class="mq-sep" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="M9 9h.01M15 9h.01"/></svg>';
+  const runMarquees = () => document.querySelectorAll('.marquee-track[data-text]').forEach(t => startMarquee(t, `<span>${t.dataset.text}</span>${smile}`));
+  runMarquees();
+  if (document.fonts) document.fonts.ready.then(runMarquees);
+  let mqTimer; addEventListener('resize', () => { clearTimeout(mqTimer); mqTimer = setTimeout(runMarquees, 250); });
 
   // Slideshow 2 (6 Sekunden, Iris-Übergang)
   let slides = [...document.querySelectorAll('#slider .slide')];

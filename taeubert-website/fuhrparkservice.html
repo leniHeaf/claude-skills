@@ -131,7 +131,10 @@
   .tile h3 { font-size: 30px; margin-bottom: 16px; }
   .tile.big h3 { font-size: 38px; }
   .marquee { overflow: hidden; white-space: nowrap; margin-bottom: 20px; }
-  .marquee-track { display: inline-flex; align-items: center; gap: 28px; animation: marquee 10s linear infinite; }
+  .marquee-track { display: inline-flex; align-items: center; animation: marquee 30s linear infinite; will-change: transform; }
+  .marquee-track > * { flex: none; margin-right: clamp(20px, 3vw, 40px); }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  .mq-sep { width: clamp(24px, 3vw, 40px); height: auto; }
   .marquee-track span { font-family: "Archivo Black"; text-transform: uppercase; font-size: clamp(28px, 4vw, 52px); }
   .marquee-track svg { flex: none; }
   @keyframes marquee { to { transform: translateX(-50%); } }
@@ -333,7 +336,6 @@
   .mail-form input, .mail-form textarea { font: inherit; font-weight: 400; padding: 13px 14px; border: 1px solid var(--line); background: var(--white); }
   .mail-form input:focus, .mail-form textarea:focus { outline: 2px solid var(--black); outline-offset: -1px; }
   .scroll-sec .marquee { margin: 0; }
-  .marquee-track.slow { animation-duration: 45s; }
   .map iframe { display: block; width: 100%; height: 450px; border: 0; }
   .map-consent { min-height: 450px; display: grid; place-content: center; text-align: center; gap: 10px; padding: 40px 20px; background: var(--grey); }
   .map-consent p { max-width: 560px; margin: 0 auto; }
@@ -578,6 +580,16 @@
     };
     if (img.hasAttribute('data-missing-src') || (img.complete && !img.naturalWidth)) hide(); else img.addEventListener('error', hide);
   });
+  // Laufschrift: zwei identische Hälften, ruhiges konstantes Tempo, Pause beim Drüberfahren
+  function startMarquee(t, unit) {
+    t.innerHTML = unit;
+    const one = t.scrollWidth || 1;
+    const n = Math.max(2, Math.ceil((window.innerWidth * 1.2) / one));
+    const half = unit.repeat(n);
+    t.innerHTML = half + half;
+    const speed = window.innerWidth < 760 ? 45 : 70; // Pixel pro Sekunde
+    t.style.animationDuration = (t.scrollWidth / 2 / speed).toFixed(1) + 's';
+  }
 
   // Slideshows
   document.querySelectorAll('.slider').forEach(sl => {
@@ -596,10 +608,10 @@
   });
 
   // Laufschrift
-  document.querySelectorAll('.marquee-track[data-text]').forEach(t => {
-    const unit = `<span>${t.dataset.text}</span>`;
-    t.innerHTML = unit.repeat(8);
-  });
+  const runMarquees = () => document.querySelectorAll('.marquee-track[data-text]').forEach(t => startMarquee(t, `<span>${t.dataset.text}</span>`));
+  runMarquees();
+  if (document.fonts) document.fonts.ready.then(runMarquees);
+  let mqTimer; addEventListener('resize', () => { clearTimeout(mqTimer); mqTimer = setTimeout(runMarquees, 250); });
 
   // Google-Karte erst nach Zustimmung laden
   document.querySelectorAll('[data-load-map]').forEach(btn => btn.addEventListener('click', () => {
