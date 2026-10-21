@@ -260,6 +260,12 @@
   .rte h2, .rte h3 { margin: 22px 0 12px; font-size: clamp(22px, 2.4vw, 30px); }
   .rte a { text-decoration: underline; }
   .rte table { border-collapse: collapse; width: 100%; margin: 12px 0; } .rte td, .rte th { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
+  .rte table.compare { margin: 18px 0 20px; font-size: 15px; }
+  .compare thead th { background: var(--black); color: var(--white); font-weight: 700; border-color: var(--black); }
+  .compare thead th:nth-child(2) { background: var(--red); border-color: var(--red); }
+  .compare tbody th { font-weight: 600; background: var(--grey); width: 32%; }
+  .compare td:nth-child(2) { font-weight: 600; }
+  @media (max-width: 600px) { .rte table.compare { font-size: 13px; } .compare th, .compare td { padding: 7px 6px; } }
   .btns { margin-top: 22px; }
   .sub-hero { position: relative; height: var(--h); min-height: 380px; color: var(--white); display: grid; place-items: center; text-align: center; overflow: hidden; }
   .sub-hero-content { position: relative; padding: 40px 20px; }
@@ -433,7 +439,7 @@
 </section>
 <section class="sec" style="padding:50px 0 50px">
   <div class="page-width iwt" style="--cols:50fr 50fr"><div class="iwt-media" style="aspect-ratio:auto"><img src="images/Design_ohne_Titel-38.webp" alt="Für Kunden aus der Region" loading="lazy"></div><div class="iwt-text" style="max-width:500px"><h2 class="h-4">Für Kunden aus der Region</h2>
-<div class="rte"><h2></h2><p>Wir reparieren Kleinschäden für Autofahrer aus:<br/>Sonneberg, Neustadt bei Coburg, Rödental, Föritztal, Coburg und Umgebung.</p><p>Egal ob Privatfahrzeug, Leasingauto oder Firmenwagen – wir schauen uns das an und sagen dir ehrlich, welche Lösung sinnvoll ist.</p></div>
+<div class="rte"><p>Wir reparieren Kleinschäden für Autofahrer aus:<br/>Sonneberg, Neustadt bei Coburg, Rödental, Föritztal, Coburg und Umgebung.</p><p>Egal ob Privatfahrzeug, Leasingauto oder Firmenwagen – wir schauen uns das an und sagen dir ehrlich, welche Lösung sinnvoll ist.</p></div>
 <div class="btns"><a class="btn btn-dark" href="https://terminbuchungtaeubert.de">Jetzt Termin buchen</a></div></div></div>
 </section>
 <section class="sec rich-sub" style="padding:50px 0 50px">

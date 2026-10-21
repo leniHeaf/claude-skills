@@ -259,6 +259,12 @@
   .rte h2, .rte h3 { margin: 22px 0 12px; font-size: clamp(22px, 2.4vw, 30px); }
   .rte a { text-decoration: underline; }
   .rte table { border-collapse: collapse; width: 100%; margin: 12px 0; } .rte td, .rte th { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
+  .rte table.compare { margin: 18px 0 20px; font-size: 15px; }
+  .compare thead th { background: var(--black); color: var(--white); font-weight: 700; border-color: var(--black); }
+  .compare thead th:nth-child(2) { background: var(--red); border-color: var(--red); }
+  .compare tbody th { font-weight: 600; background: var(--grey); width: 32%; }
+  .compare td:nth-child(2) { font-weight: 600; }
+  @media (max-width: 600px) { .rte table.compare { font-size: 13px; } .compare th, .compare td { padding: 7px 6px; } }
   .btns { margin-top: 22px; }
   .sub-hero { position: relative; height: var(--h); min-height: 380px; color: var(--white); display: grid; place-items: center; text-align: center; overflow: hidden; }
   .sub-hero-content { position: relative; padding: 40px 20px; }
@@ -429,7 +435,7 @@
 </section>
 <section class="sec" style="padding:50px 0 50px">
   <div class="page-width"><div class="rich-inner" style="max-width:760px"><h2 class="h-4">Wie läuft die Unfallreparatur bei uns ab?</h2>
-<div class="rte"><h2></h2><ol><li>Sie kontaktieren uns telefonisch oder per Formular<br/></li><li>Wir begutachten den Schaden am Fahrzeug<br/></li><li>Ein Gutachter dokumentiert den Schaden (falls nötig)<br/></li><li>Wir stimmen alles mit der Versicherung ab<br/></li><li>Reparatur & Lackierung erfolgen fachgerecht<br/></li><li>Fahrzeugübergabe – sauber und geprüft<br/></li></ol><p>Sie geben Ihr Auto ab – und bekommen es fertig zurück.</p></div></div></div>
+<div class="rte"><ol><li>Sie kontaktieren uns telefonisch oder per Formular<br/></li><li>Wir begutachten den Schaden am Fahrzeug<br/></li><li>Ein Gutachter dokumentiert den Schaden (falls nötig)<br/></li><li>Wir stimmen alles mit der Versicherung ab<br/></li><li>Reparatur & Lackierung erfolgen fachgerecht<br/></li><li>Fahrzeugübergabe – sauber und geprüft<br/></li></ol><p>Sie geben Ihr Auto ab – und bekommen es fertig zurück.</p></div></div></div>
 </section>
 <section class="sec" style="padding:50px 0 50px">
   <div class="page-width"><div class="faq"><h2 class="sec-head">Häufige Fragen</h2><details><summary><span>Wie lange dauert eine Unfallreparatur?</span></summary><div class="rte"><p>Je nach Schaden meist 2–7 Werktage. Bei größeren Schäden informieren wir Sie vorab transparent.<br/></p></div></details><details><summary><span>Bekomme ich einen Ersatzwagen?</span></summary><div class="rte"><p>Ja. Bei unverschuldetem Unfall steht Ihnen ein Mietwagen oder Nutzungsausfall zu.</p></div></details><details><summary><span>Muss ich etwas vorstrecken?</span></summary><div class="rte"><p>In vielen Fällen rechnen wir direkt mit der Versicherung ab.<br/><br/></p></div></details></div></div>

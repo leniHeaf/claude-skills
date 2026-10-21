@@ -341,6 +341,12 @@ EXTRA_CSS = """
   .rte h2, .rte h3 { margin: 22px 0 12px; font-size: clamp(22px, 2.4vw, 30px); }
   .rte a { text-decoration: underline; }
   .rte table { border-collapse: collapse; width: 100%; margin: 12px 0; } .rte td, .rte th { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
+  .rte table.compare { margin: 18px 0 20px; font-size: 15px; }
+  .compare thead th { background: var(--black); color: var(--white); font-weight: 700; border-color: var(--black); }
+  .compare thead th:nth-child(2) { background: var(--red); border-color: var(--red); }
+  .compare tbody th { font-weight: 600; background: var(--grey); width: 32%; }
+  .compare td:nth-child(2) { font-weight: 600; }
+  @media (max-width: 600px) { .rte table.compare { font-size: 13px; } .compare th, .compare td { padding: 7px 6px; } }
   .btns { margin-top: 22px; }
   .sub-hero { position: relative; height: var(--h); min-height: 380px; color: var(--white); display: grid; place-items: center; text-align: center; overflow: hidden; }
   .sub-hero-content { position: relative; padding: 40px 20px; }
@@ -475,6 +481,29 @@ def first_heading(d):
     return ""
 
 
+# Inhalte, die im Shopify-Editor zusammengelaufen sind, wieder lesbar machen
+FIXES = [
+    ("<p>Smart RepairKlassische Lackierung1–3 Stunden Reparaturmehrere Tage Werkstattdeutlich günstigerdeutlich teurer"
+     "Originallack bleibt erhaltenneuer Lackkeine Farbabweichungenmöglich<br/></p>",
+     '''<table class="compare">
+<thead><tr><th scope="col"></th><th scope="col">Smart Repair</th><th scope="col">Klassische Lackierung</th></tr></thead>
+<tbody>
+<tr><th scope="row">Dauer</th><td>1–3 Stunden Reparatur</td><td>mehrere Tage Werkstatt</td></tr>
+<tr><th scope="row">Kosten</th><td>deutlich günstiger</td><td>deutlich teurer</td></tr>
+<tr><th scope="row">Lack</th><td>Originallack bleibt erhalten</td><td>neuer Lack</td></tr>
+<tr><th scope="row">Farbabweichungen</th><td>keine</td><td>möglich</td></tr>
+</tbody>
+</table>'''),
+    ("<h2></h2>", ""),
+]
+
+
+def apply_fixes(body_html):
+    for old, new in FIXES:
+        body_html = body_html.replace(old, new)
+    return body_html
+
+
 def description(body_html):
     """Erster Fließtext der Seite, auf ~155 Zeichen gekürzt."""
     for m in re.finditer(r'<div class="rte">(.*?)</div>', body_html, re.S):
@@ -532,7 +561,7 @@ def main():
             r = RENDER.get(s["type"])
             if r:
                 body.append(r(s))
-        body_html = first_h1(chr(10).join(b for b in body if b))
+        body_html = first_h1(apply_fixes(chr(10).join(b for b in body if b)))
         title = first_heading(d) or slug.replace("-", " ").title()
         og = re.search(r'src="images/([^"]+)"', body_html)
         page = f"""<!doctype html>
