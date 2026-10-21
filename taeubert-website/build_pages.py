@@ -8,7 +8,8 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from new_pages import NEW_PAGES  # noqa: E402
 
 THEME, SITE = sys.argv[1], sys.argv[2]
-BOOKING = "https://terminbuchungtaeubert.de"
+BOOKING_URL = "https://terminbuchungtaeubert.de"  # externes Buchungstool
+BOOKING = "termin.html"  # eigene Seite mit eingebettetem Tool
 DOMAIN = "https://www.taeubert-karosserie-lack.de"
 
 # Vorlage -> Dateiname (nur Seiten mit eigenem Inhalt, keine Theme-Demo-Vorlagen)
@@ -892,7 +893,7 @@ THANKS = """<section class="sec" style="padding:100px 0">
   <div class="page-width"><div class="rich-inner" style="max-width:640px;margin:0 auto;text-align:center">
     <h1 class="h-6">Danke – Ihre Meldung ist da.</h1>
     <div class="rte"><p>Wir sehen uns die Fotos an und melden uns schnellstmöglich bei Ihnen. Eilt es? Rufen Sie uns an: <a href="tel:+4936754289606">03675 4289606</a>.</p></div>
-    <div class="btns" style="justify-content:center"><a class="btn btn-dark" href="index.html">Zur Startseite</a><a class="btn btn-outline-dark" href="https://terminbuchungtaeubert.de">Termin online buchen</a></div>
+    <div class="btns" style="justify-content:center"><a class="btn btn-dark" href="index.html">Zur Startseite</a><a class="btn btn-outline-dark" href="termin.html">Termin online buchen</a></div>
   </div></div>
 </section>"""
 
@@ -944,6 +945,30 @@ DAMAGE_JS = r"""
 """
 
 
+BOOKING_PAGE = f"""<section class="sec booking-page" style="padding:50px 0 30px">
+  <div class="page-width">
+    <h1 class="overline">Termin online buchen</h1>
+    <p class="heading h-6">Wunschtermin wählen – wir sind bereit.</p>
+    <div class="rte"><p>Wählen Sie Leistung und Termin direkt hier. Lieber persönlich? Rufen Sie uns an: <a href="tel:+4936754289606">03675 4289606</a> oder schicken Sie <a href="schaden-melden.html">Fotos Ihres Schadens</a>.</p></div>
+  </div>
+</section>
+<section class="booking-embed">
+  <div class="page-width">
+    <iframe title="Online-Terminbuchung Täubert Karosserie &amp; Lack" src="{BOOKING_URL}" loading="eager"></iframe>
+    <p class="booking-fallback">Die Buchung wird nicht angezeigt? <a class="btn btn-dark" href="{BOOKING_URL}" target="_blank" rel="noopener">Terminbuchung in neuem Fenster öffnen</a></p>
+  </div>
+</section>"""
+
+BOOKING_CSS = """
+  .booking-page .heading { margin: 4px 0 6px; }
+  .booking-page .rte a { text-decoration: underline; }
+  .booking-embed { padding: 0 0 60px; }
+  .booking-embed iframe { display: block; width: 100%; height: 1000px; border: 1px solid var(--line); background: var(--white); }
+  .booking-fallback { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 18px; }
+  @media (max-width: 600px) { .booking-embed iframe { height: 1250px; } }
+"""
+
+
 def simple_page(slug, title, desc, body_html, style, head_links, top, footer, js, ld, robots=""):
     return f"""<!doctype html>
 <html lang="de">
@@ -953,7 +978,7 @@ def simple_page(slug, title, desc, body_html, style, head_links, top, footer, js
 <title>{esc(title)} | Täubert Karosserie &amp; Lack</title>
 {robots}{seo_head(title + " – Täubert Karosserie & Lack", desc, slug)}
 {head_links}
-<style>{style}{EXTRA_CSS}{DAMAGE_CSS}</style>
+<style>{style}{EXTRA_CSS}{DAMAGE_CSS}{BOOKING_CSS}</style>
 {ld}
 {breadcrumb_ld(slug, title)}
 </head>
@@ -981,7 +1006,7 @@ def write_seo_files(slugs):
     lines = [f"/pages/{h}  /{f}.html  301" for h, f in HANDLES.items()]
     lines += [f"/pages/{x}  /{x}.html  301" for x in slugs if x not in HANDLES]
     lines += ["/pages/q-a-fanny  /meet-the-team.html  301", "/q-a-fanny.html  /meet-the-team.html  301"]
-    lines += ["/collections/*  https://terminbuchungtaeubert.de  301", "/products/*  https://terminbuchungtaeubert.de  301"]
+    lines += ["/collections/*  /termin.html  301", "/products/*  /termin.html  301"]
     open(os.path.join(SITE, "_redirects"), "w", encoding="utf-8").write("\n".join(dict.fromkeys(lines)) + "\n")
 
 
@@ -1105,6 +1130,11 @@ def main():
         "Schaden per Foto melden: Fotos hochladen und eine erste Einschätzung von Täubert Karosserie & Lack in Sonneberg erhalten.",
         DAMAGE_FORM, style, head_links, top, footer, js, ld)))
     built.insert(1, "schaden-melden")
+    open(os.path.join(SITE, "termin.html"), "w", encoding="utf-8").write(sync_images(simple_page(
+        "termin", "Termin online buchen",
+        "Termin online buchen bei Täubert Karosserie & Lack in Sonneberg: Unfallreparatur, Lackierung, Smart Repair, Reifenservice und mehr.",
+        BOOKING_PAGE, style, head_links, top, footer, js, ld)))
+    built.insert(2, "termin")
     open(os.path.join(SITE, "danke.html"), "w", encoding="utf-8").write(simple_page(
         "danke", "Danke", "Ihre Schadensmeldung ist bei uns eingegangen.", THANKS, style, head_links, top, footer, js, ld,
         robots='<meta name="robots" content="noindex, follow">\n'))

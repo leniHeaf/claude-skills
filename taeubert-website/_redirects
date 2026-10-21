@@ -14,6 +14,7 @@
 /pages/meet-the-team  /meet-the-team.html  301
 /pages/leistungen  /leistungen.html  301
 /pages/schaden-melden  /schaden-melden.html  301
+/pages/termin  /termin.html  301
 /pages/karriere  /karriere.html  301
 /pages/bamberg  /bamberg.html  301
 /pages/boxenstopp  /boxenstopp.html  301
@@ -41,5 +42,5 @@
 /pages/versicherungsschaden  /versicherungsschaden.html  301
 /pages/q-a-fanny  /meet-the-team.html  301
 /q-a-fanny.html  /meet-the-team.html  301
-/collections/*  https://terminbuchungtaeubert.de  301
-/products/*  https://terminbuchungtaeubert.de  301
+/collections/*  /termin.html  301
+/products/*  /termin.html  301
