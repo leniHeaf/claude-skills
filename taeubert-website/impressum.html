@@ -3,19 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Impressum – Täubert Karosserie &amp; Lack</title>
+<title>Impressum | Täubert Karosserie &amp; Lack</title>
 <meta name="robots" content="noindex, follow">
 <meta name="description" content="Impressum der Täubert Karosserie und Lack GmbH, Bettelhecker Straße 15, 96515 Sonneberg.">
 <link rel="canonical" href="https://www.taeubert-karosserie-lack.de/impressum.html">
-<meta property="og:type" content="website">
-<meta property="og:locale" content="de_DE">
-<meta property="og:site_name" content="Täubert Karosserie &amp; Lack">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="images/TAeUBERT-2.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/archivo-black-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+  /* Schriften lokal (DSGVO: keine Verbindung zu Google) */
+  @font-face { font-family: "Archivo Black"; font-weight: 400; font-display: swap; src: url(fonts/archivo-black-latin-400-normal.woff2) format("woff2"); }
+  @font-face { font-family: Inter; font-weight: 400; font-display: swap; src: url(fonts/inter-latin-400-normal.woff2) format("woff2"); }
+  @font-face { font-family: Inter; font-weight: 500; font-display: swap; src: url(fonts/inter-latin-500-normal.woff2) format("woff2"); }
+  @font-face { font-family: Inter; font-weight: 600; font-display: swap; src: url(fonts/inter-latin-600-normal.woff2) format("woff2"); }
+  @font-face { font-family: Inter; font-weight: 700; font-display: swap; src: url(fonts/inter-latin-700-normal.woff2) format("woff2"); }
   /* Farbschemata aus dem Shopify-Theme (config/settings_data.json) */
   :root {
     --white: #ffffff;
@@ -195,6 +197,7 @@
   .header.transparent .btn-header { background: var(--white); color: var(--black); border-color: var(--white); }
   .header.transparent .btn-header:hover { background: transparent; color: var(--white); }
   .hide-desktop { display: none; }
+  img[data-missing-src] { display: none; }
   .action-bar { display: none; }
   .fl-inner.no-showcase { grid-template-columns: 1fr; }
   .fl-inner.no-showcase .showcase { display: none; }
@@ -251,12 +254,33 @@
   .iwt > *, .mc-grid > * { min-width: 0; }
   .sub-hero-content, .slide-content > div { max-width: 100%; overflow-wrap: break-word; }
   .scroll-sec { overflow: hidden; }
-  main h1, main h2, main h3, .faq summary { overflow-wrap: anywhere; hyphens: auto; }
+  main h1, main h2, main h3, main .heading, .faq summary { overflow-wrap: break-word; hyphens: auto; }
   .faq summary span { flex: 1; min-width: 0; }
   .rte p { margin-bottom: 12px; } .rte ul, .rte ol { margin: 0 0 12px 22px; } .rte li { margin-bottom: 4px; }
   .rte h2, .rte h3 { margin: 22px 0 12px; font-size: clamp(22px, 2.4vw, 30px); }
   .rte a { text-decoration: underline; }
   .rte table { border-collapse: collapse; width: 100%; margin: 12px 0; } .rte td, .rte th { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
+  .booking-cta { background: var(--black); color: var(--white); padding: 70px 0; text-align: center; }
+  .booking-cta h2 { font-size: clamp(30px, 4vw, 46px); }
+  .booking-cta p { max-width: 620px; margin: 14px auto 0; color: rgba(255,255,255,.8); }
+  .booking-cta .btns { justify-content: center; }
+  .btn-outline-light { background: transparent; color: var(--white); border-color: rgba(255,255,255,.6); }
+  .btn-outline-light:hover { border-color: var(--white); background: var(--white); color: var(--black); }
+  .related { background: var(--grey); padding: 50px 0; }
+  .related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .related h2 { font-size: 18px; margin-bottom: 14px; }
+  .related ul { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; }
+  .related a { display: inline-block; padding: 9px 14px; background: var(--white); border: 1px solid var(--line); font-size: 15px; transition: border-color .2s; }
+  .related a:hover { border-color: var(--black); }
+  @media (max-width: 760px) { .related-grid { grid-template-columns: 1fr; } }
+  .sub-hero h1.overline { font-family: Inter, sans-serif; text-transform: uppercase; letter-spacing: .14em; font-size: 13px; font-weight: 600; line-height: 1.5; margin-bottom: 12px; }
+  .sec h1.overline, .rich-sub h1.overline { font-family: Inter, sans-serif; letter-spacing: .14em; font-size: 13px; font-weight: 600; margin-bottom: 12px; }
+  .rte table.compare { margin: 18px 0 20px; font-size: 15px; }
+  .compare thead th { background: var(--black); color: var(--white); font-weight: 700; border-color: var(--black); }
+  .compare thead th:nth-child(2) { background: var(--red); border-color: var(--red); }
+  .compare tbody th { font-weight: 600; background: var(--grey); width: 32%; }
+  .compare td:nth-child(2) { font-weight: 600; }
+  @media (max-width: 600px) { .rte table.compare { font-size: 13px; } .compare th, .compare td { padding: 7px 6px; } }
   .btns { margin-top: 22px; }
   .sub-hero { position: relative; height: var(--h); min-height: 380px; color: var(--white); display: grid; place-items: center; text-align: center; overflow: hidden; }
   .sub-hero-content { position: relative; padding: 40px 20px; }
@@ -292,6 +316,11 @@
   .scroll-sec .marquee { margin: 0; }
   .marquee-track.slow { animation-duration: 45s; }
   .map iframe { display: block; width: 100%; height: 450px; border: 0; }
+  .map-consent { min-height: 450px; display: grid; place-content: center; text-align: center; gap: 10px; padding: 40px 20px; background: var(--grey); }
+  .map-consent p { max-width: 560px; margin: 0 auto; }
+  .map-consent a { text-decoration: underline; }
+  .btn-outline-dark { background: transparent; color: var(--black); border-color: var(--black); }
+  .btn-outline-dark:hover { background: var(--black); color: var(--white); }
   .countdown, .promo-box, .cta-box { text-align: center; padding: 60px 20px; }
   .countdown { background: #050505; color: #fff; }
   .countdown h2 { font-size: clamp(30px, 4vw, 42px); }
@@ -320,6 +349,7 @@
   }
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "AutoBodyShop", "name": "Täubert Karosserie und Lack GmbH", "url": "https://www.taeubert-karosserie-lack.de/", "logo": "https://www.taeubert-karosserie-lack.de/images/Taeubert_Logo.png", "telephone": "+49 3675 4289606", "email": "hallo@taeubert-karosserie-lack.de", "address": {"@type": "PostalAddress", "streetAddress": "Bettelhecker Straße 15", "postalCode": "96515", "addressLocality": "Sonneberg", "addressRegion": "Thüringen", "addressCountry": "DE"}, "areaServed": ["Sonneberg", "Neustadt bei Coburg", "Coburg", "Rödental", "Kronach", "Bamberg"], "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"], "opens": "08:00", "closes": "17:00"}, {"@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "08:00", "closes": "14:30"}], "sameAs": ["https://www.facebook.com/ToniTaeubert/", "https://www.instagram.com/taeubert_karosserieundlack/"]}</script>
+
 </head>
 <body>
 <a class="skip" href="#inhalt">Zum Inhalt springen</a>
@@ -362,8 +392,8 @@
     <details>
       <summary>Über Täubert</summary>
       <div class="promos">
-        <a class="promo" href="history.html"><div class="media"><img src="images/1.webp" alt="History von Täubert"></div><div class="overlay"></div><span>History</span></a>
-        <a class="promo" href="azubi.html"><div class="media"><img src="images/6.webp" alt="Ausbildung bei Täubert"></div><div class="overlay"></div><span>Azubi</span></a>
+        <a class="promo" href="history.html"><div class="media"><img src="images/1.webp" srcset="images/1-700.webp 700w, images/1.webp 1080w" sizes="(max-width: 760px) 100vw, 60vw" alt="History von Täubert"></div><div class="overlay"></div><span>History</span></a>
+        <a class="promo" href="azubi.html"><div class="media"><img src="images/6.webp" srcset="images/6-700.webp 700w, images/6.webp 1800w" sizes="(max-width: 760px) 100vw, 60vw" alt="Ausbildung bei Täubert"></div><div class="overlay"></div><span>Azubi</span></a>
       </div>
     </details>
     <details>
@@ -373,7 +403,7 @@
         <a href="contact.html">Kontakt</a>
       </div>
       <div class="promos">
-        <a class="promo" href="contact.html"><div class="media"><img src="images/ElevenLabs_image_nano-banana-pro_diesesbild..._2026-01-12T09_12_54.webp" alt=""></div><div class="overlay"></div><span>Kontakt</span></a>
+        <a class="promo" href="contact.html"><div class="media"><img src="images/ElevenLabs_image_nano-banana-pro_diesesbild..._2026-01-12T09_12_54.webp" srcset="images/ElevenLabs_image_nano-banana-pro_diesesbild..._2026-01-12T09_12_54-700.webp 700w, images/ElevenLabs_image_nano-banana-pro_diesesbild..._2026-01-12T09_12_54.webp 1080w" sizes="(max-width: 760px) 100vw, 60vw" alt=""></div><div class="overlay"></div><span>Kontakt</span></a>
         <a class="promo" href="meet-the-team.html"><div class="media"></div><div class="overlay"></div><span>Meet the Team</span></a>
       </div>
     </details>
@@ -387,11 +417,16 @@
         <a href="kleinschaden.html">Kleinschaden</a>
         <a href="kratzer.html">Kratzer</a>
         <a href="leasingrueckgabe.html">Leasingrückgabe</a>
+        <a href="hagelschaden.html">Hagelschaden</a>
+        <a href="stossstange-reparieren.html">Stoßstange reparieren</a>
+        <a href="versicherungsschaden.html">Versicherungsschaden</a>
+        <a href="oldtimer-restaurierung.html">Oldtimer &amp; Klassiker</a>
+        <a href="fuhrparkservice.html">Fuhrparkservice</a>
         <a href="fahrzeugaufbereitung.html">Fahrzeugaufbereitung</a>
         <a href="reifenservice.html">Reifenservice</a>
       </div>
       <div class="promos">
-        <div class="promo"><div class="media"><img src="images/ElevenLabs_image_nano-banana_Nahaufnahmen..._2026-01-13T08_52_06-2.webp" alt=""></div><div class="overlay"></div></div>
+        <div class="promo"><div class="media"><img src="images/ElevenLabs_image_nano-banana_Nahaufnahmen..._2026-01-13T08_52_06-2.webp" srcset="images/ElevenLabs_image_nano-banana_Nahaufnahmen..._2026-01-13T08_52_06-2-700.webp 700w, images/ElevenLabs_image_nano-banana_Nahaufnahmen..._2026-01-13T08_52_06-2.webp 1344w" sizes="(max-width: 760px) 100vw, 60vw" alt=""></div><div class="overlay"></div></div>
       </div>
     </details>
   </nav>
@@ -488,10 +523,10 @@
       img.style.visibility = 'hidden';
       const slide = img.closest('#slider .slide');
       if (slide && !slide.querySelector('.slide-content')) dropSlide(slide);
-      if (img.closest('#showcase') && [...document.querySelectorAll('#showcase img')].every(i => i.complete && !i.naturalWidth))
+      if (img.closest('#showcase') && [...document.querySelectorAll('#showcase img')].every(i => i.hasAttribute('data-missing-src') || (i.complete && !i.naturalWidth)))
         document.querySelector('.fl-inner').classList.add('no-showcase');
     };
-    if (img.complete && !img.naturalWidth) hide(); else img.addEventListener('error', hide);
+    if (img.hasAttribute('data-missing-src') || (img.complete && !img.naturalWidth)) hide(); else img.addEventListener('error', hide);
   });
 
   // Slideshows
@@ -515,6 +550,12 @@
     const unit = `<span>${t.dataset.text}</span>`;
     t.innerHTML = unit.repeat(8);
   });
+
+  // Google-Karte erst nach Zustimmung laden
+  document.querySelectorAll('[data-load-map]').forEach(btn => btn.addEventListener('click', () => {
+    const sec = btn.closest('.map');
+    sec.innerHTML = '<iframe title="Täubert Karosserie und Lack Standort" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Bettelhecker+Stra%C3%9Fe+15,+96515+Sonneberg&z=15&output=embed"></iframe>';
+  }));
 
   // Countdown
   document.querySelectorAll('[data-countdown]').forEach(el => {

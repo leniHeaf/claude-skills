@@ -15,10 +15,15 @@
 <meta property="og:image" content="https://www.taeubert-karosserie-lack.de/images/3.webp">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="images/TAeUBERT-2.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/archivo-black-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+  /* Schriften lokal (DSGVO: keine Verbindung zu Google) */
+  @font-face { font-family: "Archivo Black"; font-weight: 400; font-display: swap; src: url(fonts/archivo-black-latin-400-normal.woff2) format("woff2"); }
+  @font-face { font-family: Inter; font-weight: 400; font-display: swap; src: url(fonts/inter-latin-400-normal.woff2) format("woff2"); }
+  @font-face { font-family: Inter; font-weight: 500; font-display: swap; src: url(fonts/inter-latin-500-normal.woff2) format("woff2"); }
+  @font-face { font-family: Inter; font-weight: 600; font-display: swap; src: url(fonts/inter-latin-600-normal.woff2) format("woff2"); }
+  @font-face { font-family: Inter; font-weight: 700; font-display: swap; src: url(fonts/inter-latin-700-normal.woff2) format("woff2"); }
   /* Farbschemata aus dem Shopify-Theme (config/settings_data.json) */
   :root {
     --white: #ffffff;
@@ -317,6 +322,11 @@
   .scroll-sec .marquee { margin: 0; }
   .marquee-track.slow { animation-duration: 45s; }
   .map iframe { display: block; width: 100%; height: 450px; border: 0; }
+  .map-consent { min-height: 450px; display: grid; place-content: center; text-align: center; gap: 10px; padding: 40px 20px; background: var(--grey); }
+  .map-consent p { max-width: 560px; margin: 0 auto; }
+  .map-consent a { text-decoration: underline; }
+  .btn-outline-dark { background: transparent; color: var(--black); border-color: var(--black); }
+  .btn-outline-dark:hover { background: var(--black); color: var(--white); }
   .countdown, .promo-box, .cta-box { text-align: center; padding: 60px 20px; }
   .countdown { background: #050505; color: #fff; }
   .countdown h2 { font-size: clamp(30px, 4vw, 42px); }
@@ -388,8 +398,8 @@
     <details>
       <summary>Über Täubert</summary>
       <div class="promos">
-        <a class="promo" href="history.html"><div class="media"><img src="images/1.webp" alt="History von Täubert"></div><div class="overlay"></div><span>History</span></a>
-        <a class="promo" href="azubi.html"><div class="media"><img src="images/6.webp" alt="Ausbildung bei Täubert"></div><div class="overlay"></div><span>Azubi</span></a>
+        <a class="promo" href="history.html"><div class="media"><img src="images/1.webp" srcset="images/1-700.webp 700w, images/1.webp 1080w" sizes="(max-width: 760px) 100vw, 60vw" alt="History von Täubert"></div><div class="overlay"></div><span>History</span></a>
+        <a class="promo" href="azubi.html"><div class="media"><img src="images/6.webp" srcset="images/6-700.webp 700w, images/6.webp 1800w" sizes="(max-width: 760px) 100vw, 60vw" alt="Ausbildung bei Täubert"></div><div class="overlay"></div><span>Azubi</span></a>
       </div>
     </details>
     <details>
@@ -399,7 +409,7 @@
         <a href="contact.html">Kontakt</a>
       </div>
       <div class="promos">
-        <a class="promo" href="contact.html"><div class="media"><img src="images/ElevenLabs_image_nano-banana-pro_diesesbild..._2026-01-12T09_12_54.webp" alt=""></div><div class="overlay"></div><span>Kontakt</span></a>
+        <a class="promo" href="contact.html"><div class="media"><img src="images/ElevenLabs_image_nano-banana-pro_diesesbild..._2026-01-12T09_12_54.webp" srcset="images/ElevenLabs_image_nano-banana-pro_diesesbild..._2026-01-12T09_12_54-700.webp 700w, images/ElevenLabs_image_nano-banana-pro_diesesbild..._2026-01-12T09_12_54.webp 1080w" sizes="(max-width: 760px) 100vw, 60vw" alt=""></div><div class="overlay"></div><span>Kontakt</span></a>
         <a class="promo" href="meet-the-team.html"><div class="media"></div><div class="overlay"></div><span>Meet the Team</span></a>
       </div>
     </details>
@@ -422,7 +432,7 @@
         <a href="reifenservice.html">Reifenservice</a>
       </div>
       <div class="promos">
-        <div class="promo"><div class="media"><img src="images/ElevenLabs_image_nano-banana_Nahaufnahmen..._2026-01-13T08_52_06-2.webp" alt=""></div><div class="overlay"></div></div>
+        <div class="promo"><div class="media"><img src="images/ElevenLabs_image_nano-banana_Nahaufnahmen..._2026-01-13T08_52_06-2.webp" srcset="images/ElevenLabs_image_nano-banana_Nahaufnahmen..._2026-01-13T08_52_06-2-700.webp 700w, images/ElevenLabs_image_nano-banana_Nahaufnahmen..._2026-01-13T08_52_06-2.webp 1344w" sizes="(max-width: 760px) 100vw, 60vw" alt=""></div><div class="overlay"></div></div>
       </div>
     </details>
   </nav>
@@ -434,7 +444,7 @@
 </aside>
 <main id="inhalt">
 <section class="sub-hero" style="--h:550px;--mh:350px">
-  <div class="media"><img src="images/3.webp" alt="" loading="lazy"></div><div class="overlay" style="opacity:0.2"></div>
+  <div class="media"><img src="images/3.webp" srcset="images/3-700.webp 700w, images/3.webp 1800w" sizes="(max-width: 760px) 100vw, 60vw" alt="" loading="lazy"></div><div class="overlay" style="opacity:0.2"></div>
   <div class="sub-hero-content" style="max-width:1100px"><h1 class="h-5">Karriere Be Part of our Story</h1></div>
 </section>
 <section class="sec rich-sub scheme-dark" style="padding:50px 0 50px">
@@ -442,16 +452,16 @@
 <div class="rte"><p></p><p>Seit 2009 steht Täubert Karosserie und Lack für hochwertiges Handwerk, technisches Können und absolute Sorgfalt im Detail. Direkt in Sonneberg – an der Straße, mitten im Leben.Bekannt für klare Abläufe, ehrliche Ergebnisse und das, was man selten findet: <strong>eine Werkstatt mit Haltung.</strong></p><p>Ob Ausbildung, Fachkraft oder Quereinstieg – wir wachsen stetig und suchen Menschen, die nicht einfach nur mitarbeiten wollen, sondern <strong>mitdenken, mitformen, mitverantworten. Entdecken Sie die Welt von Täubert.</strong><br/><br/>Und werden Sie Teil unserer Geschichtechichte</p></div></div></div>
 </section>
 <section class="sec scheme-dark" style="padding:40px 0 40px">
-  <div class="page-width iwt media-right" style="--cols:65fr 35fr"><div class="iwt-text" style="max-width:460px"><div class="rte"><h1><strong>Ausbildung bei Täubert Karosserie und Lack</strong></h1><p>Wir suchen keine „Azubis von der Stange“. Wir suchen Menschen, die ihr Handwerk lernen wollen – richtig. Eine Ausbildung bei uns ist kein Durchschleifen und kein Beschäftigungsprogramm. Sie ist der Einstieg in Qualität, Verantwortung und echtes Handwerk.</p></div></div><div class="iwt-media" style="aspect-ratio:auto"><img src="images/3.webp" alt="" loading="lazy"></div></div>
+  <div class="page-width iwt media-right" style="--cols:65fr 35fr"><div class="iwt-text" style="max-width:460px"><div class="rte"><h1><strong>Ausbildung bei Täubert Karosserie und Lack</strong></h1><p>Wir suchen keine „Azubis von der Stange“. Wir suchen Menschen, die ihr Handwerk lernen wollen – richtig. Eine Ausbildung bei uns ist kein Durchschleifen und kein Beschäftigungsprogramm. Sie ist der Einstieg in Qualität, Verantwortung und echtes Handwerk.</p></div></div><div class="iwt-media" style="aspect-ratio:auto"><img src="images/3.webp" srcset="images/3-700.webp 700w, images/3.webp 1800w" sizes="(max-width: 760px) 100vw, 60vw" alt="" loading="lazy"></div></div>
 </section>
 <section class="sec scheme-dark" style="padding:40px 0 40px">
   <div class="page-width iwt" style="--cols:35fr 65fr"><div class="iwt-media" style="aspect-ratio:auto"><img src="images/4.webp" alt="" loading="lazy"></div><div class="iwt-text" style="max-width:460px"><div class="rte"><h2><strong>Unsere Haltung gegenüber Azubis</strong></h2><p>Wir begegnen dir auf Augenhöhe.<br/>Mit klaren Erwartungen. Pünktlichkeit ist selbstverständlich. Sauberkeit kein Extra. Mitdenken keine Ausnahme.Dafür bekommst du etwas, das heute selten ist: Zeit zum Lernen. Erklärungen statt Anschreien.<br/>Geduld statt Druck. Wer lernen will, bekommt bei uns Unterstützung. Wer nur „irgendwas machen“ will, eher nicht.</p></div></div></div>
 </section>
 <section class="sec scheme-dark" style="padding:40px 0 40px">
-  <div class="page-width iwt media-right" style="--cols:65fr 35fr"><div class="iwt-text" style="max-width:460px"><div class="rte"><h2><strong>Was du bei uns lernst</strong></h2><p>Du lernst Karosserie- und Lackarbeiten so, wie sie <strong>fachlich richtig</strong> sind.<br/><br/>Nicht schnell.<br/>Nicht billig.<br/>Sondern sauber.</p><p><strong>Du lernst:</strong></p><p>warum Vorbereitung entscheidend ist<br/>warum Details zählen<br/>warum Lack und Karosserie zusammengehören<br/>warum Qualität kein Zufall ist</p><p>Und du lernst, Verantwortung für deine Arbeit zu übernehmen.</p></div></div><div class="iwt-media" style="aspect-ratio:auto"><img src="images/5.webp" alt="" loading="lazy"></div></div>
+  <div class="page-width iwt media-right" style="--cols:65fr 35fr"><div class="iwt-text" style="max-width:460px"><div class="rte"><h2><strong>Was du bei uns lernst</strong></h2><p>Du lernst Karosserie- und Lackarbeiten so, wie sie <strong>fachlich richtig</strong> sind.<br/><br/>Nicht schnell.<br/>Nicht billig.<br/>Sondern sauber.</p><p><strong>Du lernst:</strong></p><p>warum Vorbereitung entscheidend ist<br/>warum Details zählen<br/>warum Lack und Karosserie zusammengehören<br/>warum Qualität kein Zufall ist</p><p>Und du lernst, Verantwortung für deine Arbeit zu übernehmen.</p></div></div><div class="iwt-media" style="aspect-ratio:auto"><img src="images/5.webp" srcset="images/5-700.webp 700w, images/5.webp 1069w" sizes="(max-width: 760px) 100vw, 60vw" alt="" loading="lazy"></div></div>
 </section>
 <section class="sec scheme-dark" style="padding:40px 0 40px">
-  <div class="page-width iwt" style="--cols:35fr 65fr"><div class="iwt-media" style="aspect-ratio:auto"><img src="images/6.webp" alt="" loading="lazy"></div><div class="iwt-text" style="max-width:460px"><div class="rte"><h3><strong>mit vollgas in die Zukunft!</strong></h3><p>Werde Teil von #TeamTäubert und starte Deine Ausbildung bei uns.</p></div></div></div>
+  <div class="page-width iwt" style="--cols:35fr 65fr"><div class="iwt-media" style="aspect-ratio:auto"><img src="images/6.webp" srcset="images/6-700.webp 700w, images/6.webp 1800w" sizes="(max-width: 760px) 100vw, 60vw" alt="" loading="lazy"></div><div class="iwt-text" style="max-width:460px"><div class="rte"><h3><strong>mit vollgas in die Zukunft!</strong></h3><p>Werde Teil von #TeamTäubert und starte Deine Ausbildung bei uns.</p></div></div></div>
 </section>
 <section class="sec rich-sub" style="padding:40px 0 40px">
   <div class="page-width"><div class="rich-inner" style="max-width:900px;text-align:left;"></div></div>
@@ -460,7 +470,7 @@
   <div class="page-width"><div class="mc-grid" style="--n:3"><div class="mc-col"><h3>Was wir dir bieten</h3><div class="rte"><p>Eine strukturierte Ausbildung. Feste Ansprechpartner Klare Abläufe Moderne Werkstatt Arbeitskleidung Kostenlose Getränke Gemeinsame Pausen und Teamgefühl Und vor allem:Die Chance, nach der Ausbildung <strong>wirklich etwas zu können</strong>.</p></div></div><div class="mc-col"><h3>Deine Perspektive</h3><div class="rte"><p>Eine Ausbildung bei uns ist kein Endpunkt. Sie ist eine Basis. Gute Azubis haben bei uns echte Perspektiven. Weiterbildung. Verantwortung. Entwicklung. Wer Qualität lebt, bleibt interessant – für uns und für die Zukunft.</p></div></div><div class="mc-col"><h3>Wen wir suchen</h3><div class="rte"><p>Was wir von dir erwarten Du musst kein Profi sein.Aber du musst <strong>wollen</strong>. Interesse am Handwerk Bereitschaft zu lernen Zuverlässigkeit Respekt gegenüber Team und Arbeit Fehler sind erlaubt. Ausreden nicht.</p></div></div></div></div>
 </section>
 <section class="" style="">
-  <div class="slider" data-interval="6000" style="--h:750px;--mh:650px"><div class="slide"><div class="media"><img src="images/Bildschirmfoto_2026-01-09_um_15.29.30.webp" alt="" loading="lazy"></div><div class="overlay" style="opacity:0.2"></div><div class="slide-content"><div style="max-width:700px"></div></div></div><div class="slide"><div class="media"><img src="images/pexels-griffinw-2657960.webp" alt="" loading="lazy"></div><div class="overlay" style="opacity:0.2"></div><div class="slide-content"><div style="max-width:700px"></div></div></div><div class="slide"><div class="media"><img src="images/pexels-aida-shukuhi-914628252-20281832.webp" alt="" loading="lazy"></div><div class="overlay" style="opacity:0.2"></div><div class="slide-content"><div style="max-width:700px"></div></div></div><div class="arrows"><button data-dir="-1" aria-label="Vorheriger Slide"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button><button data-dir="1" aria-label="Nächster Slide"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button></div><div class="dots"></div></div>
+  <div class="slider" data-interval="6000" style="--h:750px;--mh:650px"><div class="slide"><div class="media"><img src="images/Bildschirmfoto_2026-01-09_um_15.29.30.webp" alt="" loading="lazy"></div><div class="overlay" style="opacity:0.2"></div><div class="slide-content"><div style="max-width:700px"></div></div></div><div class="slide"><div class="media"><img src="images/pexels-griffinw-2657960.webp" srcset="images/pexels-griffinw-2657960-700.webp 700w, images/pexels-griffinw-2657960.webp 1800w" sizes="(max-width: 760px) 100vw, 60vw" alt="" loading="lazy"></div><div class="overlay" style="opacity:0.2"></div><div class="slide-content"><div style="max-width:700px"></div></div></div><div class="slide"><div class="media"><img src="images/pexels-aida-shukuhi-914628252-20281832.webp" srcset="images/pexels-aida-shukuhi-914628252-20281832-700.webp 700w, images/pexels-aida-shukuhi-914628252-20281832.webp 1800w" sizes="(max-width: 760px) 100vw, 60vw" alt="" loading="lazy"></div><div class="overlay" style="opacity:0.2"></div><div class="slide-content"><div style="max-width:700px"></div></div></div><div class="arrows"><button data-dir="-1" aria-label="Vorheriger Slide"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button><button data-dir="1" aria-label="Nächster Slide"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button></div><div class="dots"></div></div>
 </section>
 <section class="sec rich-sub" style="padding:30px 0 120px">
   <div class="page-width"><div class="rich-inner" style="max-width:460px;text-align:center;margin:0 auto"><div class="rte"><h2><strong>Dein nächster Schritt - Passt das zu dir?</strong></h2><p>Wenn du: nicht nur einen Ausbildungsplatz suchst sondern ein Handwerk lernen willst bereit bist, Verantwortung zu übernehmen<br/>und Teil eines starken Teams sein möchtest dann freuen wir uns, dich kennenzulernen. Kein großes Bewerbungs­theater. Ein kurzes Anschreiben, ein Lebenslauf oder einfach ein Anruf reichen. Wir sprechen offen darüber, ob es passt – <strong>für beide Seiten</strong>.</p><p><strong>Täubert Karosserie und Lack</strong> Wir liefern Premium. Auch in der Ausbildung.</p></div>
@@ -470,7 +480,7 @@
   <div class="marquee" aria-label="„Built for Quality. Driven by People.“ | Jetzt bewerben |"><div class="marquee-track slow" data-text="„Built for Quality. Driven by People.“ | Jetzt bewerben |"></div></div>
 </section>
 <section class="sec" style="padding:50px 0 50px">
-  <div class="page-width"><h2 class="sec-head">Ansprechpartner</h2><div class="mc-grid" style="--n:3"><div class="mc-col"><div class="mc-media"><div class="media"><img src="images/1.webp" alt="" loading="lazy"></div></div><h3>Toni Täubert</h3><div class="rte"><p><strong>GESCHÄFTSFÜHRUNG </strong><br/>jobs@taeubert-karosserie-lack.de<br/>Telefon: +49 3675 4289606<br/><br/></p></div></div><div class="mc-col"><div class="mc-media"><div class="media"><img src="images/2.webp" alt="" loading="lazy"></div></div><h3>Lena Hofmann</h3><div class="rte"><p><strong>KAUFMÄNNISCHE BEREICH</strong><br/>jobs@taeubert-karosserie-lack.de<br/>Telefon: +49 3675 4289606<br/><br/></p></div></div></div></div>
+  <div class="page-width"><h2 class="sec-head">Ansprechpartner</h2><div class="mc-grid" style="--n:3"><div class="mc-col"><div class="mc-media"><div class="media"><img src="images/1.webp" srcset="images/1-700.webp 700w, images/1.webp 1080w" sizes="(max-width: 760px) 100vw, 60vw" alt="" loading="lazy"></div></div><h3>Toni Täubert</h3><div class="rte"><p><strong>GESCHÄFTSFÜHRUNG </strong><br/>jobs@taeubert-karosserie-lack.de<br/>Telefon: +49 3675 4289606<br/><br/></p></div></div><div class="mc-col"><div class="mc-media"><div class="media"><img src="images/2.webp" srcset="images/2-700.webp 700w, images/2.webp 1080w" sizes="(max-width: 760px) 100vw, 60vw" alt="" loading="lazy"></div></div><h3>Lena Hofmann</h3><div class="rte"><p><strong>KAUFMÄNNISCHE BEREICH</strong><br/>jobs@taeubert-karosserie-lack.de<br/>Telefon: +49 3675 4289606<br/><br/></p></div></div></div></div>
 </section>
 </main>
 <footer>
@@ -571,6 +581,12 @@
     const unit = `<span>${t.dataset.text}</span>`;
     t.innerHTML = unit.repeat(8);
   });
+
+  // Google-Karte erst nach Zustimmung laden
+  document.querySelectorAll('[data-load-map]').forEach(btn => btn.addEventListener('click', () => {
+    const sec = btn.closest('.map');
+    sec.innerHTML = '<iframe title="Täubert Karosserie und Lack Standort" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Bettelhecker+Stra%C3%9Fe+15,+96515+Sonneberg&z=15&output=embed"></iframe>';
+  }));
 
   // Countdown
   document.querySelectorAll('[data-countdown]').forEach(el => {

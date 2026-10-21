@@ -17,7 +17,7 @@ PAGES = {
     "azubi": "azubi", "bamberg": "bamberg", "boxenstopp": "boxenstopp", "bulli-t2": "vw-bulli-t2",
     "contact": "contact", "fahrzeugaufbereitung": "fahrzeugaufbereitung",
     "job": "jobs", "karosserie": "karosserie", "kleinschaden": "kleinschaden", "kratzer-2": "kratzer",
-    "kronach": "kronach", "lackierarbeiten": "lackierarbeiten", "lackierer-karosserie-co": "coburg",
+    "lackierarbeiten": "lackierarbeiten", "lackierer-karosserie-co": "coburg",
     "landing": "meet-the-team", "leasingrueckgabe-auto-sonn": "leasingrueckgabe", "marco": "q-a-marco",
     "nec": "neustadt", "pascal": "q-a-pascal", "projekte": "porsche-gts", "reifenservice": "reifenservice",
     "roedental": "roedental", "smartrepair": "smartrepair", "sonneberg": "sonneberg", "toni": "q-a-toni",
@@ -25,6 +25,18 @@ PAGES = {
     "unfallentstandsetzung": "unfallinstandsetzung", "was-kostet-es-ein-auto-l": "auto-lackieren-kosten",
     "who-we-are": "who-we-are",
 }
+# Der Kronach-Text liegt im Shop auf der Sonneberg-Vorlage; die Kronach-Vorlage enthält den Rödental-Text
+PAGE_ALIASES = [("sonneberg", "kronach")]
+# Seitenspezifische Textkorrekturen (alt, neu)
+TEXT_FIXES = {
+    "kronach": [("Lackierer Sonneberg |", "Lackierer Kronach |")],
+    "sonneberg": [
+        ("Täubert Karosserie &amp; Lack in Sonneberg betreut regelmäßig Kunden aus Kronach", "Täubert Karosserie &amp; Lack betreut regelmäßig Kunden aus Sonneberg"),
+        ("Täubert Karosserie & Lack in Sonneberg betreut regelmäßig Kunden aus Kronach", "Täubert Karosserie & Lack betreut regelmäßig Kunden aus Sonneberg"),
+        ("Kronach", "Sonneberg"),
+    ],
+}
+
 # Shopify-Seiten-Handles -> Datei
 HANDLES = {
     "contact": "contact", "who-we-are": "who-we-are", "jobs": "jobs", "26-09-2026-boxenstopp": "boxenstopp",
@@ -296,8 +308,16 @@ def r_blocks(sec):
     out = []
     for t, s in blocks(sec):
         if t == "ai_gen_block_699b8cf":
-            out.append('''<section class="map"><iframe title="Täubert Karosserie und Lack Standort" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-  src="https://www.google.com/maps?q=Bettelhecker+Stra%C3%9Fe+15,+96515+Sonneberg&z=15&output=embed"></iframe></section>''')
+            out.append('''<section class="map" id="karte">
+  <div class="map-consent">
+    <p><strong>Bettelhecker Straße 15, 96515 Sonneberg</strong></p>
+    <p>Die Karte wird von Google Maps geladen. Dabei werden Daten an Google übertragen (siehe <a href="datenschutz.html">Datenschutz</a>).</p>
+    <div class="btns" style="justify-content:center">
+      <button class="btn btn-dark" type="button" data-load-map>Karte laden</button>
+      <a class="btn btn-outline-dark" href="https://www.google.com/maps/search/?api=1&query=Bettelhecker+Stra%C3%9Fe+15+96515+Sonneberg" target="_blank" rel="noopener">In Google Maps öffnen</a>
+    </div>
+  </div>
+</section>''')
         elif t == "ai_gen_block_171b48e":
             out.append(f'''<section class="countdown">
   <h2>{esc(s.get("heading"))}</h2><p>{esc(s.get("intro"))}</p>
@@ -406,6 +426,11 @@ EXTRA_CSS = """
   .scroll-sec .marquee { margin: 0; }
   .marquee-track.slow { animation-duration: 45s; }
   .map iframe { display: block; width: 100%; height: 450px; border: 0; }
+  .map-consent { min-height: 450px; display: grid; place-content: center; text-align: center; gap: 10px; padding: 40px 20px; background: var(--grey); }
+  .map-consent p { max-width: 560px; margin: 0 auto; }
+  .map-consent a { text-decoration: underline; }
+  .btn-outline-dark { background: transparent; color: var(--black); border-color: var(--black); }
+  .btn-outline-dark:hover { background: var(--black); color: var(--white); }
   .countdown, .promo-box, .cta-box { text-align: center; padding: 60px 20px; }
   .countdown { background: #050505; color: #fff; }
   .countdown h2 { font-size: clamp(30px, 4vw, 42px); }
@@ -457,6 +482,12 @@ PAGE_JS = """
     t.innerHTML = unit.repeat(8);
   });
 
+  // Google-Karte erst nach Zustimmung laden
+  document.querySelectorAll('[data-load-map]').forEach(btn => btn.addEventListener('click', () => {
+    const sec = btn.closest('.map');
+    sec.innerHTML = '<iframe title="Täubert Karosserie und Lack Standort" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Bettelhecker+Stra%C3%9Fe+15,+96515+Sonneberg&z=15&output=embed"></iframe>';
+  }));
+
   // Countdown
   document.querySelectorAll('[data-countdown]').forEach(el => {
     const target = new Date(el.dataset.countdown), b = el.querySelector('b');
@@ -483,7 +514,7 @@ PAGE_JS = """
 def shell():
     src = open(os.path.join(SITE, "index.html"), encoding="utf-8").read()
     style = re.search(r"<style>(.*?)</style>", src, re.S).group(1)
-    head_links = re.search(r'(<link rel="icon".*?rel="stylesheet">)', src, re.S).group(1)
+    head_links = re.search(r'(<link rel="icon"[^>]*>(?:\s*<link rel="preload"[^>]*as="font"[^>]*>)*)', src, re.S).group(1)
     top = re.search(r'(<a class="skip".*?</aside>)', src, re.S).group(1)
     top = top.replace('class="header transparent"', 'class="header"')
     footer = re.search(r"(<footer>.*?</footer>)", src, re.S).group(1)
@@ -666,6 +697,23 @@ def sync_images(page):
         exists = os.path.exists(os.path.join(SITE, path))
         return f'{"src" if exists else "data-missing-src"}="{path}"'
     page = re.sub(r'\b(src|data-missing-src)="(images/[^"]+)"', fix, page)
+    # Responsive Bilder: kleine 700px-Variante fürs Handy anbieten
+    widths = {}
+
+    def srcset(m):
+        tag = re.sub(r'\s(srcset|sizes)="[^"]*"', "", m.group(0))
+        src = re.search(r'\bsrc="(images/[^"]+)"', tag)
+        if not src:
+            return tag
+        path = src.group(1)
+        small = os.path.splitext(path)[0] + "-700.webp"
+        if not os.path.exists(os.path.join(SITE, small)):
+            return tag
+        if path not in widths:
+            from PIL import Image
+            widths[path] = Image.open(os.path.join(SITE, path)).width
+        return tag.replace(f'src="{path}"', f'src="{path}" srcset="{small} 700w, {path} {widths[path]}w" sizes="{"100vw" if 'fetchpriority="high"' in tag or "sub-hero" in tag else "(max-width: 760px) 100vw, 60vw"}"', 1)
+    page = re.sub(r"<img\b[^>]*>", srcset, page)
     # og:image nur, wenn die Datei existiert
     def og(m):
         return m.group(0) if os.path.exists(os.path.join(SITE, m.group(1))) else ""
@@ -716,7 +764,7 @@ def main():
     ld = re.search(r'(<script type="application/ld\+json">.*?</script>)', open(os.path.join(SITE, "index.html"), encoding="utf-8").read(), re.S)
     ld = ld.group(1) if ld else ""
     built = []
-    for tpl, slug in PAGES.items():
+    for tpl, slug in list(PAGES.items()) + PAGE_ALIASES:
         d = load(os.path.join(THEME, "templates", f"page.{tpl}.json"))
         body = []
         for k in d["order"]:
@@ -727,6 +775,8 @@ def main():
             if r:
                 body.append(r(s))
         body_html = apply_fixes(chr(10).join(b for b in body if b))
+        for old, new in TEXT_FIXES.get(slug, []):
+            body_html = body_html.replace(old, new)
         title = first_heading(d) or slug.replace("-", " ").title()
         meta = SERVICES.get(slug) or LOCATIONS.get(slug)
         extra_ld = ""

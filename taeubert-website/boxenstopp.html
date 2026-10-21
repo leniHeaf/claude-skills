@@ -15,10 +15,15 @@
 <meta property="og:image" content="https://www.taeubert-karosserie-lack.de/images/Header_Banner_for_Blog.webp">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="images/TAeUBERT-2.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/archivo-black-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+  /* Schriften lokal (DSGVO: keine Verbindung zu Google) */
+  @font-face { font-family: "Archivo Black"; font-weight: 400; font-display: swap; src: url(fonts/archivo-black-latin-400-normal.woff2) format("woff2"); }
+  @font-face { font-family: Inter; font-weight: 400; font-display: swap; src: url(fonts/inter-latin-400-normal.woff2) format("woff2"); }
+  @font-face { font-family: Inter; font-weight: 500; font-display: swap; src: url(fonts/inter-latin-500-normal.woff2) format("woff2"); }
+  @font-face { font-family: Inter; font-weight: 600; font-display: swap; src: url(fonts/inter-latin-600-normal.woff2) format("woff2"); }
+  @font-face { font-family: Inter; font-weight: 700; font-display: swap; src: url(fonts/inter-latin-700-normal.woff2) format("woff2"); }
   /* Farbschemata aus dem Shopify-Theme (config/settings_data.json) */
   :root {
     --white: #ffffff;
@@ -317,6 +322,11 @@
   .scroll-sec .marquee { margin: 0; }
   .marquee-track.slow { animation-duration: 45s; }
   .map iframe { display: block; width: 100%; height: 450px; border: 0; }
+  .map-consent { min-height: 450px; display: grid; place-content: center; text-align: center; gap: 10px; padding: 40px 20px; background: var(--grey); }
+  .map-consent p { max-width: 560px; margin: 0 auto; }
+  .map-consent a { text-decoration: underline; }
+  .btn-outline-dark { background: transparent; color: var(--black); border-color: var(--black); }
+  .btn-outline-dark:hover { background: var(--black); color: var(--white); }
   .countdown, .promo-box, .cta-box { text-align: center; padding: 60px 20px; }
   .countdown { background: #050505; color: #fff; }
   .countdown h2 { font-size: clamp(30px, 4vw, 42px); }
@@ -388,8 +398,8 @@
     <details>
       <summary>Über Täubert</summary>
       <div class="promos">
-        <a class="promo" href="history.html"><div class="media"><img src="images/1.webp" alt="History von Täubert"></div><div class="overlay"></div><span>History</span></a>
-        <a class="promo" href="azubi.html"><div class="media"><img src="images/6.webp" alt="Ausbildung bei Täubert"></div><div class="overlay"></div><span>Azubi</span></a>
+        <a class="promo" href="history.html"><div class="media"><img src="images/1.webp" srcset="images/1-700.webp 700w, images/1.webp 1080w" sizes="(max-width: 760px) 100vw, 60vw" alt="History von Täubert"></div><div class="overlay"></div><span>History</span></a>
+        <a class="promo" href="azubi.html"><div class="media"><img src="images/6.webp" srcset="images/6-700.webp 700w, images/6.webp 1800w" sizes="(max-width: 760px) 100vw, 60vw" alt="Ausbildung bei Täubert"></div><div class="overlay"></div><span>Azubi</span></a>
       </div>
     </details>
     <details>
@@ -399,7 +409,7 @@
         <a href="contact.html">Kontakt</a>
       </div>
       <div class="promos">
-        <a class="promo" href="contact.html"><div class="media"><img src="images/ElevenLabs_image_nano-banana-pro_diesesbild..._2026-01-12T09_12_54.webp" alt=""></div><div class="overlay"></div><span>Kontakt</span></a>
+        <a class="promo" href="contact.html"><div class="media"><img src="images/ElevenLabs_image_nano-banana-pro_diesesbild..._2026-01-12T09_12_54.webp" srcset="images/ElevenLabs_image_nano-banana-pro_diesesbild..._2026-01-12T09_12_54-700.webp 700w, images/ElevenLabs_image_nano-banana-pro_diesesbild..._2026-01-12T09_12_54.webp 1080w" sizes="(max-width: 760px) 100vw, 60vw" alt=""></div><div class="overlay"></div><span>Kontakt</span></a>
         <a class="promo" href="meet-the-team.html"><div class="media"></div><div class="overlay"></div><span>Meet the Team</span></a>
       </div>
     </details>
@@ -422,7 +432,7 @@
         <a href="reifenservice.html">Reifenservice</a>
       </div>
       <div class="promos">
-        <div class="promo"><div class="media"><img src="images/ElevenLabs_image_nano-banana_Nahaufnahmen..._2026-01-13T08_52_06-2.webp" alt=""></div><div class="overlay"></div></div>
+        <div class="promo"><div class="media"><img src="images/ElevenLabs_image_nano-banana_Nahaufnahmen..._2026-01-13T08_52_06-2.webp" srcset="images/ElevenLabs_image_nano-banana_Nahaufnahmen..._2026-01-13T08_52_06-2-700.webp 700w, images/ElevenLabs_image_nano-banana_Nahaufnahmen..._2026-01-13T08_52_06-2.webp 1344w" sizes="(max-width: 760px) 100vw, 60vw" alt=""></div><div class="overlay"></div></div>
       </div>
     </details>
   </nav>
@@ -434,7 +444,7 @@
 </aside>
 <main id="inhalt">
 <section class="sub-hero" style="--h:650px;--mh:450px">
-  <div class="media"><img src="images/Header_Banner_for_Blog.webp" alt="" loading="lazy"></div><div class="overlay" style="opacity:0.2"></div>
+  <div class="media"><img src="images/Header_Banner_for_Blog.webp" srcset="images/Header_Banner_for_Blog-700.webp 700w, images/Header_Banner_for_Blog.webp 1800w" sizes="(max-width: 760px) 100vw, 60vw" alt="" loading="lazy"></div><div class="overlay" style="opacity:0.2"></div>
   <div class="sub-hero-content" style="max-width:990px"><p class="overline"><strong>reifenwechsel-tag</strong></p>
 <h1 class="h-8"><strong> 26.09.2026                                    Reifenwechseltag BOXENSTOPPEVENT</strong></h1>
 <div class="rte"><p><strong>Jeder 10. Reifenwechsel  geschenkt!</strong></p></div>
@@ -448,7 +458,7 @@
   </div>
 </section>
 <section class="sec" style="padding:50px 0 50px">
-  <div class="page-width"><h2 class="sec-head">Boxenstopp am 26.09.2026</h2><div class="mc-grid" style="--n:3"><div class="mc-col"><div class="mc-media"><div class="media"><img src="images/1_cbd74079-c307-4241-a782-b0dd6ee7fa1e.webp" alt="" loading="lazy"></div></div><h3>Unsere Zusatzleistungen</h3><div class="rte"><ul><li>Reifeneinlagern </li><li>Reifen waschen  </li><li>Wuchten                                                                             <br/><br/></li></ul></div><a class="btn btn-dark" href="https://terminbuchungtaeubert.de">Termin sichern!</a></div><div class="mc-col"><div class="mc-media"><div class="media"><img src="images/2_88827fa0-1bf3-4cfe-8709-ded76ccef89d.webp" alt="" loading="lazy"></div></div><h3>Don´t drink and drive</h3><div class="rte"><p>Komme mit Begleitung, so kann aus deiner Limo ein Cocktail werden.</p></div><a class="btn btn-dark" href="https://terminbuchungtaeubert.de">Termin sichern!</a></div><div class="mc-col"><div class="mc-media"><div class="media"><img src="images/3_2ea6a6f2-811b-44c9-8f4e-bd608a0f80dd.webp" alt="" loading="lazy"></div></div><h3>Reifen neu - Dem Verein treu</h3><div class="rte"><p>Nenne deinen Verein - der Verein mit den meisten Stimmen erhält die Spende. Mit jeder Stimme wächste der Spendenbetrag. Egal ob Fußball-, Feuerwehr-, Bürger-, oder Kirmesverein</p><p>Bewerbt euch jetzt und holt das Beste für euer Team raus. </p><p>E-Mail oder per Instagram</p></div><a class="btn btn-dark" href="https://terminbuchungtaeubert.de">Termin sichern!</a></div></div></div>
+  <div class="page-width"><h2 class="sec-head">Boxenstopp am 26.09.2026</h2><div class="mc-grid" style="--n:3"><div class="mc-col"><div class="mc-media"><div class="media"><img src="images/1_cbd74079-c307-4241-a782-b0dd6ee7fa1e.webp" srcset="images/1_cbd74079-c307-4241-a782-b0dd6ee7fa1e-700.webp 700w, images/1_cbd74079-c307-4241-a782-b0dd6ee7fa1e.webp 1012w" sizes="(max-width: 760px) 100vw, 60vw" alt="" loading="lazy"></div></div><h3>Unsere Zusatzleistungen</h3><div class="rte"><ul><li>Reifeneinlagern </li><li>Reifen waschen  </li><li>Wuchten                                                                             <br/><br/></li></ul></div><a class="btn btn-dark" href="https://terminbuchungtaeubert.de">Termin sichern!</a></div><div class="mc-col"><div class="mc-media"><div class="media"><img src="images/2_88827fa0-1bf3-4cfe-8709-ded76ccef89d.webp" srcset="images/2_88827fa0-1bf3-4cfe-8709-ded76ccef89d-700.webp 700w, images/2_88827fa0-1bf3-4cfe-8709-ded76ccef89d.webp 1080w" sizes="(max-width: 760px) 100vw, 60vw" alt="" loading="lazy"></div></div><h3>Don´t drink and drive</h3><div class="rte"><p>Komme mit Begleitung, so kann aus deiner Limo ein Cocktail werden.</p></div><a class="btn btn-dark" href="https://terminbuchungtaeubert.de">Termin sichern!</a></div><div class="mc-col"><div class="mc-media"><div class="media"><img src="images/3_2ea6a6f2-811b-44c9-8f4e-bd608a0f80dd.webp" srcset="images/3_2ea6a6f2-811b-44c9-8f4e-bd608a0f80dd-700.webp 700w, images/3_2ea6a6f2-811b-44c9-8f4e-bd608a0f80dd.webp 1080w" sizes="(max-width: 760px) 100vw, 60vw" alt="" loading="lazy"></div></div><h3>Reifen neu - Dem Verein treu</h3><div class="rte"><p>Nenne deinen Verein - der Verein mit den meisten Stimmen erhält die Spende. Mit jeder Stimme wächste der Spendenbetrag. Egal ob Fußball-, Feuerwehr-, Bürger-, oder Kirmesverein</p><p>Bewerbt euch jetzt und holt das Beste für euer Team raus. </p><p>E-Mail oder per Instagram</p></div><a class="btn btn-dark" href="https://terminbuchungtaeubert.de">Termin sichern!</a></div></div></div>
 </section>
 <section class="promo-box">
   <span class="badge">10. Wechsel gratis</span>
@@ -571,6 +581,12 @@
     const unit = `<span>${t.dataset.text}</span>`;
     t.innerHTML = unit.repeat(8);
   });
+
+  // Google-Karte erst nach Zustimmung laden
+  document.querySelectorAll('[data-load-map]').forEach(btn => btn.addEventListener('click', () => {
+    const sec = btn.closest('.map');
+    sec.innerHTML = '<iframe title="Täubert Karosserie und Lack Standort" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Bettelhecker+Stra%C3%9Fe+15,+96515+Sonneberg&z=15&output=embed"></iframe>';
+  }));
 
   // Countdown
   document.querySelectorAll('[data-countdown]').forEach(el => {
