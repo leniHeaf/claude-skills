@@ -1,9 +1,7 @@
 # Bilder
 
-Noch fehlende Dateien (11). Abschnitte ohne Bild zeigen bis dahin nur Text.
+Noch fehlende Dateien (9). Abschnitte ohne Bild zeigen bis dahin nur Text.
 
-- 2_88827fa0-1bf3-4cfe-8709-ded76ccef89d.png
-- 3_2ea6a6f2-811b-44c9-8f4e-bd608a0f80dd.png
 - Bildschirmfoto_2026-01-09_um_14.26.45.png
 - DSC00347_2.jpg
 - DSC06286.jpg
