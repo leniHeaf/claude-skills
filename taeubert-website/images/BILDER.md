@@ -1,13 +1,10 @@
 # Bilder
 
-Noch fehlende Dateien (28). Abschnitte ohne Bild zeigen bis dahin nur Text.
+Noch fehlende Dateien (24). Abschnitte ohne Bild zeigen bis dahin nur Text.
 
 - 1_cbd74079-c307-4241-a782-b0dd6ee7fa1e.png
 - 2_88827fa0-1bf3-4cfe-8709-ded76ccef89d.png
-- 3.png
 - 3_2ea6a6f2-811b-44c9-8f4e-bd608a0f80dd.png
-- 4.png
-- 6.png
 - Bildschirmfoto_2025-12-03_um_16.41.11.png
 - Bildschirmfoto_2026-01-09_um_14.26.45.png
 - Bildschirmfoto_2026-01-09_um_15.02.22.png
@@ -24,7 +21,6 @@ Noch fehlende Dateien (28). Abschnitte ohne Bild zeigen bis dahin nur Text.
 - pexels-borta-2790256-30787396.jpg
 - pexels-bulat843-1243575272-31389821.jpg
 - pexels-glv-visuals-859366-28611341.jpg
-- pexels-griffinw-2657960.jpg
 - pexels-markusspiske-1729999.jpg
 - pexels-trishin-rambajan-1564695-11329078.jpg
 - pexels-uiliamnornberg-24960483_2971c584-81f6-4dd4-bf60-f58213b7bd8b.jpg
