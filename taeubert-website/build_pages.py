@@ -15,7 +15,7 @@ DOMAIN = "https://www.taeubert-karosserie-lack.de"
 PAGES = {
     "911": "porsche-911", "about-1": "history", "about-2": "karriere", "adrian": "q-a-adrian",
     "azubi": "azubi", "bamberg": "bamberg", "boxenstopp": "boxenstopp", "bulli-t2": "vw-bulli-t2",
-    "contact": "contact", "fahrzeugaufbereitung": "fahrzeugaufbereitung", "fanny": "q-a-fanny",
+    "contact": "contact", "fahrzeugaufbereitung": "fahrzeugaufbereitung",
     "job": "jobs", "karosserie": "karosserie", "kleinschaden": "kleinschaden", "kratzer-2": "kratzer",
     "kronach": "kronach", "lackierarbeiten": "lackierarbeiten", "lackierer-karosserie-co": "coburg",
     "landing": "meet-the-team", "leasingrueckgabe-auto-sonn": "leasingrueckgabe", "marco": "q-a-marco",
@@ -30,7 +30,7 @@ HANDLES = {
     "contact": "contact", "who-we-are": "who-we-are", "jobs": "jobs", "26-09-2026-boxenstopp": "boxenstopp",
     "history": "history", "porsche-911": "porsche-911", "porsche-gts": "porsche-gts", "vw-bulli-t2": "vw-bulli-t2",
     "q-a-marco": "q-a-marco", "q-a-toni": "q-a-toni", "q-a-adrian": "q-a-adrian", "q-a-pascal": "q-a-pascal",
-    "q-a-fanny": "q-a-fanny", "azubi": "azubi", "meet-the-team": "meet-the-team",
+    "azubi": "azubi", "meet-the-team": "meet-the-team",
 }
 
 
@@ -100,11 +100,17 @@ def media(ref, extra=""):
     return f'<div class="media{extra}"><img src="images/{esc(img_name(ref))}" alt="" loading="lazy"></div>'
 
 
+# Ehemalige Mitarbeitende: Blöcke, die sie nennen oder auf ihre Seite verlinken, nicht mehr ausgeben
+FORMER_STAFF = ("fanny",)
+
+
 def blocks(sec):
     bl = sec.get("blocks") or {}
     for k in sec.get("block_order", list(bl)):
         b = bl.get(k)
         if b and not b.get("disabled"):
+            if any(n in json.dumps(b, ensure_ascii=False).lower() for n in FORMER_STAFF):
+                continue
             yield b["type"], b.get("settings") or {}
 
 
@@ -700,6 +706,7 @@ def write_seo_files(slugs):
     # 301-Weiterleitungen von den alten Shopify-Adressen (/pages/<handle>), Netlify-Format
     lines = [f"/pages/{h}  /{f}.html  301" for h, f in HANDLES.items()]
     lines += [f"/pages/{x}  /{x}.html  301" for x in slugs if x not in HANDLES]
+    lines += ["/pages/q-a-fanny  /meet-the-team.html  301", "/q-a-fanny.html  /meet-the-team.html  301"]
     lines += ["/collections/*  https://terminbuchungtaeubert.de  301", "/products/*  https://terminbuchungtaeubert.de  301"]
     open(os.path.join(SITE, "_redirects"), "w", encoding="utf-8").write("\n".join(dict.fromkeys(lines)) + "\n")
 
