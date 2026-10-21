@@ -4,6 +4,9 @@ Aufruf: python3 -I build_pages.py <theme-dir> <site-dir>
 """
 import html, json, os, re, sys
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from new_pages import NEW_PAGES  # noqa: E402
+
 THEME, SITE = sys.argv[1], sys.argv[2]
 BOOKING = "https://terminbuchungtaeubert.de"
 DOMAIN = "https://www.taeubert-karosserie-lack.de"
@@ -541,6 +544,7 @@ LOCATIONS = {
 SERVICE_LINKS = [("karosserie", "Karosserie"), ("lackierarbeiten", "Lackierarbeiten"), ("unfallinstandsetzung", "Unfallinstandsetzung"),
                  ("smartrepair", "Smart Repair"), ("kleinschaden", "Kleinschaden"), ("kratzer", "Kratzer entfernen"),
                  ("leasingrueckgabe", "Leasingrückgabe"), ("fahrzeugaufbereitung", "Fahrzeugaufbereitung"), ("reifenservice", "Reifenservice")]
+SERVICE_LINKS += [(slug, p["short"]) for slug, p in NEW_PAGES.items()]
 LOCATION_LINKS = [("sonneberg", "Sonneberg"), ("neustadt", "Neustadt bei Coburg"), ("coburg", "Coburg"),
                   ("roedental", "Rödental"), ("kronach", "Kronach"), ("bamberg", "Bamberg")]
 
@@ -662,6 +666,30 @@ def sync_images(page):
     return re.sub(r'<meta property="og:image" content="https://www\.taeubert-karosserie-lack\.de/(images/[^"]+)">\n?', og, page)
 
 
+def render_new_page(slug, p):
+    """Eigene Leistungsseite im Stil der übrigen Unterseiten."""
+    secs = []
+    for i, (h, body) in enumerate(p["sections"]):
+        bg = " scheme-grey" if i % 2 else ""
+        secs.append(f'''<section class="sec{bg}" style="padding:60px 0">
+  <div class="page-width"><div class="rich-inner" style="max-width:760px"><h2 class="h-4">{esc(h)}</h2><div class="rte">{body}</div></div></div>
+</section>''')
+    rows = "".join(f'<details><summary><span>{esc(q)}</span></summary><div class="rte"><p>{esc(a)}</p></div></details>' for q, a in p["faq"])
+    return f'''<section class="sub-hero" style="--h:520px;--mh:440px">
+  <div class="media"></div><div class="overlay" style="opacity:0"></div>
+  <div class="sub-hero-content" style="max-width:960px">
+    <h1 class="overline">{esc(p["title"])}</h1>
+    <p class="heading h-8">{esc(p["claim"])}</p>
+    <div class="rte"><p>{esc(p["lead"])}</p></div>
+    <div class="btns"><a class="btn btn-light" href="{BOOKING}">Termin online buchen</a><a class="btn btn-outline-light" href="tel:+4936754289606">Anrufen</a></div>
+  </div>
+</section>
+{chr(10).join(secs)}
+<section class="sec" style="padding:60px 0">
+  <div class="page-width"><div class="faq"><h2 class="sec-head">Häufige Fragen</h2>{rows}</div></div>
+</section>'''
+
+
 def write_seo_files(slugs):
     urls = [f"{DOMAIN}/"] + [f"{DOMAIN}/{x}.html" for x in slugs]
     sm = "\n".join(f"  <url><loc>{u}</loc></url>" for u in urls)
@@ -713,6 +741,34 @@ def main():
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{esc(title)} | Täubert Karosserie &amp; Lack</title>
 {seo_head(f"{title} – Täubert Karosserie & Lack", desc or description(body_html), slug, og.group(1) if og else None)}
+{head_links}
+<style>{style}{EXTRA_CSS}</style>
+{ld}
+{extra_ld}
+</head>
+<body>
+{top}
+<main id="inhalt">
+{body_html}
+</main>
+{footer}
+<script>
+{js}</script>
+</body>
+</html>
+"""
+        open(os.path.join(SITE, f"{slug}.html"), "w", encoding="utf-8").write(sync_images(page))
+        built.append(slug)
+    for slug, p in NEW_PAGES.items():
+        body_html = render_new_page(slug, p) + booking_cta(slug, p["short"])
+        extra_ld = service_ld(slug, p["short"], p["desc"]) + faq_ld(body_html)
+        page = f"""<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{esc(p["title"])} | Täubert Karosserie &amp; Lack</title>
+{seo_head(p["title"] + " – Täubert Karosserie & Lack", p["desc"], slug)}
 {head_links}
 <style>{style}{EXTRA_CSS}</style>
 {ld}
