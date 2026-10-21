@@ -1,6 +1,6 @@
 # Bilder
 
-Noch fehlende Dateien (72). Aus Shopify (Admin → Inhalte → Dateien) mit exakt diesem Namen in diesen Ordner legen:
+Noch fehlende Dateien (69). Aus Shopify (Admin → Inhalte → Dateien) mit exakt diesem Namen in diesen Ordner legen:
 
 - 05aec4a8-410c-4309-a1e1-ac39cf6f5274.jpg
 - 1.png
@@ -53,11 +53,8 @@ Noch fehlende Dateien (72). Aus Shopify (Admin → Inhalte → Dateien) mit exak
 - hf_20260210_181415_b7a35485-0e8f-4bc2-a27b-68fbefbdc94a.png
 - hf_20260210_181531_cb41fa11-8f63-4e1a-93b7-0ea0ed24e5f9.jpg
 - hf_20260210_181635_67b929d3-3424-4e2b-887e-a7b3adbd05fe.jpg
-- pexels-adrien-gambet-537682496-31627608.jpg
 - pexels-aida-shukuhi-914628252-20281832.jpg
 - pexels-amar-11157437.jpg
-- pexels-artempodrez-8985714.jpg
-- pexels-artempodrez-8985722.jpg
 - pexels-artempodrez-8986139.jpg
 - pexels-austin-briones-2158818052-36202185.jpg
 - pexels-borta-2790256-30787396.jpg
