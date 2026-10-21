@@ -352,6 +352,8 @@ RENDER = {
     "custom-liquid": r_custom_liquid, "_blocks": r_blocks,
 }
 
+OVERVIEW_CSS = ""
+
 EXTRA_CSS = """
   /* Unterseiten */
   .sec { background: var(--white); }
@@ -744,6 +746,102 @@ def render_new_page(slug, p):
 </section>'''
 
 
+def all_services():
+    """(slug, Kurzname, Beschreibung) aller Leistungsseiten."""
+    out = [(slug, SERVICES[slug][1], SERVICES[slug][2]) for slug, _ in SERVICE_LINKS if slug in SERVICES]
+    out += [(slug, SERVICES[slug][1], SERVICES[slug][2]) for slug in SERVICES
+            if slug not in GUIDES and slug not in {s for s, *_ in out}]
+    out += [(slug, p["short"], p["desc"]) for slug, p in NEW_PAGES.items()]
+    return out
+
+
+# Ratgeber-Seiten (keine eigene Leistung)
+GUIDES = ["unfall-oder-kratzer", "auto-lackieren-kosten"]
+
+
+# Leistungen, die auf der Startseite und im Footer zuerst stehen
+TOP_SERVICES = ["unfallinstandsetzung", "lackierarbeiten", "karosserie", "smartrepair", "hagelschaden", "fahrzeugaufbereitung"]
+
+
+def service_cards(items):
+    return "".join(
+        f'<a class="svc" href="{slug}.html"><h3>{esc(name)}</h3><p>{esc(desc)}</p><span>Mehr erfahren →</span></a>'
+        for slug, name, desc in items)
+
+
+def update_index():
+    """Leistungsblock, Footer-Leistungen und strukturierte Daten der Startseite aus den Leistungslisten erzeugen."""
+    fp = os.path.join(SITE, "index.html")
+    s = open(fp, encoding="utf-8").read()
+    svcs = all_services()
+    top = [x for t in TOP_SERVICES for x in svcs if x[0] == t]
+    block = f'''<!-- LEISTUNGEN:START -->
+  <section class="services-sec" id="leistungen">
+    <div class="page-width">
+      <h2>Unsere Leistungen</h2>
+      <p class="lead">Karosserie, Lack und Fahrzeugpflege für Kunden aus Sonneberg, Neustadt bei Coburg, Coburg und Umgebung – alles in einem Betrieb.</p>
+      <div class="svc-grid">{service_cards(top)}</div>
+      <a class="btn btn-dark svc-more" href="leistungen.html">Alle {len(svcs)} Leistungen ansehen</a>
+    </div>
+  </section>
+  <!-- LEISTUNGEN:END -->'''
+    s = re.sub(r"<!-- LEISTUNGEN:START -->.*?<!-- LEISTUNGEN:END -->", lambda m: block, s, flags=re.S)
+    foot = "".join(f'<li><a href="{slug}.html">{esc(name)}</a></li>' for slug, name, _ in top)
+    foot += '<li><a href="leistungen.html">Alle Leistungen</a></li>'
+    s = re.sub(r"<!-- FOOTER-LEISTUNGEN:START -->.*?<!-- FOOTER-LEISTUNGEN:END -->",
+               lambda m: f"<!-- FOOTER-LEISTUNGEN:START -->{foot}<!-- FOOTER-LEISTUNGEN:END -->", s, flags=re.S)
+    # Firmendaten um den Leistungskatalog ergänzen
+    m = re.search(r'<script type="application/ld\+json">(\{"@context": "https://schema.org", "@type": "AutoBodyShop".*?)</script>', s, re.S)
+    data = json.loads(m.group(1))
+    data["hasOfferCatalog"] = {"@type": "OfferCatalog", "name": "Leistungen", "itemListElement": [
+        {"@type": "Offer", "itemOffered": {"@type": "Service", "name": name, "description": desc, "url": f"{DOMAIN}/{slug}.html"}}
+        for slug, name, desc in svcs]}
+    s = s.replace(m.group(1), json.dumps(data, ensure_ascii=False))
+    open(fp, "w", encoding="utf-8").write(s)
+
+
+def breadcrumb_ld(slug, name, parent=None):
+    items = [("Startseite", f"{DOMAIN}/")]
+    if parent:
+        items.append(parent)
+    items.append((name, f"{DOMAIN}/{slug}.html"))
+    data = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
+        {"@type": "ListItem", "position": i + 1, "name": n, "item": u} for i, (n, u) in enumerate(items)]}
+    return '<script type="application/ld+json">' + json.dumps(data, ensure_ascii=False) + "</script>"
+
+
+def render_overview():
+    svcs = all_services()
+    locs = "".join(f'<li><a href="{slug}.html">{esc(LOCATIONS[slug][0])}</a></li>' for slug, _ in LOCATION_LINKS)
+    return f'''<section class="sub-hero" style="--h:420px;--mh:360px">
+  <div class="media"></div><div class="overlay" style="opacity:0"></div>
+  <div class="sub-hero-content" style="max-width:960px">
+    <p class="overline">Täubert Karosserie &amp; Lack</p>
+    <h1 class="h-8">Leistungen</h1>
+    <div class="rte"><p>Unfallreparatur, Lackierung, Smart Repair, Fahrzeugaufbereitung und mehr – für PKW, Transporter, Firmenfahrzeuge und Klassiker aller Marken.</p></div>
+    <div class="btns"><a class="btn btn-light" href="{BOOKING}">Termin online buchen</a><a class="btn btn-outline-light" href="tel:+4936754289606">Anrufen</a></div>
+  </div>
+</section>
+<section class="services-sec">
+  <div class="page-width">
+    <h2>Alle Leistungen im Überblick</h2>
+    <div class="svc-grid">{service_cards(svcs)}</div>
+  </div>
+</section>
+<section class="sec" style="padding:60px 0 0">
+  <div class="page-width">
+    <h2 class="h-4">Ratgeber</h2>
+    <div class="svc-grid" style="margin-top:20px">{service_cards([(g, SERVICES[g][0], SERVICES[g][2]) for g in GUIDES])}</div>
+  </div>
+</section>
+<section class="sec" style="padding:60px 0">
+  <div class="page-width"><div class="rich-inner" style="max-width:760px">
+    <h2 class="h-4">Für Kunden aus der Region</h2>
+    <div class="rte"><p>Unsere Werkstatt liegt in der Bettelhecker Straße 15 in Sonneberg. Kunden kommen zu uns aus:</p><ul>{locs}</ul></div>
+  </div></div>
+</section>'''
+
+
 def write_seo_files(slugs):
     urls = [f"{DOMAIN}/"] + [f"{DOMAIN}/{x}.html" for x in slugs]
     sm = "\n".join(f"  <url><loc>{u}</loc></url>" for u in urls)
@@ -760,6 +858,7 @@ def write_seo_files(slugs):
 
 
 def main():
+    update_index()
     style, head_links, top, footer, js = shell()
     ld = re.search(r'(<script type="application/ld\+json">.*?</script>)', open(os.path.join(SITE, "index.html"), encoding="utf-8").read(), re.S)
     ld = ld.group(1) if ld else ""
@@ -785,7 +884,9 @@ def main():
             body_html = keyword_h1(body_html, seo_title) + booking_cta(slug, short)
             title = seo_title
             if slug in SERVICES:
-                extra_ld = service_ld(slug, short, desc)
+                extra_ld = service_ld(slug, short, desc) + breadcrumb_ld(slug, short, ("Leistungen", f"{DOMAIN}/leistungen.html"))
+            else:
+                extra_ld = breadcrumb_ld(slug, short)
         else:
             body_html = first_h1(body_html)
             desc = None
@@ -818,7 +919,7 @@ def main():
         built.append(slug)
     for slug, p in NEW_PAGES.items():
         body_html = render_new_page(slug, p) + booking_cta(slug, p["short"])
-        extra_ld = service_ld(slug, p["short"], p["desc"]) + faq_ld(body_html)
+        extra_ld = service_ld(slug, p["short"], p["desc"]) + breadcrumb_ld(slug, p["short"], ("Leistungen", f"{DOMAIN}/leistungen.html")) + faq_ld(body_html)
         page = f"""<!doctype html>
 <html lang="de">
 <head>
@@ -844,6 +945,33 @@ def main():
 """
         open(os.path.join(SITE, f"{slug}.html"), "w", encoding="utf-8").write(sync_images(page))
         built.append(slug)
+    ov_desc = f"Alle Leistungen von Täubert Karosserie & Lack in Sonneberg: Unfallreparatur, Lackierung, Smart Repair, Hagelschaden, Fahrzeugaufbereitung und mehr."
+    page = f"""<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leistungen – Karosserie &amp; Lack Sonneberg | Täubert Karosserie &amp; Lack</title>
+{seo_head("Leistungen – Täubert Karosserie & Lack", ov_desc, "leistungen")}
+{head_links}
+<style>{style}{EXTRA_CSS}{OVERVIEW_CSS}</style>
+{ld}
+{breadcrumb_ld("leistungen", "Leistungen")}
+</head>
+<body>
+{top}
+<main id="inhalt">
+{render_overview()}
+{booking_cta("leistungen", "Leistungen")}
+</main>
+{footer}
+<script>
+{js}</script>
+</body>
+</html>
+"""
+    open(os.path.join(SITE, "leistungen.html"), "w", encoding="utf-8").write(sync_images(page))
+    built.insert(0, "leistungen")
     write_seo_files(built)
     for extra in ("index.html", "impressum.html", "datenschutz.html"):
         fp = os.path.join(SITE, extra)
