@@ -293,6 +293,7 @@ def r_contact_form(sec):
 
 
 def r_scrolling(sec):
+    return ""  # Laufschrift auf Wunsch entfernt
     st = sec["settings"]
     txt = " ".join(re.sub("<[^>]+>", "", s.get("text", "")) for _, s in blocks(sec))
     return f'''<section class="scroll-sec" style="padding:{st.get("top_padding", 40)}px 0 {st.get("bottom_padding", 40)}px">
