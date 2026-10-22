@@ -197,6 +197,13 @@
   .hours dt { font-weight: 700; }
   .foot-bottom { margin-top: 44px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.2); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 13px; color: rgba(255,255,255,.7); }
 
+  /* Vertrauensleiste */
+  .trust { list-style: none; display: flex; flex-wrap: wrap; gap: 10px 26px; }
+  .trust li { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; }
+  .trust svg { color: var(--red); flex: none; }
+  .trust-bar { background: var(--black); color: var(--white); padding: 18px 0; border-top: 1px solid rgba(255,255,255,.15); }
+  .trust-bar .trust { justify-content: center; }
+  @media (max-width: 600px) { .trust { gap: 8px 16px; } .trust li { font-size: 14px; } .trust-bar .trust { justify-content: flex-start; } }
   /* Leistungsübersicht */
   .services-sec { padding: 70px 0; background: var(--grey); }
   .services-sec h2 { font-size: clamp(28px, 3.4vw, 44px); margin-bottom: 10px; }
@@ -287,6 +294,7 @@
   .booking-cta h2 { font-size: clamp(30px, 4vw, 46px); }
   .booking-cta p { max-width: 620px; margin: 14px auto 0; color: rgba(255,255,255,.8); }
   .booking-cta .btns { justify-content: center; }
+  .booking-cta .trust { justify-content: center; margin: 18px 0 4px; }
   .btn-outline-light { background: transparent; color: var(--white); border-color: rgba(255,255,255,.6); }
   .btn-outline-light:hover { border-color: var(--white); background: var(--white); color: var(--black); }
   .related { background: var(--grey); padding: 50px 0; }
@@ -421,7 +429,7 @@
     <details>
       <summary>Termin vereinbaren</summary>
       <div class="sub">
-        <a href="termin.html">Online Termin buchen</a>
+        <a href="termin.html">Termin online buchen</a>
         <a href="schaden-melden.html">Schaden per Foto melden</a>
         <a href="contact.html">Kontakt</a>
       </div>
@@ -466,7 +474,7 @@
   <div class="sub-hero-content" style="max-width:960px">
 <h1 class="overline">Karosserie Sonneberg &amp; Neustadt bei Coburg</h1><p class="heading h-8">Nach dem Crash sind wir dran.</p>
 <div class="rte"><p>Karosserie Sonneberg, Neustadt bei Coburg, Coburg<br/><br/></p></div>
-<div class="btns"><a class="btn btn-light" href="termin.html">jetzt Termin buchen</a></div></div>
+<div class="btns"><a class="btn btn-light" href="termin.html">Termin online buchen</a></div></div>
 </section>
 <section class="sec rich-sub" style="padding:50px 0 50px">
   <div class="page-width"><div class="rich-inner" style="max-width:650px;text-align:left;"><h2 class="h-4">Delle im Kotflügel. Kratzer in der Tür. Unfall passiert.</h2>
@@ -476,22 +484,22 @@
 <section class="sec" style="padding:50px 0 50px">
   <div class="page-width iwt media-right" style="--cols:50fr 50fr"><div class="iwt-text" style="max-width:500px"><h2 class="h-3">Karosseriearbeiten – mehr als nur Optik</h2>
 <div class="rte"><p>Viele denken: Karosserie = Blech gerade machen.<br/>Stimmt nur halb.</p><p>Die Karosserie ist die Sicherheitsstruktur deines Autos.<br/>Wenn sie nicht richtig repariert wird, funktioniert im Ernstfall auch Airbag, Sensorik oder Fahrwerk nicht mehr so, wie es soll.</p><p>Deshalb arbeiten wir:</p><ul><li>mit moderner Richtbank</li><li>mit präziser Vermessung</li><li>nach Herstellervorgaben</li></ul><p>Wir reparieren nicht „schön genug“.<br/>Wir reparieren <strong>richtig</strong>.</p></div>
-<div class="btns"><a class="btn btn-dark" href="termin.html">jetzt Termin buchen</a></div></div><div class="iwt-media" style="aspect-ratio:auto"><img src="images/pexels-artempodrez-8985722.jpg" srcset="images/pexels-artempodrez-8985722-700.webp 700w, images/pexels-artempodrez-8985722.jpg 1069w" sizes="(max-width: 760px) 100vw, 60vw" alt="Karosseriearbeiten – mehr als nur Optik" loading="lazy"></div></div>
+<div class="btns"><a class="btn btn-dark" href="termin.html">Termin online buchen</a></div></div><div class="iwt-media" style="aspect-ratio:auto"><img src="images/pexels-artempodrez-8985722.jpg" srcset="images/pexels-artempodrez-8985722-700.webp 700w, images/pexels-artempodrez-8985722.jpg 1069w" sizes="(max-width: 760px) 100vw, 60vw" alt="Karosseriearbeiten – mehr als nur Optik" loading="lazy"></div></div>
 </section>
 <section class="sec" style="padding:50px 0 50px">
   <div class="page-width iwt" style="--cols:50fr 50fr"><div class="iwt-media" style="aspect-ratio:auto"><img src="images/pexels-artempodrez-8986139.webp" srcset="images/pexels-artempodrez-8986139-700.webp 700w, images/pexels-artempodrez-8986139.webp 1280w" sizes="(max-width: 760px) 100vw, 60vw" alt="Unfall gehabt? Wir kümmern uns." loading="lazy"></div><div class="iwt-text" style="max-width:500px"><h2 class="h-3">Unfall gehabt? Wir kümmern uns.</h2>
 <div class="rte"><p>Nach einem Unfall hat niemand Lust auf:<br/>Versicherung. Gutachter. Telefonate. Papierkram.</p><p>Musst du auch nicht.</p><p>Wir übernehmen für Kunden aus <strong>Sonneberg, Neustadt bei Coburg und Umgebung</strong>:</p><ul><li>Schadenaufnahme</li><li>Abstimmung mit der Versicherung</li><li>Organisation des Gutachters</li><li>komplette Reparatur</li></ul><p>Du bringst das Auto.<br/>Wir regeln den Rest.</p></div>
-<div class="btns"><a class="btn btn-dark" href="termin.html">jetzt Termin buchen</a></div></div></div>
+<div class="btns"><a class="btn btn-dark" href="termin.html">Termin online buchen</a></div></div></div>
 </section>
 <section class="sec" style="padding:50px 0 50px">
   <div class="page-width iwt media-right" style="--cols:50fr 50fr"><div class="iwt-text" style="max-width:500px"><h2 class="h-3">Lackierung & Karosserie – alles an einem Ort</h2>
 <div class="rte"><p>Der häufigste Grund, warum man Reparaturen später erkennt?<br/>Karosserie und Lackierung passieren in zwei verschiedenen Betrieben.</p><p>Bei uns nicht.</p><p>Nach der Karosseriereparatur lackieren wir dein Fahrzeug direkt bei uns im Haus.<br/>Mit digitaler Farbtonmessung, modernen Lackierverfahren und dem Anspruch, dass wir selbst den Unterschied nicht mehr sehen wollen.</p><p>Kurz gesagt:<br/>Du siehst später nicht, wo der Schaden war.</p></div>
-<div class="btns"><a class="btn btn-dark" href="termin.html">jetzt Termin buchen</a></div></div><div class="iwt-media" style="aspect-ratio:auto"><img src="images/pexels-amar-11157437.webp" srcset="images/pexels-amar-11157437-700.webp 700w, images/pexels-amar-11157437.webp 1800w" sizes="(max-width: 760px) 100vw, 60vw" alt="Lackierung &amp; Karosserie – alles an einem Ort" loading="lazy"></div></div>
+<div class="btns"><a class="btn btn-dark" href="termin.html">Termin online buchen</a></div></div><div class="iwt-media" style="aspect-ratio:auto"><img src="images/pexels-amar-11157437.webp" srcset="images/pexels-amar-11157437-700.webp 700w, images/pexels-amar-11157437.webp 1800w" sizes="(max-width: 760px) 100vw, 60vw" alt="Lackierung &amp; Karosserie – alles an einem Ort" loading="lazy"></div></div>
 </section>
 <section class="sec" style="padding:50px 0 50px">
   <div class="page-width iwt" style="--cols:50fr 50fr"><div class="iwt-media" style="aspect-ratio:auto"><img src="images/pexels-artempodrez-8985714.jpg" alt="Für die Region unterwegs" loading="lazy"></div><div class="iwt-text" style="max-width:500px"><h2 class="h-3">Für die Region unterwegs</h2>
 <div class="rte"><p>Unsere Kunden kommen aus:<br/>Sonneberg, Neustadt bei Coburg, Rödental, Föritztal, Coburg und Umgebung.</p><p>Wir reparieren:</p><ul><li>PKW</li><li>Transporter</li><li>Firmenfahrzeuge</li><li>Oldtimer</li></ul><p>Marke? Egal.<br/>Schaden? Auch egal.<br/>Wir schauen uns das an.</p></div>
-<div class="btns"><a class="btn btn-dark" href="termin.html">jetzt Termin buchen</a></div></div></div>
+<div class="btns"><a class="btn btn-dark" href="termin.html">Termin online buchen</a></div></div></div>
 </section>
 <section class="sec rich-sub" style="padding:50px 0 50px">
   <div class="page-width"><div class="rich-inner" style="max-width:650px;text-align:left;"><div class="rte"><h2>Komm einfach vorbei</h2><p>Du bist unsicher, ob sich eine Reparatur lohnt?<br/>Dann komm vorbei. Ohne Termin, ohne Verpflichtung.</p><p>Wir schauen uns dein Fahrzeug an und sagen dir ehrlich, was Sinn macht.</p><p><strong>Täubert Karosserie & Lack – deine Karosserie-Werkstatt in Sonneberg und Neustadt bei Coburg.</strong></p></div>
@@ -499,6 +507,7 @@
 </section><section class="booking-cta">
   <div class="page-width">
     <h2>Termin online buchen</h2>
+    <ul class="trust"><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Kostenvoranschlag in 24 Stunden</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Direkte Abrechnung mit der Versicherung</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ersatzwagen</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Hol- und Bringservice</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Alle Marken</li></ul>
     <p>Wählen Sie Ihren Wunschtermin direkt online – oder rufen Sie uns an. Wir schauen uns Ihr Fahrzeug an und sagen Ihnen ehrlich, was Sinn macht.</p>
     <div class="btns">
       <a class="btn btn-light" href="termin.html">Termin online buchen</a>
@@ -634,6 +643,17 @@
     const sec = btn.closest('.map');
     sec.innerHTML = '<iframe title="Täubert Karosserie und Lack Standort" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Bettelhecker+Stra%C3%9Fe+15,+96515+Sonneberg&z=15&output=embed"></iframe>';
   }));
+
+  // Anfragen zählen (nur wenn eine cookielose Statistik wie Plausible eingebunden ist)
+  const track = (name, props) => { if (window.plausible) window.plausible(name, { props }); };
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a'); if (!a) return;
+    const h = a.getAttribute('href') || '', page = location.pathname.split('/').pop() || 'index.html';
+    if (h.startsWith('tel:')) track('Anruf', { page });
+    else if (h.includes('wa.me')) track('WhatsApp', { page });
+    else if (h.endsWith('termin.html') || h.includes('terminbuchungtaeubert')) track('Termin', { page });
+    else if (h.endsWith('schaden-melden.html')) track('Schaden melden', { page });
+  });
 
   // Countdown
   document.querySelectorAll('[data-countdown]').forEach(el => {

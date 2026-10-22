@@ -197,6 +197,13 @@
   .hours dt { font-weight: 700; }
   .foot-bottom { margin-top: 44px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.2); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 13px; color: rgba(255,255,255,.7); }
 
+  /* Vertrauensleiste */
+  .trust { list-style: none; display: flex; flex-wrap: wrap; gap: 10px 26px; }
+  .trust li { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; }
+  .trust svg { color: var(--red); flex: none; }
+  .trust-bar { background: var(--black); color: var(--white); padding: 18px 0; border-top: 1px solid rgba(255,255,255,.15); }
+  .trust-bar .trust { justify-content: center; }
+  @media (max-width: 600px) { .trust { gap: 8px 16px; } .trust li { font-size: 14px; } .trust-bar .trust { justify-content: flex-start; } }
   /* Leistungsübersicht */
   .services-sec { padding: 70px 0; background: var(--grey); }
   .services-sec h2 { font-size: clamp(28px, 3.4vw, 44px); margin-bottom: 10px; }
@@ -287,6 +294,7 @@
   .booking-cta h2 { font-size: clamp(30px, 4vw, 46px); }
   .booking-cta p { max-width: 620px; margin: 14px auto 0; color: rgba(255,255,255,.8); }
   .booking-cta .btns { justify-content: center; }
+  .booking-cta .trust { justify-content: center; margin: 18px 0 4px; }
   .btn-outline-light { background: transparent; color: var(--white); border-color: rgba(255,255,255,.6); }
   .btn-outline-light:hover { border-color: var(--white); background: var(--white); color: var(--black); }
   .related { background: var(--grey); padding: 50px 0; }
@@ -421,7 +429,7 @@
     <details>
       <summary>Termin vereinbaren</summary>
       <div class="sub">
-        <a href="termin.html">Online Termin buchen</a>
+        <a href="termin.html">Termin online buchen</a>
         <a href="schaden-melden.html">Schaden per Foto melden</a>
         <a href="contact.html">Kontakt</a>
       </div>
@@ -465,7 +473,7 @@
   <div class="media"><img src="images/ElevenLabs_image_nano-banana_Auto_faehrt_2026-01-13T08_54_47.webp" srcset="images/ElevenLabs_image_nano-banana_Auto_faehrt_2026-01-13T08_54_47-700.webp 700w, images/ElevenLabs_image_nano-banana_Auto_faehrt_2026-01-13T08_54_47.webp 1344w" sizes="(max-width: 760px) 100vw, 60vw" alt="" loading="lazy"></div><div class="overlay" style="opacity:0.2"></div>
   <div class="sub-hero-content" style="max-width:960px"><h1 class="h-8">VW BULLI T2</h1>
 <div class="rte"><p><strong>2024 Projektjahr I :</strong> 2-Schicht im <br/>Oceanicblau<br/><br/><br/><br/></p></div>
-<div class="btns"><a class="btn btn-light" href="termin.html">Jetzt buchen</a></div></div>
+<div class="btns"><a class="btn btn-light" href="termin.html">Termin online buchen</a></div></div>
 </section>
 <section class="sec rich-sub" style="padding:50px 0 50px">
   <div class="page-width"><div class="rich-inner" style="max-width:650px;text-align:center;margin:0 auto"><h2 class="h-5">Full Front Restoration</h2>
@@ -605,6 +613,17 @@
     const sec = btn.closest('.map');
     sec.innerHTML = '<iframe title="Täubert Karosserie und Lack Standort" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Bettelhecker+Stra%C3%9Fe+15,+96515+Sonneberg&z=15&output=embed"></iframe>';
   }));
+
+  // Anfragen zählen (nur wenn eine cookielose Statistik wie Plausible eingebunden ist)
+  const track = (name, props) => { if (window.plausible) window.plausible(name, { props }); };
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a'); if (!a) return;
+    const h = a.getAttribute('href') || '', page = location.pathname.split('/').pop() || 'index.html';
+    if (h.startsWith('tel:')) track('Anruf', { page });
+    else if (h.includes('wa.me')) track('WhatsApp', { page });
+    else if (h.endsWith('termin.html') || h.includes('terminbuchungtaeubert')) track('Termin', { page });
+    else if (h.endsWith('schaden-melden.html')) track('Schaden melden', { page });
+  });
 
   // Countdown
   document.querySelectorAll('[data-countdown]').forEach(el => {

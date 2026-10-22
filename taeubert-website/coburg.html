@@ -196,6 +196,13 @@
   .hours dt { font-weight: 700; }
   .foot-bottom { margin-top: 44px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.2); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 13px; color: rgba(255,255,255,.7); }
 
+  /* Vertrauensleiste */
+  .trust { list-style: none; display: flex; flex-wrap: wrap; gap: 10px 26px; }
+  .trust li { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; }
+  .trust svg { color: var(--red); flex: none; }
+  .trust-bar { background: var(--black); color: var(--white); padding: 18px 0; border-top: 1px solid rgba(255,255,255,.15); }
+  .trust-bar .trust { justify-content: center; }
+  @media (max-width: 600px) { .trust { gap: 8px 16px; } .trust li { font-size: 14px; } .trust-bar .trust { justify-content: flex-start; } }
   /* Leistungsübersicht */
   .services-sec { padding: 70px 0; background: var(--grey); }
   .services-sec h2 { font-size: clamp(28px, 3.4vw, 44px); margin-bottom: 10px; }
@@ -286,6 +293,7 @@
   .booking-cta h2 { font-size: clamp(30px, 4vw, 46px); }
   .booking-cta p { max-width: 620px; margin: 14px auto 0; color: rgba(255,255,255,.8); }
   .booking-cta .btns { justify-content: center; }
+  .booking-cta .trust { justify-content: center; margin: 18px 0 4px; }
   .btn-outline-light { background: transparent; color: var(--white); border-color: rgba(255,255,255,.6); }
   .btn-outline-light:hover { border-color: var(--white); background: var(--white); color: var(--black); }
   .related { background: var(--grey); padding: 50px 0; }
@@ -420,7 +428,7 @@
     <details>
       <summary>Termin vereinbaren</summary>
       <div class="sub">
-        <a href="termin.html">Online Termin buchen</a>
+        <a href="termin.html">Termin online buchen</a>
         <a href="schaden-melden.html">Schaden per Foto melden</a>
         <a href="contact.html">Kontakt</a>
       </div>
@@ -472,6 +480,7 @@
 </section><section class="booking-cta">
   <div class="page-width">
     <h2>Termin online buchen</h2>
+    <ul class="trust"><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Kostenvoranschlag in 24 Stunden</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Direkte Abrechnung mit der Versicherung</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ersatzwagen</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Hol- und Bringservice</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Alle Marken</li></ul>
     <p>Wählen Sie Ihren Wunschtermin direkt online – oder rufen Sie uns an. Wir schauen uns Ihr Fahrzeug an und sagen Ihnen ehrlich, was Sinn macht.</p>
     <div class="btns">
       <a class="btn btn-light" href="termin.html">Termin online buchen</a>
@@ -607,6 +616,17 @@
     const sec = btn.closest('.map');
     sec.innerHTML = '<iframe title="Täubert Karosserie und Lack Standort" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Bettelhecker+Stra%C3%9Fe+15,+96515+Sonneberg&z=15&output=embed"></iframe>';
   }));
+
+  // Anfragen zählen (nur wenn eine cookielose Statistik wie Plausible eingebunden ist)
+  const track = (name, props) => { if (window.plausible) window.plausible(name, { props }); };
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a'); if (!a) return;
+    const h = a.getAttribute('href') || '', page = location.pathname.split('/').pop() || 'index.html';
+    if (h.startsWith('tel:')) track('Anruf', { page });
+    else if (h.includes('wa.me')) track('WhatsApp', { page });
+    else if (h.endsWith('termin.html') || h.includes('terminbuchungtaeubert')) track('Termin', { page });
+    else if (h.endsWith('schaden-melden.html')) track('Schaden melden', { page });
+  });
 
   // Countdown
   document.querySelectorAll('[data-countdown]').forEach(el => {

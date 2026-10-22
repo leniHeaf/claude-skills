@@ -197,6 +197,13 @@
   .hours dt { font-weight: 700; }
   .foot-bottom { margin-top: 44px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.2); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 13px; color: rgba(255,255,255,.7); }
 
+  /* Vertrauensleiste */
+  .trust { list-style: none; display: flex; flex-wrap: wrap; gap: 10px 26px; }
+  .trust li { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; }
+  .trust svg { color: var(--red); flex: none; }
+  .trust-bar { background: var(--black); color: var(--white); padding: 18px 0; border-top: 1px solid rgba(255,255,255,.15); }
+  .trust-bar .trust { justify-content: center; }
+  @media (max-width: 600px) { .trust { gap: 8px 16px; } .trust li { font-size: 14px; } .trust-bar .trust { justify-content: flex-start; } }
   /* Leistungsübersicht */
   .services-sec { padding: 70px 0; background: var(--grey); }
   .services-sec h2 { font-size: clamp(28px, 3.4vw, 44px); margin-bottom: 10px; }
@@ -287,6 +294,7 @@
   .booking-cta h2 { font-size: clamp(30px, 4vw, 46px); }
   .booking-cta p { max-width: 620px; margin: 14px auto 0; color: rgba(255,255,255,.8); }
   .booking-cta .btns { justify-content: center; }
+  .booking-cta .trust { justify-content: center; margin: 18px 0 4px; }
   .btn-outline-light { background: transparent; color: var(--white); border-color: rgba(255,255,255,.6); }
   .btn-outline-light:hover { border-color: var(--white); background: var(--white); color: var(--black); }
   .related { background: var(--grey); padding: 50px 0; }
@@ -421,7 +429,7 @@
     <details>
       <summary>Termin vereinbaren</summary>
       <div class="sub">
-        <a href="termin.html">Online Termin buchen</a>
+        <a href="termin.html">Termin online buchen</a>
         <a href="schaden-melden.html">Schaden per Foto melden</a>
         <a href="contact.html">Kontakt</a>
       </div>
@@ -465,7 +473,7 @@
   <div class="media"><img src="images/IMG_1396.jpg" srcset="images/IMG_1396-700.webp 700w, images/IMG_1396.jpg 913w" sizes="(max-width: 760px) 100vw, 60vw" alt="" loading="lazy"></div><div class="overlay" style="opacity:0.2"></div>
   <div class="sub-hero-content" style="max-width:960px">
 <h1 class="overline">Reifenservice Sonneberg &amp; Neustadt bei Coburg</h1><p class="heading h-8">Wir wechseln. Du fährst weiter.</p>
-<div class="btns"><a class="btn btn-light" href="termin.html">Jetzt Termin buchen</a></div></div>
+<div class="btns"><a class="btn btn-light" href="termin.html">Termin online buchen</a></div></div>
 </section>
 <section class="sec rich-sub" style="padding:50px 0 50px">
   <div class="page-width"><div class="rich-inner" style="max-width:650px;text-align:left;"><div class="rte"><p>Frühjahr kommt plötzlich.<br/>Winter auch.</p><p>Und jedes Mal dieselbe Frage:<br/><strong>„Ich brauch noch schnell einen Termin zum Reifenwechsel…“</strong></p><p>Kein Problem.<br/>Bei <strong>Täubert Karosserie & Lack</strong> bekommst du schnellen, zuverlässigen Reifenservice – ohne lange Wartezeiten und ohne Stress.</p><p></p><p></p><p></p></div>
@@ -474,22 +482,22 @@
 <section class="sec" style="padding:50px 0 50px">
   <div class="page-width iwt media-right" style="--cols:50fr 50fr"><div class="iwt-text" style="max-width:500px"><h2 class="h-4">Reifenwechsel & Räderwechsel</h2>
 <div class="rte"><p>Sommerreifen, Winterreifen oder Kompletträder – wir kümmern uns darum, dass dein Fahrzeug sicher unterwegs ist.</p><p>Unser Reifenservice:</p><ul><li>Reifenwechsel</li><li>Räderwechsel</li><li>Sichtprüfung der Reifen</li><li>Kontrolle von Profiltiefe und Alter</li><li>Reifendruck einstellen</li><li>Nachziehen der Radschrauben</li></ul><p>Du gibst das Auto ab, wir machen den Rest.</p></div>
-<div class="btns"><a class="btn btn-dark" href="termin.html">Jetzt Termin buchen</a></div></div><div class="iwt-media" style="aspect-ratio:auto"><img src="images/pexels-enis-yavuz-3516387-5260115.webp" srcset="images/pexels-enis-yavuz-3516387-5260115-700.webp 700w, images/pexels-enis-yavuz-3516387-5260115.webp 1200w" sizes="(max-width: 760px) 100vw, 60vw" alt="Reifenwechsel &amp; Räderwechsel" loading="lazy"></div></div>
+<div class="btns"><a class="btn btn-dark" href="termin.html">Termin online buchen</a></div></div><div class="iwt-media" style="aspect-ratio:auto"><img src="images/pexels-enis-yavuz-3516387-5260115.webp" srcset="images/pexels-enis-yavuz-3516387-5260115-700.webp 700w, images/pexels-enis-yavuz-3516387-5260115.webp 1200w" sizes="(max-width: 760px) 100vw, 60vw" alt="Reifenwechsel &amp; Räderwechsel" loading="lazy"></div></div>
 </section>
 <section class="sec" style="padding:50px 0 50px">
   <div class="page-width iwt" style="--cols:50fr 50fr"><div class="iwt-media" style="aspect-ratio:auto"><img src="images/pexels-austin-briones-2158818052-36202185.webp" srcset="images/pexels-austin-briones-2158818052-36202185-700.webp 700w, images/pexels-austin-briones-2158818052-36202185.webp 1201w" sizes="(max-width: 760px) 100vw, 60vw" alt="Rädereinlagerung – kein Schleppen mehr" loading="lazy"></div><div class="iwt-text" style="max-width:500px"><h2 class="h-4">Rädereinlagerung – kein Schleppen mehr</h2>
 <div class="rte"><p>Vier Räder im Keller, Kofferraum oder Treppenhaus?<br/>Muss nicht sein.</p><p>Wir lagern deine Reifen fachgerecht ein:</p><ul><li>trocken</li><li>dunkel</li><li>temperaturgeschützt</li></ul><p>Zum nächsten Saisonwechsel stehen deine Räder bei deinem Termin schon bereit.</p></div>
-<div class="btns"><a class="btn btn-dark" href="termin.html">Jetzt Termin buchen</a></div></div></div>
+<div class="btns"><a class="btn btn-dark" href="termin.html">Termin online buchen</a></div></div></div>
 </section>
 <section class="sec" style="padding:50px 0 50px">
   <div class="page-width iwt media-right" style="--cols:50fr 50fr"><div class="iwt-text" style="max-width:500px"><h2 class="h-4">Sicherheit geht vor</h2>
 <div class="rte"><p>Reifen sind der einzige Kontakt zur Straße.<br/>Zu wenig Profil, falscher Luftdruck oder beschädigte Reifen verlängern den Bremsweg deutlich und erhöhen das Unfallrisiko.</p><p>Deshalb prüfen wir bei jedem Termin:</p><ul><li>Profiltiefe</li><li>Beschädigungen</li><li>ungleichmäßigen Verschleiß</li><li>Luftdruck</li></ul><p>Wenn etwas auffällt, sagen wir dir ehrlich Bescheid.</p></div>
-<div class="btns"><a class="btn btn-dark" href="termin.html">Jetzt Termin buchen</a></div></div><div class="iwt-media" style="aspect-ratio:auto"><img src="images/pexels-glv-visuals-859366-28611341.webp" srcset="images/pexels-glv-visuals-859366-28611341-700.webp 700w, images/pexels-glv-visuals-859366-28611341.webp 1012w" sizes="(max-width: 760px) 100vw, 60vw" alt="Sicherheit geht vor" loading="lazy"></div></div>
+<div class="btns"><a class="btn btn-dark" href="termin.html">Termin online buchen</a></div></div><div class="iwt-media" style="aspect-ratio:auto"><img src="images/pexels-glv-visuals-859366-28611341.webp" srcset="images/pexels-glv-visuals-859366-28611341-700.webp 700w, images/pexels-glv-visuals-859366-28611341.webp 1012w" sizes="(max-width: 760px) 100vw, 60vw" alt="Sicherheit geht vor" loading="lazy"></div></div>
 </section>
 <section class="sec" style="padding:50px 0 50px">
   <div class="page-width iwt" style="--cols:50fr 50fr"><div class="iwt-media" style="aspect-ratio:auto"><img src="images/Design_ohne_Titel-38.webp" srcset="images/Design_ohne_Titel-38-700.webp 700w, images/Design_ohne_Titel-38.webp 2400w" sizes="(max-width: 760px) 100vw, 60vw" alt="Für Autofahrer aus der Region" loading="lazy"></div><div class="iwt-text" style="max-width:500px"><h2 class="h-4">Für Autofahrer aus der Region</h2>
 <div class="rte"><p>Unser Reifenservice wird von Kunden aus <strong>Sonneberg, Neustadt bei Coburg, Rödental, Föritztal, Coburg und Umgebung</strong> genutzt.</p><p>Egal ob Privatfahrzeug, Leasingauto oder Firmenwagen – du kannst jederzeit einen Termin vereinbaren.</p></div>
-<div class="btns"><a class="btn btn-dark" href="termin.html">Jetzt Termin buchen</a></div></div></div>
+<div class="btns"><a class="btn btn-dark" href="termin.html">Termin online buchen</a></div></div></div>
 </section>
 <section class="sec rich-sub" style="padding:50px 0 50px">
   <div class="page-width"><div class="rich-inner" style="max-width:650px;text-align:left;"><div class="rte"><h2>Jetzt Termin sichern</h2><p>Gerade zum Saisonwechsel sind Termine schnell vergeben.<br/>Melde dich frühzeitig – dann bist du rechtzeitig startklar für Sommer oder Winter.</p><p><strong>Täubert Karosserie & Lack – dein Reifenservice in Sonneberg & Neustadt bei Coburg.</strong></p></div>
@@ -497,6 +505,7 @@
 </section><section class="booking-cta">
   <div class="page-width">
     <h2>Termin online buchen</h2>
+    <ul class="trust"><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Kostenvoranschlag in 24 Stunden</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Direkte Abrechnung mit der Versicherung</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ersatzwagen</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Hol- und Bringservice</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Alle Marken</li></ul>
     <p>Wählen Sie Ihren Wunschtermin direkt online – oder rufen Sie uns an. Wir schauen uns Ihr Fahrzeug an und sagen Ihnen ehrlich, was Sinn macht.</p>
     <div class="btns">
       <a class="btn btn-light" href="termin.html">Termin online buchen</a>
@@ -632,6 +641,17 @@
     const sec = btn.closest('.map');
     sec.innerHTML = '<iframe title="Täubert Karosserie und Lack Standort" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Bettelhecker+Stra%C3%9Fe+15,+96515+Sonneberg&z=15&output=embed"></iframe>';
   }));
+
+  // Anfragen zählen (nur wenn eine cookielose Statistik wie Plausible eingebunden ist)
+  const track = (name, props) => { if (window.plausible) window.plausible(name, { props }); };
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a'); if (!a) return;
+    const h = a.getAttribute('href') || '', page = location.pathname.split('/').pop() || 'index.html';
+    if (h.startsWith('tel:')) track('Anruf', { page });
+    else if (h.includes('wa.me')) track('WhatsApp', { page });
+    else if (h.endsWith('termin.html') || h.includes('terminbuchungtaeubert')) track('Termin', { page });
+    else if (h.endsWith('schaden-melden.html')) track('Schaden melden', { page });
+  });
 
   // Countdown
   document.querySelectorAll('[data-countdown]').forEach(el => {

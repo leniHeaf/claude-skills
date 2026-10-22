@@ -198,6 +198,13 @@
   .hours dt { font-weight: 700; }
   .foot-bottom { margin-top: 44px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.2); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 13px; color: rgba(255,255,255,.7); }
 
+  /* Vertrauensleiste */
+  .trust { list-style: none; display: flex; flex-wrap: wrap; gap: 10px 26px; }
+  .trust li { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; }
+  .trust svg { color: var(--red); flex: none; }
+  .trust-bar { background: var(--black); color: var(--white); padding: 18px 0; border-top: 1px solid rgba(255,255,255,.15); }
+  .trust-bar .trust { justify-content: center; }
+  @media (max-width: 600px) { .trust { gap: 8px 16px; } .trust li { font-size: 14px; } .trust-bar .trust { justify-content: flex-start; } }
   /* Leistungsübersicht */
   .services-sec { padding: 70px 0; background: var(--grey); }
   .services-sec h2 { font-size: clamp(28px, 3.4vw, 44px); margin-bottom: 10px; }
@@ -318,7 +325,7 @@
     <details>
       <summary>Termin vereinbaren</summary>
       <div class="sub">
-        <a href="termin.html">Online Termin buchen</a>
+        <a href="termin.html">Termin online buchen</a>
         <a href="schaden-melden.html">Schaden per Foto melden</a>
         <a href="contact.html">Kontakt</a>
       </div>
@@ -369,12 +376,17 @@
           <h1 class="reveal-text"><strong>Wir bringen Fahrzeuge zurück in Bestform</strong></h1>
           <p class="reveal-text d2">Unfallreparatur, Lackierung, Smart Repair, Oldtimer und Fahrzeugaufbereitung alles aus einer Hand.</p>
           <div class="btns reveal-text d3">
-            <a href="termin.html" class="btn btn-light">Termin buchen</a>
+            <a href="termin.html" class="btn btn-light">Termin online buchen</a>
             <a href="schaden-melden.html" class="btn btn-light">Schaden per Foto melden</a>
           </div>
         </div>
       </div>
     </div>
+  </section>
+
+  <!-- Vertrauensleiste -->
+  <section class="trust-bar" aria-label="Unsere Versprechen">
+    <div class="page-width"><ul class="trust"><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Kostenvoranschlag in 24 Stunden</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Direkte Abrechnung mit der Versicherung</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ersatzwagen</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Hol- und Bringservice</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Alle Marken</li></ul></div>
   </section>
 
   <!-- Rich Text -->
@@ -422,7 +434,7 @@
           <a class="tile big" href="termin.html">
             <div class="media"><img src="images/hf_20260210_181354_b287ca50-bc5a-4edc-a818-d8872a4dc8c6.webp" srcset="images/hf_20260210_181354_b287ca50-bc5a-4edc-a818-d8872a4dc8c6-700.webp 700w, images/hf_20260210_181354_b287ca50-bc5a-4edc-a818-d8872a4dc8c6.webp 1024w" sizes="(max-width: 760px) 100vw, 60vw" alt="Service bei Täubert Karosserie &amp; Lack" loading="lazy"></div>
             <div class="overlay"></div>
-            <div class="tile-content"><h3><strong>service</strong></h3><span class="btn btn-light">Jetzt Termin buchen</span></div>
+            <div class="tile-content"><h3><strong>service</strong></h3><span class="btn btn-light">Termin online buchen</span></div>
           </a>
         </div>
         <div class="grid-item w33">
@@ -479,7 +491,7 @@
           <a href="termin.html" data-i="1">Zitronengelb</a><span class="sep">, </span>
           <a href="termin.html" data-i="2">weiß</a>
         </div>
-        <a href="termin.html" class="btn btn-dark">Termin buchen</a>
+        <a href="termin.html" class="btn btn-dark">Termin online buchen</a>
       </div>
       <div class="showcase" id="showcase">
         <div class="media active"><img src="images/hf_20260210_174234_03b93839-672b-4ba9-b742-8e3397346ee1.webp" srcset="images/hf_20260210_174234_03b93839-672b-4ba9-b742-8e3397346ee1-700.webp 700w, images/hf_20260210_174234_03b93839-672b-4ba9-b742-8e3397346ee1.webp 1024w" sizes="(max-width: 760px) 100vw, 60vw" alt="Klassiker in Braun"></div>

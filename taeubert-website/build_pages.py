@@ -94,6 +94,8 @@ def a_attrs(href):
 
 def button(url, label, cls="btn-dark"):
     href = link(url, label)
+    if href == BOOKING:
+        label = "Termin online buchen"
     if not label or not href:
         return ""
     return f'<a class="btn {cls}" {a_attrs(href)}>{esc(label)}</a>'
@@ -377,6 +379,7 @@ EXTRA_CSS = """
   .booking-cta h2 { font-size: clamp(30px, 4vw, 46px); }
   .booking-cta p { max-width: 620px; margin: 14px auto 0; color: rgba(255,255,255,.8); }
   .booking-cta .btns { justify-content: center; }
+  .booking-cta .trust { justify-content: center; margin: 18px 0 4px; }
   .btn-outline-light { background: transparent; color: var(--white); border-color: rgba(255,255,255,.6); }
   .btn-outline-light:hover { border-color: var(--white); background: var(--white); color: var(--black); }
   .related { background: var(--grey); padding: 50px 0; }
@@ -490,6 +493,17 @@ PAGE_JS = """
     sec.innerHTML = '<iframe title="Täubert Karosserie und Lack Standort" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Bettelhecker+Stra%C3%9Fe+15,+96515+Sonneberg&z=15&output=embed"></iframe>';
   }));
 
+  // Anfragen zählen (nur wenn eine cookielose Statistik wie Plausible eingebunden ist)
+  const track = (name, props) => { if (window.plausible) window.plausible(name, { props }); };
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a'); if (!a) return;
+    const h = a.getAttribute('href') || '', page = location.pathname.split('/').pop() || 'index.html';
+    if (h.startsWith('tel:')) track('Anruf', { page });
+    else if (h.includes('wa.me')) track('WhatsApp', { page });
+    else if (h.endsWith('termin.html') || h.includes('terminbuchungtaeubert')) track('Termin', { page });
+    else if (h.endsWith('schaden-melden.html')) track('Schaden melden', { page });
+  });
+
   // Countdown
   document.querySelectorAll('[data-countdown]').forEach(el => {
     const target = new Date(el.dataset.countdown), b = el.querySelector('b');
@@ -601,12 +615,19 @@ def keyword_h1(body_html, h1):
     return body_html.replace(first, new, 1)
 
 
+# Kundenversprechen (vom Betrieb bestätigt)
+TRUST = ["Kostenvoranschlag in 24 Stunden", "Direkte Abrechnung mit der Versicherung", "Ersatzwagen", "Hol- und Bringservice", "Alle Marken"]
+CHECK = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>'
+TRUST_HTML = '<ul class="trust">' + "".join(f"<li>{CHECK}{t}</li>" for t in TRUST) + "</ul>"
+
+
 def booking_cta(slug, place):
     svc = "".join(f'<li><a href="{x}.html">{esc(n)}</a></li>' for x, n in SERVICE_LINKS if x != slug)
     loc = "".join(f'<li><a href="{x}.html">{esc(n)}</a></li>' for x, n in LOCATION_LINKS if x != slug)
     return f'''<section class="booking-cta">
   <div class="page-width">
     <h2>Termin online buchen</h2>
+    {TRUST_HTML}
     <p>Wählen Sie Ihren Wunschtermin direkt online – oder rufen Sie uns an. Wir schauen uns Ihr Fahrzeug an und sagen Ihnen ehrlich, was Sinn macht.</p>
     <div class="btns">
       <a class="btn btn-light" href="{BOOKING}">Termin online buchen</a>
@@ -644,6 +665,19 @@ def service_ld(slug, name, desc):
 
 # Inhalte, die im Shopify-Editor zusammengelaufen sind, wieder lesbar machen
 FIXES = [
+    (">Who we are today<", ">Wer wir heute sind<"),
+    (">Who we are<", ">Wer wir sind<"),
+    (">Our mindset<", ">Unsere Haltung<"),
+    (">What defines us<", ">Was uns ausmacht<"),
+    (">Our standard<", ">Unser Anspruch<"),
+    (">Growth with integrity<", ">Wachstum mit Haltung<"),
+    (">About Täubert<", ">Über Täubert<"),
+    (">Karriere Be Part of our Story<", ">Karriere bei Täubert<"),
+    (">Expert Q&amp;A<", ">Team im Gespräch<"),
+    (">Expert Q&A<", ">Team im Gespräch<"),
+    (">Mehr Q&amp;As<", ">Weitere Gespräche<"),
+    (">Mehr Q&As<", ">Weitere Gespräche<"),
+    (">Team Stories<", ">Team im Gespräch<"),
     ("<p>Smart RepairKlassische Lackierung1–3 Stunden Reparaturmehrere Tage Werkstattdeutlich günstigerdeutlich teurer"
      "Originallack bleibt erhaltenneuer Lackkeine Farbabweichungenmöglich<br/></p>",
      '''<table class="compare">
@@ -849,7 +883,7 @@ DAMAGE_FORM = """<section class="sub-hero" style="--h:420px;--mh:380px">
   <div class="sub-hero-content" style="max-width:960px">
     <h1 class="overline">Schaden melden – Kostenvoranschlag per Foto</h1>
     <p class="heading h-8">Foto schicken. Einschätzung bekommen.</p>
-    <div class="rte"><p>Laden Sie bis zu drei Fotos Ihres Schadens hoch. Wir melden uns mit einer ersten Einschätzung und einem Terminvorschlag.</p></div>
+    <div class="rte"><p>Laden Sie bis zu drei Fotos Ihres Schadens hoch. Sie erhalten innerhalb von 24 Stunden einen Kostenvoranschlag und einen Terminvorschlag.</p></div>
   </div>
 </section>
 <section class="sec" style="padding:60px 0">

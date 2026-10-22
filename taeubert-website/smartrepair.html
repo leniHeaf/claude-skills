@@ -197,6 +197,13 @@
   .hours dt { font-weight: 700; }
   .foot-bottom { margin-top: 44px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.2); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 13px; color: rgba(255,255,255,.7); }
 
+  /* Vertrauensleiste */
+  .trust { list-style: none; display: flex; flex-wrap: wrap; gap: 10px 26px; }
+  .trust li { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; }
+  .trust svg { color: var(--red); flex: none; }
+  .trust-bar { background: var(--black); color: var(--white); padding: 18px 0; border-top: 1px solid rgba(255,255,255,.15); }
+  .trust-bar .trust { justify-content: center; }
+  @media (max-width: 600px) { .trust { gap: 8px 16px; } .trust li { font-size: 14px; } .trust-bar .trust { justify-content: flex-start; } }
   /* Leistungsübersicht */
   .services-sec { padding: 70px 0; background: var(--grey); }
   .services-sec h2 { font-size: clamp(28px, 3.4vw, 44px); margin-bottom: 10px; }
@@ -287,6 +294,7 @@
   .booking-cta h2 { font-size: clamp(30px, 4vw, 46px); }
   .booking-cta p { max-width: 620px; margin: 14px auto 0; color: rgba(255,255,255,.8); }
   .booking-cta .btns { justify-content: center; }
+  .booking-cta .trust { justify-content: center; margin: 18px 0 4px; }
   .btn-outline-light { background: transparent; color: var(--white); border-color: rgba(255,255,255,.6); }
   .btn-outline-light:hover { border-color: var(--white); background: var(--white); color: var(--black); }
   .related { background: var(--grey); padding: 50px 0; }
@@ -421,7 +429,7 @@
     <details>
       <summary>Termin vereinbaren</summary>
       <div class="sub">
-        <a href="termin.html">Online Termin buchen</a>
+        <a href="termin.html">Termin online buchen</a>
         <a href="schaden-melden.html">Schaden per Foto melden</a>
         <a href="contact.html">Kontakt</a>
       </div>
@@ -465,7 +473,7 @@
   <div class="media"><img src="images/3_508b5dcd-775e-48c9-a539-2a98aafa4f6b.jpg" srcset="images/3_508b5dcd-775e-48c9-a539-2a98aafa4f6b-700.webp 700w, images/3_508b5dcd-775e-48c9-a539-2a98aafa4f6b.jpg 1024w" sizes="(max-width: 760px) 100vw, 60vw" alt="" loading="lazy"></div><div class="overlay" style="opacity:0.2"></div>
   <div class="sub-hero-content" style="max-width:960px"><h1 class="overline">Smart Repair Sonneberg – Dellen entfernen ohne Lackieren</h1><p class="heading h-8">Kleine Delle im Auto?</p>
 <div class="rte"><p><br/>Das muss nicht neu lackiert werden.<br/><br/></p></div>
-<div class="btns"><a class="btn btn-light" href="termin.html">Jetzt Termin buchen</a></div></div>
+<div class="btns"><a class="btn btn-light" href="termin.html">Termin online buchen</a></div></div>
 </section>
 <section class="sec rich-sub" style="padding:50px 0 50px">
   <div class="page-width"><div class="rich-inner" style="max-width:650px;text-align:left;"><div class="rte"><p>Ein Einkaufswagen auf dem Parkplatz, eine unachtsam geöffnete Autotür oder leichter Hagel –<br/><br/>plötzlich ist eine Delle im Auto.</p><p>Die gute Nachricht:<br/><br/><strong>In vielen Fällen kann der Schaden komplett ohne Lackieren repariert werden.</strong></p><p>Mit der sogenannten <strong>Smart-Repair-Methode</strong> entfernen wir Dellen schonend, schnell und deutlich günstiger als eine klassische Lackierung.</p></div>
@@ -474,12 +482,12 @@
 <section class="sec" style="padding:50px 0 50px">
   <div class="page-width iwt media-right" style="--cols:50fr 50fr"><div class="iwt-text" style="max-width:500px"><h2 class="h-5">Was ist Smart Repair?</h2>
 <div class="rte"><p>Smart Repair ist ein spezielles Reparaturverfahren, bei dem die beschädigte Stelle von innen heraus vorsichtig zurückgeformt wird.<br/><br/>Der Originallack bleibt dabei erhalten.</p><p>Das bedeutet für Sie:</p><ul><li>keine Farbunterschiede<br/></li><li>keine Wertminderung<br/></li><li>kürzere Reparaturzeit<br/></li><li>deutlich geringere Kosten<br/></li></ul><p>Das Fahrzeug sieht danach wieder aus wie vorher.</p></div>
-<div class="btns"><a class="btn btn-dark" href="termin.html">Jetzt Termin buchen</a></div></div><div class="iwt-media" style="aspect-ratio:auto"><img src="images/1_6f36b140-2e90-4499-9343-be0cf20702fe.webp" srcset="images/1_6f36b140-2e90-4499-9343-be0cf20702fe-700.webp 700w, images/1_6f36b140-2e90-4499-9343-be0cf20702fe.webp 2000w" sizes="(max-width: 760px) 100vw, 60vw" alt="Was ist Smart Repair?" loading="lazy"></div></div>
+<div class="btns"><a class="btn btn-dark" href="termin.html">Termin online buchen</a></div></div><div class="iwt-media" style="aspect-ratio:auto"><img src="images/1_6f36b140-2e90-4499-9343-be0cf20702fe.webp" srcset="images/1_6f36b140-2e90-4499-9343-be0cf20702fe-700.webp 700w, images/1_6f36b140-2e90-4499-9343-be0cf20702fe.webp 2000w" sizes="(max-width: 760px) 100vw, 60vw" alt="Was ist Smart Repair?" loading="lazy"></div></div>
 </section>
 <section class="sec" style="padding:50px 0 50px">
   <div class="page-width iwt" style="--cols:50fr 50fr"><div class="iwt-media" style="aspect-ratio:auto"><img src="images/4_12352486-8bba-4930-ab08-035bdc1e181b.webp" srcset="images/4_12352486-8bba-4930-ab08-035bdc1e181b-700.webp 700w, images/4_12352486-8bba-4930-ab08-035bdc1e181b.webp 1024w" sizes="(max-width: 760px) 100vw, 60vw" alt="Wann ist Dellen entfernen ohne Lackieren möglich?" loading="lazy"></div><div class="iwt-text" style="max-width:500px"><h2 class="h-4">Wann ist Dellen entfernen ohne Lackieren möglich?</h2>
 <div class="rte"><p>Die Methode funktioniert besonders gut bei:</p><ul><li>Parkremplern<br/></li><li>Türdellen<br/></li><li>kleinen Beulen<br/></li><li>Hagelschäden<br/></li><li>leichten Stoßfängerschäden<br/></li></ul><p>Wichtig: Der Lack darf nicht gerissen oder abgeplatzt sein.<br/><br/>Ob Smart Repair möglich ist, prüfen wir kostenlos direkt am Fahrzeug.</p></div>
-<div class="btns"><a class="btn btn-dark" href="termin.html">Jetzt Termin buchen</a></div></div></div>
+<div class="btns"><a class="btn btn-dark" href="termin.html">Termin online buchen</a></div></div></div>
 </section>
 <section class="sec" style="padding:50px 0 50px">
   <div class="page-width iwt media-right" style="--cols:50fr 50fr"><div class="iwt-text" style="max-width:500px"><h2 class="h-5">Ihre Vorteile gegenüber einer Lackierung</h2>
@@ -492,12 +500,12 @@
 <tr><th scope="row">Farbabweichungen</th><td>keine</td><td>möglich</td></tr>
 </tbody>
 </table><p>Gerade bei Leasingfahrzeugen lohnt sich die Methode besonders.</p></div>
-<div class="btns"><a class="btn btn-dark" href="termin.html">Jetzt Termin buchen</a></div></div><div class="iwt-media" style="aspect-ratio:auto"><img src="images/5_0d3fd80b-a1b9-4eed-b1cf-aacb5850c2fe.webp" srcset="images/5_0d3fd80b-a1b9-4eed-b1cf-aacb5850c2fe-700.webp 700w, images/5_0d3fd80b-a1b9-4eed-b1cf-aacb5850c2fe.webp 1024w" sizes="(max-width: 760px) 100vw, 60vw" alt="Ihre Vorteile gegenüber einer Lackierung" loading="lazy"></div></div>
+<div class="btns"><a class="btn btn-dark" href="termin.html">Termin online buchen</a></div></div><div class="iwt-media" style="aspect-ratio:auto"><img src="images/5_0d3fd80b-a1b9-4eed-b1cf-aacb5850c2fe.webp" srcset="images/5_0d3fd80b-a1b9-4eed-b1cf-aacb5850c2fe-700.webp 700w, images/5_0d3fd80b-a1b9-4eed-b1cf-aacb5850c2fe.webp 1024w" sizes="(max-width: 760px) 100vw, 60vw" alt="Ihre Vorteile gegenüber einer Lackierung" loading="lazy"></div></div>
 </section>
 <section class="sec" style="padding:50px 0 50px">
   <div class="page-width iwt" style="--cols:50fr 50fr"><div class="iwt-media" style="aspect-ratio:auto"><img src="images/2_9055a4a8-269a-440a-9cfa-9d6825da7a83.webp" srcset="images/2_9055a4a8-269a-440a-9cfa-9d6825da7a83-700.webp 700w, images/2_9055a4a8-269a-440a-9cfa-9d6825da7a83.webp 2000w" sizes="(max-width: 760px) 100vw, 60vw" alt="Perfekt vor Leasingrückgabe oder Fahrzeugverkauf" loading="lazy"></div><div class="iwt-text" style="max-width:500px"><h2 class="h-4">Perfekt vor Leasingrückgabe oder Fahrzeugverkauf</h2>
 <div class="rte"><p>Viele Autofahrer erleben bei der Leasingrückgabe eine böse Überraschung:<br/><br/>Schon kleine Dellen werden von Leasinggesellschaften teuer berechnet.</p><p>Oft kostet ein Schaden dort mehrere hundert Euro.</p><p>Mit Smart Repair können wir solche Schäden vorher fachgerecht beseitigen — meist für einen Bruchteil der Kosten.</p></div>
-<div class="btns"><a class="btn btn-dark" href="termin.html">Jetzt Termin buchen</a></div></div></div>
+<div class="btns"><a class="btn btn-dark" href="termin.html">Termin online buchen</a></div></div></div>
 </section>
 <section class="sec rich-sub" style="padding:50px 0 50px">
   <div class="page-width"><div class="rich-inner" style="max-width:650px;text-align:left;"><div class="rte"><h2>Wie läuft die Reparatur ab?</h2><ol><li>Sie kommen kurz mit dem Fahrzeug vorbei</li><li>Wir prüfen kostenlos, ob Smart Repair möglich ist</li><li>Terminvereinbarung (oft kurzfristig)<br/></li><li>Delle wird präzise herausgedrückt<br/></li><li>Fahrzeug kann meist am selben Tag wieder mitgenommen werden<br/></li></ol><p>In vielen Fällen warten Sie nur wenige Stunden.</p></div>
@@ -508,6 +516,7 @@
 </section><section class="booking-cta">
   <div class="page-width">
     <h2>Termin online buchen</h2>
+    <ul class="trust"><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Kostenvoranschlag in 24 Stunden</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Direkte Abrechnung mit der Versicherung</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ersatzwagen</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Hol- und Bringservice</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Alle Marken</li></ul>
     <p>Wählen Sie Ihren Wunschtermin direkt online – oder rufen Sie uns an. Wir schauen uns Ihr Fahrzeug an und sagen Ihnen ehrlich, was Sinn macht.</p>
     <div class="btns">
       <a class="btn btn-light" href="termin.html">Termin online buchen</a>
@@ -643,6 +652,17 @@
     const sec = btn.closest('.map');
     sec.innerHTML = '<iframe title="Täubert Karosserie und Lack Standort" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Bettelhecker+Stra%C3%9Fe+15,+96515+Sonneberg&z=15&output=embed"></iframe>';
   }));
+
+  // Anfragen zählen (nur wenn eine cookielose Statistik wie Plausible eingebunden ist)
+  const track = (name, props) => { if (window.plausible) window.plausible(name, { props }); };
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a'); if (!a) return;
+    const h = a.getAttribute('href') || '', page = location.pathname.split('/').pop() || 'index.html';
+    if (h.startsWith('tel:')) track('Anruf', { page });
+    else if (h.includes('wa.me')) track('WhatsApp', { page });
+    else if (h.endsWith('termin.html') || h.includes('terminbuchungtaeubert')) track('Termin', { page });
+    else if (h.endsWith('schaden-melden.html')) track('Schaden melden', { page });
+  });
 
   // Countdown
   document.querySelectorAll('[data-countdown]').forEach(el => {
