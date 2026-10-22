@@ -665,19 +665,6 @@ def service_ld(slug, name, desc):
 
 # Inhalte, die im Shopify-Editor zusammengelaufen sind, wieder lesbar machen
 FIXES = [
-    (">Who we are today<", ">Wer wir heute sind<"),
-    (">Who we are<", ">Wer wir sind<"),
-    (">Our mindset<", ">Unsere Haltung<"),
-    (">What defines us<", ">Was uns ausmacht<"),
-    (">Our standard<", ">Unser Anspruch<"),
-    (">Growth with integrity<", ">Wachstum mit Haltung<"),
-    (">About Täubert<", ">Über Täubert<"),
-    (">Karriere Be Part of our Story<", ">Karriere bei Täubert<"),
-    (">Expert Q&amp;A<", ">Team im Gespräch<"),
-    (">Expert Q&A<", ">Team im Gespräch<"),
-    (">Mehr Q&amp;As<", ">Weitere Gespräche<"),
-    (">Mehr Q&As<", ">Weitere Gespräche<"),
-    (">Team Stories<", ">Team im Gespräch<"),
     ("<p>Smart RepairKlassische Lackierung1–3 Stunden Reparaturmehrere Tage Werkstattdeutlich günstigerdeutlich teurer"
      "Originallack bleibt erhaltenneuer Lackkeine Farbabweichungenmöglich<br/></p>",
      '''<table class="compare">
