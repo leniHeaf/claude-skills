@@ -539,7 +539,8 @@ def shell():
     marquee_js = re.search(r"(  // Laufschrift: zwei identische.*?\n  \})\n", js, re.S).group(1) + "\n"
     menu_js = re.search(r"(  // Menü-Drawer.*?addEventListener\('keydown'.*?\n)", js, re.S).group(1)
     img_js = re.search(r"(  // Fehlende Bilddateien.*?\n  \}\);\n)", js, re.S).group(1)
-    return style, head_links, top, footer, menu_js + img_js + marquee_js + PAGE_JS + "  document.getElementById('year').textContent = new Date().getFullYear();\n"
+    status_js = re.search(r"(  // Öffnungsstatus.*?\n  \}\)\(\);\n)", js, re.S).group(1)
+    return style, head_links, top, footer, menu_js + img_js + status_js + marquee_js + PAGE_JS + "  document.getElementById('year').textContent = new Date().getFullYear();\n"
 
 
 def first_heading(d):
@@ -787,9 +788,29 @@ GUIDES = ["unfall-oder-kratzer", "auto-lackieren-kosten"]
 TOP_SERVICES = ["unfallinstandsetzung", "lackierarbeiten", "karosserie", "smartrepair", "hagelschaden", "fahrzeugaufbereitung"]
 
 
+# Kurze Nutzen-Sätze für die Leistungskarten (die Meta-Beschreibungen bleiben für Google)
+CARD_TEXT = {
+    "karosserie": "Richtbank, Vermessung, Herstellervorgaben – und danach direkt in unsere Lackierkabine.",
+    "lackierarbeiten": "Farbton digital gemessen. Man sieht später nicht, wo der Schaden war.",
+    "unfallinstandsetzung": "Wir regeln Gutachter und Versicherung – Sie bekommen Ihr Auto repariert zurück.",
+    "smartrepair": "Dellen raus, ohne neu zu lackieren. Oft in wenigen Stunden.",
+    "kleinschaden": "Parkrempler, Poller, Einkaufswagen – schnell und günstig behoben.",
+    "kratzer": "Vom oberflächlichen Kratzer bis zum Metall – passend repariert.",
+    "leasingrueckgabe": "Vorher reparieren statt teuer nachzahlen.",
+    "fahrzeugaufbereitung": "Politur, Innenraum, Lackpflege – Ihr Auto wie frisch übergeben.",
+    "reifenservice": "Reifenwechsel und Einlagerung – Termin online buchen.",
+    "unfall": "Ein Anruf – wir kümmern uns um alles Weitere.",
+    "hagelschaden": "Hageldellen möglichst ohne Lackieren entfernen.",
+    "stossstange-reparieren": "Kratzer, Risse, Dellen – reparieren statt tauschen, wo es Sinn macht.",
+    "oldtimer-restaurierung": "Entrostung und Lack im Originalfarbton – mit Respekt vor dem Original.",
+    "fuhrparkservice": "Firmenwagen und Transporter schnell wieder einsatzbereit.",
+    "versicherungsschaden": "Direkte Abrechnung mit der Versicherung. Sie bringen das Auto, wir den Rest.",
+}
+
+
 def service_cards(items):
     return "".join(
-        f'<a class="svc" href="{slug}.html"><h3>{esc(name)}</h3><p>{esc(desc)}</p><span>Mehr erfahren →</span></a>'
+        f'<a class="svc" href="{slug}.html"><h3>{esc(name)}</h3><p>{esc(CARD_TEXT.get(slug, desc))}</p><span>Mehr erfahren →</span></a>'
         for slug, name, desc in items)
 
 
@@ -991,6 +1012,45 @@ BOOKING_CSS = """
 """
 
 
+UNFALL_STEPS = [
+    ("Sichern", "Warnblinker an, Warnweste anziehen, Warndreieck in ausreichendem Abstand aufstellen."),
+    ("Helfen", "Verletzte versorgen und den Notruf 112 wählen. Die Polizei (110) rufen, wenn jemand verletzt ist, der Unfallgegner flüchtet oder es Streit über den Hergang gibt."),
+    ("Fotografieren", "Unfallstelle, Endstellung der Fahrzeuge, alle Schäden und die Kennzeichen – lieber zu viele Fotos als zu wenige."),
+    ("Daten austauschen", "Name, Anschrift, Kennzeichen und Versicherung des Unfallgegners notieren. Zeugen um Namen und Telefonnummer bitten."),
+    ("Nichts unterschreiben", "Kein Schuldanerkenntnis abgeben oder unterschreiben – auch wenn Sie unter Druck gesetzt werden."),
+    ("Versicherung informieren", "Den Schaden zeitnah Ihrer Versicherung melden. Ist der andere schuld, dürfen Sie in der Regel einen unabhängigen Gutachter wählen."),
+    ("Uns anrufen", "Wir übernehmen Gutachter, Versicherung und Reparatur – auf Wunsch mit Ersatzwagen und Hol- und Bringservice."),
+]
+
+UNFALL_PAGE = f"""<section class="sec soforthilfe" style="padding:50px 0 20px">
+  <div class="page-width">
+    <h1 class="overline">Unfall-Soforthilfe</h1>
+    <p class="heading h-6">Unfall gehabt? Das ist jetzt zu tun.</p>
+    <div class="sos-call">
+      <a class="btn btn-dark" href="tel:+4936754289606">Täubert anrufen: 03675 4289606</a>
+      <a class="btn btn-outline-dark" href="https://wa.me/4936754289606" target="_blank" rel="noopener">Fotos per WhatsApp</a>
+      <a class="btn btn-outline-dark" href="schaden-melden.html">Schaden per Foto melden</a>
+    </div>
+    <p class="open-status" data-open-status></p>
+  </div>
+</section>
+<section class="sec" style="padding:20px 0 60px">
+  <div class="page-width">
+    <ol class="sos-list">{"".join(f'<li><h2>{esc(t)}</h2><p>{esc(d)}</p></li>' for t, d in UNFALL_STEPS)}</ol>
+    <p class="sos-note">Allgemeine Hinweise, keine Rechtsberatung. Bei Verletzten gilt immer: zuerst Notruf 112.</p>
+  </div>
+</section>"""
+
+UNFALL_CSS = """
+  .sos-call { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 14px; }
+  .sos-list { list-style: none; counter-reset: sos; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .sos-list li { counter-increment: sos; position: relative; padding: 22px 22px 22px 70px; background: var(--grey); }
+  .sos-list li::before { content: counter(sos); position: absolute; left: 22px; top: 18px; font-family: "Archivo Black"; font-size: 30px; color: var(--red); }
+  .sos-list h2 { font-size: 19px; margin-bottom: 6px; }
+  .sos-note { margin-top: 22px; font-size: 14px; color: #555; }
+"""
+
+
 def simple_page(slug, title, desc, body_html, style, head_links, top, footer, js, ld, robots=""):
     return f"""<!doctype html>
 <html lang="de">
@@ -1000,7 +1060,7 @@ def simple_page(slug, title, desc, body_html, style, head_links, top, footer, js
 <title>{esc(title)} | Täubert Karosserie &amp; Lack</title>
 {robots}{seo_head(title + " – Täubert Karosserie & Lack", desc, slug)}
 {head_links}
-<style>{style}{EXTRA_CSS}{DAMAGE_CSS}{BOOKING_CSS}</style>
+<style>{style}{EXTRA_CSS}{DAMAGE_CSS}{BOOKING_CSS}{UNFALL_CSS}</style>
 {ld}
 {breadcrumb_ld(slug, title)}
 </head>
@@ -1157,6 +1217,11 @@ def main():
         "Termin online buchen bei Täubert Karosserie & Lack in Sonneberg: Unfallreparatur, Lackierung, Smart Repair, Reifenservice und mehr.",
         BOOKING_PAGE, style, head_links, top, footer, js, ld)))
     built.insert(2, "termin")
+    open(os.path.join(SITE, "unfall-was-tun.html"), "w", encoding="utf-8").write(sync_images(simple_page(
+        "unfall-was-tun", "Unfall – was tun?",
+        "Unfall gehabt? Checkliste in 7 Schritten: sichern, helfen, fotografieren, Daten austauschen – und Täubert in Sonneberg kümmert sich um den Rest.",
+        UNFALL_PAGE, style, head_links, top, footer, js, ld)))
+    built.insert(3, "unfall-was-tun")
     open(os.path.join(SITE, "danke.html"), "w", encoding="utf-8").write(simple_page(
         "danke", "Danke", "Ihre Schadensmeldung ist bei uns eingegangen.", THANKS, style, head_links, top, footer, js, ld,
         robots='<meta name="robots" content="noindex, follow">\n'))

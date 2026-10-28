@@ -111,7 +111,7 @@
   .rich p { margin-top: 18px; font-size: 17px; }
 
   /* Kontakt-Banner */
-  .contact-banner { width: 95%; margin: 0 auto; background: var(--black); color: var(--white); text-align: center; padding: 25px 20px 30px; }
+  .contact-banner { width: 100%; margin: 0; background: var(--black); color: var(--white); text-align: center; padding: 25px 20px 30px; }
   .contact-banner h2 { font-size: clamp(34px, 4vw, 48px); margin-bottom: 10px; }
   .contact-banner p { font-size: 18px; margin-bottom: 25px; }
   .contact-banner .btns { justify-content: center; gap: 16px; }
@@ -159,10 +159,10 @@
   .fl-inner { display: grid; grid-template-columns: 60% 40%; gap: 40px; align-items: center; }
   .fl-inner h2 { font-size: clamp(18px, 1.6vw, 22px); margin-bottom: 26px; font-family: Inter; font-weight: 700; letter-spacing: .08em; }
   .fl-links { font-family: "Archivo Black"; text-transform: uppercase; font-size: clamp(40px, 6vw, 88px); line-height: 1.3; }
-  .fl-links a { color: #b5b5b5; transition: color .25s; }
+  .fl-links a { color: #7a7a7a; transition: color .25s; }
   .fl-links a.active, .fl-links a:hover { color: var(--text); }
   .fl-links sup { font-family: Inter; font-size: 14px; vertical-align: super; margin-left: 4px; }
-  .fl-links .sep { color: #b5b5b5; }
+  .fl-links .sep { color: #7a7a7a; }
   .fl-inner .btn { margin-top: 34px; }
   .showcase { position: relative; aspect-ratio: 4 / 5; overflow: hidden; }
   .showcase .media { transition: opacity .5s; opacity: 0; }
@@ -196,6 +196,69 @@
   .hours dt { font-weight: 700; }
   .foot-bottom { margin-top: 44px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.2); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 13px; color: rgba(255,255,255,.7); }
 
+  /* Startbild: lesbarer Text, klare Buttons */
+  .hero .overlay { opacity: 1; background: linear-gradient(90deg, rgba(0,0,0,.6) 0%, rgba(0,0,0,.25) 55%, rgba(0,0,0,0) 80%), linear-gradient(0deg, rgba(0,0,0,.45), rgba(0,0,0,0) 45%); }
+  .btn-outline-light { background: transparent; color: var(--white); border-color: rgba(255,255,255,.8); }
+  .btn-outline-light:hover { background: var(--white); color: var(--black); border-color: var(--white); }
+  .btn-outline-dark { background: transparent; color: var(--black); border-color: var(--black); }
+  .btn-outline-dark:hover { background: var(--black); color: var(--white); }
+  .tile-sub { margin: -8px 0 16px; font-size: 16px; }
+  .announce .sep { opacity: .5; margin: 0 6px; }
+  .announce .ul { text-decoration: underline; text-underline-offset: 3px; }
+  .eyebrow { font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 10px; color: #c00000; }
+
+  /* Schadens-Assistent */
+  .assist { padding: 80px 0; background: var(--white); }
+  .assist-inner { display: grid; grid-template-columns: 1fr 2fr; gap: 50px; align-items: start; }
+  .assist-head h2 { font-size: clamp(30px, 3.6vw, 46px); }
+  .assist-head p:last-child { margin-top: 12px; color: #555; }
+  .assist-form fieldset { border: 0; margin: 0 0 22px; padding: 0; }
+  .assist-form legend { font-weight: 700; margin-bottom: 10px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips label { position: relative; cursor: pointer; }
+  .chips input { position: absolute; opacity: 0; inset: 0; }
+  .chips span { display: inline-block; padding: 11px 16px; border: 1px solid var(--line); background: var(--white); font-size: 15px; transition: border-color .15s, background .15s, color .15s; }
+  .chips label:hover span { border-color: var(--black); }
+  .chips input:checked + span { background: var(--black); border-color: var(--black); color: var(--white); }
+  .chips input:focus-visible + span { outline: 2px solid var(--red); outline-offset: 2px; }
+  .assist-result { margin-top: 6px; padding: 26px; background: var(--grey); border-left: 4px solid var(--red); }
+  .assist-result h3 { font-size: 22px; margin-bottom: 8px; }
+  .assist-result p { margin-bottom: 8px; }
+  .assist-result .btns { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 10px; }
+
+  /* Ablauf */
+  .steps-sec { padding: 80px 0; background: var(--grey); }
+  .steps-sec h2 { font-size: clamp(30px, 3.6vw, 46px); margin-bottom: 36px; }
+  .steps { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; margin-bottom: 34px; }
+  .steps li { border-top: 2px solid var(--black); padding-top: 18px; }
+  .steps .num { font-family: "Archivo Black"; color: #c00000; font-size: 30px; }
+  .steps h3 { font-size: 19px; margin: 6px 0 8px; }
+  .steps p { color: #444; }
+  .steps-sec .btns { display: flex; flex-wrap: wrap; gap: 12px; }
+
+  /* FAQ + Anfahrt */
+  .faq-sec { padding: 80px 0 40px; }
+  .faq { max-width: 900px; margin: 0 auto; }
+  .faq h2 { font-size: clamp(30px, 3.6vw, 46px); margin-bottom: 20px; }
+  .faq details { border-bottom: 1px solid var(--line); overflow: hidden; }
+  .faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 20px; padding: 20px 0; font-weight: 700; font-size: 18px; }
+  .faq summary span { flex: 1; min-width: 0; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; flex: none; width: 20px; text-align: center; font-size: 24px; line-height: 1; transition: transform .2s; }
+  .faq details[open] summary::after { transform: rotate(45deg); }
+  .faq .rte { padding-bottom: 16px; color: #444; }
+  .visit { padding: 60px 0 80px; }
+  .visit-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; background: var(--grey); padding: 40px; }
+  .visit h2 { font-size: clamp(28px, 3vw, 40px); margin-bottom: 14px; }
+  .visit .addr { font-size: 17px; margin-bottom: 10px; }
+  .visit .btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  .visit-hours { font-size: 17px; }
+  .open-status { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; margin-bottom: 12px; }
+  .open-status::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: #9a9a9a; }
+  .open-status.is-open::before { background: #2fbf55; }
+  .open-status:empty { display: none; }
+  footer .open-status { color: var(--white); }
+
   /* Vertrauensleiste */
   .trust { list-style: none; display: flex; flex-wrap: wrap; gap: 10px 26px; }
   .trust li { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; }
@@ -215,7 +278,28 @@
   .svc span { margin-top: auto; font-weight: 600; font-size: 14px; }
   .svc-more { margin-top: 28px; }
   @media (max-width: 990px) { .svc-grid { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 600px) { .svc-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) {
+    .svc-grid { grid-template-columns: 1fr; gap: 8px; }
+    .svc { padding: 16px 44px 16px 16px; position: relative; gap: 4px; }
+    .svc h3 { font-size: 16px; }
+    .svc p { font-size: 14px; }
+    .svc span { display: none; }
+    .svc::after { content: "→"; position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-weight: 700; }
+  }
+  @media (max-width: 990px) {
+    .assist-inner, .visit-inner { grid-template-columns: 1fr; gap: 24px; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .visit-inner { padding: 28px 20px; }
+  }
+  @media (max-width: 760px) {
+    .header-right .icon-btn { display: none; }
+    .hero .media img { object-position: 72% center; }
+    .announce { font-size: 12px; }
+  }
+  @media (max-width: 480px) {
+    .steps { grid-template-columns: 1fr; }
+    .announce .sep, .announce .ul { display: none; }
+  }
   footer ul a { overflow-wrap: anywhere; }
   /* UX: Fokus, Sprunglink, Header-Button, Aktionsleiste */
   :focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
@@ -265,7 +349,7 @@
     .icon-btn .label { display: none; }
     .hero-content { padding-bottom: 50px; }
     .hero p { font-size: 16px; }
-    .contact-banner { width: calc(100% - 32px); }
+    .contact-banner { width: 100%; }
     .contact-banner .btn { width: 100%; }
     .slides-section { padding-left: 16px; padding-right: 16px; }
     .fl-links { font-size: 34px; overflow-wrap: anywhere; }
@@ -393,6 +477,13 @@
   .booking-embed iframe { display: block; width: 100%; height: 1000px; border: 1px solid var(--line); background: var(--white); }
   .booking-fallback { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 18px; }
   @media (max-width: 600px) { .booking-embed iframe { height: 1250px; } }
+
+  .sos-call { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 14px; }
+  .sos-list { list-style: none; counter-reset: sos; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .sos-list li { counter-increment: sos; position: relative; padding: 22px 22px 22px 70px; background: var(--grey); }
+  .sos-list li::before { content: counter(sos); position: absolute; left: 22px; top: 18px; font-family: "Archivo Black"; font-size: 30px; color: var(--red); }
+  .sos-list h2 { font-size: 19px; margin-bottom: 6px; }
+  .sos-note { margin-top: 22px; font-size: 14px; color: #555; }
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "AutoBodyShop", "name": "Täubert Karosserie und Lack GmbH", "url": "https://www.taeubert-karosserie-lack.de/", "logo": "https://www.taeubert-karosserie-lack.de/images/Taeubert_Logo.png", "telephone": "+49 3675 4289606", "email": "hallo@taeubert-karosserie-lack.de", "address": {"@type": "PostalAddress", "streetAddress": "Bettelhecker Straße 15", "postalCode": "96515", "addressLocality": "Sonneberg", "addressRegion": "Thüringen", "addressCountry": "DE"}, "areaServed": ["Sonneberg", "Neustadt bei Coburg", "Coburg", "Rödental", "Kronach", "Bamberg"], "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"], "opens": "08:00", "closes": "17:00"}, {"@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "08:00", "closes": "14:30"}], "sameAs": ["https://www.facebook.com/ToniTaeubert/", "https://www.instagram.com/taeubert_karosserieundlack/"], "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Leistungen", "itemListElement": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Karosseriearbeiten", "description": "Karosseriereparatur in Sonneberg & Neustadt bei Coburg: Richtbank, präzise Vermessung, Reparatur nach Herstellervorgaben – Lack direkt im Haus.", "url": "https://www.taeubert-karosserie-lack.de/karosserie.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Lackierarbeiten", "description": "Autolackierung in Sonneberg: digitale Farbtonmessung, staubfreie Lackierkabine, Spot Repair und Komplettlackierung – ohne sichtbaren Unterschied.", "url": "https://www.taeubert-karosserie-lack.de/lackierarbeiten.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Unfallinstandsetzung", "description": "Unfallreparatur in Sonneberg & Neustadt bei Coburg: Karosserie, Lack und Abwicklung mit Versicherung und Gutachter aus einer Hand.", "url": "https://www.taeubert-karosserie-lack.de/unfallinstandsetzung.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Smart Repair", "description": "Smart Repair in Sonneberg: Dellen und kleine Schäden ohne Neulackierung entfernen – Originallack bleibt, oft in wenigen Stunden erledigt.", "url": "https://www.taeubert-karosserie-lack.de/smartrepair.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Kleinschaden-Reparatur", "description": "Parkschaden, Kratzer oder Delle? Kleinschaden-Reparatur in Sonneberg & Neustadt bei Coburg – schnell, günstig und mit Originallack.", "url": "https://www.taeubert-karosserie-lack.de/kleinschaden.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Kratzer entfernen", "description": "Kratzer im Lack entfernen lassen in Sonneberg: vom oberflächlichen Kratzer bis zur Tiefe – mit exakter Farbtonanpassung.", "url": "https://www.taeubert-karosserie-lack.de/kratzer.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Leasingrückgabe", "description": "Leasingrückgabe in Sonneberg vorbereiten: Schäden vorab günstig beseitigen und teure Nachzahlungen beim Leasinggeber vermeiden.", "url": "https://www.taeubert-karosserie-lack.de/leasingrueckgabe.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Fahrzeugaufbereitung", "description": "Fahrzeugaufbereitung in Sonneberg: Politur, Innenraumreinigung und Lackpflege – ideal vor Verkauf oder Leasingrückgabe.", "url": "https://www.taeubert-karosserie-lack.de/fahrzeugaufbereitung.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Reifenservice", "description": "Reifenwechsel, Räderwechsel und Rädereinlagerung in Sonneberg & Neustadt bei Coburg – Termin online buchen.", "url": "https://www.taeubert-karosserie-lack.de/reifenservice.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Unfallreparatur", "description": "Unfall gehabt? Täubert in Sonneberg kümmert sich um Reparatur, Versicherung und Gutachten – direkte Abrechnung mit der Versicherung.", "url": "https://www.taeubert-karosserie-lack.de/unfall.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Hagelschaden", "description": "Hagelschaden am Auto in Sonneberg reparieren lassen: Dellen möglichst ohne Lackieren entfernen, Lack und Karosserie aus einer Hand, Abstimmung mit der Versicherung.", "url": "https://www.taeubert-karosserie-lack.de/hagelschaden.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Stoßstange reparieren", "description": "Stoßstange reparieren oder lackieren in Sonneberg & Neustadt bei Coburg: Kratzer, Risse und Dellen im Stoßfänger beseitigen – oft ohne neues Teil.", "url": "https://www.taeubert-karosserie-lack.de/stossstange-reparieren.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Oldtimer & Klassiker", "description": "Oldtimer-Restaurierung und Klassiker-Lackierung in Sonneberg: Entrostung, Karosseriearbeiten und originalgetreue Lackierung – mit Respekt vor dem Original.", "url": "https://www.taeubert-karosserie-lack.de/oldtimer-restaurierung.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Fuhrparkservice", "description": "Karosserie- und Lackservice für Firmenfahrzeuge und Transporter in Sonneberg & Neustadt bei Coburg: Schäden schnell beheben, Fahrzeuge schnell zurück im Einsatz.", "url": "https://www.taeubert-karosserie-lack.de/fuhrparkservice.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Versicherungsschaden", "description": "Versicherungsschaden in Sonneberg: Täubert übernimmt Schadenaufnahme, Abstimmung mit Versicherung und Gutachter sowie die komplette Reparatur.", "url": "https://www.taeubert-karosserie-lack.de/versicherungsschaden.html"}}]}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Startseite", "item": "https://www.taeubert-karosserie-lack.de/"}, {"@type": "ListItem", "position": 2, "name": "Termin online buchen", "item": "https://www.taeubert-karosserie-lack.de/termin.html"}]}</script>
@@ -400,7 +491,7 @@
 <body>
 <a class="skip" href="#inhalt">Zum Inhalt springen</a>
 <div class="announce">
-  <strong><a href="mailto:hallo@taeubert-karosserie-lack.de">hallo@taeubert-karosserie-lack.de</a> I <a href="tel:+4936754289606">03675 4289606</a></strong>
+  <span><strong>Unfall gehabt?</strong> <a href="tel:+4936754289606">03675 4289606</a> <span class="sep">·</span> <a class="ul" href="unfall-was-tun.html">Was jetzt zu tun ist</a></span>
 </div>
 
 <header class="header" id="header">
@@ -536,6 +627,7 @@
     </div>
     <div>
       <h4>Öffnungszeiten</h4>
+      <p class="open-status" data-open-status></p>
       <dl class="hours">
         <dt>Montag – Donnerstag</dt><dd>08:00 – 17:00 Uhr</dd>
         <dt>Freitag</dt><dd>08:00 – 14:30 Uhr</dd>
@@ -580,6 +672,28 @@
     };
     if (img.hasAttribute('data-missing-src') || (img.complete && !img.naturalWidth)) hide(); else img.addEventListener('error', hide);
   });
+  // Öffnungsstatus (Mo–Do 8–17, Fr 8–14:30, Zeitzone Berlin)
+  (function () {
+    const HOURS = { 1: [480, 1020], 2: [480, 1020], 3: [480, 1020], 4: [480, 1020], 5: [480, 870] };
+    const NAMES = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
+    const fmt = m => String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0');
+    const update = () => {
+      const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Berlin' }));
+      const day = now.getDay(), min = now.getHours() * 60 + now.getMinutes(), today = HOURS[day];
+      let text, open = false;
+      if (today && min >= today[0] && min < today[1]) { open = true; text = 'Jetzt geöffnet – bis ' + fmt(today[1]) + ' Uhr'; }
+      else {
+        let d = day, first = true;
+        if (today && min < today[0]) text = 'Geschlossen – öffnet heute um ' + fmt(today[0]) + ' Uhr';
+        else {
+          for (let i = 1; i <= 7; i++) { d = (day + i) % 7; if (HOURS[d]) break; }
+          text = 'Geschlossen – öffnet ' + (d === (day + 1) % 7 ? 'morgen' : 'am ' + NAMES[d]) + ' um ' + fmt(HOURS[d][0]) + ' Uhr';
+        }
+      }
+      document.querySelectorAll('[data-open-status]').forEach(el => { el.textContent = text; el.classList.toggle('is-open', open); });
+    };
+    update(); setInterval(update, 60000);
+  })();
   // Laufschrift: zwei identische Hälften, ruhiges konstantes Tempo, Pause beim Drüberfahren
   function startMarquee(t, unit) {
     t.innerHTML = unit;
