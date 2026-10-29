@@ -1,0 +1,88 @@
+{
+  "name": "Schichtplan",
+  "type": "object",
+  "properties": {
+    "week_start": {
+      "type": "string",
+      "format": "date",
+      "description": "Montag der Woche (ISO yyyy-MM-dd)"
+    },
+    "employee": {
+      "type": "string",
+      "description": "Mitarbeitername"
+    },
+    "monday": {
+      "type": "string",
+      "enum": [
+        "frueh",
+        "spaet",
+        "frei",
+        "urlaub",
+        "krank"
+      ],
+      "default": "frueh"
+    },
+    "tuesday": {
+      "type": "string",
+      "enum": [
+        "frueh",
+        "spaet",
+        "frei",
+        "urlaub",
+        "krank"
+      ],
+      "default": "frueh"
+    },
+    "wednesday": {
+      "type": "string",
+      "enum": [
+        "frueh",
+        "spaet",
+        "frei",
+        "urlaub",
+        "krank"
+      ],
+      "default": "frueh"
+    },
+    "thursday": {
+      "type": "string",
+      "enum": [
+        "frueh",
+        "spaet",
+        "frei",
+        "urlaub",
+        "krank"
+      ],
+      "default": "frueh"
+    },
+    "friday": {
+      "type": "string",
+      "enum": [
+        "frueh",
+        "spaet",
+        "frei",
+        "urlaub",
+        "krank"
+      ],
+      "default": "frueh"
+    },
+    "saturday": {
+      "type": "string",
+      "enum": [
+        "frueh",
+        "spaet",
+        "frei",
+        "urlaub",
+        "krank"
+      ],
+      "default": "frei"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "week_start",
+    "employee"
+  ]
+}

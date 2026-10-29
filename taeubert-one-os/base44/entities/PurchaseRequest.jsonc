@@ -1,0 +1,73 @@
+{
+  "name": "PurchaseRequest",
+  "type": "object",
+  "properties": {
+    "material_id": {
+      "type": "string"
+    },
+    "material_name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "quantity": {
+      "type": "number"
+    },
+    "unit": {
+      "type": "string"
+    },
+    "urgency": {
+      "type": "string",
+      "enum": [
+        "niedrig",
+        "normal",
+        "dringend",
+        "sofort"
+      ],
+      "default": "normal"
+    },
+    "vehicle_id": {
+      "type": "string"
+    },
+    "vehicle_info": {
+      "type": "string"
+    },
+    "requested_by": {
+      "type": "string"
+    },
+    "supplier": {
+      "type": "string"
+    },
+    "photo": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "offen",
+        "bestellt",
+        "geliefert",
+        "abgebrochen"
+      ],
+      "default": "offen"
+    },
+    "ordered_at": {
+      "type": "string"
+    },
+    "delivered_at": {
+      "type": "string"
+    },
+    "price_total": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "material_name",
+    "quantity",
+    "urgency"
+  ]
+}

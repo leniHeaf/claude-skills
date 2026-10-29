@@ -1,0 +1,80 @@
+{
+  "name": "QualityCheck",
+  "type": "object",
+  "properties": {
+    "vehicle_id": {
+      "type": "string",
+      "description": "Zugeh\u00f6riges Fahrzeug (ID)"
+    },
+    "vehicle_info": {
+      "type": "string",
+      "description": "Fahrzeuginfo"
+    },
+    "stage": {
+      "type": "string",
+      "enum": [
+        "vorbereitung",
+        "lackierung",
+        "finish",
+        "endkontrolle",
+        "uebergabe"
+      ],
+      "description": "Pr\u00fcfstufe"
+    },
+    "checklist": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "item": {
+            "type": "string"
+          },
+          "checked": {
+            "type": "boolean"
+          },
+          "comment": {
+            "type": "string"
+          },
+          "photo": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Checkliste"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "offen",
+        "bestanden",
+        "nacharbeit"
+      ],
+      "default": "offen",
+      "description": "Ergebnis"
+    },
+    "inspector": {
+      "type": "string",
+      "description": "Pr\u00fcfer"
+    },
+    "photos": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Fotos"
+    },
+    "comments": {
+      "type": "string",
+      "description": "Kommentare"
+    },
+    "approved": {
+      "type": "boolean",
+      "default": false,
+      "description": "Freigabe erteilt"
+    }
+  },
+  "required": [
+    "vehicle_id",
+    "stage"
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "name": "ZeitKorrektur",
+  "type": "object",
+  "properties": {
+    "employee": {
+      "type": "string",
+      "description": "Mitarbeiter, der die Korrektur anfordert"
+    },
+    "time_entry_id": {
+      "type": "string",
+      "description": "ID der betroffenen Zeiterfassung"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Datum des Eintrags"
+    },
+    "vehicle_info": {
+      "type": "string",
+      "description": "Fahrzeuginfo (zur Anzeige)"
+    },
+    "activity": {
+      "type": "string",
+      "description": "T\u00e4tigkeit (zur Anzeige)"
+    },
+    "original_start_time": {
+      "type": "string",
+      "description": "Originaler Start (ISO)"
+    },
+    "original_end_time": {
+      "type": "string",
+      "description": "Original Ende (ISO)"
+    },
+    "original_duration_minutes": {
+      "type": "number",
+      "description": "Originale Dauer in Minuten"
+    },
+    "corrected_start_time": {
+      "type": "string",
+      "description": "Korrigierter Start (ISO)"
+    },
+    "corrected_end_time": {
+      "type": "string",
+      "description": "Korrigiertes Ende (ISO)"
+    },
+    "corrected_duration_minutes": {
+      "type": "number",
+      "description": "Korrigierte Dauer in Minuten"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Begr\u00fcndung der Korrektur"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "eingereicht",
+        "genehmigt",
+        "abgelehnt"
+      ],
+      "default": "eingereicht",
+      "description": "Genehmigungsstatus"
+    },
+    "reviewed_by": {
+      "type": "string",
+      "description": "Gepr\u00fcft von"
+    },
+    "manager_comment": {
+      "type": "string",
+      "description": "Kommentar des Managers"
+    }
+  },
+  "required": [
+    "employee",
+    "time_entry_id",
+    "date",
+    "reason"
+  ]
+}

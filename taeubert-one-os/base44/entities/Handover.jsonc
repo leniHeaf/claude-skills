@@ -1,0 +1,65 @@
+{
+  "name": "Handover",
+  "type": "object",
+  "properties": {
+    "vehicle_id": {
+      "type": "string"
+    },
+    "vehicle_info": {
+      "type": "string"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "checklist": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "item": {
+            "type": "string"
+          },
+          "checked": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "care_instructions": {
+      "type": "string"
+    },
+    "customer_signature": {
+      "type": "string",
+      "description": "Base64 oder URL der Unterschrift"
+    },
+    "rating_requested": {
+      "type": "boolean",
+      "default": false
+    },
+    "rating": {
+      "type": "number"
+    },
+    "rating_comment": {
+      "type": "string"
+    },
+    "completed": {
+      "type": "boolean",
+      "default": false
+    },
+    "completed_at": {
+      "type": "string"
+    },
+    "photos": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "vehicle_id"
+  ]
+}

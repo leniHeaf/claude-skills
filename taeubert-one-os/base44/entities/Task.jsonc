@@ -1,0 +1,88 @@
+{
+  "name": "Task",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Aufgabentitel"
+    },
+    "description": {
+      "type": "string",
+      "description": "Beschreibung"
+    },
+    "vehicle_id": {
+      "type": "string",
+      "description": "Zugeh\u00f6riges Fahrzeug (ID)"
+    },
+    "vehicle_info": {
+      "type": "string",
+      "description": "Fahrzeuginfo (Marke Modell - Kennzeichen)"
+    },
+    "assigned_to": {
+      "type": "string",
+      "description": "Verantwortlicher"
+    },
+    "estimated_hours": {
+      "type": "number",
+      "default": 0,
+      "description": "Gesch\u00e4tzte Arbeitszeit in Stunden (AW)"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "niedrig",
+        "mittel",
+        "hoch",
+        "kritisch"
+      ],
+      "default": "mittel",
+      "description": "Priorit\u00e4t"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "offen",
+        "in_arbeit",
+        "erledigt"
+      ],
+      "default": "offen",
+      "description": "Status"
+    },
+    "deadline": {
+      "type": "string",
+      "format": "date",
+      "description": "F\u00e4lligkeitsdatum"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "teile",
+        "karosserie",
+        "vorbereitung",
+        "lackierung",
+        "finish",
+        "reinigung",
+        "kunde",
+        "uebergabe",
+        "lager",
+        "sonstiges"
+      ],
+      "default": "sonstiges",
+      "description": "Kategorie"
+    },
+    "photos": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Fotos"
+    },
+    "comments": {
+      "type": "string",
+      "description": "Kommentare"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "name": "PerformanceScore",
+  "type": "object",
+  "properties": {
+    "employee": {
+      "type": "string"
+    },
+    "month": {
+      "type": "string",
+      "description": "Format: 2026-05"
+    },
+    "quality_score": {
+      "type": "number",
+      "default": 0,
+      "description": "0-10"
+    },
+    "productivity_score": {
+      "type": "number",
+      "default": 0
+    },
+    "responsibility_score": {
+      "type": "number",
+      "default": 0
+    },
+    "order_score": {
+      "type": "number",
+      "default": 0
+    },
+    "team_score": {
+      "type": "number",
+      "default": 0
+    },
+    "total_score": {
+      "type": "number",
+      "default": 0
+    },
+    "quality_notes": {
+      "type": "string"
+    },
+    "productivity_notes": {
+      "type": "string"
+    },
+    "responsibility_notes": {
+      "type": "string"
+    },
+    "order_notes": {
+      "type": "string"
+    },
+    "team_notes": {
+      "type": "string"
+    },
+    "strengths": {
+      "type": "string"
+    },
+    "development_areas": {
+      "type": "string"
+    },
+    "badges": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "employee_of_month": {
+      "type": "boolean",
+      "default": false
+    },
+    "reviewed_by": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "employee",
+    "month"
+  ]
+}

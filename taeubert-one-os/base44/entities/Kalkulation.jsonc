@@ -1,0 +1,158 @@
+{
+  "name": "Kalkulation",
+  "type": "object",
+  "properties": {
+    "schadensbericht_id": {
+      "type": "string",
+      "description": "Schadensbericht (ID)"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Datum der Kalkulation"
+    },
+    "positionen": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "position_id": {
+            "type": "string"
+          },
+          "bezeichnung": {
+            "type": "string"
+          },
+          "gewerk": {
+            "type": "string"
+          },
+          "positionstyp": {
+            "type": "string"
+          },
+          "richtzeit_ah": {
+            "type": "number"
+          },
+          "menge": {
+            "type": "number",
+            "default": 1
+          },
+          "einzelpreis": {
+            "type": "number"
+          },
+          "gesamtpreis": {
+            "type": "number"
+          }
+        }
+      },
+      "description": "Reparaturpositionen (Zeilen)"
+    },
+    "stundenlohn_mechanik": {
+      "type": "number",
+      "default": 150,
+      "description": "Stundenlohn Mechanik \u20ac/h"
+    },
+    "stundenlohn_karosserie": {
+      "type": "number",
+      "default": 150,
+      "description": "Stundenlohn Karosserie \u20ac/h"
+    },
+    "stundenlohn_lackierung": {
+      "type": "number",
+      "default": 155,
+      "description": "Stundenlohn Lackierung \u20ac/h"
+    },
+    "lackmaterial_prozent": {
+      "type": "number",
+      "default": 45,
+      "description": "Lackmaterial-Pauschale in % des Lacklohns (DAT-Standard: 45%)"
+    },
+    "kleinteile_aufschlag_aktiv": {
+      "type": "boolean",
+      "default": false,
+      "description": "Kleinteile-Aufschlag auf Ersatzteile aktiv"
+    },
+    "kleinteile_prozent": {
+      "type": "number",
+      "default": 15,
+      "description": "Kleinteile-Aufschlag in %"
+    },
+    "summe_arbeitslohn": {
+      "type": "number",
+      "default": 0,
+      "description": "Summe Arbeitslohn gesamt (berechnet)"
+    },
+    "summe_arbeitslohn_lack": {
+      "type": "number",
+      "default": 0,
+      "description": "Summe Arbeitslohn Lackierung (berechnet)"
+    },
+    "summe_arbeitslohn_karosserie": {
+      "type": "number",
+      "default": 0,
+      "description": "Summe Arbeitslohn Karosserie (berechnet)"
+    },
+    "summe_arbeitslohn_mechanik": {
+      "type": "number",
+      "default": 0,
+      "description": "Summe Arbeitslohn Mechanik (berechnet)"
+    },
+    "summe_ersatzteile": {
+      "type": "number",
+      "default": 0,
+      "description": "Summe Ersatzteile (berechnet)"
+    },
+    "summe_lackmaterial": {
+      "type": "number",
+      "default": 0,
+      "description": "Summe Lackmaterial-Pauschale (berechnet, DAT: 45% des Lacklohns)"
+    },
+    "summe_pauschale": {
+      "type": "number",
+      "default": 0,
+      "description": "Summe Nebenkosten / Pauschalen (berechnet)"
+    },
+    "zwischensumme_netto": {
+      "type": "number",
+      "default": 0,
+      "description": "Reparaturkosten netto (berechnet)"
+    },
+    "mwst_satz": {
+      "type": "number",
+      "default": 19,
+      "description": "MwSt-Satz in %"
+    },
+    "mwst_auf_arbeitslohn": {
+      "type": "boolean",
+      "default": true,
+      "description": "MwSt auch auf Arbeitslohn (Versicherungsfall = false)"
+    },
+    "mwst_betrag": {
+      "type": "number",
+      "default": 0,
+      "description": "MwSt-Betrag (berechnet)"
+    },
+    "gesamtbetrag_brutto": {
+      "type": "number",
+      "default": 0,
+      "description": "Reparaturkosten brutto (berechnet)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Entwurf",
+        "Kalkuliert",
+        "Kunde informiert",
+        "Auftrag erteilt"
+      ],
+      "default": "Kalkuliert",
+      "description": "Status"
+    },
+    "hinweis": {
+      "type": "string",
+      "default": "Unverbindliche Kostensch\u00e4tzung. \u00c4nderungen vorbehalten.",
+      "description": "Hinweis"
+    }
+  },
+  "required": [
+    "schadensbericht_id"
+  ]
+}

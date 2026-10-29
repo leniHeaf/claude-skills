@@ -1,0 +1,95 @@
+{
+  "name": "TaskRequest",
+  "type": "object",
+  "properties": {
+    "employee": {
+      "type": "string",
+      "description": "Mitarbeiter, der die Aufgabe einplant"
+    },
+    "title": {
+      "type": "string",
+      "description": "Aufgabentitel"
+    },
+    "description": {
+      "type": "string",
+      "description": "Beschreibung"
+    },
+    "vehicle_info": {
+      "type": "string",
+      "description": "Fahrzeuginfo (optional)"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "teile",
+        "karosserie",
+        "vorbereitung",
+        "lackierung",
+        "finish",
+        "reinigung",
+        "kunde",
+        "uebergabe",
+        "lager",
+        "sonstiges"
+      ],
+      "default": "sonstiges",
+      "description": "Kategorie"
+    },
+    "planned_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Geplantes Datum"
+    },
+    "planned_start_time": {
+      "type": "string",
+      "description": "Geplante Startzeit (HH:mm)"
+    },
+    "estimated_hours": {
+      "type": "number",
+      "default": 0,
+      "description": "Gesch\u00e4tzte Dauer in Stunden"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "niedrig",
+        "mittel",
+        "hoch",
+        "kritisch"
+      ],
+      "default": "mittel",
+      "description": "Priorit\u00e4t"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Begr\u00fcndung / Warum diese Einplanung"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "eingereicht",
+        "genehmigt",
+        "abgelehnt"
+      ],
+      "default": "eingereicht",
+      "description": "Genehmigungsstatus"
+    },
+    "reviewed_by": {
+      "type": "string",
+      "description": "Gepr\u00fcft von"
+    },
+    "manager_comment": {
+      "type": "string",
+      "description": "Kommentar des Managers"
+    },
+    "task_id": {
+      "type": "string",
+      "description": "ID der erstellten Aufgabe (nach Genehmigung)"
+    }
+  },
+  "required": [
+    "employee",
+    "title",
+    "planned_date"
+  ]
+}

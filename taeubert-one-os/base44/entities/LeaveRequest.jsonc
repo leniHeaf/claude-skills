@@ -1,0 +1,44 @@
+{
+  "name": "LeaveRequest",
+  "type": "object",
+  "properties": {
+    "employee": {
+      "type": "string"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "days": {
+      "type": "number"
+    },
+    "reason": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "eingereicht",
+        "genehmigt",
+        "abgelehnt",
+        "rueckfrage"
+      ],
+      "default": "eingereicht"
+    },
+    "manager_comment": {
+      "type": "string"
+    },
+    "reviewed_by": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "employee",
+    "start_date",
+    "end_date"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "name": "RolePermission",
+  "type": "object",
+  "properties": {
+    "role": {
+      "type": "string",
+      "enum": [
+        "master",
+        "karosserie_lack",
+        "buerro",
+        "azubi",
+        "mitarbeiter"
+      ],
+      "description": "Rollen-ID"
+    },
+    "module": {
+      "type": "string",
+      "description": "Modul-Key (z.B. betrieb, kunden, lohn, academy)"
+    },
+    "has_access": {
+      "type": "boolean",
+      "default": false,
+      "description": "Zugriff erlaubt?"
+    }
+  },
+  "required": [
+    "role",
+    "module"
+  ]
+}

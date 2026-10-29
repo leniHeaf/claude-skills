@@ -1,0 +1,55 @@
+{
+  "name": "VehiclePhoto",
+  "type": "object",
+  "properties": {
+    "vehicle_id": {
+      "type": "string"
+    },
+    "vehicle_info": {
+      "type": "string"
+    },
+    "photo_url": {
+      "type": "string"
+    },
+    "area": {
+      "type": "string",
+      "enum": [
+        "annahme",
+        "schaden",
+        "vorschaden",
+        "demontage",
+        "teile",
+        "vorbereitung",
+        "lackierung",
+        "finish",
+        "endkontrolle",
+        "uebergabe",
+        "reklamation",
+        "nacharbeit",
+        "sonstiges"
+      ],
+      "default": "annahme"
+    },
+    "employee": {
+      "type": "string"
+    },
+    "vehicle_status": {
+      "type": "string"
+    },
+    "task_id": {
+      "type": "string"
+    },
+    "comment": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string",
+      "description": "ISO timestamp"
+    }
+  },
+  "required": [
+    "vehicle_id",
+    "photo_url",
+    "area"
+  ]
+}

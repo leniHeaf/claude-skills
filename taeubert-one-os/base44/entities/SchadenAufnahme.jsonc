@@ -1,0 +1,109 @@
+{
+  "name": "SchadenAufnahme",
+  "type": "object",
+  "properties": {
+    "customer_name": {
+      "type": "string",
+      "description": "Kundenname"
+    },
+    "customer_phone": {
+      "type": "string",
+      "description": "Telefonnummer"
+    },
+    "customer_email": {
+      "type": "string",
+      "description": "E-Mail"
+    },
+    "customer_address": {
+      "type": "string",
+      "description": "Adresse"
+    },
+    "vehicle_make": {
+      "type": "string",
+      "description": "Marke"
+    },
+    "vehicle_model": {
+      "type": "string",
+      "description": "Modell"
+    },
+    "vehicle_license_plate": {
+      "type": "string",
+      "description": "Kennzeichen"
+    },
+    "vehicle_color": {
+      "type": "string",
+      "description": "Farbe"
+    },
+    "vehicle_vin": {
+      "type": "string",
+      "description": "Fahrgestellnummer"
+    },
+    "insurance": {
+      "type": "string",
+      "description": "Versicherung"
+    },
+    "insurance_case_number": {
+      "type": "string",
+      "description": "Schadennummer"
+    },
+    "damage_location": {
+      "type": "string",
+      "description": "Schadensstelle(n)"
+    },
+    "damage_description": {
+      "type": "string",
+      "description": "Schadensbeschreibung"
+    },
+    "damage_photos": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Schadensfotos"
+    },
+    "kalkulation_gewuenscht": {
+      "type": "boolean",
+      "default": false,
+      "description": "Kalkulation gew\u00fcnscht (90 \u20ac)"
+    },
+    "kalkulation_termin": {
+      "type": "string",
+      "format": "date",
+      "description": "Wunschdatum Kalkulation"
+    },
+    "kalkulation_uhrzeit": {
+      "type": "string",
+      "description": "Wunschuhrzeit Kalkulation"
+    },
+    "reparatur_termin": {
+      "type": "string",
+      "format": "date",
+      "description": "Wunschdatum Reparatur"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Zus\u00e4tzliche Notizen"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "neu",
+        "kalkulation_geplant",
+        "angebot_erstellt",
+        "auftrag_erteilt",
+        "abgelehnt"
+      ],
+      "default": "neu",
+      "description": "Status"
+    },
+    "aufgenommen_von": {
+      "type": "string",
+      "description": "Aufgenommen von (Mitarbeiter)"
+    }
+  },
+  "required": [
+    "customer_name",
+    "customer_phone",
+    "vehicle_license_plate"
+  ]
+}

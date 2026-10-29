@@ -1,0 +1,67 @@
+{
+  "name": "Appointment",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "annahme",
+        "abholung",
+        "lackierung",
+        "werkstatt",
+        "urlaub",
+        "probearbeit",
+        "kundentermin",
+        "autohaus",
+        "tuev",
+        "reifenwechsel",
+        "nachkontrolle",
+        "sonstiges"
+      ],
+      "default": "annahme"
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "start_time": {
+      "type": "string"
+    },
+    "end_time": {
+      "type": "string"
+    },
+    "vehicle_id": {
+      "type": "string"
+    },
+    "vehicle_info": {
+      "type": "string"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "employee": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "geplant",
+        "bestaetigt",
+        "abgeschlossen",
+        "abgesagt"
+      ],
+      "default": "geplant"
+    }
+  },
+  "required": [
+    "title",
+    "date",
+    "type"
+  ]
+}

@@ -1,0 +1,159 @@
+{
+  "name": "Vehicle",
+  "type": "object",
+  "properties": {
+    "customer_name": {
+      "type": "string",
+      "description": "Kundenname"
+    },
+    "license_plate": {
+      "type": "string",
+      "description": "Kennzeichen"
+    },
+    "make": {
+      "type": "string",
+      "description": "Fahrzeugmarke / Hersteller"
+    },
+    "model": {
+      "type": "string",
+      "description": "Fahrzeugmodell"
+    },
+    "baureihe": {
+      "type": "string",
+      "description": "Baureihe / Variante"
+    },
+    "fahrzeugklasse": {
+      "type": "string",
+      "description": "Fahrzeugklasse (z.B. PKW)"
+    },
+    "hsn": {
+      "type": "string",
+      "description": "Herstellerschl\u00fcsselnummer (HSN, 4-stellig)"
+    },
+    "tsn": {
+      "type": "string",
+      "description": "Typschl\u00fcsselnummer (TSN, 3-stellig)"
+    },
+    "baujahr": {
+      "type": "number",
+      "description": "Baujahr"
+    },
+    "erstzulassung": {
+      "type": "string",
+      "format": "date",
+      "description": "Erstzulassung"
+    },
+    "color": {
+      "type": "string",
+      "description": "Fahrzeugfarbe"
+    },
+    "vin": {
+      "type": "string",
+      "description": "Fahrgestellnummer"
+    },
+    "hubraum": {
+      "type": "string",
+      "description": "Hubraum in ccm"
+    },
+    "leistung_kw": {
+      "type": "string",
+      "description": "Leistung in kW"
+    },
+    "leistung_ps": {
+      "type": "string",
+      "description": "Leistung in PS"
+    },
+    "anzahl_sitze": {
+      "type": "string",
+      "description": "Anzahl Sitzpl\u00e4tze"
+    },
+    "schadstoffklasse": {
+      "type": "string",
+      "description": "Schadstoffklasse (z.B. Euro 6)"
+    },
+    "kraftstoff": {
+      "type": "string",
+      "description": "Kraftstoffart (z.B. Benzin, Diesel)"
+    },
+    "insurance": {
+      "type": "string",
+      "description": "Versicherung"
+    },
+    "insurance_case_number": {
+      "type": "string",
+      "description": "Schadensnummer"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "annahme",
+        "teile_bestellt",
+        "demontage",
+        "karosserie",
+        "vorbereitung",
+        "lackierung",
+        "finish",
+        "endkontrolle",
+        "uebergabe"
+      ],
+      "default": "annahme",
+      "description": "Aktueller Produktionsstatus"
+    },
+    "condition": {
+      "type": "string",
+      "enum": [
+        "fertig",
+        "in_arbeit",
+        "problem",
+        "wartet_auf_teile",
+        "lackierung"
+      ],
+      "default": "in_arbeit",
+      "description": "Zustandscode"
+    },
+    "responsible": {
+      "type": "string",
+      "description": "Verantwortlicher Mitarbeiter"
+    },
+    "estimated_completion": {
+      "type": "string",
+      "format": "date",
+      "description": "Geplante Fertigstellung"
+    },
+    "customer_wishes": {
+      "type": "string",
+      "description": "Kundenw\u00fcnsche und Zusatzarbeiten"
+    },
+    "damage_description": {
+      "type": "string",
+      "description": "Schadensbeschreibung"
+    },
+    "photos": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Fahrzeugfotos"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Interne Notizen"
+    },
+    "quality_approved": {
+      "type": "boolean",
+      "default": false,
+      "description": "Qualit\u00e4tsfreigabe erteilt"
+    },
+    "progress": {
+      "type": "number",
+      "default": 0,
+      "description": "Fortschritt in Prozent"
+    }
+  },
+  "required": [
+    "customer_name",
+    "license_plate",
+    "make",
+    "model"
+  ]
+}

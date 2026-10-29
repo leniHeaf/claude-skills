@@ -1,0 +1,54 @@
+{
+  "name": "DATImport",
+  "type": "object",
+  "properties": {
+    "vehicle_id": {
+      "type": "string"
+    },
+    "vehicle_info": {
+      "type": "string"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "damage_number": {
+      "type": "string",
+      "description": "Schadennummer"
+    },
+    "insurance": {
+      "type": "string",
+      "description": "Versicherung"
+    },
+    "total_hours": {
+      "type": "number",
+      "description": "Geplante Stunden gesamt"
+    },
+    "total_parts_cost": {
+      "type": "number",
+      "description": "Teilekosten gesamt"
+    },
+    "task_count": {
+      "type": "number",
+      "description": "Anzahl erstellter Aufgaben"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "entwurf",
+        "freigegeben",
+        "abgeschlossen"
+      ],
+      "default": "entwurf"
+    },
+    "approved_by": {
+      "type": "string"
+    },
+    "raw_data": {
+      "type": "string",
+      "description": "JSON der analysierten Daten"
+    }
+  },
+  "required": [
+    "vehicle_id"
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "name": "TimeEntry",
+  "type": "object",
+  "properties": {
+    "vehicle_id": {
+      "type": "string"
+    },
+    "vehicle_info": {
+      "type": "string"
+    },
+    "employee": {
+      "type": "string"
+    },
+    "activity": {
+      "type": "string",
+      "enum": [
+        "demontage",
+        "karosserie",
+        "schleifen",
+        "fuellern",
+        "abkleben",
+        "lackierung",
+        "finish",
+        "reinigung",
+        "nacharbeit",
+        "sonstiges"
+      ],
+      "default": "sonstiges"
+    },
+    "start_time": {
+      "type": "string"
+    },
+    "end_time": {
+      "type": "string"
+    },
+    "pause_minutes": {
+      "type": "number",
+      "default": 0
+    },
+    "pause_start": {
+      "type": "string",
+      "description": "ISO timestamp when current pause started"
+    },
+    "duration_minutes": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "aktiv",
+        "pausiert",
+        "beendet"
+      ],
+      "default": "aktiv"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "vehicle_id",
+    "employee",
+    "activity",
+    "start_time"
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "name": "Ausbildungsplan",
+  "type": "object",
+  "properties": {
+    "apprentice": {
+      "type": "string",
+      "description": "Azubi-Name"
+    },
+    "department": {
+      "type": "string",
+      "enum": [
+        "karosserie",
+        "lackierung",
+        "vorbereitung",
+        "finish",
+        "werkstatt",
+        "buerro",
+        "annahme",
+        "lackaufbereitung",
+        "qualitaet",
+        "schule",
+        "betrieb",
+        "sonstiges"
+      ],
+      "default": "werkstatt",
+      "description": "Einsatzort / Abteilung"
+    },
+    "topic": {
+      "type": "string",
+      "description": "Lerninhalt / Thema"
+    },
+    "instructor": {
+      "type": "string",
+      "description": "Ausbilder / Betreuer"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Von"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Bis"
+    },
+    "year_of_apprenticeship": {
+      "type": "number",
+      "description": "Lehrjahr (1-3)"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Notizen"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "geplant",
+        "laufend",
+        "abgeschlossen"
+      ],
+      "default": "geplant",
+      "description": "Status"
+    }
+  },
+  "required": [
+    "apprentice",
+    "department",
+    "start_date",
+    "end_date"
+  ]
+}
