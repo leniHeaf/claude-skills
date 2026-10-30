@@ -388,7 +388,7 @@ EXTRA_CSS = """
   .svc-quick { padding: 14px 0 26px; border-bottom: 1px solid var(--line); }
   .svc-quick-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 30px; }
   .svc-quick .trust { color: var(--text); }
-  .svc-quick .trust svg { color: #c00000; }
+  .svc-quick .trust svg { color: #6b6b6b; }
   .svc-quick .btns { margin-top: 0; display: flex; flex-wrap: wrap; gap: 10px; }
   .svc-steps { padding: 70px 0; background: var(--grey); }
   .svc-steps h2 { font-size: clamp(28px, 3.2vw, 40px); margin-bottom: 30px; }
@@ -421,7 +421,7 @@ EXTRA_CSS = """
   .sec h1.overline, .rich-sub h1.overline { font-family: Inter, sans-serif; letter-spacing: .14em; font-size: 13px; font-weight: 600; margin-bottom: 12px; }
   .rte table.compare { margin: 18px 0 20px; font-size: 15px; }
   .compare thead th { background: var(--black); color: var(--white); font-weight: 700; border-color: var(--black); }
-  .compare thead th:nth-child(2) { background: var(--red); border-color: var(--red); }
+  .compare thead th:nth-child(2) { background: #3a3a3a; border-color: #3a3a3a; }
   .compare tbody th { font-weight: 600; background: var(--grey); width: 32%; }
   .compare td:nth-child(2) { font-weight: 600; }
   @media (max-width: 600px) { .rte table.compare { font-size: 13px; } .compare th, .compare td { padding: 7px 6px; } }
@@ -469,13 +469,13 @@ EXTRA_CSS = """
   .countdown h2 { font-size: clamp(30px, 4vw, 42px); }
   .countdown p { margin-top: 12px; }
   .cd-cards { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-top: 30px; }
-  .cd-card { background: #1a1a1a; border: 1px solid #ff0000; border-radius: 10px; padding: 24px 32px; min-width: 240px; }
-  .cd-card b { display: block; font-family: "Archivo Black"; color: #ff0000; font-size: clamp(36px, 5vw, 54px); line-height: 1.1; }
+  .cd-card { background: #1a1a1a; border: 1px solid rgba(255,255,255,.35); border-radius: 0; padding: 24px 32px; min-width: 240px; }
+  .cd-card b { display: block; font-family: "Archivo Black"; color: #fff; font-size: clamp(36px, 5vw, 54px); line-height: 1.1; }
   .promo-box { background: #000; color: #fff; }
-  .promo-box .badge { display: inline-block; background: #ff0000; color: #000; font-weight: 700; padding: 6px 14px; margin-bottom: 16px; }
+  .promo-box .badge { display: inline-block; background: #fff; color: #000; font-weight: 700; padding: 6px 14px; margin-bottom: 16px; }
   .promo-box h2 { font-size: 30px; margin-bottom: 10px; }
   .progress { max-width: 420px; height: 10px; background: #4a4a4a; margin: 24px auto 10px; }
-  .progress div { height: 100%; background: #ff0000; }
+  .progress div { height: 100%; background: #fff; }
   .muted { color: #d1d1d1; } .small { font-size: 13px; margin-top: 6px; }
   .cta-box h2 { font-size: 28px; margin-bottom: 10px; }
   @media (max-width: 990px) {
@@ -566,8 +566,9 @@ def shell():
     marquee_js = re.search(r"(  // Laufschrift: zwei identische.*?\n  \})\n", js, re.S).group(1) + "\n"
     menu_js = re.search(r"(  // Menü-Drawer.*?addEventListener\('keydown'.*?\n)", js, re.S).group(1)
     img_js = re.search(r"(  // Fehlende Bilddateien.*?\n  \}\);\n)", js, re.S).group(1)
+    nav_js = re.search(r"(  // Hauptnavigation: Aufklappmenüs.*?\n  \}\)\(\);\n)", js, re.S).group(1)
     status_js = re.search(r"(  // Öffnungsstatus.*?\n  \}\)\(\);\n)", js, re.S).group(1)
-    return style, head_links, top, footer, menu_js + img_js + status_js + marquee_js + PAGE_JS + "  document.getElementById('year').textContent = new Date().getFullYear();\n"
+    return style, head_links, top, footer, menu_js + nav_js + img_js + status_js + marquee_js + PAGE_JS + "  document.getElementById('year').textContent = new Date().getFullYear();\n"
 
 
 def first_heading(d):
@@ -862,6 +863,41 @@ def service_cards(items, images=False):
     return "".join(out)
 
 
+CHEV = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>'
+NAV_GROUPS = [
+    ("Unfall?", [("unfall-was-tun.html", "Unfall – was jetzt zu tun ist"), ("schaden-melden.html", "Schaden per Foto melden"),
+                 ("versicherungsschaden.html", "Abrechnung mit der Versicherung"), ("unfall-oder-kratzer.html", "Wer zahlt die Reparatur?")]),
+    ("Über uns", [("who-we-are.html", "Who we are"), ("history.html", "History"), ("meet-the-team.html", "Meet the Team"),
+                  ("porsche-911.html", "Projekt: Porsche 911"), ("porsche-gts.html", "Projekt: Porsche Cayenne GTS"), ("vw-bulli-t2.html", "Projekt: VW Bulli T2")]),
+    ("Karriere", [("karriere.html", "Karriere bei Täubert"), ("azubi.html", "Ausbildung"), ("jobs.html", "Stellenangebote")]),
+]
+
+
+def nav_html():
+    svcs = {s: n for s, n, _ in all_services()}
+    mega = "".join(f'<div><h3>{esc(c)}</h3>' + "".join(f'<a href="{s}.html">{esc(svcs[s])}</a>' for s in slugs if s in svcs) + "</div>" for c, slugs in CATEGORIES)
+    out = [f'<li class="has-sub"><button class="top" type="button" aria-expanded="false">Leistungen {CHEV}</button><div class="panel mega">{mega}<a class="all" href="leistungen.html">Alle Leistungen ansehen →</a></div></li>']
+    for title, links in NAV_GROUPS:
+        out.append(f'<li class="has-sub"><button class="top" type="button" aria-expanded="false">{esc(title)} {CHEV}</button><div class="panel">' + "".join(f'<a href="{h}">{esc(t)}</a>' for h, t in links) + "</div></li>")
+    out.append('<li><a class="top" href="fragen.html">Fragen</a></li><li><a class="top" href="contact.html">Kontakt</a></li>')
+    return "<ul>" + "".join(out) + "</ul>"
+
+
+def drawer_html():
+    svcs = {s: n for s, n, _ in all_services()}
+    groups = "".join(f"<h3>{esc(c)}</h3>" + "".join(f'<a href="{s}.html">{esc(svcs[s])}</a>' for s in slugs if s in svcs) for c, slugs in CATEGORIES)
+    out = [f'''<div class="drawer-quick">
+      <a class="btn btn-dark" href="{BOOKING}">Termin online buchen</a>
+      <a class="btn btn-outline-dark" href="schaden-melden.html">Schaden per Foto melden</a>
+      <a class="btn btn-outline-dark" href="unfall-was-tun.html">Unfall – was jetzt tun?</a>
+    </div>''',
+           f'<details><summary>Leistungen</summary><div class="sub"><a href="leistungen.html"><strong>Alle Leistungen</strong></a>{groups}</div></details>']
+    for title, links in NAV_GROUPS[1:]:
+        out.append(f'<details><summary>{esc(title)}</summary><div class="sub">' + "".join(f'<a href="{h}">{esc(t)}</a>' for h, t in links) + "</div></details>")
+    out.append('<a class="plain" href="fragen.html">Häufige Fragen</a><a class="plain" href="contact.html">Kontakt &amp; Anfahrt</a>')
+    return "\n    ".join(out)
+
+
 def update_index():
     """Leistungsblock, Footer-Leistungen und strukturierte Daten der Startseite aus den Leistungslisten erzeugen."""
     fp = os.path.join(SITE, "index.html")
@@ -879,6 +915,8 @@ def update_index():
   </section>
   <!-- LEISTUNGEN:END -->'''
     s = re.sub(r"<!-- LEISTUNGEN:START -->.*?<!-- LEISTUNGEN:END -->", lambda m: block, s, flags=re.S)
+    s = re.sub(r"<!-- MAINNAV:START -->.*?<!-- MAINNAV:END -->", lambda m: "<!-- MAINNAV:START -->" + nav_html() + "<!-- MAINNAV:END -->", s, flags=re.S)
+    s = re.sub(r"<!-- DRAWERNAV:START -->.*?<!-- DRAWERNAV:END -->", lambda m: "<!-- DRAWERNAV:START -->\n    " + drawer_html() + "\n  <!-- DRAWERNAV:END -->", s, flags=re.S)
     foot = "".join(f'<li><a href="{slug}.html">{esc(name)}</a></li>' for slug, name, _ in top)
     foot += '<li><a href="leistungen.html">Alle Leistungen</a></li>'
     s = re.sub(r"<!-- FOOTER-LEISTUNGEN:START -->.*?<!-- FOOTER-LEISTUNGEN:END -->",
@@ -1061,7 +1099,7 @@ DAMAGE_CSS = """
   .damage-form .consent input { margin-top: 5px; }
   .damage-form .consent a { text-decoration: underline; }
   .form-status { margin-top: 14px; font-weight: 600; }
-  .form-status.err { color: #b00020; }
+  .form-status.err { color: #222; }
 """
 
 DAMAGE_JS = r"""
@@ -1164,7 +1202,7 @@ BOOKING_CSS = """
   .book-card h2 { font-size: 22px; margin-bottom: 8px; }
   .book-card > p { margin-bottom: 16px; color: #444; }
   .book-card .mail-form { margin-top: 0; }
-  .book-card .eyebrow { color: #c00000; font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
+  .book-card .eyebrow { color: #6b6b6b; font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
   @media (max-width: 990px) { .book-grid { grid-template-columns: 1fr; } }
   .booking-embed iframe { display: block; width: 100%; height: 1000px; border: 1px solid var(--line); background: var(--white); }
   .booking-fallback { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 18px; }
@@ -1208,7 +1246,86 @@ UNFALL_CSS = """
   .sos-list li::before { content: counter(sos); position: absolute; left: 22px; top: 18px; font-family: "Archivo Black"; font-size: 30px; color: var(--red); }
   .sos-list h2 { font-size: 19px; margin-bottom: 6px; }
   .sos-note { margin-top: 22px; font-size: 14px; color: #555; }
+  .faq .cat-head { margin: 40px 0 6px; }
+  .faq-more a { font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 """
+
+
+# Allgemeine Kundenfragen (nur bestätigte Angaben)
+GENERAL_FAQ = [
+    ("Termin & Kontakt", [
+        ("Wie bekomme ich einen Termin?", "Am schnellsten über die Online-Terminbuchung – rund um die Uhr. Alternativ fordern Sie einen Rückruf an, rufen uns an (03675 4289606) oder schreiben per WhatsApp."),
+        ("Wann habt ihr geöffnet?", "Montag bis Donnerstag 08:00–17:00 Uhr, Freitag 08:00–14:30 Uhr. Samstag und Sonntag ist geschlossen."),
+        ("Wo finde ich euch?", "Täubert Karosserie und Lack GmbH, Bettelhecker Straße 15, 96515 Sonneberg. Kunden kommen auch aus Neustadt bei Coburg, Coburg, Rödental, Kronach und Bamberg."),
+        ("Kann ich einfach vorbeikommen?", "Ja. Wenn Sie unsicher sind, ob sich eine Reparatur lohnt, schauen wir uns Ihr Fahrzeug an und sagen Ihnen ehrlich, was Sinn macht. Mit Termin geht es für Sie am schnellsten."),
+    ]),
+    ("Kosten & Kostenvoranschlag", [
+        ("Wie schnell bekomme ich einen Kostenvoranschlag?", "Innerhalb von 24 Stunden. Schicken Sie uns dafür am besten ein paar Fotos über „Schaden per Foto melden“."),
+        ("Was kostet meine Reparatur?", "Das hängt von Art und Größe des Schadens ab. Sie bekommen vorher einen klaren Kostenvoranschlag – ohne Überraschungen. Beispiele finden Sie im Ratgeber „Auto lackieren: Kosten & Beispiele“."),
+    ]),
+    ("Service rund um die Reparatur", [
+        ("Bekomme ich einen Ersatzwagen?", "Ja. Sprechen Sie uns bei der Terminvereinbarung darauf an, dann steht während der Reparatur ein Ersatzwagen für Sie bereit."),
+        ("Holt ihr mein Auto ab?", "Ja, mit unserem Hol- und Bringservice holen wir Ihr Fahrzeug ab und bringen es nach der Reparatur zurück."),
+        ("Rechnet ihr direkt mit der Versicherung ab?", "Ja. Wir rechnen direkt mit der Versicherung ab und stimmen uns mit dem Gutachter ab."),
+        ("Welche Fahrzeuge repariert ihr?", "PKW, Transporter, Firmenfahrzeuge und Oldtimer – Marke egal."),
+    ]),
+]
+FAQ_GROUPS = [(c, slugs) for c, slugs in CATEGORIES] + [("Ratgeber", GUIDES)]
+
+
+def collect_faqs(slug):
+    fp = os.path.join(SITE, f"{slug}.html")
+    if not os.path.exists(fp):
+        return []
+    s = open(fp, encoding="utf-8").read()
+    out = []
+    for m in re.finditer(r'<details[^>]*><summary><span>(.*?)</span></summary><div class="rte">(.*?)</div></details>', s, re.S):
+        q, a = plain(m.group(1)), m.group(2).strip()
+        if q and plain(a):
+            out.append((q, a))
+    return out
+
+
+def render_faq_page():
+    seen, sections, ld_items, toc = set(), [], [], []
+
+    def block(title, anchor, qa):
+        rows = []
+        for q, a in qa:
+            key = q.lower()
+            if key in seen:
+                continue
+            seen.add(key)
+            a_html = a if a.lstrip().startswith("<") else f"<p>{esc(a)}</p>"
+            rows.append(f'<details><summary><span>{esc(q)}</span></summary><div class="rte">{a_html}</div></details>')
+            ld_items.append({"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": plain(a_html)}})
+        if rows:
+            toc.append(f'<a href="#{anchor}">{esc(title)}</a>')
+            sections.append(f'<h2 class="cat-head" id="{anchor}">{esc(title)}</h2>' + "".join(rows))
+
+    for i, (title, qa) in enumerate(GENERAL_FAQ):
+        block(title, f"allg-{i}", qa)
+    svcs = {s: n for s, n, _ in all_services()}
+    for i, (title, slugs) in enumerate(FAQ_GROUPS):
+        qa = []
+        for s in slugs:
+            for q, a in collect_faqs(s):
+                qa.append((q, a + f'<p class="faq-more"><a href="{s}.html">Mehr zu {esc(svcs.get(s, SERVICES.get(s, ("", s))[1]))} →</a></p>'))
+        block(title, f"kat-{i}", qa)
+    body = f'''<section class="sec" style="padding:50px 0 10px">
+  <div class="page-width">
+    <h1 class="overline">Häufige Fragen</h1>
+    <p class="heading h-6">Ihre Fragen – unsere Antworten.</p>
+    <div class="rte"><p>Alles zu Termin, Kosten, Versicherung, Ersatzwagen und unseren Leistungen. Ihre Frage ist nicht dabei? <a href="tel:+4936754289606">03675 4289606</a> oder <a href="https://wa.me/4936754289606" target="_blank" rel="noopener">WhatsApp</a>.</p></div>
+    <nav class="cat-nav" aria-label="Themen" style="margin-top:18px">{"".join(toc)}</nav>
+  </div>
+</section>
+<section class="sec" style="padding:10px 0 60px">
+  <div class="page-width"><div class="faq">{"".join(sections)}</div></div>
+</section>'''
+    ld = '<script type="application/ld+json">' + json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": ld_items}, ensure_ascii=False) + "</script>"
+    return body, ld, len(ld_items)
+
 
 
 def simple_page(slug, title, desc, body_html, style, head_links, top, footer, js, ld, robots=""):
@@ -1390,6 +1507,13 @@ def main():
         "Unfall gehabt? Checkliste in 7 Schritten: sichern, helfen, fotografieren, Daten austauschen – und Täubert in Sonneberg kümmert sich um den Rest.",
         UNFALL_PAGE, style, head_links, top, footer, js, ld)))
     built.insert(3, "unfall-was-tun")
+    faq_body, faq_schema, faq_count = render_faq_page()
+    faq_page = simple_page("fragen", "Häufige Fragen – Täubert Sonneberg",
+        f"{faq_count} Antworten zu Termin, Kostenvoranschlag, Versicherung, Ersatzwagen, Unfallreparatur, Lackierung und Smart Repair bei Täubert in Sonneberg.",
+        faq_body, style, head_links, top, footer, js, ld)
+    faq_page = faq_page.replace("</head>", faq_schema + "\n</head>", 1)
+    open(os.path.join(SITE, "fragen.html"), "w", encoding="utf-8").write(sync_images(faq_page))
+    built.insert(4, "fragen")
     open(os.path.join(SITE, "danke.html"), "w", encoding="utf-8").write(simple_page(
         "danke", "Danke", "Ihre Schadensmeldung ist bei uns eingegangen.", THANKS, style, head_links, top, footer, js, ld,
         robots='<meta name="robots" content="noindex, follow">\n'))
