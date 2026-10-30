@@ -519,6 +519,38 @@
   .callback-hint a { text-decoration: underline; text-underline-offset: 3px; color: var(--white); }
   .btn-outline-light { background: transparent; color: var(--white); border-color: rgba(255,255,255,.6); }
   .btn-outline-light:hover { border-color: var(--white); background: var(--white); color: var(--black); }
+  .finder { padding: 90px 0 30px; }
+  .finder-list { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px; border-top: 1px solid var(--black); }
+  .finder-list a { display: flex; align-items: baseline; gap: 18px; padding: 22px 4px; border-bottom: 1px solid var(--line); transition: padding .3s cubic-bezier(.2,.8,.2,1); }
+  .finder-list a:hover { padding-left: 14px; }
+  .finder-list .q { font-weight: 700; font-size: 19px; flex: 1; }
+  .finder-list .to { font-size: 14px; color: #555; text-align: right; }
+  .finder-list .to::after { content: " →"; color: var(--black); }
+  .cat-sec { padding: 70px 0 0; scroll-margin-top: 120px; }
+  .cat-sec .cat-top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px 60px; align-items: end; margin-bottom: 32px; }
+  .cat-sec h2 { font-size: clamp(30px, 3.6vw, 50px); line-height: 1.02; }
+  .cat-sec .cat-top p { color: #555; font-size: 17px; max-width: 520px; }
+  .tile-grid.c4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tile-grid.c4 .tile-svc { aspect-ratio: 16 / 10; }
+  .tile-grid.c1 { grid-template-columns: 1fr; }
+  .tile-grid.c1 .tile-svc { aspect-ratio: 21 / 8; }
+  .tile-body h3 { font-size: clamp(18px, 1.55vw, 23px); overflow-wrap: normal; hyphens: manual; }
+  .chips { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  .chips a { display: inline-block; padding: 10px 16px; border: 1px solid var(--line); font-size: 15px; transition: border-color .2s; }
+  .chips a:hover { border-color: var(--black); }
+  .more-svc { padding: 80px 0; }
+  .more-svc h2 { font-size: clamp(28px, 3.2vw, 44px); margin-bottom: 28px; }
+  .svc-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 70px; align-items: start; padding-top: 70px; padding-bottom: 30px; }
+  .svc-article > div + div { margin-top: 56px; padding-top: 56px; border-top: 1px solid var(--line); }
+  .svc-article h2 { font-size: clamp(26px, 2.8vw, 38px); margin-bottom: 18px; }
+  .svc-aside { position: sticky; top: 110px; background: var(--black); color: var(--white); padding: 32px; }
+  .svc-aside h2 { font-size: 22px; margin-bottom: 18px; }
+  .svc-aside .trust { flex-direction: column; gap: 10px; color: rgba(255,255,255,.9); }
+  .svc-aside .btns { flex-direction: column; margin-top: 24px; gap: 10px; display: flex; }
+  .svc-aside .btn { width: 100%; text-align: center; }
+  .svc-aside .hours { margin-top: 20px; font-size: 14px; color: rgba(255,255,255,.7); }
+  @media (max-width: 990px) { .svc-layout { grid-template-columns: 1fr; gap: 40px; } .svc-aside { display: none; } }
+  @media (max-width: 760px) { .finder { padding-top: 60px; } .finder-list { grid-template-columns: 1fr; } .finder-list .to { display: none; } .finder-list .q::after { content: " →"; } .cat-sec .cat-top { grid-template-columns: 1fr; } .tile-grid.c4 { grid-template-columns: 1fr; } .tile-grid.c1 .tile-svc { aspect-ratio: 4 / 3; } .more-svc { padding: 56px 0; } .svc-layout { padding-top: 50px; } .tile-body h3 { font-size: 19px; } .tile-grid.c4 .tile-svc { aspect-ratio: 4 / 3; } }
   .related { background: var(--grey); padding: 50px 0; }
   .related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
   .related h2 { font-size: 18px; margin-bottom: 14px; }
@@ -674,14 +706,14 @@
     <div class="btns"><a class="btn btn-dark" href="https://terminbuchungtaeubert.de">Termin online buchen</a><a class="btn btn-outline-dark" href="schaden-melden.html">Schaden per Foto melden</a></div>
   </div>
 </section>
-<section class="sec" style="padding:60px 0">
-  <div class="page-width"><div class="rich-inner" style="max-width:760px"><h2 class="h-4">Hagel hinterlässt mehr als ein paar Dellen</h2><div class="rte"><p>Ein kurzer Schauer reicht, und das Dach sieht aus wie ein Golfball. Hagelschäden sind ärgerlich, aber in vielen Fällen gut zu reparieren – oft sogar, ohne dass der Originallack angetastet werden muss.</p><p>Entscheidend ist, wie tief die Dellen sind und ob der Lack beschädigt wurde. Genau das schauen wir uns als Erstes an.</p></div></div></div>
-</section>
-<section class="sec scheme-grey" style="padding:60px 0">
-  <div class="page-width"><div class="rich-inner" style="max-width:760px"><h2 class="h-4">So reparieren wir Hagelschäden</h2><div class="rte"><ul><li><strong>Smart Repair:</strong> Dellen werden von innen schonend zurückgeformt, der Originallack bleibt erhalten.</li><li><strong>Lackreparatur:</strong> Ist der Lack gerissen oder abgeplatzt, lackieren wir die betroffenen Teile mit exakter Farbtonanpassung.</li><li><strong>Karosserie:</strong> Stark verformte Teile setzen wir instand oder ersetzen sie.</li></ul><p>Karosserie und Lackierung passieren bei uns im selben Betrieb – das spart Zeit und sorgt für ein einheitliches Ergebnis.</p></div></div></div>
-</section>
-<section class="sec" style="padding:60px 0">
-  <div class="page-width"><div class="rich-inner" style="max-width:760px"><h2 class="h-4">Hagelschaden und Versicherung</h2><div class="rte"><p>Hagel ist in der Regel über die Teilkasko versichert. Wir dokumentieren den Schaden, stimmen uns mit Ihrer Versicherung und dem Gutachter ab und übernehmen die Reparatur. Welche Kosten Ihre Versicherung übernimmt, hängt von Ihrem Vertrag ab – wir helfen Ihnen gern bei der Klärung.</p></div></div></div>
+<section class="page-width svc-layout">
+  <div class="svc-article"><div><h2>Hagel hinterlässt mehr als ein paar Dellen</h2><div class="rte"><p>Ein kurzer Schauer reicht, und das Dach sieht aus wie ein Golfball. Hagelschäden sind ärgerlich, aber in vielen Fällen gut zu reparieren – oft sogar, ohne dass der Originallack angetastet werden muss.</p><p>Entscheidend ist, wie tief die Dellen sind und ob der Lack beschädigt wurde. Genau das schauen wir uns als Erstes an.</p></div></div><div><h2>So reparieren wir Hagelschäden</h2><div class="rte"><ul><li><strong>Smart Repair:</strong> Dellen werden von innen schonend zurückgeformt, der Originallack bleibt erhalten.</li><li><strong>Lackreparatur:</strong> Ist der Lack gerissen oder abgeplatzt, lackieren wir die betroffenen Teile mit exakter Farbtonanpassung.</li><li><strong>Karosserie:</strong> Stark verformte Teile setzen wir instand oder ersetzen sie.</li></ul><p>Karosserie und Lackierung passieren bei uns im selben Betrieb – das spart Zeit und sorgt für ein einheitliches Ergebnis.</p></div></div><div><h2>Hagelschaden und Versicherung</h2><div class="rte"><p>Hagel ist in der Regel über die Teilkasko versichert. Wir dokumentieren den Schaden, stimmen uns mit Ihrer Versicherung und dem Gutachter ab und übernehmen die Reparatur. Welche Kosten Ihre Versicherung übernimmt, hängt von Ihrem Vertrag ab – wir helfen Ihnen gern bei der Klärung.</p></div></div></div>
+  <aside class="svc-aside" aria-label="Termin">
+    <h2>Hagelschaden bei Täubert</h2>
+    <ul class="trust"><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Kostenvoranschlag in 24 Stunden</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Direkte Abrechnung mit der Versicherung</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ersatzwagen</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Hol- und Bringservice</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Alle Marken</li></ul>
+    <div class="btns"><a class="btn btn-light" href="https://terminbuchungtaeubert.de">Termin online buchen</a><a class="btn btn-outline-light" href="schaden-melden.html">Schaden per Foto melden</a><a class="btn btn-outline-light" href="tel:+4936754289606">03675 4289606</a></div>
+    <p class="hours">Mo–Do 8–17 Uhr · Fr 8–14:30 Uhr<br>Bettelhecker Straße 15, Sonneberg</p>
+  </aside>
 </section>
 <section class="sec" style="padding:60px 0">
   <div class="page-width"><div class="faq"><h2 class="sec-head">Häufige Fragen</h2><details><summary><span>Kann jede Hageldelle ohne Lackieren entfernt werden?</span></summary><div class="rte"><p>Nicht jede. Ist der Lack beschädigt oder die Delle sehr tief oder an einer Kante, ist meist eine Lackierung nötig. Wir sagen Ihnen nach der Begutachtung ehrlich, welcher Weg sinnvoll ist.</p></div></details><details><summary><span>Zahlt die Versicherung den Hagelschaden?</span></summary><div class="rte"><p>Hagel ist üblicherweise über die Teilkasko abgedeckt. Die genauen Bedingungen stehen in Ihrem Vertrag; wir unterstützen Sie bei der Abstimmung mit der Versicherung.</p></div></details><details><summary><span>Wie schnell sollte ich nach einem Hagelschauer kommen?</span></summary><div class="rte"><p>So bald wie möglich – vor allem, wenn der Lack beschädigt ist. Offene Stellen können sonst rosten.</p></div></details></div></div>
@@ -694,6 +726,11 @@
       <li><span class="num">3</span><h3>Reparatur – mit Ersatzwagen</h3><p>Auf Wunsch holen wir Ihr Auto ab. Mit der Versicherung rechnen wir direkt ab.</p></li>
       <li><span class="num">4</span><h3>Abholen und weiterfahren</h3><p>Geprüft und gereinigt – man sieht nicht mehr, wo der Schaden war.</p></li>
     </ol>
+  </div>
+</section><section class="more-svc">
+  <div class="page-width">
+    <h2>Das könnte Sie auch interessieren</h2>
+    <div class="tile-grid"><a class="tile-svc" href="unfall.html"><span class="tile-media"><img src="images/hf_20260210_181354_b287ca50-bc5a-4edc-a818-d8872a4dc8c6.webp" srcset="images/hf_20260210_181354_b287ca50-bc5a-4edc-a818-d8872a4dc8c6-700.webp 700w, images/hf_20260210_181354_b287ca50-bc5a-4edc-a818-d8872a4dc8c6.webp 1024w" sizes="(max-width: 760px) 100vw, 60vw" alt="Unfallreparatur" loading="lazy"></span><span class="tile-body"><h3>Unfall&shy;reparatur</h3><p>Ein Anruf – wir kümmern uns um alles Weitere.</p><span class="tile-more">Mehr erfahren</span></span></a><a class="tile-svc" href="unfallinstandsetzung.html"><span class="tile-media"><img src="images/pexels-hellochemo-28960715.webp" srcset="images/pexels-hellochemo-28960715-700.webp 700w, images/pexels-hellochemo-28960715.webp 1200w" sizes="(max-width: 760px) 100vw, 60vw" alt="Unfallinstandsetzung" loading="lazy"></span><span class="tile-body"><h3>Unfall&shy;instand&shy;setzung</h3><p>Wir regeln Gutachter und Versicherung – Sie bekommen Ihr Auto repariert zurück.</p><span class="tile-more">Mehr erfahren</span></span></a><a class="tile-svc" href="versicherungsschaden.html"><span class="tile-media"><img src="images/pexels-artempodrez-8986139.webp" srcset="images/pexels-artempodrez-8986139-700.webp 700w, images/pexels-artempodrez-8986139.webp 1280w" sizes="(max-width: 760px) 100vw, 60vw" alt="Versicherungsschaden" loading="lazy"></span><span class="tile-body"><h3>Versicherungs&shy;schaden</h3><p>Direkte Abrechnung mit der Versicherung. Sie bringen das Auto, wir den Rest.</p><span class="tile-more">Mehr erfahren</span></span></a></div>
   </div>
 </section><section class="booking-cta">
   <div class="page-width">

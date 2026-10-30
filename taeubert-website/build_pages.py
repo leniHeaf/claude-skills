@@ -410,6 +410,38 @@ EXTRA_CSS = """
   .callback-hint a { text-decoration: underline; text-underline-offset: 3px; color: var(--white); }
   .btn-outline-light { background: transparent; color: var(--white); border-color: rgba(255,255,255,.6); }
   .btn-outline-light:hover { border-color: var(--white); background: var(--white); color: var(--black); }
+  .finder { padding: 90px 0 30px; }
+  .finder-list { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px; border-top: 1px solid var(--black); }
+  .finder-list a { display: flex; align-items: baseline; gap: 18px; padding: 22px 4px; border-bottom: 1px solid var(--line); transition: padding .3s cubic-bezier(.2,.8,.2,1); }
+  .finder-list a:hover { padding-left: 14px; }
+  .finder-list .q { font-weight: 700; font-size: 19px; flex: 1; }
+  .finder-list .to { font-size: 14px; color: #555; text-align: right; }
+  .finder-list .to::after { content: " →"; color: var(--black); }
+  .cat-sec { padding: 70px 0 0; scroll-margin-top: 120px; }
+  .cat-sec .cat-top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px 60px; align-items: end; margin-bottom: 32px; }
+  .cat-sec h2 { font-size: clamp(30px, 3.6vw, 50px); line-height: 1.02; }
+  .cat-sec .cat-top p { color: #555; font-size: 17px; max-width: 520px; }
+  .tile-grid.c4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tile-grid.c4 .tile-svc { aspect-ratio: 16 / 10; }
+  .tile-grid.c1 { grid-template-columns: 1fr; }
+  .tile-grid.c1 .tile-svc { aspect-ratio: 21 / 8; }
+  .tile-body h3 { font-size: clamp(18px, 1.55vw, 23px); overflow-wrap: normal; hyphens: manual; }
+  .chips { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  .chips a { display: inline-block; padding: 10px 16px; border: 1px solid var(--line); font-size: 15px; transition: border-color .2s; }
+  .chips a:hover { border-color: var(--black); }
+  .more-svc { padding: 80px 0; }
+  .more-svc h2 { font-size: clamp(28px, 3.2vw, 44px); margin-bottom: 28px; }
+  .svc-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 70px; align-items: start; padding-top: 70px; padding-bottom: 30px; }
+  .svc-article > div + div { margin-top: 56px; padding-top: 56px; border-top: 1px solid var(--line); }
+  .svc-article h2 { font-size: clamp(26px, 2.8vw, 38px); margin-bottom: 18px; }
+  .svc-aside { position: sticky; top: 110px; background: var(--black); color: var(--white); padding: 32px; }
+  .svc-aside h2 { font-size: 22px; margin-bottom: 18px; }
+  .svc-aside .trust { flex-direction: column; gap: 10px; color: rgba(255,255,255,.9); }
+  .svc-aside .btns { flex-direction: column; margin-top: 24px; gap: 10px; display: flex; }
+  .svc-aside .btn { width: 100%; text-align: center; }
+  .svc-aside .hours { margin-top: 20px; font-size: 14px; color: rgba(255,255,255,.7); }
+  @media (max-width: 990px) { .svc-layout { grid-template-columns: 1fr; gap: 40px; } .svc-aside { display: none; } }
+  @media (max-width: 760px) { .finder { padding-top: 60px; } .finder-list { grid-template-columns: 1fr; } .finder-list .to { display: none; } .finder-list .q::after { content: " →"; } .cat-sec .cat-top { grid-template-columns: 1fr; } .tile-grid.c4 { grid-template-columns: 1fr; } .tile-grid.c1 .tile-svc { aspect-ratio: 4 / 3; } .more-svc { padding: 56px 0; } .svc-layout { padding-top: 50px; } .tile-body h3 { font-size: 19px; } .tile-grid.c4 .tile-svc { aspect-ratio: 4 / 3; } }
   .related { background: var(--grey); padding: 50px 0; }
   .related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
   .related h2 { font-size: 18px; margin-bottom: 14px; }
@@ -793,12 +825,16 @@ def sync_images(page):
 
 def render_new_page(slug, p):
     """Eigene Leistungsseite im Stil der übrigen Unterseiten."""
-    secs = []
-    for i, (h, body) in enumerate(p["sections"]):
-        bg = " scheme-grey" if i % 2 else ""
-        secs.append(f'''<section class="sec{bg}" style="padding:60px 0">
-  <div class="page-width"><div class="rich-inner" style="max-width:760px"><h2 class="h-4">{esc(h)}</h2><div class="rte">{body}</div></div></div>
-</section>''')
+    art = "".join(f'<div><h2>{esc(h)}</h2><div class="rte">{body}</div></div>' for h, body in p["sections"])
+    secs = [f'''<section class="page-width svc-layout">
+  <div class="svc-article">{art}</div>
+  <aside class="svc-aside" aria-label="Termin">
+    <h2>{esc(p["short"])} bei Täubert</h2>
+    {TRUST_HTML}
+    <div class="btns"><a class="btn btn-light" href="{BOOKING}">Termin online buchen</a><a class="btn btn-outline-light" href="schaden-melden.html">Schaden per Foto melden</a><a class="btn btn-outline-light" href="tel:+4936754289606">03675 4289606</a></div>
+    <p class="hours">Mo–Do 8–17 Uhr · Fr 8–14:30 Uhr<br>Bettelhecker Straße 15, Sonneberg</p>
+  </aside>
+</section>''']
     rows = "".join(f'<details><summary><span>{esc(q)}</span></summary><div class="rte"><p>{esc(a)}</p></div></details>' for q, a in p["faq"])
     img = FALLBACK_IMG.get(slug)
     media_html = f'<div class="media"><img src="images/{img}" alt="{esc(p["short"])}" fetchpriority="high"></div><div class="overlay" style="opacity:.5"></div>' if img else '<div class="media"></div><div class="overlay" style="opacity:0"></div>'
@@ -854,13 +890,20 @@ CARD_TEXT = {
 }
 
 
+# Trennstellen für lange Komposita in den Foto-Kacheln
+SHY = {"Unfallinstandsetzung": "Unfall&shy;instand&shy;setzung", "Fahrzeugaufbereitung": "Fahrzeug&shy;aufbereitung",
+       "Versicherungsschaden": "Versicherungs&shy;schaden", "Karosseriearbeiten": "Karosserie&shy;arbeiten",
+       "Kleinschaden-Reparatur": "Kleinschaden-<wbr>Reparatur", "Unfallreparatur": "Unfall&shy;reparatur",
+       "Leasingrückgabe": "Leasing&shy;rückgabe", "Fuhrparkservice": "Fuhrpark&shy;service", "Lackierarbeiten": "Lackier&shy;arbeiten"}
+
+
 def service_tiles(items):
     """Großflächige Foto-Kacheln (Startseite)."""
     out = []
     for slug, name, desc in items:
         img = CARD_IMG.get(slug) or FALLBACK_IMG.get(slug)
         pic = f'<img src="images/{esc(img)}" alt="{esc(name)}" loading="lazy">' if img else ""
-        out.append(f'<a class="tile-svc" href="{slug}.html"><span class="tile-media">{pic}</span><span class="tile-body"><h3>{esc(name)}</h3><p>{esc(CARD_TEXT.get(slug, desc))}</p><span class="tile-more">Mehr erfahren</span></span></a>')
+        out.append(f'<a class="tile-svc" href="{slug}.html"><span class="tile-media">{pic}</span><span class="tile-body"><h3>{SHY.get(name, esc(name))}</h3><p>{esc(CARD_TEXT.get(slug, desc))}</p><span class="tile-more">Mehr erfahren</span></span></a>')
     return "".join(out)
 
 
@@ -1012,37 +1055,86 @@ def with_service_frame(slug, name, body_html):
 
 
 
+CAT_INTRO = {
+    "Unfall & Versicherung": "Ein Ansprechpartner von der Schadensaufnahme bis zur Abrechnung mit der Versicherung. Sie bringen das Auto – wir regeln den Rest.",
+    "Karosserie & Lack": "Richtbank, Lackierkabine und digitale Farbtonmessung unter einem Dach. Man sieht später nicht, wo der Schaden war.",
+    "Pflege & Service": "Damit Ihr Fahrzeug nicht nur repariert, sondern gepflegt zurückkommt – privat, geleast oder im Fuhrpark.",
+    "Klassiker": "Restaurierung mit Geduld, Handwerk und Respekt vor dem Original.",
+}
+# Schnellauswahl: Anliegen des Kunden -> passende Leistung
+FINDER = [
+    ("Ich hatte einen Unfall", "unfall"), ("Ich habe eine Delle", "smartrepair"),
+    ("Mein Lack ist zerkratzt", "kratzer"), ("Die Stoßstange ist beschädigt", "stossstange-reparieren"),
+    ("Mein Auto hat Hagelschaden", "hagelschaden"), ("Mein Leasingauto geht zurück", "leasingrueckgabe"),
+    ("Mein Auto soll wieder glänzen", "fahrzeugaufbereitung"), ("Ich möchte neu lackieren", "lackierarbeiten"),
+]
+
+
+def tile_grid(items):
+    n = len(items)
+    cls = " c4" if n == 4 else " c1" if n == 1 else ""
+    return f'<div class="tile-grid{cls}">{service_tiles(items)}</div>'
+
+
+def related_tiles(slug):
+    """Drei passende Leistungen mit Bild: zuerst aus derselben Kategorie, dann die wichtigsten."""
+    svcs = {s: (s, n, d) for s, n, d in all_services()}
+    same = next((slugs for _, slugs in CATEGORIES if slug in slugs), [])
+    pick = []
+    for x in same + TOP_SERVICES:
+        if x != slug and x in svcs and x not in pick:
+            pick.append(x)
+    return f'''<section class="more-svc">
+  <div class="page-width">
+    <h2>Das könnte Sie auch interessieren</h2>
+    <div class="tile-grid">{service_tiles([svcs[x] for x in pick[:3]])}</div>
+  </div>
+</section>'''
+
+
 def render_overview():
     svcs = all_services()
+    names = {s: n for s, n, _ in svcs}
     locs = "".join(f'<li><a href="{slug}.html">{esc(LOCATIONS[slug][0])}</a></li>' for slug, _ in LOCATION_LINKS)
-    return f'''<section class="sub-hero" style="--h:420px;--mh:360px">
-  <div class="media"></div><div class="overlay" style="opacity:0"></div>
+    finder = "".join(f'<li><a href="{x}.html"><span class="q">{esc(q)}</span><span class="to">{esc(names[x])}</span></a></li>' for q, x in FINDER if x in names)
+    cats = "".join(f'''<section class="cat-sec" id="kat-{i}">
+  <div class="page-width">
+    <div class="cat-top"><h2>{esc(c)}</h2><p>{esc(CAT_INTRO.get(c, ""))}</p></div>
+    {tile_grid([x for s in slugs for x in svcs if x[0] == s])}
+  </div>
+</section>''' for i, (c, slugs) in enumerate(CATEGORIES))
+    hero = CARD_IMG.get("lackierarbeiten") or FALLBACK_IMG["unfallinstandsetzung"]
+    return f'''<section class="sub-hero" style="--h:560px;--mh:460px">
+  <div class="media"><img src="images/{esc(hero)}" alt="Lackierarbeiten bei Täubert in Sonneberg" fetchpriority="high"></div><div class="overlay" style="opacity:.55"></div>
   <div class="sub-hero-content" style="max-width:960px">
-    <p class="overline">Täubert Karosserie &amp; Lack</p>
+    <p class="overline">Täubert Karosserie &amp; Lack · Sonneberg</p>
     <h1 class="h-8">Leistungen</h1>
-    <div class="rte"><p>Unfallreparatur, Lackierung, Smart Repair, Fahrzeugaufbereitung und mehr – für PKW, Transporter, Firmenfahrzeuge und Klassiker aller Marken.</p></div>
-    <div class="btns"><a class="btn btn-light" href="{BOOKING}">Termin online buchen</a><a class="btn btn-outline-light" href="tel:+4936754289606">Anrufen</a></div>
+    <div class="rte"><p>Unfallreparatur, Lackierung, Smart Repair und Fahrzeugpflege – für PKW, Transporter, Firmenfahrzeuge und Klassiker aller Marken. Alles aus einer Hand.</p></div>
+    <div class="btns"><a class="btn btn-light" href="{BOOKING}">Termin online buchen</a><a class="btn btn-outline-light" href="schaden-melden.html">Schaden per Foto melden</a></div>
   </div>
 </section>
 <section class="svc-quick">
   <div class="page-width svc-quick-inner">{TRUST_HTML}</div>
 </section>
-<section class="services-sec">
+<section class="finder" id="was-ist-passiert">
   <div class="page-width">
-    <nav class="cat-nav" aria-label="Kategorien">{"".join(f'<a href="#kat-{i}">{esc(c)}</a>' for i, (c, _) in enumerate(CATEGORIES))}</nav>
-    {"".join(f'<h2 class="cat-head" id="kat-{i}">{esc(c)}</h2><div class="svc-grid">{service_cards([x for s in slugs for x in svcs if x[0] == s], images=True)}</div>' for i, (c, slugs) in enumerate(CATEGORIES))}
+    <div class="sec-intro"><p class="eyebrow">Schnellauswahl</p><h2>Was ist passiert?</h2>
+    <p class="lead">Wählen Sie Ihr Anliegen – wir zeigen Ihnen direkt die passende Leistung.</p></div>
+    <ul class="finder-list">{finder}</ul>
   </div>
 </section>
-<section class="sec" style="padding:60px 0 0">
+{cats}
+<section class="sec" style="padding:90px 0 0">
   <div class="page-width">
-    <h2 class="h-4">Ratgeber</h2>
-    <div class="svc-grid" style="margin-top:20px">{service_cards([(g, SERVICES[g][0], SERVICES[g][2]) for g in GUIDES])}</div>
+    <div class="cat-top" style="margin-bottom:24px"><h2 class="h-4">Ratgeber</h2></div>
+    <div class="svc-grid">{service_cards([(g, SERVICES[g][0], SERVICES[g][2]) for g in GUIDES])}</div>
   </div>
 </section>
-<section class="sec" style="padding:60px 0">
-  <div class="page-width"><div class="rich-inner" style="max-width:760px">
+<section class="sec" style="padding:70px 0 90px">
+  <div class="page-width"><div style="max-width:860px">
     <h2 class="h-4">Für Kunden aus der Region</h2>
-    <div class="rte"><p>Unsere Werkstatt liegt in der Bettelhecker Straße 15 in Sonneberg. Kunden kommen zu uns aus:</p><ul>{locs}</ul></div>
+    <p style="margin-top:12px;color:#555">Unsere Werkstatt liegt in der Bettelhecker Straße 15 in Sonneberg – wenige Minuten von Neustadt bei Coburg. Auf Wunsch holen wir Ihr Fahrzeug ab.</p>
+    <ul class="chips">{locs}</ul>
   </div></div>
 </section>'''
 
@@ -1409,6 +1501,8 @@ def main():
             if slug in SERVICES and slug not in GUIDES:
                 CARD_IMG[slug] = first_image(body_html)
                 body_html = with_service_frame(slug, short, body_html)
+            if slug in SERVICES and slug not in GUIDES:
+                body_html += related_tiles(slug)
             body_html += booking_cta(slug, short)
             title = seo_title
             if slug in SERVICES:
@@ -1448,7 +1542,7 @@ def main():
         open(os.path.join(SITE, f"{slug}.html"), "w", encoding="utf-8").write(sync_images(page))
         built.append(slug)
     for slug, p in NEW_PAGES.items():
-        body_html = with_service_frame(slug, p["short"], render_new_page(slug, p)) + booking_cta(slug, p["short"])
+        body_html = with_service_frame(slug, p["short"], render_new_page(slug, p)) + related_tiles(slug) + booking_cta(slug, p["short"])
         extra_ld = service_ld(slug, p["short"], p["desc"]) + breadcrumb_ld(slug, p["short"], ("Leistungen", f"{DOMAIN}/leistungen.html")) + faq_ld(body_html)
         page = f"""<!doctype html>
 <html lang="de">
