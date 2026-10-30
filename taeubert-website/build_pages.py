@@ -1717,45 +1717,63 @@ def render_faq_page():
 
 
 
-# Eigener Lack-Konfigurator (statisch, ohne externen Dienst): echte Studiofotos je Modell und Farbe
+# Eigener Lack-Konfigurator (statisch, ohne externen Dienst)
+# "tint": blaue Karosserie wird im Browser live umgefärbt (Technik aus dem Base44-Konfigurator), "photo": echte Studiofotos je Farbe
 KONFIG_MODELS = [
-    ("911", "Porsche 911 Klassiker", [
+    ("g", "Mercedes-Benz G-Klasse", "tint", "hf_20260210_181224_9fb53726-af8f-484d-9126-6d24f40444b3.webp"),
+    ("golf", "VW Golf", "tint", "hf_20260210_181007_e0cc78c3-7998-457e-9a33-87828b0061dd.webp"),
+    ("jimny", "Suzuki Jimny", "tint", "hf_20260210_181330_97f3ed36-acbd-4482-acf3-ff9139249598.webp"),
+    ("bulli", "VW Bulli T2", "tint", "05aec4a8-410c-4309-a1e1-ac39cf6f5274.webp"),
+    ("911", "Porsche 911 Klassiker", "photo", [
         ("gelb", "Pastellgelb", "#e1d394", "hf_20260210_174113_8bd7f253-8826-4ed4-89ed-56b117c21301.webp"),
         ("weiss", "Kreideweiß", "#eceef0", "hf_20260210_174125_ad38590c-eeea-4e3b-ae46-15b828359911.webp"),
         ("gruen", "Mintgrün", "#9cc1ae", "hf_20260210_174155_7be82c39-92ac-4e20-8db2-d93ad803ab9d.webp"),
         ("schwarz", "Tiefschwarz", "#16191c", "hf_20260210_174226_2ba690d2-bbec-414c-9427-48c2ef35920e.webp"),
         ("braun", "Mahagonibraun", "#5b3d33", "hf_20260210_174234_03b93839-672b-4ba9-b742-8e3397346ee1.webp")]),
-    ("w114", "Mercedes-Benz /8 Klassiker", [
+    ("w114", "Mercedes-Benz /8 Klassiker", "photo", [
         ("gelb", "Pastellgelb", "#e1d394", "hf_20260210_173801_c09630de-aae3-46b1-9460-d37b19053b9d_1.webp"),
         ("gruen", "Mintgrün", "#9cc1ae", "hf_20260210_173808_364c1669-6822-493e-9baa-db18c7f4d18c.webp")]),
-    ("g", "Mercedes-Benz G-Klasse", [
-        ("blau", "Eisblau", "#86aec2", "hf_20260210_181224_9fb53726-af8f-484d-9126-6d24f40444b3.webp"),
-        ("schwarz", "Tiefschwarz", "#16191c", "hf_20260210_181531_cb41fa11-8f63-4e1a-93b7-0ea0ed24e5f9.webp")]),
 ]
+# Lackpalette für die live eingefärbten Modelle
+KONFIG_PALETTE = [
+    ("schwarz", "Tiefschwarz", "#141518"), ("weiss", "Kreideweiß", "#e9ebec"), ("silber", "Brillantsilber", "#b4b8bc"),
+    ("kreidegrau", "Kreidegrau", "#9b9d99"), ("achatgrau", "Achatgrau", "#5c6064"), ("oliv", "Olivgrün", "#5a6146"),
+    ("mint", "Mintgrün", "#9cc1ae"), ("eisblau", "Eisblau", "#86aec2"), ("gentian", "Gentianblau", "#1f3a68"),
+    ("gelb", "Racinggelb", "#e5c01c"), ("orange", "Signalorange", "#e0661c"), ("karmin", "Karminrot", "#8c1c22"),
+    ("braun", "Mahagonibraun", "#5b3d33"), ("sand", "Sandbeige", "#c8b48e"),
+]
+KONFIG_FINISH = ["Hochglanz", "Metallic", "Matt"]
 KONFIG_SCOPE = ["Komplettlackierung", "Teillackierung", "Ausbesserung / Spot Repair", "Erst beraten lassen"]
 
 
 def konfig_page():
-    m0, c0 = KONFIG_MODELS[0][0], KONFIG_MODELS[0][2][0]
-    models = "".join(f'<label class="kf-model"><input type="radio" name="modell" value="{k}"{" checked" if k == m0 else ""}><span>{esc(n)}</span></label>' for k, n, _ in KONFIG_MODELS)
+    first = KONFIG_MODELS[0]
+    models = "".join(f'<label class="kf-model"><input type="radio" name="modell" value="{k}"{" checked" if k == first[0] else ""}><span>{esc(n)}{" <em>Live-Farbe</em>" if mode == "tint" else ""}</span></label>' for k, n, mode, _ in KONFIG_MODELS)
+    finish = "".join(f'<label class="kf-chip"><input type="radio" name="finish" value="{esc(x)}"{" checked" if i == 0 else ""}><span>{esc(x)}</span></label>' for i, x in enumerate(KONFIG_FINISH))
     scope = "".join(f'<label class="kf-chip"><input type="radio" name="umfang" value="{esc(x)}"{" checked" if i == 0 else ""}><span>{esc(x)}</span></label>' for i, x in enumerate(KONFIG_SCOPE))
-    data = {k: {"name": n, "colors": [{"id": c, "name": cn, "hex": h, "img": f"images/{img}"} for c, cn, h, img in cols]} for k, n, cols in KONFIG_MODELS}
-    first = KONFIG_MODELS[0][2][0]
+    data = {"palette": [{"id": c, "name": n, "hex": h} for c, n, h in KONFIG_PALETTE], "models": {}}
+    for k, n, mode, src in KONFIG_MODELS:
+        if mode == "tint":
+            data["models"][k] = {"name": n, "mode": "tint", "img": f"images/{src}"}
+        else:
+            data["models"][k] = {"name": n, "mode": "photo", "colors": [{"id": c, "name": cn, "hex": h, "img": f"images/{img}"} for c, cn, h, img in src]}
     return f'''<section class="kf">
   <div class="kf-stage">
-    <p class="kf-label"><span id="kf-model-name">{esc(KONFIG_MODELS[0][1])}</span> · <span id="kf-color-name">{esc(first[1])}</span></p>
-    <div class="kf-img"><img id="kf-img" src="images/{first[3]}" alt="{esc(KONFIG_MODELS[0][1])} in {esc(first[1])}" fetchpriority="high"></div>
-    <p class="kf-note">Studioaufnahmen zur Orientierung. Ihr Fahrzeug und Ihren Wunschfarbton lackieren wir in jedem Farbcode.</p>
+    <p class="kf-label"><span id="kf-model-name">{esc(first[1])}</span> · <span id="kf-color-name"></span></p>
+    <div class="kf-img"><img id="kf-img" src="images/{first[3]}" alt="{esc(first[1])}" fetchpriority="high"><canvas id="kf-canvas" aria-hidden="true"></canvas></div>
+    <p class="kf-note">Farbvorschau zur Orientierung – Ihr Fahrzeug lackieren wir in jedem Farbcode.</p>
   </div>
   <form class="kf-panel" id="kf-form" onsubmit="return false">
     <h1 class="overline">Lack-Konfigurator</h1>
     <p class="kf-title">Ihre Farbe. Ihr Auto.</p>
     <fieldset><legend><span>01</span> Modell</legend><div class="kf-models">{models}</div></fieldset>
-    <fieldset><legend><span>02</span> Farbe <em id="kf-color-label">{esc(first[1])}</em></legend><div class="kf-swatches" id="kf-swatches"></div></fieldset>
-    <fieldset><legend><span>03</span> Umfang</legend><div class="kf-chips">{scope}</div></fieldset>
-    <fieldset><legend><span>04</span> Ihr Fahrzeug <small>(optional)</small></legend>
+    <fieldset><legend><span>02</span> Farbe <em id="kf-color-label"></em></legend><div class="kf-swatches" id="kf-swatches"></div>
+      <label class="kf-custom" id="kf-custom-wrap"><input type="color" id="kf-custom" value="#2b5d4f"><span>Eigene Farbe wählen</span></label></fieldset>
+    <fieldset><legend><span>03</span> Finish</legend><div class="kf-chips">{finish}</div></fieldset>
+    <fieldset><legend><span>04</span> Umfang</legend><div class="kf-chips">{scope}</div></fieldset>
+    <fieldset><legend><span>05</span> Ihr Fahrzeug <small>(optional)</small></legend>
       <label class="kf-field">Marke, Modell, Baujahr<input name="fahrzeug" id="kf-car" placeholder="z. B. VW Golf 7, 2016" autocomplete="off"></label>
-      <label class="kf-field">Eigener Farbcode oder Wunschfarbe<input name="farbcode" id="kf-code" placeholder="z. B. LY9B oder „Nardograu“" autocomplete="off"></label>
+      <label class="kf-field">Farbcode oder Wunschfarbe<input name="farbcode" id="kf-code" placeholder="z. B. LY9B oder „Nardograu“" autocomplete="off"></label>
     </fieldset>
     <div class="kf-summary" aria-live="polite"><p class="eyebrow">Ihre Konfiguration</p><p id="kf-sum"></p></div>
     <div class="kf-cta">
@@ -1779,10 +1797,14 @@ def konfig_page():
 KONFIG_CSS = """
   .kf { display: grid; grid-template-columns: minmax(0, 1fr) 440px; align-items: start; background: #fff; }
   .kf-stage { position: sticky; top: calc(var(--announce-h) + var(--hdr-h)); height: calc(100svh - var(--announce-h) - var(--hdr-h)); transition: top .35s var(--ease), height .35s var(--ease); min-height: 460px; background: #c9cbcc; overflow: hidden; z-index: 2; }
-  .kf-label { position: absolute; z-index: 1; top: 32px; left: 40px; font-size: 12px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: #555; }
+  .kf-label { position: absolute; z-index: 1; top: 32px; left: 40px; font-size: 12px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: #333; }
   .kf-img { position: absolute; inset: 0; }
-  .kf-img img { width: 100%; height: 100%; object-fit: cover; object-position: center 58%; transition: opacity .35s ease, transform .6s cubic-bezier(.2,.8,.2,1); }
-  .kf-img img.out { opacity: 0; transform: scale(.985); }
+  .kf-img img, .kf-img canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 58%; transition: opacity .35s ease, transform .6s cubic-bezier(.2,.8,.2,1); }
+  .kf-img canvas { opacity: 0; }
+  .kf-img.tinted canvas { opacity: 1; }
+  .kf-img.tinted img { opacity: 0; }
+  .kf-img.out img, .kf-img.out canvas { opacity: 0; transform: scale(.985); }
+  .kf-img.matt canvas, .kf-img.matt img { filter: contrast(.9) saturate(.88) brightness(1.03); }
   .kf-note { position: absolute; z-index: 1; bottom: 24px; left: 40px; right: 40px; font-size: 13px; color: #333; }
   .kf-panel { padding: 40px; border-left: 1px solid var(--line); display: flex; flex-direction: column; gap: 26px; }
   .kf-panel h1.overline { font-family: Inter, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: #6b6b6b; }
@@ -1793,15 +1815,21 @@ KONFIG_CSS = """
   .kf legend em, .kf legend small { margin-left: auto; font-style: normal; font-weight: 500; text-transform: none; letter-spacing: 0; color: #555; font-size: 14px; }
   .kf input[type=radio] { position: absolute; opacity: 0; pointer-events: none; }
   .kf-models { display: grid; gap: 8px; }
-  .kf-model span { display: block; padding: 14px 16px; border: 1px solid var(--line); font-weight: 600; cursor: pointer; transition: border-color .2s, background .2s, color .2s; }
+  .kf-model span { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 16px; border: 1px solid var(--line); font-weight: 600; cursor: pointer; transition: border-color .2s, background .2s, color .2s; }
+  .kf-model em { font-style: normal; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #6b6b6b; font-weight: 600; }
   .kf-model input:checked + span { border-color: var(--black); background: var(--black); color: #fff; }
+  .kf-model input:checked + span em { color: rgba(255,255,255,.7); }
   .kf-model input:focus-visible + span, .kf-chip input:focus-visible + span, .kf-sw input:focus-visible + span { outline: 2px solid #111; outline-offset: 3px; }
-  .kf-swatches { display: flex; flex-wrap: wrap; gap: 14px; }
+  .kf-swatches { display: flex; flex-wrap: wrap; gap: 12px; }
   .kf-sw { position: relative; }
-  .kf-sw span { display: block; width: 46px; height: 46px; border-radius: 50%; background: var(--c); box-shadow: inset 0 0 0 1px rgba(0,0,0,.15); cursor: pointer; transition: transform .2s; }
+  .kf-sw span { display: block; width: 40px; height: 40px; border-radius: 50%; background: var(--c); box-shadow: inset 0 0 0 1px rgba(0,0,0,.15); cursor: pointer; transition: transform .2s; }
   .kf-sw span::after { content: ""; position: absolute; inset: -5px; border-radius: 50%; border: 1px solid transparent; transition: border-color .2s; }
   .kf-sw input:checked + span::after { border-color: #111; }
   .kf-sw span:hover { transform: scale(1.06); }
+  .kf-custom { display: inline-flex; align-items: center; gap: 12px; margin-top: 16px; font-size: 14px; font-weight: 600; cursor: pointer; }
+  .kf-custom input { width: 40px; height: 40px; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: none; cursor: pointer; overflow: hidden; }
+  .kf-custom input::-webkit-color-swatch-wrapper { padding: 0; } .kf-custom input::-webkit-color-swatch { border: 0; border-radius: 50%; }
+  .kf-custom[hidden] { display: none; }
   .kf-chips { display: flex; flex-wrap: wrap; gap: 8px; }
   .kf-chip span { display: inline-block; padding: 10px 14px; border: 1px solid var(--line); font-size: 14px; cursor: pointer; transition: border-color .2s; }
   .kf-chip input:checked + span { border-color: var(--black); box-shadow: inset 0 0 0 1px var(--black); font-weight: 600; }
@@ -1832,46 +1860,94 @@ KONFIG_CSS = """
 """
 
 KONFIG_JS = r"""
-// Lack-Konfigurator
-(function () {
-  var form = document.getElementById('kf-form'); if (!form || !window.KONFIG) return;
-  var K = window.KONFIG, img = document.getElementById('kf-img'), sw = document.getElementById('kf-swatches');
-  img.removeAttribute('srcset'); img.removeAttribute('sizes');
-  var q = new URLSearchParams(location.search);
-  function val(n) { var e = form.querySelector('input[name="' + n + '"]:checked'); return e ? e.value : ''; }
-  function setModel(m, c) {
-    var mi = form.querySelector('input[name="modell"][value="' + m + '"]'); if (!mi) { m = Object.keys(K)[0]; mi = form.querySelector('input[name="modell"][value="' + m + '"]'); }
-    mi.checked = true;
-    sw.innerHTML = K[m].colors.map(function (x, i) {
-      return '<label class="kf-sw" title="' + x.name + '"><input type="radio" name="farbe" value="' + x.id + '" aria-label="' + x.name + '"' + ((c ? x.id === c : i === 0) ? ' checked' : '') + '><span style="--c:' + x.hex + '"></span></label>';
-    }).join('');
-    if (!val('farbe')) sw.querySelector('input').checked = true;
-    update();
-  }
-  function update() {
-    var m = val('modell'), col = K[m].colors.filter(function (x) { return x.id === val('farbe'); })[0];
-    document.getElementById('kf-model-name').textContent = K[m].name;
-    document.getElementById('kf-color-name').textContent = col.name;
-    document.getElementById('kf-color-label').textContent = col.name;
-    if (!update.done) { img.src = col.img; img.alt = K[m].name + ' in ' + col.name; update.done = true; }
-    else if (img.getAttribute('src') !== col.img) {
-      var pre = new Image(); pre.src = col.img; img.classList.add('out');
-      var swap = function () { img.src = col.img; img.alt = K[m].name + ' in ' + col.name; requestAnimationFrame(function () { img.classList.remove('out'); }); };
-      setTimeout(function () { pre.complete ? swap() : (pre.onload = swap, pre.onerror = swap); }, 180);
+  // Lack-Konfigurator: Live-Einfärbung blauer Karosserien (Farbton/Sättigung tauschen, Helligkeitsverlauf behalten)
+  (function () {
+    var form = document.getElementById('kf-form'); if (!form || !window.KONFIG) return;
+    var K = window.KONFIG, M = K.models, img = document.getElementById('kf-img'), cv = document.getElementById('kf-canvas'), box = img.parentNode;
+    var sw = document.getElementById('kf-swatches'), custom = document.getElementById('kf-custom'), customWrap = document.getElementById('kf-custom-wrap');
+    img.removeAttribute('srcset'); img.removeAttribute('sizes');
+    var q = new URLSearchParams(location.search), base = {}, customHex = null, first = true;
+
+    function hexToHsl(hex) { var n = parseInt(hex.slice(1), 16); return rgbToHsl(n >> 16 & 255, n >> 8 & 255, n & 255); }
+    function rgbToHsl(r, g, b) { r /= 255; g /= 255; b /= 255; var mx = Math.max(r, g, b), mn = Math.min(r, g, b), h = 0, s = 0, l = (mx + mn) / 2;
+      if (mx !== mn) { var d = mx - mn; s = l > .5 ? d / (2 - mx - mn) : d / (mx + mn);
+        h = mx === r ? ((g - b) / d + (g < b ? 6 : 0)) * 60 : mx === g ? ((b - r) / d + 2) * 60 : ((r - g) / d + 4) * 60; }
+      return { h: h, s: s, l: l }; }
+    function hslToRgb(h, s, l) { h /= 360; if (!s) { var v = Math.round(l * 255); return [v, v, v]; }
+      var f = function (p, q2, t) { if (t < 0) t += 1; if (t > 1) t -= 1; return t < 1 / 6 ? p + (q2 - p) * 6 * t : t < .5 ? q2 : t < 2 / 3 ? p + (q2 - p) * (2 / 3 - t) * 6 : p; };
+      var q2 = l < .5 ? l * (1 + s) : l + s - l * s, p = 2 * l - q2;
+      return [Math.round(f(p, q2, h + 1 / 3) * 255), Math.round(f(p, q2, h) * 255), Math.round(f(p, q2, h - 1 / 3) * 255)]; }
+
+    function loadBase(src, cb) {
+      if (base[src]) return cb(base[src]);
+      var im = new Image(); im.onload = function () {
+        var w = Math.min(1200, im.naturalWidth), h = Math.round(im.naturalHeight * w / im.naturalWidth), c = document.createElement('canvas');
+        c.width = w; c.height = h; var x = c.getContext('2d'); x.drawImage(im, 0, 0, w, h);
+        try { base[src] = { w: w, h: h, data: x.getImageData(0, 0, w, h) }; cb(base[src]); } catch (e) { cb(null); }
+      }; im.onerror = function () { cb(null); }; im.src = src;
     }
-    var car = document.getElementById('kf-car').value.trim(), code = document.getElementById('kf-code').value.trim();
-    var sum = col.name + (code ? ' (Wunsch: ' + code + ')' : '') + ' · ' + val('umfang') + ' · ' + (car || ('Vorlage: ' + K[m].name));
-    document.getElementById('kf-sum').textContent = sum;
-    var text = 'Hallo Täubert-Team, ich interessiere mich für eine Lackierung.\nFarbe: ' + col.name + (code ? '\nWunschfarbe/Farbcode: ' + code : '') +
-      '\nUmfang: ' + val('umfang') + '\nFahrzeug: ' + (car || 'noch offen') + '\nVorlage im Konfigurator: ' + K[m].name;
-    document.getElementById('kf-wa').href = 'https://wa.me/4936754289606?text=' + encodeURIComponent(text);
-    document.getElementById('kf-mail').href = 'mailto:hallo@taeubert-karosserie-lack.de?subject=' + encodeURIComponent('Lack-Konfigurator: ' + col.name) + '&body=' + encodeURIComponent(text);
-    try { history.replaceState(null, '', '?modell=' + m + '&farbe=' + col.id); } catch (e) {}
-  }
-  form.addEventListener('change', function (e) { if (e.target.name === 'modell') setModel(e.target.value); else update(); });
-  form.addEventListener('input', function (e) { if (e.target.tagName === 'INPUT' && e.target.type !== 'radio') update(); });
-  setModel(q.get('modell') || Object.keys(K)[0], q.get('farbe'));
-})();
+    function tint(src, hex) {
+      loadBase(src, function (b) {
+        if (!b) { box.classList.remove('tinted'); return; }   // Einfärben nicht möglich: Originalfoto bleibt sichtbar
+        cv.width = b.w; cv.height = b.h; var ctx = cv.getContext('2d'), out = ctx.createImageData(b.w, b.h), d = b.data.data, o = out.data, t = hexToHsl(hex);
+        var scale = t.l > .7 || t.l < .25 ? .3 : .45;
+        for (var i = 0; i < d.length; i += 4) {
+          var r = d[i], g = d[i + 1], bl = d[i + 2], sat = Math.max(r, g, bl) - Math.min(r, g, bl), p = rgbToHsl(r, g, bl);
+          var sw8 = sat <= 15 ? 0 : Math.min((sat - 15) / 40, 1), hw = p.h >= 165 && p.h <= 325 ? 1 : p.h >= 135 && p.h < 165 ? (p.h - 135) / 30 : p.h > 325 && p.h <= 355 ? (355 - p.h) / 30 : 0;
+          var lw = p.l > .93 ? 0 : Math.min((.93 - p.l) / .08, 1), wgt = Math.min(sw8, hw, lw);
+          if (wgt > .01) { var c = hslToRgb(t.h, t.s, Math.max(.02, Math.min(.98, t.l + (p.l - .5) * scale)));
+            o[i] = r * (1 - wgt) + c[0] * wgt; o[i + 1] = g * (1 - wgt) + c[1] * wgt; o[i + 2] = bl * (1 - wgt) + c[2] * wgt; }
+          else { o[i] = r; o[i + 1] = g; o[i + 2] = bl; }
+          o[i + 3] = d[i + 3];
+        }
+        ctx.putImageData(out, 0, 0); box.classList.add('tinted'); box.classList.remove('out');
+      });
+    }
+    function val(n) { var e = form.querySelector('input[name="' + n + '"]:checked'); return e ? e.value : ''; }
+    function colors(m) { return M[m].mode === 'tint' ? K.palette : M[m].colors; }
+    function setModel(m, c) {
+      if (!M[m]) m = Object.keys(M)[0];
+      form.querySelector('input[name="modell"][value="' + m + '"]').checked = true;
+      sw.innerHTML = colors(m).map(function (x, i) {
+        return '<label class="kf-sw" title="' + x.name + '"><input type="radio" name="farbe" value="' + x.id + '" aria-label="' + x.name + '"' + ((c ? x.id === c : i === 0) ? ' checked' : '') + '><span style="--c:' + x.hex + '"></span></label>';
+      }).join('');
+      if (!val('farbe')) sw.querySelector('input').checked = true;
+      customWrap.hidden = M[m].mode !== 'tint'; customHex = null;
+      update();
+    }
+    function current() {
+      var m = val('modell'), col = colors(m).filter(function (x) { return x.id === val('farbe'); })[0];
+      if (customHex && M[m].mode === 'tint') col = { id: 'eigen', name: 'Eigene Farbe ' + customHex.toUpperCase(), hex: customHex };
+      return { m: m, col: col };
+    }
+    function update() {
+      var c = current(), m = c.m, col = c.col, model = M[m];
+      document.getElementById('kf-model-name').textContent = model.name;
+      document.getElementById('kf-color-name').textContent = col.name;
+      document.getElementById('kf-color-label').textContent = col.name;
+      box.classList.toggle('matt', val('finish') === 'Matt');
+      var src = model.mode === 'tint' ? model.img : col.img;
+      var show = function () {
+        if (img.getAttribute('src') !== src) { img.src = src; img.alt = model.name + ' in ' + col.name; }
+        if (model.mode === 'tint') tint(src, col.hex); else { box.classList.remove('tinted'); box.classList.remove('out'); }
+      };
+      if (first || img.getAttribute('src') === src) { first = false; show(); } else { box.classList.add('out'); setTimeout(show, 200); }
+      var car = document.getElementById('kf-car').value.trim(), code = document.getElementById('kf-code').value.trim();
+      document.getElementById('kf-sum').textContent = col.name + ' · ' + val('finish') + (code ? ' (Wunsch: ' + code + ')' : '') + ' · ' + val('umfang') + ' · ' + (car || ('Vorlage: ' + model.name));
+      var text = 'Hallo Täubert-Team, ich interessiere mich für eine Lackierung.\nFarbe: ' + col.name + ' (' + col.hex + ')\nFinish: ' + val('finish') + (code ? '\nWunschfarbe/Farbcode: ' + code : '') +
+        '\nUmfang: ' + val('umfang') + '\nFahrzeug: ' + (car || 'noch offen') + '\nVorlage im Konfigurator: ' + model.name;
+      document.getElementById('kf-wa').href = 'https://wa.me/4936754289606?text=' + encodeURIComponent(text);
+      document.getElementById('kf-mail').href = 'mailto:hallo@taeubert-karosserie-lack.de?subject=' + encodeURIComponent('Lack-Konfigurator: ' + col.name) + '&body=' + encodeURIComponent(text);
+      try { history.replaceState(null, '', '?modell=' + m + '&farbe=' + col.id); } catch (e) {}
+    }
+    form.addEventListener('change', function (e) {
+      if (e.target.name === 'modell') setModel(e.target.value);
+      else { if (e.target.name === 'farbe') customHex = null; update(); }
+    });
+    custom.addEventListener('input', function () { customHex = custom.value; var s = form.querySelector('input[name="farbe"]:checked'); if (s) s.checked = false; update(); });
+    form.addEventListener('input', function (e) { if (e.target.tagName === 'INPUT' && e.target.type === 'text') update(); });
+    setModel(q.get('modell') || Object.keys(M)[0], q.get('farbe'));
+  })();
 """
 
 
