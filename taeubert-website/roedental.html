@@ -268,7 +268,7 @@
   .konfig-visual { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
   .swatch { position: relative; aspect-ratio: 1 / 1; overflow: hidden; background: var(--grey); border-bottom: 6px solid var(--c); }
   .swatch img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.2,.8,.2,1); }
-  .konfig-visual:hover .swatch img { transform: scale(1.04); }
+  .swatch:hover img { transform: scale(1.04); }
   @media (max-width: 990px) { .konfig-inner { grid-template-columns: 1fr; gap: 28px; } }
 
   /* Hauptnavigation (Desktop) */
@@ -475,6 +475,52 @@
     .foot-grid { grid-template-columns: 1fr; }
   }
 
+  /* ===== Brabus × Porsche: Dramaturgie, Präzision, Ruhe ===== */
+  :root { --hdr-h: 84px; --ease: cubic-bezier(.2,.8,.2,1); }
+  @media (min-width: 761px) { .header-inner { height: var(--hdr-h); transition: height .35s var(--ease); } body.scrolled { --hdr-h: 68px; } }
+  .eyebrow::before, .hero-eyebrow::before { content: ""; display: inline-block; width: 36px; height: 1px; background: currentColor; margin-right: 14px; vertical-align: middle; transform: translateY(-2px); }
+  .hero { height: calc(100svh - var(--announce-h) - 84px); min-height: 600px; max-height: 1100px; }
+  .hero h1 { font-size: clamp(42px, 6vw, 100px); line-height: .94; letter-spacing: -.005em; }
+  .hero-content .inner { max-width: 1200px; }
+  .hero-content { padding-bottom: 96px; }
+  .hero-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; margin-bottom: 22px; color: rgba(255,255,255,.85); }
+  .scroll-cue { position: absolute; right: var(--gutter, 40px); bottom: 40px; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 12px; font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.8); writing-mode: vertical-rl; }
+  .scroll-cue span { display: block; width: 1px; height: 56px; background: rgba(255,255,255,.25); position: relative; overflow: hidden; }
+  .scroll-cue span::after { content: ""; position: absolute; left: 0; top: -40%; width: 1px; height: 40%; background: #fff; animation: cue 2.2s var(--ease) infinite; }
+  @keyframes cue { to { top: 100%; } }
+  .spec { background: #000; color: #fff; border-top: 1px solid rgba(255,255,255,.12); }
+  .spec-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .spec-grid > div { padding: 34px 24px 32px 0; border-right: 1px solid rgba(255,255,255,.12); margin-right: 24px; }
+  .spec-grid > div:last-child { border-right: 0; margin-right: 0; }
+  .spec strong { display: block; font-family: "Archivo Black", sans-serif; font-weight: 400; text-transform: uppercase; font-size: clamp(17px, 1.65vw, 26px); line-height: 1.05; }
+  .spec span { display: block; margin-top: 10px; font-size: 13px; letter-spacing: .04em; color: rgba(255,255,255,.65); }
+  .care { background: #000; color: #fff; padding: 140px 0; }
+  .care .eyebrow { color: rgba(255,255,255,.6); }
+  .care h2 { font-size: clamp(38px, 5.4vw, 84px); line-height: .98; max-width: 1000px; }
+  .care .lead { color: rgba(255,255,255,.7); max-width: 640px; }
+  .care-grid { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 56px; margin: 72px 0 56px; }
+  .care-grid li { border-top: 1px solid rgba(255,255,255,.2); padding: 26px 0 40px; }
+  .care-grid .n { font-size: 12px; letter-spacing: .24em; color: rgba(255,255,255,.5); font-weight: 600; }
+  .care-grid h3 { font-size: clamp(19px, 1.6vw, 23px); margin: 16px 0 10px; }
+  .care-grid p { color: rgba(255,255,255,.68); font-size: 15.5px; max-width: 340px; }
+  .care .btns { display: flex; flex-wrap: wrap; gap: 12px; }
+  .tile-more { position: relative; }
+  .tile-more::after { content: " →"; display: inline-block; transition: transform .35s var(--ease); }
+  .tile-svc:hover .tile-more::after { transform: translateX(6px); }
+  .btn { transition: background .25s var(--ease), color .25s var(--ease), border-color .25s var(--ease), transform .25s var(--ease); }
+  .btn:active { transform: scale(.98); }
+  html.rv-on .rv { opacity: 0; transform: translateY(28px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+  html.rv-on .rv.in { opacity: 1; transform: none; }
+  @media (max-width: 990px) { .spec-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .spec-grid > div { border-right: 0; margin-right: 0; border-bottom: 1px solid rgba(255,255,255,.12); padding: 22px 12px 22px 0; } .care-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 760px) {
+    .hero { height: calc(100svh - var(--announce-h) - 70px); min-height: 520px; }
+    .hero-content { padding-bottom: 56px; } .scroll-cue { display: none; }
+    .eyebrow, .hero-eyebrow, .overline { letter-spacing: .14em !important; font-size: 11px; } .eyebrow::before, .hero-eyebrow::before { width: 20px; margin-right: 10px; }
+    .spec-grid > div:last-child { grid-column: 1 / -1; border-bottom: 0; }
+    .care { padding: 88px 0; } .care-grid { grid-template-columns: 1fr; margin: 48px 0 36px; } .care-grid li { padding-bottom: 28px; }
+  }
+  @media (prefers-reduced-motion: reduce) { html.rv-on .rv { opacity: 1; transform: none; transition: none; } .scroll-cue span::after { animation: none; } }
+
   /* Unterseiten */
   .sec { background: var(--white); }
   .scheme-dark { background: var(--black); color: var(--white); }
@@ -494,6 +540,8 @@
   .rte table { border-collapse: collapse; width: 100%; margin: 12px 0; } .rte td, .rte th { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
   .crumbs { display: flex; flex-wrap: wrap; gap: 8px; font-size: 14px; color: #555; padding-top: 16px; padding-bottom: 4px; }
   .crumbs a { text-decoration: underline; text-underline-offset: 3px; }
+  .svc-area { font-size: 14px; color: #555; margin-top: 6px; }
+  .svc-area a { color: var(--black); text-decoration: underline; text-underline-offset: 3px; }
   .svc-quick { padding: 14px 0 26px; border-bottom: 1px solid var(--line); }
   .svc-quick-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 30px; }
   .svc-quick .trust { color: var(--text); }
@@ -634,9 +682,20 @@
     .mail-form .f.half { width: 100%; }
     .map iframe { height: 300px; }
   }
+
+  .city { padding: 110px 0; border-bottom: 1px solid var(--line); }
+  .city-inner { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 64px; align-items: start; }
+  .city h2 { font-size: clamp(30px, 3.4vw, 50px); line-height: 1.02; margin-bottom: 18px; }
+  .city-text > p:not(.eyebrow) { color: #555; font-size: 17px; max-width: 560px; }
+  .city-places { margin-top: 14px; font-size: 15px !important; }
+  .city-facts { list-style: none; display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--black); }
+  .city-facts li { padding: 24px 16px 24px 0; border-bottom: 1px solid var(--line); }
+  .city-facts strong { display: block; font-family: "Archivo Black", sans-serif; font-weight: 400; text-transform: uppercase; font-size: clamp(18px, 1.6vw, 24px); }
+  .city-facts span { display: block; margin-top: 6px; font-size: 14px; color: #555; }
+  @media (max-width: 760px) { .city { padding: 64px 0; } .city-inner { grid-template-columns: 1fr; gap: 32px; } }
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "AutoBodyShop", "name": "Täubert Karosserie und Lack GmbH", "url": "https://www.taeubert-karosserie-lack.de/", "logo": "https://www.taeubert-karosserie-lack.de/images/Taeubert_Logo.png", "telephone": "+49 3675 4289606", "email": "hallo@taeubert-karosserie-lack.de", "address": {"@type": "PostalAddress", "streetAddress": "Bettelhecker Straße 15", "postalCode": "96515", "addressLocality": "Sonneberg", "addressRegion": "Thüringen", "addressCountry": "DE"}, "areaServed": ["Sonneberg", "Neustadt bei Coburg", "Coburg", "Rödental", "Kronach", "Bamberg"], "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"], "opens": "08:00", "closes": "17:00"}, {"@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "08:00", "closes": "14:30"}], "sameAs": ["https://www.facebook.com/ToniTaeubert/", "https://www.instagram.com/taeubert_karosserieundlack/"], "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Leistungen", "itemListElement": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Karosseriearbeiten", "description": "Karosseriereparatur in Sonneberg & Neustadt bei Coburg: Richtbank, präzise Vermessung, Reparatur nach Herstellervorgaben – Lack direkt im Haus.", "url": "https://www.taeubert-karosserie-lack.de/karosserie.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Lackierarbeiten", "description": "Autolackierung in Sonneberg: digitale Farbtonmessung, staubfreie Lackierkabine, Spot Repair und Komplettlackierung – ohne sichtbaren Unterschied.", "url": "https://www.taeubert-karosserie-lack.de/lackierarbeiten.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Unfallinstandsetzung", "description": "Unfallreparatur in Sonneberg & Neustadt bei Coburg: Karosserie, Lack und Abwicklung mit Versicherung und Gutachter aus einer Hand.", "url": "https://www.taeubert-karosserie-lack.de/unfallinstandsetzung.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Smart Repair", "description": "Smart Repair in Sonneberg: Dellen und kleine Schäden ohne Neulackierung entfernen – Originallack bleibt, oft in wenigen Stunden erledigt.", "url": "https://www.taeubert-karosserie-lack.de/smartrepair.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Kleinschaden-Reparatur", "description": "Parkschaden, Kratzer oder Delle? Kleinschaden-Reparatur in Sonneberg & Neustadt bei Coburg – schnell, günstig und mit Originallack.", "url": "https://www.taeubert-karosserie-lack.de/kleinschaden.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Kratzer entfernen", "description": "Kratzer im Lack entfernen lassen in Sonneberg: vom oberflächlichen Kratzer bis zur Tiefe – mit exakter Farbtonanpassung.", "url": "https://www.taeubert-karosserie-lack.de/kratzer.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Leasingrückgabe", "description": "Leasingrückgabe in Sonneberg vorbereiten: Schäden vorab günstig beseitigen und teure Nachzahlungen beim Leasinggeber vermeiden.", "url": "https://www.taeubert-karosserie-lack.de/leasingrueckgabe.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Fahrzeugaufbereitung", "description": "Fahrzeugaufbereitung in Sonneberg: Politur, Innenraumreinigung und Lackpflege – ideal vor Verkauf oder Leasingrückgabe.", "url": "https://www.taeubert-karosserie-lack.de/fahrzeugaufbereitung.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Reifenservice", "description": "Reifenwechsel, Räderwechsel und Rädereinlagerung in Sonneberg & Neustadt bei Coburg – Termin online buchen.", "url": "https://www.taeubert-karosserie-lack.de/reifenservice.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Unfallreparatur", "description": "Unfall gehabt? Täubert in Sonneberg kümmert sich um Reparatur, Versicherung und Gutachten – direkte Abrechnung mit der Versicherung.", "url": "https://www.taeubert-karosserie-lack.de/unfall.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Hagelschaden", "description": "Hagelschaden am Auto in Sonneberg reparieren: Dellen möglichst ohne Lackieren entfernen, Lack und Karosserie aus einer Hand, direkt mit der Versicherung.", "url": "https://www.taeubert-karosserie-lack.de/hagelschaden.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Stoßstange reparieren", "description": "Stoßstange reparieren oder lackieren in Sonneberg & Neustadt bei Coburg: Kratzer, Risse und Dellen im Stoßfänger beseitigen – oft ohne neues Teil.", "url": "https://www.taeubert-karosserie-lack.de/stossstange-reparieren.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Oldtimer & Klassiker", "description": "Oldtimer-Restaurierung und Klassiker-Lackierung in Sonneberg: Entrostung, Karosseriearbeiten und originalgetreue Lackierung – mit Respekt vor dem Original.", "url": "https://www.taeubert-karosserie-lack.de/oldtimer-restaurierung.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Fuhrparkservice", "description": "Karosserie- und Lackservice für Firmenwagen und Transporter in Sonneberg & Neustadt bei Coburg: Schäden schnell beheben, Fahrzeuge schnell zurück im Einsatz.", "url": "https://www.taeubert-karosserie-lack.de/fuhrparkservice.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Versicherungsschaden", "description": "Versicherungsschaden in Sonneberg: Täubert übernimmt Schadenaufnahme, Abstimmung mit Versicherung und Gutachter sowie die komplette Reparatur.", "url": "https://www.taeubert-karosserie-lack.de/versicherungsschaden.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Unterbodenschutz", "description": "Unterbodenschutz, Unterbodenwäsche und Hohlraumversiegelung in Sonneberg: Rost vorbeugen, Schäden behandeln und den Wert Ihres Fahrzeugs erhalten.", "url": "https://www.taeubert-karosserie-lack.de/unterbodenschutz.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Lackaufbereitung", "description": "Lackaufbereitung und Politur in Sonneberg: Waschkratzer, Hologramme und stumpfen Lack maschinell aufbereiten – für Tiefenglanz wie am ersten Tag.", "url": "https://www.taeubert-karosserie-lack.de/lackaufbereitung.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Keramikversiegelung", "description": "Keramikversiegelung und Lackversiegelung in Sonneberg: dauerhafter Schutz und Tiefenglanz – Wasser perlt ab, Schmutz haftet weniger, Pflege wird leichter.", "url": "https://www.taeubert-karosserie-lack.de/keramikversiegelung.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Innenraumaufbereitung", "description": "Innenraumaufbereitung in Sonneberg: Polster- und Lederreinigung, Teppiche, Armaturen und Geruchsentfernung – damit Sie wieder gern einsteigen.", "url": "https://www.taeubert-karosserie-lack.de/innenraumaufbereitung.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Scheinwerfer aufbereiten", "description": "Scheinwerfer aufbereiten in Sonneberg: vergilbte und matte Scheinwerfer schleifen, polieren und versiegeln – für klare Sicht und gepflegte Optik.", "url": "https://www.taeubert-karosserie-lack.de/scheinwerfer-aufbereiten.html"}}]}}</script>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Startseite", "item": "https://www.taeubert-karosserie-lack.de/"}, {"@type": "ListItem", "position": 2, "name": "Rödental", "item": "https://www.taeubert-karosserie-lack.de/roedental.html"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Startseite", "item": "https://www.taeubert-karosserie-lack.de/"}, {"@type": "ListItem", "position": 2, "name": "Rödental", "item": "https://www.taeubert-karosserie-lack.de/roedental.html"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "AutoBodyShop", "name": "Täubert Karosserie und Lack GmbH", "url": "https://www.taeubert-karosserie-lack.de/roedental.html", "telephone": "+49 3675 4289606", "address": {"@type": "PostalAddress", "streetAddress": "Bettelhecker Straße 15", "postalCode": "96515", "addressLocality": "Sonneberg", "addressCountry": "DE"}, "areaServed": [{"@type": "City", "name": "Rödental"}, {"@type": "City", "name": "Oeslau"}, {"@type": "City", "name": "Einberg"}, {"@type": "City", "name": "Mönchröden"}, {"@type": "City", "name": "Neustadt bei Coburg"}]}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Wie weit ist es von Rödental zu Ihnen?", "acceptedAnswer": {"@type": "Answer", "text": "Je nach Verkehr etwa 20 Minuten bis in die Bettelhecker Straße 15 in Sonneberg."}}]}</script>
 </head>
 <body>
 <a class="skip" href="#inhalt">Zum Inhalt springen</a>
@@ -655,7 +714,7 @@
     <a href="index.html" class="logo" aria-label="Täubert Karosserie &amp; Lack – Startseite">
       <img src="images/Taeubert_Logo.png" alt="TÄUBERT Karosserie &amp; Lack" onerror="this.outerHTML='<span class=&quot;logo-fallback&quot;>TÄUBERT</span>'">
     </a>
-    <nav class="main-nav" aria-label="Hauptnavigation"><!-- MAINNAV:START --><ul><li class="has-sub"><button class="top" type="button" aria-expanded="false">Leistungen <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><div class="panel mega"><div><h3>Unfall &amp; Versicherung</h3><a href="unfall.html">Unfallreparatur</a><a href="unfallinstandsetzung.html">Unfallinstandsetzung</a><a href="versicherungsschaden.html">Versicherungsschaden</a><a href="hagelschaden.html">Hagelschaden</a></div><div><h3>Karosserie &amp; Lack</h3><a href="karosserie.html">Karosseriearbeiten</a><a href="lackierarbeiten.html">Lackierarbeiten</a><a href="smartrepair.html">Smart Repair</a><a href="kleinschaden.html">Kleinschaden-Reparatur</a><a href="kratzer.html">Kratzer entfernen</a><a href="stossstange-reparieren.html">Stoßstange reparieren</a></div><div><h3>Aufbereitung &amp; Pflege</h3><a href="fahrzeugaufbereitung.html">Fahrzeugaufbereitung</a><a href="lackaufbereitung.html">Lackaufbereitung</a><a href="keramikversiegelung.html">Keramikversiegelung</a><a href="innenraumaufbereitung.html">Innenraumaufbereitung</a><a href="scheinwerfer-aufbereiten.html">Scheinwerfer aufbereiten</a><a href="unterbodenschutz.html">Unterbodenschutz</a></div><div><h3>Service</h3><a href="reifenservice.html">Reifenservice</a><a href="leasingrueckgabe.html">Leasingrückgabe</a><a href="fuhrparkservice.html">Fuhrparkservice</a></div><div><h3>Klassiker</h3><a href="oldtimer-restaurierung.html">Oldtimer &amp; Klassiker</a></div><a class="all" href="leistungen.html">Alle Leistungen ansehen →</a></div></li><li class="has-sub"><button class="top" type="button" aria-expanded="false">Unfall? <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><div class="panel"><a href="unfall-was-tun.html">Unfall – was jetzt zu tun ist</a><a href="schaden-melden.html">Schaden per Foto melden</a><a href="versicherungsschaden.html">Abrechnung mit der Versicherung</a><a href="unfall-oder-kratzer.html">Wer zahlt die Reparatur?</a></div></li><li class="has-sub"><button class="top" type="button" aria-expanded="false">Über uns <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><div class="panel"><a href="who-we-are.html">Who we are</a><a href="history.html">History</a><a href="meet-the-team.html">Meet the Team</a><a href="porsche-911.html">Projekt: Porsche 911</a><a href="porsche-gts.html">Projekt: Porsche Cayenne GTS</a><a href="vw-bulli-t2.html">Projekt: VW Bulli T2</a></div></li><li class="has-sub"><button class="top" type="button" aria-expanded="false">Karriere <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><div class="panel"><a href="karriere.html">Karriere bei Täubert</a><a href="azubi.html">Ausbildung</a><a href="jobs.html">Stellenangebote</a></div></li><li><a class="top" href="fragen.html">Fragen</a></li><li><a class="top" href="contact.html">Kontakt</a></li></ul><!-- MAINNAV:END --></nav>
+    <nav class="main-nav" aria-label="Hauptnavigation"><!-- MAINNAV:START --><ul><li class="has-sub"><button class="top" type="button" aria-expanded="false">Leistungen <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><div class="panel mega"><div><h3>Unfall &amp; Versicherung</h3><a href="unfall.html">Unfallreparatur</a><a href="unfallinstandsetzung.html">Unfallinstandsetzung</a><a href="versicherungsschaden.html">Versicherungsschaden</a><a href="hagelschaden.html">Hagelschaden</a></div><div><h3>Karosserie &amp; Lack</h3><a href="karosserie.html">Karosseriearbeiten</a><a href="lackierarbeiten.html">Lackierarbeiten</a><a href="smartrepair.html">Smart Repair</a><a href="kleinschaden.html">Kleinschaden-Reparatur</a><a href="kratzer.html">Kratzer entfernen</a><a href="stossstange-reparieren.html">Stoßstange reparieren</a></div><div><h3>Aufbereitung &amp; Pflege</h3><a href="fahrzeugaufbereitung.html">Fahrzeugaufbereitung</a><a href="lackaufbereitung.html">Lackaufbereitung</a><a href="keramikversiegelung.html">Keramikversiegelung</a><a href="innenraumaufbereitung.html">Innenraumaufbereitung</a><a href="scheinwerfer-aufbereiten.html">Scheinwerfer aufbereiten</a><a href="unterbodenschutz.html">Unterbodenschutz</a></div><div><h3>Service</h3><a href="reifenservice.html">Reifenservice</a><a href="leasingrueckgabe.html">Leasingrückgabe</a><a href="fuhrparkservice.html">Fuhrparkservice</a></div><div><h3>Klassiker</h3><a href="oldtimer-restaurierung.html">Oldtimer &amp; Klassiker</a></div><a class="all" href="leistungen.html">Alle Leistungen ansehen →</a><a class="all" href="konfigurator.html">Lack-Konfigurator →</a></div></li><li class="has-sub"><button class="top" type="button" aria-expanded="false">Unfall? <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><div class="panel"><a href="unfall-was-tun.html">Unfall – was jetzt zu tun ist</a><a href="schaden-melden.html">Schaden per Foto melden</a><a href="versicherungsschaden.html">Abrechnung mit der Versicherung</a><a href="unfall-oder-kratzer.html">Wer zahlt die Reparatur?</a></div></li><li class="has-sub"><button class="top" type="button" aria-expanded="false">Über uns <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><div class="panel"><a href="who-we-are.html">Who we are</a><a href="history.html">History</a><a href="meet-the-team.html">Meet the Team</a><a href="porsche-911.html">Projekt: Porsche 911</a><a href="porsche-gts.html">Projekt: Porsche Cayenne GTS</a><a href="vw-bulli-t2.html">Projekt: VW Bulli T2</a></div></li><li class="has-sub"><button class="top" type="button" aria-expanded="false">Karriere <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><div class="panel"><a href="karriere.html">Karriere bei Täubert</a><a href="azubi.html">Ausbildung</a><a href="jobs.html">Stellenangebote</a><a href="jobs.html#bewerbung">Direkt bewerben</a></div></li><li><a class="top" href="fragen.html">Fragen</a></li><li><a class="top" href="contact.html">Kontakt</a></li></ul><!-- MAINNAV:END --></nav>
     <div class="header-right">
       <a class="btn btn-header" href="https://terminbuchungtaeubert.de">Termin buchen</a>
       <a class="icon-btn hide-desktop" href="https://terminbuchungtaeubert.de" aria-label="Termin buchen">
@@ -684,8 +743,8 @@
     </div>
     <details><summary>Leistungen</summary><div class="sub"><a href="leistungen.html"><strong>Alle Leistungen</strong></a><h3>Unfall &amp; Versicherung</h3><a href="unfall.html">Unfallreparatur</a><a href="unfallinstandsetzung.html">Unfallinstandsetzung</a><a href="versicherungsschaden.html">Versicherungsschaden</a><a href="hagelschaden.html">Hagelschaden</a><h3>Karosserie &amp; Lack</h3><a href="karosserie.html">Karosseriearbeiten</a><a href="lackierarbeiten.html">Lackierarbeiten</a><a href="smartrepair.html">Smart Repair</a><a href="kleinschaden.html">Kleinschaden-Reparatur</a><a href="kratzer.html">Kratzer entfernen</a><a href="stossstange-reparieren.html">Stoßstange reparieren</a><h3>Aufbereitung &amp; Pflege</h3><a href="fahrzeugaufbereitung.html">Fahrzeugaufbereitung</a><a href="lackaufbereitung.html">Lackaufbereitung</a><a href="keramikversiegelung.html">Keramikversiegelung</a><a href="innenraumaufbereitung.html">Innenraumaufbereitung</a><a href="scheinwerfer-aufbereiten.html">Scheinwerfer aufbereiten</a><a href="unterbodenschutz.html">Unterbodenschutz</a><h3>Service</h3><a href="reifenservice.html">Reifenservice</a><a href="leasingrueckgabe.html">Leasingrückgabe</a><a href="fuhrparkservice.html">Fuhrparkservice</a><h3>Klassiker</h3><a href="oldtimer-restaurierung.html">Oldtimer &amp; Klassiker</a></div></details>
     <details><summary>Über uns</summary><div class="sub"><a href="who-we-are.html">Who we are</a><a href="history.html">History</a><a href="meet-the-team.html">Meet the Team</a><a href="porsche-911.html">Projekt: Porsche 911</a><a href="porsche-gts.html">Projekt: Porsche Cayenne GTS</a><a href="vw-bulli-t2.html">Projekt: VW Bulli T2</a></div></details>
-    <details><summary>Karriere</summary><div class="sub"><a href="karriere.html">Karriere bei Täubert</a><a href="azubi.html">Ausbildung</a><a href="jobs.html">Stellenangebote</a></div></details>
-    <a class="plain" href="fragen.html">Häufige Fragen</a><a class="plain" href="contact.html">Kontakt &amp; Anfahrt</a>
+    <details><summary>Karriere</summary><div class="sub"><a href="karriere.html">Karriere bei Täubert</a><a href="azubi.html">Ausbildung</a><a href="jobs.html">Stellenangebote</a><a href="jobs.html#bewerbung">Direkt bewerben</a></div></details>
+    <a class="plain" href="konfigurator.html">Lack-Konfigurator</a><a class="plain" href="fragen.html">Häufige Fragen</a><a class="plain" href="contact.html">Kontakt &amp; Anfahrt</a>
   <!-- DRAWERNAV:END --></nav>
   <div class="drawer-foot">
     <a href="https://www.facebook.com/ToniTaeubert/?locale=de_DE" aria-label="Facebook" target="_blank" rel="noopener"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M14 8h3V4h-3c-2.8 0-5 2.2-5 5v2H7v4h2v9h4v-9h3l1-4h-4V9c0-.6.4-1 1-1z"/></svg></a>
@@ -698,11 +757,24 @@
   <div class="page-width"><div class="rich-inner" style="max-width:650px;text-align:center;margin:0 auto">
 <h1 class="overline">Lackierer &amp; Karosserie Rödental</h1><p class="heading h-5">Karosserie & Lackierer Rödental | Unfallreparatur Täubert</p>
 <div class="rte"><p>Professionelle Lackierung und Karosseriearbeiten nahe Rödental. Hilfe bei Unfall, Parkrempler und Leasingrückgabe.<br/><br/><br/></p></div></div></div>
+</section><section class="city">
+  <div class="page-width city-inner">
+    <div class="city-text"><p class="eyebrow">Für Kunden aus Rödental</p><h2>So einfach geht's aus Rödental</h2><p>Von Rödental sind Sie in rund 20 Minuten bei uns in Sonneberg – oder wir holen Ihr Auto mit dem Hol- und Bringservice ab.</p>
+    <p class="city-places">Wir sind für Sie da in Rödental, Oeslau, Einberg, Mönchröden, Neustadt bei Coburg und Umgebung.</p></div>
+    <ul class="city-facts">
+      <li><strong>etwa 20 Minuten</strong><span>bis zu unserer Werkstatt</span></li>
+      <li><strong>Hol &amp; Bring</strong><span>Wir holen Ihr Auto ab</span></li>
+      <li><strong>24 h</strong><span>Kostenvoranschlag per Foto</span></li>
+      <li><strong>Ersatzwagen</strong><span>Mobil während der Reparatur</span></li>
+    </ul>
+  </div>
 </section>
 <section class="sec" style="padding:60px 0 60px">
   <div class="page-width"><div class="contact-form" style="max-width:650px"><h3 class="h-5">Kontakt</h3><div class="rte"><p>Wir freuen uns auf Ihre Nachricht </p></div>
     <form class="mail-form"><label class="f half">Name<input name="name" required></label><label class="f half">E-Mail<input name="email" type="email" required></label><label class="f">Telefon<input name="phone" type="tel"></label><label class="f">Nachricht<textarea name="message" rows="7" required></textarea></label><button class="btn btn-dark" type="submit">senden</button></form>
   </div></div>
+</section><section class="sec" style="padding:70px 0">
+  <div class="page-width"><div class="faq"><h2 class="sec-head">Häufige Fragen</h2><details><summary><span>Wie weit ist es von Rödental zu Ihnen?</span></summary><div class="rte"><p>Je nach Verkehr etwa 20 Minuten bis in die Bettelhecker Straße 15 in Sonneberg.</p></div></details></div></div>
 </section><section class="booking-cta">
   <div class="page-width">
     <h2>Termin online buchen</h2>
@@ -845,6 +917,23 @@
       document.querySelectorAll('[data-open-status]').forEach(el => { el.textContent = text; el.classList.toggle('is-open', open); });
     };
     update(); setInterval(update, 60000);
+  })();
+  // Header beim Scrollen schlanker, Inhalte sanft einblenden
+  (function () {
+    var onScroll = function () { document.body.classList.toggle('scrolled', window.scrollY > 40); };
+    window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+    if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var els = document.querySelectorAll('main .sec-intro, main .tile-svc, main .care-grid li, main .steps li, main .spec-grid > div, main .cat-top, main .finder-list li, main .konfig-inner > *, main .faq details, main .svc-article > div, main .kf-info-grid > div');
+    if (!els.length) return;
+    document.documentElement.classList.add('rv-on');
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    els.forEach(function (el, i) { el.classList.add('rv'); el.style.transitionDelay = (i % 3) * 80 + 'ms'; io.observe(el); });
+    // Sicherheitsnetz: alles, was schon oberhalb des unteren Bildschirmrands liegt, sofort zeigen (auch bei schnellem Scrollen oder Sprungmarken)
+    var tick = false, sweep = function () { tick = false; els.forEach(function (el) { if (!el.classList.contains('in') && el.getBoundingClientRect().top < innerHeight) el.classList.add('in'); }); };
+    window.addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(sweep); } }, { passive: true });
+    window.addEventListener('load', sweep); setTimeout(sweep, 1500);
   })();
   // Laufschrift: zwei identische Hälften, ruhiges konstantes Tempo, Pause beim Drüberfahren
   function startMarquee(t, unit) {

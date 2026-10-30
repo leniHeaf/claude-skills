@@ -385,6 +385,8 @@ EXTRA_CSS = """
   .rte table { border-collapse: collapse; width: 100%; margin: 12px 0; } .rte td, .rte th { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
   .crumbs { display: flex; flex-wrap: wrap; gap: 8px; font-size: 14px; color: #555; padding-top: 16px; padding-bottom: 4px; }
   .crumbs a { text-decoration: underline; text-underline-offset: 3px; }
+  .svc-area { font-size: 14px; color: #555; margin-top: 6px; }
+  .svc-area a { color: var(--black); text-decoration: underline; text-underline-offset: 3px; }
   .svc-quick { padding: 14px 0 26px; border-bottom: 1px solid var(--line); }
   .svc-quick-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 30px; }
   .svc-quick .trust { color: var(--text); }
@@ -603,7 +605,8 @@ def shell():
     img_js = re.search(r"(  // Fehlende Bilddateien.*?\n  \}\);\n)", js, re.S).group(1)
     nav_js = re.search(r"(  // Hauptnavigation: Aufklappmenüs.*?\n  \}\)\(\);\n)", js, re.S).group(1)
     status_js = re.search(r"(  // Öffnungsstatus.*?\n  \}\)\(\);\n)", js, re.S).group(1)
-    return style, head_links, top, footer, menu_js + nav_js + img_js + status_js + marquee_js + PAGE_JS + "  document.getElementById('year').textContent = new Date().getFullYear();\n"
+    scroll_js = re.search(r"(  // Header beim Scrollen schlanker.*?\n  \}\)\(\);\n)", js, re.S).group(1)
+    return style, head_links, top, footer, menu_js + nav_js + img_js + status_js + scroll_js + marquee_js + PAGE_JS + "  document.getElementById('year').textContent = new Date().getFullYear();\n"
 
 
 def first_heading(d):
@@ -647,16 +650,16 @@ SERVICES = {
                               "Was kostet es, ein Auto lackieren zu lassen? Preise und Beispiele für Teil- und Komplettlackierung von Täubert in Sonneberg."),
 }
 LOCATIONS = {
-    "sonneberg": ("Lackierer & Karosserie Sonneberg", "Sonneberg",
+    "sonneberg": ("Lackierer & Karosserie Sonneberg – Unfallreparatur", "Sonneberg",
                   "Ihr Lackierer und Karosseriebauer in Sonneberg: Unfallreparatur, Lackierung, Smart Repair und Versicherungsabwicklung – Bettelhecker Straße 15."),
     "neustadt": ("Lackierer & Karosserie Neustadt bei Coburg", "Neustadt bei Coburg",
                  "Lackierer nahe Neustadt bei Coburg: Unfallreparatur, Lackierung und Smart Repair bei Täubert – nur wenige Minuten entfernt in Sonneberg."),
-    "coburg": ("Lackierer & Karosserie Coburg", "Coburg",
-               "Karosserie und Lackierung für Autofahrer aus Coburg: Unfallreparatur, Lackierarbeiten und Abwicklung mit der Versicherung bei Täubert."),
+    "coburg": ("Lackierer & Karosserie Coburg – Unfallreparatur", "Coburg",
+               "Lackierer & Karosserie für Coburg: Unfallreparatur, Lackierarbeiten, Smart Repair und Aufbereitung – Kostenvoranschlag in 24 h, Ersatzwagen, Hol- und Bringservice."),
     "roedental": ("Lackierer & Karosserie Rödental", "Rödental",
                   "Karosserie und Lackierung für Rödental: Unfallreparatur, Parkrempler und Smart Repair bei Täubert Karosserie & Lack in Sonneberg."),
-    "kronach": ("Lackierer & Karosserie Kronach", "Kronach",
-                "Lackierer für Kronach: Unfallreparatur, Lackierung und Smart Repair bei Täubert Karosserie & Lack in Sonneberg."),
+    "kronach": ("Lackierer & Karosserie Kronach – Unfallreparatur", "Kronach",
+                "Lackierer & Karosserie für Kronach: Unfallreparatur, Lackierung, Smart Repair und Aufbereitung – mit Hol- und Bringservice, Ersatzwagen und direkter Abrechnung mit der Versicherung."),
     "bamberg": ("Lackierer & Karosserie Bamberg", "Bamberg",
                 "Karosserie und Lackierung für Autofahrer aus Bamberg: Unfallreparatur, Lackierarbeiten und Smart Repair bei Täubert in Sonneberg."),
 }
@@ -931,14 +934,14 @@ NAV_GROUPS = [
                  ("versicherungsschaden.html", "Abrechnung mit der Versicherung"), ("unfall-oder-kratzer.html", "Wer zahlt die Reparatur?")]),
     ("Über uns", [("who-we-are.html", "Who we are"), ("history.html", "History"), ("meet-the-team.html", "Meet the Team"),
                   ("porsche-911.html", "Projekt: Porsche 911"), ("porsche-gts.html", "Projekt: Porsche Cayenne GTS"), ("vw-bulli-t2.html", "Projekt: VW Bulli T2")]),
-    ("Karriere", [("karriere.html", "Karriere bei Täubert"), ("azubi.html", "Ausbildung"), ("jobs.html", "Stellenangebote")]),
+    ("Karriere", [("karriere.html", "Karriere bei Täubert"), ("azubi.html", "Ausbildung"), ("jobs.html", "Stellenangebote"), ("jobs.html#bewerbung", "Direkt bewerben")]),
 ]
 
 
 def nav_html():
     svcs = {s: n for s, n, _ in all_services()}
     mega = "".join(f'<div><h3>{esc(c)}</h3>' + "".join(f'<a href="{s}.html">{esc(svcs[s])}</a>' for s in slugs if s in svcs) + "</div>" for c, slugs in CATEGORIES)
-    out = [f'<li class="has-sub"><button class="top" type="button" aria-expanded="false">Leistungen {CHEV}</button><div class="panel mega">{mega}<a class="all" href="leistungen.html">Alle Leistungen ansehen →</a></div></li>']
+    out = [f'<li class="has-sub"><button class="top" type="button" aria-expanded="false">Leistungen {CHEV}</button><div class="panel mega">{mega}<a class="all" href="leistungen.html">Alle Leistungen ansehen →</a><a class="all" href="konfigurator.html">Lack-Konfigurator →</a></div></li>']
     for title, links in NAV_GROUPS:
         out.append(f'<li class="has-sub"><button class="top" type="button" aria-expanded="false">{esc(title)} {CHEV}</button><div class="panel">' + "".join(f'<a href="{h}">{esc(t)}</a>' for h, t in links) + "</div></li>")
     out.append('<li><a class="top" href="fragen.html">Fragen</a></li><li><a class="top" href="contact.html">Kontakt</a></li>')
@@ -956,8 +959,31 @@ def drawer_html():
            f'<details><summary>Leistungen</summary><div class="sub"><a href="leistungen.html"><strong>Alle Leistungen</strong></a>{groups}</div></details>']
     for title, links in NAV_GROUPS[1:]:
         out.append(f'<details><summary>{esc(title)}</summary><div class="sub">' + "".join(f'<a href="{h}">{esc(t)}</a>' for h, t in links) + "</div></details>")
-    out.append('<a class="plain" href="fragen.html">Häufige Fragen</a><a class="plain" href="contact.html">Kontakt &amp; Anfahrt</a>')
+    out.append('<a class="plain" href="konfigurator.html">Lack-Konfigurator</a><a class="plain" href="fragen.html">Häufige Fragen</a><a class="plain" href="contact.html">Kontakt &amp; Anfahrt</a>')
     return "\n    ".join(out)
+
+
+# Rundum-Service: das zentrale Versprechen (Startseite und Leistungsübersicht)
+CARE = [
+    ("Wir holen Ihr Auto ab", "Mit unserem Hol- und Bringservice müssen Sie nicht einmal in die Werkstatt kommen."),
+    ("Sie bleiben mobil", "Ein Ersatzwagen für die Dauer der Reparatur – auch mit Hund, nach Absprache."),
+    ("Klarheit in 24 Stunden", "Ihr Kostenvoranschlag: verständlich, verbindlich, ohne Überraschungen."),
+    ("Kein Papierkram", "Wir rechnen direkt mit der Versicherung ab und stimmen uns mit dem Gutachter ab."),
+    ("Handwerk ohne Kompromisse", "Richtbank, digitale Farbtonmessung und eigene Lackierkabine – für ein Ergebnis wie ab Werk."),
+    ("Gereinigt zurück", "Geprüft, gereinigt und auf Wunsch wieder vor Ihre Tür gebracht."),
+]
+
+
+def care_html():
+    items = "".join(f'<li><span class="n">{i + 1:02d}</span><h3>{esc(h)}</h3><p>{esc(t)}</p></li>' for i, (h, t) in enumerate(CARE))
+    return f'''<section class="care" id="service">
+    <div class="page-width">
+      <div class="sec-intro"><p class="eyebrow">Rundum-Service</p><h2>Sie lehnen sich zurück. Wir erledigen den Rest.</h2>
+      <p class="lead">Ob Parkrempler, Unfall, Lack oder Aufbereitung: Sie haben einen Ansprechpartner, und wir kümmern uns um alles – in höchster Qualität und ohne Aufwand für Sie.</p></div>
+      <ol class="care-grid">{items}</ol>
+      <div class="btns"><a class="btn btn-light" href="{BOOKING}">Termin online buchen</a><a class="btn btn-outline-light" href="termin.html#rueckruf">Rückruf anfordern</a></div>
+    </div>
+  </section>'''
 
 
 def update_index():
@@ -977,6 +1003,7 @@ def update_index():
   </section>
   <!-- LEISTUNGEN:END -->'''
     s = re.sub(r"<!-- LEISTUNGEN:START -->.*?<!-- LEISTUNGEN:END -->", lambda m: block, s, flags=re.S)
+    s = re.sub(r"<!-- SERVICE:START -->.*?<!-- SERVICE:END -->", lambda m: "<!-- SERVICE:START -->\n  " + care_html() + "\n  <!-- SERVICE:END -->", s, flags=re.S)
     s = re.sub(r"<!-- MAINNAV:START -->.*?<!-- MAINNAV:END -->", lambda m: "<!-- MAINNAV:START -->" + nav_html() + "<!-- MAINNAV:END -->", s, flags=re.S)
     s = re.sub(r"<!-- DRAWERNAV:START -->.*?<!-- DRAWERNAV:END -->", lambda m: "<!-- DRAWERNAV:START -->\n    " + drawer_html() + "\n  <!-- DRAWERNAV:END -->", s, flags=re.S)
     foot = "".join(f'<li><a href="{slug}.html">{esc(name)}</a></li>' for slug, name, _ in top)
@@ -1041,6 +1068,7 @@ def first_image(body_html):
 def service_intro(slug, name):
     """Brotkrumen + Kurzleiste mit Versprechen und den zwei Hauptaktionen direkt unter dem Startbild."""
     return f'''<nav class="crumbs page-width" aria-label="Brotkrumen"><a href="index.html">Startseite</a><span>›</span><a href="leistungen.html">Leistungen</a><span>›</span><span aria-current="page">{esc(name)}</span></nav>
+<p class="svc-area page-width">{esc(name)} für Kunden aus <a href="sonneberg.html">Sonneberg</a>, <a href="coburg.html">Coburg</a>, <a href="kronach.html">Kronach</a>, <a href="neustadt.html">Neustadt bei Coburg</a> und Umgebung – mit Hol- und Bringservice.</p>
 <section class="svc-quick">
   <div class="page-width svc-quick-inner">
     {TRUST_HTML}
@@ -1141,6 +1169,91 @@ def tidy_service(slug, body_html):
     return head + rest
 
 
+# Eigene Inhalte je Ort (gegen doppelte Inhalte, für lokale Suche)
+CITY = {
+    "sonneberg": {"time": "mitten in Sonneberg", "places": ["Sonneberg", "Föritztal", "Neuhaus-Schierschnitz", "Judenbach", "Steinach", "Lauscha", "Schalkau"],
+        "text": "Unsere Werkstatt liegt in der Bettelhecker Straße 15 – für Sonneberger nur ein paar Minuten. Karosserie, Lack und Aufbereitung passieren hier unter einem Dach.",
+        "faq": [("Wo genau finde ich Ihre Werkstatt in Sonneberg?", "In der Bettelhecker Straße 15, 96515 Sonneberg. Geöffnet Montag bis Donnerstag 08:00–17:00 Uhr und Freitag 08:00–14:30 Uhr."),
+                ("Kann ich in Sonneberg einfach ohne Termin vorbeikommen?", "Ja, für eine erste Einschätzung gern. Für die Reparatur vereinbaren wir einen Termin – am schnellsten online."),
+                ("Holen Sie mein Auto in Sonneberg auch zu Hause ab?", "Ja, mit unserem Hol- und Bringservice holen wir Ihr Fahrzeug ab und bringen es nach der Reparatur zurück.")]},
+    "neustadt": {"time": "etwa 10 Minuten", "places": ["Neustadt bei Coburg", "Wildenheid", "Fürth am Berg", "Ebersdorf bei Coburg", "Sonnefeld"],
+        "text": "Von Neustadt bei Coburg sind Sie in rund zehn Minuten bei uns in Sonneberg – oder Sie lassen sich das Fahren ganz sparen: Wir holen Ihr Auto ab.",
+        "faq": [("Wie weit ist es von Neustadt bei Coburg zu Ihnen?", "Je nach Verkehr etwa zehn Minuten – unsere Werkstatt liegt in der Bettelhecker Straße 15 in Sonneberg."),
+                ("Holen Sie mein Auto in Neustadt bei Coburg ab?", "Ja, mit unserem Hol- und Bringservice. Geben Sie es einfach bei der Buchung an.")]},
+    "coburg": {"time": "etwa 25 Minuten", "places": ["Coburg", "Rödental", "Dörfles-Esbach", "Ahorn", "Lautertal", "Untersiemau", "Meeder"],
+        "text": "Von Coburg aus sind Sie in rund 25 Minuten bei uns. Noch bequemer: Wir holen Ihr Auto in Coburg ab, Sie fahren solange mit dem Ersatzwagen – und bekommen Ihr Fahrzeug repariert und gereinigt zurück.",
+        "faq": [("Lohnt sich der Weg von Coburg nach Sonneberg?", "Ja – und oft müssen Sie ihn gar nicht selbst fahren. Mit unserem Hol- und Bringservice holen wir Ihr Auto ab, und Sie bleiben mit dem Ersatzwagen mobil."),
+                ("Darf ich als Coburger nach einem Unfall eine Werkstatt in Sonneberg wählen?", "Ja. Bei einem Haftpflichtschaden können Sie die Werkstatt grundsätzlich frei wählen – wir rechnen direkt mit der Versicherung ab."),
+                ("Muss ich für den Kostenvoranschlag extra aus Coburg kommen?", "Nein. Schicken Sie uns Fotos über „Schaden per Foto melden“ oder per WhatsApp – Sie erhalten den Kostenvoranschlag innerhalb von 24 Stunden.")]},
+    "kronach": {"time": "etwa 40 Minuten", "places": ["Kronach", "Küps", "Mitwitz", "Stockheim", "Pressig", "Steinbach am Wald", "Wilhelmsthal"],
+        "text": "Von Kronach brauchen Sie rund 40 Minuten bis zu uns nach Sonneberg. Damit sich der Weg für Sie nicht wie ein Weg anfühlt, holen wir Ihr Auto auf Wunsch ab und bringen es repariert zurück.",
+        "faq": [("Wie weit ist es von Kronach zu Ihnen?", "Je nach Strecke und Verkehr etwa 40 Minuten bis in die Bettelhecker Straße 15 in Sonneberg."),
+                ("Holen Sie mein Auto in Kronach ab?", "Ja, mit unserem Hol- und Bringservice holen wir Ihr Fahrzeug im Raum Kronach ab und bringen es nach der Reparatur zurück – sprechen Sie uns bei der Buchung darauf an."),
+                ("Muss ich für den Kostenvoranschlag extra herfahren?", "Nein. Fotos über „Schaden per Foto melden“ oder WhatsApp genügen – Sie bekommen den Kostenvoranschlag innerhalb von 24 Stunden."),
+                ("Bekomme ich als Kunde aus Kronach einen Ersatzwagen?", "Ja. Damit Sie mobil bleiben, stellen wir Ihnen für die Dauer der Reparatur einen Ersatzwagen – auch mit Hund, nach Absprache.")]},
+    "roedental": {"time": "etwa 20 Minuten", "places": ["Rödental", "Oeslau", "Einberg", "Mönchröden", "Neustadt bei Coburg"],
+        "text": "Von Rödental sind Sie in rund 20 Minuten bei uns in Sonneberg – oder wir holen Ihr Auto mit dem Hol- und Bringservice ab.",
+        "faq": [("Wie weit ist es von Rödental zu Ihnen?", "Je nach Verkehr etwa 20 Minuten bis in die Bettelhecker Straße 15 in Sonneberg.")]},
+    "bamberg": {"time": "etwa eine Stunde", "places": ["Bamberg", "Lichtenfels", "Bad Staffelstein", "Ebensfeld"],
+        "text": "Von Bamberg sind es über die A73 rund eine Stunde. Viele Kunden schicken uns zuerst Fotos und bekommen innerhalb von 24 Stunden einen Kostenvoranschlag – so wissen Sie vorher genau, woran Sie sind.",
+        "faq": [("Lohnt sich der Weg von Bamberg?", "Gerade bei größeren Reparaturen, Lackierungen oder Klassikern ja. Schicken Sie uns vorab Fotos – Sie bekommen den Kostenvoranschlag in 24 Stunden.")]},
+}
+
+# Kronach: komplett eigener Text statt der Sonneberg-Vorlage
+KRONACH_BODY = [
+    ("Unfall oder Lackschaden im Raum Kronach?", "<p>Ob Parkrempler in der Kronacher Innenstadt, Wildunfall im Frankenwald oder Steinschlag auf der B173: Ein Schaden kommt immer ungelegen. Bei Täubert bekommen Sie Karosserie, Lack und Versicherungsabwicklung aus einer Hand – mit Ersatzwagen und Hol- und Bringservice.</p>"),
+    ("Was wir für Kunden aus Kronach übernehmen", "<ul><li>Unfallinstandsetzung nach Herstellervorgaben</li><li>Lackierung mit digitaler Farbtonmessung in der eigenen Lackierkabine</li><li>Smart Repair für Dellen und Parkschäden</li><li>Wildschaden und Hagelschaden – Abstimmung mit der Teilkasko</li><li>Fahrzeugaufbereitung, Unterbodenschutz und Leasingrückgabe</li></ul>"),
+    ("Wildunfall – was die Versicherung zahlt", "<p>Wildunfälle mit Haarwild wie Reh oder Wildschwein sind in der Regel über die Teilkasko versichert. Wichtig: Polizei oder Jagdpächter informieren und eine Wildunfallbescheinigung geben lassen. Den Rest stimmen wir mit Ihrer Versicherung ab. Mehr in der Checkliste <a href=\"unfall-was-tun.html\">Unfall – was jetzt zu tun ist</a>.</p>"),
+]
+
+
+def city_block(slug):
+    c = CITY.get(slug)
+    if not c:
+        return ""
+    name = LOCATIONS[slug][1]
+    places = ", ".join(c["places"])
+    return f'''<section class="city">
+  <div class="page-width city-inner">
+    <div class="city-text"><p class="eyebrow">Für Kunden aus {esc(name)}</p><h2>So einfach geht's aus {esc(name)}</h2><p>{esc(c["text"])}</p>
+    <p class="city-places">Wir sind für Sie da in {esc(places)} und Umgebung.</p></div>
+    <ul class="city-facts">
+      <li><strong>{esc(c["time"])}</strong><span>bis zu unserer Werkstatt</span></li>
+      <li><strong>Hol &amp; Bring</strong><span>Wir holen Ihr Auto ab</span></li>
+      <li><strong>24 h</strong><span>Kostenvoranschlag per Foto</span></li>
+      <li><strong>Ersatzwagen</strong><span>Mobil während der Reparatur</span></li>
+    </ul>
+  </div>
+</section>'''
+
+
+def city_faq(slug):
+    c = CITY.get(slug)
+    return faq_section([(q, esc(a)) for q, a in c["faq"]]) if c else ""
+
+
+def city_ld(slug):
+    name = LOCATIONS[slug][1]
+    data = {"@context": "https://schema.org", "@type": "AutoBodyShop", "name": "Täubert Karosserie und Lack GmbH", "url": f"{DOMAIN}/{slug}.html",
+            "telephone": "+49 3675 4289606", "address": {"@type": "PostalAddress", "streetAddress": "Bettelhecker Straße 15", "postalCode": "96515", "addressLocality": "Sonneberg", "addressCountry": "DE"},
+            "areaServed": [{"@type": "City", "name": n} for n in CITY.get(slug, {}).get("places", [name])]}
+    return '<script type="application/ld+json">' + json.dumps(data, ensure_ascii=False) + "</script>"
+
+
+CITY_CSS = """
+  .city { padding: 110px 0; border-bottom: 1px solid var(--line); }
+  .city-inner { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 64px; align-items: start; }
+  .city h2 { font-size: clamp(30px, 3.4vw, 50px); line-height: 1.02; margin-bottom: 18px; }
+  .city-text > p:not(.eyebrow) { color: #555; font-size: 17px; max-width: 560px; }
+  .city-places { margin-top: 14px; font-size: 15px !important; }
+  .city-facts { list-style: none; display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--black); }
+  .city-facts li { padding: 24px 16px 24px 0; border-bottom: 1px solid var(--line); }
+  .city-facts strong { display: block; font-family: "Archivo Black", sans-serif; font-weight: 400; text-transform: uppercase; font-size: clamp(18px, 1.6vw, 24px); }
+  .city-facts span { display: block; margin-top: 6px; font-size: 14px; color: #555; }
+  @media (max-width: 760px) { .city { padding: 64px 0; } .city-inner { grid-template-columns: 1fr; gap: 32px; } }
+"""
+
+
 def with_service_frame(slug, name, body_html):
     """Startbild bleibt oben; danach Brotkrumen + Kurzleiste, am Ende vor dem Buchungsblock der Ablauf."""
     m = re.search(r"<section.*?</section>", body_html, re.S)
@@ -1220,6 +1333,7 @@ def render_overview():
   </div>
 </section>
 {cats}
+{care_html()}
 <section class="sec" style="padding:90px 0 0">
   <div class="page-width">
     <div class="cat-top" style="margin-bottom:24px"><h2 class="h-4">Ratgeber</h2></div>
@@ -1282,7 +1396,7 @@ DAMAGE_FORM = """<section class="sub-hero" style="--h:420px;--mh:380px">
   </div></div>
 </section>"""
 
-THANKS = """<section class="sec" style="padding:100px 0">
+THANKS = f"""<section class="sec" style="padding:100px 0">
   <div class="page-width"><div class="rich-inner" style="max-width:640px;margin:0 auto;text-align:center">
     <h1 class="h-6">Danke – Ihre Meldung ist da.</h1>
     <div class="rte"><p>Wir sehen uns die Fotos an und melden uns schnellstmöglich bei Ihnen. Eilt es? Rufen Sie uns an: <a href="tel:+4936754289606">03675 4289606</a>.</p></div>
@@ -1329,16 +1443,19 @@ DAMAGE_JS = r"""
     try {
       const r = await fetch('/', { method: 'POST', body: data });
       if (!r.ok) throw new Error(r.status);
-      location.href = 'danke.html';
+      location.href = form.dataset.thanks || 'danke.html';
     } catch (err) {
       console.warn('Schadensmeldung konnte nicht gesendet werden:', err);
       btn.disabled = false;
       const v = n => (form.elements[n] || {}).value || '';
-      const msg = `${form.dataset.title || 'Schadensmeldung'}\nName: ${v('name')}\nTelefon: ${v('telefon')}\nE-Mail: ${v('email')}\nFahrzeug: ${v('fahrzeug')}\nSchaden: ${v('schaden')}\nKosten: ${v('kostentraeger')}\n\n${v('nachricht')}`;
-      say('Das Senden hat gerade nicht geklappt. Schicken Sie Ihre Angaben einfach per WhatsApp oder E-Mail – die Nachricht ist schon vorbereitet, die Fotos hängen Sie dort an.', true);
+      const skip = ['form-name', 'firma', 'einwilligung'];
+      const lines = [...form.elements].filter(el => el.name && !skip.includes(el.name) && el.type !== 'file' && el.type !== 'submit' && (el.type !== 'checkbox' || el.checked) && el.value)
+        .map(el => (el.closest('label') ? el.closest('label').textContent.split('\n')[0].replace('*', '').trim() : el.name) + ': ' + (el.type === 'checkbox' ? 'ja' : el.value));
+      const msg = `${form.dataset.title || 'Schadensmeldung'}\n` + lines.join('\n');
+      say('Das Senden hat gerade nicht geklappt. Schicken Sie Ihre Angaben einfach per WhatsApp oder E-Mail – die Nachricht ist schon vorbereitet, Fotos oder Unterlagen hängen Sie dort an.', true);
       status.insertAdjacentHTML('beforeend', '<span class="btns" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px">'
         + '<a class="btn btn-dark" target="_blank" rel="noopener" href="https://wa.me/4936754289606?text=' + encodeURIComponent(msg) + '">Per WhatsApp senden</a>'
-        + '<a class="btn btn-outline-dark" href="mailto:hallo@taeubert-karosserie-lack.de?subject=' + encodeURIComponent('Schadensmeldung') + '&body=' + encodeURIComponent(msg) + '">Per E-Mail senden</a></span>');
+        + '<a class="btn btn-outline-dark" href="mailto:hallo@taeubert-karosserie-lack.de?subject=' + encodeURIComponent(form.dataset.title || 'Schadensmeldung') + '&body=' + encodeURIComponent(msg) + '">Per E-Mail senden</a></span>');
     }
   }));
 """
@@ -1484,6 +1601,7 @@ GENERAL_FAQ = [
         ("Wie buche ich den Ersatzwagen?", "Ganz einfach: Geben Sie bei der <a href=\"https://terminbuchungtaeubert.de\">Online-Terminbuchung</a> an, dass Sie einen Ersatzwagen brauchen, kreuzen Sie es beim <a href=\"termin.html#rueckruf\">Rückruf</a> oder bei der <a href=\"schaden-melden.html\">Schadensmeldung</a> an – oder sagen Sie es uns am Telefon: 03675 4289606."),
         ("Wie früh sollte ich den Ersatzwagen anfragen?", "Am besten direkt bei der Terminvereinbarung. Dann planen wir das Fahrzeug fest für Ihren Reparaturtermin ein."),
         ("Wer zahlt den Ersatzwagen?", "Hatten Sie einen unverschuldeten Unfall, übernimmt in der Regel die Versicherung des Unfallgegners die Kosten für ein Ersatzfahrzeug. In allen anderen Fällen nennen wir Ihnen die Konditionen vorab – ohne Überraschungen."),
+        ("Darf mein Hund mit in den Ersatzwagen?", "Ja, nach Absprache. Geben Sie es bei der Buchung oder am Telefon an – dann planen wir ein passendes Fahrzeug für Sie und Ihren Hund ein."),
         ("Was brauche ich, um den Ersatzwagen abzuholen?", "Bitte bringen Sie Ihren gültigen Führerschein und Ihren Personalausweis mit."),
         ("Wie lange kann ich den Ersatzwagen nutzen?", "Für die Dauer der Reparatur. Sobald Ihr Auto fertig ist, tauschen Sie einfach zurück."),
         ("Holen Sie mein Auto ab?", "Ja. Mit unserem Hol- und Bringservice holen wir Ihr Fahrzeug ab und bringen es nach der Reparatur zurück – geben Sie den Wunsch bei der Buchung, beim Rückruf oder am Telefon an."),
@@ -1599,6 +1717,235 @@ def render_faq_page():
 
 
 
+# Eigener Lack-Konfigurator (statisch, ohne externen Dienst): echte Studiofotos je Modell und Farbe
+KONFIG_MODELS = [
+    ("911", "Porsche 911 Klassiker", [
+        ("gelb", "Pastellgelb", "#e1d394", "hf_20260210_174113_8bd7f253-8826-4ed4-89ed-56b117c21301.webp"),
+        ("weiss", "Kreideweiß", "#eceef0", "hf_20260210_174125_ad38590c-eeea-4e3b-ae46-15b828359911.webp"),
+        ("gruen", "Mintgrün", "#9cc1ae", "hf_20260210_174155_7be82c39-92ac-4e20-8db2-d93ad803ab9d.webp"),
+        ("schwarz", "Tiefschwarz", "#16191c", "hf_20260210_174226_2ba690d2-bbec-414c-9427-48c2ef35920e.webp"),
+        ("braun", "Mahagonibraun", "#5b3d33", "hf_20260210_174234_03b93839-672b-4ba9-b742-8e3397346ee1.webp")]),
+    ("w114", "Mercedes-Benz /8 Klassiker", [
+        ("gelb", "Pastellgelb", "#e1d394", "hf_20260210_173801_c09630de-aae3-46b1-9460-d37b19053b9d_1.webp"),
+        ("gruen", "Mintgrün", "#9cc1ae", "hf_20260210_173808_364c1669-6822-493e-9baa-db18c7f4d18c.webp")]),
+    ("g", "Mercedes-Benz G-Klasse", [
+        ("blau", "Eisblau", "#86aec2", "hf_20260210_181224_9fb53726-af8f-484d-9126-6d24f40444b3.webp"),
+        ("schwarz", "Tiefschwarz", "#16191c", "hf_20260210_181531_cb41fa11-8f63-4e1a-93b7-0ea0ed24e5f9.webp")]),
+]
+KONFIG_SCOPE = ["Komplettlackierung", "Teillackierung", "Ausbesserung / Spot Repair", "Erst beraten lassen"]
+
+
+def konfig_page():
+    m0, c0 = KONFIG_MODELS[0][0], KONFIG_MODELS[0][2][0]
+    models = "".join(f'<label class="kf-model"><input type="radio" name="modell" value="{k}"{" checked" if k == m0 else ""}><span>{esc(n)}</span></label>' for k, n, _ in KONFIG_MODELS)
+    scope = "".join(f'<label class="kf-chip"><input type="radio" name="umfang" value="{esc(x)}"{" checked" if i == 0 else ""}><span>{esc(x)}</span></label>' for i, x in enumerate(KONFIG_SCOPE))
+    data = {k: {"name": n, "colors": [{"id": c, "name": cn, "hex": h, "img": f"images/{img}"} for c, cn, h, img in cols]} for k, n, cols in KONFIG_MODELS}
+    first = KONFIG_MODELS[0][2][0]
+    return f'''<section class="kf">
+  <div class="kf-stage">
+    <p class="kf-label"><span id="kf-model-name">{esc(KONFIG_MODELS[0][1])}</span> · <span id="kf-color-name">{esc(first[1])}</span></p>
+    <div class="kf-img"><img id="kf-img" src="images/{first[3]}" alt="{esc(KONFIG_MODELS[0][1])} in {esc(first[1])}" fetchpriority="high"></div>
+    <p class="kf-note">Studioaufnahmen zur Orientierung. Ihr Fahrzeug und Ihren Wunschfarbton lackieren wir in jedem Farbcode.</p>
+  </div>
+  <form class="kf-panel" id="kf-form" onsubmit="return false">
+    <h1 class="overline">Lack-Konfigurator</h1>
+    <p class="kf-title">Ihre Farbe. Ihr Auto.</p>
+    <fieldset><legend><span>01</span> Modell</legend><div class="kf-models">{models}</div></fieldset>
+    <fieldset><legend><span>02</span> Farbe <em id="kf-color-label">{esc(first[1])}</em></legend><div class="kf-swatches" id="kf-swatches"></div></fieldset>
+    <fieldset><legend><span>03</span> Umfang</legend><div class="kf-chips">{scope}</div></fieldset>
+    <fieldset><legend><span>04</span> Ihr Fahrzeug <small>(optional)</small></legend>
+      <label class="kf-field">Marke, Modell, Baujahr<input name="fahrzeug" id="kf-car" placeholder="z. B. VW Golf 7, 2016" autocomplete="off"></label>
+      <label class="kf-field">Eigener Farbcode oder Wunschfarbe<input name="farbcode" id="kf-code" placeholder="z. B. LY9B oder „Nardograu“" autocomplete="off"></label>
+    </fieldset>
+    <div class="kf-summary" aria-live="polite"><p class="eyebrow">Ihre Konfiguration</p><p id="kf-sum"></p></div>
+    <div class="kf-cta">
+      <a class="btn btn-dark" id="kf-wa" href="https://wa.me/4936754289606" target="_blank" rel="noopener">Anfrage per WhatsApp</a>
+      <a class="btn btn-outline-dark" id="kf-mail" href="mailto:hallo@taeubert-karosserie-lack.de">Anfrage per E-Mail</a>
+      <a class="btn btn-outline-dark" href="{BOOKING}">Beratungstermin buchen</a>
+    </div>
+    <p class="kf-small">Lieber persönlich? <a href="tel:+4936754289606">03675 4289606</a> · <a href="termin.html#rueckruf">Rückruf anfordern</a></p>
+  </form>
+</section>
+<section class="sec kf-info">
+  <div class="page-width kf-info-grid">
+    <div><p class="eyebrow">Präzision</p><h2>Digitale Farbtonmessung</h2><p>Wir messen den Farbton am Fahrzeug und mischen exakt an – auch für Sonder- und Klassikerfarben.</p></div>
+    <div><p class="eyebrow">Qualität</p><h2>Staubfreie Lackierkabine</h2><p>Lackiert wird in der eigenen Kabine – mit Hochglanz-Finish und sauberen Übergängen.</p></div>
+    <div><p class="eyebrow">Alles aus einer Hand</p><h2>Karosserie &amp; Lack</h2><p>Vorarbeiten, Entrostung und Lackierung in einem Betrieb. <a href="lackierarbeiten.html">Mehr zu Lackierarbeiten →</a></p></div>
+  </div>
+</section>
+<script>window.KONFIG = {json.dumps(data, ensure_ascii=False)};</script>'''
+
+
+KONFIG_CSS = """
+  .kf { display: grid; grid-template-columns: minmax(0, 1fr) 440px; align-items: start; background: #fff; }
+  .kf-stage { position: sticky; top: calc(var(--announce-h) + var(--hdr-h)); height: calc(100svh - var(--announce-h) - var(--hdr-h)); transition: top .35s var(--ease), height .35s var(--ease); min-height: 460px; background: #c9cbcc; overflow: hidden; z-index: 2; }
+  .kf-label { position: absolute; z-index: 1; top: 32px; left: 40px; font-size: 12px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: #555; }
+  .kf-img { position: absolute; inset: 0; }
+  .kf-img img { width: 100%; height: 100%; object-fit: cover; object-position: center 58%; transition: opacity .35s ease, transform .6s cubic-bezier(.2,.8,.2,1); }
+  .kf-img img.out { opacity: 0; transform: scale(.985); }
+  .kf-note { position: absolute; z-index: 1; bottom: 24px; left: 40px; right: 40px; font-size: 13px; color: #333; }
+  .kf-panel { padding: 40px; border-left: 1px solid var(--line); display: flex; flex-direction: column; gap: 26px; }
+  .kf-panel h1.overline { font-family: Inter, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: #6b6b6b; }
+  .kf-title { font-family: "Archivo Black", sans-serif; text-transform: uppercase; font-size: clamp(28px, 2.6vw, 38px); line-height: 1.02; margin-top: -14px; }
+  .kf fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+  .kf legend { display: flex; align-items: baseline; gap: 10px; width: 100%; font-weight: 700; font-size: 15px; text-transform: uppercase; letter-spacing: .12em; padding-bottom: 12px; margin-bottom: 14px; border-bottom: 1px solid var(--black); }
+  .kf legend span { font-size: 12px; color: #6b6b6b; letter-spacing: .2em; }
+  .kf legend em, .kf legend small { margin-left: auto; font-style: normal; font-weight: 500; text-transform: none; letter-spacing: 0; color: #555; font-size: 14px; }
+  .kf input[type=radio] { position: absolute; opacity: 0; pointer-events: none; }
+  .kf-models { display: grid; gap: 8px; }
+  .kf-model span { display: block; padding: 14px 16px; border: 1px solid var(--line); font-weight: 600; cursor: pointer; transition: border-color .2s, background .2s, color .2s; }
+  .kf-model input:checked + span { border-color: var(--black); background: var(--black); color: #fff; }
+  .kf-model input:focus-visible + span, .kf-chip input:focus-visible + span, .kf-sw input:focus-visible + span { outline: 2px solid #111; outline-offset: 3px; }
+  .kf-swatches { display: flex; flex-wrap: wrap; gap: 14px; }
+  .kf-sw { position: relative; }
+  .kf-sw span { display: block; width: 46px; height: 46px; border-radius: 50%; background: var(--c); box-shadow: inset 0 0 0 1px rgba(0,0,0,.15); cursor: pointer; transition: transform .2s; }
+  .kf-sw span::after { content: ""; position: absolute; inset: -5px; border-radius: 50%; border: 1px solid transparent; transition: border-color .2s; }
+  .kf-sw input:checked + span::after { border-color: #111; }
+  .kf-sw span:hover { transform: scale(1.06); }
+  .kf-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .kf-chip span { display: inline-block; padding: 10px 14px; border: 1px solid var(--line); font-size: 14px; cursor: pointer; transition: border-color .2s; }
+  .kf-chip input:checked + span { border-color: var(--black); box-shadow: inset 0 0 0 1px var(--black); font-weight: 600; }
+  .kf-field { display: block; font-size: 14px; font-weight: 600; margin-top: 10px; }
+  .kf-field input { display: block; width: 100%; margin-top: 6px; padding: 13px 14px; border: 1px solid var(--line); font: inherit; font-weight: 400; }
+  .kf-field input:focus { outline: 2px solid #111; outline-offset: 0; border-color: #111; }
+  .kf-summary { background: var(--grey); padding: 18px 20px; }
+  .kf-summary .eyebrow { margin-bottom: 6px; }
+  #kf-sum { font-weight: 600; }
+  .kf-cta { display: grid; gap: 10px; }
+  .kf-cta .btn { width: 100%; }
+  .kf-small { font-size: 14px; color: #555; }
+  .kf-small a { text-decoration: underline; text-underline-offset: 3px; color: var(--black); }
+  .kf-info { padding: 100px 0; border-top: 1px solid var(--line); }
+  .kf-info-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px; }
+  .kf-info h2 { font-size: clamp(20px, 1.8vw, 26px); margin-bottom: 10px; }
+  .kf-info p:not(.eyebrow) { color: #555; }
+  .kf-info a { text-decoration: underline; text-underline-offset: 3px; color: var(--black); }
+  @media (max-width: 990px) {
+    .kf { grid-template-columns: 1fr; }
+    .kf-stage { top: calc(var(--announce-h) + 70px); height: 40svh; min-height: 230px; box-shadow: 0 1px 0 var(--line); }
+    .kf-label { top: 16px; left: 16px; right: 16px; font-size: 11px; letter-spacing: .14em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .kf-note { display: none; }
+    .kf-panel { padding: 32px 16px 48px; border-left: 0; }
+    .kf-info { padding: 64px 0; }
+    .kf-info-grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+"""
+
+KONFIG_JS = r"""
+// Lack-Konfigurator
+(function () {
+  var form = document.getElementById('kf-form'); if (!form || !window.KONFIG) return;
+  var K = window.KONFIG, img = document.getElementById('kf-img'), sw = document.getElementById('kf-swatches');
+  img.removeAttribute('srcset'); img.removeAttribute('sizes');
+  var q = new URLSearchParams(location.search);
+  function val(n) { var e = form.querySelector('input[name="' + n + '"]:checked'); return e ? e.value : ''; }
+  function setModel(m, c) {
+    var mi = form.querySelector('input[name="modell"][value="' + m + '"]'); if (!mi) { m = Object.keys(K)[0]; mi = form.querySelector('input[name="modell"][value="' + m + '"]'); }
+    mi.checked = true;
+    sw.innerHTML = K[m].colors.map(function (x, i) {
+      return '<label class="kf-sw" title="' + x.name + '"><input type="radio" name="farbe" value="' + x.id + '" aria-label="' + x.name + '"' + ((c ? x.id === c : i === 0) ? ' checked' : '') + '><span style="--c:' + x.hex + '"></span></label>';
+    }).join('');
+    if (!val('farbe')) sw.querySelector('input').checked = true;
+    update();
+  }
+  function update() {
+    var m = val('modell'), col = K[m].colors.filter(function (x) { return x.id === val('farbe'); })[0];
+    document.getElementById('kf-model-name').textContent = K[m].name;
+    document.getElementById('kf-color-name').textContent = col.name;
+    document.getElementById('kf-color-label').textContent = col.name;
+    if (!update.done) { img.src = col.img; img.alt = K[m].name + ' in ' + col.name; update.done = true; }
+    else if (img.getAttribute('src') !== col.img) {
+      var pre = new Image(); pre.src = col.img; img.classList.add('out');
+      var swap = function () { img.src = col.img; img.alt = K[m].name + ' in ' + col.name; requestAnimationFrame(function () { img.classList.remove('out'); }); };
+      setTimeout(function () { pre.complete ? swap() : (pre.onload = swap, pre.onerror = swap); }, 180);
+    }
+    var car = document.getElementById('kf-car').value.trim(), code = document.getElementById('kf-code').value.trim();
+    var sum = col.name + (code ? ' (Wunsch: ' + code + ')' : '') + ' · ' + val('umfang') + ' · ' + (car || ('Vorlage: ' + K[m].name));
+    document.getElementById('kf-sum').textContent = sum;
+    var text = 'Hallo Täubert-Team, ich interessiere mich für eine Lackierung.\nFarbe: ' + col.name + (code ? '\nWunschfarbe/Farbcode: ' + code : '') +
+      '\nUmfang: ' + val('umfang') + '\nFahrzeug: ' + (car || 'noch offen') + '\nVorlage im Konfigurator: ' + K[m].name;
+    document.getElementById('kf-wa').href = 'https://wa.me/4936754289606?text=' + encodeURIComponent(text);
+    document.getElementById('kf-mail').href = 'mailto:hallo@taeubert-karosserie-lack.de?subject=' + encodeURIComponent('Lack-Konfigurator: ' + col.name) + '&body=' + encodeURIComponent(text);
+    try { history.replaceState(null, '', '?modell=' + m + '&farbe=' + col.id); } catch (e) {}
+  }
+  form.addEventListener('change', function (e) { if (e.target.name === 'modell') setModel(e.target.value); else update(); });
+  form.addEventListener('input', function (e) { if (e.target.tagName === 'INPUT' && e.target.type !== 'radio') update(); });
+  setModel(q.get('modell') || Object.keys(K)[0], q.get('farbe'));
+})();
+"""
+
+
+# Bewerbung direkt über die Website (Netlify Forms), zusätzlich zur JOIN-Stellenliste
+JOB_OPTIONS = ["Ausbildung Fahrzeuglackierer/in (m/w/d)", "Ausbildung Karosserie- und Fahrzeugbaumechaniker/in (m/w/d)",
+               "Fachkraft Lackierung (m/w/d)", "Fachkraft Karosserie (m/w/d)", "Quereinstieg (m/w/d)", "Praktikum", "Initiativbewerbung", "Andere Stelle aus der Liste"]
+APPLY_FORM = f"""<section class="apply" id="bewerbung">
+  <div class="page-width apply-inner">
+    <div class="apply-text">
+      <p class="eyebrow">Direkt bewerben</p>
+      <h2>In zwei Minuten beworben.</h2>
+      <p>Kein Anschreiben nötig. Name, Telefonnummer und die Stelle reichen – Lebenslauf und Zeugnisse können Sie anhängen, müssen aber nicht. Wir melden uns persönlich bei Ihnen.</p>
+      <ul class="apply-steps"><li><strong>01</strong> Formular ausfüllen</li><li><strong>02</strong> Wir rufen Sie an</li><li><strong>03</strong> Kennenlernen in der Werkstatt</li></ul>
+      <p class="apply-alt">Lieber per WhatsApp? <a href="https://wa.me/4936754289606?text={'Hallo, ich möchte mich bei Täubert bewerben.'.replace(' ', '%20')}" target="_blank" rel="noopener">Hier schreiben</a> · oder anrufen: <a href="tel:+4936754289606">03675 4289606</a></p>
+    </div>
+    <form class="damage-form" name="bewerbung" method="POST" action="danke-bewerbung.html" enctype="multipart/form-data" data-netlify="true" netlify-honeypot="firma" data-title="Bewerbung" data-thanks="danke-bewerbung.html">
+      <input type="hidden" name="form-name" value="bewerbung">
+      <p class="hp"><label>Nicht ausfüllen: <input name="firma" tabindex="-1" autocomplete="off"></label></p>
+      <div class="mail-form">
+        <label class="f half">Vor- und Nachname *<input name="name" autocomplete="name" required></label>
+        <label class="f half">Telefon *<input name="telefon" type="tel" autocomplete="tel" required></label>
+        <label class="f half">E-Mail<input name="email" type="email" autocomplete="email"></label>
+        <label class="f half">Stelle *
+          <select name="stelle" required>{"".join(f"<option>{o}</option>" for o in JOB_OPTIONS)}</select>
+        </label>
+        <label class="f half">Frühester Start<input name="start" placeholder="z. B. sofort oder 01.08."></label>
+        <label class="f half">Führerschein Klasse B?
+          <select name="fuehrerschein"><option>Ja</option><option>Nein</option><option>In Arbeit</option></select>
+        </label>
+        <label class="f">Lebenslauf <small>(optional, PDF oder Foto)</small><input name="lebenslauf" type="file" accept=".pdf,image/*"></label>
+        <label class="f">Zeugnisse / weitere Unterlagen <small>(optional)</small><input name="unterlagen" type="file" accept=".pdf,image/*"></label>
+        <label class="f">Kurz zu Ihnen <small>(optional)</small><textarea name="nachricht" rows="4" placeholder="Erfahrung, Wunsch-Arbeitszeit, was Sie an Fahrzeugen begeistert …"></textarea></label>
+        <label class="f consent"><input type="checkbox" name="einwilligung" required><span>Ich bin einverstanden, dass meine Angaben und Unterlagen zur Bearbeitung meiner Bewerbung gespeichert werden (siehe <a href="datenschutz.html">Datenschutz</a>). *</span></label>
+      </div>
+      <button class="btn btn-dark" type="submit">Bewerbung absenden</button>
+      <p class="form-status" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>"""
+APPLY_CTA = """<section class="apply-cta">
+  <div class="page-width apply-cta-inner">
+    <div><p class="eyebrow">#TeamTäubert</p><h2>Bereit? Bewerben Sie sich direkt hier.</h2><p>Ohne Anschreiben, in zwei Minuten – wir melden uns persönlich.</p></div>
+    <div class="btns"><a class="btn btn-light" href="jobs.html#bewerbung">Jetzt bewerben</a><a class="btn btn-outline-light" href="jobs.html">Alle Stellen ansehen</a></div>
+  </div>
+</section>"""
+APPLY_CSS = """
+  .apply { padding: 110px 0; background: var(--grey); scroll-margin-top: 120px; }
+  .apply-inner { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 64px; align-items: start; }
+  .apply h2 { font-size: clamp(32px, 3.8vw, 54px); line-height: 1.02; margin-bottom: 18px; }
+  .apply-text > p { color: #555; font-size: 17px; max-width: 480px; }
+  .apply-steps { list-style: none; margin: 28px 0; border-top: 1px solid var(--black); max-width: 420px; }
+  .apply-steps li { padding: 16px 0; border-bottom: 1px solid var(--line); font-weight: 600; }
+  .apply-steps strong { font-size: 12px; letter-spacing: .2em; color: #6b6b6b; margin-right: 14px; }
+  .apply-alt a { color: var(--black); text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+  .apply form .btn { margin-top: 18px; }
+  .apply form { background: var(--white); padding: 36px; min-width: 0; }
+  .apply .f { min-width: 0; } .apply select { width: 100%; max-width: 100%; }
+  .apply-cta { background: #000; color: #fff; padding: 90px 0; }
+  .apply-cta-inner { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 30px; }
+  .apply-cta .eyebrow { color: rgba(255,255,255,.6); }
+  .apply-cta h2 { font-size: clamp(28px, 3.4vw, 48px); line-height: 1.02; max-width: 720px; }
+  .apply-cta p:not(.eyebrow) { color: rgba(255,255,255,.7); margin-top: 12px; }
+  .apply-cta .btns { display: flex; flex-wrap: wrap; gap: 12px; }
+  @media (max-width: 900px) { .apply { padding: 64px 0; } .apply-inner { grid-template-columns: minmax(0, 1fr); gap: 36px; } .apply input, .apply select, .apply textarea { max-width: 100%; min-width: 0; } .apply form { padding: 22px 16px; } .apply-cta { padding: 64px 0; } }
+"""
+THANKS_APPLY = f"""<section class="sec" style="padding:100px 0">
+  <div class="page-width"><div class="rich-inner" style="max-width:640px;margin:0 auto;text-align:center">
+    <h1 class="h-6">Danke für Ihre Bewerbung!</h1>
+    <div class="rte"><p>Wir haben Ihre Angaben erhalten und melden uns persönlich bei Ihnen – meist innerhalb weniger Tage. Fragen? Rufen Sie uns an: <a href="tel:+4936754289606">03675 4289606</a>.</p></div>
+    <div class="btns" style="justify-content:center"><a class="btn btn-dark" href="index.html">Zur Startseite</a><a class="btn btn-outline-dark" href="meet-the-team.html">Das Team kennenlernen</a></div>
+  </div></div>
+</section>"""
+
+
 def simple_page(slug, title, desc, body_html, style, head_links, top, footer, js, ld, robots=""):
     return f"""<!doctype html>
 <html lang="de">
@@ -1675,17 +2022,37 @@ def main():
                 body_html = with_service_frame(slug, short, body_html)
             if slug in SERVICES and slug not in GUIDES:
                 body_html += related_tiles(slug, "Alle Aufbereitungen im Überblick", 5) if slug == "fahrzeugaufbereitung" else related_tiles(slug)
+            if slug in LOCATIONS:
+                m = re.search(r"<section.*?</section>", body_html, re.S)
+                head, rest = body_html[:m.end()], body_html[m.end():]
+                if slug == "kronach":
+                    head = f'''<section class="sub-hero" style="--h:560px;--mh:460px">
+  <div class="media"><img src="images/pexels-artempodrez-8986139.webp" alt="Unfallreparatur für Kunden aus Kronach" fetchpriority="high"></div><div class="overlay" style="opacity:.55"></div>
+  <div class="sub-hero-content" style="max-width:960px">
+    <h1 class="overline">{esc(seo_title)}</h1>
+    <p class="heading h-8">Für Kronach. Mit Abholservice.</p>
+    <div class="rte"><p>Unfallreparatur, Lackierung und Smart Repair – wir holen Ihr Auto im Raum Kronach ab und bringen es repariert zurück.</p></div>
+    <div class="btns"><a class="btn btn-light" href="{BOOKING}">Termin online buchen</a><a class="btn btn-outline-light" href="schaden-melden.html">Schaden per Foto melden</a></div>
+  </div>
+</section>'''
+                    rest = "".join(f'<section class="sec{" scheme-grey" if i % 2 else ""}" style="padding:80px 0"><div class="page-width"><div class="rich-inner" style="max-width:760px"><h2 class="h-4">{esc(h)}</h2><div class="rte">{b}</div></div></div></section>' for i, (h, b) in enumerate(KRONACH_BODY))
+                    rest += f'<section class="more-svc"><div class="page-width"><h2>Unsere Leistungen für Kronach</h2>{tile_grid([x for t in TOP_SERVICES for x in all_services() if x[0] == t])}</div></section>'
+                body_html = head + city_block(slug) + rest + city_faq(slug)
             body_html += booking_cta(slug, short)
             title = seo_title
             if slug in SERVICES:
                 extra_ld = service_ld(slug, short, desc) + breadcrumb_ld(slug, short, ("Leistungen", f"{DOMAIN}/leistungen.html"))
             else:
-                extra_ld = breadcrumb_ld(slug, short)
+                extra_ld = breadcrumb_ld(slug, short) + city_ld(slug)
         else:
             body_html = first_h1(body_html)
             desc = None
             if slug in PAGE_META:
                 title, desc = PAGE_META[slug]
+        if slug == "jobs":
+            body_html += APPLY_FORM
+        elif slug in ("karriere", "azubi"):
+            body_html += APPLY_CTA
         extra_ld += faq_ld(body_html)
         og = re.search(r'src="images/([^"]+)"', body_html)
         page = f"""<!doctype html>
@@ -1696,7 +2063,7 @@ def main():
 <title>{esc(title)} | Täubert</title>
 {seo_head(f"{title} – Täubert Karosserie & Lack", desc or description(body_html), slug, og.group(1) if og else None)}
 {head_links}
-<style>{style}{EXTRA_CSS}</style>
+<style>{style}{EXTRA_CSS}{CITY_CSS}</style>
 {ld}
 {extra_ld}
 </head>
@@ -1711,6 +2078,10 @@ def main():
 </body>
 </html>
 """
+        if slug in ("jobs", "karriere", "azubi"):
+            page = page.replace("</style>", DAMAGE_CSS + APPLY_CSS + "</style>", 1)
+            if slug == "jobs":
+                page = page.replace("</script>\n</body>", DAMAGE_JS + "</script>\n</body>", 1)
         open(os.path.join(SITE, f"{slug}.html"), "w", encoding="utf-8").write(sync_images(page))
         built.append(slug)
     for slug, p in NEW_PAGES.items():
@@ -1724,7 +2095,7 @@ def main():
 <title>{esc(p["title"])} | Täubert</title>
 {seo_head(p["title"] + " – Täubert Karosserie & Lack", p["desc"], slug)}
 {head_links}
-<style>{style}{EXTRA_CSS}</style>
+<style>{style}{EXTRA_CSS}{CITY_CSS}</style>
 {ld}
 {extra_ld}
 </head>
@@ -1783,6 +2154,12 @@ def main():
         "Unfall gehabt? Checkliste in 7 Schritten: sichern, helfen, fotografieren, Daten austauschen – und Täubert in Sonneberg kümmert sich um den Rest.",
         UNFALL_PAGE, style, head_links, top, footer, js, ld)))
     built.insert(3, "unfall-was-tun")
+    kpage = simple_page("konfigurator", "Lack-Konfigurator – Wunschfarbe online wählen",
+        "Lack-Konfigurator von Täubert Karosserie & Lack in Sonneberg: Modell und Farbe wählen, Umfang festlegen und die Konfiguration direkt als Anfrage senden.",
+        konfig_page(), style, head_links, top, footer, js, ld)
+    kpage = kpage.replace("</style>", KONFIG_CSS + "</style>", 1).replace("</script>\n</body>", KONFIG_JS + "</script>\n</body>", 1)
+    open(os.path.join(SITE, "konfigurator.html"), "w", encoding="utf-8").write(sync_images(kpage))
+    built.insert(4, "konfigurator")
     faq_body, faq_schema, faq_count = render_faq_page()
     faq_page = simple_page("fragen", "Häufige Fragen – Täubert Sonneberg",
         f"{faq_count} Antworten zu Termin, Kostenvoranschlag, Versicherung, Ersatzwagen, Unfallreparatur, Lackierung und Smart Repair bei Täubert in Sonneberg.",
@@ -1792,6 +2169,9 @@ def main():
     built.insert(4, "fragen")
     open(os.path.join(SITE, "danke.html"), "w", encoding="utf-8").write(simple_page(
         "danke", "Danke", "Ihre Schadensmeldung ist bei uns eingegangen.", THANKS, style, head_links, top, footer, js, ld,
+        robots='<meta name="robots" content="noindex, follow">\n'))
+    open(os.path.join(SITE, "danke-bewerbung.html"), "w", encoding="utf-8").write(simple_page(
+        "danke-bewerbung", "Danke für Ihre Bewerbung", "Ihre Bewerbung ist bei uns eingegangen.", THANKS_APPLY, style, head_links, top, footer, js, ld,
         robots='<meta name="robots" content="noindex, follow">\n'))
     write_seo_files(built)
     update_index()  # erneut, jetzt mit den Bildern der gebauten Leistungsseiten

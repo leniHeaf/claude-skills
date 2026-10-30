@@ -1,0 +1,1042 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Danke für Ihre Bewerbung | Täubert</title>
+<meta name="robots" content="noindex, follow">
+<meta name="description" content="Ihre Bewerbung ist bei uns eingegangen.">
+<link rel="canonical" href="https://www.taeubert-karosserie-lack.de/danke-bewerbung.html">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_DE">
+<meta property="og:site_name" content="Täubert Karosserie &amp; Lack">
+<meta property="og:title" content="Danke für Ihre Bewerbung – Täubert Karosserie &amp; Lack">
+<meta property="og:description" content="Ihre Bewerbung ist bei uns eingegangen.">
+<meta property="og:url" content="https://www.taeubert-karosserie-lack.de/danke-bewerbung.html">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="images/TAeUBERT-2.png">
+<link rel="preload" href="fonts/archivo-black-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  /* Schriften lokal (DSGVO: keine Verbindung zu Google) */
+  @font-face { font-family: "Archivo Black"; font-weight: 400; font-display: swap; src: url(fonts/archivo-black-latin-400-normal.woff2) format("woff2"); }
+  @font-face { font-family: Inter; font-weight: 400; font-display: swap; src: url(fonts/inter-latin-400-normal.woff2) format("woff2"); }
+  @font-face { font-family: Inter; font-weight: 500; font-display: swap; src: url(fonts/inter-latin-500-normal.woff2) format("woff2"); }
+  @font-face { font-family: Inter; font-weight: 600; font-display: swap; src: url(fonts/inter-latin-600-normal.woff2) format("woff2"); }
+  @font-face { font-family: Inter; font-weight: 700; font-display: swap; src: url(fonts/inter-latin-700-normal.woff2) format("woff2"); }
+  /* Farbschemata aus dem Shopify-Theme (config/settings_data.json) */
+  :root {
+    --white: #ffffff;
+    --black: #000000;
+    --text: #222222;
+    --grey: #ededed;
+    --line: #d1d1d1;
+    --red: #111111; /* Akzent: kein Rot, schwarz */
+    --page: 1400px;
+    --gutter: 40px;
+    --announce-h: 36px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: Inter, system-ui, sans-serif; font-size: 16px; line-height: 1.6; color: var(--text); background: var(--white); -webkit-font-smoothing: antialiased; }
+  h1, h2, h3, .heading { font-family: "Archivo Black", Inter, sans-serif; font-weight: 400; text-transform: uppercase; letter-spacing: .4px; line-height: 1.1; }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+  .page-width { max-width: var(--page); margin: 0 auto; padding: 0 var(--gutter); }
+
+  /* Bild-Container: grauer Hintergrund, falls eine Bilddatei noch fehlt */
+  .media { position: absolute; inset: 0; background: #2a2a2a; overflow: hidden; }
+  .media img { width: 100%; height: 100%; object-fit: cover; }
+  .overlay { position: absolute; inset: 0; background: #000; pointer-events: none; }
+
+  /* Buttons: eckig (corner_rounding_button = 0) */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 15px 30px; font-family: Inter, sans-serif; font-weight: 600; font-size: 15px; border: 1px solid transparent; cursor: pointer; transition: background .2s, color .2s, border-color .2s; }
+  .btn-light { background: var(--white); color: var(--black); border-color: var(--white); }
+  .btn-light:hover { background: transparent; color: var(--white); }
+  .btn-dark { background: var(--black); color: var(--white); border-color: var(--black); }
+  .btn-dark:hover { background: transparent; color: var(--black); }
+
+  /* Announcement-Bar */
+  .announce { position: sticky; top: 0; z-index: 60; height: var(--announce-h); background: var(--black); color: var(--white); display: flex; align-items: center; justify-content: center; font-size: 13px; padding: 0 16px; text-align: center; }
+  .announce a:hover { text-decoration: underline; }
+
+  /* Header: Logo mittig, Menü als Drawer, transparent über dem Hero */
+  .header { position: sticky; top: var(--announce-h); z-index: 50; background: var(--grey); color: var(--text); transition: background .25s, color .25s, box-shadow .25s; }
+  .header.transparent { background: transparent; color: var(--white); }
+  .home .header { margin-bottom: -84px; }
+  .header-inner { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: 84px; }
+  .icon-btn { background: none; border: 0; color: inherit; cursor: pointer; padding: 8px; display: inline-flex; align-items: center; gap: 10px; font: inherit; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
+  .header .logo { justify-self: center; }
+  .header .logo img { width: 185px; height: auto; }
+  .header.transparent .logo img { filter: brightness(0) invert(1); }
+  .logo-fallback { font-family: "Archivo Black"; font-size: 26px; letter-spacing: .08em; }
+  .header-right { justify-self: end; display: flex; align-items: center; gap: 6px; }
+
+  /* Menü-Drawer */
+  .drawer-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.5); opacity: 0; pointer-events: none; transition: opacity .3s; z-index: 90; }
+  .drawer { position: fixed; top: 0; left: 0; bottom: 0; width: min(460px, 100%); background: var(--white); z-index: 100; transform: translateX(-100%); transition: transform .4s cubic-bezier(.2,.8,.2,1); display: flex; flex-direction: column; overflow-y: auto; }
+  .menu-open .drawer { transform: none; }
+  .menu-open .drawer-backdrop { opacity: 1; pointer-events: auto; }
+  .drawer-head { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; border-bottom: 1px solid var(--line); }
+  .drawer nav { padding: 12px 24px; }
+  .drawer details { border-bottom: 1px solid var(--line); }
+  .drawer summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 18px 0; font-family: "Archivo Black"; font-size: 18px; text-transform: uppercase; }
+  .drawer summary::-webkit-details-marker { display: none; }
+  .drawer summary::after { content: "+"; font-family: Inter; font-size: 22px; transition: transform .2s; }
+  .drawer details[open] summary::after { transform: rotate(45deg); }
+  .drawer .sub { display: grid; gap: 4px; padding: 0 0 18px; }
+  .drawer .sub a { padding: 6px 0; color: #555; }
+  .drawer .sub a:hover { color: var(--black); }
+  .promos { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 4px 0 20px; }
+  .promo { position: relative; aspect-ratio: 1; overflow: hidden; color: var(--white); }
+  .promo span { position: absolute; left: 12px; bottom: 10px; font-family: "Archivo Black"; text-transform: uppercase; font-size: 15px; }
+  .promo .overlay { opacity: .25; }
+  .drawer-foot { margin-top: auto; padding: 24px; border-top: 1px solid var(--line); display: flex; gap: 18px; }
+
+  /* Hero-Slideshow */
+  .hero { position: relative; height: 90vh; min-height: 520px; color: var(--white); overflow: hidden; }
+  .hero .overlay { opacity: .2; }
+  .hero-content { position: absolute; left: 0; right: 0; bottom: 0; padding-bottom: 70px; }
+  .hero-content .inner { max-width: 700px; }
+  .hero h1 { font-size: clamp(38px, 5.4vw, 72px); }
+  .hero p { font-size: 18px; margin: 18px 0 28px; max-width: 600px; }
+  .btns { display: flex; flex-wrap: wrap; gap: 12px; }
+  .reveal-text { opacity: 0; transform: translateY(24px); animation: rise .9s cubic-bezier(.2,.8,.2,1) .2s forwards; }
+  .reveal-text.d2 { animation-delay: .35s; } .reveal-text.d3 { animation-delay: .5s; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+
+  /* Rich Text */
+  .rich { padding: 50px 0; text-align: center; }
+  .rich .inner { max-width: 650px; margin: 0 auto; }
+  .rich h2 { font-size: clamp(26px, 3vw, 36px); }
+  .rich p { margin-top: 18px; font-size: 17px; }
+
+  /* Kontakt-Banner */
+  .contact-banner { width: 100%; margin: 0; background: var(--black); color: var(--white); text-align: center; padding: 25px 20px 30px; }
+  .contact-banner h2 { font-size: clamp(34px, 4vw, 48px); margin-bottom: 10px; }
+  .contact-banner p { font-size: 18px; margin-bottom: 25px; }
+  .contact-banner .btns { justify-content: center; gap: 16px; }
+  .contact-banner .btn { padding: 14px 28px; font-size: 16px; }
+  .contact-banner .btn-light:hover { background: var(--black); color: var(--white); border-color: var(--white); }
+
+  /* Grid mit Laufschrift */
+  .grid-section { padding: 120px 0; }
+  .grid { display: flex; flex-wrap: wrap; gap: 60px 0; margin: 0 -10px; }
+  .grid-item { padding: 0 10px; }
+  .grid-item.w66 { width: 66.666%; } .grid-item.w33 { width: 33.333%; } .grid-item.w100 { width: 100%; }
+  .tile { position: relative; display: block; height: 400px; color: var(--white); overflow: hidden; }
+  .tile .media img { transition: transform .8s cubic-bezier(.2,.8,.2,1); }
+  .tile:hover .media img { transform: scale(1.04); }
+  .tile .overlay { opacity: .2; }
+  .tile-content { position: absolute; left: 30px; bottom: 30px; right: 30px; max-width: 450px; }
+  .tile h3 { font-size: 30px; margin-bottom: 16px; }
+  .tile.big h3 { font-size: 38px; }
+  .marquee { overflow: hidden; white-space: nowrap; margin-bottom: 20px; }
+  .marquee-track { display: inline-flex; align-items: center; animation: marquee 30s linear infinite; will-change: transform; }
+  .marquee-track > * { flex: none; margin-right: clamp(20px, 3vw, 40px); }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  .mq-sep { width: clamp(24px, 3vw, 40px); height: auto; }
+  .marquee-track span { font-family: "Archivo Black"; text-transform: uppercase; font-size: clamp(28px, 4vw, 52px); }
+  .marquee-track svg { flex: none; }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+
+  /* Slideshow 2 */
+  .slides-section { padding: 120px var(--gutter); }
+  .slider { position: relative; height: 750px; overflow: hidden; color: var(--white); }
+  .slide { position: absolute; inset: 0; opacity: 0; transition: opacity .9s ease, clip-path 1.1s cubic-bezier(.6,0,.2,1); clip-path: circle(0% at 50% 50%); }
+  .slide.active { opacity: 1; clip-path: circle(150% at 50% 50%); z-index: 1; }
+  .slide .overlay { opacity: .2; }
+  .slide-content { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 20px; }
+  .slide h2 { font-size: clamp(40px, 6vw, 80px); margin-bottom: 26px; }
+  .dots { position: absolute; right: 24px; bottom: 24px; z-index: 5; display: flex; gap: 8px; padding: 8px 12px; background: rgba(0,0,0,.33); border-radius: 999px; }
+  .dots button { width: 8px; height: 8px; border-radius: 50%; border: 0; background: rgba(255,255,255,.5); cursor: pointer; padding: 0; transition: width .3s, background .3s; }
+  .dots button.active { width: 24px; border-radius: 4px; background: #fff; }
+  .arrows { position: absolute; inset: 0; z-index: 4; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; pointer-events: none; }
+  .arrows button { pointer-events: auto; width: 52px; height: 52px; border-radius: 50%; border: 0; background: #fff; color: #000; cursor: pointer; display: grid; place-items: center; opacity: 0; transition: opacity .3s; }
+  .slider:hover .arrows button { opacity: 1; }
+
+  /* Featured Links: Klassiker-Farben */
+  .featured-links { background: var(--grey); padding: 60px var(--gutter); }
+  .fl-inner { display: grid; grid-template-columns: 60% 40%; gap: 40px; align-items: center; }
+  .fl-inner h2 { font-size: clamp(18px, 1.6vw, 22px); margin-bottom: 26px; font-family: Inter; font-weight: 700; letter-spacing: .08em; }
+  .fl-links { font-family: "Archivo Black"; text-transform: uppercase; font-size: clamp(40px, 6vw, 88px); line-height: 1.3; }
+  .fl-links a { color: #7a7a7a; transition: color .25s; }
+  .fl-links a.active, .fl-links a:hover { color: var(--text); }
+  .fl-links sup { font-family: Inter; font-size: 14px; vertical-align: super; margin-left: 4px; }
+  .fl-links .sep { color: #7a7a7a; }
+  .fl-inner .btn { margin-top: 34px; }
+  .showcase { position: relative; aspect-ratio: 4 / 5; overflow: hidden; }
+  .showcase .media { transition: opacity .5s; opacity: 0; }
+  .showcase .media.active { opacity: 1; }
+
+  /* Blog */
+  .blog { background: var(--black); color: var(--white); padding: 60px 0; }
+  .blog-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin-bottom: 36px; }
+  .blog-head h2 { font-size: clamp(48px, 7vw, 96px); }
+  .blog-head a { text-decoration: underline; text-underline-offset: 4px; }
+  .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .post { position: relative; aspect-ratio: 4 / 5; overflow: hidden; display: block; }
+  .post .overlay { opacity: .5; }
+  .post-content { position: absolute; left: 24px; right: 24px; bottom: 24px; }
+  .post-content small { text-transform: uppercase; letter-spacing: .1em; font-size: 12px; }
+  .post-content h3 { font-size: 22px; margin: 8px 0 12px; }
+  .post-content u { text-underline-offset: 4px; }
+
+  /* Footer */
+  footer { background: var(--black); color: var(--white); padding: 50px var(--gutter); margin-top: 80px; }
+  .foot-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr 1.4fr; gap: 3%; }
+  footer h4 { font-family: "Archivo Black"; text-transform: uppercase; font-size: 16px; margin-bottom: 16px; }
+  footer p { color: rgba(255,255,255,.8); }
+  footer ul { list-style: none; display: grid; gap: 8px; }
+  footer ul a { color: rgba(255,255,255,.8); }
+  footer ul a:hover { color: #fff; text-decoration: underline; }
+  .foot-logo img { width: 180px; margin-bottom: 18px; }
+  .socials { display: flex; gap: 14px; margin-top: 20px; }
+  .socials a { opacity: .85; } .socials a:hover { opacity: 1; }
+  .hours { display: grid; grid-template-columns: auto 1fr; gap: 6px 20px; }
+  .hours dt { font-weight: 700; }
+  .foot-bottom { margin-top: 44px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.2); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 13px; color: rgba(255,255,255,.7); }
+
+  /* Startbild: lesbarer Text, klare Buttons */
+  .hero .overlay { opacity: 1; background: linear-gradient(90deg, rgba(0,0,0,.6) 0%, rgba(0,0,0,.25) 55%, rgba(0,0,0,0) 80%), linear-gradient(0deg, rgba(0,0,0,.45), rgba(0,0,0,0) 45%); }
+  .btn-outline-light { background: transparent; color: var(--white); border-color: rgba(255,255,255,.8); }
+  .btn-outline-light:hover { background: var(--white); color: var(--black); border-color: var(--white); }
+  .btn-outline-dark { background: transparent; color: var(--black); border-color: var(--black); }
+  .btn-outline-dark:hover { background: var(--black); color: var(--white); }
+  .tile-sub { margin: -8px 0 16px; font-size: 16px; }
+  .announce .sep { opacity: .5; margin: 0 6px; }
+  .announce .ul { text-decoration: underline; text-underline-offset: 3px; }
+  .eyebrow { font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 10px; color: #6b6b6b; }
+
+  /* Schadens-Assistent */
+  .assist { padding: 80px 0; background: var(--white); }
+  .assist-inner { display: grid; grid-template-columns: 1fr 2fr; gap: 50px; align-items: start; }
+  .assist-head h2 { font-size: clamp(30px, 3.6vw, 46px); }
+  .assist-head p:last-child { margin-top: 12px; color: #555; }
+  .assist-form fieldset { border: 0; margin: 0 0 22px; padding: 0; }
+  .assist-form legend { font-weight: 700; margin-bottom: 10px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips label { position: relative; cursor: pointer; }
+  .chips input { position: absolute; opacity: 0; inset: 0; }
+  .chips span { display: inline-block; padding: 11px 16px; border: 1px solid var(--line); background: var(--white); font-size: 15px; transition: border-color .15s, background .15s, color .15s; }
+  .chips label:hover span { border-color: var(--black); }
+  .chips input:checked + span { background: var(--black); border-color: var(--black); color: var(--white); }
+  .chips input:focus-visible + span { outline: 2px solid var(--red); outline-offset: 2px; }
+  .assist-result { margin-top: 6px; padding: 26px; background: var(--grey); border-left: 4px solid var(--red); }
+  .assist-result h3 { font-size: 22px; margin-bottom: 8px; }
+  .assist-result p { margin-bottom: 8px; }
+  .assist-result .btns { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 10px; }
+
+  /* Ablauf */
+  .steps-sec { padding: 80px 0; background: var(--grey); }
+  .steps-sec h2 { font-size: clamp(30px, 3.6vw, 46px); margin-bottom: 36px; }
+  .steps { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; margin-bottom: 34px; }
+  .steps li { border-top: 2px solid var(--black); padding-top: 18px; }
+  .steps .num { font-family: "Archivo Black"; color: #111; font-size: 30px; }
+  .steps h3 { font-size: 19px; margin: 6px 0 8px; }
+  .steps p { color: #444; }
+  .steps-sec .btns { display: flex; flex-wrap: wrap; gap: 12px; }
+
+  /* FAQ + Anfahrt */
+  .faq-sec { padding: 80px 0 40px; }
+  .faq { max-width: 900px; margin: 0 auto; }
+  .faq h2 { font-size: clamp(30px, 3.6vw, 46px); margin-bottom: 20px; }
+  .faq details { border-bottom: 1px solid var(--line); overflow: hidden; }
+  .faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 20px; padding: 20px 0; font-weight: 700; font-size: 18px; }
+  .faq summary span { flex: 1; min-width: 0; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; flex: none; width: 20px; text-align: center; font-size: 24px; line-height: 1; transition: transform .2s; }
+  .faq details[open] summary::after { transform: rotate(45deg); }
+  .faq .rte { padding-bottom: 16px; color: #444; }
+  .visit { padding: 60px 0 80px; }
+  .visit-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; background: var(--grey); padding: 40px; }
+  .visit h2 { font-size: clamp(28px, 3vw, 40px); margin-bottom: 14px; }
+  .visit .addr { font-size: 17px; margin-bottom: 10px; }
+  .visit .btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  .visit-hours { font-size: 17px; }
+  .open-status { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; margin-bottom: 12px; }
+  .open-status::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: #9a9a9a; }
+  .open-status.is-open::before { background: #2fbf55; }
+  .open-status:empty { display: none; }
+  footer .open-status { color: var(--white); }
+
+  /* Lack-Konfigurator */
+  .konfig { padding: 80px 0; }
+  .konfig-inner { display: grid; grid-template-columns: 1fr 1.4fr; gap: 50px; align-items: center; }
+  .konfig h2 { font-size: clamp(30px, 3.6vw, 46px); margin-bottom: 14px; }
+  .konfig-text p:not(.eyebrow) { color: #444; max-width: 520px; }
+  .konfig .btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+  .konfig-visual { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .swatch { position: relative; aspect-ratio: 1 / 1; overflow: hidden; background: var(--grey); border-bottom: 6px solid var(--c); }
+  .swatch img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.2,.8,.2,1); }
+  .swatch:hover img { transform: scale(1.04); }
+  @media (max-width: 990px) { .konfig-inner { grid-template-columns: 1fr; gap: 28px; } }
+
+  /* Hauptnavigation (Desktop) */
+  .main-nav { display: none; }
+  .main-nav > ul { list-style: none; display: flex; align-items: center; gap: 4px; }
+  .main-nav > ul > li { position: relative; }
+  .main-nav .top { display: inline-flex; align-items: center; gap: 6px; padding: 10px 12px; font: inherit; font-size: 15px; font-weight: 600; color: inherit; background: none; border: 0; cursor: pointer; }
+  .main-nav .top svg { transition: transform .2s; }
+  .main-nav li.open > .top svg { transform: rotate(180deg); }
+  .main-nav .top[aria-current="page"], .main-nav .top:hover { text-decoration: underline; text-underline-offset: 6px; }
+  .main-nav .panel { position: absolute; top: calc(100% + 8px); left: 0; min-width: 240px; background: var(--white); color: var(--text); box-shadow: 0 18px 40px -12px rgba(0,0,0,.25); border: 1px solid var(--line); padding: 18px 20px; display: none; z-index: 60; }
+  .main-nav li.open > .panel { display: block; }
+  .main-nav .panel a { display: block; padding: 6px 0; font-size: 15px; }
+  .main-nav .panel a:hover, .main-nav .panel a[aria-current="page"] { text-decoration: underline; text-underline-offset: 4px; }
+  .main-nav .panel .all { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); font-weight: 700; }
+  .main-nav .mega { left: 50%; transform: translateX(-30%); display: none; grid-template-columns: repeat(5, minmax(150px, 1fr)); gap: 24px; min-width: 880px; }
+  .main-nav li.open > .mega { display: grid; }
+  .main-nav .mega h3 { font-size: 13px; letter-spacing: .1em; margin-bottom: 6px; color: #6b6b6b; }
+  .main-nav .mega .all { grid-column: 1 / -1; }
+  @media (min-width: 1150px) {
+    .main-nav { display: block; justify-self: center; }
+    .header-inner { grid-template-columns: auto 1fr auto; gap: 20px; }
+    .header-inner > div:first-child { display: none; }
+    .header .logo { justify-self: start; grid-column: 1; grid-row: 1; }
+    .main-nav { grid-column: 2; grid-row: 1; }
+    .header-right { grid-column: 3; grid-row: 1; }
+  }
+  /* Menü-Drawer: Schnellzugriff + Gruppen */
+  .drawer-quick { display: grid; gap: 8px; padding: 6px 0 18px; border-bottom: 1px solid var(--line); }
+  .drawer-quick .btn { justify-content: flex-start; }
+  .drawer .sub h3 { font-size: 12px; letter-spacing: .1em; color: #6b6b6b; margin: 10px 0 2px; }
+  .drawer .plain { display: block; padding: 18px 0; border-bottom: 1px solid var(--line); font-family: "Archivo Black"; font-size: 18px; text-transform: uppercase; }
+  .drawer a[aria-current="page"] { text-decoration: underline; }
+
+  /* ===== Premium-Stil (Porsche-Ruhe + Brabus-Härte): schwarz/weiß, präzise Typo, viel Raum ===== */
+  :root { --grey: #f3f3f1; --line: #dcdcd8; }
+  .header, .header:not(.transparent) { background: #000; color: #fff; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .header .logo img { filter: brightness(0) invert(1); }
+  .header .btn-header { background: #fff; color: #000; border-color: #fff; }
+  .header .btn-header:hover { background: transparent; color: #fff; }
+  .announce { border-bottom: 1px solid rgba(255,255,255,.08); letter-spacing: .02em; }
+  .btn { text-transform: uppercase; letter-spacing: .1em; font-size: 13px; padding: 17px 30px; font-weight: 600; }
+  .btn-header { font-size: 12px; padding: 12px 20px; }
+  .main-nav .top { text-transform: uppercase; letter-spacing: .12em; font-size: 12.5px; }
+  .main-nav .panel { border-radius: 0; border-color: #e6e6e3; }
+  .overline, .eyebrow, .book-card .eyebrow { letter-spacing: .22em !important; }
+  h1, h2, h3, .heading { letter-spacing: .02em; }
+  .hero .overlay { background: linear-gradient(90deg, rgba(0,0,0,.72) 0%, rgba(0,0,0,.35) 50%, rgba(0,0,0,.05) 80%), linear-gradient(0deg, rgba(0,0,0,.55), rgba(0,0,0,0) 50%); }
+  .trust-bar { background: #0b0b0b; border-top: 1px solid rgba(255,255,255,.08); }
+  .trust li { font-weight: 500; letter-spacing: .02em; }
+  .svc { border-color: #e6e6e3; }
+  .svc:hover { border-color: #000; transform: none; }
+  .svc span { text-transform: uppercase; letter-spacing: .12em; font-size: 12px; }
+  .services-sec, .steps-sec, .visit-inner { background: var(--grey); }
+  .contact-banner { background: #0b0b0b; }
+  .faq summary { font-weight: 600; }
+  .chips span { letter-spacing: .02em; }
+  .drawer summary, .drawer .plain { letter-spacing: .04em; }
+
+  /* ===== Premium-Layout: Rhythmus, Foto-Kacheln, ruhige Typografie ===== */
+  body { font-size: 17px; line-height: 1.7; }
+  .services-sec, .steps-sec, .assist, .faq-sec, .konfig { padding: 120px 0; }
+  .slides-section { padding-top: 0; padding-bottom: 0; }
+  .slides-section .slider { height: 82vh; min-height: 520px; }
+  .visit { padding: 0 0 120px; }
+  .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: #6b6b6b; margin-bottom: 14px; }
+  .sec-intro { max-width: 760px; margin-bottom: 56px; }
+  .sec-intro h2, .services-sec h2, .steps-sec h2, .assist-head h2, .faq h2, .konfig h2, .visit h2 { font-size: clamp(34px, 4.4vw, 62px); line-height: 1.02; letter-spacing: 0; }
+  .lead, .sec-intro .lead { font-size: 19px; color: #555; margin-top: 18px; max-width: 640px; }
+  .intro { padding: 120px 0 40px; text-align: left; }
+  .intro .inner { max-width: 1100px; margin: 0; }
+  .intro h2 { font-size: clamp(26px, 3vw, 40px); line-height: 1.15; max-width: 900px; }
+  .intro p { font-size: 19px; color: #555; max-width: 680px; margin-top: 20px; }
+  .tile-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
+  .tile-svc { position: relative; display: block; aspect-ratio: 4 / 5; overflow: hidden; background: #111; color: #fff; }
+  .tile-svc .tile-media, .tile-svc img { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .tile-svc img { object-fit: cover; transition: transform 1.1s cubic-bezier(.2,.8,.2,1), opacity .4s; opacity: .85; }
+  .tile-svc::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0,0,0,.85) 0%, rgba(0,0,0,.25) 45%, rgba(0,0,0,0) 70%); }
+  .tile-svc:hover img { transform: scale(1.05); opacity: 1; }
+  .tile-body { position: absolute; left: 0; right: 0; bottom: 0; padding: 32px; z-index: 1; }
+  .tile-body h3 { font-size: clamp(20px, 1.8vw, 26px); margin-bottom: 10px; }
+  .tile-body p { font-size: 15px; color: rgba(255,255,255,.8); max-width: 340px; line-height: 1.55; }
+  .tile-more { display: inline-block; margin-top: 16px; font-size: 12px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,.6); padding-bottom: 4px; }
+  .services-sec .svc-more { margin-top: 48px; }
+  .svc { border: 0; background: var(--white); }
+  .svc:hover { outline: 1px solid #000; }
+  .steps li { border-top-width: 1px; }
+  .steps .num { font-size: 15px; letter-spacing: .2em; color: #6b6b6b; font-family: Inter, sans-serif; font-weight: 600; }
+  .steps .num::before { content: "0"; }
+  .steps h3 { font-size: 21px; margin: 14px 0 10px; }
+  .assist { background: var(--white); border-top: 1px solid var(--line); }
+  .chips span { padding: 12px 18px; font-size: 14px; }
+  .visit-inner { padding: 56px; }
+  .konfig { background: var(--white); }
+  .faq-sec { border-top: 1px solid var(--line); }
+  @media (max-width: 990px) { .tile-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 760px) {
+    .services-sec, .steps-sec, .assist, .faq-sec, .konfig { padding: 72px 0; }
+    .intro { padding: 72px 0 10px; }
+    .visit { padding: 0 0 72px; }
+    .visit-inner { padding: 28px 20px; }
+    .slides-section .slider { height: 70vh; }
+    .tile-grid { grid-template-columns: 1fr; }
+    .tile-svc { aspect-ratio: 4 / 3; }
+    .tile-body { padding: 22px; }
+    .sec-intro { margin-bottom: 32px; }
+  }
+
+  /* Vertrauensleiste */
+  .trust { list-style: none; display: flex; flex-wrap: wrap; gap: 10px 26px; }
+  .trust li { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; }
+  .trust svg { color: currentColor; flex: none; opacity: .85; }
+  .trust-bar { background: var(--black); color: var(--white); padding: 18px 0; border-top: 1px solid rgba(255,255,255,.15); }
+  .trust-bar .trust { justify-content: center; }
+  @media (max-width: 600px) { .trust { gap: 8px 16px; } .trust li { font-size: 14px; } .trust-bar .trust { justify-content: flex-start; } }
+  /* Leistungsübersicht */
+  .services-sec { padding: 70px 0; background: var(--grey); }
+  .services-sec h2 { font-size: clamp(28px, 3.4vw, 44px); margin-bottom: 10px; }
+  .services-sec .lead { max-width: 640px; margin-bottom: 34px; }
+  .svc-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .svc { display: flex; flex-direction: column; gap: 8px; padding: 24px; background: var(--white); border: 1px solid var(--line); transition: border-color .2s, transform .2s; }
+  .svc:hover { border-color: var(--black); transform: translateY(-2px); }
+  .svc h3 { font-size: 18px; }
+  .svc p { font-size: 15px; color: #555; }
+  .svc span { margin-top: auto; font-weight: 600; font-size: 14px; }
+  .svc-more { margin-top: 28px; }
+  @media (max-width: 990px) { .svc-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) {
+    .svc-grid { grid-template-columns: 1fr; gap: 8px; }
+    .svc { padding: 16px 44px 16px 16px; position: relative; gap: 4px; }
+    .svc h3 { font-size: 16px; }
+    .svc p { font-size: 14px; }
+    .svc span { display: none; }
+    .svc::after { content: "→"; position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-weight: 700; }
+  }
+  @media (max-width: 990px) {
+    .assist-inner, .visit-inner { grid-template-columns: 1fr; gap: 24px; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .visit-inner { padding: 28px 20px; }
+  }
+  @media (max-width: 760px) {
+    .header-right .icon-btn { display: none; }
+    .hero .media img { object-position: 72% center; }
+    .announce { font-size: 12px; }
+  }
+  @media (max-width: 480px) {
+    .steps { grid-template-columns: 1fr; }
+    .announce .sep, .announce .ul { display: none; }
+  }
+  footer ul a { overflow-wrap: anywhere; }
+  /* UX: Fokus, Sprunglink, Header-Button, Aktionsleiste */
+  :focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+  .announce :focus-visible, .header.transparent :focus-visible, .hero :focus-visible, .trust-bar :focus-visible, .contact-banner :focus-visible, footer :focus-visible, .booking-cta :focus-visible, .scheme-dark :focus-visible, .sub-hero :focus-visible, .action-bar :focus-visible { outline-color: #fff; }
+  .skip { position: absolute; left: 12px; top: -60px; z-index: 200; background: var(--black); color: var(--white); padding: 10px 16px; font-weight: 600; }
+  .skip:focus { top: 12px; }
+  .btn-header { padding: 10px 18px; font-size: 14px; background: var(--black); color: var(--white); border-color: var(--black); margin-right: 6px; }
+  .btn-header:hover { background: transparent; color: inherit; border-color: currentColor; }
+  .header.transparent .btn-header { background: var(--white); color: var(--black); border-color: var(--white); }
+  .header.transparent .btn-header:hover { background: transparent; color: var(--white); }
+  .hide-desktop { display: none; }
+  img[data-missing-src] { display: none; }
+  .action-bar { display: none; }
+  .fl-inner.no-showcase { grid-template-columns: 1fr; }
+  .fl-inner.no-showcase .showcase { display: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none; } .reveal-text { animation: none; opacity: 1; transform: none; }
+    .slide { transition: none; } html { scroll-behavior: auto; }
+  }
+  @media (max-width: 990px) {
+    :root { --gutter: 20px; }
+    .grid-item.w66, .grid-item.w33 { width: 100%; }
+    .grid { gap: 20px 0; }
+    .tile { height: 500px; }
+    .grid-section, .slides-section { padding-top: 70px; padding-bottom: 70px; }
+    .slider { height: 650px; }
+    .fl-inner { grid-template-columns: minmax(0, 1fr); }
+    .fl-links a { display: block; }
+    .fl-links .sep { display: none; }
+    .showcase { max-width: 480px; }
+    .blog-grid { grid-template-columns: 1fr; }
+    .foot-grid { grid-template-columns: 1fr 1fr; gap: 36px 20px; }
+  }
+  @media (max-width: 760px) {
+    .btn-header { display: none; }
+    .hide-desktop { display: inline-flex; }
+    .action-bar { display: grid; grid-template-columns: 1fr 1fr 1.2fr; position: fixed; left: 0; right: 0; bottom: 0; z-index: 70; background: var(--black); border-top: 1px solid rgba(255,255,255,.15); padding-bottom: env(safe-area-inset-bottom); }
+    .action-bar a { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-height: 60px; color: var(--white); font-size: 12px; font-weight: 600; }
+    .action-bar a.primary { background: var(--white); color: var(--black); }
+    body { padding-bottom: 64px; }
+  }
+  @media (max-width: 600px) {
+    :root { --gutter: 16px; --announce-h: 40px; }
+    .announce { font-size: 12px; }
+    .header-inner { height: 70px; }
+    .home .header { margin-bottom: -70px; }
+    .header .logo img { width: 110px; }
+    .icon-btn .label { display: none; }
+    .hero-content { padding-bottom: 50px; }
+    .hero p { font-size: 16px; }
+    .contact-banner { width: 100%; }
+    .contact-banner .btn { width: 100%; }
+    .slides-section { padding-left: 16px; padding-right: 16px; }
+    .fl-links { font-size: 34px; overflow-wrap: anywhere; }
+    .foot-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ===== Brabus × Porsche: Dramaturgie, Präzision, Ruhe ===== */
+  :root { --hdr-h: 84px; --ease: cubic-bezier(.2,.8,.2,1); }
+  @media (min-width: 761px) { .header-inner { height: var(--hdr-h); transition: height .35s var(--ease); } body.scrolled { --hdr-h: 68px; } }
+  .eyebrow::before, .hero-eyebrow::before { content: ""; display: inline-block; width: 36px; height: 1px; background: currentColor; margin-right: 14px; vertical-align: middle; transform: translateY(-2px); }
+  .hero { height: calc(100svh - var(--announce-h) - 84px); min-height: 600px; max-height: 1100px; }
+  .hero h1 { font-size: clamp(42px, 6vw, 100px); line-height: .94; letter-spacing: -.005em; }
+  .hero-content .inner { max-width: 1200px; }
+  .hero-content { padding-bottom: 96px; }
+  .hero-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; margin-bottom: 22px; color: rgba(255,255,255,.85); }
+  .scroll-cue { position: absolute; right: var(--gutter, 40px); bottom: 40px; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 12px; font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: rgba(255,255,255,.8); writing-mode: vertical-rl; }
+  .scroll-cue span { display: block; width: 1px; height: 56px; background: rgba(255,255,255,.25); position: relative; overflow: hidden; }
+  .scroll-cue span::after { content: ""; position: absolute; left: 0; top: -40%; width: 1px; height: 40%; background: #fff; animation: cue 2.2s var(--ease) infinite; }
+  @keyframes cue { to { top: 100%; } }
+  .spec { background: #000; color: #fff; border-top: 1px solid rgba(255,255,255,.12); }
+  .spec-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .spec-grid > div { padding: 34px 24px 32px 0; border-right: 1px solid rgba(255,255,255,.12); margin-right: 24px; }
+  .spec-grid > div:last-child { border-right: 0; margin-right: 0; }
+  .spec strong { display: block; font-family: "Archivo Black", sans-serif; font-weight: 400; text-transform: uppercase; font-size: clamp(17px, 1.65vw, 26px); line-height: 1.05; }
+  .spec span { display: block; margin-top: 10px; font-size: 13px; letter-spacing: .04em; color: rgba(255,255,255,.65); }
+  .care { background: #000; color: #fff; padding: 140px 0; }
+  .care .eyebrow { color: rgba(255,255,255,.6); }
+  .care h2 { font-size: clamp(38px, 5.4vw, 84px); line-height: .98; max-width: 1000px; }
+  .care .lead { color: rgba(255,255,255,.7); max-width: 640px; }
+  .care-grid { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 56px; margin: 72px 0 56px; }
+  .care-grid li { border-top: 1px solid rgba(255,255,255,.2); padding: 26px 0 40px; }
+  .care-grid .n { font-size: 12px; letter-spacing: .24em; color: rgba(255,255,255,.5); font-weight: 600; }
+  .care-grid h3 { font-size: clamp(19px, 1.6vw, 23px); margin: 16px 0 10px; }
+  .care-grid p { color: rgba(255,255,255,.68); font-size: 15.5px; max-width: 340px; }
+  .care .btns { display: flex; flex-wrap: wrap; gap: 12px; }
+  .tile-more { position: relative; }
+  .tile-more::after { content: " →"; display: inline-block; transition: transform .35s var(--ease); }
+  .tile-svc:hover .tile-more::after { transform: translateX(6px); }
+  .btn { transition: background .25s var(--ease), color .25s var(--ease), border-color .25s var(--ease), transform .25s var(--ease); }
+  .btn:active { transform: scale(.98); }
+  html.rv-on .rv { opacity: 0; transform: translateY(28px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+  html.rv-on .rv.in { opacity: 1; transform: none; }
+  @media (max-width: 990px) { .spec-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .spec-grid > div { border-right: 0; margin-right: 0; border-bottom: 1px solid rgba(255,255,255,.12); padding: 22px 12px 22px 0; } .care-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 760px) {
+    .hero { height: calc(100svh - var(--announce-h) - 70px); min-height: 520px; }
+    .hero-content { padding-bottom: 56px; } .scroll-cue { display: none; }
+    .eyebrow, .hero-eyebrow, .overline { letter-spacing: .14em !important; font-size: 11px; } .eyebrow::before, .hero-eyebrow::before { width: 20px; margin-right: 10px; }
+    .spec-grid > div:last-child { grid-column: 1 / -1; border-bottom: 0; }
+    .care { padding: 88px 0; } .care-grid { grid-template-columns: 1fr; margin: 48px 0 36px; } .care-grid li { padding-bottom: 28px; }
+  }
+  @media (prefers-reduced-motion: reduce) { html.rv-on .rv { opacity: 1; transform: none; transition: none; } .scroll-cue span::after { animation: none; } }
+
+  /* Unterseiten */
+  .sec { background: var(--white); }
+  .scheme-dark { background: var(--black); color: var(--white); }
+  .scheme-grey { background: var(--grey); }
+  .overline { font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 12px; }
+  .h-1 { font-size: 16px; } .h-2 { font-size: 20px; } .h-3 { font-size: clamp(24px, 2.6vw, 32px); } .h-4 { font-size: clamp(26px, 3vw, 38px); }
+  .h-5 { font-size: clamp(30px, 3.6vw, 46px); } .h-6, .h-7 { font-size: clamp(34px, 4.6vw, 60px); } .h-8 { font-size: clamp(38px, 5.6vw, 76px); }
+  .rte { margin-top: 14px; overflow-wrap: break-word; }
+  .iwt > *, .mc-grid > * { min-width: 0; }
+  .sub-hero-content, .slide-content > div { max-width: 100%; overflow-wrap: break-word; }
+  .scroll-sec { overflow: hidden; }
+  main h1, main h2, main h3, main .heading, .faq summary { overflow-wrap: break-word; hyphens: auto; }
+  .faq summary span { flex: 1; min-width: 0; }
+  .rte p { margin-bottom: 12px; } .rte ul, .rte ol { margin: 0 0 12px 22px; } .rte li { margin-bottom: 4px; }
+  .rte h2, .rte h3 { margin: 22px 0 12px; font-size: clamp(22px, 2.4vw, 30px); }
+  .rte a { text-decoration: underline; }
+  .rte table { border-collapse: collapse; width: 100%; margin: 12px 0; } .rte td, .rte th { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
+  .crumbs { display: flex; flex-wrap: wrap; gap: 8px; font-size: 14px; color: #555; padding-top: 16px; padding-bottom: 4px; }
+  .crumbs a { text-decoration: underline; text-underline-offset: 3px; }
+  .svc-area { font-size: 14px; color: #555; margin-top: 6px; }
+  .svc-area a { color: var(--black); text-decoration: underline; text-underline-offset: 3px; }
+  .svc-quick { padding: 14px 0 26px; border-bottom: 1px solid var(--line); }
+  .svc-quick-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 30px; }
+  .svc-quick .trust { color: var(--text); }
+  .svc-quick .trust svg { color: #6b6b6b; }
+  .svc-quick .btns { margin-top: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+  .svc-steps { padding: 70px 0; background: var(--grey); }
+  .svc-steps h2 { font-size: clamp(28px, 3.2vw, 40px); margin-bottom: 30px; }
+  .cat-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+  .cat-nav a { padding: 9px 14px; background: var(--white); border: 1px solid var(--line); font-weight: 600; font-size: 14px; }
+  .cat-nav a:hover { border-color: var(--black); }
+  .cat-head { font-size: clamp(24px, 2.6vw, 32px); margin: 40px 0 16px; scroll-margin-top: 140px; }
+  .svc.has-img { padding-top: 0; }
+  .svc-img { display: block; aspect-ratio: 16 / 9; margin: 0 -24px 14px; overflow: hidden; background: var(--grey); }
+  .svc-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+  .svc:hover .svc-img img { transform: scale(1.04); }
+  @media (max-width: 600px) { .svc.has-img { padding: 0 16px 16px; } .svc-img { margin: 0 -16px 12px; } .svc.has-img::after { top: auto; bottom: 18px; transform: none; } }
+  .booking-cta { background: var(--black); color: var(--white); padding: 70px 0; text-align: center; }
+  .booking-cta h2 { font-size: clamp(30px, 4vw, 46px); }
+  .booking-cta p { max-width: 620px; margin: 14px auto 0; color: rgba(255,255,255,.8); }
+  .booking-cta .btns { justify-content: center; }
+  .booking-cta .trust { justify-content: center; margin: 18px 0 4px; }
+  .callback-hint { margin-top: 10px !important; }
+  .callback-hint a { text-decoration: underline; text-underline-offset: 3px; color: var(--white); }
+  .btn-outline-light { background: transparent; color: var(--white); border-color: rgba(255,255,255,.6); }
+  .btn-outline-light:hover { border-color: var(--white); background: var(--white); color: var(--black); }
+  .finder { padding: 90px 0 30px; }
+  .finder-list { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px; border-top: 1px solid var(--black); }
+  .finder-list a { display: flex; align-items: baseline; gap: 18px; padding: 22px 4px; border-bottom: 1px solid var(--line); transition: padding .3s cubic-bezier(.2,.8,.2,1); }
+  .finder-list a:hover { padding-left: 14px; }
+  .finder-list .q { font-weight: 700; font-size: 19px; flex: 1; }
+  .finder-list .to { font-size: 14px; color: #555; text-align: right; }
+  .finder-list .to::after { content: " →"; color: var(--black); }
+  .cat-sec { padding: 70px 0 0; scroll-margin-top: 120px; }
+  .cat-sec .cat-top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px 60px; align-items: end; margin-bottom: 32px; }
+  .cat-sec h2 { font-size: clamp(30px, 3.6vw, 50px); line-height: 1.02; }
+  .cat-sec .cat-top p { color: #555; font-size: 17px; max-width: 520px; }
+  .tile-grid.c4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tile-grid.c4 .tile-svc { aspect-ratio: 16 / 10; }
+  .tile-grid.c1 { grid-template-columns: 1fr; }
+  .tile-grid.c5 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .tile-grid.c5 > * { grid-column: span 2; }
+  .tile-grid.c5 > :nth-child(-n+2) { grid-column: span 3; aspect-ratio: 16 / 10; }
+  .tile-grid.c1 .tile-svc { aspect-ratio: 21 / 8; }
+  .tile-body h3 { font-size: clamp(18px, 1.55vw, 23px); overflow-wrap: normal; hyphens: manual; }
+  .chips { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  .chips a { display: inline-block; padding: 10px 16px; border: 1px solid var(--line); font-size: 15px; transition: border-color .2s; }
+  .chips a:hover { border-color: var(--black); }
+  .more-svc { padding: 80px 0; }
+  .more-svc h2 { font-size: clamp(28px, 3.2vw, 44px); margin-bottom: 28px; }
+  .svc-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 70px; align-items: start; padding-top: 70px; padding-bottom: 30px; }
+  .svc-article > div + div { margin-top: 56px; padding-top: 56px; border-top: 1px solid var(--line); }
+  .svc-article h2 { font-size: clamp(26px, 2.8vw, 38px); margin-bottom: 18px; }
+  .svc-aside { position: sticky; top: 110px; background: var(--black); color: var(--white); padding: 32px; }
+  .svc-aside h2 { font-size: 22px; margin-bottom: 18px; }
+  .svc-aside .trust { flex-direction: column; gap: 10px; color: rgba(255,255,255,.9); }
+  .svc-aside .btns { flex-direction: column; margin-top: 24px; gap: 10px; display: flex; }
+  .svc-aside .btn { width: 100%; text-align: center; }
+  .svc-aside .hours { margin-top: 20px; font-size: 14px; color: rgba(255,255,255,.7); }
+  @media (max-width: 990px) { .tile-grid.c5 { grid-template-columns: 1fr 1fr; } .tile-grid.c5 > * { grid-column: auto; } .tile-grid.c5 > :first-child { grid-column: 1 / -1; } .svc-layout { grid-template-columns: 1fr; gap: 40px; } .svc-aside { display: none; } }
+  @media (max-width: 760px) { .finder { padding-top: 60px; } .finder-list { grid-template-columns: 1fr; } .finder-list .to { display: none; } .finder-list .q::after { content: " →"; } .cat-sec .cat-top { grid-template-columns: 1fr; } .tile-grid.c4, .tile-grid.c5 { grid-template-columns: 1fr; } .tile-grid.c5 > * { aspect-ratio: 4 / 3 !important; } .tile-grid.c1 .tile-svc { aspect-ratio: 4 / 3; } .more-svc { padding: 56px 0; } .svc-layout { padding-top: 50px; } .tile-body h3 { font-size: 19px; } .tile-grid.c4 .tile-svc { aspect-ratio: 4 / 3; } }
+  .related { background: var(--grey); padding: 50px 0; }
+  .related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .related h2 { font-size: 18px; margin-bottom: 14px; }
+  .related ul { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; }
+  .related a { display: inline-block; padding: 9px 14px; background: var(--white); border: 1px solid var(--line); font-size: 15px; transition: border-color .2s; }
+  .related a:hover { border-color: var(--black); }
+  @media (max-width: 760px) { .related-grid { grid-template-columns: 1fr; } }
+  .sub-hero h1.overline { font-family: Inter, sans-serif; text-transform: uppercase; letter-spacing: .14em; font-size: 13px; font-weight: 600; line-height: 1.5; margin-bottom: 12px; }
+  .sec h1.overline, .rich-sub h1.overline { font-family: Inter, sans-serif; letter-spacing: .14em; font-size: 13px; font-weight: 600; margin-bottom: 12px; }
+  .rte table.compare { margin: 18px 0 20px; font-size: 15px; }
+  .compare thead th { background: var(--black); color: var(--white); font-weight: 700; border-color: var(--black); }
+  .compare thead th:nth-child(2) { background: #3a3a3a; border-color: #3a3a3a; }
+  .compare tbody th { font-weight: 600; background: var(--grey); width: 32%; }
+  .compare td:nth-child(2) { font-weight: 600; }
+  @media (max-width: 600px) { .rte table.compare { font-size: 13px; } .compare th, .compare td { padding: 7px 6px; } }
+  .btns { margin-top: 22px; }
+  .sub-hero { position: relative; height: var(--h); min-height: 380px; color: var(--white); display: grid; place-items: center; text-align: center; overflow: hidden; }
+  .sub-hero-content { position: relative; padding: 40px 20px; }
+  .sub-hero-content .btns { justify-content: center; }
+  .iwt { display: grid; grid-template-columns: var(--cols); gap: 60px; align-items: center; }
+  .iwt-media { position: relative; overflow: hidden; background: #2a2a2a; min-height: 320px; }
+  .iwt-media img { width: 100%; height: 100%; object-fit: cover; }
+  .iwt-text { width: 100%; }
+  .media-right .iwt-text { justify-self: end; }
+  .slider { height: var(--h); }
+  .slider:not(:has(.slide.active)) .slide:first-child { opacity: 1; clip-path: none; }
+  .slide-content p { margin: 14px 0; font-size: 17px; }
+  .sec-head { font-size: clamp(28px, 3.4vw, 44px); margin-bottom: 30px; }
+  .sec-sub { margin: -16px 0 30px; }
+  .mc-grid { display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); gap: 30px; }
+  .mc-media { position: relative; aspect-ratio: 4 / 5; margin-bottom: 18px; }
+  .mc-col h3 { font-size: 20px; }
+  .mc-col .btn { margin-top: 10px; }
+  .faq { max-width: 900px; margin: 0 auto; }
+  .faq details { border-bottom: 1px solid var(--line); overflow: hidden; }
+  .faq summary::after { flex: none; width: 20px; text-align: center; }
+  .faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 20px; padding: 20px 0; font-weight: 700; font-size: 18px; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; font-size: 24px; line-height: 1; transition: transform .2s; }
+  .faq details[open] summary::after { transform: rotate(45deg); }
+  .faq .rte { margin-top: 0; padding-bottom: 12px; }
+  .contact-form { margin: 0 auto; }
+  .mail-form { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 24px; }
+  .mail-form .f { display: grid; gap: 6px; font-size: 14px; font-weight: 600; width: 100%; }
+  .mail-form .f.half { width: calc(50% - 8px); }
+  .mail-form input, .mail-form textarea { font: inherit; font-weight: 400; padding: 13px 14px; border: 1px solid var(--line); background: var(--white); }
+  .mail-form input:focus, .mail-form textarea:focus { outline: 2px solid var(--black); outline-offset: -1px; }
+  .scroll-sec .marquee { margin: 0; }
+  .map iframe { display: block; width: 100%; height: 450px; border: 0; }
+  .map-consent { min-height: 450px; display: grid; place-content: center; text-align: center; gap: 10px; padding: 40px 20px; background: var(--grey); }
+  .map-consent p { max-width: 560px; margin: 0 auto; }
+  .map-consent a { text-decoration: underline; }
+  .btn-outline-dark { background: transparent; color: var(--black); border-color: var(--black); }
+  .btn-outline-dark:hover { background: var(--black); color: var(--white); }
+  .countdown, .promo-box, .cta-box { text-align: center; padding: 60px 20px; }
+  .countdown { background: #050505; color: #fff; }
+  .countdown h2 { font-size: clamp(30px, 4vw, 42px); }
+  .countdown p { margin-top: 12px; }
+  .cd-cards { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-top: 30px; }
+  .cd-card { background: #1a1a1a; border: 1px solid rgba(255,255,255,.35); border-radius: 0; padding: 24px 32px; min-width: 240px; }
+  .cd-card b { display: block; font-family: "Archivo Black"; color: #fff; font-size: clamp(36px, 5vw, 54px); line-height: 1.1; }
+  .promo-box { background: #000; color: #fff; }
+  .promo-box .badge { display: inline-block; background: #fff; color: #000; font-weight: 700; padding: 6px 14px; margin-bottom: 16px; }
+  .promo-box h2 { font-size: 30px; margin-bottom: 10px; }
+  .progress { max-width: 420px; height: 10px; background: #4a4a4a; margin: 24px auto 10px; }
+  .progress div { height: 100%; background: #fff; }
+  .muted { color: #d1d1d1; } .small { font-size: 13px; margin-top: 6px; }
+  .cta-box h2 { font-size: 28px; margin-bottom: 10px; }
+  @media (max-width: 990px) {
+    .iwt { grid-template-columns: 1fr; gap: 28px; }
+    .iwt .iwt-media { order: -1; }
+    .media-right .iwt-text { justify-self: start; }
+    .mc-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .sub-hero { height: var(--mh); }
+    .slider { height: var(--mh); }
+    .mail-form .f.half { width: 100%; }
+    .map iframe { height: 300px; }
+  }
+
+  .hp { position: absolute; left: -9999px; }
+  .damage-form select { font: inherit; padding: 13px 14px; border: 1px solid var(--line); background: var(--white); }
+  .damage-form input[type=file] { padding: 10px; background: var(--grey); border: 1px dashed #999; margin-top: 6px; }
+  .damage-form small { font-weight: 400; color: #555; }
+  .damage-form .consent { display: flex; gap: 10px; align-items: flex-start; font-weight: 400; }
+  .damage-form .consent input { margin-top: 5px; }
+  .damage-form .consent a { text-decoration: underline; }
+  .form-status { margin-top: 14px; font-weight: 600; }
+  .form-status.err { color: #222; }
+
+  .book-note { font-size: 14px; color: #555; margin-top: 14px; }
+  .booking-page .heading { margin: 4px 0 6px; }
+  .booking-page .rte a { text-decoration: underline; }
+  .booking-embed { padding: 0 0 60px; }
+  .book-grid { display: grid; grid-template-columns: 1fr 1.6fr 1fr; gap: 16px; align-items: start; }
+  .book-card { background: var(--grey); padding: 26px; }
+  .book-card h2 { font-size: 22px; margin-bottom: 8px; }
+  .book-card > p { margin-bottom: 16px; color: #444; }
+  .book-card .mail-form { margin-top: 0; }
+  .book-card .eyebrow { color: #6b6b6b; font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
+  @media (max-width: 990px) { .book-grid { grid-template-columns: 1fr; } }
+  .booking-embed iframe { display: block; width: 100%; height: 1000px; border: 1px solid var(--line); background: var(--white); }
+  .booking-fallback { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 18px; }
+  @media (max-width: 600px) { .booking-embed iframe { height: 1250px; } }
+
+  .sos-call { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 14px; }
+  .sos-list { list-style: none; counter-reset: sos; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .sos-list li { counter-increment: sos; position: relative; padding: 22px 22px 22px 70px; background: var(--grey); }
+  .sos-list li::before { content: counter(sos); position: absolute; left: 22px; top: 18px; font-family: "Archivo Black"; font-size: 30px; color: var(--red); }
+  .sos-list h2 { font-size: 19px; margin-bottom: 6px; }
+  .sos-note { margin-top: 22px; font-size: 14px; color: #555; }
+  .faq .cat-head { margin: 40px 0 6px; }
+  .faq-more a { font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "AutoBodyShop", "name": "Täubert Karosserie und Lack GmbH", "url": "https://www.taeubert-karosserie-lack.de/", "logo": "https://www.taeubert-karosserie-lack.de/images/Taeubert_Logo.png", "telephone": "+49 3675 4289606", "email": "hallo@taeubert-karosserie-lack.de", "address": {"@type": "PostalAddress", "streetAddress": "Bettelhecker Straße 15", "postalCode": "96515", "addressLocality": "Sonneberg", "addressRegion": "Thüringen", "addressCountry": "DE"}, "areaServed": ["Sonneberg", "Neustadt bei Coburg", "Coburg", "Rödental", "Kronach", "Bamberg"], "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"], "opens": "08:00", "closes": "17:00"}, {"@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "08:00", "closes": "14:30"}], "sameAs": ["https://www.facebook.com/ToniTaeubert/", "https://www.instagram.com/taeubert_karosserieundlack/"], "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Leistungen", "itemListElement": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Karosseriearbeiten", "description": "Karosseriereparatur in Sonneberg & Neustadt bei Coburg: Richtbank, präzise Vermessung, Reparatur nach Herstellervorgaben – Lack direkt im Haus.", "url": "https://www.taeubert-karosserie-lack.de/karosserie.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Lackierarbeiten", "description": "Autolackierung in Sonneberg: digitale Farbtonmessung, staubfreie Lackierkabine, Spot Repair und Komplettlackierung – ohne sichtbaren Unterschied.", "url": "https://www.taeubert-karosserie-lack.de/lackierarbeiten.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Unfallinstandsetzung", "description": "Unfallreparatur in Sonneberg & Neustadt bei Coburg: Karosserie, Lack und Abwicklung mit Versicherung und Gutachter aus einer Hand.", "url": "https://www.taeubert-karosserie-lack.de/unfallinstandsetzung.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Smart Repair", "description": "Smart Repair in Sonneberg: Dellen und kleine Schäden ohne Neulackierung entfernen – Originallack bleibt, oft in wenigen Stunden erledigt.", "url": "https://www.taeubert-karosserie-lack.de/smartrepair.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Kleinschaden-Reparatur", "description": "Parkschaden, Kratzer oder Delle? Kleinschaden-Reparatur in Sonneberg & Neustadt bei Coburg – schnell, günstig und mit Originallack.", "url": "https://www.taeubert-karosserie-lack.de/kleinschaden.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Kratzer entfernen", "description": "Kratzer im Lack entfernen lassen in Sonneberg: vom oberflächlichen Kratzer bis zur Tiefe – mit exakter Farbtonanpassung.", "url": "https://www.taeubert-karosserie-lack.de/kratzer.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Leasingrückgabe", "description": "Leasingrückgabe in Sonneberg vorbereiten: Schäden vorab günstig beseitigen und teure Nachzahlungen beim Leasinggeber vermeiden.", "url": "https://www.taeubert-karosserie-lack.de/leasingrueckgabe.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Fahrzeugaufbereitung", "description": "Fahrzeugaufbereitung in Sonneberg: Politur, Innenraumreinigung und Lackpflege – ideal vor Verkauf oder Leasingrückgabe.", "url": "https://www.taeubert-karosserie-lack.de/fahrzeugaufbereitung.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Reifenservice", "description": "Reifenwechsel, Räderwechsel und Rädereinlagerung in Sonneberg & Neustadt bei Coburg – Termin online buchen.", "url": "https://www.taeubert-karosserie-lack.de/reifenservice.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Unfallreparatur", "description": "Unfall gehabt? Täubert in Sonneberg kümmert sich um Reparatur, Versicherung und Gutachten – direkte Abrechnung mit der Versicherung.", "url": "https://www.taeubert-karosserie-lack.de/unfall.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Hagelschaden", "description": "Hagelschaden am Auto in Sonneberg reparieren: Dellen möglichst ohne Lackieren entfernen, Lack und Karosserie aus einer Hand, direkt mit der Versicherung.", "url": "https://www.taeubert-karosserie-lack.de/hagelschaden.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Stoßstange reparieren", "description": "Stoßstange reparieren oder lackieren in Sonneberg & Neustadt bei Coburg: Kratzer, Risse und Dellen im Stoßfänger beseitigen – oft ohne neues Teil.", "url": "https://www.taeubert-karosserie-lack.de/stossstange-reparieren.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Oldtimer & Klassiker", "description": "Oldtimer-Restaurierung und Klassiker-Lackierung in Sonneberg: Entrostung, Karosseriearbeiten und originalgetreue Lackierung – mit Respekt vor dem Original.", "url": "https://www.taeubert-karosserie-lack.de/oldtimer-restaurierung.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Fuhrparkservice", "description": "Karosserie- und Lackservice für Firmenwagen und Transporter in Sonneberg & Neustadt bei Coburg: Schäden schnell beheben, Fahrzeuge schnell zurück im Einsatz.", "url": "https://www.taeubert-karosserie-lack.de/fuhrparkservice.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Versicherungsschaden", "description": "Versicherungsschaden in Sonneberg: Täubert übernimmt Schadenaufnahme, Abstimmung mit Versicherung und Gutachter sowie die komplette Reparatur.", "url": "https://www.taeubert-karosserie-lack.de/versicherungsschaden.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Unterbodenschutz", "description": "Unterbodenschutz, Unterbodenwäsche und Hohlraumversiegelung in Sonneberg: Rost vorbeugen, Schäden behandeln und den Wert Ihres Fahrzeugs erhalten.", "url": "https://www.taeubert-karosserie-lack.de/unterbodenschutz.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Lackaufbereitung", "description": "Lackaufbereitung und Politur in Sonneberg: Waschkratzer, Hologramme und stumpfen Lack maschinell aufbereiten – für Tiefenglanz wie am ersten Tag.", "url": "https://www.taeubert-karosserie-lack.de/lackaufbereitung.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Keramikversiegelung", "description": "Keramikversiegelung und Lackversiegelung in Sonneberg: dauerhafter Schutz und Tiefenglanz – Wasser perlt ab, Schmutz haftet weniger, Pflege wird leichter.", "url": "https://www.taeubert-karosserie-lack.de/keramikversiegelung.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Innenraumaufbereitung", "description": "Innenraumaufbereitung in Sonneberg: Polster- und Lederreinigung, Teppiche, Armaturen und Geruchsentfernung – damit Sie wieder gern einsteigen.", "url": "https://www.taeubert-karosserie-lack.de/innenraumaufbereitung.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Scheinwerfer aufbereiten", "description": "Scheinwerfer aufbereiten in Sonneberg: vergilbte und matte Scheinwerfer schleifen, polieren und versiegeln – für klare Sicht und gepflegte Optik.", "url": "https://www.taeubert-karosserie-lack.de/scheinwerfer-aufbereiten.html"}}]}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Startseite", "item": "https://www.taeubert-karosserie-lack.de/"}, {"@type": "ListItem", "position": 2, "name": "Danke für Ihre Bewerbung", "item": "https://www.taeubert-karosserie-lack.de/danke-bewerbung.html"}]}</script>
+</head>
+<body>
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+<div class="announce">
+  <span><strong>Unfall gehabt?</strong> <a href="tel:+4936754289606">03675 4289606</a> <span class="sep">·</span> <a class="ul" href="unfall-was-tun.html">Was jetzt zu tun ist</a></span>
+</div>
+
+<header class="header" id="header">
+  <div class="page-width header-inner">
+    <div>
+      <button class="icon-btn" id="menu-open" aria-label="Menü öffnen" aria-controls="drawer" aria-expanded="false">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+        <span class="label">Menü</span>
+      </button>
+    </div>
+    <a href="index.html" class="logo" aria-label="Täubert Karosserie &amp; Lack – Startseite">
+      <img src="images/Taeubert_Logo.png" alt="TÄUBERT Karosserie &amp; Lack" onerror="this.outerHTML='<span class=&quot;logo-fallback&quot;>TÄUBERT</span>'">
+    </a>
+    <nav class="main-nav" aria-label="Hauptnavigation"><!-- MAINNAV:START --><ul><li class="has-sub"><button class="top" type="button" aria-expanded="false">Leistungen <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><div class="panel mega"><div><h3>Unfall &amp; Versicherung</h3><a href="unfall.html">Unfallreparatur</a><a href="unfallinstandsetzung.html">Unfallinstandsetzung</a><a href="versicherungsschaden.html">Versicherungsschaden</a><a href="hagelschaden.html">Hagelschaden</a></div><div><h3>Karosserie &amp; Lack</h3><a href="karosserie.html">Karosseriearbeiten</a><a href="lackierarbeiten.html">Lackierarbeiten</a><a href="smartrepair.html">Smart Repair</a><a href="kleinschaden.html">Kleinschaden-Reparatur</a><a href="kratzer.html">Kratzer entfernen</a><a href="stossstange-reparieren.html">Stoßstange reparieren</a></div><div><h3>Aufbereitung &amp; Pflege</h3><a href="fahrzeugaufbereitung.html">Fahrzeugaufbereitung</a><a href="lackaufbereitung.html">Lackaufbereitung</a><a href="keramikversiegelung.html">Keramikversiegelung</a><a href="innenraumaufbereitung.html">Innenraumaufbereitung</a><a href="scheinwerfer-aufbereiten.html">Scheinwerfer aufbereiten</a><a href="unterbodenschutz.html">Unterbodenschutz</a></div><div><h3>Service</h3><a href="reifenservice.html">Reifenservice</a><a href="leasingrueckgabe.html">Leasingrückgabe</a><a href="fuhrparkservice.html">Fuhrparkservice</a></div><div><h3>Klassiker</h3><a href="oldtimer-restaurierung.html">Oldtimer &amp; Klassiker</a></div><a class="all" href="leistungen.html">Alle Leistungen ansehen →</a><a class="all" href="konfigurator.html">Lack-Konfigurator →</a></div></li><li class="has-sub"><button class="top" type="button" aria-expanded="false">Unfall? <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><div class="panel"><a href="unfall-was-tun.html">Unfall – was jetzt zu tun ist</a><a href="schaden-melden.html">Schaden per Foto melden</a><a href="versicherungsschaden.html">Abrechnung mit der Versicherung</a><a href="unfall-oder-kratzer.html">Wer zahlt die Reparatur?</a></div></li><li class="has-sub"><button class="top" type="button" aria-expanded="false">Über uns <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><div class="panel"><a href="who-we-are.html">Who we are</a><a href="history.html">History</a><a href="meet-the-team.html">Meet the Team</a><a href="porsche-911.html">Projekt: Porsche 911</a><a href="porsche-gts.html">Projekt: Porsche Cayenne GTS</a><a href="vw-bulli-t2.html">Projekt: VW Bulli T2</a></div></li><li class="has-sub"><button class="top" type="button" aria-expanded="false">Karriere <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button><div class="panel"><a href="karriere.html">Karriere bei Täubert</a><a href="azubi.html">Ausbildung</a><a href="jobs.html">Stellenangebote</a><a href="jobs.html#bewerbung">Direkt bewerben</a></div></li><li><a class="top" href="fragen.html">Fragen</a></li><li><a class="top" href="contact.html">Kontakt</a></li></ul><!-- MAINNAV:END --></nav>
+    <div class="header-right">
+      <a class="btn btn-header" href="https://terminbuchungtaeubert.de">Termin buchen</a>
+      <a class="icon-btn hide-desktop" href="https://terminbuchungtaeubert.de" aria-label="Termin buchen">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="1"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      </a>
+      <a class="icon-btn" href="tel:+4936754289606" aria-label="Anrufen: 03675 4289606">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<div class="drawer-backdrop" id="backdrop"></div>
+<aside class="drawer" id="drawer" aria-label="Menü">
+  <div class="drawer-head">
+    <span class="heading" style="font-size:20px">Menü</span>
+    <button class="icon-btn" id="menu-close" aria-label="Menü schließen">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </button>
+  </div>
+  <nav class="drawer-nav"><!-- DRAWERNAV:START -->
+    <div class="drawer-quick">
+      <a class="btn btn-dark" href="https://terminbuchungtaeubert.de">Termin online buchen</a>
+      <a class="btn btn-outline-dark" href="schaden-melden.html">Schaden per Foto melden</a>
+      <a class="btn btn-outline-dark" href="unfall-was-tun.html">Unfall – was jetzt tun?</a>
+    </div>
+    <details><summary>Leistungen</summary><div class="sub"><a href="leistungen.html"><strong>Alle Leistungen</strong></a><h3>Unfall &amp; Versicherung</h3><a href="unfall.html">Unfallreparatur</a><a href="unfallinstandsetzung.html">Unfallinstandsetzung</a><a href="versicherungsschaden.html">Versicherungsschaden</a><a href="hagelschaden.html">Hagelschaden</a><h3>Karosserie &amp; Lack</h3><a href="karosserie.html">Karosseriearbeiten</a><a href="lackierarbeiten.html">Lackierarbeiten</a><a href="smartrepair.html">Smart Repair</a><a href="kleinschaden.html">Kleinschaden-Reparatur</a><a href="kratzer.html">Kratzer entfernen</a><a href="stossstange-reparieren.html">Stoßstange reparieren</a><h3>Aufbereitung &amp; Pflege</h3><a href="fahrzeugaufbereitung.html">Fahrzeugaufbereitung</a><a href="lackaufbereitung.html">Lackaufbereitung</a><a href="keramikversiegelung.html">Keramikversiegelung</a><a href="innenraumaufbereitung.html">Innenraumaufbereitung</a><a href="scheinwerfer-aufbereiten.html">Scheinwerfer aufbereiten</a><a href="unterbodenschutz.html">Unterbodenschutz</a><h3>Service</h3><a href="reifenservice.html">Reifenservice</a><a href="leasingrueckgabe.html">Leasingrückgabe</a><a href="fuhrparkservice.html">Fuhrparkservice</a><h3>Klassiker</h3><a href="oldtimer-restaurierung.html">Oldtimer &amp; Klassiker</a></div></details>
+    <details><summary>Über uns</summary><div class="sub"><a href="who-we-are.html">Who we are</a><a href="history.html">History</a><a href="meet-the-team.html">Meet the Team</a><a href="porsche-911.html">Projekt: Porsche 911</a><a href="porsche-gts.html">Projekt: Porsche Cayenne GTS</a><a href="vw-bulli-t2.html">Projekt: VW Bulli T2</a></div></details>
+    <details><summary>Karriere</summary><div class="sub"><a href="karriere.html">Karriere bei Täubert</a><a href="azubi.html">Ausbildung</a><a href="jobs.html">Stellenangebote</a><a href="jobs.html#bewerbung">Direkt bewerben</a></div></details>
+    <a class="plain" href="konfigurator.html">Lack-Konfigurator</a><a class="plain" href="fragen.html">Häufige Fragen</a><a class="plain" href="contact.html">Kontakt &amp; Anfahrt</a>
+  <!-- DRAWERNAV:END --></nav>
+  <div class="drawer-foot">
+    <a href="https://www.facebook.com/ToniTaeubert/?locale=de_DE" aria-label="Facebook" target="_blank" rel="noopener"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M14 8h3V4h-3c-2.8 0-5 2.2-5 5v2H7v4h2v9h4v-9h3l1-4h-4V9c0-.6.4-1 1-1z"/></svg></a>
+    <a href="https://www.instagram.com/taeubert_karosserieundlack/" aria-label="Instagram" target="_blank" rel="noopener"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+    <a href="https://wa.me/message/BWRVH4RG3XVDH1" aria-label="WhatsApp" target="_blank" rel="noopener"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.3.8 3.2.7.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.4-.3z"/></svg></a>
+  </div>
+</aside>
+<main id="inhalt">
+<section class="sec" style="padding:100px 0">
+  <div class="page-width"><div class="rich-inner" style="max-width:640px;margin:0 auto;text-align:center">
+    <h1 class="h-6">Danke für Ihre Bewerbung!</h1>
+    <div class="rte"><p>Wir haben Ihre Angaben erhalten und melden uns persönlich bei Ihnen – meist innerhalb weniger Tage. Fragen? Rufen Sie uns an: <a href="tel:+4936754289606">03675 4289606</a>.</p></div>
+    <div class="btns" style="justify-content:center"><a class="btn btn-dark" href="index.html">Zur Startseite</a><a class="btn btn-outline-dark" href="meet-the-team.html">Das Team kennenlernen</a></div>
+  </div></div>
+</section>
+</main>
+<footer>
+  <div class="foot-grid">
+    <div>
+      <div class="foot-logo"><img src="images/Taeubert_Logo_weiss.png" alt="TÄUBERT"></div>
+      <p>Bei Täubert geben wir ein Auto erst zurück, wenn wir selbst wieder einsteigen würden.</p>
+      <div class="socials">
+        <a href="https://www.facebook.com/ToniTaeubert/?locale=de_DE" aria-label="Facebook" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M14 8h3V4h-3c-2.8 0-5 2.2-5 5v2H7v4h2v9h4v-9h3l1-4h-4V9c0-.6.4-1 1-1z"/></svg></a>
+        <a href="https://www.instagram.com/taeubert_karosserieundlack/" aria-label="Instagram" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+        <a href="https://wa.me/message/BWRVH4RG3XVDH1" aria-label="WhatsApp" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg></a>
+      </div>
+    </div>
+    <div>
+      <h4>Leistungen</h4>
+      <ul><!-- FOOTER-LEISTUNGEN:START --><li><a href="unfallinstandsetzung.html">Unfallinstandsetzung</a></li><li><a href="lackierarbeiten.html">Lackierarbeiten</a></li><li><a href="karosserie.html">Karosseriearbeiten</a></li><li><a href="smartrepair.html">Smart Repair</a></li><li><a href="hagelschaden.html">Hagelschaden</a></li><li><a href="fahrzeugaufbereitung.html">Fahrzeugaufbereitung</a></li><li><a href="leistungen.html">Alle Leistungen</a></li><!-- FOOTER-LEISTUNGEN:END --></ul>
+    </div>
+    <div>
+      <h4>mehr</h4>
+      <ul>
+        <li><a href="history.html">History</a></li>
+        <li><a href="meet-the-team.html">Meet the Team</a></li>
+        <li><a href="azubi.html">Azubi</a></li>
+        <li><a href="karriere.html">Karriere</a></li>
+        <li><a href="jobs.html">Stellenangebote</a></li>
+        <li><a href="boxenstopp.html">Boxenstopp</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Information</h4>
+      <ul>
+        <li><a href="schaden-melden.html">Schaden melden</a></li>
+        <li><a href="contact.html">Kontakt</a></li>
+        <li><a href="impressum.html">Impressum</a></li>
+        <li><a href="datenschutz.html">Datenschutz</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Öffnungszeiten</h4>
+      <p class="open-status" data-open-status></p>
+      <dl class="hours">
+        <dt>Montag – Donnerstag</dt><dd>08:00 – 17:00 Uhr</dd>
+        <dt>Freitag</dt><dd>08:00 – 14:30 Uhr</dd>
+        <dt>Samstag – Sonntag</dt><dd>Geschlossen</dd>
+      </dl>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© <span id="year">2026</span> Täubert Karosserie &amp; Lack</span>
+    <span>Bettelhecker Straße 15 · 96515 Sonneberg</span>
+  </div>
+  <nav class="action-bar" aria-label="Schnellkontakt">
+    <a href="tel:+4936754289606"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg><span>Anrufen</span></a>
+    <a href="https://wa.me/4936754289606" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg><span>WhatsApp</span></a>
+    <a href="https://terminbuchungtaeubert.de" class="primary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="1"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>Termin</span></a>
+  </nav>
+</footer>
+<script>
+  // Menü-Drawer
+  const openBtn = document.getElementById('menu-open');
+  const setMenu = open => { document.body.classList.toggle('menu-open', open); openBtn.setAttribute('aria-expanded', open); };
+  openBtn.onclick = () => setMenu(true);
+  document.getElementById('menu-close').onclick = () => setMenu(false);
+  document.getElementById('backdrop').onclick = () => setMenu(false);
+  addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+  // Hauptnavigation: Aufklappmenüs (Klick, Hover, Tastatur) und aktive Seite markieren
+  (function () {
+    const items = [...document.querySelectorAll('.main-nav li.has-sub')];
+    const close = except => items.forEach(li => { if (li !== except) { li.classList.remove('open'); li.querySelector('.top').setAttribute('aria-expanded', 'false'); } });
+    items.forEach(li => {
+      const btn = li.querySelector('.top');
+      btn.addEventListener('click', e => { e.stopPropagation(); const open = !li.classList.contains('open'); close(li); li.classList.toggle('open', open); btn.setAttribute('aria-expanded', open); });
+      if (matchMedia('(hover: hover)').matches) {
+        let t; li.addEventListener('mouseenter', () => { clearTimeout(t); close(li); li.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); });
+        li.addEventListener('mouseleave', () => { t = setTimeout(() => { li.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); }, 180); });
+      }
+    });
+    document.addEventListener('click', e => { if (!e.target.closest('.main-nav')) close(); });
+    addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+    const here = location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.main-nav a, .drawer a').forEach(a => { if (a.getAttribute('href') === here) a.setAttribute('aria-current', 'page'); });
+    items.forEach(li => { if (li.querySelector('a[aria-current="page"]')) li.querySelector('.top').setAttribute('aria-current', 'page'); });
+  })();
+  // Fehlende Bilddateien: Bild ausblenden; Slides ohne Bild und Text entfernen
+  const dropSlide = slide => {
+    if (slides.length < 2) return;
+    const i = slides.indexOf(slide);
+    slide.remove(); slides.splice(i, 1); dots.children[i].remove();
+    [...dots.children].forEach((d, j) => d.onclick = () => go(j));
+    document.querySelector('#slider .dots').hidden = document.querySelector('#slider .arrows').hidden = slides.length < 2;
+    go(0);
+  };
+  document.querySelectorAll('img').forEach(img => {
+    const hide = () => {
+      img.style.visibility = 'hidden';
+      const slide = img.closest('#slider .slide');
+      if (slide && !slide.querySelector('.slide-content')) dropSlide(slide);
+      if (img.closest('#showcase') && [...document.querySelectorAll('#showcase img')].every(i => i.hasAttribute('data-missing-src') || (i.complete && !i.naturalWidth)))
+        document.querySelector('.fl-inner').classList.add('no-showcase');
+    };
+    if (img.hasAttribute('data-missing-src') || (img.complete && !img.naturalWidth)) hide(); else img.addEventListener('error', hide);
+  });
+  // Öffnungsstatus (Mo–Do 8–17, Fr 8–14:30, Zeitzone Berlin)
+  (function () {
+    const HOURS = { 1: [480, 1020], 2: [480, 1020], 3: [480, 1020], 4: [480, 1020], 5: [480, 870] };
+    const NAMES = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
+    const fmt = m => String(Math.floor(m / 60)).padStart(2, '0') + ':' + String(m % 60).padStart(2, '0');
+    const update = () => {
+      const now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Europe/Berlin' }));
+      const day = now.getDay(), min = now.getHours() * 60 + now.getMinutes(), today = HOURS[day];
+      let text, open = false;
+      if (today && min >= today[0] && min < today[1]) { open = true; text = 'Jetzt geöffnet – bis ' + fmt(today[1]) + ' Uhr'; }
+      else {
+        let d = day, first = true;
+        if (today && min < today[0]) text = 'Geschlossen – öffnet heute um ' + fmt(today[0]) + ' Uhr';
+        else {
+          for (let i = 1; i <= 7; i++) { d = (day + i) % 7; if (HOURS[d]) break; }
+          text = 'Geschlossen – öffnet ' + (d === (day + 1) % 7 ? 'morgen' : 'am ' + NAMES[d]) + ' um ' + fmt(HOURS[d][0]) + ' Uhr';
+        }
+      }
+      document.querySelectorAll('[data-open-status]').forEach(el => { el.textContent = text; el.classList.toggle('is-open', open); });
+    };
+    update(); setInterval(update, 60000);
+  })();
+  // Header beim Scrollen schlanker, Inhalte sanft einblenden
+  (function () {
+    var onScroll = function () { document.body.classList.toggle('scrolled', window.scrollY > 40); };
+    window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+    if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var els = document.querySelectorAll('main .sec-intro, main .tile-svc, main .care-grid li, main .steps li, main .spec-grid > div, main .cat-top, main .finder-list li, main .konfig-inner > *, main .faq details, main .svc-article > div, main .kf-info-grid > div');
+    if (!els.length) return;
+    document.documentElement.classList.add('rv-on');
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    els.forEach(function (el, i) { el.classList.add('rv'); el.style.transitionDelay = (i % 3) * 80 + 'ms'; io.observe(el); });
+    // Sicherheitsnetz: alles, was schon oberhalb des unteren Bildschirmrands liegt, sofort zeigen (auch bei schnellem Scrollen oder Sprungmarken)
+    var tick = false, sweep = function () { tick = false; els.forEach(function (el) { if (!el.classList.contains('in') && el.getBoundingClientRect().top < innerHeight) el.classList.add('in'); }); };
+    window.addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(sweep); } }, { passive: true });
+    window.addEventListener('load', sweep); setTimeout(sweep, 1500);
+  })();
+  // Laufschrift: zwei identische Hälften, ruhiges konstantes Tempo, Pause beim Drüberfahren
+  function startMarquee(t, unit) {
+    t.innerHTML = unit;
+    const one = t.scrollWidth || 1;
+    const n = Math.max(2, Math.ceil((window.innerWidth * 1.2) / one));
+    const half = unit.repeat(n);
+    t.innerHTML = half + half;
+    const speed = window.innerWidth < 760 ? 45 : 70; // Pixel pro Sekunde
+    t.style.animationDuration = (t.scrollWidth / 2 / speed).toFixed(1) + 's';
+  }
+
+  // Slideshows
+  document.querySelectorAll('.slider').forEach(sl => {
+    const slides = [...sl.querySelectorAll('.slide')], dots = sl.querySelector('.dots');
+    let cur = 0, timer;
+    const go = i => {
+      cur = (i + slides.length) % slides.length;
+      slides.forEach((s, j) => s.classList.toggle('active', j === cur));
+      if (dots) [...dots.children].forEach((d, j) => d.classList.toggle('active', j === cur));
+      clearInterval(timer);
+      if (slides.length > 1) timer = setInterval(() => go(cur + 1), +sl.dataset.interval || 6000);
+    };
+    if (dots) slides.forEach((_, i) => { const b = document.createElement('button'); b.setAttribute('aria-label', 'Slide ' + (i + 1)); b.onclick = () => go(i); dots.appendChild(b); });
+    sl.querySelectorAll('.arrows button').forEach(b => b.onclick = () => go(cur + +b.dataset.dir));
+    go(0);
+  });
+
+  // Laufschrift
+  const runMarquees = () => document.querySelectorAll('.marquee-track[data-text]').forEach(t => startMarquee(t, `<span>${t.dataset.text}</span>`));
+  runMarquees();
+  if (document.fonts) document.fonts.ready.then(runMarquees);
+  let mqTimer; addEventListener('resize', () => { clearTimeout(mqTimer); mqTimer = setTimeout(runMarquees, 250); });
+
+  // Google-Karte erst nach Zustimmung laden
+  document.querySelectorAll('[data-load-map]').forEach(btn => btn.addEventListener('click', () => {
+    const sec = btn.closest('.map');
+    sec.innerHTML = '<iframe title="Täubert Karosserie und Lack Standort" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Bettelhecker+Stra%C3%9Fe+15,+96515+Sonneberg&z=15&output=embed"></iframe>';
+  }));
+
+  // Anfragen zählen (nur wenn eine cookielose Statistik wie Plausible eingebunden ist)
+  const track = (name, props) => { if (window.plausible) window.plausible(name, { props }); };
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a'); if (!a) return;
+    const h = a.getAttribute('href') || '', page = location.pathname.split('/').pop() || 'index.html';
+    if (h.startsWith('tel:')) track('Anruf', { page });
+    else if (h.includes('wa.me')) track('WhatsApp', { page });
+    else if (h.endsWith('termin.html') || h.includes('terminbuchungtaeubert')) track('Termin', { page });
+    else if (h.endsWith('schaden-melden.html')) track('Schaden melden', { page });
+  });
+
+  // Countdown
+  document.querySelectorAll('[data-countdown]').forEach(el => {
+    const target = new Date(el.dataset.countdown), b = el.querySelector('b');
+    const tick = () => {
+      const ms = target - new Date();
+      if (ms <= 0) { b.textContent = 'Vorbei'; return; }
+      const d = Math.floor(ms / 864e5), h = Math.floor(ms / 36e5) % 24, m = Math.floor(ms / 6e4) % 60;
+      b.textContent = `${d}T ${h}h ${m}m`;
+    };
+    tick(); setInterval(tick, 30000);
+  });
+
+  // Kontaktformular -> E-Mail-Programm (statische Seite ohne Server)
+  document.querySelectorAll('.mail-form').forEach(f => f.addEventListener('submit', e => {
+    e.preventDefault();
+    if (!f.checkValidity()) { f.reportValidity(); return; }
+    const v = n => (f.elements[n] || {}).value || '';
+    const body = `Name: ${v('name')}\nE-Mail: ${v('email')}\nTelefon: ${v('phone')}\n\n${v('message')}`;
+    location.href = 'mailto:hallo@taeubert-karosserie-lack.de?subject=' + encodeURIComponent('Anfrage über die Website') + '&body=' + encodeURIComponent(body);
+  }));
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Schadensmeldung: Fotos verkleinern und an Netlify Forms senden
+  document.querySelectorAll('.damage-form').forEach(form => form.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    const status = form.querySelector('.form-status'), btn = form.querySelector('button[type=submit]');
+    const say = (t, err) => { status.textContent = t; status.classList.toggle('err', !!err); };
+
+    btn.disabled = true; say('Fotos werden vorbereitet …');
+    const shrink = file => new Promise(res => {
+      if (!file || !file.size || !file.type.startsWith('image/')) return res(file);
+      const img = new Image(), url = URL.createObjectURL(file);
+      img.onload = () => {
+        const s = Math.min(1, 1600 / Math.max(img.width, img.height));
+        const c = document.createElement('canvas'); c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
+        c.toBlob(b => res(b ? new File([b], file.name.replace(/\.[^.]+$/, '') + '.jpg', { type: 'image/jpeg' }) : file), 'image/jpeg', 0.82);
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); res(file); };
+      img.src = url;
+    });
+    const data = new FormData(form);
+    for (const k of ['foto1', 'foto2', 'foto3']) { const f = data.get(k); if (f && f.size) data.set(k, await shrink(f)); else data.delete(k); }
+    say('Wird gesendet …');
+    try {
+      const r = await fetch('/', { method: 'POST', body: data });
+      if (!r.ok) throw new Error(r.status);
+      location.href = form.dataset.thanks || 'danke.html';
+    } catch (err) {
+      console.warn('Schadensmeldung konnte nicht gesendet werden:', err);
+      btn.disabled = false;
+      const v = n => (form.elements[n] || {}).value || '';
+      const skip = ['form-name', 'firma', 'einwilligung'];
+      const lines = [...form.elements].filter(el => el.name && !skip.includes(el.name) && el.type !== 'file' && el.type !== 'submit' && (el.type !== 'checkbox' || el.checked) && el.value)
+        .map(el => (el.closest('label') ? el.closest('label').textContent.split('\n')[0].replace('*', '').trim() : el.name) + ': ' + (el.type === 'checkbox' ? 'ja' : el.value));
+      const msg = `${form.dataset.title || 'Schadensmeldung'}\n` + lines.join('\n');
+      say('Das Senden hat gerade nicht geklappt. Schicken Sie Ihre Angaben einfach per WhatsApp oder E-Mail – die Nachricht ist schon vorbereitet, Fotos oder Unterlagen hängen Sie dort an.', true);
+      status.insertAdjacentHTML('beforeend', '<span class="btns" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px">'
+        + '<a class="btn btn-dark" target="_blank" rel="noopener" href="https://wa.me/4936754289606?text=' + encodeURIComponent(msg) + '">Per WhatsApp senden</a>'
+        + '<a class="btn btn-outline-dark" href="mailto:hallo@taeubert-karosserie-lack.de?subject=' + encodeURIComponent(form.dataset.title || 'Schadensmeldung') + '&body=' + encodeURIComponent(msg) + '">Per E-Mail senden</a></span>');
+    }
+  }));
+</script>
+</body>
+</html>
