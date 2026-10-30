@@ -9,7 +9,7 @@ from new_pages import NEW_PAGES  # noqa: E402
 
 THEME, SITE = sys.argv[1], sys.argv[2]
 BOOKING_URL = "https://terminbuchungtaeubert.de"  # externes Buchungstool
-BOOKING = "termin.html"  # eigene Seite mit eingebettetem Tool
+BOOKING = BOOKING_URL  # Buttons führen direkt zum Buchungstool (Einbetten wird vom Tool nicht zuverlässig erlaubt)
 DOMAIN = "https://www.taeubert-karosserie-lack.de"
 
 # Vorlage -> Dateiname (nur Seiten mit eigenem Inhalt, keine Theme-Demo-Vorlagen)
@@ -936,7 +936,7 @@ THANKS = """<section class="sec" style="padding:100px 0">
   <div class="page-width"><div class="rich-inner" style="max-width:640px;margin:0 auto;text-align:center">
     <h1 class="h-6">Danke – Ihre Meldung ist da.</h1>
     <div class="rte"><p>Wir sehen uns die Fotos an und melden uns schnellstmöglich bei Ihnen. Eilt es? Rufen Sie uns an: <a href="tel:+4936754289606">03675 4289606</a>.</p></div>
-    <div class="btns" style="justify-content:center"><a class="btn btn-dark" href="index.html">Zur Startseite</a><a class="btn btn-outline-dark" href="termin.html">Termin online buchen</a></div>
+    <div class="btns" style="justify-content:center"><a class="btn btn-dark" href="index.html">Zur Startseite</a><a class="btn btn-outline-dark" href="{BOOKING_URL}">Termin online buchen</a></div>
   </div></div>
 </section>"""
 
@@ -959,7 +959,7 @@ DAMAGE_JS = r"""
     if (!form.checkValidity()) { form.reportValidity(); return; }
     const status = form.querySelector('.form-status'), btn = form.querySelector('button[type=submit]');
     const say = (t, err) => { status.textContent = t; status.classList.toggle('err', !!err); };
-    if (location.protocol === 'file:') { say('Das Formular funktioniert erst auf der veröffentlichten Seite. Bitte schicken Sie die Fotos so lange per WhatsApp.', true); return; }
+
     btn.disabled = true; say('Fotos werden vorbereitet …');
     const shrink = file => new Promise(res => {
       if (!file || !file.size || !file.type.startsWith('image/')) return res(file);
@@ -981,8 +981,14 @@ DAMAGE_JS = r"""
       if (!r.ok) throw new Error(r.status);
       location.href = 'danke.html';
     } catch (err) {
+      console.warn('Schadensmeldung konnte nicht gesendet werden:', err);
       btn.disabled = false;
-      say('Senden hat nicht geklappt. Bitte schicken Sie die Fotos per WhatsApp oder rufen Sie uns an: 03675 4289606.', true);
+      const v = n => (form.elements[n] || {}).value || '';
+      const msg = `Schadensmeldung\nName: ${v('name')}\nTelefon: ${v('telefon')}\nE-Mail: ${v('email')}\nFahrzeug: ${v('fahrzeug')}\nSchaden: ${v('schaden')}\nKosten: ${v('kostentraeger')}\n\n${v('nachricht')}`;
+      say('Das Senden hat gerade nicht geklappt. Schicken Sie Ihre Angaben einfach per WhatsApp oder E-Mail – die Nachricht ist schon vorbereitet, die Fotos hängen Sie dort an.', true);
+      status.insertAdjacentHTML('beforeend', '<span class="btns" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px">'
+        + '<a class="btn btn-dark" target="_blank" rel="noopener" href="https://wa.me/4936754289606?text=' + encodeURIComponent(msg) + '">Per WhatsApp senden</a>'
+        + '<a class="btn btn-outline-dark" href="mailto:hallo@taeubert-karosserie-lack.de?subject=' + encodeURIComponent('Schadensmeldung') + '&body=' + encodeURIComponent(msg) + '">Per E-Mail senden</a></span>');
     }
   }));
 """
@@ -992,13 +998,12 @@ BOOKING_PAGE = f"""<section class="sec booking-page" style="padding:50px 0 30px"
   <div class="page-width">
     <h1 class="overline">Termin online buchen</h1>
     <p class="heading h-6">Wunschtermin wählen – wir sind bereit.</p>
-    <div class="rte"><p>Wählen Sie Leistung und Termin direkt hier. Lieber persönlich? Rufen Sie uns an: <a href="tel:+4936754289606">03675 4289606</a> oder schicken Sie <a href="schaden-melden.html">Fotos Ihres Schadens</a>.</p></div>
+    <div class="rte"><p>Wählen Sie Leistung und Wunschtermin in unserer Online-Terminbuchung. Lieber persönlich? Rufen Sie uns an: <a href="tel:+4936754289606">03675 4289606</a> oder schicken Sie <a href="schaden-melden.html">Fotos Ihres Schadens</a>.</p></div>
   </div>
 </section>
 <section class="booking-embed">
   <div class="page-width">
-    <iframe title="Online-Terminbuchung Täubert Karosserie &amp; Lack" src="{BOOKING_URL}" loading="eager"></iframe>
-    <p class="booking-fallback">Die Buchung wird nicht angezeigt? <a class="btn btn-dark" href="{BOOKING_URL}" target="_blank" rel="noopener">Terminbuchung in neuem Fenster öffnen</a></p>
+    <div class="btns"><a class="btn btn-dark" href="{BOOKING_URL}">Zur Online-Terminbuchung</a><a class="btn btn-outline-dark" href="tel:+4936754289606">Anrufen: 03675 4289606</a></div>
   </div>
 </section>"""
 

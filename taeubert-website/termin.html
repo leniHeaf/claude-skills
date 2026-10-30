@@ -518,8 +518,8 @@
       <img src="images/Taeubert_Logo.png" alt="TÄUBERT Karosserie &amp; Lack" onerror="this.outerHTML='<span class=&quot;logo-fallback&quot;>TÄUBERT</span>'">
     </a>
     <div class="header-right">
-      <a class="btn btn-header" href="termin.html">Termin buchen</a>
-      <a class="icon-btn hide-desktop" href="termin.html" aria-label="Termin buchen">
+      <a class="btn btn-header" href="https://terminbuchungtaeubert.de">Termin buchen</a>
+      <a class="icon-btn hide-desktop" href="https://terminbuchungtaeubert.de" aria-label="Termin buchen">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="1"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
       </a>
       <a class="icon-btn" href="tel:+4936754289606" aria-label="Anrufen: 03675 4289606">
@@ -548,7 +548,7 @@
     <details>
       <summary>Termin vereinbaren</summary>
       <div class="sub">
-        <a href="termin.html">Termin online buchen</a>
+        <a href="https://terminbuchungtaeubert.de">Termin online buchen</a>
         <a href="schaden-melden.html">Schaden per Foto melden</a>
         <a href="contact.html">Kontakt</a>
       </div>
@@ -592,13 +592,12 @@
   <div class="page-width">
     <h1 class="overline">Termin online buchen</h1>
     <p class="heading h-6">Wunschtermin wählen – wir sind bereit.</p>
-    <div class="rte"><p>Wählen Sie Leistung und Termin direkt hier. Lieber persönlich? Rufen Sie uns an: <a href="tel:+4936754289606">03675 4289606</a> oder schicken Sie <a href="schaden-melden.html">Fotos Ihres Schadens</a>.</p></div>
+    <div class="rte"><p>Wählen Sie Leistung und Wunschtermin in unserer Online-Terminbuchung. Lieber persönlich? Rufen Sie uns an: <a href="tel:+4936754289606">03675 4289606</a> oder schicken Sie <a href="schaden-melden.html">Fotos Ihres Schadens</a>.</p></div>
   </div>
 </section>
 <section class="booking-embed">
   <div class="page-width">
-    <iframe title="Online-Terminbuchung Täubert Karosserie &amp; Lack" src="https://terminbuchungtaeubert.de" loading="eager"></iframe>
-    <p class="booking-fallback">Die Buchung wird nicht angezeigt? <a class="btn btn-dark" href="https://terminbuchungtaeubert.de" target="_blank" rel="noopener">Terminbuchung in neuem Fenster öffnen</a></p>
+    <div class="btns"><a class="btn btn-dark" href="https://terminbuchungtaeubert.de">Zur Online-Terminbuchung</a><a class="btn btn-outline-dark" href="tel:+4936754289606">Anrufen: 03675 4289606</a></div>
   </div>
 </section>
 </main>
@@ -654,7 +653,7 @@
   <nav class="action-bar" aria-label="Schnellkontakt">
     <a href="tel:+4936754289606"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg><span>Anrufen</span></a>
     <a href="https://wa.me/4936754289606" target="_blank" rel="noopener"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg><span>WhatsApp</span></a>
-    <a href="termin.html" class="primary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="1"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>Termin</span></a>
+    <a href="https://terminbuchungtaeubert.de" class="primary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="1"/><path d="M16 2v4M8 2v4M3 10h18"/></svg><span>Termin</span></a>
   </nav>
 </footer>
 <script>
@@ -784,7 +783,7 @@
     if (!form.checkValidity()) { form.reportValidity(); return; }
     const status = form.querySelector('.form-status'), btn = form.querySelector('button[type=submit]');
     const say = (t, err) => { status.textContent = t; status.classList.toggle('err', !!err); };
-    if (location.protocol === 'file:') { say('Das Formular funktioniert erst auf der veröffentlichten Seite. Bitte schicken Sie die Fotos so lange per WhatsApp.', true); return; }
+
     btn.disabled = true; say('Fotos werden vorbereitet …');
     const shrink = file => new Promise(res => {
       if (!file || !file.size || !file.type.startsWith('image/')) return res(file);
@@ -806,8 +805,14 @@
       if (!r.ok) throw new Error(r.status);
       location.href = 'danke.html';
     } catch (err) {
+      console.warn('Schadensmeldung konnte nicht gesendet werden:', err);
       btn.disabled = false;
-      say('Senden hat nicht geklappt. Bitte schicken Sie die Fotos per WhatsApp oder rufen Sie uns an: 03675 4289606.', true);
+      const v = n => (form.elements[n] || {}).value || '';
+      const msg = `Schadensmeldung\nName: ${v('name')}\nTelefon: ${v('telefon')}\nE-Mail: ${v('email')}\nFahrzeug: ${v('fahrzeug')}\nSchaden: ${v('schaden')}\nKosten: ${v('kostentraeger')}\n\n${v('nachricht')}`;
+      say('Das Senden hat gerade nicht geklappt. Schicken Sie Ihre Angaben einfach per WhatsApp oder E-Mail – die Nachricht ist schon vorbereitet, die Fotos hängen Sie dort an.', true);
+      status.insertAdjacentHTML('beforeend', '<span class="btns" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px">'
+        + '<a class="btn btn-dark" target="_blank" rel="noopener" href="https://wa.me/4936754289606?text=' + encodeURIComponent(msg) + '">Per WhatsApp senden</a>'
+        + '<a class="btn btn-outline-dark" href="mailto:hallo@taeubert-karosserie-lack.de?subject=' + encodeURIComponent('Schadensmeldung') + '&body=' + encodeURIComponent(msg) + '">Per E-Mail senden</a></span>');
     }
   }));
 </script>
