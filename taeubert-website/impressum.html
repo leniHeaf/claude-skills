@@ -298,6 +298,31 @@
   .drawer .plain { display: block; padding: 18px 0; border-bottom: 1px solid var(--line); font-family: "Archivo Black"; font-size: 18px; text-transform: uppercase; }
   .drawer a[aria-current="page"] { text-decoration: underline; }
 
+  /* ===== Premium-Stil (Porsche-Ruhe + Brabus-Härte): schwarz/weiß, präzise Typo, viel Raum ===== */
+  :root { --grey: #f3f3f1; --line: #dcdcd8; }
+  .header, .header:not(.transparent) { background: #000; color: #fff; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .header .logo img { filter: brightness(0) invert(1); }
+  .header .btn-header { background: #fff; color: #000; border-color: #fff; }
+  .header .btn-header:hover { background: transparent; color: #fff; }
+  .announce { border-bottom: 1px solid rgba(255,255,255,.08); letter-spacing: .02em; }
+  .btn { text-transform: uppercase; letter-spacing: .1em; font-size: 13px; padding: 17px 30px; font-weight: 600; }
+  .btn-header { font-size: 12px; padding: 12px 20px; }
+  .main-nav .top { text-transform: uppercase; letter-spacing: .12em; font-size: 12.5px; }
+  .main-nav .panel { border-radius: 0; border-color: #e6e6e3; }
+  .overline, .eyebrow, .book-card .eyebrow { letter-spacing: .22em !important; }
+  h1, h2, h3, .heading { letter-spacing: .02em; }
+  .hero .overlay { background: linear-gradient(90deg, rgba(0,0,0,.72) 0%, rgba(0,0,0,.35) 50%, rgba(0,0,0,.05) 80%), linear-gradient(0deg, rgba(0,0,0,.55), rgba(0,0,0,0) 50%); }
+  .trust-bar { background: #0b0b0b; border-top: 1px solid rgba(255,255,255,.08); }
+  .trust li { font-weight: 500; letter-spacing: .02em; }
+  .svc { border-color: #e6e6e3; }
+  .svc:hover { border-color: #000; transform: none; }
+  .svc span { text-transform: uppercase; letter-spacing: .12em; font-size: 12px; }
+  .services-sec, .steps-sec, .visit-inner { background: var(--grey); }
+  .contact-banner { background: #0b0b0b; }
+  .faq summary { font-weight: 600; }
+  .chips span { letter-spacing: .02em; }
+  .drawer summary, .drawer .plain { letter-spacing: .04em; }
+
   /* Vertrauensleiste */
   .trust { list-style: none; display: flex; flex-wrap: wrap; gap: 10px 26px; }
   .trust li { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; }
