@@ -663,7 +663,7 @@ LOCATIONS = {
 SERVICE_LINKS = [("karosserie", "Karosserie"), ("lackierarbeiten", "Lackierarbeiten"), ("unfallinstandsetzung", "Unfallinstandsetzung"),
                  ("smartrepair", "Smart Repair"), ("kleinschaden", "Kleinschaden"), ("kratzer", "Kratzer entfernen"),
                  ("leasingrueckgabe", "Leasingrückgabe"), ("fahrzeugaufbereitung", "Fahrzeugaufbereitung"), ("reifenservice", "Reifenservice")]
-SERVICE_LINKS += [(slug, p["short"]) for slug, p in NEW_PAGES.items()]
+SERVICE_LINKS += [(slug, p["short"]) for slug, p in NEW_PAGES.items() if slug not in dict(SERVICE_LINKS)]
 LOCATION_LINKS = [("sonneberg", "Sonneberg"), ("neustadt", "Neustadt bei Coburg"), ("coburg", "Coburg"),
                   ("roedental", "Rödental"), ("kronach", "Kronach"), ("bamberg", "Bamberg")]
 
@@ -861,7 +861,7 @@ def all_services():
     out = [(slug, SERVICES[slug][1], SERVICES[slug][2]) for slug, _ in SERVICE_LINKS if slug in SERVICES]
     out += [(slug, SERVICES[slug][1], SERVICES[slug][2]) for slug in SERVICES
             if slug not in GUIDES and slug not in {s for s, *_ in out}]
-    out += [(slug, p["short"], p["desc"]) for slug, p in NEW_PAGES.items()]
+    out += [(slug, p["short"], p["desc"]) for slug, p in NEW_PAGES.items() if slug not in {s for s, *_ in out}]
     return out
 
 
@@ -1062,6 +1062,85 @@ STEPS_HTML = '''<section class="svc-steps">
 </section>'''
 
 
+# Einheitliche Ansprache mit "Sie" (einige Shopify-Texte duzen)
+DU_SIE = [
+    ("wo du danach hingehst.", "wo Sie danach hingehen."), ("bekommst du keine schnelle", "bekommen Sie keine schnelle"),
+    ("dass du später nicht mehr siehst", "dass Sie später nicht mehr sehen"), ("Sicherheitsstruktur deines Autos", "Sicherheitsstruktur Ihres Autos"),
+    ("Musst du auch nicht.", "Müssen Sie auch nicht."), ("Du bringst das Auto.", "Sie bringen das Auto."),
+    ("lackieren wir dein Fahrzeug", "lackieren wir Ihr Fahrzeug"), ("Du siehst später nicht", "Sie sehen später nicht"),
+    ("Du bist unsicher, ob sich eine Reparatur lohnt?<br/>Dann komm vorbei.", "Sie sind unsicher, ob sich eine Reparatur lohnt?<br/>Dann kommen Sie vorbei."),
+    ("Wir schauen uns dein Fahrzeug an", "Wir schauen uns Ihr Fahrzeug an"), ("sagen dir ehrlich", "sagen Ihnen ehrlich"), ("sagen dir offen", "sagen Ihnen offen"),
+    ("– deine Karosserie-Werkstatt", "– Ihre Karosserie-Werkstatt"), ("– deine Werkstatt", "– Ihre Werkstatt"), ("– dein Reifenservice", "– Ihr Reifenservice"),
+    ("bekommst du professionelle", "bekommen Sie professionelle"), ("Du erkennst keinen Unterschied mehr.", "Sie erkennen keinen Unterschied mehr."),
+    ("exakt deinem Fahrzeug an", "exakt Ihrem Fahrzeug an"), ("ist dein Fahrzeug schneller wieder einsatzbereit, als du denkst", "ist Ihr Fahrzeug schneller wieder einsatzbereit, als Sie denken"),
+    ("dass dein Auto einmal", "dass Ihr Auto einmal"),
+    ("Du bist unsicher, ob sich eine Lackierung lohnt?<br/>Komm kurz vorbei", "Sie sind unsicher, ob sich eine Lackierung lohnt?<br/>Kommen Sie kurz vorbei"),
+    ("und geben dir sofort", "und geben Ihnen sofort"), ("als du denkst", "als Sie denken"), ("Das bedeutet für dich:", "Das bedeutet für Sie:"),
+    ("Oft ist dein Auto", "Oft ist Ihr Auto"), ("exakt an dein Fahrzeug an", "exakt an Ihr Fahrzeug an"),
+    ("Du musst keinen Termin machen.<br/>Komm einfach kurz vorbei – wir begutachten dein Fahrzeug kostenlos und sagen dir sofort",
+     "Sie müssen keinen Termin machen.<br/>Kommen Sie einfach kurz vorbei – wir begutachten Ihr Fahrzeug kostenlos und sagen Ihnen sofort"),
+    ("Wir reinigen dein Fahrzeug nicht einfach", "Wir reinigen Ihr Fahrzeug nicht einfach"), ("Du steigst ein und merkst sofort", "Sie steigen ein und merken sofort"),
+    ("Dann sagen wir dir das ehrlich.", "Dann sagen wir Ihnen das ehrlich."), ("ohne dass du eine zweite Werkstatt suchen musst", "ohne dass Sie eine zweite Werkstatt suchen müssen"),
+    ("Du bist dir unsicher, ob sich eine Aufbereitung lohnt?<br/>Komm kurz vorbei.", "Sie sind unsicher, ob sich eine Aufbereitung lohnt?<br/>Kommen Sie kurz vorbei."),
+    ("Wir wechseln. Du fährst weiter.", "Wir wechseln. Sie fahren weiter."), ("bekommst du schnellen", "bekommen Sie schnellen"),
+    ("dass dein Fahrzeug sicher", "dass Ihr Fahrzeug sicher"), ("Du gibst das Auto ab", "Sie geben das Auto ab"), ("Wir lagern deine Reifen", "Wir lagern Ihre Reifen"),
+    ("stehen deine Räder bei deinem Termin", "stehen Ihre Räder bei Ihrem Termin"), ("sagen wir dir ehrlich", "sagen wir Ihnen ehrlich"),
+    ("– du kannst jederzeit", "– Sie können jederzeit"), ("Melde dich frühzeitig – dann bist du rechtzeitig", "Melden Sie sich frühzeitig – dann sind Sie rechtzeitig"),
+    ("Komm einfach vorbei", "Kommen Sie einfach vorbei"), ("Komm kurz vorbei", "Kommen Sie kurz vorbei"), ("Melde dich bei uns", "Melden Sie sich bei uns"),
+]
+
+# FAQ für Leistungsseiten aus dem Shop, die noch keine Fragen hatten
+SERVICE_FAQ = {
+    "karosserie": [
+        ("Lohnt sich die Reparatur noch?", "Das entscheidet sich am Fahrzeug. Wir begutachten den Schaden, erstellen innerhalb von 24 Stunden einen Kostenvoranschlag und sagen Ihnen ehrlich, ob sich die Reparatur lohnt."),
+        ("Werden Sensoren und Assistenzsysteme berücksichtigt?", "Ja. Wir reparieren nach Herstellervorgaben – dazu gehört, dass Sensoren, Kameras und Assistenzsysteme im Reparaturbereich berücksichtigt und geprüft werden."),
+        ("Rechnen Sie direkt mit der Versicherung ab?", "Ja. Wir rechnen direkt mit der Versicherung ab und stimmen uns bei Bedarf mit dem Gutachter ab."),
+        ("Bekomme ich einen Ersatzwagen?", "Ja, für die Dauer der Reparatur. Auf Wunsch holen wir Ihr Fahrzeug auch ab und bringen es zurück."),
+    ],
+    "lackierarbeiten": [
+        ("Sieht man den Unterschied zum Originallack?", "Unser Anspruch ist: nein. Wir messen den Farbton digital, mischen den Lack passend an und lackieren in der staubfreien Lackierkabine. Wo nötig, werden angrenzende Flächen beilackiert, damit der Übergang unsichtbar bleibt."),
+        ("Teillackierung oder Komplettlackierung?", "Meist reicht es, die beschädigten Teile zu lackieren. Was das kostet, zeigt unser Ratgeber <a href=\"auto-lackieren-kosten.html\">Auto lackieren: Kosten &amp; Beispiele</a>."),
+        ("Wie lange dauert eine Lackierung?", "Das hängt vom Umfang ab. Kleine Spot Repairs gehen oft schnell, Teillackierungen dauern meist einige Tage. Den genauen Zeitrahmen nennen wir Ihnen mit dem Kostenvoranschlag."),
+        ("Wann sollte ich mit einem Lackschaden kommen?", "Möglichst bald. Liegt das Blech frei, kann Rost entstehen – dann wird die Reparatur aufwendiger."),
+    ],
+    "kleinschaden": [
+        ("Was zählt als Kleinschaden?", "Typisch sind Parkrempler, Kratzer, kleine Dellen, Schrammen an der Stoßstange oder Steinschläge – Schäden, bei denen keine tragenden Teile betroffen sind."),
+        ("Soll ich den Kleinschaden über die Versicherung abrechnen?", "Bei kleinen Schäden ist Selbstzahlen oft günstiger, weil sonst eine Rückstufung droht. Wir beraten Sie gern – mehr im Ratgeber <a href=\"unfall-oder-kratzer.html\">Unfall oder Kratzer – wer zahlt?</a>"),
+        ("Muss das Teil neu lackiert werden?", "Nicht immer. Viele Dellen lassen sich per <a href=\"smartrepair.html\">Smart Repair</a> ohne Lackieren entfernen; kleine Lackschäden reparieren wir punktuell per Spot Repair."),
+    ],
+    "fahrzeugaufbereitung": [
+        ("Was ist der Unterschied zur Waschanlage?", "Eine Aufbereitung reinigt nicht nur, sie bearbeitet: Lack wird dekontaminiert und poliert, der Innenraum tiefengereinigt. Das Ergebnis geht weit über eine Wäsche hinaus."),
+        ("Kann ich nur innen oder nur außen buchen?", "Ja. Sie können zum Beispiel nur die <a href=\"innenraumaufbereitung.html\">Innenraumaufbereitung</a> oder nur die <a href=\"lackaufbereitung.html\">Lackaufbereitung</a> buchen – oder beides kombinieren."),
+        ("Lohnt sich eine Aufbereitung vor dem Verkauf?", "Häufig ja. Ein gepflegtes Fahrzeug macht einen besseren ersten Eindruck und lässt sich leichter und oft zu einem besseren Preis verkaufen."),
+    ],
+    "reifenservice": [
+        ("Lagern Sie meine Reifen ein?", "Ja. Wir lagern Ihre Reifen oder Kompletträder fachgerecht ein – zum nächsten Wechsel stehen sie bereit."),
+        ("Wann sollte ich die Reifen wechseln?", "Als Faustregel gilt „von O bis O“: Winterreifen von Oktober bis Ostern. Entscheidend ist aber das Wetter – bei Glätte, Schnee oder Matsch sind Winterreifen Pflicht."),
+        ("Brauche ich einen Termin?", "Ja, am einfachsten online. Gerade zum Saisonwechsel sind Termine schnell vergeben – buchen Sie frühzeitig."),
+    ],
+}
+
+
+def faq_section(qa):
+    rows = "".join(f'<details><summary><span>{esc(q)}</span></summary><div class="rte"><p>{a}</p></div></details>' for q, a in qa)
+    return f'''<section class="sec" style="padding:70px 0">
+  <div class="page-width"><div class="faq"><h2 class="sec-head">Häufige Fragen</h2>{rows}</div></div>
+</section>'''
+
+
+def tidy_service(slug, body_html):
+    """Sie-Ansprache, weniger wiederholte Buchungsbuttons im Fließtext, fehlende FAQ ergänzen."""
+    for old, new in DU_SIE:
+        body_html = body_html.replace(old, new)
+    m = re.search(r"<section.*?</section>", body_html, re.S)
+    head, rest = body_html[:m.end()], body_html[m.end():]
+    rest = re.sub(r'<a class="btn [^"]*" href="' + re.escape(BOOKING) + r'"[^>]*>Termin online buchen</a>', "", rest)
+    rest = re.sub(r'<div class="btns">\s*</div>', "", rest)
+    if slug in SERVICE_FAQ:
+        rest += faq_section(SERVICE_FAQ[slug])
+    return head + rest
+
+
 def with_service_frame(slug, name, body_html):
     """Startbild bleibt oben; danach Brotkrumen + Kurzleiste, am Ende vor dem Buchungsblock der Ablauf."""
     m = re.search(r"<section.*?</section>", body_html, re.S)
@@ -1192,6 +1271,8 @@ DAMAGE_FORM = """<section class="sub-hero" style="--h:420px;--mh:380px">
           <small>Tipp: ein Foto aus etwa 2 m Abstand, eines aus der Nähe und eines vom ganzen Fahrzeug. Die Fotos werden vor dem Senden automatisch verkleinert.</small>
         </label>
         <label class="f">Kurze Beschreibung<textarea name="nachricht" rows="5" placeholder="Was ist passiert? Wann passt Ihnen ein Termin?"></textarea></label>
+        <label class="f consent"><input type="checkbox" name="ersatzwagen" value="ja"><span>Ich brauche einen Ersatzwagen</span></label>
+        <label class="f consent"><input type="checkbox" name="holservice" value="ja"><span>Hol- und Bringservice gewünscht</span></label>
         <label class="f consent"><input type="checkbox" name="einwilligung" required><span>Ich bin einverstanden, dass meine Angaben und Fotos zur Bearbeitung der Anfrage gespeichert werden (siehe <a href="datenschutz.html">Datenschutz</a>). *</span></label>
       </div>
       <div class="btns"><button class="btn btn-dark" type="submit">Schaden senden</button></div>
@@ -1277,6 +1358,7 @@ BOOKING_PAGE = f"""<section class="sec booking-page" style="padding:50px 0 30px"
       <h2>Wunschtermin selbst wählen</h2>
       <p>Leistung auswählen, freien Termin anklicken, fertig – rund um die Uhr.</p>
       <a class="btn btn-dark" href="{BOOKING_URL}">Zur Online-Terminbuchung</a>
+      <p class="book-note">Ersatzwagen oder Hol- und Bringservice gewünscht? Geben Sie es bei der Buchung an – oder kreuzen Sie es beim Rückruf an.</p>
     </div>
     <div class="book-card" id="rueckruf">
       <p class="eyebrow">Option 2 · Rückruf</p>
@@ -1294,6 +1376,8 @@ BOOKING_PAGE = f"""<section class="sec booking-page" style="padding:50px 0 30px"
           <label class="f half">Wann erreichen wir Sie?
             <select name="nachricht"><option>Egal – so bald wie möglich</option><option>Vormittags</option><option>Mittags</option><option>Nachmittags</option></select>
           </label>
+          <label class="f consent"><input type="checkbox" name="ersatzwagen" value="ja"><span>Ich brauche einen Ersatzwagen</span></label>
+          <label class="f consent"><input type="checkbox" name="holservice" value="ja"><span>Hol- und Bringservice gewünscht</span></label>
           <label class="f consent"><input type="checkbox" name="einwilligung" required><span>Ich bin einverstanden, dass meine Angaben zur Bearbeitung gespeichert werden (siehe <a href="datenschutz.html">Datenschutz</a>). *</span></label>
         </div>
         <div class="btns"><button class="btn btn-outline-dark" type="submit">Rückruf anfordern</button></div>
@@ -1313,6 +1397,7 @@ BOOKING_PAGE = f"""<section class="sec booking-page" style="padding:50px 0 30px"
 </section>"""
 
 BOOKING_CSS = """
+  .book-note { font-size: 14px; color: #555; margin-top: 14px; }
   .booking-page .heading { margin: 4px 0 6px; }
   .booking-page .rte a { text-decoration: underline; }
   .booking-embed { padding: 0 0 60px; }
@@ -1373,23 +1458,89 @@ UNFALL_CSS = """
 # Allgemeine Kundenfragen (nur bestätigte Angaben)
 GENERAL_FAQ = [
     ("Termin & Kontakt", [
-        ("Wie bekomme ich einen Termin?", "Am schnellsten über die Online-Terminbuchung – rund um die Uhr. Alternativ fordern Sie einen Rückruf an, rufen uns an (03675 4289606) oder schreiben per WhatsApp."),
-        ("Wann habt ihr geöffnet?", "Montag bis Donnerstag 08:00–17:00 Uhr, Freitag 08:00–14:30 Uhr. Samstag und Sonntag ist geschlossen."),
-        ("Wo finde ich euch?", "Täubert Karosserie und Lack GmbH, Bettelhecker Straße 15, 96515 Sonneberg. Kunden kommen auch aus Neustadt bei Coburg, Coburg, Rödental, Kronach und Bamberg."),
+        ("Wie bekomme ich einen Termin?", "Am schnellsten über die <a href=\"https://terminbuchungtaeubert.de\">Online-Terminbuchung</a> – rund um die Uhr. Alternativ <a href=\"termin.html#rueckruf\">fordern Sie einen Rückruf an</a>, rufen uns an (03675 4289606) oder schreiben per WhatsApp."),
+        ("Wann haben Sie geöffnet?", "Montag bis Donnerstag 08:00–17:00 Uhr, Freitag 08:00–14:30 Uhr. Samstag und Sonntag ist geschlossen."),
+        ("Wo finde ich Sie?", "Täubert Karosserie und Lack GmbH, Bettelhecker Straße 15, 96515 Sonneberg. Kunden kommen auch aus Neustadt bei Coburg, Coburg, Rödental, Kronach und Bamberg. <a href=\"contact.html\">Anfahrt &amp; Kontakt</a>"),
         ("Kann ich einfach vorbeikommen?", "Ja. Wenn Sie unsicher sind, ob sich eine Reparatur lohnt, schauen wir uns Ihr Fahrzeug an und sagen Ihnen ehrlich, was Sinn macht. Mit Termin geht es für Sie am schnellsten."),
+        ("Kann ich den Schaden per Foto oder WhatsApp schicken?", "Ja. Über <a href=\"schaden-melden.html\">Schaden per Foto melden</a> laden Sie ein paar Bilder hoch – oder schicken sie per WhatsApp an 03675 4289606. Wir melden uns mit einer ersten Einschätzung."),
+        ("Welche Fotos brauchen Sie für eine Einschätzung?", "Am besten drei bis vier: eine Gesamtansicht des Fahrzeugs, den Schaden aus etwa zwei Metern und ein bis zwei Nahaufnahmen von schräg, damit Dellen sichtbar werden. Ein Foto vom Fahrzeugschein hilft bei der Teilebestellung."),
+        ("Was soll ich zum Termin mitbringen?", "Fahrzeugschein, Fahrzeugschlüssel und – bei Versicherungsschäden – die Schadennummer, den Unfallbericht oder die Daten des Unfallgegners sowie ein vorhandenes Gutachten."),
     ]),
     ("Kosten & Kostenvoranschlag", [
         ("Wie schnell bekomme ich einen Kostenvoranschlag?", "Innerhalb von 24 Stunden. Schicken Sie uns dafür am besten ein paar Fotos über „Schaden per Foto melden“."),
-        ("Was kostet meine Reparatur?", "Das hängt von Art und Größe des Schadens ab. Sie bekommen vorher einen klaren Kostenvoranschlag – ohne Überraschungen. Beispiele finden Sie im Ratgeber „Auto lackieren: Kosten & Beispiele“."),
+        ("Kostet die Begutachtung etwas?", "Nein. Wir schauen uns den Schaden kostenlos an und geben Ihnen eine ehrliche Einschätzung, was nötig ist."),
+        ("Was kostet meine Reparatur?", "Das hängt von Art und Größe des Schadens ab. Sie bekommen vorher einen klaren Kostenvoranschlag – ohne Überraschungen. Beispiele finden Sie im Ratgeber <a href=\"auto-lackieren-kosten.html\">Auto lackieren: Kosten &amp; Beispiele</a>."),
+        ("Wird es am Ende teurer als besprochen?", "Grundlage ist der Kostenvoranschlag. Stellen wir bei der Reparatur einen versteckten Schaden fest, sprechen wir das vorher mit Ihnen ab – es wird nichts ohne Ihre Zustimmung gemacht."),
+        ("Reparieren oder Teil tauschen – was ist günstiger?", "Oft ist Reparieren günstiger, etwa bei Dellen per Smart Repair oder bei Kunststoff-Stoßfängern. Ist ein Teil stark beschädigt, kann Tauschen sinnvoller sein. Wir rechnen beides ehrlich durch."),
     ]),
     ("Service rund um die Reparatur", [
-        ("Bekomme ich einen Ersatzwagen?", "Ja. Sprechen Sie uns bei der Terminvereinbarung darauf an, dann steht während der Reparatur ein Ersatzwagen für Sie bereit."),
-        ("Holt ihr mein Auto ab?", "Ja, mit unserem Hol- und Bringservice holen wir Ihr Fahrzeug ab und bringen es nach der Reparatur zurück."),
-        ("Rechnet ihr direkt mit der Versicherung ab?", "Ja. Wir rechnen direkt mit der Versicherung ab und stimmen uns mit dem Gutachter ab."),
-        ("Welche Fahrzeuge repariert ihr?", "PKW, Transporter, Firmenfahrzeuge und Oldtimer – Marke egal."),
+        ("Rechnen Sie direkt mit der Versicherung ab?", "Ja. Wir rechnen direkt mit der Versicherung ab und stimmen uns mit dem Gutachter ab."),
+        ("Welche Fahrzeuge reparieren Sie?", "PKW, Transporter, Firmenfahrzeuge und Oldtimer – Marke egal."),
+        ("Wie erfahre ich, wann mein Auto fertig ist?", "Mit dem Kostenvoranschlag nennen wir Ihnen einen realistischen Zeitrahmen. Sobald Ihr Fahrzeug fertig ist, melden wir uns bei Ihnen."),
+        ("Wird mein Auto nach der Reparatur gereinigt?", "Ja. Sie bekommen Ihr Fahrzeug geprüft und gereinigt zurück."),
+    ]),
+    ("Ersatzwagen & Hol- und Bringservice", [
+        ("Bekomme ich einen Ersatzwagen?", "Ja. Damit Sie während der Reparatur mobil bleiben, stellen wir Ihnen einen Ersatzwagen zur Verfügung."),
+        ("Wie buche ich den Ersatzwagen?", "Ganz einfach: Geben Sie bei der <a href=\"https://terminbuchungtaeubert.de\">Online-Terminbuchung</a> an, dass Sie einen Ersatzwagen brauchen, kreuzen Sie es beim <a href=\"termin.html#rueckruf\">Rückruf</a> oder bei der <a href=\"schaden-melden.html\">Schadensmeldung</a> an – oder sagen Sie es uns am Telefon: 03675 4289606."),
+        ("Wie früh sollte ich den Ersatzwagen anfragen?", "Am besten direkt bei der Terminvereinbarung. Dann planen wir das Fahrzeug fest für Ihren Reparaturtermin ein."),
+        ("Wer zahlt den Ersatzwagen?", "Hatten Sie einen unverschuldeten Unfall, übernimmt in der Regel die Versicherung des Unfallgegners die Kosten für ein Ersatzfahrzeug. In allen anderen Fällen nennen wir Ihnen die Konditionen vorab – ohne Überraschungen."),
+        ("Was brauche ich, um den Ersatzwagen abzuholen?", "Bitte bringen Sie Ihren gültigen Führerschein und Ihren Personalausweis mit."),
+        ("Wie lange kann ich den Ersatzwagen nutzen?", "Für die Dauer der Reparatur. Sobald Ihr Auto fertig ist, tauschen Sie einfach zurück."),
+        ("Holen Sie mein Auto ab?", "Ja. Mit unserem Hol- und Bringservice holen wir Ihr Fahrzeug ab und bringen es nach der Reparatur zurück – geben Sie den Wunsch bei der Buchung, beim Rückruf oder am Telefon an."),
+        ("Gilt der Hol- und Bringservice auch für Aufbereitung und Reifen?", "Sprechen Sie uns an – wir finden eine Lösung, die zu Ihrem Termin passt."),
+    ]),
+    ("Nach dem Unfall", [
+        ("Was muss ich direkt nach einem Unfall tun?", "Unfallstelle sichern, bei Verletzten den Notruf 112 wählen, Fotos machen und die Daten des Unfallgegners notieren. Die ganze Checkliste: <a href=\"unfall-was-tun.html\">Unfall – was jetzt zu tun ist</a>. Danach rufen Sie uns an – wir kümmern uns um alles Weitere."),
+        ("Mein Auto ist nicht mehr fahrbereit – was nun?", "Rufen Sie uns an: 03675 4289606. Wir besprechen mit Ihnen, wie Ihr Fahrzeug zu uns kommt, und kümmern uns um alles Weitere."),
+        ("Muss ich den Unfall meiner Versicherung melden?", "Ja, Versicherungen verlangen in der Regel eine Meldung innerhalb einer Woche – auch wenn Sie nicht schuld sind. Bei kleinen, selbst verursachten Schäden kann es trotzdem günstiger sein, selbst zu zahlen; das besprechen wir gern mit Ihnen."),
+        ("Steht mir ein Mietwagen oder Nutzungsausfall zu?", "Wenn Sie unverschuldet einen Unfall hatten, haben Sie in der Regel Anspruch auf einen Mietwagen oder eine Nutzungsausfallentschädigung durch die gegnerische Versicherung. Unabhängig davon stellen wir Ihnen auf Wunsch einen Ersatzwagen."),
+        ("Was ist eine Wertminderung?", "Ein Unfallwagen ist beim Verkauf oft weniger wert, auch wenn er perfekt repariert ist. Diese sogenannte merkantile Wertminderung ermittelt bei unverschuldeten Unfällen der Gutachter, und die gegnerische Versicherung ersetzt sie in der Regel."),
+        ("Was passiert bei einem Totalschaden?", "Liegen die Reparaturkosten deutlich über dem Wert des Fahrzeugs, spricht man von einem wirtschaftlichen Totalschaden. Wir besprechen mit Ihnen und dem Gutachter, ob eine Reparatur trotzdem möglich und sinnvoll ist."),
     ]),
 ]
+# Fragen, die auf der Leistungsseite verständlich sind, auf der Sammelseite aber Kontext brauchen
+FAQ_RENAME = {
+    "Sieht man danach noch etwas?": "Sieht man nach Smart Repair noch etwas?",
+    "Wie teuer ist das?": "Was kostet Smart Repair?",
+    "Muss ich das der Versicherung melden?": "Muss ich eine Delle der Versicherung melden?",
+    "Kann ein Kratzer rosten?": "Kann ein Kratzer im Lack rosten?",
+    "Lohnt sich das bei älteren Autos?": "Lohnt sich Kratzer entfernen bei älteren Autos?",
+    "Muss ich einen Termin machen?": "Brauche ich für eine Kratzer-Reparatur einen Termin?",
+    "Muss wirklich alles repariert werden?": "Muss vor der Leasingrückgabe alles repariert werden?",
+    "Lohnt sich das bei jedem Leasingfahrzeug?": "Lohnt sich die Reparatur vor der Leasingrückgabe immer?",
+    "Bekomme ich eine Einschätzung vorab?": "Bekomme ich vor der Leasingrückgabe eine Einschätzung?",
+    "Sieht man die Lackierung später?": "Sieht man eine Teillackierung später?",
+    "Lohnt sich das bei älteren Fahrzeugen?": "Lohnt sich eine Lackierung bei älteren Fahrzeugen?",
+    "Sieht man die Lackierung danach?": "Sieht man die Lackierung an der Stoßstange danach?",
+    "Wie lange dauert die Reparatur?": "Wie lange dauert eine Unfallreparatur?",
+    "Muss ich die Reparatur vorstrecken?": "Muss ich etwas vorstrecken?",
+    "Brauche ich einen Termin?": "Brauche ich für den Reifenwechsel einen Termin?",
+    "Wie lange hält das Ergebnis?": "Wie lange hält eine Lackpolitur?",
+}
 FAQ_GROUPS = [(c, slugs) for c, slugs in CATEGORIES] + [("Ratgeber", GUIDES)]
+# Zusätzliche Fragen, die in einer Kategorie der Sammelseite vor den Fragen der Leistungsseiten stehen
+CAT_EXTRA = {
+    "Unfall & Versicherung": [
+        ("Welche Versicherung zahlt meinen Schaden?", "<ul><li><strong>Unfallgegner schuld:</strong> dessen Kfz-Haftpflichtversicherung.</li><li><strong>Selbst verursacht:</strong> Ihre Vollkasko – sofern vorhanden.</li><li><strong>Hagel, Sturm, Wildunfall, Glas:</strong> in der Regel Ihre Teilkasko.</li><li><strong>Vandalismus, Fahrerflucht:</strong> meist Ihre Vollkasko.</li></ul><p>Wir helfen Ihnen bei der Einordnung – mehr im Ratgeber <a href=\"unfall-oder-kratzer.html\">Unfall oder Kratzer – wer zahlt?</a></p>"),
+        ("Was bedeutet direkte Abrechnung mit der Versicherung?", "Wir stellen die Rechnung direkt an die Versicherung und stimmen uns mit ihr und dem Gutachter ab. Sie müssen sich um den Papierkram nicht kümmern; je nach Fall zahlen Sie nur eine vereinbarte Selbstbeteiligung."),
+        ("Was ist die Selbstbeteiligung?", "Der Betrag, den Sie bei einem Kaskoschaden laut Vertrag selbst tragen. Bei einem unverschuldeten Haftpflichtschaden fällt keine Selbstbeteiligung an."),
+        ("Werde ich nach dem Schaden hochgestuft?", "Bei Schäden über Ihre Haftpflicht oder Vollkasko wird Ihr Schadenfreiheitsrabatt in der Regel zurückgestuft – bei der Teilkasko nicht. Bei kleinen Schäden rechnen wir gern mit Ihnen durch, ob Selbstzahlen günstiger ist."),
+        ("Was ist eine Werkstattbindung?", "Manche Kasko-Tarife sind günstiger, weil die Versicherung die Werkstatt vorgibt. Schauen Sie in Ihren Vertrag oder fragen Sie uns – wir klären das mit Ihnen."),
+        ("Wer bezahlt den Gutachter?", "Bei einem unverschuldeten Unfall in der Regel die Versicherung des Unfallgegners. Bei Kaskoschäden beauftragt meist Ihre eigene Versicherung einen Gutachter."),
+        ("Was brauche ich für die Versicherung?", "Ihre Versicherungsnummer bzw. die Schadennummer, Datum und Ort des Unfalls, Fotos sowie – falls vorhanden – Daten des Unfallgegners und Zeugen. Den Rest stimmen wir mit der Versicherung ab."),
+        ("Kann ich mir den Schaden auszahlen lassen?", "Bei Haftpflichtschäden ist eine Auszahlung nach Gutachten (fiktive Abrechnung) grundsätzlich möglich, allerdings ohne Mehrwertsteuer. Wir empfehlen die fachgerechte Reparatur – gerade wegen Sicherheit und Wiederverkaufswert."),
+    ],
+    "Aufbereitung & Pflege": [
+        ("Was kostet eine Fahrzeugaufbereitung?", "Das hängt von Fahrzeuggröße, Zustand und gewünschtem Umfang ab. Wir schauen uns Ihr Auto an und nennen Ihnen vorab einen festen Preis."),
+        ("Wie lange dauert eine Aufbereitung?", "Je nach Umfang wenige Stunden bis mehrere Tage – eine Komplettaufbereitung mit mehrstufiger Politur und Versiegelung braucht naturgemäß länger. Den Abholzeitpunkt nennen wir Ihnen beim Termin."),
+        ("Welche Aufbereitungen bieten Sie an?", "<ul><li><a href=\"fahrzeugaufbereitung.html\">Komplettaufbereitung</a> innen und außen</li><li><a href=\"lackaufbereitung.html\">Lackaufbereitung &amp; Politur</a></li><li><a href=\"keramikversiegelung.html\">Keramik-, Sealant- und Wachsversiegelung</a></li><li><a href=\"innenraumaufbereitung.html\">Innenraumaufbereitung</a> inkl. Geruchsbehandlung</li><li><a href=\"scheinwerfer-aufbereiten.html\">Scheinwerfer aufbereiten</a></li><li><a href=\"unterbodenschutz.html\">Unterbodenwäsche, Unterbodenschutz und Hohlraumversiegelung</a></li></ul>"),
+        ("Was soll ich vor der Aufbereitung ausräumen?", "Bitte nehmen Sie persönliche Gegenstände, Kindersitze und Wertsachen aus dem Fahrzeug. So kommen wir an alle Stellen heran."),
+        ("Wie oft sollte ich mein Auto aufbereiten lassen?", "Eine gründliche Aufbereitung ein- bis zweimal im Jahr hält Lack und Innenraum in Form – ideal im Frühjahr nach dem Streusalz und im Herbst vor dem Winter."),
+        ("Lohnt sich eine Aufbereitung vor der Leasingrückgabe?", "Oft ja. Gebrauchsspuren, die sich wegpolieren oder reinigen lassen, werden dann nicht als Schaden berechnet. Mehr dazu bei der <a href=\"leasingrueckgabe.html\">Leasingrückgabe</a>."),
+        ("Entfernen Sie auch Tierhaare?", "Ja, Tierhaarentfernung gehört zur Innenraumaufbereitung – ebenso die Behandlung von Gerüchen."),
+        ("Kann ich Aufbereitung und Reparatur kombinieren?", "Ja. Karosserie, Smart Repair, Lackierung und Aufbereitung gibt es bei uns unter einem Dach – Sie bringen das Auto einmal und bekommen alles erledigt."),
+    ],
+}
 
 
 def collect_faqs(slug):
@@ -1411,11 +1562,12 @@ def render_faq_page():
     def block(title, anchor, qa):
         rows = []
         for q, a in qa:
-            key = q.lower()
+            q = FAQ_RENAME.get(q, q)
+            key = q.lower().replace("rechnet ihr", "rechnen sie")
             if key in seen:
                 continue
             seen.add(key)
-            a_html = a if a.lstrip().startswith("<") else f"<p>{esc(a)}</p>"
+            a_html = a if a.lstrip().startswith("<") else f"<p>{a}</p>" if "<a " in a else f"<p>{esc(a)}</p>"
             rows.append(f'<details><summary><span>{esc(q)}</span></summary><div class="rte">{a_html}</div></details>')
             ld_items.append({"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": plain(a_html)}})
         if rows:
@@ -1426,7 +1578,7 @@ def render_faq_page():
         block(title, f"allg-{i}", qa)
     svcs = {s: n for s, n, _ in all_services()}
     for i, (title, slugs) in enumerate(FAQ_GROUPS):
-        qa = []
+        qa = list(CAT_EXTRA.get(title, []))
         for s in slugs:
             for q, a in collect_faqs(s):
                 qa.append((q, a + f'<p class="faq-more"><a href="{s}.html">Mehr zu {esc(svcs.get(s, SERVICES.get(s, ("", s))[1]))} →</a></p>'))
@@ -1497,6 +1649,8 @@ def main():
     ld = ld.group(1) if ld else ""
     built = []
     for tpl, slug in list(PAGES.items()) + PAGE_ALIASES:
+        if slug in NEW_PAGES:  # eigene Seite ersetzt die Shopify-Vorlage
+            continue
         d = load(os.path.join(THEME, "templates", f"page.{tpl}.json"))
         body = []
         for k in d["order"]:
@@ -1517,6 +1671,7 @@ def main():
             body_html = keyword_h1(body_html, seo_title)
             if slug in SERVICES and slug not in GUIDES:
                 CARD_IMG[slug] = first_image(body_html)
+                body_html = tidy_service(slug, body_html)
                 body_html = with_service_frame(slug, short, body_html)
             if slug in SERVICES and slug not in GUIDES:
                 body_html += related_tiles(slug, "Alle Aufbereitungen im Überblick", 5) if slug == "fahrzeugaufbereitung" else related_tiles(slug)

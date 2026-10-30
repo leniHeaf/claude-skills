@@ -645,6 +645,7 @@
   .form-status { margin-top: 14px; font-weight: 600; }
   .form-status.err { color: #222; }
 
+  .book-note { font-size: 14px; color: #555; margin-top: 14px; }
   .booking-page .heading { margin: 4px 0 6px; }
   .booking-page .rte a { text-decoration: underline; }
   .booking-embed { padding: 0 0 60px; }
@@ -741,6 +742,7 @@
       <h2>Wunschtermin selbst wählen</h2>
       <p>Leistung auswählen, freien Termin anklicken, fertig – rund um die Uhr.</p>
       <a class="btn btn-dark" href="https://terminbuchungtaeubert.de">Zur Online-Terminbuchung</a>
+      <p class="book-note">Ersatzwagen oder Hol- und Bringservice gewünscht? Geben Sie es bei der Buchung an – oder kreuzen Sie es beim Rückruf an.</p>
     </div>
     <div class="book-card" id="rueckruf">
       <p class="eyebrow">Option 2 · Rückruf</p>
@@ -758,6 +760,8 @@
           <label class="f half">Wann erreichen wir Sie?
             <select name="nachricht"><option>Egal – so bald wie möglich</option><option>Vormittags</option><option>Mittags</option><option>Nachmittags</option></select>
           </label>
+          <label class="f consent"><input type="checkbox" name="ersatzwagen" value="ja"><span>Ich brauche einen Ersatzwagen</span></label>
+          <label class="f consent"><input type="checkbox" name="holservice" value="ja"><span>Hol- und Bringservice gewünscht</span></label>
           <label class="f consent"><input type="checkbox" name="einwilligung" required><span>Ich bin einverstanden, dass meine Angaben zur Bearbeitung gespeichert werden (siehe <a href="datenschutz.html">Datenschutz</a>). *</span></label>
         </div>
         <div class="btns"><button class="btn btn-outline-dark" type="submit">Rückruf anfordern</button></div>

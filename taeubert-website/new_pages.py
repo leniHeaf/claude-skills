@@ -69,8 +69,8 @@ NEW_PAGES = {
              '<p>Individuelle Designs und Sonderlackierungen finden Sie bei <a href="https://taeubertcustomize.de/" target="_blank" rel="noopener">Täubert custom</a>.</p>'),
         ],
         "faq": [
-            ("Restauriert ihr komplette Fahrzeuge?", "Unser Schwerpunkt liegt auf Karosserie, Entrostung und Lackierung. Was bei Ihrem Fahrzeug sinnvoll ist, besprechen wir gemeinsam vor Ort."),
-            ("Könnt ihr den Originalfarbton treffen?", "Ja, der Farbton wird am Original orientiert und digital gemessen. Bei sehr alten Lacken stimmen wir den Ton zusätzlich mit Ihnen ab."),
+            ("Restaurieren Sie komplette Fahrzeuge?", "Unser Schwerpunkt liegt auf Karosserie, Entrostung und Lackierung. Was bei Ihrem Fahrzeug sinnvoll ist, besprechen wir gemeinsam vor Ort."),
+            ("Können Sie den Originalfarbton treffen?", "Ja, der Farbton wird am Original orientiert und digital gemessen. Bei sehr alten Lacken stimmen wir den Ton zusätzlich mit Ihnen ab."),
             ("Wie lange dauert eine Restaurierung?", "Das hängt stark vom Zustand des Fahrzeugs ab. Nach der Begutachtung bekommen Sie eine realistische Einschätzung."),
         ],
     },
@@ -90,9 +90,9 @@ NEW_PAGES = {
              "<p>Sprechen Sie uns an, wenn Sie mehrere Fahrzeuge betreuen. Wir stimmen Termine und Abläufe so mit Ihnen ab, dass Ausfallzeiten möglichst kurz bleiben.</p>"),
         ],
         "faq": [
-            ("Repariert ihr auch Transporter?", "Ja, neben PKW reparieren wir auch Transporter und Firmenfahrzeuge."),
+            ("Reparieren Sie auch Transporter?", "Ja, neben PKW reparieren wir auch Transporter und Firmenfahrzeuge."),
             ("Können Termine für mehrere Fahrzeuge abgestimmt werden?", "Ja. Sprechen Sie uns an, dann planen wir die Termine gemeinsam mit Ihnen."),
-            ("Übernehmt ihr die Abwicklung mit der Versicherung?", "Bei Unfallschäden stimmen wir uns mit Versicherung und Gutachter ab – auch bei Firmenfahrzeugen."),
+            ("Übernehmen Sie die Abwicklung mit der Versicherung?", "Bei Unfallschäden stimmen wir uns mit Versicherung und Gutachter ab – auch bei Firmenfahrzeugen."),
         ],
     },
     "versicherungsschaden": {
@@ -236,3 +236,36 @@ NEW_PAGES.update({
         ],
     },
 })
+
+
+# Ersetzt die Shopify-Seite, die versehentlich den Aufbereitungs-Text enthielt
+NEW_PAGES["unfallinstandsetzung"] = {
+    "title": "Unfallinstandsetzung Sonneberg & Coburg",
+    "short": "Unfallinstandsetzung",
+    "desc": "Unfallreparatur in Sonneberg & Neustadt bei Coburg: Karosserie, Lack und Abwicklung mit Versicherung und Gutachter aus einer Hand – mit Ersatzwagen.",
+    "claim": "Nach dem Unfall in guten Händen.",
+    "lead": "Karosserie, Lack und Versicherung aus einer Hand – mit Ersatzwagen sowie Hol- und Bringservice.",
+    "sections": [
+        ("Ein Unfall ist Stress genug",
+         "<p>Telefonate mit der Versicherung, Gutachter, Werkstatt, Mietwagen – nach einem Unfall kommt vieles auf einmal. Bei uns haben Sie dafür einen Ansprechpartner.</p>"
+         "<p>Sie bringen das Auto. Wir regeln den Rest – und Sie bekommen Ihr Fahrzeug so zurück, dass man nicht mehr sieht, wo der Schaden war.</p>"),
+        ("Was wir für Sie übernehmen",
+         "<ul><li><strong>Schadensaufnahme</strong> mit Fotodokumentation</li>"
+         "<li><strong>Kostenvoranschlag in 24 Stunden</strong></li>"
+         "<li><strong>Abstimmung mit Gutachter und Versicherung</strong> – und direkte Abrechnung mit der Versicherung</li>"
+         "<li><strong>Karosseriereparatur</strong> nach Herstellervorgaben – mit Richtbank und präziser Vermessung</li>"
+         "<li><strong>Lackierung</strong> im eigenen Haus mit digitaler Farbtonmessung</li>"
+         "<li><strong>Ersatzwagen</strong> sowie <strong>Hol- und Bringservice</strong></li></ul>"),
+        ("Haftpflicht, Kasko oder selbst zahlen?",
+         "<p>Waren Sie nicht schuld, zahlt in der Regel die Haftpflichtversicherung des Unfallgegners. Bei selbst verursachten Schäden kommt Ihre Vollkasko infrage. Bei kleineren Schäden kann es günstiger sein, selbst zu zahlen, um eine Rückstufung zu vermeiden.</p>"
+         "<p>Wir helfen Ihnen bei der Einordnung – mehr dazu im Ratgeber <a href=\"unfall-oder-kratzer.html\">Unfall oder Kratzer – wer zahlt?</a></p>"),
+        ("Gerade passiert?",
+         "<p>Unfallstelle sichern, Polizei bei Verletzten, Fotos machen, Daten austauschen – unsere Checkliste zeigt Schritt für Schritt, <a href=\"unfall-was-tun.html\">was jetzt zu tun ist</a>. Oder rufen Sie uns direkt an: <a href=\"tel:+4936754289606\">03675 4289606</a>.</p>"),
+    ],
+    "faq": [
+        ("Darf ich die Werkstatt selbst wählen?", "Bei einem Haftpflichtschaden – also wenn der Unfallgegner schuld ist – können Sie die Werkstatt grundsätzlich frei wählen. Bei Kaskoschäden hängt es von Ihrem Tarif ab; manche Verträge sehen eine Werkstattbindung vor."),
+        ("Brauche ich einen Gutachter?", "Bei größeren Haftpflichtschäden haben Sie Anspruch auf einen unabhängigen Gutachter. Bei kleineren Schäden reicht oft ein Kostenvoranschlag. Wir sagen Ihnen, was in Ihrem Fall sinnvoll ist, und stimmen uns mit dem Gutachter ab."),
+        ("Bekomme ich einen Ersatzwagen?", "Ja. Damit Sie mobil bleiben, stellen wir Ihnen für die Dauer der Reparatur einen Ersatzwagen zur Verfügung. Auf Wunsch holen wir Ihr Fahrzeug auch ab und bringen es zurück."),
+        ("Wie lange dauert die Reparatur?", "Das hängt vom Schaden und von der Teileverfügbarkeit ab. Mit dem Kostenvoranschlag nennen wir Ihnen einen realistischen Zeitrahmen."),
+    ],
+}

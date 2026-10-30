@@ -34,7 +34,6 @@
 /pages/sonneberg  /sonneberg.html  301
 /pages/unfall  /unfall.html  301
 /pages/unfall-oder-kratzer  /unfall-oder-kratzer.html  301
-/pages/unfallinstandsetzung  /unfallinstandsetzung.html  301
 /pages/auto-lackieren-kosten  /auto-lackieren-kosten.html  301
 /pages/kronach  /kronach.html  301
 /pages/hagelschaden  /hagelschaden.html  301
@@ -47,6 +46,7 @@
 /pages/keramikversiegelung  /keramikversiegelung.html  301
 /pages/innenraumaufbereitung  /innenraumaufbereitung.html  301
 /pages/scheinwerfer-aufbereiten  /scheinwerfer-aufbereiten.html  301
+/pages/unfallinstandsetzung  /unfallinstandsetzung.html  301
 /pages/q-a-fanny  /meet-the-team.html  301
 /q-a-fanny.html  /meet-the-team.html  301
 /collections/*  /termin.html  301
