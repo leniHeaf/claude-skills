@@ -1,6 +1,6 @@
 """Zusätzliche Leistungsseiten (eigene Texte), aus der Wettbewerbsanalyse abgeleitet.
 
-Nur Leistungen, die laut den bestehenden Täubert-Seiten angeboten werden.
+Nur Leistungen, die laut den bestehenden Täubert-Seiten angeboten werden bzw. vom Betrieb ergänzt wurden (Aufbereitung, Unterboden).
 Jede Seite: (SEO-Titel, Kurzname, Meta-Beschreibung, Hero, Abschnitte, FAQ)
 """
 
@@ -120,3 +120,119 @@ NEW_PAGES = {
         ],
     },
 }
+
+
+NEW_PAGES.update({
+    "unterbodenschutz": {
+        "title": "Unterbodenschutz & Hohlraumversiegelung Sonneberg",
+        "short": "Unterbodenschutz",
+        "desc": "Unterbodenschutz, Unterbodenwäsche und Hohlraumversiegelung in Sonneberg: Rost vorbeugen, Schäden behandeln und den Wert Ihres Fahrzeugs erhalten.",
+        "claim": "Schutz von unten.",
+        "lead": "Unterbodenwäsche, Rostbehandlung, Unterbodenschutz und Hohlraumversiegelung – damit Streusalz keine Chance hat.",
+        "sections": [
+            ("Was man nicht sieht, rostet zuerst",
+             "<p>Im Winter im Thüringer Wald bekommt der Unterboden einiges ab: Streusalz, Splitt, Nässe und Schmutz setzen sich in Falzen, Schwellern und Radhäusern fest. Rost entsteht dort oft unbemerkt – bis er teuer wird oder beim TÜV auffällt.</p>"
+             "<p>Ein intakter Unterbodenschutz und versiegelte Hohlräume halten Ihr Fahrzeug über Jahre gesund.</p>"),
+            ("Unsere Leistungen am Unterboden",
+             "<ul><li><strong>Unterbodenwäsche:</strong> gründliche Reinigung von Salz und Schmutz als Grundlage für jede Behandlung</li>"
+             "<li><strong>Prüfung:</strong> Wir schauen uns Unterboden, Schweller, Radhäuser und Falze auf der Hebebühne genau an</li>"
+             "<li><strong>Rostbehandlung:</strong> Roststellen entfernen, behandeln und grundieren</li>"
+             "<li><strong>Unterbodenschutz:</strong> neue Schutzschicht auf gefährdeten Bereichen</li>"
+             "<li><strong>Hohlraumversiegelung:</strong> Konservierung in Schwellern, Türen und Hohlräumen</li></ul>"),
+            ("Wann sich Unterbodenschutz lohnt",
+             "<ul><li>vor dem Winter – und nach dem Winter, um Salz zu entfernen</li><li>nach dem Kauf eines Gebrauchtwagens</li><li>vor der Hauptuntersuchung, wenn Rost sichtbar ist</li><li>bei Oldtimern, Wohnmobilen und Transportern, die lange halten sollen</li></ul>"
+             "<p>Ist bereits Blech durchgerostet, übernehmen unsere Karosseriebauer die Reparatur – im selben Betrieb.</p>"),
+        ],
+        "faq": [
+            ("Wie oft sollte der Unterbodenschutz geprüft werden?", "Am besten einmal im Jahr, idealerweise nach dem Winter. Dann sieht man Beschädigungen durch Splitt und Salz und kann früh reagieren."),
+            ("Was ist der Unterschied zwischen Unterbodenschutz und Hohlraumversiegelung?", "Der Unterbodenschutz schützt die sichtbaren Flächen unter dem Fahrzeug. Die Hohlraumversiegelung konserviert die Innenseiten von Schwellern, Türen und Trägern, wo Feuchtigkeit sonst unbemerkt Rost bildet."),
+            ("Kann vorhandener Rost einfach überdeckt werden?", "Das machen wir nicht. Rost wird zuerst entfernt und behandelt – sonst arbeitet er unter der neuen Schicht weiter."),
+        ],
+    },
+    "lackaufbereitung": {
+        "title": "Lackaufbereitung & Politur Sonneberg",
+        "short": "Lackaufbereitung",
+        "desc": "Lackaufbereitung und Politur in Sonneberg: Waschkratzer, Hologramme und stumpfen Lack maschinell aufbereiten – für Tiefenglanz wie am ersten Tag.",
+        "claim": "Glanz, der zurückkommt.",
+        "lead": "Waschkratzer, Hologramme, stumpfer Lack – wir polieren maschinell in mehreren Stufen.",
+        "sections": [
+            ("Warum Lack mit der Zeit stumpf wird",
+             "<p>Waschanlage, Sonne, Vogelkot, Baumharz: Mit den Jahren entstehen feine Kratzer und Schlieren, die das Licht streuen. Der Lack wirkt matt, die Farbe flach.</p>"
+             "<p>Meist liegt der Schaden nur in der obersten Klarlackschicht – und lässt sich herauspolieren.</p>"),
+            ("So bereiten wir Ihren Lack auf",
+             "<ul><li><strong>Gründliche Wäsche und Dekontamination:</strong> Flugrost, Teer und Rückstände werden entfernt</li>"
+             "<li><strong>Lackanalyse:</strong> Wir prüfen Zustand und Schichtdicke, bevor wir polieren</li>"
+             "<li><strong>Maschinelle Politur:</strong> je nach Zustand ein- oder mehrstufig – vom Schleifen feiner Kratzer bis zum Hochglanz-Finish</li>"
+             "<li><strong>Schutz:</strong> Wachs, Sealant oder Keramikversiegelung, damit der Glanz bleibt</li></ul>"),
+            ("Wenn Polieren nicht reicht",
+             "<p>Kratzer, die bis in die Farbschicht oder das Metall gehen, lassen sich nicht wegpolieren. Dann sagen wir Ihnen das ehrlich – und reparieren die Stelle in unserer Lackierkabine mit digitaler Farbtonmessung.</p>"),
+        ],
+        "faq": [
+            ("Welche Kratzer kann man wegpolieren?", "Kratzer, die nur im Klarlack liegen – zum Beispiel Waschkratzer und Hologramme. Ein Anhaltspunkt: Bleibt der Fingernagel nicht hängen, ist Politur meist möglich."),
+            ("Wird bei der Politur Lack abgetragen?", "Ja, ein sehr kleiner Teil des Klarlacks. Deshalb prüfen wir vorher die Schichtdicke und polieren nur so viel wie nötig."),
+            ("Wie lange hält das Ergebnis?", "Das hängt von Pflege und Schutz ab. Mit einer Versiegelung und schonender Handwäsche bleibt der Glanz deutlich länger erhalten."),
+        ],
+    },
+    "keramikversiegelung": {
+        "title": "Keramikversiegelung & Lackversiegelung Sonneberg",
+        "short": "Keramikversiegelung",
+        "desc": "Keramikversiegelung und Lackversiegelung in Sonneberg: dauerhafter Schutz und Tiefenglanz – Wasser perlt ab, Schmutz haftet weniger, Pflege wird leichter.",
+        "claim": "Schutz, den man sieht.",
+        "lead": "Keramik-, Sealant- oder Wachsversiegelung – für Glanz, Schutz und leichtere Pflege.",
+        "sections": [
+            ("Was eine Versiegelung bringt",
+             "<ul><li>tiefer Glanz und satte Farbe</li><li>Wasser perlt ab, Schmutz und Insekten haften weniger</li><li>Schutz vor UV-Strahlung, Vogelkot und Streusalz</li><li>einfachere und schnellere Wäsche</li></ul>"),
+            ("Keramik, Sealant oder Wachs?",
+             "<p><strong>Keramikversiegelung</strong> bildet eine besonders harte, langlebige Schutzschicht – ideal für Neuwagen und frisch aufbereitete Fahrzeuge.</p>"
+             "<p><strong>Sealant und Wachs</strong> sind die günstigere Wahl mit kürzerer Haltbarkeit – gut für regelmäßige Pflege.</p>"
+             "<p>Wir beraten Sie, was zu Ihrem Fahrzeug und Ihrer Nutzung passt.</p>"),
+            ("Die Vorbereitung entscheidet",
+             "<p>Eine Versiegelung konserviert den Zustand, den der Lack gerade hat – auch Kratzer. Deshalb wird der Lack vorher gründlich gereinigt und bei Bedarf poliert. Auch Felgen, Scheiben und Kunststoffteile können versiegelt werden.</p>"),
+        ],
+        "faq": [
+            ("Wie lange hält eine Keramikversiegelung?", "Deutlich länger als Wachs – bei richtiger Pflege mehrere Jahre. Die genaue Haltbarkeit hängt vom Produkt, der Nutzung und der Pflege ab."),
+            ("Kann ich mit Keramikversiegelung in die Waschanlage?", "Wir empfehlen schonende Handwäsche. Bürstenwaschanlagen verursachen Kratzer und verkürzen die Lebensdauer jeder Versiegelung."),
+            ("Lohnt sich eine Versiegelung bei einem Neuwagen?", "Ja, gerade dann: Der Lack ist noch makellos, und die Versiegelung schützt ihn von Anfang an."),
+        ],
+    },
+    "innenraumaufbereitung": {
+        "title": "Innenraumaufbereitung & Polsterreinigung Sonneberg",
+        "short": "Innenraumaufbereitung",
+        "desc": "Innenraumaufbereitung in Sonneberg: Polster- und Lederreinigung, Teppiche, Armaturen und Geruchsentfernung – damit Sie wieder gern einsteigen.",
+        "claim": "Einsteigen und wohlfühlen.",
+        "lead": "Sitze, Teppiche, Leder, Armaturen und Gerüche – gründlich gereinigt und gepflegt.",
+        "sections": [
+            ("Der Unterschied, den man sofort merkt",
+             "<p>Im Innenraum verbringen Sie die meiste Zeit. Krümel, Flecken, Tierhaare und Gerüche fallen jeden Tag auf – eine gründliche Aufbereitung macht hier den größten Unterschied.</p>"),
+            ("Was wir im Innenraum machen",
+             "<ul><li>Sitze aus Stoff: Tiefenreinigung und Fleckentfernung</li><li>Leder: Reinigung und Pflege, damit es geschmeidig bleibt</li><li>Teppiche, Fußmatten und Kofferraum</li><li>Armaturen, Displays, Lüftungen und schwer erreichbare Stellen</li><li>Tierhaarentfernung</li><li>Geruchsbehandlung – z. B. bei Rauch, Hund oder Feuchtigkeit</li><li>Scheiben innen streifenfrei</li></ul>"),
+            ("Ideal vor Verkauf und Leasingrückgabe",
+             "<p>Ein gepflegter Innenraum macht beim Verkauf den ersten Eindruck – und vermeidet Diskussionen bei der Leasingrückgabe. Kombiniert mit einer Lackaufbereitung wirkt Ihr Fahrzeug wieder wie frisch übernommen.</p>"),
+        ],
+        "faq": [
+            ("Lassen sich alle Flecken entfernen?", "Die meisten ja. Bei sehr alten oder eingebrannten Flecken ist manchmal nur eine deutliche Verbesserung möglich – das sagen wir Ihnen vorher."),
+            ("Bekommt man Rauchgeruch wirklich raus?", "In den meisten Fällen deutlich bis vollständig. Dazu reinigen wir alle Flächen und behandeln den Geruch gezielt an der Quelle."),
+            ("Wie lange dauert eine Innenraumaufbereitung?", "Das hängt vom Zustand ab. Wir nennen Ihnen beim Termin einen verbindlichen Abholzeitpunkt."),
+        ],
+    },
+    "scheinwerfer-aufbereiten": {
+        "title": "Scheinwerfer aufbereiten Sonneberg",
+        "short": "Scheinwerfer aufbereiten",
+        "desc": "Scheinwerfer aufbereiten in Sonneberg: vergilbte und matte Scheinwerfer schleifen, polieren und versiegeln – für klare Sicht und gepflegte Optik.",
+        "claim": "Klare Sicht. Klare Linie.",
+        "lead": "Vergilbte, matte Scheinwerfer werden wieder klar – geschliffen, poliert und versiegelt.",
+        "sections": [
+            ("Warum Scheinwerfer blind werden",
+             "<p>Moderne Scheinwerfer bestehen aus Kunststoff. UV-Strahlung, Steinschlag und Waschanlagen machen die Oberfläche mit den Jahren gelblich und matt. Das sieht nicht nur alt aus – die Lichtausbeute sinkt spürbar.</p>"),
+            ("So bereiten wir Scheinwerfer auf",
+             "<ul><li>Abkleben der umliegenden Lackflächen</li><li>Nassschleifen in mehreren Stufen</li><li>Politur bis zur vollen Klarheit</li><li>UV-Schutz-Versiegelung, damit die Scheinwerfer lange klar bleiben</li></ul>"),
+            ("Aufbereiten statt neu kaufen",
+             "<p>Neue Scheinwerfer sind teuer. Solange das Glas nicht gerissen und innen nichts beschädigt ist, ist die Aufbereitung meist die deutlich günstigere Lösung.</p>"),
+        ],
+        "faq": [
+            ("Hilft die Aufbereitung bei der Hauptuntersuchung?", "Stark eingetrübte Scheinwerfer können die Lichtwerte verschlechtern. Klare Scheinwerfer verbessern Ausleuchtung und Optik."),
+            ("Was, wenn der Scheinwerfer innen beschlagen ist?", "Feuchtigkeit oder Schäden im Inneren lassen sich durch Aufbereiten von außen nicht beheben. Wir prüfen das vorher und sagen Ihnen, was sinnvoll ist."),
+            ("Wie lange bleiben die Scheinwerfer klar?", "Durch die abschließende UV-Versiegelung deutlich länger als nach einer einfachen Politur."),
+        ],
+    },
+})

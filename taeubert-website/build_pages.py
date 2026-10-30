@@ -424,6 +424,9 @@ EXTRA_CSS = """
   .tile-grid.c4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .tile-grid.c4 .tile-svc { aspect-ratio: 16 / 10; }
   .tile-grid.c1 { grid-template-columns: 1fr; }
+  .tile-grid.c5 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .tile-grid.c5 > * { grid-column: span 2; }
+  .tile-grid.c5 > :nth-child(-n+2) { grid-column: span 3; aspect-ratio: 16 / 10; }
   .tile-grid.c1 .tile-svc { aspect-ratio: 21 / 8; }
   .tile-body h3 { font-size: clamp(18px, 1.55vw, 23px); overflow-wrap: normal; hyphens: manual; }
   .chips { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
@@ -440,8 +443,8 @@ EXTRA_CSS = """
   .svc-aside .btns { flex-direction: column; margin-top: 24px; gap: 10px; display: flex; }
   .svc-aside .btn { width: 100%; text-align: center; }
   .svc-aside .hours { margin-top: 20px; font-size: 14px; color: rgba(255,255,255,.7); }
-  @media (max-width: 990px) { .svc-layout { grid-template-columns: 1fr; gap: 40px; } .svc-aside { display: none; } }
-  @media (max-width: 760px) { .finder { padding-top: 60px; } .finder-list { grid-template-columns: 1fr; } .finder-list .to { display: none; } .finder-list .q::after { content: " →"; } .cat-sec .cat-top { grid-template-columns: 1fr; } .tile-grid.c4 { grid-template-columns: 1fr; } .tile-grid.c1 .tile-svc { aspect-ratio: 4 / 3; } .more-svc { padding: 56px 0; } .svc-layout { padding-top: 50px; } .tile-body h3 { font-size: 19px; } .tile-grid.c4 .tile-svc { aspect-ratio: 4 / 3; } }
+  @media (max-width: 990px) { .tile-grid.c5 { grid-template-columns: 1fr 1fr; } .tile-grid.c5 > * { grid-column: auto; } .tile-grid.c5 > :first-child { grid-column: 1 / -1; } .svc-layout { grid-template-columns: 1fr; gap: 40px; } .svc-aside { display: none; } }
+  @media (max-width: 760px) { .finder { padding-top: 60px; } .finder-list { grid-template-columns: 1fr; } .finder-list .to { display: none; } .finder-list .q::after { content: " →"; } .cat-sec .cat-top { grid-template-columns: 1fr; } .tile-grid.c4, .tile-grid.c5 { grid-template-columns: 1fr; } .tile-grid.c5 > * { aspect-ratio: 4 / 3 !important; } .tile-grid.c1 .tile-svc { aspect-ratio: 4 / 3; } .more-svc { padding: 56px 0; } .svc-layout { padding-top: 50px; } .tile-body h3 { font-size: 19px; } .tile-grid.c4 .tile-svc { aspect-ratio: 4 / 3; } }
   .related { background: var(--grey); padding: 50px 0; }
   .related-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
   .related h2 { font-size: 18px; margin-bottom: 14px; }
@@ -886,6 +889,11 @@ CARD_TEXT = {
     "stossstange-reparieren": "Kratzer, Risse, Dellen – reparieren statt tauschen, wo es Sinn macht.",
     "oldtimer-restaurierung": "Entrostung und Lack im Originalfarbton – mit Respekt vor dem Original.",
     "fuhrparkservice": "Firmenwagen und Transporter schnell wieder einsatzbereit.",
+    "lackaufbereitung": "Waschkratzer und Hologramme raus – maschinell poliert bis zum Tiefenglanz.",
+    "keramikversiegelung": "Langzeitschutz und Glanz – Wasser perlt ab, Pflege wird leichter.",
+    "innenraumaufbereitung": "Polster, Leder, Teppiche und Gerüche – wieder gern einsteigen.",
+    "scheinwerfer-aufbereiten": "Vergilbt und matt? Geschliffen, poliert, versiegelt – wieder klar.",
+    "unterbodenschutz": "Unterbodenwäsche, Rostbehandlung und Hohlraumversiegelung gegen Streusalz.",
     "versicherungsschaden": "Direkte Abrechnung mit der Versicherung. Sie bringen das Auto, wir den Rest.",
 }
 
@@ -894,7 +902,8 @@ CARD_TEXT = {
 SHY = {"Unfallinstandsetzung": "Unfall&shy;instand&shy;setzung", "Fahrzeugaufbereitung": "Fahrzeug&shy;aufbereitung",
        "Versicherungsschaden": "Versicherungs&shy;schaden", "Karosseriearbeiten": "Karosserie&shy;arbeiten",
        "Kleinschaden-Reparatur": "Kleinschaden-<wbr>Reparatur", "Unfallreparatur": "Unfall&shy;reparatur",
-       "Leasingrückgabe": "Leasing&shy;rückgabe", "Fuhrparkservice": "Fuhrpark&shy;service", "Lackierarbeiten": "Lackier&shy;arbeiten"}
+       "Leasingrückgabe": "Leasing&shy;rückgabe", "Lackaufbereitung": "Lack&shy;aufbereitung", "Keramikversiegelung": "Keramik&shy;versiegelung",
+       "Innenraumaufbereitung": "Innenraum&shy;aufbereitung", "Unterbodenschutz": "Unterboden&shy;schutz", "Fuhrparkservice": "Fuhrpark&shy;service", "Lackierarbeiten": "Lackier&shy;arbeiten"}
 
 
 def service_tiles(items):
@@ -999,7 +1008,8 @@ def breadcrumb_ld(slug, name, parent=None):
 CATEGORIES = [
     ("Unfall & Versicherung", ["unfall", "unfallinstandsetzung", "versicherungsschaden", "hagelschaden"]),
     ("Karosserie & Lack", ["karosserie", "lackierarbeiten", "smartrepair", "kleinschaden", "kratzer", "stossstange-reparieren"]),
-    ("Pflege & Service", ["fahrzeugaufbereitung", "reifenservice", "leasingrueckgabe", "fuhrparkservice"]),
+    ("Aufbereitung & Pflege", ["fahrzeugaufbereitung", "lackaufbereitung", "keramikversiegelung", "innenraumaufbereitung", "scheinwerfer-aufbereiten", "unterbodenschutz"]),
+    ("Service", ["reifenservice", "leasingrueckgabe", "fuhrparkservice"]),
     ("Klassiker", ["oldtimer-restaurierung"]),
 ]
 CARD_IMG = {}  # slug -> erstes vorhandenes Bild der Leistungsseite (wird beim Bauen gefüllt)
@@ -1012,6 +1022,11 @@ FALLBACK_IMG = {
     "kratzer": "pexels-uiliamnornberg-24960483_2971c584-81f6-4dd4-bf60-f58213b7bd8b.webp",
     "stossstange-reparieren": "pexels-vadutskevich-13249371.webp",
     "fuhrparkservice": "T_ubert_Karosserie_und_Lack_in_Sonneberg_Fuhrparkserive.webp",
+    "unterbodenschutz": "pexels-aida-shukuhi-914628252-20281832.webp",
+    "lackaufbereitung": "pexels-tima-miroshnichenko-6872570.webp",
+    "keramikversiegelung": "pexels-amar-11157437.webp",
+    "innenraumaufbereitung": "pexels-wavyvisuals-377312923-20051451.webp",
+    "scheinwerfer-aufbereiten": "ElevenLabs_image_nano-banana_Nahaufnahmen..._2026-01-13T08_52_06-2.webp",
     "oldtimer-restaurierung": "hf_20260210_174234_03b93839-672b-4ba9-b742-8e3397346ee1.webp",
 }
 
@@ -1058,7 +1073,8 @@ def with_service_frame(slug, name, body_html):
 CAT_INTRO = {
     "Unfall & Versicherung": "Ein Ansprechpartner von der Schadensaufnahme bis zur Abrechnung mit der Versicherung. Sie bringen das Auto – wir regeln den Rest.",
     "Karosserie & Lack": "Richtbank, Lackierkabine und digitale Farbtonmessung unter einem Dach. Man sieht später nicht, wo der Schaden war.",
-    "Pflege & Service": "Damit Ihr Fahrzeug nicht nur repariert, sondern gepflegt zurückkommt – privat, geleast oder im Fuhrpark.",
+    "Aufbereitung & Pflege": "Vom Unterboden bis zum Dachhimmel: Lack, Innenraum, Scheinwerfer und Versiegelung – damit Ihr Fahrzeug gepflegt aussieht und lange hält.",
+    "Service": "Reifen, Leasingrückgabe und Firmenfahrzeuge – unkompliziert und termingenau.",
     "Klassiker": "Restaurierung mit Geduld, Handwerk und Respekt vor dem Original.",
 }
 # Schnellauswahl: Anliegen des Kunden -> passende Leistung
@@ -1066,17 +1082,18 @@ FINDER = [
     ("Ich hatte einen Unfall", "unfall"), ("Ich habe eine Delle", "smartrepair"),
     ("Mein Lack ist zerkratzt", "kratzer"), ("Die Stoßstange ist beschädigt", "stossstange-reparieren"),
     ("Mein Auto hat Hagelschaden", "hagelschaden"), ("Mein Leasingauto geht zurück", "leasingrueckgabe"),
-    ("Mein Auto soll wieder glänzen", "fahrzeugaufbereitung"), ("Ich möchte neu lackieren", "lackierarbeiten"),
+    ("Mein Lack ist stumpf", "lackaufbereitung"), ("Der Innenraum ist verschmutzt", "innenraumaufbereitung"),
+    ("Mein Unterboden rostet", "unterbodenschutz"), ("Ich möchte neu lackieren", "lackierarbeiten"),
 ]
 
 
 def tile_grid(items):
     n = len(items)
-    cls = " c4" if n == 4 else " c1" if n == 1 else ""
+    cls = {4: " c4", 1: " c1", 5: " c5"}.get(n, "")
     return f'<div class="tile-grid{cls}">{service_tiles(items)}</div>'
 
 
-def related_tiles(slug):
+def related_tiles(slug, title="Das könnte Sie auch interessieren", n=3):
     """Drei passende Leistungen mit Bild: zuerst aus derselben Kategorie, dann die wichtigsten."""
     svcs = {s: (s, n, d) for s, n, d in all_services()}
     same = next((slugs for _, slugs in CATEGORIES if slug in slugs), [])
@@ -1086,8 +1103,8 @@ def related_tiles(slug):
             pick.append(x)
     return f'''<section class="more-svc">
   <div class="page-width">
-    <h2>Das könnte Sie auch interessieren</h2>
-    <div class="tile-grid">{service_tiles([svcs[x] for x in pick[:3]])}</div>
+    <h2>{esc(title)}</h2>
+    {tile_grid([svcs[x] for x in pick[:n]])}
   </div>
 </section>'''
 
@@ -1502,7 +1519,7 @@ def main():
                 CARD_IMG[slug] = first_image(body_html)
                 body_html = with_service_frame(slug, short, body_html)
             if slug in SERVICES and slug not in GUIDES:
-                body_html += related_tiles(slug)
+                body_html += related_tiles(slug, "Alle Aufbereitungen im Überblick", 5) if slug == "fahrzeugaufbereitung" else related_tiles(slug)
             body_html += booking_cta(slug, short)
             title = seo_title
             if slug in SERVICES:
