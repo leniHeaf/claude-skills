@@ -28,6 +28,13 @@ PAGES = {
 }
 # Der Kronach-Text liegt im Shop auf der Sonneberg-Vorlage; die Kronach-Vorlage enthält den Rödental-Text
 PAGE_ALIASES = [("sonneberg", "kronach")]
+# Eigene Titel/Beschreibungen für Nicht-Leistungsseiten (sonst aus der ersten Überschrift)
+PAGE_META = {
+    "azubi": ("Ausbildung bei Täubert – Azubi in Sonneberg", "Ausbildung zum Fahrzeuglackierer oder Karosseriebauer bei Täubert in Sonneberg: sauberes Handwerk lernen, ernst genommen werden, mit Perspektive."),
+    "karriere": ("Karriere & Jobs bei Täubert", "Jobs bei Täubert Karosserie & Lack in Sonneberg: Gesellen, Meister und Quereinsteiger – klare Abläufe, faire Bezahlung, Quartalsprämien."),
+    "boxenstopp": ("Boxenstopp – Reifenwechsel-Event", "Boxenstopp bei Täubert in Sonneberg: Reifenwechsel-Event mit Aktionen und Verpflegung. Infos und Termine."),
+    "q-a-marco": ("Q&A mit Marco – Team Täubert", "Marco ist seit 10 Jahren bei Täubert Karosserie & Lack. Im Gespräch über seinen Schwerpunkt, das Team und gutes Handwerk."),
+}
 # Seitenspezifische Textkorrekturen (alt, neu)
 TEXT_FIXES = {
     "kronach": [("Lackierer Sonneberg |", "Lackierer Kronach |")],
@@ -376,11 +383,31 @@ EXTRA_CSS = """
   .rte h2, .rte h3 { margin: 22px 0 12px; font-size: clamp(22px, 2.4vw, 30px); }
   .rte a { text-decoration: underline; }
   .rte table { border-collapse: collapse; width: 100%; margin: 12px 0; } .rte td, .rte th { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
+  .crumbs { display: flex; flex-wrap: wrap; gap: 8px; font-size: 14px; color: #555; padding-top: 16px; padding-bottom: 4px; }
+  .crumbs a { text-decoration: underline; text-underline-offset: 3px; }
+  .svc-quick { padding: 14px 0 26px; border-bottom: 1px solid var(--line); }
+  .svc-quick-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 30px; }
+  .svc-quick .trust { color: var(--text); }
+  .svc-quick .trust svg { color: #c00000; }
+  .svc-quick .btns { margin-top: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+  .svc-steps { padding: 70px 0; background: var(--grey); }
+  .svc-steps h2 { font-size: clamp(28px, 3.2vw, 40px); margin-bottom: 30px; }
+  .cat-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+  .cat-nav a { padding: 9px 14px; background: var(--white); border: 1px solid var(--line); font-weight: 600; font-size: 14px; }
+  .cat-nav a:hover { border-color: var(--black); }
+  .cat-head { font-size: clamp(24px, 2.6vw, 32px); margin: 40px 0 16px; scroll-margin-top: 140px; }
+  .svc.has-img { padding-top: 0; }
+  .svc-img { display: block; aspect-ratio: 16 / 9; margin: 0 -24px 14px; overflow: hidden; background: var(--grey); }
+  .svc-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+  .svc:hover .svc-img img { transform: scale(1.04); }
+  @media (max-width: 600px) { .svc.has-img { padding: 0 16px 16px; } .svc-img { margin: 0 -16px 12px; } .svc.has-img::after { top: auto; bottom: 18px; transform: none; } }
   .booking-cta { background: var(--black); color: var(--white); padding: 70px 0; text-align: center; }
   .booking-cta h2 { font-size: clamp(30px, 4vw, 46px); }
   .booking-cta p { max-width: 620px; margin: 14px auto 0; color: rgba(255,255,255,.8); }
   .booking-cta .btns { justify-content: center; }
   .booking-cta .trust { justify-content: center; margin: 18px 0 4px; }
+  .callback-hint { margin-top: 10px !important; }
+  .callback-hint a { text-decoration: underline; text-underline-offset: 3px; color: var(--white); }
   .btn-outline-light { background: transparent; color: var(--white); border-color: rgba(255,255,255,.6); }
   .btn-outline-light:hover { border-color: var(--white); background: var(--white); color: var(--black); }
   .related { background: var(--grey); padding: 50px 0; }
@@ -558,29 +585,29 @@ def first_heading(d):
 
 # SEO für Leistungs- und Standortseiten: Titel, Beschreibung, H1 (Leistung + Ort)
 SERVICES = {
-    "karosserie": ("Karosserie Sonneberg & Neustadt bei Coburg", "Karosseriearbeiten",
+    "karosserie": ("Karosserie Sonneberg & Neustadt b. Coburg", "Karosseriearbeiten",
                    "Karosseriereparatur in Sonneberg & Neustadt bei Coburg: Richtbank, präzise Vermessung, Reparatur nach Herstellervorgaben – Lack direkt im Haus."),
-    "lackierarbeiten": ("Lackierarbeiten Sonneberg & Neustadt bei Coburg", "Lackierarbeiten",
+    "lackierarbeiten": ("Lackierarbeiten & Autolackierung Sonneberg", "Lackierarbeiten",
                         "Autolackierung in Sonneberg: digitale Farbtonmessung, staubfreie Lackierkabine, Spot Repair und Komplettlackierung – ohne sichtbaren Unterschied."),
-    "unfallinstandsetzung": ("Unfallinstandsetzung Sonneberg & Neustadt bei Coburg", "Unfallinstandsetzung",
+    "unfallinstandsetzung": ("Unfallinstandsetzung Sonneberg & Coburg", "Unfallinstandsetzung",
                              "Unfallreparatur in Sonneberg & Neustadt bei Coburg: Karosserie, Lack und Abwicklung mit Versicherung und Gutachter aus einer Hand."),
-    "smartrepair": ("Smart Repair Sonneberg – Dellen entfernen ohne Lackieren", "Smart Repair",
+    "smartrepair": ("Smart Repair Sonneberg – Dellen ohne Lackieren", "Smart Repair",
                     "Smart Repair in Sonneberg: Dellen und kleine Schäden ohne Neulackierung entfernen – Originallack bleibt, oft in wenigen Stunden erledigt."),
-    "kleinschaden": ("Kleinschaden-Reparatur Sonneberg & Neustadt bei Coburg", "Kleinschaden-Reparatur",
+    "kleinschaden": ("Kleinschaden-Reparatur Sonneberg", "Kleinschaden-Reparatur",
                      "Parkschaden, Kratzer oder Delle? Kleinschaden-Reparatur in Sonneberg & Neustadt bei Coburg – schnell, günstig und mit Originallack."),
     "kratzer": ("Kratzer im Auto entfernen – Sonneberg", "Kratzer entfernen",
                 "Kratzer im Lack entfernen lassen in Sonneberg: vom oberflächlichen Kratzer bis zur Tiefe – mit exakter Farbtonanpassung."),
     "leasingrueckgabe": ("Leasingrückgabe vorbereiten – Sonneberg", "Leasingrückgabe",
                          "Leasingrückgabe in Sonneberg vorbereiten: Schäden vorab günstig beseitigen und teure Nachzahlungen beim Leasinggeber vermeiden."),
-    "fahrzeugaufbereitung": ("Fahrzeugaufbereitung Sonneberg & Neustadt bei Coburg", "Fahrzeugaufbereitung",
+    "fahrzeugaufbereitung": ("Fahrzeugaufbereitung Sonneberg", "Fahrzeugaufbereitung",
                              "Fahrzeugaufbereitung in Sonneberg: Politur, Innenraumreinigung und Lackpflege – ideal vor Verkauf oder Leasingrückgabe."),
-    "reifenservice": ("Reifenservice Sonneberg & Neustadt bei Coburg", "Reifenservice",
+    "reifenservice": ("Reifenservice Sonneberg & Neustadt", "Reifenservice",
                       "Reifenwechsel, Räderwechsel und Rädereinlagerung in Sonneberg & Neustadt bei Coburg – Termin online buchen."),
     "unfall": ("Unfall gehabt? Unfallreparatur Sonneberg", "Unfallreparatur",
                "Unfall gehabt? Täubert in Sonneberg kümmert sich um Reparatur, Versicherung und Gutachten – direkte Abrechnung mit der Versicherung."),
-    "unfall-oder-kratzer": ("Unfall oder Kratzer – wer zahlt die Reparatur?", "Ratgeber Reparaturkosten",
+    "unfall-oder-kratzer": ("Unfall oder Kratzer – wer zahlt?", "Ratgeber Reparaturkosten",
                             "Wer übernimmt die Reparaturkosten nach Unfall oder Kratzer? Antworten zu Versicherung, Gutachter und Ersatzwagen von Täubert in Sonneberg."),
-    "auto-lackieren-kosten": ("Auto lackieren Kosten – Preise & Beispiele", "Ratgeber Lackierkosten",
+    "auto-lackieren-kosten": ("Auto lackieren: Kosten & Beispiele", "Ratgeber Lackierkosten",
                               "Was kostet es, ein Auto lackieren zu lassen? Preise und Beispiele für Teil- und Komplettlackierung von Täubert in Sonneberg."),
 }
 LOCATIONS = {
@@ -630,6 +657,7 @@ def booking_cta(slug, place):
   <div class="page-width">
     <h2>Termin online buchen</h2>
     {TRUST_HTML}
+    <p class="callback-hint">Keine Zeit zum Buchen? <a href="termin.html#rueckruf">Rückruf anfordern</a> – wir melden uns.</p>
     <p>Wählen Sie Ihren Wunschtermin direkt online – oder rufen Sie uns an. Wir schauen uns Ihr Fahrzeug an und sagen Ihnen ehrlich, was Sinn macht.</p>
     <div class="btns">
       <a class="btn btn-light" href="{BOOKING}">Termin online buchen</a>
@@ -686,6 +714,7 @@ FIXES = [
 def apply_fixes(body_html):
     for old, new in FIXES:
         body_html = body_html.replace(old, new)
+    body_html = re.sub(r"<h1>(.*?)</h1>", r"<h2>\1</h2>", body_html, flags=re.S)
     return body_html
 
 
@@ -717,8 +746,22 @@ def seo_head(title, desc, slug, image=None):
 <meta name="twitter:card" content="summary_large_image">'''
 
 
+def fill_alts(page):
+    """Leere Alt-Texte im Inhalt durch den Seitentitel ersetzen (Menü/Footer bleiben dekorativ)."""
+    t = re.search(r"<title>(.*?) \| ", page)
+    if not t:
+        return page
+    i, j = page.find("<main"), page.find("</main>")
+    if i < 0 or j < 0:
+        return page
+    main = re.sub(r'(<img\b[^>]*?)\salt=""', lambda m: f'{m.group(1)} alt="{t.group(1)}"', page[i:j])
+    main = re.sub(r'<img\b(?![^>]*\balt=)([^>]*)>', lambda m: f'<img alt="{t.group(1)}"{m.group(1)}>', main)
+    return page[:i] + main + page[j:]
+
+
 def sync_images(page):
     """Fehlende Bilddateien nicht anfragen (keine 404): src <-> data-missing-src je nach Vorhandensein."""
+    page = fill_alts(page)
     def fix(m):
         attr, path = m.group(1), m.group(2)
         exists = os.path.exists(os.path.join(SITE, path))
@@ -756,8 +799,10 @@ def render_new_page(slug, p):
   <div class="page-width"><div class="rich-inner" style="max-width:760px"><h2 class="h-4">{esc(h)}</h2><div class="rte">{body}</div></div></div>
 </section>''')
     rows = "".join(f'<details><summary><span>{esc(q)}</span></summary><div class="rte"><p>{esc(a)}</p></div></details>' for q, a in p["faq"])
+    img = FALLBACK_IMG.get(slug)
+    media_html = f'<div class="media"><img src="images/{img}" alt="{esc(p["short"])}" fetchpriority="high"></div><div class="overlay" style="opacity:.5"></div>' if img else '<div class="media"></div><div class="overlay" style="opacity:0"></div>'
     return f'''<section class="sub-hero" style="--h:520px;--mh:440px">
-  <div class="media"></div><div class="overlay" style="opacity:0"></div>
+  {media_html}
   <div class="sub-hero-content" style="max-width:960px">
     <h1 class="overline">{esc(p["title"])}</h1>
     <p class="heading h-8">{esc(p["claim"])}</p>
@@ -808,10 +853,13 @@ CARD_TEXT = {
 }
 
 
-def service_cards(items):
-    return "".join(
-        f'<a class="svc" href="{slug}.html"><h3>{esc(name)}</h3><p>{esc(CARD_TEXT.get(slug, desc))}</p><span>Mehr erfahren →</span></a>'
-        for slug, name, desc in items)
+def service_cards(items, images=False):
+    out = []
+    for slug, name, desc in items:
+        img = (CARD_IMG.get(slug) or FALLBACK_IMG.get(slug)) if images else None
+        pic = f'<span class="svc-img"><img src="images/{esc(img)}" alt="{esc(name)}" loading="lazy"></span>' if img else ""
+        out.append(f'<a class="svc{" has-img" if pic else ""}" href="{slug}.html">{pic}<h3>{esc(name)}</h3><p>{esc(CARD_TEXT.get(slug, desc))}</p><span>Mehr erfahren →</span></a>')
+    return "".join(out)
 
 
 def update_index():
@@ -855,6 +903,67 @@ def breadcrumb_ld(slug, name, parent=None):
     return '<script type="application/ld+json">' + json.dumps(data, ensure_ascii=False) + "</script>"
 
 
+
+# Leistungs-Kategorien für die Übersicht
+CATEGORIES = [
+    ("Unfall & Versicherung", ["unfall", "unfallinstandsetzung", "versicherungsschaden", "hagelschaden"]),
+    ("Karosserie & Lack", ["karosserie", "lackierarbeiten", "smartrepair", "kleinschaden", "kratzer", "stossstange-reparieren"]),
+    ("Pflege & Service", ["fahrzeugaufbereitung", "reifenservice", "leasingrueckgabe", "fuhrparkservice"]),
+    ("Klassiker", ["oldtimer-restaurierung"]),
+]
+CARD_IMG = {}  # slug -> erstes vorhandenes Bild der Leistungsseite (wird beim Bauen gefüllt)
+# Bilder für Seiten ohne eigenes Foto (Karte in der Übersicht und Startbild der neuen Leistungsseiten)
+FALLBACK_IMG = {
+    "unfall": "hf_20260210_181354_b287ca50-bc5a-4edc-a818-d8872a4dc8c6.webp",
+    "unfallinstandsetzung": "pexels-hellochemo-28960715.webp",
+    "versicherungsschaden": "pexels-artempodrez-8986139.webp",
+    "hagelschaden": "pexels-dante-juhasz-62201650-10880630.webp",
+    "kratzer": "pexels-uiliamnornberg-24960483_2971c584-81f6-4dd4-bf60-f58213b7bd8b.webp",
+    "stossstange-reparieren": "pexels-vadutskevich-13249371.webp",
+    "fuhrparkservice": "T_ubert_Karosserie_und_Lack_in_Sonneberg_Fuhrparkserive.webp",
+    "oldtimer-restaurierung": "hf_20260210_174234_03b93839-672b-4ba9-b742-8e3397346ee1.webp",
+}
+
+
+def first_image(body_html):
+    for m in re.finditer(r'src="images/([^"]+)"', body_html):
+        if os.path.exists(os.path.join(SITE, "images", m.group(1))):
+            return m.group(1)
+    return None
+
+
+def service_intro(slug, name):
+    """Brotkrumen + Kurzleiste mit Versprechen und den zwei Hauptaktionen direkt unter dem Startbild."""
+    return f'''<nav class="crumbs page-width" aria-label="Brotkrumen"><a href="index.html">Startseite</a><span>›</span><a href="leistungen.html">Leistungen</a><span>›</span><span aria-current="page">{esc(name)}</span></nav>
+<section class="svc-quick">
+  <div class="page-width svc-quick-inner">
+    {TRUST_HTML}
+    <div class="btns"><a class="btn btn-dark" href="{BOOKING}">Termin online buchen</a><a class="btn btn-outline-dark" href="schaden-melden.html">Schaden per Foto melden</a></div>
+  </div>
+</section>'''
+
+
+STEPS_HTML = '''<section class="svc-steps">
+  <div class="page-width">
+    <h2>So läuft's ab</h2>
+    <ol class="steps">
+      <li><span class="num">1</span><h3>Schaden melden</h3><p>Fotos hochladen, anrufen oder per WhatsApp schreiben.</p></li>
+      <li><span class="num">2</span><h3>Kostenvoranschlag in 24 Stunden</h3><p>Klare Einschätzung, was nötig ist und was es kostet.</p></li>
+      <li><span class="num">3</span><h3>Reparatur – mit Ersatzwagen</h3><p>Auf Wunsch holen wir Ihr Auto ab. Mit der Versicherung rechnen wir direkt ab.</p></li>
+      <li><span class="num">4</span><h3>Abholen und weiterfahren</h3><p>Geprüft und gereinigt – man sieht nicht mehr, wo der Schaden war.</p></li>
+    </ol>
+  </div>
+</section>'''
+
+
+def with_service_frame(slug, name, body_html):
+    """Startbild bleibt oben; danach Brotkrumen + Kurzleiste, am Ende vor dem Buchungsblock der Ablauf."""
+    m = re.search(r"<section.*?</section>", body_html, re.S)
+    head, rest = body_html[:m.end()], body_html[m.end():]
+    return head + service_intro(slug, name) + rest + STEPS_HTML
+
+
+
 def render_overview():
     svcs = all_services()
     locs = "".join(f'<li><a href="{slug}.html">{esc(LOCATIONS[slug][0])}</a></li>' for slug, _ in LOCATION_LINKS)
@@ -867,10 +976,13 @@ def render_overview():
     <div class="btns"><a class="btn btn-light" href="{BOOKING}">Termin online buchen</a><a class="btn btn-outline-light" href="tel:+4936754289606">Anrufen</a></div>
   </div>
 </section>
+<section class="svc-quick">
+  <div class="page-width svc-quick-inner">{TRUST_HTML}</div>
+</section>
 <section class="services-sec">
   <div class="page-width">
-    <h2>Alle Leistungen im Überblick</h2>
-    <div class="svc-grid">{service_cards(svcs)}</div>
+    <nav class="cat-nav" aria-label="Kategorien">{"".join(f'<a href="#kat-{i}">{esc(c)}</a>' for i, (c, _) in enumerate(CATEGORIES))}</nav>
+    {"".join(f'<h2 class="cat-head" id="kat-{i}">{esc(c)}</h2><div class="svc-grid">{service_cards([x for s in slugs for x in svcs if x[0] == s], images=True)}</div>' for i, (c, slugs) in enumerate(CATEGORIES))}
   </div>
 </section>
 <section class="sec" style="padding:60px 0 0">
@@ -923,7 +1035,7 @@ DAMAGE_FORM = """<section class="sub-hero" style="--h:420px;--mh:380px">
           <small>Tipp: ein Foto aus etwa 2 m Abstand, eines aus der Nähe und eines vom ganzen Fahrzeug. Die Fotos werden vor dem Senden automatisch verkleinert.</small>
         </label>
         <label class="f">Kurze Beschreibung<textarea name="nachricht" rows="5" placeholder="Was ist passiert? Wann passt Ihnen ein Termin?"></textarea></label>
-        <label class="f consent"><input type="checkbox" name="einwilligung" required> Ich bin einverstanden, dass meine Angaben und Fotos zur Bearbeitung der Anfrage gespeichert werden (siehe <a href="datenschutz.html">Datenschutz</a>). *</label>
+        <label class="f consent"><input type="checkbox" name="einwilligung" required><span>Ich bin einverstanden, dass meine Angaben und Fotos zur Bearbeitung der Anfrage gespeichert werden (siehe <a href="datenschutz.html">Datenschutz</a>). *</span></label>
       </div>
       <div class="btns"><button class="btn btn-dark" type="submit">Schaden senden</button></div>
       <p class="form-status" role="status"></p>
@@ -984,7 +1096,7 @@ DAMAGE_JS = r"""
       console.warn('Schadensmeldung konnte nicht gesendet werden:', err);
       btn.disabled = false;
       const v = n => (form.elements[n] || {}).value || '';
-      const msg = `Schadensmeldung\nName: ${v('name')}\nTelefon: ${v('telefon')}\nE-Mail: ${v('email')}\nFahrzeug: ${v('fahrzeug')}\nSchaden: ${v('schaden')}\nKosten: ${v('kostentraeger')}\n\n${v('nachricht')}`;
+      const msg = `${form.dataset.title || 'Schadensmeldung'}\nName: ${v('name')}\nTelefon: ${v('telefon')}\nE-Mail: ${v('email')}\nFahrzeug: ${v('fahrzeug')}\nSchaden: ${v('schaden')}\nKosten: ${v('kostentraeger')}\n\n${v('nachricht')}`;
       say('Das Senden hat gerade nicht geklappt. Schicken Sie Ihre Angaben einfach per WhatsApp oder E-Mail – die Nachricht ist schon vorbereitet, die Fotos hängen Sie dort an.', true);
       status.insertAdjacentHTML('beforeend', '<span class="btns" style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px">'
         + '<a class="btn btn-dark" target="_blank" rel="noopener" href="https://wa.me/4936754289606?text=' + encodeURIComponent(msg) + '">Per WhatsApp senden</a>'
@@ -996,14 +1108,50 @@ DAMAGE_JS = r"""
 
 BOOKING_PAGE = f"""<section class="sec booking-page" style="padding:50px 0 30px">
   <div class="page-width">
-    <h1 class="overline">Termin online buchen</h1>
-    <p class="heading h-6">Wunschtermin wählen – wir sind bereit.</p>
-    <div class="rte"><p>Wählen Sie Leistung und Wunschtermin in unserer Online-Terminbuchung. Lieber persönlich? Rufen Sie uns an: <a href="tel:+4936754289606">03675 4289606</a> oder schicken Sie <a href="schaden-melden.html">Fotos Ihres Schadens</a>.</p></div>
+    <h1 class="overline">Termin buchen</h1>
+    <p class="heading h-6">So unkompliziert wie möglich.</p>
+    <div class="rte"><p>Drei Wege – wählen Sie den bequemsten. Lieber persönlich? Rufen Sie uns an: <a href="tel:+4936754289606">03675 4289606</a> oder schicken Sie <a href="schaden-melden.html">Fotos Ihres Schadens</a>.</p></div>
   </div>
 </section>
 <section class="booking-embed">
-  <div class="page-width">
-    <div class="btns"><a class="btn btn-dark" href="{BOOKING_URL}">Zur Online-Terminbuchung</a><a class="btn btn-outline-dark" href="tel:+4936754289606">Anrufen: 03675 4289606</a></div>
+  <div class="page-width book-grid">
+    <div class="book-card">
+      <p class="eyebrow">Option 1 · Online</p>
+      <h2>Wunschtermin selbst wählen</h2>
+      <p>Leistung auswählen, freien Termin anklicken, fertig – rund um die Uhr.</p>
+      <a class="btn btn-dark" href="{BOOKING_URL}">Zur Online-Terminbuchung</a>
+    </div>
+    <div class="book-card" id="rueckruf">
+      <p class="eyebrow">Option 2 · Rückruf</p>
+      <h2>Wir rufen Sie an</h2>
+      <p>Name und Telefonnummer reichen – wir melden uns und machen den Termin mit Ihnen aus.</p>
+      <form class="damage-form" name="rueckruf" method="POST" action="danke.html" data-netlify="true" netlify-honeypot="firma" data-title="Rückrufwunsch">
+        <input type="hidden" name="form-name" value="rueckruf">
+        <p class="hp"><label>Nicht ausfüllen: <input name="firma" tabindex="-1" autocomplete="off"></label></p>
+        <div class="mail-form">
+          <label class="f half">Name *<input name="name" autocomplete="name" required></label>
+          <label class="f half">Telefon *<input name="telefon" type="tel" autocomplete="tel" required></label>
+          <label class="f half">Worum geht es?
+            <select name="schaden"><option>Unfallschaden</option><option>Lack / Kratzer / Delle</option><option>Reifenwechsel</option><option>Fahrzeugaufbereitung</option><option>Leasingrückgabe</option><option>Sonstiges</option></select>
+          </label>
+          <label class="f half">Wann erreichen wir Sie?
+            <select name="nachricht"><option>Egal – so bald wie möglich</option><option>Vormittags</option><option>Mittags</option><option>Nachmittags</option></select>
+          </label>
+          <label class="f consent"><input type="checkbox" name="einwilligung" required><span>Ich bin einverstanden, dass meine Angaben zur Bearbeitung gespeichert werden (siehe <a href="datenschutz.html">Datenschutz</a>). *</span></label>
+        </div>
+        <div class="btns"><button class="btn btn-outline-dark" type="submit">Rückruf anfordern</button></div>
+        <p class="form-status" role="status"></p>
+      </form>
+    </div>
+    <div class="book-card">
+      <p class="eyebrow">Option 3 · Direkt</p>
+      <h2>Anrufen oder schreiben</h2>
+      <p class="open-status" data-open-status></p>
+      <div class="btns" style="display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+        <a class="btn btn-dark" href="tel:+4936754289606">03675 4289606</a>
+        <a class="btn btn-outline-dark" href="https://wa.me/4936754289606" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
   </div>
 </section>"""
 
@@ -1011,6 +1159,13 @@ BOOKING_CSS = """
   .booking-page .heading { margin: 4px 0 6px; }
   .booking-page .rte a { text-decoration: underline; }
   .booking-embed { padding: 0 0 60px; }
+  .book-grid { display: grid; grid-template-columns: 1fr 1.6fr 1fr; gap: 16px; align-items: start; }
+  .book-card { background: var(--grey); padding: 26px; }
+  .book-card h2 { font-size: 22px; margin-bottom: 8px; }
+  .book-card > p { margin-bottom: 16px; color: #444; }
+  .book-card .mail-form { margin-top: 0; }
+  .book-card .eyebrow { color: #c00000; font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 8px; }
+  @media (max-width: 990px) { .book-grid { grid-template-columns: 1fr; } }
   .booking-embed iframe { display: block; width: 100%; height: 1000px; border: 1px solid var(--line); background: var(--white); }
   .booking-fallback { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 18px; }
   @media (max-width: 600px) { .booking-embed iframe { height: 1250px; } }
@@ -1062,7 +1217,7 @@ def simple_page(slug, title, desc, body_html, style, head_links, top, footer, js
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{esc(title)} | Täubert Karosserie &amp; Lack</title>
+<title>{esc(title)} | Täubert</title>
 {robots}{seo_head(title + " – Täubert Karosserie & Lack", desc, slug)}
 {head_links}
 <style>{style}{EXTRA_CSS}{DAMAGE_CSS}{BOOKING_CSS}{UNFALL_CSS}</style>
@@ -1084,7 +1239,9 @@ def simple_page(slug, title, desc, body_html, style, head_links, top, footer, js
 
 def write_seo_files(slugs):
     urls = [f"{DOMAIN}/"] + [f"{DOMAIN}/{x}.html" for x in slugs]
-    sm = "\n".join(f"  <url><loc>{u}</loc></url>" for u in urls)
+    import datetime
+    today = datetime.date.today().isoformat()
+    sm = "\n".join(f"  <url><loc>{u}</loc><lastmod>{today}</lastmod></url>" for u in urls)
     open(os.path.join(SITE, "sitemap.xml"), "w", encoding="utf-8").write(
         f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{sm}\n</urlset>\n')
     open(os.path.join(SITE, "robots.txt"), "w", encoding="utf-8").write(
@@ -1121,7 +1278,11 @@ def main():
         extra_ld = ""
         if meta:
             seo_title, short, desc = meta
-            body_html = keyword_h1(body_html, seo_title) + booking_cta(slug, short)
+            body_html = keyword_h1(body_html, seo_title)
+            if slug in SERVICES and slug not in GUIDES:
+                CARD_IMG[slug] = first_image(body_html)
+                body_html = with_service_frame(slug, short, body_html)
+            body_html += booking_cta(slug, short)
             title = seo_title
             if slug in SERVICES:
                 extra_ld = service_ld(slug, short, desc) + breadcrumb_ld(slug, short, ("Leistungen", f"{DOMAIN}/leistungen.html"))
@@ -1130,6 +1291,8 @@ def main():
         else:
             body_html = first_h1(body_html)
             desc = None
+            if slug in PAGE_META:
+                title, desc = PAGE_META[slug]
         extra_ld += faq_ld(body_html)
         og = re.search(r'src="images/([^"]+)"', body_html)
         page = f"""<!doctype html>
@@ -1137,7 +1300,7 @@ def main():
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{esc(title)} | Täubert Karosserie &amp; Lack</title>
+<title>{esc(title)} | Täubert</title>
 {seo_head(f"{title} – Täubert Karosserie & Lack", desc or description(body_html), slug, og.group(1) if og else None)}
 {head_links}
 <style>{style}{EXTRA_CSS}</style>
@@ -1158,14 +1321,14 @@ def main():
         open(os.path.join(SITE, f"{slug}.html"), "w", encoding="utf-8").write(sync_images(page))
         built.append(slug)
     for slug, p in NEW_PAGES.items():
-        body_html = render_new_page(slug, p) + booking_cta(slug, p["short"])
+        body_html = with_service_frame(slug, p["short"], render_new_page(slug, p)) + booking_cta(slug, p["short"])
         extra_ld = service_ld(slug, p["short"], p["desc"]) + breadcrumb_ld(slug, p["short"], ("Leistungen", f"{DOMAIN}/leistungen.html")) + faq_ld(body_html)
         page = f"""<!doctype html>
 <html lang="de">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{esc(p["title"])} | Täubert Karosserie &amp; Lack</title>
+<title>{esc(p["title"])} | Täubert</title>
 {seo_head(p["title"] + " – Täubert Karosserie & Lack", p["desc"], slug)}
 {head_links}
 <style>{style}{EXTRA_CSS}</style>
@@ -1191,7 +1354,7 @@ def main():
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Leistungen – Karosserie &amp; Lack Sonneberg | Täubert Karosserie &amp; Lack</title>
+<title>Leistungen – Karosserie &amp; Lack Sonneberg | Täubert</title>
 {seo_head("Leistungen – Täubert Karosserie & Lack", ov_desc, "leistungen")}
 {head_links}
 <style>{style}{EXTRA_CSS}{OVERVIEW_CSS}</style>
@@ -1218,7 +1381,7 @@ def main():
         DAMAGE_FORM, style, head_links, top, footer, js, ld)))
     built.insert(1, "schaden-melden")
     open(os.path.join(SITE, "termin.html"), "w", encoding="utf-8").write(sync_images(simple_page(
-        "termin", "Termin online buchen",
+        "termin", "Termin buchen – online, Rückruf oder Anruf",
         "Termin online buchen bei Täubert Karosserie & Lack in Sonneberg: Unfallreparatur, Lackierung, Smart Repair, Reifenservice und mehr.",
         BOOKING_PAGE, style, head_links, top, footer, js, ld)))
     built.insert(2, "termin")

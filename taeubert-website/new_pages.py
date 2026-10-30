@@ -6,9 +6,9 @@ Jede Seite: (SEO-Titel, Kurzname, Meta-Beschreibung, Hero, Abschnitte, FAQ)
 
 NEW_PAGES = {
     "hagelschaden": {
-        "title": "Hagelschaden reparieren – Sonneberg & Neustadt bei Coburg",
+        "title": "Hagelschaden reparieren – Sonneberg",
         "short": "Hagelschaden",
-        "desc": "Hagelschaden am Auto in Sonneberg reparieren lassen: Dellen möglichst ohne Lackieren entfernen, Lack und Karosserie aus einer Hand, Abstimmung mit der Versicherung.",
+        "desc": "Hagelschaden am Auto in Sonneberg reparieren: Dellen möglichst ohne Lackieren entfernen, Lack und Karosserie aus einer Hand, direkt mit der Versicherung.",
         "claim": "Nach dem Hagel kommt Täubert.",
         "lead": "Dellen auf Dach, Motorhaube und Kofferraum – wir prüfen, was ohne Neulackierung geht.",
         "sections": [
@@ -30,7 +30,7 @@ NEW_PAGES = {
         ],
     },
     "stossstange-reparieren": {
-        "title": "Stoßstange reparieren & lackieren – Sonneberg",
+        "title": "Stoßstange reparieren Sonneberg",
         "short": "Stoßstange reparieren",
         "desc": "Stoßstange reparieren oder lackieren in Sonneberg & Neustadt bei Coburg: Kratzer, Risse und Dellen im Stoßfänger beseitigen – oft ohne neues Teil.",
         "claim": "Stoßstange erwischt? Kriegen wir hin.",
@@ -52,7 +52,7 @@ NEW_PAGES = {
         ],
     },
     "oldtimer-restaurierung": {
-        "title": "Oldtimer-Restaurierung & Lackierung – Sonneberg",
+        "title": "Oldtimer-Restaurierung Sonneberg",
         "short": "Oldtimer & Klassiker",
         "desc": "Oldtimer-Restaurierung und Klassiker-Lackierung in Sonneberg: Entrostung, Karosseriearbeiten und originalgetreue Lackierung – mit Respekt vor dem Original.",
         "claim": "Klassiker verdienen Geduld.",
@@ -75,9 +75,9 @@ NEW_PAGES = {
         ],
     },
     "fuhrparkservice": {
-        "title": "Fuhrparkservice für Firmenfahrzeuge – Sonneberg",
+        "title": "Fuhrparkservice Sonneberg – Firmenfahrzeuge",
         "short": "Fuhrparkservice",
-        "desc": "Karosserie- und Lackservice für Firmenfahrzeuge und Transporter in Sonneberg & Neustadt bei Coburg: Schäden schnell beheben, Fahrzeuge schnell zurück im Einsatz.",
+        "desc": "Karosserie- und Lackservice für Firmenwagen und Transporter in Sonneberg & Neustadt bei Coburg: Schäden schnell beheben, Fahrzeuge schnell zurück im Einsatz.",
         "claim": "Ihre Flotte. Unser Job.",
         "lead": "Karosserie, Lack und Smart Repair für PKW, Transporter und Firmenfahrzeuge.",
         "sections": [
@@ -96,7 +96,7 @@ NEW_PAGES = {
         ],
     },
     "versicherungsschaden": {
-        "title": "Versicherungsschaden abwickeln – Unfallreparatur Sonneberg",
+        "title": "Versicherungsschaden Sonneberg – direkt abgerechnet",
         "short": "Versicherungsschaden",
         "desc": "Versicherungsschaden in Sonneberg: Täubert übernimmt Schadenaufnahme, Abstimmung mit Versicherung und Gutachter sowie die komplette Reparatur.",
         "claim": "Sie bringen das Auto. Wir regeln den Rest.",
