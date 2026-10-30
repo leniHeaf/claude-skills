@@ -329,6 +329,55 @@
   .chips span { letter-spacing: .02em; }
   .drawer summary, .drawer .plain { letter-spacing: .04em; }
 
+  /* ===== Premium-Layout: Rhythmus, Foto-Kacheln, ruhige Typografie ===== */
+  body { font-size: 17px; line-height: 1.7; }
+  .services-sec, .steps-sec, .assist, .faq-sec, .konfig { padding: 120px 0; }
+  .slides-section { padding-top: 0; padding-bottom: 0; }
+  .slides-section .slider { height: 82vh; min-height: 520px; }
+  .visit { padding: 0 0 120px; }
+  .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: #6b6b6b; margin-bottom: 14px; }
+  .sec-intro { max-width: 760px; margin-bottom: 56px; }
+  .sec-intro h2, .services-sec h2, .steps-sec h2, .assist-head h2, .faq h2, .konfig h2, .visit h2 { font-size: clamp(34px, 4.4vw, 62px); line-height: 1.02; letter-spacing: 0; }
+  .lead, .sec-intro .lead { font-size: 19px; color: #555; margin-top: 18px; max-width: 640px; }
+  .intro { padding: 120px 0 40px; text-align: left; }
+  .intro .inner { max-width: 1100px; margin: 0; }
+  .intro h2 { font-size: clamp(26px, 3vw, 40px); line-height: 1.15; max-width: 900px; }
+  .intro p { font-size: 19px; color: #555; max-width: 680px; margin-top: 20px; }
+  .tile-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; }
+  .tile-svc { position: relative; display: block; aspect-ratio: 4 / 5; overflow: hidden; background: #111; color: #fff; }
+  .tile-svc .tile-media, .tile-svc img { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .tile-svc img { object-fit: cover; transition: transform 1.1s cubic-bezier(.2,.8,.2,1), opacity .4s; opacity: .85; }
+  .tile-svc::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0,0,0,.85) 0%, rgba(0,0,0,.25) 45%, rgba(0,0,0,0) 70%); }
+  .tile-svc:hover img { transform: scale(1.05); opacity: 1; }
+  .tile-body { position: absolute; left: 0; right: 0; bottom: 0; padding: 32px; z-index: 1; }
+  .tile-body h3 { font-size: clamp(20px, 1.8vw, 26px); margin-bottom: 10px; }
+  .tile-body p { font-size: 15px; color: rgba(255,255,255,.8); max-width: 340px; line-height: 1.55; }
+  .tile-more { display: inline-block; margin-top: 16px; font-size: 12px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,.6); padding-bottom: 4px; }
+  .services-sec .svc-more { margin-top: 48px; }
+  .svc { border: 0; background: var(--white); }
+  .svc:hover { outline: 1px solid #000; }
+  .steps li { border-top-width: 1px; }
+  .steps .num { font-size: 15px; letter-spacing: .2em; color: #6b6b6b; font-family: Inter, sans-serif; font-weight: 600; }
+  .steps .num::before { content: "0"; }
+  .steps h3 { font-size: 21px; margin: 14px 0 10px; }
+  .assist { background: var(--white); border-top: 1px solid var(--line); }
+  .chips span { padding: 12px 18px; font-size: 14px; }
+  .visit-inner { padding: 56px; }
+  .konfig { background: var(--white); }
+  .faq-sec { border-top: 1px solid var(--line); }
+  @media (max-width: 990px) { .tile-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 760px) {
+    .services-sec, .steps-sec, .assist, .faq-sec, .konfig { padding: 72px 0; }
+    .intro { padding: 72px 0 10px; }
+    .visit { padding: 0 0 72px; }
+    .visit-inner { padding: 28px 20px; }
+    .slides-section .slider { height: 70vh; }
+    .tile-grid { grid-template-columns: 1fr; }
+    .tile-svc { aspect-ratio: 4 / 3; }
+    .tile-body { padding: 22px; }
+    .sec-intro { margin-bottom: 32px; }
+  }
+
   /* Vertrauensleiste */
   .trust { list-style: none; display: flex; flex-wrap: wrap; gap: 10px 26px; }
   .trust li { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; }

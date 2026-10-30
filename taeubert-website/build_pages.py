@@ -854,6 +854,16 @@ CARD_TEXT = {
 }
 
 
+def service_tiles(items):
+    """Großflächige Foto-Kacheln (Startseite)."""
+    out = []
+    for slug, name, desc in items:
+        img = CARD_IMG.get(slug) or FALLBACK_IMG.get(slug)
+        pic = f'<img src="images/{esc(img)}" alt="{esc(name)}" loading="lazy">' if img else ""
+        out.append(f'<a class="tile-svc" href="{slug}.html"><span class="tile-media">{pic}</span><span class="tile-body"><h3>{esc(name)}</h3><p>{esc(CARD_TEXT.get(slug, desc))}</p><span class="tile-more">Mehr erfahren</span></span></a>')
+    return "".join(out)
+
+
 def service_cards(items, images=False):
     out = []
     for slug, name, desc in items:
@@ -907,9 +917,9 @@ def update_index():
     block = f'''<!-- LEISTUNGEN:START -->
   <section class="services-sec" id="leistungen">
     <div class="page-width">
-      <h2>Unsere Leistungen</h2>
-      <p class="lead">Karosserie, Lack und Fahrzeugpflege für Kunden aus Sonneberg, Neustadt bei Coburg, Coburg und Umgebung – alles in einem Betrieb.</p>
-      <div class="svc-grid">{service_cards(top)}</div>
+      <div class="sec-intro"><p class="eyebrow">Leistungen</p><h2>Alles aus einer Hand</h2>
+      <p class="lead">Karosserie, Lack und Fahrzeugpflege – in einem Betrieb, für Kunden aus Sonneberg, Neustadt bei Coburg, Coburg und Umgebung.</p></div>
+      <div class="tile-grid">{service_tiles(top)}</div>
       <a class="btn btn-dark svc-more" href="leistungen.html">Alle {len(svcs)} Leistungen ansehen</a>
     </div>
   </section>
@@ -1518,6 +1528,7 @@ def main():
         "danke", "Danke", "Ihre Schadensmeldung ist bei uns eingegangen.", THANKS, style, head_links, top, footer, js, ld,
         robots='<meta name="robots" content="noindex, follow">\n'))
     write_seo_files(built)
+    update_index()  # erneut, jetzt mit den Bildern der gebauten Leistungsseiten
     for extra in ("index.html", "impressum.html", "datenschutz.html"):
         fp = os.path.join(SITE, extra)
         content = sync_images(open(fp, encoding="utf-8").read())
