@@ -426,6 +426,7 @@ EXTRA_CSS = """
   .tile-grid.c4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .tile-grid.c4 .tile-svc { aspect-ratio: 16 / 10; }
   .tile-grid.c1 { grid-template-columns: 1fr; }
+  @media (min-width: 991px) { .tile-grid.m2 > :first-child, .tile-grid.m1 > :first-child, .tile-grid.m1 > :last-child { grid-column: span 2; aspect-ratio: auto; } }
   .tile-grid.c5 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
   .tile-grid.c5 > * { grid-column: span 2; }
   .tile-grid.c5 > :nth-child(-n+2) { grid-column: span 3; aspect-ratio: 16 / 10; }
@@ -841,7 +842,7 @@ def render_new_page(slug, p):
     <p class="hours">Mo–Do 8–17 Uhr · Fr 8–14:30 Uhr<br>Bettelhecker Straße 15, Sonneberg</p>
   </aside>
 </section>''']
-    rows = "".join(f'<details><summary><span>{esc(q)}</span></summary><div class="rte"><p>{esc(a)}</p></div></details>' for q, a in p["faq"])
+    rows = "".join(f'<details><summary><span>{esc(q)}</span></summary><div class="rte"><p>{a if "<a " in a else esc(a)}</p></div></details>' for q, a in p["faq"])
     img = FALLBACK_IMG.get(slug)
     media_html = f'<div class="media"><img src="images/{img}" alt="{esc(p["short"])}" fetchpriority="high"></div><div class="overlay" style="opacity:.5"></div>' if img else '<div class="media"></div><div class="overlay" style="opacity:0"></div>'
     return f'''<section class="sub-hero" style="--h:520px;--mh:440px">
@@ -896,7 +897,11 @@ CARD_TEXT = {
     "keramikversiegelung": "Langzeitschutz und Glanz – Wasser perlt ab, Pflege wird leichter.",
     "innenraumaufbereitung": "Polster, Leder, Teppiche und Gerüche – wieder gern einsteigen.",
     "scheinwerfer-aufbereiten": "Vergilbt und matt? Geschliffen, poliert, versiegelt – wieder klar.",
-    "unterbodenschutz": "Unterbodenwäsche, Rostbehandlung und Hohlraumversiegelung gegen Streusalz.",
+    "unterbodenschutz": "Unterbodenwäsche, Rostbehandlung und Mike Sanders Versiegelung gegen Streusalz.",
+    "hu-au": "Vorab-Check, Mängel direkt beheben, Prüfung organisieren – Plakette ohne Stress.",
+    "reifen-kaufen": "Beratung, Bestellung, Montage und Wuchten – alles aus einer Hand.",
+    "felgenreparatur": "Bordsteinschäden und Kratzer an Alufelgen – wie neu lackiert.",
+    "lackstift": "Nach Farbcode exakt angemischt – für Steinschläge und kleine Kratzer.",
     "versicherungsschaden": "Direkte Abrechnung mit der Versicherung. Sie bringen das Auto, wir den Rest.",
 }
 
@@ -906,7 +911,7 @@ SHY = {"Unfallinstandsetzung": "Unfall&shy;instand&shy;setzung", "Fahrzeugaufber
        "Versicherungsschaden": "Versicherungs&shy;schaden", "Karosseriearbeiten": "Karosserie&shy;arbeiten",
        "Kleinschaden-Reparatur": "Kleinschaden-<wbr>Reparatur", "Unfallreparatur": "Unfall&shy;reparatur",
        "Leasingrückgabe": "Leasing&shy;rückgabe", "Lackaufbereitung": "Lack&shy;aufbereitung", "Keramikversiegelung": "Keramik&shy;versiegelung",
-       "Innenraumaufbereitung": "Innenraum&shy;aufbereitung", "Unterbodenschutz": "Unterboden&shy;schutz", "Fuhrparkservice": "Fuhrpark&shy;service", "Lackierarbeiten": "Lackier&shy;arbeiten"}
+       "Innenraumaufbereitung": "Innenraum&shy;aufbereitung", "Unterbodenschutz": "Unterboden&shy;schutz", "Felgenreparatur": "Felgen&shy;reparatur", "Fuhrparkservice": "Fuhrpark&shy;service", "Lackierarbeiten": "Lackier&shy;arbeiten"}
 
 
 def service_tiles(items):
@@ -1034,9 +1039,10 @@ def breadcrumb_ld(slug, name, parent=None):
 # Leistungs-Kategorien für die Übersicht
 CATEGORIES = [
     ("Unfall & Versicherung", ["unfall", "unfallinstandsetzung", "versicherungsschaden", "hagelschaden"]),
-    ("Karosserie & Lack", ["karosserie", "lackierarbeiten", "smartrepair", "kleinschaden", "kratzer", "stossstange-reparieren"]),
+    ("Karosserie & Lack", ["karosserie", "lackierarbeiten", "smartrepair", "kleinschaden", "kratzer", "stossstange-reparieren", "lackstift"]),
     ("Aufbereitung & Pflege", ["fahrzeugaufbereitung", "lackaufbereitung", "keramikversiegelung", "innenraumaufbereitung", "scheinwerfer-aufbereiten", "unterbodenschutz"]),
-    ("Service", ["reifenservice", "leasingrueckgabe", "fuhrparkservice"]),
+    ("Räder & Reifen", ["reifenservice", "reifen-kaufen", "felgenreparatur"]),
+    ("Service", ["hu-au", "leasingrueckgabe", "fuhrparkservice"]),
     ("Klassiker", ["oldtimer-restaurierung"]),
 ]
 CARD_IMG = {}  # slug -> erstes vorhandenes Bild der Leistungsseite (wird beim Bauen gefüllt)
@@ -1050,6 +1056,10 @@ FALLBACK_IMG = {
     "stossstange-reparieren": "pexels-vadutskevich-13249371.webp",
     "fuhrparkservice": "T_ubert_Karosserie_und_Lack_in_Sonneberg_Fuhrparkserive.webp",
     "unterbodenschutz": "pexels-aida-shukuhi-914628252-20281832.webp",
+    "hu-au": "pexels-enis-yavuz-3516387-5260115.webp",
+    "reifen-kaufen": "pexels-borta-2790256-30787396.webp",
+    "felgenreparatur": "pexels-austin-briones-2158818052-36202185.webp",
+    "lackstift": "Zwischenueberschrifthinzufuegen.webp",
     "lackaufbereitung": "pexels-tima-miroshnichenko-6872570.webp",
     "keramikversiegelung": "pexels-amar-11157437.webp",
     "innenraumaufbereitung": "pexels-wavyvisuals-377312923-20051451.webp",
@@ -1266,7 +1276,8 @@ CAT_INTRO = {
     "Unfall & Versicherung": "Ein Ansprechpartner von der Schadensaufnahme bis zur Abrechnung mit der Versicherung. Sie bringen das Auto – wir regeln den Rest.",
     "Karosserie & Lack": "Richtbank, Lackierkabine und digitale Farbtonmessung unter einem Dach. Man sieht später nicht, wo der Schaden war.",
     "Aufbereitung & Pflege": "Vom Unterboden bis zum Dachhimmel: Lack, Innenraum, Scheinwerfer und Versiegelung – damit Ihr Fahrzeug gepflegt aussieht und lange hält.",
-    "Service": "Reifen, Leasingrückgabe und Firmenfahrzeuge – unkompliziert und termingenau.",
+    "Räder & Reifen": "Neue Reifen bestellen, wechseln und einlagern – und beschädigte Felgen reparieren.",
+    "Service": "HU/AU, Leasingrückgabe und Firmenfahrzeuge – unkompliziert und termingenau.",
     "Klassiker": "Restaurierung mit Geduld, Handwerk und Respekt vor dem Original.",
 }
 # Schnellauswahl: Anliegen des Kunden -> passende Leistung
@@ -1276,12 +1287,14 @@ FINDER = [
     ("Mein Auto hat Hagelschaden", "hagelschaden"), ("Mein Leasingauto geht zurück", "leasingrueckgabe"),
     ("Mein Lack ist stumpf", "lackaufbereitung"), ("Der Innenraum ist verschmutzt", "innenraumaufbereitung"),
     ("Mein Unterboden rostet", "unterbodenschutz"), ("Ich möchte neu lackieren", "lackierarbeiten"),
+    ("Mein Auto muss zum TÜV", "hu-au"), ("Ich brauche neue Reifen", "reifen-kaufen"),
+    ("Meine Felge ist beschädigt", "felgenreparatur"), ("Ich brauche einen Lackstift", "lackstift"),
 ]
 
 
 def tile_grid(items):
     n = len(items)
-    cls = {4: " c4", 1: " c1", 5: " c5"}.get(n, "")
+    cls = {4: " c4", 1: " c1", 5: " c5"}.get(n, " m2" if n > 5 and n % 3 == 2 else " m1" if n > 5 and n % 3 == 1 else "")
     return f'<div class="tile-grid{cls}">{service_tiles(items)}</div>'
 
 
@@ -1488,7 +1501,7 @@ BOOKING_PAGE = f"""<section class="sec booking-page" style="padding:50px 0 30px"
           <label class="f half">Name *<input name="name" autocomplete="name" required></label>
           <label class="f half">Telefon *<input name="telefon" type="tel" autocomplete="tel" required></label>
           <label class="f half">Worum geht es?
-            <select name="schaden"><option>Unfallschaden</option><option>Lack / Kratzer / Delle</option><option>Reifenwechsel</option><option>Fahrzeugaufbereitung</option><option>Leasingrückgabe</option><option>Sonstiges</option></select>
+            <select name="schaden"><option>Unfallschaden</option><option>Lack / Kratzer / Delle</option><option>Reifenwechsel / neue Reifen</option><option>HU/AU (TÜV)</option><option>Felgenreparatur</option><option>Lackstift</option><option>Fahrzeugaufbereitung</option><option>Leasingrückgabe</option><option>Sonstiges</option></select>
           </label>
           <label class="f half">Wann erreichen wir Sie?
             <select name="nachricht"><option>Egal – so bald wie möglich</option><option>Vormittags</option><option>Mittags</option><option>Nachmittags</option></select>
@@ -1595,6 +1608,10 @@ GENERAL_FAQ = [
         ("Welche Fahrzeuge reparieren Sie?", "PKW, Transporter, Firmenfahrzeuge und Oldtimer – Marke egal."),
         ("Wie erfahre ich, wann mein Auto fertig ist?", "Mit dem Kostenvoranschlag nennen wir Ihnen einen realistischen Zeitrahmen. Sobald Ihr Fahrzeug fertig ist, melden wir uns bei Ihnen."),
         ("Wird mein Auto nach der Reparatur gereinigt?", "Ja. Sie bekommen Ihr Fahrzeug geprüft und gereinigt zurück."),
+        ("Kann ich mehrere Leistungen in einem Termin erledigen?", "Ja. Unfallreparatur, Lack, HU/AU, Reifen, Aufbereitung oder Unterbodenschutz – alles unter einem Dach. Sagen Sie uns bei der Buchung, was gemacht werden soll, dann planen wir es zusammen ein."),
+        ("Wie erfahre ich, wie weit mein Auto ist?", "Rufen Sie uns an (03675 4289606) oder schreiben Sie per WhatsApp – wir geben Ihnen jederzeit Bescheid."),
+        ("Arbeiten Sie auch für Firmenkunden?", "Ja. Firmenwagen, Transporter und ganze Flotten betreuen wir mit abgestimmten Terminen – mehr beim <a href=\"fuhrparkservice.html\">Fuhrparkservice</a>."),
+        ("Welche Leistungen bieten Sie insgesamt an?", "Unfallreparatur, Karosserie, Lackierung, Smart Repair, Kratzer und Kleinschäden, Hagelschaden, HU/AU, Reifen und Felgenreparatur, Lackstifte, Fahrzeugaufbereitung, Keramikversiegelung, Unterbodenschutz inklusive Mike Sanders Versiegelung, Leasingrückgabe, Fuhrparkservice und Oldtimer-Restaurierung. <a href=\"leistungen.html\">Alle Leistungen ansehen</a>"),
     ]),
     ("Ersatzwagen & Hol- und Bringservice", [
         ("Bekomme ich einen Ersatzwagen?", "Ja. Damit Sie während der Reparatur mobil bleiben, stellen wir Ihnen einen Ersatzwagen zur Verfügung."),

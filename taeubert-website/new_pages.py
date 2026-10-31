@@ -69,6 +69,7 @@ NEW_PAGES = {
              '<p>Individuelle Designs und Sonderlackierungen finden Sie bei <a href="https://taeubertcustomize.de/" target="_blank" rel="noopener">Täubert custom</a>.</p>'),
         ],
         "faq": [
+            ("Bieten Sie Hohlraumversiegelung für Klassiker an?", "Ja, zum Beispiel mit Mike Sanders Korrosionsschutzfett – ideal für Oldtimer. Mehr dazu beim <a href=\"unterbodenschutz.html\">Unterbodenschutz</a>."),
             ("Restaurieren Sie komplette Fahrzeuge?", "Unser Schwerpunkt liegt auf Karosserie, Entrostung und Lackierung. Was bei Ihrem Fahrzeug sinnvoll ist, besprechen wir gemeinsam vor Ort."),
             ("Können Sie den Originalfarbton treffen?", "Ja, der Farbton wird am Original orientiert und digital gemessen. Bei sehr alten Lacken stimmen wir den Ton zusätzlich mit Ihnen ab."),
             ("Wie lange dauert eine Restaurierung?", "Das hängt stark vom Zustand des Fahrzeugs ab. Nach der Begutachtung bekommen Sie eine realistische Einschätzung."),
@@ -124,11 +125,11 @@ NEW_PAGES = {
 
 NEW_PAGES.update({
     "unterbodenschutz": {
-        "title": "Unterbodenschutz & Hohlraumversiegelung Sonneberg",
+        "title": "Unterbodenschutz & Mike Sanders Versiegelung Sonneberg",
         "short": "Unterbodenschutz",
-        "desc": "Unterbodenschutz, Unterbodenwäsche und Hohlraumversiegelung in Sonneberg: Rost vorbeugen, Schäden behandeln und den Wert Ihres Fahrzeugs erhalten.",
+        "desc": "Unterbodenschutz und Hohlraumversiegelung in Sonneberg – auch mit Mike Sanders Korrosionsschutzfett: Unterbodenwäsche, Rostbehandlung und Langzeitschutz für Alltagsauto und Klassiker.",
         "claim": "Schutz von unten.",
-        "lead": "Unterbodenwäsche, Rostbehandlung, Unterbodenschutz und Hohlraumversiegelung – damit Streusalz keine Chance hat.",
+        "lead": "Unterbodenwäsche, Rostbehandlung, Unterbodenschutz und Hohlraumversiegelung – auch mit Mike Sanders. Damit Streusalz keine Chance hat.",
         "sections": [
             ("Was man nicht sieht, rostet zuerst",
              "<p>Im Winter im Thüringer Wald bekommt der Unterboden einiges ab: Streusalz, Splitt, Nässe und Schmutz setzen sich in Falzen, Schwellern und Radhäusern fest. Rost entsteht dort oft unbemerkt – bis er teuer wird oder beim TÜV auffällt.</p>"
@@ -138,7 +139,12 @@ NEW_PAGES.update({
              "<li><strong>Prüfung:</strong> Wir schauen uns Unterboden, Schweller, Radhäuser und Falze auf der Hebebühne genau an</li>"
              "<li><strong>Rostbehandlung:</strong> Roststellen entfernen, behandeln und grundieren</li>"
              "<li><strong>Unterbodenschutz:</strong> neue Schutzschicht auf gefährdeten Bereichen</li>"
-             "<li><strong>Hohlraumversiegelung:</strong> Konservierung in Schwellern, Türen und Hohlräumen</li></ul>"),
+             "<li><strong>Hohlraumversiegelung:</strong> Konservierung in Schwellern, Türen und Hohlräumen</li>"
+             "<li><strong>Mike Sanders Versiegelung:</strong> Langzeit-Korrosionsschutz mit heiß verarbeitetem Fett</li></ul>"),
+            ("Mike Sanders Versiegelung",
+             "<p>Das Korrosionsschutzfett von Mike Sanders gilt unter Oldtimer- und Youngtimer-Fans als Klassiker – aus gutem Grund. Es wird erhitzt und flüssig in Hohlräume, Schweller, Träger und auf den Unterboden gesprüht. Dabei kriecht es tief in Falze und Nähte und verdrängt Feuchtigkeit.</p>"
+             "<ul><li>bleibt dauerhaft elastisch und wird nicht spröde</li><li>kleine Beschädigungen schließen sich wieder</li><li>kriecht in Falze und Spalten, die andere Mittel nicht erreichen</li><li>ideal für Klassiker, Wohnmobile, Transporter und Fahrzeuge, die lange halten sollen</li></ul>"
+             "<p>Vorher wird der Unterboden gereinigt, getrocknet und auf Rost geprüft. Vorhandene Roststellen behandeln wir zuerst – erst dann wird versiegelt.</p>"),
             ("Wann sich Unterbodenschutz lohnt",
              "<ul><li>vor dem Winter – und nach dem Winter, um Salz zu entfernen</li><li>nach dem Kauf eines Gebrauchtwagens</li><li>vor der Hauptuntersuchung, wenn Rost sichtbar ist</li><li>bei Oldtimern, Wohnmobilen und Transportern, die lange halten sollen</li></ul>"
              "<p>Ist bereits Blech durchgerostet, übernehmen unsere Karosseriebauer die Reparatur – im selben Betrieb.</p>"),
@@ -146,6 +152,9 @@ NEW_PAGES.update({
         "faq": [
             ("Wie oft sollte der Unterbodenschutz geprüft werden?", "Am besten einmal im Jahr, idealerweise nach dem Winter. Dann sieht man Beschädigungen durch Splitt und Salz und kann früh reagieren."),
             ("Was ist der Unterschied zwischen Unterbodenschutz und Hohlraumversiegelung?", "Der Unterbodenschutz schützt die sichtbaren Flächen unter dem Fahrzeug. Die Hohlraumversiegelung konserviert die Innenseiten von Schwellern, Türen und Trägern, wo Feuchtigkeit sonst unbemerkt Rost bildet."),
+            ("Was ist eine Mike Sanders Versiegelung?", "Eine Hohlraum- und Unterbodenkonservierung mit dem Korrosionsschutzfett von Mike Sanders. Es wird heiß verarbeitet, kriecht tief in Falze und Hohlräume, bleibt elastisch und schützt so besonders lange vor Rost."),
+            ("Für welche Fahrzeuge lohnt sich Mike Sanders?", "Besonders für Oldtimer und Youngtimer, Wohnmobile, Transporter und alle Fahrzeuge, die man lange behalten möchte. Aber auch ein Alltagsauto profitiert vom Langzeitschutz."),
+            ("Kann das Fett nach der Behandlung tropfen?", "An den ersten sehr warmen Tagen kann überschüssiges Fett an Ablauföffnungen austreten. Das ist normal und lässt nach – wir sagen Ihnen bei der Abholung, worauf Sie achten sollten."),
             ("Kann vorhandener Rost einfach überdeckt werden?", "Das machen wir nicht. Rost wird zuerst entfernt und behandelt – sonst arbeitet er unter der neuen Schicht weiter."),
         ],
     },
@@ -269,3 +278,93 @@ NEW_PAGES["unfallinstandsetzung"] = {
         ("Wie lange dauert die Reparatur?", "Das hängt vom Schaden und von der Teileverfügbarkeit ab. Mit dem Kostenvoranschlag nennen wir Ihnen einen realistischen Zeitrahmen."),
     ],
 }
+
+
+NEW_PAGES.update({
+    "hu-au": {
+        "title": "HU/AU (TÜV) Sonneberg – Hauptuntersuchung",
+        "short": "HU/AU (TÜV)",
+        "desc": "HU/AU in Sonneberg: Wir bereiten Ihr Fahrzeug auf die Hauptuntersuchung vor, beheben Mängel wie Rost oder blinde Scheinwerfer direkt im Haus und kümmern uns um die Prüfung.",
+        "claim": "Neue Plakette. Ohne Stress.",
+        "lead": "Vorab-Check, Mängel direkt beheben, Prüfung organisieren – Sie holen Ihr Auto mit Plakette ab.",
+        "sections": [
+            ("HU/AU-Service bei Täubert",
+             "<p>Die Hauptuntersuchung (HU, umgangssprachlich „TÜV“) und die Abgasuntersuchung (AU) sind Pflicht. Damit Ihr Termin ohne böse Überraschung endet, schauen wir uns Ihr Fahrzeug vorher an und beheben, was die Plakette gefährden würde.</p>"
+             "<ul><li><strong>Vorab-Check</strong> der typischen Prüfpunkte</li><li><strong>Mängel direkt beheben</strong> – Karosserie, Rost, Unterboden, Scheinwerfer, Reifen</li><li><strong>Prüfung organisieren</strong> durch eine amtlich anerkannte Prüforganisation</li></ul>"),
+            ("Was bei der HU geprüft wird",
+             "<ul><li>Bremsen, Lenkung und Fahrwerk</li><li>Beleuchtung und Scheinwerfereinstellung</li><li>Karosserie, tragende Teile und Rost</li><li>Reifen und Räder</li><li>Abgasverhalten (AU)</li><li>Sicherheits- und Umweltbauteile</li></ul>"),
+            ("Typische Mängel, die wir direkt beheben",
+             "<ul><li>Durchrostungen an Schwellern, Radläufen und Unterboden – Instandsetzung durch unsere Karosseriebauer</li><li>beschädigter <a href=\"unterbodenschutz.html\">Unterbodenschutz</a></li><li>blinde oder vergilbte Scheinwerfer – <a href=\"scheinwerfer-aufbereiten.html\">aufbereiten</a> statt neu kaufen</li><li>abgefahrene oder beschädigte <a href=\"reifen-kaufen.html\">Reifen</a></li><li>scharfkantige Unfallschäden</li></ul>"),
+        ],
+        "faq": [
+            ("Wie oft muss mein Auto zur Hauptuntersuchung?", "Ein neuer Pkw muss nach drei Jahren zur ersten HU, danach alle zwei Jahre. Wann es so weit ist, zeigt die Plakette auf dem hinteren Kennzeichen."),
+            ("Was passiert, wenn ich die HU überzogen habe?", "Ab etwa zwei Monaten Überziehung drohen ein Verwarn- bzw. Bußgeld und eine erweiterte Prüfung. Am besten rechtzeitig einen Termin buchen."),
+            ("Was, wenn bei der HU Mängel gefunden werden?", "Dann beheben wir sie direkt bei uns – Karosserie, Rost, Scheinwerfer oder Reifen – und das Fahrzeug wird zur Nachprüfung vorgestellt."),
+            ("Kann ich HU/AU mit einer Reparatur verbinden?", "Ja. Ob Lackschaden, Unfallreparatur oder Aufbereitung – wir erledigen alles in einem Termin."),
+        ],
+    },
+    "reifen-kaufen": {
+        "title": "Reifen kaufen & wechseln Sonneberg",
+        "short": "Reifen bestellen",
+        "desc": "Neue Reifen in Sonneberg bestellen und montieren lassen: Sommer-, Winter- und Ganzjahresreifen aller Marken – mit Beratung, Montage, Wuchten und Einlagerung.",
+        "claim": "Neue Reifen. Ohne Umweg.",
+        "lead": "Wir beraten, bestellen, montieren und wuchten – und lagern Ihre Räder auf Wunsch ein.",
+        "sections": [
+            ("Wir bestellen Ihre Reifen",
+             "<p>Sommer-, Winter- oder Ganzjahresreifen, Premium oder preisbewusst: Wir beraten Sie nach Fahrzeug und Fahrprofil und bestellen die passenden Reifen für Sie – Sie müssen sich um nichts kümmern.</p>"
+             "<ul><li>alle gängigen Größen und Marken</li><li>Beratung zu Fahrprofil, Laufleistung und Budget</li><li>auf Wunsch komplette Räder mit Felgen</li></ul>"),
+            ("Montage, Wuchten, Einlagerung",
+             "<ul><li>Montage und Auswuchten</li><li>Reifendruck-Kontrollsystem wird berücksichtigt</li><li>Räderwechsel zum Saisonwechsel</li><li>fachgerechte <a href=\"reifenservice.html\">Einlagerung</a> Ihrer Räder</li></ul>"
+             "<p>Beschädigte Alufelge? Die bringen wir mit unserer <a href=\"felgenreparatur.html\">Felgenreparatur</a> wieder in Form.</p>"),
+            ("Wann brauche ich neue Reifen?",
+             "<p>Gesetzlich vorgeschrieben sind mindestens 1,6 mm Profiltiefe. Empfohlen werden bei Sommerreifen etwa 3 mm und bei Winterreifen etwa 4 mm. Auch das Alter zählt: Gummi wird mit den Jahren hart – wir prüfen Ihre Reifen gern und sagen Ihnen ehrlich, ob ein Wechsel nötig ist.</p>"),
+        ],
+        "faq": [
+            ("Welche Reifengröße passt auf mein Auto?", "Die Größe steht auf der Reifenflanke (z. B. 205/55 R16) und in der Zulassungsbescheinigung. Am einfachsten: Fahrzeug nennen oder ein Foto der Reifenflanke schicken – wir finden die passenden Reifen."),
+            ("Wie lange dauert die Bestellung?", "In der Regel sind die Reifen innerhalb weniger Werktage da. Den Montagetermin stimmen wir direkt mit Ihnen ab."),
+            ("Lohnen sich Ganzjahresreifen?", "Für Fahrer mit eher geringer Laufleistung und milden Wintern oft ja. Wer viel fährt oder häufig im Thüringer Wald unterwegs ist, ist mit Winterreifen meist besser bedient. Wir beraten Sie gern."),
+        ],
+    },
+    "felgenreparatur": {
+        "title": "Felgenreparatur Sonneberg – Bordsteinschäden",
+        "short": "Felgenreparatur",
+        "desc": "Felgenreparatur in Sonneberg: Bordsteinschäden, Kratzer und Korrosion an Alufelgen beseitigen und im Originalfarbton lackieren – günstiger als neue Felgen.",
+        "claim": "Bordstein erwischt? Wird wieder schön.",
+        "lead": "Kratzer, Bordsteinschäden und Korrosion an Alufelgen – geschliffen, gespachtelt und neu lackiert.",
+        "sections": [
+            ("Typische Felgenschäden",
+             "<ul><li>Bordsteinschäden am Felgenhorn</li><li>Kratzer und Schrammen</li><li>Korrosion und abblätternder Lack</li><li>verblasste oder beschädigte Felgenfarbe</li></ul>"),
+            ("So reparieren wir Ihre Felgen",
+             "<ul><li><strong>Prüfung:</strong> Wir kontrollieren die Felge auf Risse und Verformungen</li><li><strong>Vorbereitung:</strong> Schleifen, Spachteln, Glätten der beschädigten Stellen</li><li><strong>Lackierung:</strong> im Originalfarbton – Silber, Anthrazit, Schwarz oder Ihre Wunschfarbe</li><li><strong>Klarlack:</strong> für Glanz und Schutz</li></ul>"
+             "<p>Wunschfarbe gefällig? Felgen lackieren wir auch komplett um.</p>"),
+            ("Wann eine Reparatur nicht infrage kommt",
+             "<p>Bei Rissen oder verformten Felgen geht Sicherheit vor – dann ist ein Austausch die richtige Wahl. Glanzgedrehte Felgen erfordern ein besonderes Verfahren; sprechen Sie uns darauf an.</p>"),
+        ],
+        "faq": [
+            ("Lohnt sich eine Felgenreparatur?", "Meist ja – eine Reparatur ist in der Regel deutlich günstiger als eine neue Felge, besonders bei Original-Alufelgen."),
+            ("Sieht man die Reparatur danach?", "Unser Ziel ist, dass man keinen Unterschied sieht. Die Felge wird im passenden Farbton lackiert und mit Klarlack versiegelt."),
+            ("Kann ich meine Felgen in einer anderen Farbe lackieren lassen?", "Ja, Felgen lackieren wir auf Wunsch komplett in einer neuen Farbe – zum Beispiel Schwarz glänzend oder matt."),
+        ],
+    },
+    "lackstift": {
+        "title": "Lackstift im Originalfarbton – Sonneberg",
+        "short": "Lackstift",
+        "desc": "Lackstift im Originalfarbton in Sonneberg: nach Farbcode exakt angemischt – für Steinschläge und kleine Kratzer. Mit Anleitung zur richtigen Anwendung.",
+        "claim": "Ihr Farbton zum Mitnehmen.",
+        "lead": "Nach Farbcode exakt angemischt – für Steinschläge, kleine Kratzer und Macken.",
+        "sections": [
+            ("Lackstift nach Farbcode",
+             "<p>Ein guter Lackstift schützt kleine Macken vor Rost und lässt sie fast verschwinden. Wir mischen Ihren Farbton nach Farbcode exakt an – auf Wunsch messen wir den Lack direkt am Fahrzeug digital.</p>"
+             "<p><strong>Ihr Farbcode</strong> steht meist auf dem Typenschild in der Fahrertür bzw. B-Säule, im Kofferraum oder im Serviceheft. Nicht gefunden? Bringen Sie das Auto kurz vorbei.</p>"),
+            ("So verwenden Sie den Lackstift richtig",
+             "<ol><li>Stelle gründlich reinigen und entfetten</li><li>Lose Lackteile vorsichtig entfernen</li><li>Lack dünn auftupfen, nicht streichen</li><li>Gut trocknen lassen, bei Bedarf eine zweite Schicht</li><li>Zum Schluss Klarlack für Glanz und Schutz</li></ol>"),
+            ("Wann ein Lackstift reicht – und wann nicht",
+             "<p>Für Steinschläge und kleine, punktuelle Kratzer ist der Lackstift ideal. Längere Kratzer, Dellen oder größere Flächen beheben wir besser mit <a href=\"smartrepair.html\">Smart Repair</a> oder einer <a href=\"lackierarbeiten.html\">Lackierung</a> – dann sieht man wirklich nichts mehr.</p>"),
+        ],
+        "faq": [
+            ("Wo finde ich meinen Farbcode?", "Meist auf dem Typenschild an der B-Säule oder in der Fahrertür, manchmal im Kofferraum, unter der Motorhaube oder im Serviceheft. Wir helfen Ihnen gern beim Finden."),
+            ("Wie schnell bekomme ich meinen Lackstift?", "Fragen Sie kurz per Telefon oder WhatsApp an – wir sagen Ihnen, wann Ihr Farbton fertig angemischt ist."),
+            ("Schützt ein Lackstift vor Rost?", "Ja, bei kleinen Steinschlägen versiegelt er die offene Stelle und verhindert, dass Feuchtigkeit an das Blech kommt."),
+        ],
+    },
+})
