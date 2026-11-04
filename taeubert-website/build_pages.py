@@ -2039,17 +2039,20 @@ KONFIG_CSS = """
     .kc-conf { flex-direction: column; min-height: 0; }
     .kc-left, .kc-right { width: 100%; }
     .kc-left { position: sticky; top: calc(var(--announce-h) + 70px); z-index: 2; }
-    .kc-top { padding: 10px 16px; }
+    .kc-top { padding: 4px 16px; }
     .kc-view { padding: 0 16px 8px; }
     .kc-stage { flex-direction: column-reverse; }
-    .kc-thumbs { flex-direction: row; border-right: 0; padding: 6px 16px 10px; overflow-x: auto; }
-    .kc-thumb { width: 52px; height: 52px; }
+    .kc-thumbs { flex-direction: row; border-right: 0; padding: 4px 16px 8px; overflow-x: auto; gap: 6px; }
+    .kc-thumb { width: 40px; height: 40px; border-width: 1px; }
     .kc-tab:first-child { padding-left: 16px; }
     .kc-viewlabel { display: none; }
-    .kc-view .kf-img { height: 26svh; aspect-ratio: auto; }
+    .kc-view .kf-img { height: 22svh; aspect-ratio: auto; }
     .kc-info { display: none; }
     .kc-right { position: static; height: auto; border-left: 0; }
     .kc-head, .kc-body, .kc-nav { padding-left: 16px; padding-right: 16px; }
+    .kc-head { padding-top: 14px; padding-bottom: 14px; } .kc-head h2 { margin-top: 8px; font-size: 16px; }
+    .kc-nav { padding-top: 12px; padding-bottom: 12px; }
+    .kc-body { scroll-margin-top: 50svh; }
     .kc-nav { position: sticky; bottom: 0; background: #fff; z-index: 3; }
   }
   @media (max-width: 760px) { .kc-nav { bottom: calc(61px + env(safe-area-inset-bottom)); } }
