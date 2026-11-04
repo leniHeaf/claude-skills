@@ -5,7 +5,7 @@ Aufruf: python3 -I build_pages.py <theme-dir> <site-dir>
 import html, json, os, re, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from new_pages import NEW_PAGES  # noqa: E402
+from new_pages import NEW_PAGES, RATGEBER  # noqa: E402
 
 THEME, SITE = sys.argv[1], sys.argv[2]
 BOOKING_URL = "https://terminbuchungtaeubert.de"  # externes Buchungstool
@@ -830,13 +830,13 @@ def sync_images(page):
     return re.sub(r'<meta property="og:image" content="https://www\.taeubert-karosserie-lack\.de/(images/[^"]+)">\n?', og, page)
 
 
-def render_new_page(slug, p):
+def render_new_page(slug, p, aside_title=None):
     """Eigene Leistungsseite im Stil der übrigen Unterseiten."""
     art = "".join(f'<div><h2>{esc(h)}</h2><div class="rte">{body}</div></div>' for h, body in p["sections"])
     secs = [f'''<section class="page-width svc-layout">
   <div class="svc-article">{art}</div>
   <aside class="svc-aside" aria-label="Termin">
-    <h2>{esc(p["short"])} bei Täubert</h2>
+    <h2>{esc(aside_title or p["short"] + " bei Täubert")}</h2>
     {TRUST_HTML}
     <div class="btns"><a class="btn btn-light" href="{BOOKING}">Termin online buchen</a><a class="btn btn-outline-light" href="schaden-melden.html">Schaden per Foto melden</a><a class="btn btn-outline-light" href="tel:+4936754289606">03675 4289606</a></div>
     <p class="hours">Mo–Do 8–17 Uhr · Fr 8–14:30 Uhr<br>Bettelhecker Straße 15, Sonneberg</p>
@@ -870,7 +870,14 @@ def all_services():
 
 
 # Ratgeber-Seiten (keine eigene Leistung)
-GUIDES = ["unfall-oder-kratzer", "auto-lackieren-kosten"]
+GUIDES = ["unfall-oder-kratzer", "auto-lackieren-kosten"] + list(RATGEBER)
+
+
+def guide_meta(g):
+    """(Titel, Kurzname, Beschreibung) eines Ratgebers – aus dem Shop oder aus RATGEBER."""
+    if g in SERVICES:
+        return SERVICES[g][0], SERVICES[g][1], SERVICES[g][2]
+    return RATGEBER[g]["title"], RATGEBER[g]["short"], RATGEBER[g]["desc"]
 
 
 # Leistungen, die auf der Startseite und im Footer zuerst stehen
@@ -935,7 +942,7 @@ def service_cards(items, images=False):
 
 CHEV = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>'
 NAV_GROUPS = [
-    ("Unfall?", [("unfall-was-tun.html", "Unfall – was jetzt zu tun ist"), ("schaden-melden.html", "Schaden per Foto melden"),
+    ("Unfall?", [("unfall-was-tun.html", "Unfall – was jetzt zu tun ist"), ("schaden-melden.html", "Schaden per Foto melden"), ("ratgeber.html", "Ratgeber & Tipps"),
                  ("versicherungsschaden.html", "Abrechnung mit der Versicherung"), ("unfall-oder-kratzer.html", "Wer zahlt die Reparatur?")]),
     ("Über uns", [("who-we-are.html", "Who we are"), ("history.html", "History"), ("meet-the-team.html", "Meet the Team"),
                   ("porsche-911.html", "Projekt: Porsche 911"), ("porsche-gts.html", "Projekt: Porsche Cayenne GTS"), ("vw-bulli-t2.html", "Projekt: VW Bulli T2")]),
@@ -1064,6 +1071,8 @@ FALLBACK_IMG = {
     "keramikversiegelung": "pexels-amar-11157437.webp",
     "innenraumaufbereitung": "pexels-wavyvisuals-377312923-20051451.webp",
     "scheinwerfer-aufbereiten": "ElevenLabs_image_nano-banana_Nahaufnahmen..._2026-01-13T08_52_06-2.webp",
+    "unfall-oder-kratzer": "pexels-uiliamnornberg-24960483_2971c584-81f6-4dd4-bf60-f58213b7bd8b.webp",
+    "auto-lackieren-kosten": "pexels-markusspiske-1729999.webp",
     "oldtimer-restaurierung": "hf_20260210_174234_03b93839-672b-4ba9-b742-8e3397346ee1.webp",
 }
 
@@ -1351,7 +1360,7 @@ def render_overview():
 <section class="sec" style="padding:90px 0 0">
   <div class="page-width">
     <div class="cat-top" style="margin-bottom:24px"><h2 class="h-4">Ratgeber</h2></div>
-    <div class="svc-grid">{service_cards([(g, SERVICES[g][0], SERVICES[g][2]) for g in GUIDES])}</div>
+    <div class="svc-grid">{service_cards([(g, guide_meta(g)[0], guide_meta(g)[2]) for g in GUIDES])}</div>
   </div>
 </section>
 <section class="sec" style="padding:70px 0 90px">
@@ -1786,7 +1795,7 @@ def render_faq_page():
         qa = list(CAT_EXTRA.get(title, []))
         for s in slugs:
             for q, a in collect_faqs(s):
-                qa.append((q, a + f'<p class="faq-more"><a href="{s}.html">Mehr zu {esc(svcs.get(s, SERVICES.get(s, ("", s))[1]))} →</a></p>'))
+                qa.append((q, a + f'<p class="faq-more"><a href="{s}.html">Mehr zu {esc(svcs.get(s) or guide_meta(s)[1])} →</a></p>'))
         block(title, f"kat-{i}", qa)
     body = f'''<section class="sec" style="padding:50px 0 10px">
   <div class="page-width">
@@ -2415,6 +2424,59 @@ def main():
 """
         open(os.path.join(SITE, f"{slug}.html"), "w", encoding="utf-8").write(sync_images(page))
         built.append(slug)
+    for slug, p in RATGEBER.items():
+        FALLBACK_IMG[slug] = p["img"]
+        head = render_new_page(slug, p, aside_title="Wir helfen Ihnen weiter")
+        m = re.search(r"<section.*?</section>", head, re.S)
+        crumbs = f'<nav class="crumbs page-width" aria-label="Brotkrumen"><a href="index.html">Startseite</a><span>›</span><a href="ratgeber.html">Ratgeber</a><span>›</span><span aria-current="page">{esc(p["short"])}</span></nav>'
+        svcs = {x[0]: x for x in all_services()}
+        rel = f'<section class="more-svc"><div class="page-width"><h2>Passende Leistungen</h2>{tile_grid([svcs[r] for r in p["related"] if r in svcs])}</div></section>'
+        body_html = head[:m.end()] + crumbs + head[m.end():] + rel + booking_cta(slug, p["short"])
+        art = {"@context": "https://schema.org", "@type": "Article", "headline": p["title"], "description": p["desc"], "image": f"{DOMAIN}/images/{p['img']}",
+               "author": {"@type": "Organization", "name": "Täubert Karosserie und Lack GmbH"}, "publisher": {"@type": "Organization", "name": "Täubert Karosserie und Lack GmbH"},
+               "mainEntityOfPage": f"{DOMAIN}/{slug}.html", "inLanguage": "de"}
+        extra_ld = '<script type="application/ld+json">' + json.dumps(art, ensure_ascii=False) + "</script>" + breadcrumb_ld(slug, p["short"], ("Ratgeber", f"{DOMAIN}/ratgeber.html")) + faq_ld(body_html)
+        page = f"""<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{esc(p["title"])} | Täubert</title>
+{seo_head(p["title"] + " – Täubert Karosserie & Lack", p["desc"], slug, p["img"])}
+{head_links}
+<style>{style}{EXTRA_CSS}</style>
+{ld}
+{extra_ld}
+</head>
+<body>
+{top}
+<main id="inhalt">
+{body_html}
+</main>
+{footer}
+<script>
+{js}</script>
+</body>
+</html>
+"""
+        open(os.path.join(SITE, f"{slug}.html"), "w", encoding="utf-8").write(sync_images(page))
+        built.append(slug)
+    hub = f'''<section class="sub-hero" style="--h:480px;--mh:400px">
+  <div class="media"><img src="images/pexels-glv-visuals-859366-28611341.webp" alt="Ratgeber rund ums Auto" fetchpriority="high"></div><div class="overlay" style="opacity:.55"></div>
+  <div class="sub-hero-content" style="max-width:960px">
+    <p class="overline">Täubert Karosserie &amp; Lack</p>
+    <h1 class="h-8">Ratgeber</h1>
+    <div class="rte"><p>Unfall, Lack, Versicherung und Pflege: verständlich erklärt von unserer Werkstatt in Sonneberg.</p></div>
+  </div>
+</section>
+<section class="more-svc">
+  <div class="page-width">{tile_grid([(g, guide_meta(g)[0] if g in SERVICES else guide_meta(g)[1], guide_meta(g)[2]) for g in GUIDES])}</div>
+</section>'''
+    open(os.path.join(SITE, "ratgeber.html"), "w", encoding="utf-8").write(sync_images(simple_page(
+        "ratgeber", "Ratgeber – Unfall, Lack & Pflege",
+        "Ratgeber von Täubert Karosserie & Lack in Sonneberg: Wildunfall, Parkschaden, Steinschlag, Leasingrückgabe, Smart Repair, Winter-Check und mehr.",
+        hub + booking_cta("ratgeber", "Ratgeber"), style, head_links, top, footer, js, ld)))
+    built.append("ratgeber")
     ov_desc = f"Alle Leistungen von Täubert Karosserie & Lack in Sonneberg: Unfallreparatur, Lackierung, Smart Repair, Hagelschaden, Fahrzeugaufbereitung und mehr."
     page = f"""<!doctype html>
 <html lang="de">

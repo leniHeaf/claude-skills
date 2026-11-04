@@ -368,3 +368,148 @@ NEW_PAGES.update({
         ],
     },
 })
+
+
+# Ratgeber-Artikel (beantworten typische Suchanfragen, verlinken auf passende Leistungen)
+RATGEBER = {
+    "wildunfall-was-tun": {
+        "title": "Wildunfall – was tun? Checkliste & Versicherung",
+        "short": "Wildunfall – was tun?",
+        "desc": "Wildunfall mit Reh oder Wildschwein: Was Sie sofort tun müssen, warum die Wildunfallbescheinigung wichtig ist und welche Versicherung zahlt – Ratgeber von Täubert in Sonneberg.",
+        "claim": "Wildunfall? Ruhe bewahren.",
+        "lead": "Was Sie an der Unfallstelle tun, welche Bescheinigung Sie brauchen und wer den Schaden zahlt.",
+        "img": "pexels-glv-visuals-859366-28611341.webp",
+        "related": ["unfall", "versicherungsschaden", "karosserie"],
+        "sections": [
+            ("Sofort an der Unfallstelle",
+             "<ol><li>Warnblinker an, Warnweste anziehen, Warndreieck aufstellen</li><li>Verletzte versorgen und bei Bedarf den Notruf 112 wählen</li><li>Polizei verständigen (110) – sie informiert den zuständigen Jäger</li><li>Das Tier nicht anfassen – verletzte Tiere können sich wehren</li><li>Fotos machen: Fahrzeug, Schaden, Tier und Unfallstelle</li></ol>"
+             "<p>Nehmen Sie das Tier auf keinen Fall mit – das wäre Wilderei.</p>"),
+            ("Die Wildunfallbescheinigung",
+             "<p>Lassen Sie sich von Polizei oder Jäger eine Wildunfallbescheinigung ausstellen. Sie ist der wichtigste Nachweis für Ihre Versicherung. Melden Sie den Schaden anschließend zeitnah Ihrer Versicherung.</p>"),
+            ("Wer zahlt den Schaden?",
+             "<ul><li><strong>Teilkasko:</strong> zahlt in der Regel bei Zusammenstößen mit Haarwild wie Reh, Wildschwein, Hirsch, Fuchs oder Hase – viele Verträge auch bei Tieren aller Art.</li><li><strong>Keine Rückstufung:</strong> Ein Teilkasko-Schaden verschlechtert Ihren Schadenfreiheitsrabatt nicht.</li><li><strong>Ausweichmanöver ohne Zusammenstoß:</strong> Hier kommt es auf Ihren Vertrag an – lassen Sie sich beraten.</li></ul>"
+             "<p>Bei Täubert rechnen wir direkt mit Ihrer Versicherung ab, stellen einen Ersatzwagen und holen Ihr Auto im Umkreis von 30 km ab.</p>"),
+        ],
+        "faq": [
+            ("Muss ich nach einem Wildunfall die Polizei rufen?", "Ja, informieren Sie Polizei oder Jäger. Nur so erhalten Sie die Wildunfallbescheinigung, die Ihre Versicherung in der Regel verlangt."),
+            ("Darf ich das tote Tier mitnehmen?", "Nein. Das Wild gehört dem Jagdpächter – wer es mitnimmt, macht sich strafbar."),
+            ("Werde ich nach einem Wildunfall hochgestuft?", "Nein, wenn die Teilkasko zahlt. Teilkasko-Schäden wirken sich nicht auf den Schadenfreiheitsrabatt aus."),
+        ],
+    },
+    "parkschaden-fahrerflucht": {
+        "title": "Parkschaden mit Fahrerflucht – wer zahlt?",
+        "short": "Parkschaden & Fahrerflucht",
+        "desc": "Parkschaden und der Verursacher ist weg? So gehen Sie richtig vor, wer den Schaden zahlt und wann Selbstzahlen günstiger ist – Ratgeber von Täubert in Sonneberg.",
+        "claim": "Delle da, Verursacher weg?",
+        "lead": "So sichern Sie Beweise, wann die Versicherung zahlt – und wann eine günstige Reparatur die bessere Wahl ist.",
+        "img": "pexels-artempodrez-8985722.jpg",
+        "related": ["kleinschaden", "smartrepair", "kratzer"],
+        "sections": [
+            ("Das sollten Sie sofort tun",
+             "<ol><li>Fotos vom Schaden und der Umgebung machen</li><li>Nach einem Zettel am Fahrzeug suchen – und nach Zeugen fragen</li><li>Unfallflucht bei der Polizei anzeigen, möglichst schnell</li><li>Den Schaden Ihrer Versicherung melden</li></ol>"),
+            ("Wer zahlt den Schaden?",
+             "<ul><li><strong>Verursacher wird ermittelt:</strong> Dessen Kfz-Haftpflicht zahlt – ohne Nachteile für Sie.</li><li><strong>Verursacher bleibt unbekannt:</strong> Es zahlt Ihre Vollkasko, sofern vorhanden – dann gilt Ihre Selbstbeteiligung und Sie werden zurückgestuft.</li><li><strong>Kleine Schäden:</strong> Oft ist Selbstzahlen günstiger als Rückstufung plus Selbstbeteiligung.</li></ul>"),
+            ("Kleine Delle, kleiner Preis",
+             "<p>Viele Parkschäden lassen sich per <a href=\"smartrepair.html\">Smart Repair</a> ohne Lackieren beheben – oft in wenigen Stunden. Schicken Sie uns Fotos, Sie bekommen den Kostenvoranschlag innerhalb von 24 Stunden. Dann rechnen wir gemeinsam durch, ob sich die Versicherung lohnt.</p>"),
+        ],
+        "faq": [
+            ("Reicht ein Zettel hinter dem Scheibenwischer?", "Nein. Wer einen Schaden verursacht, muss angemessen warten oder die Polizei informieren. Ein Zettel allein schützt nicht vor dem Vorwurf der Unfallflucht."),
+            ("Soll ich die Vollkasko in Anspruch nehmen?", "Bei kleinen Schäden oft nicht – Rückstufung und Selbstbeteiligung können teurer sein als die Reparatur. Wir rechnen es mit Ihnen durch."),
+            ("Muss ich Anzeige erstatten, wenn ich selbst zahle?", "Empfehlenswert ist es trotzdem: Wird der Verursacher später ermittelt, können Sie die Kosten zurückfordern."),
+        ],
+    },
+    "steinschlag-lack": {
+        "title": "Steinschlag im Lack – reparieren, bevor Rost entsteht",
+        "short": "Steinschlag im Lack",
+        "desc": "Steinschlag im Autolack: warum Sie schnell handeln sollten, wann ein Lackstift reicht und wann Spot Repair oder Lackierung nötig ist – Ratgeber von Täubert in Sonneberg.",
+        "claim": "Kleiner Punkt, große Wirkung.",
+        "lead": "Warum Steinschläge im Lack schnell behandelt werden sollten – und welche Reparatur die richtige ist.",
+        "img": "ElevenLabs_image_nano-banana_Nahaufnahmen..._2026-01-13T08_52_06.webp",
+        "related": ["lackstift", "smartrepair", "lackierarbeiten"],
+        "sections": [
+            ("Warum Sie schnell handeln sollten",
+             "<p>Ein Steinschlag sieht harmlos aus. Liegt das Blech frei, dringt aber Feuchtigkeit ein – besonders im Winter mit Streusalz. Der Rost wandert unter den Lack, und aus einem kleinen Punkt wird eine größere Reparatur.</p>"),
+            ("Welche Reparatur passt?",
+             "<ul><li><strong>Lackstift:</strong> für einzelne kleine Steinschläge – nach Farbcode exakt angemischt. <a href=\"lackstift.html\">Mehr zum Lackstift</a></li><li><strong>Spot Repair:</strong> für mehrere oder größere Stellen – punktgenau und kaum sichtbar.</li><li><strong>Teillackierung:</strong> wenn eine Motorhaube oder Front stark übersät ist.</li></ul>"),
+            ("Vorbeugen",
+             "<p>Eine <a href=\"keramikversiegelung.html\">Versiegelung</a> macht den Lack widerstandsfähiger und leichter zu pflegen. Und: Kleine Schäden am besten vor dem Winter schließen.</p>"
+             "<p>Steinschlag in der Windschutzscheibe ist ein eigenes Thema – hier geht es um den Lack.</p>"),
+        ],
+        "faq": [
+            ("Zahlt die Versicherung einen Steinschlag im Lack?", "In der Regel nicht über die Teilkasko – die deckt Glasschäden, nicht den Lack. Bei Lackschäden ist Selbstzahlen meist günstiger."),
+            ("Kann ich einen Steinschlag selbst ausbessern?", "Ja, mit einem passend angemischten Lackstift. Wichtig: gründlich reinigen, dünn auftupfen und mit Klarlack abschließen."),
+            ("Wie schnell rostet ein Steinschlag?", "Liegt das Blech frei, kann sich schon nach wenigen Wochen Flugrost bilden – im Winter schneller."),
+        ],
+    },
+    "leasingrueckgabe-checkliste": {
+        "title": "Leasingrückgabe-Checkliste: Nachzahlungen vermeiden",
+        "short": "Checkliste Leasingrückgabe",
+        "desc": "Leasingrückgabe ohne teure Nachzahlung: Checkliste für Lack, Felgen, Innenraum und Unterlagen – und wann sich eine Reparatur vorher lohnt. Ratgeber von Täubert in Sonneberg.",
+        "claim": "Gut vorbereitet zurückgeben.",
+        "lead": "Mit dieser Checkliste erkennen Sie, was der Gutachter beanstanden könnte – und was sich vorher günstig beheben lässt.",
+        "img": "pexels-bulat843-1243575272-31389821.webp",
+        "related": ["leasingrueckgabe", "fahrzeugaufbereitung", "felgenreparatur"],
+        "sections": [
+            ("Wann anfangen?",
+             "<p>Am besten sechs bis acht Wochen vor der Rückgabe. Dann bleibt genug Zeit für Einschätzung, Reparatur und Aufbereitung – ohne Stress.</p>"),
+            ("Checkliste außen",
+             "<ul><li>Kratzer und Schrammen im Lack</li><li>Dellen und Parkschäden</li><li>Steinschläge an Front und Motorhaube</li><li>Bordsteinschäden an den Felgen</li><li>Risse oder Schäden an Stoßfängern</li><li>Reifen: Profiltiefe und Beschädigungen</li></ul>"),
+            ("Checkliste innen und Unterlagen",
+             "<ul><li>Flecken, Gerüche, Brandlöcher, Tierhaare</li><li>Kratzer an Verkleidungen und Displays</li><li>Serviceheft bzw. Wartungsnachweise</li><li>alle Schlüssel und Zubehör (Ladekabel, Kofferraumabdeckung, Warndreieck)</li></ul>"),
+            ("Reparieren oder zahlen?",
+             "<p>Leasinggeber berechnen Schäden oft nach Pauschalen. Kleine Schäden vorher per Smart Repair, Spot Repair oder Aufbereitung zu beheben, ist häufig deutlich günstiger. Wir schauen uns Ihr Fahrzeug an und sagen ehrlich, was sich lohnt – und was als normale Abnutzung durchgeht.</p>"),
+        ],
+        "faq": [
+            ("Muss ich jeden Kratzer reparieren lassen?", "Nein. Normale Gebrauchsspuren sind meist erlaubt. Entscheidend ist der Schadenkatalog Ihres Leasinggebers – wir helfen bei der Einschätzung."),
+            ("Bekomme ich vorher eine Einschätzung?", "Ja. Kommen Sie vorbei oder schicken Sie Fotos – Sie erhalten eine ehrliche Einschätzung und einen Kostenvoranschlag in 24 Stunden."),
+            ("Lohnt sich eine Aufbereitung vor der Rückgabe?", "Oft ja. Ein sauberer, polierter Wagen macht einen deutlich besseren Eindruck, und viele Gebrauchsspuren verschwinden."),
+        ],
+    },
+    "smart-repair-kosten": {
+        "title": "Was kostet Smart Repair? Preisfaktoren & Ablauf",
+        "short": "Smart Repair: Kosten",
+        "desc": "Was kostet Smart Repair? Wovon der Preis abhängt, wo die Grenzen liegen und warum es meist günstiger ist als Lackieren – Ratgeber von Täubert in Sonneberg.",
+        "claim": "Dellen weg. Lack bleibt.",
+        "lead": "Wovon der Preis abhängt – und wie Sie in 24 Stunden wissen, was Ihre Reparatur kostet.",
+        "img": "1_6f36b140-2e90-4499-9343-be0cf20702fe.webp",
+        "related": ["smartrepair", "kleinschaden", "hagelschaden"],
+        "sections": [
+            ("Was ist Smart Repair?",
+             "<p>Beim Smart Repair werden Dellen von innen schonend zurückgedrückt oder von außen herausgezogen – ohne neue Lackierung. Der Originallack bleibt erhalten, und die Reparatur dauert oft nur wenige Stunden.</p>"),
+            ("Wovon der Preis abhängt",
+             "<ul><li><strong>Größe und Tiefe</strong> der Delle</li><li><strong>Position:</strong> an Kanten und Sicken ist es aufwendiger</li><li><strong>Zugänglichkeit</strong> von innen</li><li><strong>Material:</strong> Aluminium ist anspruchsvoller als Stahl</li><li><strong>Lack:</strong> ist er gerissen, kommt ein Spot Repair hinzu</li></ul>"),
+            ("Smart Repair oder Lackierung?",
+             "<p>Smart Repair ist meist deutlich günstiger und schneller als eine Lackierung – und es gibt keine Farbunterschiede. Ist der Lack beschädigt oder die Delle zu stark, lackieren wir. Wir sagen Ihnen ehrlich, was sinnvoll ist.</p>"
+             "<p><strong>Ihr Preis in 24 Stunden:</strong> Schicken Sie uns zwei, drei Fotos über <a href=\"schaden-melden.html\">Schaden per Foto melden</a>.</p>"),
+        ],
+        "faq": [
+            ("Was kostet es, eine Delle entfernen zu lassen?", "Das hängt von Größe, Position und Zugänglichkeit ab. Schicken Sie uns Fotos – Sie bekommen innerhalb von 24 Stunden einen verbindlichen Kostenvoranschlag."),
+            ("Wie lange dauert Smart Repair?", "Oft nur wenige Stunden – bei mehreren Dellen oder Hagelschaden entsprechend länger."),
+            ("Funktioniert Smart Repair bei jeder Delle?", "Nicht immer. Ist der Lack gerissen oder die Delle sehr scharfkantig, ist eine Lackreparatur nötig. Wir prüfen das vorab."),
+        ],
+    },
+    "auto-winterfest": {
+        "title": "Auto winterfest machen – Checkliste für Thüringen",
+        "short": "Auto winterfest machen",
+        "desc": "Auto winterfest machen: Reifen, Unterbodenschutz, Lackversiegelung, Licht und kleine Lackschäden – Checkliste von Täubert in Sonneberg für Winter im Thüringer Wald.",
+        "claim": "Bereit für Schnee und Salz.",
+        "lead": "Streusalz, Splitt und Nässe setzen dem Auto zu. Mit dieser Checkliste kommt es gut durch den Winter.",
+        "img": "pexels-borta-2790256-30787396.webp",
+        "related": ["reifen-kaufen", "unterbodenschutz", "keramikversiegelung"],
+        "sections": [
+            ("Reifen",
+             "<p>Faustregel: von O bis O – Oktober bis Ostern. Bei Glätte, Schnee oder Matsch sind Winterreifen Pflicht. Empfohlen werden mindestens 4 mm Profil. <a href=\"reifen-kaufen.html\">Reifen bestellen und wechseln</a></p>"),
+            ("Unterboden und Hohlräume",
+             "<p>Streusalz greift vor allem dort an, wo man nicht hinschaut. Eine Unterbodenwäsche und ein intakter Unterbodenschutz – zum Beispiel mit Mike Sanders – schützen vor Rost. <a href=\"unterbodenschutz.html\">Mehr zum Unterbodenschutz</a></p>"),
+            ("Lack",
+             "<p>Kleine Steinschläge und Kratzer vor dem Winter schließen – sonst rosten sie. Eine <a href=\"keramikversiegelung.html\">Versiegelung</a> schützt den Lack zusätzlich vor Salz und Schmutz.</p>"),
+            ("Kurz-Checkliste",
+             "<ul><li>Winterreifen montiert, Profil geprüft</li><li>Unterboden gereinigt und geschützt</li><li>Lackschäden ausgebessert, Lack versiegelt</li><li>Scheinwerfer klar und richtig eingestellt</li><li>Frostschutz im Scheibenwischwasser</li><li>Eiskratzer und Handbesen im Auto</li></ul>"),
+        ],
+        "faq": [
+            ("Wann sollte ich mein Auto winterfest machen?", "Am besten im Oktober – bevor die ersten Frostnächte und das Streusalz kommen."),
+            ("Lohnt sich eine Unterbodenwäsche im Winter?", "Ja, besonders nach längeren Fahrten auf gesalzenen Straßen und spätestens im Frühjahr."),
+            ("Wann ist der beste Zeitpunkt für eine Versiegelung?", "Vor dem Winter: Dann ist der Lack geschützt, wenn Salz und Schmutz kommen."),
+        ],
+    },
+}
