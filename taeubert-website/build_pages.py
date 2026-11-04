@@ -1804,20 +1804,20 @@ def render_faq_page():
 
 
 
-# Eigener Lack-Konfigurator (statisch, ohne externen Dienst)
-# Jedes Modell wird im Browser live umgefärbt: Pixel im Farbton-Bereich der Originalkarosserie bekommen Farbton/Sättigung
-# der Wunschfarbe, der Helligkeitsverlauf (Reflexe, Schatten) bleibt erhalten. Technik aus dem Base44-Konfigurator übernommen.
-# (slug, Name, Bild, Farbton-Mitte, halbe Breite, mittlere Helligkeit der Originalkarosserie)
+# Lack-Konfigurator im Aufbau des Base44-Originals: Modellübersicht (Filter + Karten) und Schritt-für-Schritt-Konfiguration
+# mit Zusammenfassung und Anfrageformular. Die Karosserie wird im Browser live umgefärbt (Technik aus dem Original):
+# Pixel im Farbton-Bereich der Originalkarosserie bekommen Farbton/Sättigung der Wunschfarbe, Reflexe und Schatten bleiben.
+# (slug, Marke, Modell, Variante, Fahrzeugtyp, Epoche, Bild, Farbton-Mitte, halbe Breite, mittlere Helligkeit der Karosserie)
 KONFIG_MODELS = [
-    ("911", "Porsche 911 Klassiker", "hf_20260210_174113_8bd7f253-8826-4ed4-89ed-56b117c21301.webp", 47, 14, .70),
-    ("964", "Porsche 911 Cabrio (964)", "ElevenLabs_image_nano-banana_Porsche_rast..._2026-01-13T08_49_41.webp", 355, 16, .42),
-    ("g", "Mercedes-Benz G-Klasse", "hf_20260210_181224_9fb53726-af8f-484d-9126-6d24f40444b3.webp", 245, 80, .55),
-    ("w114", "Mercedes-Benz /8 Klassiker", "hf_20260210_173801_c09630de-aae3-46b1-9460-d37b19053b9d_1.webp", 47, 14, .70),
-    ("bulli", "VW Bulli T2", "05aec4a8-410c-4309-a1e1-ac39cf6f5274.webp", 245, 80, .55),
-    ("golf", "VW Golf", "hf_20260210_181007_e0cc78c3-7998-457e-9a33-87828b0061dd.webp", 245, 80, .60),
-    ("jimny", "Suzuki Jimny", "hf_20260210_181330_97f3ed36-acbd-4482-acf3-ff9139249598.webp", 245, 80, .55),
+    ("911", "Porsche", "911", "Klassiker", "Pkw", "1970er", "hf_20260210_174113_8bd7f253-8826-4ed4-89ed-56b117c21301.webp", 47, 14, .70),
+    ("964", "Porsche", "911 Cabrio", "964", "Pkw", "1990er", "ElevenLabs_image_nano-banana_Porsche_rast..._2026-01-13T08_49_41.webp", 355, 16, .42),
+    ("w114", "Mercedes-Benz", "/8", "W114", "Pkw", "1970er", "hf_20260210_173801_c09630de-aae3-46b1-9460-d37b19053b9d_1.webp", 47, 14, .70),
+    ("g", "Mercedes-Benz", "G-Klasse", "", "Pkw", "", "hf_20260210_181224_9fb53726-af8f-484d-9126-6d24f40444b3.webp", 245, 80, .55),
+    ("bulli", "Volkswagen", "Bulli", "T2", "Transporter", "1970er", "05aec4a8-410c-4309-a1e1-ac39cf6f5274.webp", 245, 80, .55),
+    ("golf", "Volkswagen", "Golf", "", "Pkw", "", "hf_20260210_181007_e0cc78c3-7998-457e-9a33-87828b0061dd.webp", 245, 80, .60),
+    ("jimny", "Suzuki", "Jimny", "", "Pkw", "", "hf_20260210_181330_97f3ed36-acbd-4482-acf3-ff9139249598.webp", 245, 80, .55),
 ]
-# Lackpalette
+KONFIG_TYPES = ["Alle", "Pkw", "Motorrad", "Mofa/Roller", "Transporter", "Nutzfahrzeug", "Amphibienfahrzeug", "Kabinenroller", "Kleinstwagen"]
 KONFIG_PALETTE = [
     ("schwarz", "Tiefschwarz", "#141518"), ("weiss", "Kreideweiß", "#e9ebec"), ("silber", "Brillantsilber", "#b4b8bc"),
     ("kreidegrau", "Kreidegrau", "#9b9d99"), ("achatgrau", "Achatgrau", "#5c6064"), ("oliv", "Olivgrün", "#5a6146"),
@@ -1825,145 +1825,215 @@ KONFIG_PALETTE = [
     ("gelb", "Racinggelb", "#e5c01c"), ("pastellgelb", "Pastellgelb", "#e1d394"), ("orange", "Signalorange", "#e0661c"),
     ("karmin", "Karminrot", "#8c1c22"), ("braun", "Mahagonibraun", "#5b3d33"), ("sand", "Sandbeige", "#c8b48e"),
 ]
-KONFIG_FINISH = ["Hochglanz", "Metallic", "Matt"]
-KONFIG_SCOPE = ["Komplettlackierung", "Teillackierung", "Ausbesserung / Spot Repair", "Erst beraten lassen"]
+# Schritte nach dem Original: Farb-Schritt mit Farbkreisen, übrige Schritte als Auswahlkarten mit Beschreibung
+KONFIG_STEPS = [
+    ("Lackfarbe", "color", []),
+    ("Lackart", "option", [("Hochglanz", "Klassischer Glanzlack – tiefer Glanz und leicht zu pflegen."),
+                           ("Metallic", "Mit Effektpigmenten – lebendige Reflexe im Sonnenlicht."),
+                           ("Matt", "Seidenmatte Oberfläche – markant und modern, braucht besondere Pflege.")]),
+    ("Umfang", "option", [("Komplettlackierung", "Das gesamte Fahrzeug in der neuen Farbe."),
+                          ("Teillackierung", "Einzelne Bauteile, z. B. Motorhaube, Dach oder Spiegel."),
+                          ("Ausbesserung / Spot Repair", "Kleine Schäden punktgenau im Farbton ausbessern."),
+                          ("Erst beraten lassen", "Wir sehen uns Ihr Fahrzeug an und beraten Sie persönlich.")]),
+    ("Felgen", "option", [("Original belassen", "Die Felgen bleiben, wie sie sind."),
+                          ("Schwarz glänzend", "Felgen in Hochglanz-Schwarz – sportlich und markant."),
+                          ("Anthrazit", "Zeitlos und unempfindlich gegen Bremsstaub."),
+                          ("Silber", "Der klassische Look – passt auch zum Oldtimer.")]),
+]
 
 
 def konfig_page():
-    first = KONFIG_MODELS[0]
-    thumb = lambda f: f.replace(".webp", "-700.webp") if os.path.exists(os.path.join(SITE, "images", f.replace(".webp", "-700.webp"))) else f
-    models = "".join(f'<label class="kf-model"><input type="radio" name="modell" value="{k}"{" checked" if k == first[0] else ""}><span><img src="images/{esc(thumb(img))}" alt="" loading="lazy">{esc(n)}</span></label>' for k, n, img, *_ in KONFIG_MODELS)
-    finish = "".join(f'<label class="kf-chip"><input type="radio" name="finish" value="{esc(x)}"{" checked" if i == 0 else ""}><span>{esc(x)}</span></label>' for i, x in enumerate(KONFIG_FINISH))
-    scope = "".join(f'<label class="kf-chip"><input type="radio" name="umfang" value="{esc(x)}"{" checked" if i == 0 else ""}><span>{esc(x)}</span></label>' for i, x in enumerate(KONFIG_SCOPE))
+    def name(m):
+        return f"{m[2]} | {m[3]}" if m[3] else m[2]
+    cards = "".join(f'''<a class="kc-card" href="?modell={m[0]}" data-type="{esc(m[4])}">
+      <span class="kc-card-img"><img src="images/{esc(m[6])}" alt="{esc(m[1])} {esc(m[2])}" loading="lazy"></span>
+      <span class="kc-card-brand">{esc(m[1])}{f' <em>{esc(m[5])}</em>' if m[5] else ''}</span>
+      <span class="kc-card-name">{esc(name(m))}</span>
+      <span class="kc-card-type">{esc(m[4])}</span>
+      <span class="kc-card-go">Konfigurieren</span>
+    </a>''' for m in KONFIG_MODELS)
+    types = "".join(f'<button type="button" class="kc-type{" on" if i == 0 else ""}" data-type="{esc(t)}" aria-pressed="{"true" if i == 0 else "false"}">{esc(t)}</button>' for i, t in enumerate(KONFIG_TYPES))
+    hidden = "".join(f'<input type="hidden" name="{n}" value="">' for n in ["vorlage", "lackfarbe", "lackart", "umfang", "felgen"])
     data = {"palette": [{"id": c, "name": n, "hex": h} for c, n, h in KONFIG_PALETTE],
-            "models": {k: {"name": n, "img": f"images/{img}", "hue": hue, "range": rng, "l": l} for k, n, img, hue, rng, l in KONFIG_MODELS}}
-    return f'''<section class="kf">
-  <div class="kf-stage">
-    <p class="kf-label" id="kf-model-name">{esc(first[1])}</p>
-    <div class="kf-img"><img id="kf-img" src="images/{first[2]}" alt="{esc(first[1])}" fetchpriority="high"><canvas id="kf-canvas" role="img" aria-label="{esc(first[1])} in Wunschfarbe"></canvas></div>
-    <div class="kf-color"><span class="kf-dot" id="kf-dot"></span><div><strong id="kf-color-name"></strong><small id="kf-hex"></small></div></div>
-    <div class="kf-tools">
-      <button type="button" class="kf-tool" id="kf-orig" aria-pressed="false">Original</button>
-      <button type="button" class="kf-tool" id="kf-save">Bild speichern</button>
-      <button type="button" class="kf-tool" id="kf-share">Link teilen</button>
+            "steps": [{"name": n, "type": t, "options": [{"name": o, "desc": d} for o, d in opts]} for n, t, opts in KONFIG_STEPS],
+            "models": {m[0]: {"brand": m[1], "name": name(m), "img": f"images/{m[6]}", "hue": m[7], "range": m[8], "l": m[9]} for m in KONFIG_MODELS}}
+    return f'''<section class="kc">
+  <div class="kc-home" id="kc-home">
+    <div class="page-width">
+      <div class="kc-hero"><h1>Customize</h1><p>Wählen Sie Ihr Modell und gestalten Sie es nach Ihren Wünschen</p></div>
+      <div class="kc-types" role="group" aria-label="Fahrzeugart">{types}</div>
+      <p class="kc-count" id="kc-count">{len(KONFIG_MODELS)} Modelle</p>
+      <div class="kc-grid" id="kc-grid">{cards}</div>
+      <div class="kc-empty" id="kc-empty" hidden><p>Keine Modelle in dieser Kategorie</p><a href="termin.html#wunschtermin">Ihr Fahrzeug ist nicht dabei? Wir lackieren alles – Anfrage senden</a></div>
     </div>
   </div>
-  <form class="kf-panel" id="kf-form" onsubmit="return false">
-    <h1 class="overline">Lack-Konfigurator</h1>
-    <p class="kf-title">Ihre Farbe. Ihr Auto.</p>
-    <fieldset><legend><span>01</span> Modell</legend><div class="kf-models">{models}</div></fieldset>
-    <fieldset><legend><span>02</span> Farbe <em id="kf-color-label"></em></legend><div class="kf-swatches" id="kf-swatches"></div>
-      <label class="kf-custom"><input type="color" id="kf-custom" value="#2b5d4f"><span>Eigene Farbe wählen</span></label></fieldset>
-    <fieldset><legend><span>03</span> Finish</legend><div class="kf-chips">{finish}</div></fieldset>
-    <fieldset><legend><span>04</span> Umfang</legend><div class="kf-chips">{scope}</div></fieldset>
-    <fieldset><legend><span>05</span> Ihr Fahrzeug <small>(optional)</small></legend>
-      <label class="kf-field">Marke, Modell, Baujahr<input name="fahrzeug" id="kf-car" placeholder="z. B. VW Golf 7, 2016" autocomplete="off"></label>
-      <label class="kf-field">Farbcode oder Wunschfarbe<input name="farbcode" id="kf-code" placeholder="z. B. LY9B oder „Nardograu“" autocomplete="off"></label>
-    </fieldset>
-    <div class="kf-summary" aria-live="polite"><p class="eyebrow">Ihre Konfiguration</p><p id="kf-sum"></p></div>
-    <div class="kf-cta">
-      <a class="btn btn-dark" id="kf-wa" href="https://wa.me/4936754289606" target="_blank" rel="noopener">Anfrage per WhatsApp</a>
-      <a class="btn btn-outline-dark" id="kf-term" href="termin.html#wunschtermin">Beratungstermin anfragen</a>
-      <a class="btn btn-outline-dark" id="kf-mail" href="mailto:hallo@taeubert-karosserie-lack.de">Anfrage per E-Mail</a>
+  <div class="kc-conf" id="kc-conf" hidden>
+    <div class="kc-left">
+      <div class="kc-top"><a href="konfigurator.html" id="kc-back" class="kc-link">← Zurück</a><button type="button" id="kc-reset" class="kc-link kc-light">↺ Reset</button></div>
+      <div class="kc-view"><div class="kf-img"><img id="kf-img" src="images/{KONFIG_MODELS[0][6]}" alt=""><canvas id="kf-canvas" role="img" aria-label=""></canvas></div></div>
+      <div class="kc-info"><p class="kc-brand" id="kc-brand"></p><p class="kc-model" id="kc-model"></p></div>
     </div>
-    <p class="kf-small">Farbvorschau zur Orientierung – wir lackieren jeden Farbcode. Lieber persönlich? <a href="tel:+4936754289606">03675 4289606</a></p>
-  </form>
-</section>
-<section class="sec kf-info">
-  <div class="page-width kf-info-grid">
-    <div><p class="eyebrow">Präzision</p><h2>Digitale Farbtonmessung</h2><p>Wir messen den Farbton am Fahrzeug und mischen exakt an – auch für Sonder- und Klassikerfarben.</p></div>
-    <div><p class="eyebrow">Qualität</p><h2>Staubfreie Lackierkabine</h2><p>Lackiert wird in der eigenen Kabine – mit Hochglanz-Finish und sauberen Übergängen.</p></div>
-    <div><p class="eyebrow">Alles aus einer Hand</p><h2>Karosserie &amp; Lack</h2><p>Vorarbeiten, Entrostung und Lackierung in einem Betrieb. <a href="lackierarbeiten.html">Mehr zu Lackierarbeiten →</a></p></div>
+    <div class="kc-right">
+      <div class="kc-head" id="kc-head">
+        <div class="kc-step"><span id="kc-step-name"></span><span id="kc-step-num"></span></div>
+        <h2 id="kc-opt-name"></h2><p id="kc-opt-desc"></p>
+      </div>
+      <div class="kc-body">
+        <div id="kc-options"></div>
+        <div class="kc-summary" id="kc-summary" hidden>
+          <h3 class="kc-label">Ihre Konfiguration</h3>
+          <div id="kc-sum-list"></div>
+          <p class="kc-note"><strong>Hinweis:</strong> Sie bringen das Fahrzeug zu uns – oder wir holen es im Umkreis von 30 km ab. Die Konfiguration dient als Grundlage für ein unverbindliches Angebot.</p>
+          <form class="kc-form" id="kc-form" name="konfiguration" method="POST" action="konfigurator.html" data-netlify="true" netlify-honeypot="firma">
+            <input type="hidden" name="form-name" value="konfiguration">{hidden}
+            <p class="hp"><label>Nicht ausfüllen: <input name="firma" tabindex="-1" autocomplete="off"></label></p>
+            <h3 class="kc-label">Kontaktinformationen</h3>
+            <label>Name *<input name="name" autocomplete="name" required></label>
+            <label>E-Mail *<input name="email" type="email" autocomplete="email" required></label>
+            <label>Telefon<input name="telefon" type="tel" autocomplete="tel"></label>
+            <label>Nachricht<textarea name="nachricht" rows="3" placeholder="Ihr Fahrzeug, Farbcode oder Wunschtermin"></textarea></label>
+            <label class="kc-consent"><input type="checkbox" name="einwilligung" required><span>Ich bin einverstanden, dass meine Angaben zur Bearbeitung der Anfrage gespeichert werden (siehe <a href="datenschutz.html">Datenschutz</a>). *</span></label>
+            <button type="submit" class="kc-btn kc-send">Anfrage senden</button>
+            <p class="kc-status" id="kc-status" role="status" aria-live="polite"></p>
+          </form>
+          <div class="kc-done" id="kc-done" hidden><span>✓</span><h3>Anfrage gesendet</h3><p>Vielen Dank für Ihre Konfiguration. Wir melden uns in Kürze bei Ihnen.</p></div>
+        </div>
+      </div>
+      <div class="kc-nav"><button type="button" id="kc-prev" class="kc-link">‹ Zurück</button><button type="button" id="kc-next" class="kc-btn">Weiter ›</button></div>
+    </div>
   </div>
 </section>
 <script>window.KONFIG = {json.dumps(data, ensure_ascii=False)};</script>'''
 
 
 KONFIG_CSS = """
-  .kf { display: grid; grid-template-columns: minmax(0, 1fr) 460px; align-items: start; background: #fff; }
-  .kf-stage { position: sticky; top: calc(var(--announce-h) + var(--hdr-h)); height: calc(100svh - var(--announce-h) - var(--hdr-h)); transition: top .35s var(--ease), height .35s var(--ease); min-height: 460px; background: #c9cbcc; overflow: hidden; z-index: 2; }
-  .kf-label { position: absolute; z-index: 1; top: 32px; left: 40px; font-size: 12px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: #222; background: rgba(255,255,255,.7); padding: 6px 10px; }
-  .kf-img { position: absolute; inset: 0; }
-  .kf-img img, .kf-img canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 58%; transition: opacity .35s ease, transform .6s cubic-bezier(.2,.8,.2,1); }
+  .kc { background: #fff; color: #171717; }
+  .kc-home { padding: 72px 0 96px; }
+  .kc-hero { text-align: center; margin-bottom: 40px; }
+  .kc-hero h1 { font-family: Inter, sans-serif; font-weight: 300; font-size: clamp(30px, 5vw, 60px); letter-spacing: .15em; text-transform: uppercase; line-height: 1.1; }
+  .kc-hero p { margin: 14px auto 0; max-width: 28rem; font-size: 14px; color: #737373; letter-spacing: .02em; }
+  .kc-types { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+  .kc-type { font: inherit; font-size: 11px; letter-spacing: .15em; text-transform: uppercase; padding: 8px 16px; border: 1px solid #e5e5e5; border-radius: 2px; background: #fff; color: #737373; cursor: pointer; transition: all .15s; }
+  .kc-type:hover { border-color: #a3a3a3; color: #171717; }
+  .kc-type.on { background: #171717; border-color: #171717; color: #fff; }
+  .kc-count { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: #737373; margin-bottom: 32px; }
+  .kc-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px 32px; }
+  .kc-card { display: block; color: inherit; }
+  .kc-card[hidden] { display: none; }
+  .kc-card-img { display: block; position: relative; aspect-ratio: 1 / 1; background: #fafafa; overflow: hidden; border-radius: 2px; }
+  .kc-card-img img { position: absolute; inset: 24px; width: calc(100% - 48px); height: calc(100% - 48px); object-fit: contain; transition: transform .7s ease; }
+  .kc-card:hover .kc-card-img img { transform: scale(1.05); }
+  .kc-card-brand { display: block; margin-top: 16px; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: #737373; }
+  .kc-card-brand em { font-style: normal; font-size: 9px; letter-spacing: .1em; color: #8a8a8a; margin-left: 6px; }
+  .kc-card-name { display: block; margin-top: 4px; font-size: 14px; letter-spacing: .15em; text-transform: uppercase; font-weight: 500; }
+  .kc-card-type { display: inline-block; margin-top: 8px; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: #737373; border: 1px solid #e5e5e5; padding: 2px 6px; border-radius: 2px; }
+  .kc-card-go { display: table; margin-top: 12px; font-size: 10px; letter-spacing: .25em; text-transform: uppercase; border-bottom: 1px solid #171717; padding-bottom: 2px; transition: border-color .2s; }
+  .kc-card:hover .kc-card-go { border-color: #a3a3a3; }
+  .kc-empty { text-align: center; padding: 100px 0; color: #737373; font-size: 14px; }
+  .kc-empty a { display: inline-block; margin-top: 14px; color: #171717; border-bottom: 1px solid #171717; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+  .kc-conf { display: flex; min-height: calc(100svh - var(--announce-h) - var(--hdr-h)); }
+  .kc-conf[hidden], .kc-home[hidden] { display: none; }
+  .kc-left { width: 60%; background: #fafafa; display: flex; flex-direction: column; }
+  .kc-top { display: flex; justify-content: space-between; align-items: center; padding: 24px; }
+  .kc-link { font: inherit; font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: #737373; background: none; border: 0; cursor: pointer; padding: 6px 0; transition: color .2s; }
+  .kc-link:hover { color: #171717; }
+  .kc-link:disabled { opacity: .35; cursor: default; }
+  .kc-light { color: #8a8a8a; font-size: 10px; }
+  .kc-view { flex: 1; display: flex; align-items: center; justify-content: center; padding: 0 32px 32px; }
+  .kc-view .kf-img { position: relative; width: 100%; max-width: 760px; aspect-ratio: 4 / 3; }
+  .kf-img img, .kf-img canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; transition: opacity .35s ease, transform .6s cubic-bezier(.2,.8,.2,1); }
   .kf-img canvas { opacity: 0; }
   .kf-img.tinted canvas { opacity: 1; }
-  .kf-img.tinted img, .kf-img.orig canvas { opacity: 0; }
-  .kf-img.orig img { opacity: 1; }
+  .kf-img.tinted img { opacity: 0; }
   .kf-img.out img, .kf-img.out canvas { opacity: 0; transform: scale(.985); }
   .kf-img.matt canvas { filter: contrast(.88) saturate(.85) brightness(1.03); }
   .kf-img.metallic canvas { filter: contrast(1.08) saturate(1.06); }
-  .kf-color { position: absolute; z-index: 1; left: 40px; bottom: 32px; display: flex; align-items: center; gap: 14px; background: rgba(255,255,255,.85); padding: 12px 18px 12px 12px; }
-  .kf-dot { width: 34px; height: 34px; border-radius: 50%; background: var(--c, #ccc); box-shadow: inset 0 0 0 1px rgba(0,0,0,.15); }
-  .kf-color strong { display: block; font-family: "Archivo Black", sans-serif; font-weight: 400; text-transform: uppercase; font-size: 18px; line-height: 1.1; }
-  .kf-color small { font-size: 12px; color: #555; letter-spacing: .08em; }
-  .kf-tools { position: absolute; z-index: 1; right: 32px; bottom: 32px; display: flex; gap: 8px; }
-  .kf-tool { font: inherit; font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; padding: 10px 14px; background: rgba(255,255,255,.85); border: 1px solid rgba(0,0,0,.12); cursor: pointer; transition: background .2s, color .2s; }
-  .kf-tool:hover, .kf-tool[aria-pressed=true] { background: #111; color: #fff; }
-  .kf-panel { padding: 40px; border-left: 1px solid var(--line); display: flex; flex-direction: column; gap: 26px; }
-  .kf-panel h1.overline { font-family: Inter, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: #6b6b6b; }
-  .kf-title { font-family: "Archivo Black", sans-serif; text-transform: uppercase; font-size: clamp(28px, 2.6vw, 38px); line-height: 1.02; margin-top: -14px; }
-  .kf fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
-  .kf legend { display: flex; align-items: baseline; gap: 10px; width: 100%; font-weight: 700; font-size: 15px; text-transform: uppercase; letter-spacing: .12em; padding-bottom: 12px; margin-bottom: 14px; border-bottom: 1px solid var(--black); }
-  .kf legend span { font-size: 12px; color: #6b6b6b; letter-spacing: .2em; }
-  .kf legend em, .kf legend small { margin-left: auto; font-style: normal; font-weight: 500; text-transform: none; letter-spacing: 0; color: #555; font-size: 14px; }
-  .kf input[type=radio] { position: absolute; opacity: 0; pointer-events: none; }
-  .kf-models { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .kf-model span { display: block; padding: 8px 8px 12px; border: 1px solid var(--line); font-weight: 600; font-size: 14px; line-height: 1.3; cursor: pointer; transition: border-color .2s, box-shadow .2s; }
-  .kf-model img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: center 58%; margin-bottom: 8px; background: #ddd; }
-  .kf-model input:checked + span { border-color: var(--black); box-shadow: inset 0 0 0 1px var(--black); }
-  .kf-model input:focus-visible + span, .kf-chip input:focus-visible + span, .kf-sw input:focus-visible + span { outline: 2px solid #111; outline-offset: 3px; }
-  .kf-swatches { display: flex; flex-wrap: wrap; gap: 12px; }
-  .kf-sw { position: relative; }
-  .kf-sw span { display: block; width: 38px; height: 38px; border-radius: 50%; background: var(--c); box-shadow: inset 0 0 0 1px rgba(0,0,0,.15); cursor: pointer; transition: transform .2s; }
-  .kf-sw span::after { content: ""; position: absolute; inset: -5px; border-radius: 50%; border: 1px solid transparent; transition: border-color .2s; }
-  .kf-sw input:checked + span::after { border-color: #111; }
-  .kf-sw span:hover { transform: scale(1.06); }
-  .kf-custom { display: inline-flex; align-items: center; gap: 12px; margin-top: 16px; font-size: 14px; font-weight: 600; cursor: pointer; }
-  .kf-custom input { width: 38px; height: 38px; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: none; cursor: pointer; overflow: hidden; }
-  .kf-custom input::-webkit-color-swatch-wrapper { padding: 0; } .kf-custom input::-webkit-color-swatch { border: 0; border-radius: 50%; }
-  .kf-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-  .kf-chip span { display: inline-block; padding: 10px 14px; border: 1px solid var(--line); font-size: 14px; cursor: pointer; transition: border-color .2s; }
-  .kf-chip input:checked + span { border-color: var(--black); box-shadow: inset 0 0 0 1px var(--black); font-weight: 600; }
-  .kf-field { display: block; font-size: 14px; font-weight: 600; margin-top: 10px; }
-  .kf-field input { display: block; width: 100%; margin-top: 6px; padding: 13px 14px; border: 1px solid var(--line); font: inherit; font-weight: 400; }
-  .kf-field input:focus { outline: 2px solid #111; outline-offset: 0; border-color: #111; }
-  .kf-summary { background: var(--grey); padding: 18px 20px; }
-  .kf-summary .eyebrow { margin-bottom: 6px; }
-  #kf-sum { font-weight: 600; }
-  .kf-cta { display: grid; gap: 10px; }
-  .kf-cta .btn { width: 100%; }
-  .kf-small { font-size: 14px; color: #555; }
-  .kf-small a { text-decoration: underline; text-underline-offset: 3px; color: var(--black); white-space: nowrap; }
-  .kf-info { padding: 100px 0; border-top: 1px solid var(--line); }
-  .kf-info-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px; }
-  .kf-info h2 { font-size: clamp(20px, 1.8vw, 26px); margin-bottom: 10px; }
-  .kf-info p:not(.eyebrow) { color: #555; }
-  .kf-info a { text-decoration: underline; text-underline-offset: 3px; color: var(--black); }
+  .kc-info { padding: 24px; border-top: 1px solid rgba(229,229,229,.6); background: rgba(255,255,255,.5); }
+  .kc-brand { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: #737373; }
+  .kc-model { font-size: 14px; letter-spacing: .1em; text-transform: uppercase; font-weight: 500; }
+  .kc-right { width: 40%; border-left: 1px solid #f0f0f0; display: flex; flex-direction: column; position: sticky; top: calc(var(--announce-h) + var(--hdr-h)); height: calc(100svh - var(--announce-h) - var(--hdr-h)); align-self: flex-start; }
+  .kc-head { padding: 24px; border-bottom: 1px solid #f0f0f0; }
+  .kc-step { display: flex; justify-content: space-between; font-size: 12px; letter-spacing: .15em; text-transform: uppercase; color: #737373; }
+  .kc-head h2 { font-family: Inter, sans-serif; text-transform: none; font-size: 18px; font-weight: 500; letter-spacing: 0; margin-top: 16px; }
+  .kc-head p { font-size: 12px; color: #737373; line-height: 1.6; margin-top: 8px; }
+  .kc-head h2:empty, .kc-head p:empty { display: none; }
+  .kc-body { flex: 1; overflow-y: auto; padding: 24px; }
+  .kc-swatches { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; }
+  .kc-sw { font: inherit; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 8px; border: 0; border-radius: 2px; background: none; cursor: pointer; transition: background .15s; min-width: 0; }
+  .kc-sw:hover { background: #fafafa; }
+  .kc-sw.on { background: #f5f5f5; box-shadow: 0 0 0 1px #171717; }
+  .kc-sw i { width: 36px; height: 36px; border-radius: 50%; border: 1px solid #e5e5e5; box-shadow: 0 1px 2px rgba(0,0,0,.08); display: flex; align-items: center; justify-content: center; font-style: normal; font-size: 15px; transition: transform .15s; }
+  .kc-sw:hover i { transform: scale(1.05); }
+  .kc-sw span { font-size: 10px; line-height: 1.2; color: #525252; text-align: center; width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .kc-sw input[type=color] { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+  .kc-opts { display: grid; gap: 8px; }
+  .kc-opt { font: inherit; text-align: left; width: 100%; display: flex; gap: 12px; justify-content: space-between; align-items: flex-start; padding: 16px; border: 1px solid #e5e5e5; border-radius: 2px; background: #fff; cursor: pointer; transition: border-color .2s, background .2s; }
+  .kc-opt:hover { border-color: #a3a3a3; }
+  .kc-opt.on { border-color: #171717; background: #fafafa; }
+  .kc-opt strong { display: block; font-size: 14px; font-weight: 500; letter-spacing: .02em; }
+  .kc-opt small { display: block; font-size: 12px; color: #737373; margin-top: 4px; line-height: 1.5; }
+  .kc-opt b { flex: none; width: 20px; height: 20px; border-radius: 50%; border: 1px solid #d4d4d4; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #fff; }
+  .kc-opt.on b { background: #171717; border-color: #171717; }
+  .kc-nav { padding: 24px; border-top: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; }
+  .kc-btn { font: inherit; font-size: 11px; letter-spacing: .15em; text-transform: uppercase; background: #171717; color: #fff; border: 0; border-radius: 2px; padding: 0 24px; height: 40px; cursor: pointer; transition: background .2s; }
+  .kc-btn:hover { background: #262626; }
+  .kc-label { font-family: Inter, sans-serif; font-size: 12px; font-weight: 400; letter-spacing: .2em; text-transform: uppercase; color: #737373; margin-bottom: 16px; }
+  .kc-row { padding: 8px 0; border-bottom: 1px solid #f5f5f5; }
+  .kc-row small { display: block; font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: #737373; }
+  .kc-row span { font-size: 14px; color: #262626; }
+  .kc-note { margin: 32px 0; background: #fafafa; border: 1px solid #f0f0f0; padding: 16px; font-size: 12px; color: #737373; line-height: 1.6; border-radius: 2px; }
+  .kc-note strong { color: #404040; font-weight: 600; }
+  .kc-form label { display: block; font-size: 12px; color: #737373; margin-bottom: 12px; }
+  .kc-form input:not([type=checkbox]), .kc-form textarea { display: block; width: 100%; margin-top: 4px; padding: 9px 12px; border: 1px solid #e5e5e5; border-radius: 2px; font: inherit; font-size: 14px; color: #171717; resize: none; }
+  .kc-form input:focus, .kc-form textarea:focus { outline: none; border-color: #171717; box-shadow: 0 0 0 1px #171717; }
+  .kc-consent { display: flex !important; gap: 8px; align-items: flex-start; line-height: 1.5; }
+  .kc-consent input { margin-top: 3px; }
+  .kc-consent a { text-decoration: underline; }
+  .kc-send { width: 100%; height: 48px; font-size: 12px; margin-top: 6px; }
+  .kc-status { font-size: 13px; margin-top: 12px; }
+  .kc-status .kc-fallback { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .kc-status .kc-fallback a { border: 1px solid #171717; padding: 8px 12px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+  .kc-done { text-align: center; padding: 64px 0; }
+  .kc-done span { display: inline-flex; width: 64px; height: 64px; border-radius: 50%; background: #171717; color: #fff; align-items: center; justify-content: center; font-size: 26px; }
+  .kc-done h3 { font-family: Inter, sans-serif; text-transform: none; font-size: 18px; font-weight: 500; margin: 16px 0 8px; }
+  .kc-done p { font-size: 14px; color: #737373; max-width: 24rem; margin: 0 auto; }
   @media (max-width: 990px) {
-    .kf { grid-template-columns: 1fr; }
-    .kf-stage { top: calc(var(--announce-h) + 70px); height: 42svh; min-height: 250px; box-shadow: 0 1px 0 var(--line); }
-    .kf-label { top: 12px; left: 12px; font-size: 10px; letter-spacing: .12em; padding: 4px 8px; max-width: calc(100% - 24px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .kf-color { left: 12px; bottom: 12px; padding: 8px 12px 8px 8px; gap: 10px; }
-    .kf-dot { width: 24px; height: 24px; }
-    .kf-color strong { font-size: 13px; } .kf-color small { display: none; }
-    .kf-tools { right: 12px; bottom: 12px; gap: 6px; }
-    .kf-tool { padding: 8px 9px; font-size: 10px; letter-spacing: .06em; }
-    #kf-save { display: none; }
-    .kf-panel { padding: 28px 16px 48px; border-left: 0; }
-    .kf-info { padding: 64px 0; }
-    .kf-info-grid { grid-template-columns: 1fr; gap: 32px; }
+    .kc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 16px; }
+    .kc-card-img img { inset: 12px; width: calc(100% - 24px); height: calc(100% - 24px); }
+    .kc-conf { flex-direction: column; min-height: 0; }
+    .kc-left, .kc-right { width: 100%; }
+    .kc-left { position: sticky; top: calc(var(--announce-h) + 70px); z-index: 2; }
+    .kc-top { padding: 10px 16px; }
+    .kc-view { padding: 0 16px 8px; }
+    .kc-view .kf-img { height: 26svh; aspect-ratio: auto; }
+    .kc-info { display: none; }
+    .kc-right { position: static; height: auto; border-left: 0; }
+    .kc-head, .kc-body, .kc-nav { padding-left: 16px; padding-right: 16px; }
+    .kc-nav { position: sticky; bottom: 0; background: #fff; z-index: 3; }
+  }
+  @media (max-width: 760px) { .kc-nav { bottom: calc(61px + env(safe-area-inset-bottom)); } }
+  @media (max-width: 600px) {
+    .kc-home { padding: 40px 0 64px; }
+    .kc-types { flex-wrap: nowrap; overflow-x: auto; margin: 0 -16px 24px; padding: 0 16px 4px; scrollbar-width: none; }
+    .kc-type { flex: none; font-size: 10px; padding: 8px 12px; }
+    .kc-card-name { font-size: 12px; letter-spacing: .1em; }
+    .kc-swatches { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   }
 """
 
 KONFIG_JS = r"""
-  // Lack-Konfigurator: Live-Einfärbung der Karosserie (Farbton/Sättigung tauschen, Helligkeitsverlauf behalten)
+  // Lack-Konfigurator (Aufbau wie das Base44-Original): Übersicht -> Schritte -> Zusammenfassung mit Anfrage
   (function () {
-    var form = document.getElementById('kf-form'); if (!form || !window.KONFIG) return;
-    var K = window.KONFIG, M = K.models, img = document.getElementById('kf-img'), cv = document.getElementById('kf-canvas'), box = img.parentNode;
-    var sw = document.getElementById('kf-swatches'), custom = document.getElementById('kf-custom');
+    var root = document.getElementById('kc-conf'); if (!root || !window.KONFIG) return;
+    var K = window.KONFIG, M = K.models, home = document.getElementById('kc-home');
+    var img = document.getElementById('kf-img'), cv = document.getElementById('kf-canvas'), box = img.parentNode;
+    var opts = document.getElementById('kc-options'), summary = document.getElementById('kc-summary'), form = document.getElementById('kc-form');
+    var prev = document.getElementById('kc-prev'), next = document.getElementById('kc-next');
     img.removeAttribute('srcset'); img.removeAttribute('sizes');
-    var q = new URLSearchParams(location.search), cache = {}, customHex = null, first = true, job = 0;
+    var cache = {}, job = 0, model = null, step = 0, sel = {}, customHex = null;
+    var esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
 
+    // --- Live-Einfärbung ---
     function rgbToHsl(r, g, b) { r /= 255; g /= 255; b /= 255; var mx = Math.max(r, g, b), mn = Math.min(r, g, b), h = 0, s = 0, l = (mx + mn) / 2;
       if (mx !== mn) { var d = mx - mn; s = l > .5 ? d / (2 - mx - mn) : d / (mx + mn);
         h = mx === r ? ((g - b) / d + (g < b ? 6 : 0)) * 60 : mx === g ? ((b - r) / d + 2) * 60 : ((r - g) / d + 4) * 60; }
@@ -1973,8 +2043,6 @@ KONFIG_JS = r"""
       var f = function (p, q2, t) { if (t < 0) t += 1; if (t > 1) t -= 1; return t < 1 / 6 ? p + (q2 - p) * 6 * t : t < .5 ? q2 : t < 2 / 3 ? p + (q2 - p) * (2 / 3 - t) * 6 : p; };
       var q2 = l < .5 ? l * (1 + s) : l + s - l * s, p = 2 * l - q2;
       return [f(p, q2, h + 1 / 3) * 255, f(p, q2, h) * 255, f(p, q2, h - 1 / 3) * 255]; }
-
-    // Einmal pro Modell: Gewicht (gehört der Pixel zur Karosserie?) und Helligkeit vorberechnen
     function prepare(m, cb) {
       if (cache[m]) return cb(cache[m]);
       var mo = M[m], im = new Image();
@@ -1998,7 +2066,7 @@ KONFIG_JS = r"""
       var my = ++job;
       prepare(m, function (b) {
         if (my !== job) return;
-        if (!b) { box.classList.remove('tinted'); box.classList.remove('out'); return; }   // Einfärben nicht möglich: Originalfoto bleibt sichtbar
+        if (!b) { box.classList.remove('tinted', 'out'); return; }
         if (cv.width !== b.w) { cv.width = b.w; cv.height = b.h; }
         var ctx = cv.getContext('2d'), out = ctx.createImageData(b.w, b.h), d = b.src.data, o = out.data, t = hexToHsl(hex), wt = b.wt, lum = b.lum;
         var scale = t[2] > .7 || t[2] < .25 ? .3 : .45;
@@ -2011,66 +2079,94 @@ KONFIG_JS = r"""
         ctx.putImageData(out, 0, 0); box.classList.add('tinted'); box.classList.remove('out');
       });
     }
-    function val(n) { var e = form.querySelector('input[name="' + n + '"]:checked'); return e ? e.value : ''; }
-    function drawSwatches(c) {
-      sw.innerHTML = K.palette.map(function (x, i) {
-        return '<label class="kf-sw" title="' + x.name + '"><input type="radio" name="farbe" value="' + x.id + '" aria-label="' + x.name + '"' + ((c ? x.id === c : i === 0) ? ' checked' : '') + '><span style="--c:' + x.hex + '"></span></label>';
-      }).join('');
-      if (!val('farbe') && !customHex) sw.querySelector('input').checked = true;
+
+    // --- Auswahl ---
+    function color() { return customHex ? { id: customHex.slice(1), name: 'Eigene Farbe ' + customHex.toUpperCase(), hex: customHex } : K.palette.filter(function (p) { return p.id === sel.Lackfarbe; })[0] || K.palette[0]; }
+    function defaults() { sel = {}; customHex = null; K.steps.forEach(function (s) { sel[s.name] = s.type === 'color' ? K.palette[0].id : s.options[0].name; }); }
+    function light(hex) { var n = parseInt(hex.slice(1), 16); return ((n >> 16 & 255) * 299 + (n >> 8 & 255) * 587 + (n & 255) * 114) / 1000 > 140; }
+    function paint() {
+      var c = color(); tint(model, c.hex);
+      box.classList.toggle('matt', sel.Lackart === 'Matt'); box.classList.toggle('metallic', sel.Lackart === 'Metallic');
+      cv.setAttribute('aria-label', M[model].brand + ' ' + M[model].name + ' in ' + c.name);
+      try { history.replaceState({ m: model }, '', '?modell=' + model + '&farbe=' + c.id); } catch (e) {}
     }
-    function current() {
-      var col = K.palette.filter(function (x) { return x.id === val('farbe'); })[0];
-      if (customHex) col = { id: customHex.slice(1), name: 'Eigene Farbe', hex: customHex };
-      return { m: val('modell'), col: col };
+    function render() {
+      var total = K.steps.length, done = step >= total, s = K.steps[step];
+      document.getElementById('kc-step-name').textContent = done ? 'Zusammenfassung' : s.name;
+      document.getElementById('kc-step-num').textContent = 'Schritt ' + (step + 1) + '/' + (done ? total + 1 : total);
+      var on = done ? null : s.type === 'color' ? color() : s.options.filter(function (o) { return o.name === sel[s.name]; })[0];
+      document.getElementById('kc-opt-name').textContent = on ? on.name : '';
+      document.getElementById('kc-opt-desc').textContent = on && on.desc ? on.desc : '';
+      summary.hidden = !done; opts.hidden = done; next.hidden = done; prev.disabled = step === 0;
+      next.textContent = step === total - 1 ? 'Zusammenfassung ›' : 'Weiter ›';
+      if (done) {
+        var c = color();
+        document.getElementById('kc-sum-list').innerHTML = '<div class="kc-row"><small>Modell</small><span>' + esc(M[model].brand + ' ' + M[model].name) + '</span></div>' +
+          K.steps.map(function (st) { return '<div class="kc-row"><small>' + esc(st.name) + '</small><span>' + esc(st.type === 'color' ? c.name + ' (' + c.hex.toUpperCase() + ')' : sel[st.name]) + '</span></div>'; }).join('');
+        var set = function (n, v) { form.elements[n].value = v; };
+        set('vorlage', M[model].brand + ' ' + M[model].name); set('lackfarbe', c.name + ' ' + c.hex.toUpperCase()); set('lackart', sel.Lackart); set('umfang', sel.Umfang); set('felgen', sel.Felgen);
+        return;
+      }
+      if (s.type === 'color') {
+        opts.innerHTML = '<div class="kc-swatches">' + K.palette.map(function (p) {
+          var act = !customHex && sel.Lackfarbe === p.id;
+          return '<button type="button" class="kc-sw' + (act ? ' on' : '') + '" data-color="' + p.id + '" title="' + esc(p.name) + '" aria-pressed="' + act + '"><i style="background:' + p.hex + ';color:' + (light(p.hex) ? '#000' : '#fff') + '">' + (act ? '✓' : '') + '</i><span>' + esc(p.name) + '</span></button>';
+        }).join('') + '<label class="kc-sw' + (customHex ? ' on' : '') + '" title="Eigene Farbe"><i style="background:' + (customHex || 'conic-gradient(#e53,#ec3,#5c5,#3ad,#83e,#e53)') + '">' + (customHex ? '✓' : '') + '</i><span>Eigene Farbe</span><input type="color" id="kc-custom" value="' + (customHex || '#2b5d4f') + '"></label></div>';
+      } else {
+        opts.innerHTML = '<div class="kc-opts">' + s.options.map(function (o) {
+          var act = sel[s.name] === o.name;
+          return '<button type="button" class="kc-opt' + (act ? ' on' : '') + '" data-opt="' + esc(o.name) + '" aria-pressed="' + act + '"><span><strong>' + esc(o.name) + '</strong>' + (o.desc ? '<small>' + esc(o.desc) + '</small>' : '') + '</span><b>' + (act ? '✓' : '') + '</b></button>';
+        }).join('') + '</div>';
+      }
     }
-    function update(modelChanged) {
-      var c = current(), m = c.m, col = c.col, model = M[m];
-      document.getElementById('kf-model-name').textContent = model.name;
-      document.getElementById('kf-color-name').textContent = col.name;
-      document.getElementById('kf-hex').textContent = col.hex.toUpperCase();
-      document.getElementById('kf-dot').style.setProperty('--c', col.hex);
-      document.getElementById('kf-color-label').textContent = col.name;
-      box.classList.toggle('matt', val('finish') === 'Matt'); box.classList.toggle('metallic', val('finish') === 'Metallic');
-      cv.setAttribute('aria-label', model.name + ' in ' + col.name);
-      if (modelChanged && !first) { box.classList.add('out'); setTimeout(function () { img.src = model.img; img.alt = model.name; tint(m, col.hex); }, 200); }
-      else { if (img.getAttribute('src') !== model.img) { img.src = model.img; img.alt = model.name; } tint(m, col.hex); }
-      first = false;
-      var car = document.getElementById('kf-car').value.trim(), code = document.getElementById('kf-code').value.trim();
-      document.getElementById('kf-sum').textContent = col.name + ' (' + col.hex.toUpperCase() + ') · ' + val('finish') + (code ? ' · Wunsch: ' + code : '') + ' · ' + val('umfang') + ' · ' + (car || ('Vorlage: ' + model.name));
-      var text = 'Hallo Täubert-Team, ich interessiere mich für eine Lackierung.\nFarbe: ' + col.name + ' (' + col.hex.toUpperCase() + ')\nFinish: ' + val('finish') + (code ? '\nWunschfarbe/Farbcode: ' + code : '') +
-        '\nUmfang: ' + val('umfang') + '\nFahrzeug: ' + (car || 'noch offen') + '\nVorlage im Konfigurator: ' + model.name + '\n' + shareUrl();
-      document.getElementById('kf-wa').href = 'https://wa.me/4936754289606?text=' + encodeURIComponent(text);
-      document.getElementById('kf-mail').href = 'mailto:hallo@taeubert-karosserie-lack.de?subject=' + encodeURIComponent('Lack-Konfigurator: ' + col.name) + '&body=' + encodeURIComponent(text);
-      document.getElementById('kf-term').href = 'termin.html?leistung=' + encodeURIComponent('Lackierung') + '&notiz=' + encodeURIComponent('Konfigurator: ' + col.name + ' ' + col.hex.toUpperCase() + ', ' + val('finish') + ', ' + val('umfang') + (car ? ', ' + car : '')) + '#wunschtermin';
-      try { history.replaceState(null, '', '?modell=' + m + '&farbe=' + col.id); } catch (e) {}
+    opts.addEventListener('click', function (e) {
+      var b = e.target.closest('.kc-sw[data-color], .kc-opt'); if (!b) return;
+      var s = K.steps[step];
+      if (b.dataset.color) { sel.Lackfarbe = b.dataset.color; customHex = null; } else sel[s.name] = b.dataset.opt;
+      render(); paint();
+    });
+    opts.addEventListener('input', function (e) { if (e.target.id === 'kc-custom') { customHex = e.target.value; render(); paint(); var c = document.getElementById('kc-custom'); if (c) c.focus(); } });
+    prev.addEventListener('click', function () { if (step > 0) { step--; render(); } });
+    next.addEventListener('click', function () { step++; render(); });
+    document.getElementById('kc-reset').addEventListener('click', function () { defaults(); step = 0; render(); paint(); });
+
+    // --- Anfrage senden (Netlify Forms), bei Fehler WhatsApp/E-Mail anbieten ---
+    form.addEventListener('submit', function (e) {
+      e.preventDefault(); if (!form.checkValidity()) { form.reportValidity(); return; }
+      var status = document.getElementById('kc-status'), btn = form.querySelector('.kc-send'); btn.disabled = true; status.textContent = 'Wird gesendet …';
+      fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); form.hidden = true; document.getElementById('kc-done').hidden = false; document.querySelector('.kc-note').hidden = true; })
+        .catch(function () {
+          btn.disabled = false;
+          var t = 'Konfiguration\n' + ['vorlage', 'lackfarbe', 'lackart', 'umfang', 'felgen', 'name', 'email', 'telefon', 'nachricht'].map(function (n) { return n + ': ' + form.elements[n].value; }).join('\n');
+          status.innerHTML = 'Das Senden hat gerade nicht geklappt. Schicken Sie Ihre Konfiguration einfach so:<span class="kc-fallback"><a target="_blank" rel="noopener" href="https://wa.me/4936754289606?text=' + encodeURIComponent(t) + '">WhatsApp</a><a href="mailto:hallo@taeubert-karosserie-lack.de?subject=' + encodeURIComponent('Konfiguration') + '&body=' + encodeURIComponent(t) + '">E-Mail</a></span>';
+        });
+    });
+
+    // --- Ansichten: Übersicht oder Konfiguration ---
+    var count = document.getElementById('kc-count'), cards = [].slice.call(document.querySelectorAll('.kc-card'));
+    document.querySelectorAll('.kc-type').forEach(function (b) {
+      b.addEventListener('click', function () {
+        document.querySelectorAll('.kc-type').forEach(function (x) { x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', x === b); });
+        var n = 0; cards.forEach(function (c) { var show = b.dataset.type === 'Alle' || c.dataset.type === b.dataset.type; c.hidden = !show; if (show) n++; });
+        count.textContent = n + ' ' + (n === 1 ? 'Modell' : 'Modelle'); document.getElementById('kc-empty').hidden = n > 0;
+      });
+    });
+    function open(m, f) {
+      model = m; defaults(); step = 0;
+      if (f) { if (K.palette.some(function (p) { return p.id === f; })) sel.Lackfarbe = f; else if (/^[0-9a-f]{6}$/i.test(f)) customHex = '#' + f.toLowerCase(); }
+      home.hidden = true; root.hidden = false;
+      document.getElementById('kc-brand').textContent = M[m].brand; document.getElementById('kc-model').textContent = M[m].name;
+      img.src = M[m].img; img.alt = M[m].brand + ' ' + M[m].name; box.classList.remove('tinted');
+      form.hidden = false; document.getElementById('kc-done').hidden = true; document.querySelector('.kc-note').hidden = false; document.getElementById('kc-status').textContent = '';
+      render(); paint(); window.scrollTo(0, 0);
     }
-    function shareUrl() { return location.href.split('#')[0]; }
-    form.addEventListener('change', function (e) {
-      if (e.target.name === 'modell') update(true);
-      else { if (e.target.name === 'farbe') customHex = null; update(false); }
-    });
-    custom.addEventListener('input', function () { customHex = custom.value; var s = form.querySelector('input[name="farbe"]:checked'); if (s) s.checked = false; update(false); });
-    form.addEventListener('input', function (e) { if (e.target.tagName === 'INPUT' && e.target.type === 'text') update(false); });
-    // Original zeigen, Bild speichern, Link teilen
-    var orig = document.getElementById('kf-orig');
-    orig.addEventListener('click', function () { var on = orig.getAttribute('aria-pressed') !== 'true'; orig.setAttribute('aria-pressed', on); box.classList.toggle('orig', on); });
-    document.getElementById('kf-save').addEventListener('click', function () {
-      if (!box.classList.contains('tinted')) return;
-      var a = document.createElement('a'); a.download = 'taeubert-' + val('modell') + '-' + current().col.name.toLowerCase().replace(/[^a-z0-9äöüß]+/g, '-') + '.png';
-      a.href = cv.toDataURL('image/png'); a.click();
-    });
-    var share = document.getElementById('kf-share');
-    share.addEventListener('click', function () {
-      var u = shareUrl();
-      if (navigator.share) { navigator.share({ title: 'Meine Wunschfarbe – Täubert', url: u }).catch(function () {}); return; }
-      (navigator.clipboard ? navigator.clipboard.writeText(u) : Promise.reject()).then(function () { share.textContent = 'Link kopiert'; setTimeout(function () { share.textContent = 'Link teilen'; }, 2000); }, function () { prompt('Link kopieren:', u); });
-    });
-    var m0 = q.get('modell'), f0 = q.get('farbe');
-    if (!M[m0]) m0 = Object.keys(M)[0];
-    form.querySelector('input[name="modell"][value="' + m0 + '"]').checked = true;
-    if (f0 && /^[0-9a-f]{6}$/i.test(f0) && !K.palette.some(function (x) { return x.id === f0; })) { customHex = '#' + f0.toLowerCase(); custom.value = customHex; drawSwatches(null); sw.querySelectorAll('input').forEach(function (i) { i.checked = false; }); }
-    else drawSwatches(f0);
-    update(false);
+    function showHome() { root.hidden = true; home.hidden = false; }
+    cards.forEach(function (c) { c.addEventListener('click', function (e) { e.preventDefault(); var m = new URLSearchParams(c.getAttribute('href').slice(1)).get('modell'); try { history.pushState({ m: m }, '', '?modell=' + m); } catch (x) {} open(m); }); });
+    document.getElementById('kc-back').addEventListener('click', function (e) { e.preventDefault(); try { history.pushState({}, '', 'konfigurator.html'); } catch (x) {} showHome(); window.scrollTo(0, 0); });
+    window.addEventListener('popstate', function () { route(); });
+    function route() { var q = new URLSearchParams(location.search), m = q.get('modell'); if (M[m]) open(m, q.get('farbe')); else showHome(); }
+    route();
   })();
 """
 
