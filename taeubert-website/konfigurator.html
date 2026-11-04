@@ -764,7 +764,20 @@
   .kc-link:hover { color: #171717; }
   .kc-link:disabled { opacity: .35; cursor: default; }
   .kc-light { color: #666; font-size: 10px; }
-  .kc-view { flex: 1; display: flex; align-items: center; justify-content: center; padding: 0 32px 32px; }
+  .kc-stage { flex: 1; display: flex; min-height: 0; }
+  .kc-thumbs { flex: none; display: flex; flex-direction: column; gap: 8px; padding: 0 16px 16px; border-right: 1px solid #f0f0f0; }
+  .kc-thumbs:empty { display: none; }
+  .kc-thumb { width: 80px; height: 80px; padding: 0; border: 2px solid #e5e5e5; border-radius: 2px; overflow: hidden; background: #fff; cursor: pointer; transition: border-color .2s; }
+  .kc-thumb:hover { border-color: #a3a3a3; }
+  .kc-thumb.on { border-color: #171717; }
+  .kc-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .kc-view { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 32px 32px; }
+  .kc-viewlabel { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: #737373; margin-top: 12px; }
+  .kc-tabs { display: flex; overflow-x: auto; border-bottom: 1px solid #f0f0f0; scrollbar-width: none; }
+  .kc-tab { font: inherit; flex: none; font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: #737373; background: none; border: 0; border-bottom: 2px solid transparent; padding: 16px 14px 14px; cursor: pointer; transition: color .2s, border-color .2s; }
+  .kc-tab:first-child { padding-left: 24px; }
+  .kc-tab:hover { color: #171717; }
+  .kc-tab.on { color: #171717; border-bottom-color: #171717; }
   .kc-view .kf-img { position: relative; width: 100%; max-width: 760px; aspect-ratio: 4 / 3; }
   .kf-img img, .kf-img canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; transition: opacity .35s ease, transform .6s cubic-bezier(.2,.8,.2,1); }
   .kf-img canvas { opacity: 0; }
@@ -830,6 +843,11 @@
     .kc-left { position: sticky; top: calc(var(--announce-h) + 70px); z-index: 2; }
     .kc-top { padding: 10px 16px; }
     .kc-view { padding: 0 16px 8px; }
+    .kc-stage { flex-direction: column-reverse; }
+    .kc-thumbs { flex-direction: row; border-right: 0; padding: 6px 16px 10px; overflow-x: auto; }
+    .kc-thumb { width: 52px; height: 52px; }
+    .kc-tab:first-child { padding-left: 16px; }
+    .kc-viewlabel { display: none; }
     .kc-view .kf-img { height: 26svh; aspect-ratio: auto; }
     .kc-info { display: none; }
     .kc-right { position: static; height: auto; border-left: 0; }
@@ -959,10 +977,11 @@
   <div class="kc-conf" id="kc-conf" hidden>
     <div class="kc-left">
       <div class="kc-top"><a href="konfigurator.html" id="kc-back" class="kc-link">← Zurück</a><button type="button" id="kc-reset" class="kc-link kc-light">↺ Reset</button></div>
-      <div class="kc-view"><div class="kf-img"><img id="kf-img" src="images/hf_20260210_174113_8bd7f253-8826-4ed4-89ed-56b117c21301.webp" srcset="images/hf_20260210_174113_8bd7f253-8826-4ed4-89ed-56b117c21301-700.webp 700w, images/hf_20260210_174113_8bd7f253-8826-4ed4-89ed-56b117c21301.webp 1024w" sizes="(max-width: 760px) 100vw, 60vw" alt="Lack-Konfigurator – Wunschfarbe online wählen"><canvas id="kf-canvas" role="img" aria-label=""></canvas></div></div>
+      <div class="kc-stage"><div class="kc-thumbs" id="kc-thumbs" role="group" aria-label="Ansichten"></div><div class="kc-view"><div class="kf-img"><img id="kf-img" src="images/hf_20260210_174113_8bd7f253-8826-4ed4-89ed-56b117c21301.webp" srcset="images/hf_20260210_174113_8bd7f253-8826-4ed4-89ed-56b117c21301-700.webp 700w, images/hf_20260210_174113_8bd7f253-8826-4ed4-89ed-56b117c21301.webp 1024w" sizes="(max-width: 760px) 100vw, 60vw" alt="Lack-Konfigurator – Wunschfarbe online wählen"><canvas id="kf-canvas" role="img" aria-label=""></canvas></div></div></div>
       <div class="kc-info"><p class="kc-brand" id="kc-brand"></p><p class="kc-model" id="kc-model"></p></div>
     </div>
     <div class="kc-right">
+      <nav class="kc-tabs" id="kc-tabs" aria-label="Kategorien"></nav>
       <div class="kc-head" id="kc-head">
         <div class="kc-step"><span id="kc-step-name"></span><span id="kc-step-num"></span></div>
         <h2 id="kc-opt-name"></h2><p id="kc-opt-desc"></p>
@@ -992,7 +1011,7 @@
     </div>
   </div>
 </section>
-<script>window.KONFIG = {"palette": [{"id": "schwarz", "name": "Tiefschwarz", "hex": "#141518"}, {"id": "weiss", "name": "Kreideweiß", "hex": "#e9ebec"}, {"id": "silber", "name": "Brillantsilber", "hex": "#b4b8bc"}, {"id": "kreidegrau", "name": "Kreidegrau", "hex": "#9b9d99"}, {"id": "achatgrau", "name": "Achatgrau", "hex": "#5c6064"}, {"id": "oliv", "name": "Olivgrün", "hex": "#5a6146"}, {"id": "mint", "name": "Mintgrün", "hex": "#9cc1ae"}, {"id": "eisblau", "name": "Eisblau", "hex": "#86aec2"}, {"id": "gentian", "name": "Gentianblau", "hex": "#1f3a68"}, {"id": "gelb", "name": "Racinggelb", "hex": "#e5c01c"}, {"id": "pastellgelb", "name": "Pastellgelb", "hex": "#e1d394"}, {"id": "orange", "name": "Signalorange", "hex": "#e0661c"}, {"id": "karmin", "name": "Karminrot", "hex": "#8c1c22"}, {"id": "braun", "name": "Mahagonibraun", "hex": "#5b3d33"}, {"id": "sand", "name": "Sandbeige", "hex": "#c8b48e"}], "steps": [{"name": "Lackfarbe", "type": "color", "options": []}, {"name": "Lackart", "type": "option", "options": [{"name": "Hochglanz", "desc": "Klassischer Glanzlack – tiefer Glanz und leicht zu pflegen."}, {"name": "Metallic", "desc": "Mit Effektpigmenten – lebendige Reflexe im Sonnenlicht."}, {"name": "Matt", "desc": "Seidenmatte Oberfläche – markant und modern, braucht besondere Pflege."}]}, {"name": "Umfang", "type": "option", "options": [{"name": "Komplettlackierung", "desc": "Das gesamte Fahrzeug in der neuen Farbe."}, {"name": "Teillackierung", "desc": "Einzelne Bauteile, z. B. Motorhaube, Dach oder Spiegel."}, {"name": "Ausbesserung / Spot Repair", "desc": "Kleine Schäden punktgenau im Farbton ausbessern."}, {"name": "Erst beraten lassen", "desc": "Wir sehen uns Ihr Fahrzeug an und beraten Sie persönlich."}]}, {"name": "Felgen", "type": "option", "options": [{"name": "Original belassen", "desc": "Die Felgen bleiben, wie sie sind."}, {"name": "Schwarz glänzend", "desc": "Felgen in Hochglanz-Schwarz – sportlich und markant."}, {"name": "Anthrazit", "desc": "Zeitlos und unempfindlich gegen Bremsstaub."}, {"name": "Silber", "desc": "Der klassische Look – passt auch zum Oldtimer."}]}], "models": {"911": {"brand": "Porsche", "name": "911 | Klassiker", "img": "images/hf_20260210_174113_8bd7f253-8826-4ed4-89ed-56b117c21301.webp", "hue": 47, "range": 14, "l": 0.7}, "964": {"brand": "Porsche", "name": "911 Cabrio | 964", "img": "images/ElevenLabs_image_nano-banana_Porsche_rast..._2026-01-13T08_49_41.webp", "hue": 355, "range": 16, "l": 0.42}, "w114": {"brand": "Mercedes-Benz", "name": "/8 | W114", "img": "images/hf_20260210_173801_c09630de-aae3-46b1-9460-d37b19053b9d_1.webp", "hue": 47, "range": 14, "l": 0.7}, "g": {"brand": "Mercedes-Benz", "name": "G-Klasse", "img": "images/hf_20260210_181224_9fb53726-af8f-484d-9126-6d24f40444b3.webp", "hue": 245, "range": 80, "l": 0.55}, "bulli": {"brand": "Volkswagen", "name": "Bulli | T2", "img": "images/05aec4a8-410c-4309-a1e1-ac39cf6f5274.webp", "hue": 245, "range": 80, "l": 0.55}, "golf": {"brand": "Volkswagen", "name": "Golf", "img": "images/hf_20260210_181007_e0cc78c3-7998-457e-9a33-87828b0061dd.webp", "hue": 245, "range": 80, "l": 0.6}, "jimny": {"brand": "Suzuki", "name": "Jimny", "img": "images/hf_20260210_181330_97f3ed36-acbd-4482-acf3-ff9139249598.webp", "hue": 245, "range": 80, "l": 0.55}}};</script>
+<script>window.KONFIG = {"palette": [{"id": "schwarz", "name": "Tiefschwarz", "hex": "#141518"}, {"id": "weiss", "name": "Kreideweiß", "hex": "#e9ebec"}, {"id": "silber", "name": "Brillantsilber", "hex": "#b4b8bc"}, {"id": "kreidegrau", "name": "Kreidegrau", "hex": "#9b9d99"}, {"id": "achatgrau", "name": "Achatgrau", "hex": "#5c6064"}, {"id": "oliv", "name": "Olivgrün", "hex": "#5a6146"}, {"id": "mint", "name": "Mintgrün", "hex": "#9cc1ae"}, {"id": "eisblau", "name": "Eisblau", "hex": "#86aec2"}, {"id": "gentian", "name": "Gentianblau", "hex": "#1f3a68"}, {"id": "gelb", "name": "Racinggelb", "hex": "#e5c01c"}, {"id": "pastellgelb", "name": "Pastellgelb", "hex": "#e1d394"}, {"id": "orange", "name": "Signalorange", "hex": "#e0661c"}, {"id": "karmin", "name": "Karminrot", "hex": "#8c1c22"}, {"id": "braun", "name": "Mahagonibraun", "hex": "#5b3d33"}, {"id": "sand", "name": "Sandbeige", "hex": "#c8b48e"}], "steps": [{"name": "Lackfarbe", "type": "color", "options": []}, {"name": "Lackart", "type": "option", "options": [{"name": "Hochglanz", "desc": "Klassischer Glanzlack – tiefer Glanz und leicht zu pflegen."}, {"name": "Metallic", "desc": "Mit Effektpigmenten – lebendige Reflexe im Sonnenlicht."}, {"name": "Matt", "desc": "Seidenmatte Oberfläche – markant und modern, braucht besondere Pflege."}]}, {"name": "Umfang", "type": "option", "options": [{"name": "Komplettlackierung", "desc": "Das gesamte Fahrzeug in der neuen Farbe."}, {"name": "Teillackierung", "desc": "Einzelne Bauteile, z. B. Motorhaube, Dach oder Spiegel."}, {"name": "Ausbesserung / Spot Repair", "desc": "Kleine Schäden punktgenau im Farbton ausbessern."}, {"name": "Erst beraten lassen", "desc": "Wir sehen uns Ihr Fahrzeug an und beraten Sie persönlich."}]}, {"name": "Felgen", "type": "option", "options": [{"name": "Original belassen", "desc": "Die Felgen bleiben, wie sie sind."}, {"name": "Schwarz glänzend", "desc": "Felgen in Hochglanz-Schwarz – sportlich und markant."}, {"name": "Anthrazit", "desc": "Zeitlos und unempfindlich gegen Bremsstaub."}, {"name": "Silber", "desc": "Der klassische Look – passt auch zum Oldtimer."}]}], "models": {"911": {"brand": "Porsche", "name": "911 | Klassiker", "views": [{"img": "images/hf_20260210_174113_8bd7f253-8826-4ed4-89ed-56b117c21301.webp", "label": "Seite", "hue": 47, "range": 14, "l": 0.7}]}, "964": {"brand": "Porsche", "name": "911 Cabrio | 964", "views": [{"img": "images/ElevenLabs_image_nano-banana_Porsche_rast..._2026-01-13T08_49_41.webp", "label": "Studio", "hue": 355, "range": 16, "l": 0.42}, {"img": "images/67e54e24950565cf808d4ff0_D299D140-703F-4533-93A9-6A85108009BE.webp", "label": "In Fahrt", "hue": 355, "range": 16, "l": 0.42}, {"img": "images/67e54e9e6a50c47dbfeb5962_03_DSC_0367_2-p-3200.webp", "label": "Heck", "hue": 355, "range": 10, "l": 0.42}]}, "w114": {"brand": "Mercedes-Benz", "name": "/8 | W114", "views": [{"img": "images/hf_20260210_173801_c09630de-aae3-46b1-9460-d37b19053b9d_1.webp", "label": "Seite", "hue": 47, "range": 14, "l": 0.7}, {"img": "images/4_12352486-8bba-4930-ab08-035bdc1e181b.webp", "label": "Altstadt", "hue": 215, "range": 30, "l": 0.3}]}, "g": {"brand": "Mercedes-Benz", "name": "G-Klasse", "views": [{"img": "images/hf_20260210_181224_9fb53726-af8f-484d-9126-6d24f40444b3.webp", "label": "Seite", "hue": 245, "range": 80, "l": 0.55}, {"img": "images/hf_20260210_181415_b7a35485-0e8f-4bc2-a27b-68fbefbdc94a.webp", "label": "Aufbereitung", "hue": 245, "range": 80, "l": 0.55}, {"img": "images/hf_20260210_181635_67b929d3-3424-4e2b-887e-a7b3adbd05fe.webp", "label": "Lackierkabine", "hue": 245, "range": 80, "l": 0.6}]}, "bulli": {"brand": "Volkswagen", "name": "Bulli | T2", "views": [{"img": "images/05aec4a8-410c-4309-a1e1-ac39cf6f5274.webp", "label": "Front 3/4", "hue": 245, "range": 80, "l": 0.55}, {"img": "images/ElevenLabs_image_nano-banana_Auto_faehrt_2026-01-13T08_54_47.webp", "label": "Studio", "hue": 245, "range": 80, "l": 0.55}]}, "golf": {"brand": "Volkswagen", "name": "Golf", "views": [{"img": "images/hf_20260210_181007_e0cc78c3-7998-457e-9a33-87828b0061dd.webp", "label": "Seite", "hue": 245, "range": 80, "l": 0.6}]}, "jimny": {"brand": "Suzuki", "name": "Jimny", "views": [{"img": "images/hf_20260210_181330_97f3ed36-acbd-4482-acf3-ff9139249598.webp", "label": "Seite", "hue": 245, "range": 80, "l": 0.55}]}}};</script>
 </main>
 <footer>
   <div class="foot-grid">
@@ -1269,7 +1288,8 @@
     var opts = document.getElementById('kc-options'), summary = document.getElementById('kc-summary'), form = document.getElementById('kc-form');
     var prev = document.getElementById('kc-prev'), next = document.getElementById('kc-next');
     img.removeAttribute('srcset'); img.removeAttribute('sizes');
-    var cache = {}, job = 0, model = null, step = 0, sel = {}, customHex = null;
+    var cache = {}, job = 0, model = null, step = 0, sel = {}, customHex = null, view = 0;
+    var thumbs = document.getElementById('kc-thumbs'), tabs = document.getElementById('kc-tabs');
     var esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
 
     // --- Live-Einfärbung ---
@@ -1282,9 +1302,9 @@
       var f = function (p, q2, t) { if (t < 0) t += 1; if (t > 1) t -= 1; return t < 1 / 6 ? p + (q2 - p) * 6 * t : t < .5 ? q2 : t < 2 / 3 ? p + (q2 - p) * (2 / 3 - t) * 6 : p; };
       var q2 = l < .5 ? l * (1 + s) : l + s - l * s, p = 2 * l - q2;
       return [f(p, q2, h + 1 / 3) * 255, f(p, q2, h) * 255, f(p, q2, h - 1 / 3) * 255]; }
-    function prepare(m, cb) {
-      if (cache[m]) return cb(cache[m]);
-      var mo = M[m], im = new Image();
+    function prepare(mo, cb) {
+      if (cache[mo.img]) return cb(cache[mo.img]);
+      var im = new Image();
       im.onload = function () {
         var w = Math.min(1200, im.naturalWidth), h = Math.round(im.naturalHeight * w / im.naturalWidth), c = document.createElement('canvas');
         c.width = w; c.height = h; var x = c.getContext('2d'); x.drawImage(im, 0, 0, w, h);
@@ -1297,13 +1317,13 @@
           var w8 = Math.min(sat <= 15 ? 0 : Math.min((sat - 15) / 40, 1), hw, p[2] > .93 ? 0 : Math.min((.93 - p[2]) / .08, 1));
           wt[j] = w8 > .01 ? w8 : 0; lum[j] = p[2];
         }
-        cache[m] = { w: w, h: h, src: src, wt: wt, lum: lum, l: mo.l }; cb(cache[m]);
+        cache[mo.img] = { w: w, h: h, src: src, wt: wt, lum: lum, l: mo.l }; cb(cache[mo.img]);
       };
       im.onerror = function () { cb(null); }; im.src = mo.img;
     }
-    function tint(m, hex) {
+    function tint(v, hex) {
       var my = ++job;
-      prepare(m, function (b) {
+      prepare(v, function (b) {
         if (my !== job) return;
         if (!b) { box.classList.remove('tinted', 'out'); return; }
         if (cv.width !== b.w) { cv.width = b.w; cv.height = b.h; }
@@ -1324,13 +1344,15 @@
     function defaults() { sel = {}; customHex = null; K.steps.forEach(function (s) { sel[s.name] = s.type === 'color' ? K.palette[0].id : s.options[0].name; }); }
     function light(hex) { var n = parseInt(hex.slice(1), 16); return ((n >> 16 & 255) * 299 + (n >> 8 & 255) * 587 + (n & 255) * 114) / 1000 > 140; }
     function paint() {
-      var c = color(); tint(model, c.hex);
+      var c = color(), v = M[model].views[view]; tint(v, c.hex);
       box.classList.toggle('matt', sel.Lackart === 'Matt'); box.classList.toggle('metallic', sel.Lackart === 'Metallic');
       cv.setAttribute('aria-label', M[model].brand + ' ' + M[model].name + ' in ' + c.name);
       try { history.replaceState({ m: model }, '', '?modell=' + model + '&farbe=' + c.id); } catch (e) {}
     }
     function render() {
       var total = K.steps.length, done = step >= total, s = K.steps[step];
+      tabs.innerHTML = K.steps.map(function (st, i) { return '<button type="button" class="kc-tab' + (i === step ? ' on' : '') + '" data-step="' + i + '"' + (i === step ? ' aria-current="step"' : '') + '>' + esc(st.name) + '</button>'; }).join('') +
+        '<button type="button" class="kc-tab' + (done ? ' on' : '') + '" data-step="' + total + '"' + (done ? ' aria-current="step"' : '') + '>Zusammenfassung</button>';
       document.getElementById('kc-step-name').textContent = done ? 'Zusammenfassung' : s.name;
       document.getElementById('kc-step-num').textContent = 'Schritt ' + (step + 1) + '/' + (done ? total + 1 : total);
       var on = done ? null : s.type === 'color' ? color() : s.options.filter(function (o) { return o.name === sel[s.name]; })[0];
@@ -1366,6 +1388,14 @@
     });
     opts.addEventListener('input', function (e) { if (e.target.id === 'kc-custom') { customHex = e.target.value; render(); paint(); var c = document.getElementById('kc-custom'); if (c) c.focus(); } });
     prev.addEventListener('click', function () { if (step > 0) { step--; render(); } });
+    tabs.addEventListener('click', function (e) { var b = e.target.closest('.kc-tab'); if (b) { step = +b.dataset.step; render(); } });
+    function showView(i, anim) {
+      view = i; var v = M[model].views[i];
+      thumbs.querySelectorAll('.kc-thumb').forEach(function (t, j) { t.classList.toggle('on', j === i); t.setAttribute('aria-pressed', j === i); });
+      var go = function () { img.src = v.img; img.alt = M[model].brand + ' ' + M[model].name + ' – ' + v.label; paint(); };
+      if (anim) { box.classList.add('out'); setTimeout(go, 180); } else go();
+    }
+    thumbs.addEventListener('click', function (e) { var b = e.target.closest('.kc-thumb'); if (b && +b.dataset.view !== view) showView(+b.dataset.view, true); });
     next.addEventListener('click', function () { step++; render(); });
     document.getElementById('kc-reset').addEventListener('click', function () { defaults(); step = 0; render(); paint(); });
 
@@ -1396,9 +1426,11 @@
       if (f) { if (K.palette.some(function (p) { return p.id === f; })) sel.Lackfarbe = f; else if (/^[0-9a-f]{6}$/i.test(f)) customHex = '#' + f.toLowerCase(); }
       home.hidden = true; root.hidden = false;
       document.getElementById('kc-brand').textContent = M[m].brand; document.getElementById('kc-model').textContent = M[m].name;
-      img.src = M[m].img; img.alt = M[m].brand + ' ' + M[m].name; box.classList.remove('tinted');
+      var vs = M[m].views;
+      thumbs.innerHTML = vs.length > 1 ? vs.map(function (v, i) { return '<button type="button" class="kc-thumb' + (i ? '' : ' on') + '" data-view="' + i + '" aria-pressed="' + !i + '" title="' + esc(v.label) + '"><img src="' + v.img.replace(/\.(webp|jpg)$/, '-700.webp') + '" alt="' + esc(v.label) + '" onerror="this.onerror=null;this.src=\'' + v.img + '\'"></button>'; }).join('') : '';
+      view = 0; img.src = vs[0].img; img.alt = M[m].brand + ' ' + M[m].name; box.classList.remove('tinted');
       form.hidden = false; document.getElementById('kc-done').hidden = true; document.querySelector('.kc-note').hidden = false; document.getElementById('kc-status').textContent = '';
-      render(); paint(); window.scrollTo(0, 0);
+      render(); showView(0, false); window.scrollTo(0, 0);
     }
     function showHome() { root.hidden = true; home.hidden = false; }
     cards.forEach(function (c) { c.addEventListener('click', function (e) { e.preventDefault(); var m = new URLSearchParams(c.getAttribute('href').slice(1)).get('modell'); try { history.pushState({ m: m }, '', '?modell=' + m); } catch (x) {} open(m); }); });
