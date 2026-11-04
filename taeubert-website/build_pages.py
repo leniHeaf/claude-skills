@@ -970,7 +970,7 @@ def drawer_html():
 
 # Rundum-Service: das zentrale Versprechen (Startseite und Leistungsübersicht)
 CARE = [
-    ("Wir holen Ihr Auto ab", "Mit unserem Hol- und Bringservice müssen Sie nicht einmal in die Werkstatt kommen."),
+    ("Wir holen Ihr Auto ab", "Hol- und Bringservice im Umkreis von 30 km – Sie müssen nicht einmal in die Werkstatt kommen."),
     ("Sie bleiben mobil", "Ein Ersatzwagen für die Dauer der Reparatur – auch mit Hund, nach Absprache."),
     ("Klarheit in 24 Stunden", "Ihr Kostenvoranschlag: verständlich, verbindlich, ohne Überraschungen."),
     ("Kein Papierkram", "Wir rechnen direkt mit der Versicherung ab und stimmen uns mit dem Gutachter ab."),
@@ -1134,6 +1134,7 @@ SERVICE_FAQ = {
         ("Werden Sensoren und Assistenzsysteme berücksichtigt?", "Ja. Wir reparieren nach Herstellervorgaben – dazu gehört, dass Sensoren, Kameras und Assistenzsysteme im Reparaturbereich berücksichtigt und geprüft werden."),
         ("Rechnen Sie direkt mit der Versicherung ab?", "Ja. Wir rechnen direkt mit der Versicherung ab und stimmen uns bei Bedarf mit dem Gutachter ab."),
         ("Bekomme ich einen Ersatzwagen?", "Ja, für die Dauer der Reparatur. Auf Wunsch holen wir Ihr Fahrzeug auch ab und bringen es zurück."),
+        ("Reparieren Sie auch Elektro- und Hybridfahrzeuge?", "Ja. Karosserie- und Unfallreparaturen führen wir auch an Elektro- und Hybridautos durch – nach Herstellervorgaben."),
     ],
     "lackierarbeiten": [
         ("Sieht man den Unterschied zum Originallack?", "Unser Anspruch ist: nein. Wir messen den Farbton digital, mischen den Lack passend an und lackieren in der staubfreien Lackierkabine. Wo nötig, werden angrenzende Flächen beilackiert, damit der Übergang unsichtbar bleibt."),
@@ -1195,9 +1196,9 @@ CITY = {
         "faq": [("Lohnt sich der Weg von Coburg nach Sonneberg?", "Ja – und oft müssen Sie ihn gar nicht selbst fahren. Mit unserem Hol- und Bringservice holen wir Ihr Auto ab, und Sie bleiben mit dem Ersatzwagen mobil."),
                 ("Darf ich als Coburger nach einem Unfall eine Werkstatt in Sonneberg wählen?", "Ja. Bei einem Haftpflichtschaden können Sie die Werkstatt grundsätzlich frei wählen – wir rechnen direkt mit der Versicherung ab."),
                 ("Muss ich für den Kostenvoranschlag extra aus Coburg kommen?", "Nein. Schicken Sie uns Fotos über „Schaden per Foto melden“ oder per WhatsApp – Sie erhalten den Kostenvoranschlag innerhalb von 24 Stunden.")]},
-    "kronach": {"time": "etwa 40 Minuten", "places": ["Kronach", "Küps", "Mitwitz", "Stockheim", "Pressig", "Steinbach am Wald", "Wilhelmsthal"],
-        "text": "Von Kronach brauchen Sie rund 40 Minuten bis zu uns nach Sonneberg. Damit sich der Weg für Sie nicht wie ein Weg anfühlt, holen wir Ihr Auto auf Wunsch ab und bringen es repariert zurück.",
-        "faq": [("Wie weit ist es von Kronach zu Ihnen?", "Je nach Strecke und Verkehr etwa 40 Minuten bis in die Bettelhecker Straße 15 in Sonneberg."),
+    "kronach": {"time": "etwa 35 Minuten", "places": ["Kronach", "Küps", "Mitwitz", "Stockheim", "Pressig", "Steinbach am Wald", "Wilhelmsthal"],
+        "text": "Von Kronach brauchen Sie rund 35 Minuten bis zu uns nach Sonneberg. Damit sich der Weg für Sie nicht wie ein Weg anfühlt, holen wir Ihr Auto auf Wunsch ab und bringen es repariert zurück.",
+        "faq": [("Wie weit ist es von Kronach zu Ihnen?", "Je nach Strecke und Verkehr etwa 35 Minuten bis in die Bettelhecker Straße 15 in Sonneberg – und Kronach liegt in unserem Hol- und Bringservice-Gebiet."),
                 ("Holen Sie mein Auto in Kronach ab?", "Ja, mit unserem Hol- und Bringservice holen wir Ihr Fahrzeug im Raum Kronach ab und bringen es nach der Reparatur zurück – sprechen Sie uns bei der Buchung darauf an."),
                 ("Muss ich für den Kostenvoranschlag extra herfahren?", "Nein. Fotos über „Schaden per Foto melden“ oder WhatsApp genügen – Sie bekommen den Kostenvoranschlag innerhalb von 24 Stunden."),
                 ("Bekomme ich als Kunde aus Kronach einen Ersatzwagen?", "Ja. Damit Sie mobil bleiben, stellen wir Ihnen für die Dauer der Reparatur einen Ersatzwagen – auch mit Hund, nach Absprache.")]},
@@ -1229,7 +1230,7 @@ def city_block(slug):
     <p class="city-places">Wir sind für Sie da in {esc(places)} und Umgebung.</p></div>
     <ul class="city-facts">
       <li><strong>{esc(c["time"])}</strong><span>bis zu unserer Werkstatt</span></li>
-      <li><strong>Hol &amp; Bring</strong><span>Wir holen Ihr Auto ab</span></li>
+      {'<li><strong>Hol &amp; Bring</strong><span>im Umkreis von 30 km</span></li>' if slug != "bamberg" else '<li><strong>Fotos</strong><span>Einschätzung ohne Anfahrt</span></li>'}
       <li><strong>24 h</strong><span>Kostenvoranschlag per Foto</span></li>
       <li><strong>Ersatzwagen</strong><span>Mobil während der Reparatur</span></li>
     </ul>
@@ -1594,18 +1595,21 @@ GENERAL_FAQ = [
         ("Kann ich einfach vorbeikommen?", "Ja. Wenn Sie unsicher sind, ob sich eine Reparatur lohnt, schauen wir uns Ihr Fahrzeug an und sagen Ihnen ehrlich, was Sinn macht. Mit Termin geht es für Sie am schnellsten."),
         ("Kann ich den Schaden per Foto oder WhatsApp schicken?", "Ja. Über <a href=\"schaden-melden.html\">Schaden per Foto melden</a> laden Sie ein paar Bilder hoch – oder schicken sie per WhatsApp an 03675 4289606. Wir melden uns mit einer ersten Einschätzung."),
         ("Welche Fotos brauchen Sie für eine Einschätzung?", "Am besten drei bis vier: eine Gesamtansicht des Fahrzeugs, den Schaden aus etwa zwei Metern und ein bis zwei Nahaufnahmen von schräg, damit Dellen sichtbar werden. Ein Foto vom Fahrzeugschein hilft bei der Teilebestellung."),
+        ("Kann ich mein Auto nach Feierabend abgeben oder abholen?", "Ja. Sprechen Sie uns einfach an – dann vereinbaren wir die Schlüsselübergabe auch außerhalb der Öffnungszeiten."),
         ("Was soll ich zum Termin mitbringen?", "Fahrzeugschein, Fahrzeugschlüssel und – bei Versicherungsschäden – die Schadennummer, den Unfallbericht oder die Daten des Unfallgegners sowie ein vorhandenes Gutachten."),
     ]),
     ("Kosten & Kostenvoranschlag", [
         ("Wie schnell bekomme ich einen Kostenvoranschlag?", "Innerhalb von 24 Stunden. Schicken Sie uns dafür am besten ein paar Fotos über „Schaden per Foto melden“."),
         ("Kostet die Begutachtung etwas?", "Nein. Wir schauen uns den Schaden kostenlos an und geben Ihnen eine ehrliche Einschätzung, was nötig ist."),
         ("Was kostet meine Reparatur?", "Das hängt von Art und Größe des Schadens ab. Sie bekommen vorher einen klaren Kostenvoranschlag – ohne Überraschungen. Beispiele finden Sie im Ratgeber <a href=\"auto-lackieren-kosten.html\">Auto lackieren: Kosten &amp; Beispiele</a>."),
+        ("Wie kann ich bezahlen?", "Mit EC-Karte, Kreditkarte, bar oder per Überweisung auf Rechnung. Bei Versicherungsschäden rechnen wir direkt mit der Versicherung ab."),
         ("Wird es am Ende teurer als besprochen?", "Grundlage ist der Kostenvoranschlag. Stellen wir bei der Reparatur einen versteckten Schaden fest, sprechen wir das vorher mit Ihnen ab – es wird nichts ohne Ihre Zustimmung gemacht."),
         ("Reparieren oder Teil tauschen – was ist günstiger?", "Oft ist Reparieren günstiger, etwa bei Dellen per Smart Repair oder bei Kunststoff-Stoßfängern. Ist ein Teil stark beschädigt, kann Tauschen sinnvoller sein. Wir rechnen beides ehrlich durch."),
     ]),
     ("Service rund um die Reparatur", [
         ("Rechnen Sie direkt mit der Versicherung ab?", "Ja. Wir rechnen direkt mit der Versicherung ab und stimmen uns mit dem Gutachter ab."),
-        ("Welche Fahrzeuge reparieren Sie?", "PKW, Transporter, Firmenfahrzeuge und Oldtimer – Marke egal."),
+        ("Welche Fahrzeuge reparieren Sie?", "PKW, Transporter, Firmenfahrzeuge, Elektro- und Hybridautos sowie Oldtimer – Marke egal."),
+        ("Reparieren Sie auch Elektro- und Hybridautos?", "Ja. Unfallreparatur, Karosserie- und Lackarbeiten führen wir auch an Elektro- und Hybridfahrzeugen durch – nach Herstellervorgaben."),
         ("Wie erfahre ich, wann mein Auto fertig ist?", "Mit dem Kostenvoranschlag nennen wir Ihnen einen realistischen Zeitrahmen. Sobald Ihr Fahrzeug fertig ist, melden wir uns bei Ihnen."),
         ("Wird mein Auto nach der Reparatur gereinigt?", "Ja. Sie bekommen Ihr Fahrzeug geprüft und gereinigt zurück."),
         ("Kann ich mehrere Leistungen in einem Termin erledigen?", "Ja. Unfallreparatur, Lack, HU/AU, Reifen, Aufbereitung oder Unterbodenschutz – alles unter einem Dach. Sagen Sie uns bei der Buchung, was gemacht werden soll, dann planen wir es zusammen ein."),
@@ -1622,6 +1626,7 @@ GENERAL_FAQ = [
         ("Was brauche ich, um den Ersatzwagen abzuholen?", "Bitte bringen Sie Ihren gültigen Führerschein und Ihren Personalausweis mit."),
         ("Wie lange kann ich den Ersatzwagen nutzen?", "Für die Dauer der Reparatur. Sobald Ihr Auto fertig ist, tauschen Sie einfach zurück."),
         ("Holen Sie mein Auto ab?", "Ja. Mit unserem Hol- und Bringservice holen wir Ihr Fahrzeug ab und bringen es nach der Reparatur zurück – geben Sie den Wunsch bei der Buchung, beim Rückruf oder am Telefon an."),
+        ("Wie weit reicht der Hol- und Bringservice?", "Im Umkreis von rund 30 km um unsere Werkstatt in Sonneberg – zum Beispiel Neustadt bei Coburg, Coburg, Rödental und Kronach. Sie wohnen weiter weg? Sprechen Sie uns an."),
         ("Gilt der Hol- und Bringservice auch für Aufbereitung und Reifen?", "Sprechen Sie uns an – wir finden eine Lösung, die zu Ihrem Termin passt."),
     ]),
     ("Nach dem Unfall", [
