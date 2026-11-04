@@ -1924,7 +1924,7 @@ KONFIG_CSS = """
   .kc-card-img img { position: absolute; inset: 24px; width: calc(100% - 48px); height: calc(100% - 48px); object-fit: contain; transition: transform .7s ease; }
   .kc-card:hover .kc-card-img img { transform: scale(1.05); }
   .kc-card-brand { display: block; margin-top: 16px; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: #737373; }
-  .kc-card-brand em { font-style: normal; font-size: 9px; letter-spacing: .1em; color: #8a8a8a; margin-left: 6px; }
+  .kc-card-brand em { font-style: normal; font-size: 9px; letter-spacing: .1em; color: #666; margin-left: 6px; }
   .kc-card-name { display: block; margin-top: 4px; font-size: 14px; letter-spacing: .15em; text-transform: uppercase; font-weight: 500; }
   .kc-card-type { display: inline-block; margin-top: 8px; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: #737373; border: 1px solid #e5e5e5; padding: 2px 6px; border-radius: 2px; }
   .kc-card-go { display: table; margin-top: 12px; font-size: 10px; letter-spacing: .25em; text-transform: uppercase; border-bottom: 1px solid #171717; padding-bottom: 2px; transition: border-color .2s; }
@@ -1938,7 +1938,7 @@ KONFIG_CSS = """
   .kc-link { font: inherit; font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: #737373; background: none; border: 0; cursor: pointer; padding: 6px 0; transition: color .2s; }
   .kc-link:hover { color: #171717; }
   .kc-link:disabled { opacity: .35; cursor: default; }
-  .kc-light { color: #8a8a8a; font-size: 10px; }
+  .kc-light { color: #666; font-size: 10px; }
   .kc-view { flex: 1; display: flex; align-items: center; justify-content: center; padding: 0 32px 32px; }
   .kc-view .kf-img { position: relative; width: 100%; max-width: 760px; aspect-ratio: 4 / 3; }
   .kf-img img, .kf-img canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; transition: opacity .35s ease, transform .6s cubic-bezier(.2,.8,.2,1); }
