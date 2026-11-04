@@ -694,7 +694,21 @@
   .form-status { margin-top: 14px; font-weight: 600; }
   .form-status.err { color: #222; }
 
+  .wish { padding: 100px 0; background: var(--grey); scroll-margin-top: 120px; }
+  .wish-inner { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 64px; align-items: start; }
+  .wish h2 { font-size: clamp(32px, 3.8vw, 54px); line-height: 1.02; margin-bottom: 18px; }
+  .wish-text > p { color: #555; font-size: 17px; max-width: 480px; }
+  .wish .apply-steps { list-style: none; margin: 28px 0; border-top: 1px solid var(--black); max-width: 420px; }
+  .wish .apply-steps li { padding: 16px 0; border-bottom: 1px solid var(--line); font-weight: 600; }
+  .wish .apply-steps strong { font-size: 12px; letter-spacing: .2em; color: #6b6b6b; margin-right: 14px; }
+  .wish-hours { font-size: 15px !important; }
+  .wish form { background: var(--white); padding: 36px; min-width: 0; }
+  .wish form .btn { margin-top: 18px; }
+  .wish .f { min-width: 0; } .wish select, .wish input { width: 100%; max-width: 100%; }
+  .wish input[type=checkbox] { width: auto; }
+  @media (max-width: 900px) { .wish { padding: 64px 0; } .wish-inner { grid-template-columns: minmax(0, 1fr); gap: 36px; } .wish form { padding: 22px 16px; } }
   .book-note { font-size: 14px; color: #555; margin-top: 14px; }
+  .book-note a { text-decoration: underline; text-underline-offset: 3px; color: var(--black); }
   .booking-page .heading { margin: 4px 0 6px; }
   .booking-page .rte a { text-decoration: underline; }
   .booking-embed { padding: 0 0 60px; }
@@ -1076,6 +1090,20 @@
         + '<a class="btn btn-outline-dark" href="mailto:hallo@taeubert-karosserie-lack.de?subject=' + encodeURIComponent(form.dataset.title || 'Schadensmeldung') + '&body=' + encodeURIComponent(msg) + '">Per E-Mail senden</a></span>');
     }
   }));
+
+  // Wunschtermin: frühestens morgen, nur Werktage, Vorbelegung aus dem Link (z. B. vom Konfigurator)
+  (function () {
+    var d1 = document.getElementById('wish-date'); if (!d1) return;
+    var d2 = document.getElementById('wish-date2'), t = new Date(); t.setDate(t.getDate() + 1);
+    var min = t.getFullYear() + '-' + String(t.getMonth() + 1).padStart(2, '0') + '-' + String(t.getDate()).padStart(2, '0');
+    [d1, d2].forEach(function (d) { d.min = min; d.addEventListener('input', function () {
+      var day = d.value ? new Date(d.value + 'T12:00').getDay() : 1;
+      d.setCustomValidity(day === 0 || day === 6 ? 'Samstag und Sonntag ist geschlossen – bitte einen Werktag wählen.' : '');
+    }); });
+    var q = new URLSearchParams(location.search), sel = document.getElementById('wish-service');
+    if (q.get('leistung')) { var want = q.get('leistung').toLowerCase(), o = [].find.call(sel.options, function (x) { return x.text.toLowerCase().indexOf(want) === 0; }); if (o) sel.value = o.text; }
+    if (q.get('notiz')) document.getElementById('wish-note').value = q.get('notiz');
+  })();
 </script>
 </body>
 </html>

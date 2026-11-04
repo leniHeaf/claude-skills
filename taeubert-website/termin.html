@@ -694,7 +694,21 @@
   .form-status { margin-top: 14px; font-weight: 600; }
   .form-status.err { color: #222; }
 
+  .wish { padding: 100px 0; background: var(--grey); scroll-margin-top: 120px; }
+  .wish-inner { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 64px; align-items: start; }
+  .wish h2 { font-size: clamp(32px, 3.8vw, 54px); line-height: 1.02; margin-bottom: 18px; }
+  .wish-text > p { color: #555; font-size: 17px; max-width: 480px; }
+  .wish .apply-steps { list-style: none; margin: 28px 0; border-top: 1px solid var(--black); max-width: 420px; }
+  .wish .apply-steps li { padding: 16px 0; border-bottom: 1px solid var(--line); font-weight: 600; }
+  .wish .apply-steps strong { font-size: 12px; letter-spacing: .2em; color: #6b6b6b; margin-right: 14px; }
+  .wish-hours { font-size: 15px !important; }
+  .wish form { background: var(--white); padding: 36px; min-width: 0; }
+  .wish form .btn { margin-top: 18px; }
+  .wish .f { min-width: 0; } .wish select, .wish input { width: 100%; max-width: 100%; }
+  .wish input[type=checkbox] { width: auto; }
+  @media (max-width: 900px) { .wish { padding: 64px 0; } .wish-inner { grid-template-columns: minmax(0, 1fr); gap: 36px; } .wish form { padding: 22px 16px; } }
   .book-note { font-size: 14px; color: #555; margin-top: 14px; }
+  .book-note a { text-decoration: underline; text-underline-offset: 3px; color: var(--black); }
   .booking-page .heading { margin: 4px 0 6px; }
   .booking-page .rte a { text-decoration: underline; }
   .booking-embed { padding: 0 0 60px; }
@@ -791,7 +805,7 @@
       <h2>Wunschtermin selbst wählen</h2>
       <p>Leistung auswählen, freien Termin anklicken, fertig – rund um die Uhr.</p>
       <a class="btn btn-dark" href="https://terminbuchungtaeubert.de">Zur Online-Terminbuchung</a>
-      <p class="book-note">Ersatzwagen oder Hol- und Bringservice gewünscht? Geben Sie es bei der Buchung an – oder kreuzen Sie es beim Rückruf an.</p>
+      <p class="book-note">Lieber ohne externes Buchungstool? <a href="#wunschtermin">Wunschtermin direkt hier anfragen ↓</a></p>
     </div>
     <div class="book-card" id="rueckruf">
       <p class="eyebrow">Option 2 · Rückruf</p>
@@ -826,6 +840,41 @@
         <a class="btn btn-outline-dark" href="https://wa.me/4936754289606" target="_blank" rel="noopener">WhatsApp</a>
       </div>
     </div>
+  </div>
+</section>
+<section class="wish" id="wunschtermin">
+  <div class="page-width wish-inner">
+    <div class="wish-text">
+      <p class="eyebrow">Wunschtermin</p>
+      <h2>Termin direkt hier anfragen.</h2>
+      <p>Datum und Tageszeit wählen, Leistung angeben – wir bestätigen Ihren Termin persönlich per Telefon oder E-Mail, meist noch am selben Werktag.</p>
+      <ul class="apply-steps"><li><strong>01</strong> Wunschtermin wählen</li><li><strong>02</strong> Wir bestätigen persönlich</li><li><strong>03</strong> Auto bringen – oder abholen lassen</li></ul>
+      <p class="wish-hours">Mo–Do 08:00–17:00 Uhr · Fr 08:00–14:30 Uhr</p>
+    </div>
+    <form class="damage-form" name="wunschtermin" method="POST" action="danke-termin.html" data-netlify="true" netlify-honeypot="firma" data-title="Wunschtermin" data-thanks="danke-termin.html">
+      <input type="hidden" name="form-name" value="wunschtermin">
+      <p class="hp"><label>Nicht ausfüllen: <input name="firma" tabindex="-1" autocomplete="off"></label></p>
+      <div class="mail-form">
+        <label class="f">Leistung *
+          <select name="leistung" id="wish-service" required><option value="">Bitte wählen</option><option>Karosseriearbeiten</option><option>Lackierarbeiten</option><option>Unfallinstandsetzung</option><option>Smart Repair</option><option>Kleinschaden-Reparatur</option><option>Kratzer entfernen</option><option>Leasingrückgabe</option><option>Fahrzeugaufbereitung</option><option>Reifenservice</option><option>Unfallreparatur</option><option>Hagelschaden</option><option>Stoßstange reparieren</option><option>Oldtimer &amp; Klassiker</option><option>Fuhrparkservice</option><option>Versicherungsschaden</option><option>Unterbodenschutz</option><option>Lackaufbereitung</option><option>Keramikversiegelung</option><option>Innenraumaufbereitung</option><option>Scheinwerfer aufbereiten</option><option>HU/AU (TÜV)</option><option>Reifen bestellen</option><option>Felgenreparatur</option><option>Lackstift</option><option>Lackierung (Konfigurator)</option><option>Sonstiges</option></select>
+        </label>
+        <label class="f half">Wunschdatum *<input name="datum" id="wish-date" type="date" required></label>
+        <label class="f half">Tageszeit
+          <select name="tageszeit"><option>Egal</option><option>Vormittags (08–12 Uhr)</option><option>Nachmittags (12–17 Uhr)</option></select>
+        </label>
+        <label class="f half">Ausweichdatum <small>(optional)</small><input name="ausweichdatum" id="wish-date2" type="date"></label>
+        <label class="f half">Fahrzeug<input name="fahrzeug" placeholder="z. B. VW Golf 7"></label>
+        <label class="f half">Name *<input name="name" autocomplete="name" required></label>
+        <label class="f half">Telefon *<input name="telefon" type="tel" autocomplete="tel" required></label>
+        <label class="f">E-Mail<input name="email" type="email" autocomplete="email"></label>
+        <label class="f">Anmerkung<textarea name="nachricht" id="wish-note" rows="3" placeholder="Was soll gemacht werden?"></textarea></label>
+        <label class="f consent"><input type="checkbox" name="ersatzwagen" value="ja"><span>Ich brauche einen Ersatzwagen</span></label>
+        <label class="f consent"><input type="checkbox" name="holservice" value="ja"><span>Hol- und Bringservice gewünscht (bis 30 km)</span></label>
+        <label class="f consent"><input type="checkbox" name="einwilligung" required><span>Ich bin einverstanden, dass meine Angaben zur Bearbeitung der Terminanfrage gespeichert werden (siehe <a href="datenschutz.html">Datenschutz</a>). *</span></label>
+      </div>
+      <button class="btn btn-dark" type="submit">Wunschtermin anfragen</button>
+      <p class="form-status" role="status" aria-live="polite"></p>
+    </form>
   </div>
 </section>
 </main>
@@ -1081,6 +1130,20 @@
         + '<a class="btn btn-outline-dark" href="mailto:hallo@taeubert-karosserie-lack.de?subject=' + encodeURIComponent(form.dataset.title || 'Schadensmeldung') + '&body=' + encodeURIComponent(msg) + '">Per E-Mail senden</a></span>');
     }
   }));
+
+  // Wunschtermin: frühestens morgen, nur Werktage, Vorbelegung aus dem Link (z. B. vom Konfigurator)
+  (function () {
+    var d1 = document.getElementById('wish-date'); if (!d1) return;
+    var d2 = document.getElementById('wish-date2'), t = new Date(); t.setDate(t.getDate() + 1);
+    var min = t.getFullYear() + '-' + String(t.getMonth() + 1).padStart(2, '0') + '-' + String(t.getDate()).padStart(2, '0');
+    [d1, d2].forEach(function (d) { d.min = min; d.addEventListener('input', function () {
+      var day = d.value ? new Date(d.value + 'T12:00').getDay() : 1;
+      d.setCustomValidity(day === 0 || day === 6 ? 'Samstag und Sonntag ist geschlossen – bitte einen Werktag wählen.' : '');
+    }); });
+    var q = new URLSearchParams(location.search), sel = document.getElementById('wish-service');
+    if (q.get('leistung')) { var want = q.get('leistung').toLowerCase(), o = [].find.call(sel.options, function (x) { return x.text.toLowerCase().indexOf(want) === 0; }); if (o) sel.value = o.text; }
+    if (q.get('notiz')) document.getElementById('wish-note').value = q.get('notiz');
+  })();
 </script>
 </body>
 </html>
