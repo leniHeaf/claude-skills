@@ -1,0 +1,33 @@
+{
+  "name": "MoodEntry",
+  "type": "object",
+  "properties": {
+    "employee": {
+      "type": "string",
+      "description": "Mitarbeiter"
+    },
+    "mood": {
+      "type": "string",
+      "enum": [
+        "motiviert",
+        "neutral",
+        "gestresst"
+      ],
+      "description": "Stimmung"
+    },
+    "note": {
+      "type": "string",
+      "description": "Optionale Notiz"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Datum"
+    }
+  },
+  "required": [
+    "employee",
+    "mood",
+    "date"
+  ]
+}

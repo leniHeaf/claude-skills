@@ -1,0 +1,70 @@
+{
+  "name": "Schadensbericht",
+  "type": "object",
+  "properties": {
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Datum der Schadensaufnahme"
+    },
+    "vehicle_id": {
+      "type": "string",
+      "description": "Fahrzeug (ID)"
+    },
+    "vehicle_info": {
+      "type": "string",
+      "description": "Fahrzeuginfo (Marke Modell - Kennzeichen)"
+    },
+    "customer_id": {
+      "type": "string",
+      "description": "Kunde (ID)"
+    },
+    "customer_name": {
+      "type": "string",
+      "description": "Kundenname"
+    },
+    "photos": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Schadensfotos"
+    },
+    "schein_photo": {
+      "type": "string",
+      "description": "Foto des Fahrzeugscheins"
+    },
+    "description": {
+      "type": "string",
+      "description": "Schadensbeschreibung"
+    },
+    "schadenbereich": {
+      "type": "string",
+      "enum": [
+        "front",
+        "heck",
+        "seite_links",
+        "seite_rechts",
+        "dach",
+        "motorraum",
+        "innenraum"
+      ],
+      "description": "Bereich am Fahrzeug"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "neu",
+        "in_bearbeitung",
+        "kalkuliert",
+        "abgeschlossen"
+      ],
+      "default": "neu",
+      "description": "Status"
+    }
+  },
+  "required": [
+    "vehicle_id",
+    "customer_id"
+  ]
+}

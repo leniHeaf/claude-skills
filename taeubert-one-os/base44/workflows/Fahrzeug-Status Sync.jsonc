@@ -1,0 +1,38 @@
+{
+  "name": "Fahrzeug-Status Sync",
+  "description": "Synchronisiert Fahrzeug-Status (Annahme\u2192Reparatur\u2192QA\u2192\u00dcbergabe) automatisch, wenn Aufgaben erstellt, zugewiesen, gestartet oder erledigt werden. Verbindet DAT-Import \u2192 Auftragsverteilung \u2192 Zeiterfassung \u2192 Fahrzeug-Durchlauf.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create",
+        "update"
+      ],
+      "entity_name": "Task"
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "fahrzeug_status_sync",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "run_function": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "syncVehicleFromTask",
+            "args": {}
+          },
+          "then": "end"
+        }
+      }
+    ]
+  },
+  "x-base44-migrated-from-automation": {
+    "legacy_payload_function": "syncVehicleFromTask"
+  }
+}

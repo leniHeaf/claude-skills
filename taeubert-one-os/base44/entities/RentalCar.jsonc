@@ -1,0 +1,55 @@
+{
+  "name": "RentalCar",
+  "type": "object",
+  "properties": {
+    "customer_name": {
+      "type": "string",
+      "description": "Kunde"
+    },
+    "vehicle_info": {
+      "type": "string",
+      "description": "Kundenwagen (Reparaturfahrzeug)"
+    },
+    "rental_car_info": {
+      "type": "string",
+      "description": "Leihwagen (Kennzeichen / Typ)"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Ausgabe am"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date",
+      "description": "R\u00fcckgabe bis"
+    },
+    "start_km": {
+      "type": "number",
+      "description": "Kilometerstand bei Ausgabe"
+    },
+    "end_km": {
+      "type": "number",
+      "description": "Kilometerstand bei R\u00fcckgabe"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Notizen"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "geplant",
+        "ausgegeben",
+        "zurueck"
+      ],
+      "default": "geplant",
+      "description": "Status"
+    }
+  },
+  "required": [
+    "customer_name",
+    "start_date",
+    "end_date"
+  ]
+}

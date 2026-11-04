@@ -1,0 +1,58 @@
+{
+  "name": "MaterialUsage",
+  "type": "object",
+  "properties": {
+    "material_id": {
+      "type": "string"
+    },
+    "material_name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "quantity_used": {
+      "type": "number"
+    },
+    "unit": {
+      "type": "string"
+    },
+    "vehicle_id": {
+      "type": "string"
+    },
+    "vehicle_info": {
+      "type": "string"
+    },
+    "employee": {
+      "type": "string"
+    },
+    "area": {
+      "type": "string",
+      "enum": [
+        "karosserie",
+        "vorbereitung",
+        "lackierung",
+        "finish",
+        "aufbereitung",
+        "reifenlager",
+        "sonstiges"
+      ],
+      "default": "sonstiges"
+    },
+    "cost": {
+      "type": "number"
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "material_name",
+    "quantity_used",
+    "date"
+  ]
+}

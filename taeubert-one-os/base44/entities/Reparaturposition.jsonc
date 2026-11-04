@@ -1,0 +1,54 @@
+{
+  "name": "Reparaturposition",
+  "type": "object",
+  "properties": {
+    "positionsnummer": {
+      "type": "string",
+      "description": "Positionsnummer"
+    },
+    "bezeichnung": {
+      "type": "string",
+      "description": "Bezeichnung der Arbeit"
+    },
+    "gewerk": {
+      "type": "string",
+      "enum": [
+        "Mechanik",
+        "Karosserie",
+        "Lackierung"
+      ],
+      "default": "Karosserie",
+      "description": "Gewerk"
+    },
+    "richtzeit_ah": {
+      "type": "number",
+      "default": 0,
+      "description": "Richtzeit in Arbeitsstunden (AH)"
+    },
+    "ersatzteil_kosten": {
+      "type": "number",
+      "default": 0,
+      "description": "Ersatzteil-Kosten in \u20ac (Festpreis)"
+    },
+    "lackmaterial_kosten": {
+      "type": "number",
+      "default": 0,
+      "description": "Lackmaterial-Pauschale in \u20ac"
+    },
+    "positionstyp": {
+      "type": "string",
+      "enum": [
+        "Arbeitszeit",
+        "Ersatzteil",
+        "Lackmaterial",
+        "Pauschale"
+      ],
+      "default": "Arbeitszeit",
+      "description": "Positionstyp"
+    }
+  },
+  "required": [
+    "bezeichnung",
+    "gewerk"
+  ]
+}

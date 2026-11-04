@@ -1,0 +1,67 @@
+{
+  "name": "EmployeeProfile",
+  "type": "object",
+  "properties": {
+    "employee": {
+      "type": "string"
+    },
+    "shirt_size": {
+      "type": "string",
+      "enum": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL",
+        "3XL"
+      ]
+    },
+    "pants_size": {
+      "type": "string"
+    },
+    "shoe_size": {
+      "type": "string"
+    },
+    "fit_preference": {
+      "type": "string",
+      "enum": [
+        "slim",
+        "regular",
+        "relaxed"
+      ],
+      "default": "regular"
+    },
+    "current_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "item": {
+            "type": "string"
+          },
+          "size": {
+            "type": "string"
+          },
+          "issued_date": {
+            "type": "string"
+          },
+          "condition": {
+            "type": "string",
+            "enum": [
+              "gut",
+              "ok",
+              "verschlissen"
+            ]
+          }
+        }
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "employee"
+  ]
+}

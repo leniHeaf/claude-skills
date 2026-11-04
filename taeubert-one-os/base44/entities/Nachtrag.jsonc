@@ -1,0 +1,95 @@
+{
+  "name": "Nachtrag",
+  "type": "object",
+  "properties": {
+    "vehicle_id": {
+      "type": "string",
+      "description": "Fahrzeug-ID"
+    },
+    "vehicle_info": {
+      "type": "string",
+      "description": "Fahrzeug-Bezeichnung"
+    },
+    "reported_by": {
+      "type": "string",
+      "description": "Gemeldet von (Mitarbeiter)"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "karosserie",
+        "lackierung",
+        "mechanik",
+        "elektrik",
+        "innenraum",
+        "sonstiges"
+      ],
+      "default": "sonstiges",
+      "description": "Schadenskategorie"
+    },
+    "description": {
+      "type": "string",
+      "description": "Schadensbeschreibung"
+    },
+    "photos_before": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Vorher-Fotos"
+    },
+    "photos_after": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Nachher-Fotos"
+    },
+    "extra_time_hours": {
+      "type": "number",
+      "description": "Zusatzzeit-Anforderung in Stunden"
+    },
+    "estimated_cost": {
+      "type": "number",
+      "description": "Gesch\u00e4tzte Mehrkosten in \u20ac"
+    },
+    "urgency": {
+      "type": "string",
+      "enum": [
+        "niedrig",
+        "normal",
+        "dringend"
+      ],
+      "default": "normal",
+      "description": "Dringlichkeit"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "offen",
+        "genehmigt",
+        "abgelehnt",
+        "rueckfrage"
+      ],
+      "default": "offen",
+      "description": "Freigabestatus"
+    },
+    "manager_comment": {
+      "type": "string",
+      "description": "Kommentar des Managers"
+    },
+    "reviewed_by": {
+      "type": "string",
+      "description": "Gepr\u00fcft von"
+    },
+    "reviewed_at": {
+      "type": "string",
+      "description": "Pr\u00fcfzeitpunkt ISO"
+    }
+  },
+  "required": [
+    "vehicle_id",
+    "reported_by",
+    "description"
+  ]
+}

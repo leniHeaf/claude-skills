@@ -1,0 +1,125 @@
+{
+  "name": "CustomerOrder",
+  "type": "object",
+  "properties": {
+    "customer_id": {
+      "type": "string",
+      "description": "Kunden-ID"
+    },
+    "customer_name": {
+      "type": "string",
+      "description": "Kundenname"
+    },
+    "vehicle_id": {
+      "type": "string",
+      "description": "Fahrzeug-ID"
+    },
+    "vehicle_info": {
+      "type": "string",
+      "description": "Fahrzeuginfo (Marke, Modell, Kennzeichen)"
+    },
+    "order_type": {
+      "type": "string",
+      "enum": [
+        "reparatur",
+        "service",
+        "lackierung",
+        "karosserie",
+        "endkontrolle",
+        "uebergabe",
+        "sonstiges"
+      ],
+      "default": "reparatur"
+    },
+    "title": {
+      "type": "string",
+      "description": "Auftragstitel"
+    },
+    "description": {
+      "type": "string",
+      "description": "Auftragsbeschreibung"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "offen",
+        "in_arbeit",
+        "wartet_auf_freigabe",
+        "wartet_auf_teile",
+        "fertig",
+        "abgeschlossen",
+        "storniert"
+      ],
+      "default": "offen"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "niedrig",
+        "normal",
+        "hoch",
+        "sofort"
+      ],
+      "default": "normal"
+    },
+    "estimated_cost": {
+      "type": "number",
+      "description": "Gesch\u00e4tzte Kosten in \u20ac"
+    },
+    "actual_cost": {
+      "type": "number",
+      "description": "Tats\u00e4chliche Kosten in \u20ac"
+    },
+    "appointment_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Termin f\u00fcr Abholung/\u00dcbergabe"
+    },
+    "appointment_time": {
+      "type": "string",
+      "description": "Uhrzeit des Termins"
+    },
+    "notification_sent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Wurde Benachrichtigung gesendet"
+    },
+    "notification_method": {
+      "type": "string",
+      "enum": [
+        "whatsapp",
+        "mail",
+        "telefon",
+        "sms"
+      ],
+      "description": "Verwendeter Benachrichtigungsweg"
+    },
+    "notification_date": {
+      "type": "string",
+      "description": "Wann wurde Benachrichtigung gesendet"
+    },
+    "customer_notified": {
+      "type": "boolean",
+      "default": false,
+      "description": "Kunde wurde informiert"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Interne Notizen"
+    },
+    "assigned_to": {
+      "type": "string",
+      "description": "Zust\u00e4ndiger Mitarbeiter"
+    },
+    "created_by": {
+      "type": "string",
+      "description": "Erstellt von"
+    }
+  },
+  "required": [
+    "customer_id",
+    "customer_name",
+    "title",
+    "order_type"
+  ]
+}

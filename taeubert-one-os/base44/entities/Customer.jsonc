@@ -1,0 +1,238 @@
+{
+  "name": "Customer",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Kundenname"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Telefonnummer"
+    },
+    "email": {
+      "type": "string",
+      "description": "E-Mail-Adresse"
+    },
+    "address": {
+      "type": "string",
+      "description": "Adresse"
+    },
+    "birthday": {
+      "type": "string",
+      "format": "date",
+      "description": "Geburtstag"
+    },
+    "occupation": {
+      "type": "string",
+      "description": "Beruf"
+    },
+    "company": {
+      "type": "string",
+      "description": "Firma"
+    },
+    "customer_type": {
+      "type": "string",
+      "enum": [
+        "privat",
+        "autohaus",
+        "versicherung",
+        "flotte",
+        "premium",
+        "interessent",
+        "stammkunde",
+        "enthusiast",
+        "empfehlungsgeber",
+        "preisdruecker",
+        "kritisch"
+      ],
+      "default": "privat",
+      "description": "Kundentyp"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Interne Notizen"
+    },
+    "special_wishes": {
+      "type": "string",
+      "description": "Besondere W\u00fcnsche"
+    },
+    "rating": {
+      "type": "number",
+      "description": "Kundenbewertung (1-10)"
+    },
+    "referral_source": {
+      "type": "string",
+      "description": "Wie wurde Kunde empfohlen"
+    },
+    "journey_stage": {
+      "type": "string",
+      "enum": [
+        "interessent",
+        "erstkontakt",
+        "annahme",
+        "kalkulation",
+        "aktiv",
+        "fertigstellung",
+        "uebergabe",
+        "nachkontakt",
+        "stammkunde"
+      ],
+      "default": "interessent",
+      "description": "Journey-Stufe"
+    },
+    "last_contact": {
+      "type": "string",
+      "format": "date",
+      "description": "Letzter Kontakt"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Schlagw\u00f6rter"
+    },
+    "service_contract": {
+      "type": "boolean",
+      "default": false,
+      "description": "Hat Service-Vertrag"
+    },
+    "service_contract_details": {
+      "type": "string",
+      "description": "Details zum Service-Vertrag"
+    },
+    "preferred_contact": {
+      "type": "string",
+      "enum": [
+        "whatsapp",
+        "mail",
+        "telefon",
+        "sms"
+      ],
+      "default": "telefon",
+      "description": "Bevorzugter Kontaktweg"
+    },
+    "whatsapp_opt_in": {
+      "type": "boolean",
+      "default": false,
+      "description": "WhatsApp erlaubt"
+    },
+    "mail_opt_in": {
+      "type": "boolean",
+      "default": false,
+      "description": "E-Mail erlaubt"
+    },
+    "communication_style": {
+      "type": "string",
+      "enum": [
+        "kurz_praezise",
+        "detailliert",
+        "emotional",
+        "technisch",
+        "formell",
+        "locker"
+      ],
+      "default": "formell",
+      "description": "Kommunikationsstil"
+    },
+    "behavior_traits": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "preisorientiert",
+          "qualitaetsorientiert",
+          "emotional",
+          "detailverliebt",
+          "hektisch",
+          "anspruchsvoll",
+          "loyal",
+          "empfehlungsgeber",
+          "vip"
+        ]
+      },
+      "description": "Verhaltensmerkmale"
+    },
+    "favorite_brands": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Lieblingsmarken (z.B. Porsche, AMG)"
+    },
+    "interests": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "motorsport",
+          "oldtimer",
+          "performance",
+          "pflege",
+          "tuning",
+          "nachhaltigkeit",
+          "elektrisch"
+        ]
+      },
+      "description": "Interessen"
+    },
+    "preferences": {
+      "type": "string",
+      "description": "Pers\u00f6nliche Pr\u00e4ferenzen (z.B. trinkt Espresso, mag kurze Updates)"
+    },
+    "mood_status": {
+      "type": "string",
+      "enum": [
+        "begeistert",
+        "neutral",
+        "kritisch",
+        "gefaehrdet"
+      ],
+      "default": "neutral",
+      "description": "Aktuelle Kundenstimmung"
+    },
+    "lifetime_value": {
+      "type": "number",
+      "default": 0,
+      "description": "Gesamtumsatz in EUR"
+    },
+    "referral_value": {
+      "type": "number",
+      "default": 0,
+      "description": "Empfohlener Umsatz in EUR"
+    },
+    "loyalty_score": {
+      "type": "number",
+      "default": 0,
+      "description": "Loyalit\u00e4ts-Score (0-100)"
+    },
+    "potential_score": {
+      "type": "number",
+      "default": 0,
+      "description": "Kundenpotenzial (0-100)"
+    },
+    "risk_score": {
+      "type": "number",
+      "default": 0,
+      "description": "Risiko-Score (0-100)"
+    },
+    "vip_status": {
+      "type": "boolean",
+      "default": false,
+      "description": "VIP-Status"
+    },
+    "last_inactive_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Letzte Inaktivit\u00e4t"
+    },
+    "wishlist": {
+      "type": "string",
+      "description": "Kunden-Wunschliste f\u00fcr zuk\u00fcnftige Arbeiten"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

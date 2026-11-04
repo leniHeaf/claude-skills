@@ -1,0 +1,62 @@
+{
+  "name": "Lift",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "B\u00fchnenbezeichnung z.B. B\u00fchne 1"
+    },
+    "area": {
+      "type": "string",
+      "enum": [
+        "karosserie",
+        "vorbereitung",
+        "lackierung",
+        "finish",
+        "werkstatt",
+        "aussen"
+      ],
+      "default": "werkstatt",
+      "description": "Bereich"
+    },
+    "vehicle_id": {
+      "type": "string",
+      "description": "Aktuelles Fahrzeug"
+    },
+    "vehicle_info": {
+      "type": "string"
+    },
+    "employee": {
+      "type": "string",
+      "description": "Zust\u00e4ndiger Mitarbeiter"
+    },
+    "occupied_since": {
+      "type": "string",
+      "description": "ISO timestamp Belegungsbeginn"
+    },
+    "planned_duration_minutes": {
+      "type": "number",
+      "description": "Geplante Dauer in Minuten"
+    },
+    "next_vehicle_info": {
+      "type": "string",
+      "description": "N\u00e4chstes eingeplantes Fahrzeug"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "frei",
+        "belegt",
+        "wartung"
+      ],
+      "default": "frei"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "area"
+  ]
+}

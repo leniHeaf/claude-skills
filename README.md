@@ -45,3 +45,15 @@ Nutze die Skills taste-skill, emil-design-eng und ui-ux-pro-max. Prüfe danach m
 
 Alle Skills stammen von ihren jeweiligen Autor:innen (MIT bzw. Apache-2.0).
 Die Original-Lizenz liegt jeweils als `LICENSE.upstream` im Skill-Ordner.
+
+## App: Täubert One OS
+
+Im Ordner [`taeubert-one-os/`](taeubert-one-os) liegt eine Kopie der Werkstatt-App von
+[teamtaeubert.com](https://teamtaeubert.com) (Base44-Export: React + Vite + Tailwind).
+
+```bash
+cd taeubert-one-os
+cp .env.example .env.local   # App-ID aus Base44 eintragen
+npm install
+npm run dev
+```

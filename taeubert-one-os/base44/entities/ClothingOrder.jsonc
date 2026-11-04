@@ -1,0 +1,73 @@
+{
+  "name": "ClothingOrder",
+  "type": "object",
+  "properties": {
+    "employee": {
+      "type": "string"
+    },
+    "item": {
+      "type": "string",
+      "enum": [
+        "t-shirt",
+        "hoodie",
+        "softshell",
+        "arbeitshose",
+        "sicherheitsschuhe",
+        "cap",
+        "uebergabekleidung",
+        "sonstiges"
+      ]
+    },
+    "size": {
+      "type": "string"
+    },
+    "quantity": {
+      "type": "number",
+      "default": 1
+    },
+    "reason": {
+      "type": "string",
+      "enum": [
+        "neu",
+        "beschaedigt",
+        "verschlissen",
+        "zusaetzlich"
+      ],
+      "default": "neu"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "eingereicht",
+        "genehmigt",
+        "abgelehnt",
+        "bestellt",
+        "ausgegeben"
+      ],
+      "default": "eingereicht"
+    },
+    "approved_by": {
+      "type": "string"
+    },
+    "manager_note": {
+      "type": "string"
+    },
+    "estimated_cost": {
+      "type": "number"
+    },
+    "issued_date": {
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "required": [
+    "employee",
+    "item",
+    "size",
+    "quantity",
+    "reason"
+  ]
+}

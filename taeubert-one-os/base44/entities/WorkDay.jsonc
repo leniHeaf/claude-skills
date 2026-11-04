@@ -1,0 +1,44 @@
+{
+  "name": "WorkDay",
+  "type": "object",
+  "properties": {
+    "employee": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "clock_in": {
+      "type": "string",
+      "description": "ISO timestamp Arbeitsbeginn"
+    },
+    "clock_out": {
+      "type": "string",
+      "description": "ISO timestamp Arbeitsende"
+    },
+    "break_minutes": {
+      "type": "number",
+      "default": 0
+    },
+    "total_minutes": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "anwesend",
+        "pause",
+        "abwesend"
+      ],
+      "default": "abwesend"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "employee",
+    "date"
+  ]
+}

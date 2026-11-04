@@ -1,0 +1,32 @@
+{
+  "name": "TimeBooking",
+  "type": "object",
+  "properties": {
+    "employee": {
+      "type": "string",
+      "description": "Mitarbeiter"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Datum"
+    },
+    "start_time": {
+      "type": "string",
+      "description": "Von (ISO)"
+    },
+    "end_time": {
+      "type": "string",
+      "description": "Bis (ISO)"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Notiz"
+    }
+  },
+  "required": [
+    "employee",
+    "date",
+    "start_time"
+  ]
+}

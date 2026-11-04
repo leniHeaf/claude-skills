@@ -1,0 +1,52 @@
+{
+  "name": "TyreStorage",
+  "type": "object",
+  "properties": {
+    "customer_name": {
+      "type": "string"
+    },
+    "license_plate": {
+      "type": "string"
+    },
+    "brand": {
+      "type": "string"
+    },
+    "size": {
+      "type": "string",
+      "description": "z.B. 225/45 R17"
+    },
+    "season": {
+      "type": "string",
+      "enum": [
+        "sommer",
+        "winter",
+        "ganzjahr"
+      ],
+      "default": "sommer"
+    },
+    "tread_depth": {
+      "type": "number",
+      "description": "Profiltiefe in mm"
+    },
+    "condition": {
+      "type": "string",
+      "enum": [
+        "neu",
+        "gut",
+        "ok",
+        "schlecht"
+      ],
+      "default": "gut"
+    },
+    "storage_location": {
+      "type": "string",
+      "description": "Lagerplatz z.B. A-12"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "customer_name"
+  ]
+}

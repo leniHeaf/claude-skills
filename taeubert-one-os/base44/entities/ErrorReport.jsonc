@@ -1,0 +1,67 @@
+{
+  "name": "ErrorReport",
+  "type": "object",
+  "properties": {
+    "vehicle_id": {
+      "type": "string",
+      "description": "Fahrzeug-ID"
+    },
+    "vehicle_info": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "hologramme",
+        "durchpoliert",
+        "staub",
+        "farbton",
+        "uebergaenge",
+        "laeufer",
+        "schleifbild",
+        "einschluesse",
+        "sonstiges"
+      ],
+      "default": "sonstiges"
+    },
+    "description": {
+      "type": "string"
+    },
+    "responsible": {
+      "type": "string"
+    },
+    "stage": {
+      "type": "string"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "niedrig",
+        "mittel",
+        "hoch"
+      ],
+      "default": "mittel"
+    },
+    "root_cause": {
+      "type": "string"
+    },
+    "solution": {
+      "type": "string"
+    },
+    "photos": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "resolved": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "vehicle_id",
+    "category",
+    "description"
+  ]
+}

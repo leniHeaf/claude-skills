@@ -1,0 +1,41 @@
+{
+  "name": "WorkshopNote",
+  "type": "object",
+  "properties": {
+    "vehicle_id": {
+      "type": "string"
+    },
+    "vehicle_info": {
+      "type": "string"
+    },
+    "author": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "nachricht",
+        "sprachnotiz",
+        "nachtrag",
+        "problem"
+      ],
+      "default": "nachricht"
+    },
+    "audio_url": {
+      "type": "string",
+      "description": "URL der Sprachnotiz"
+    },
+    "resolved": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "vehicle_id",
+    "author",
+    "message"
+  ]
+}
