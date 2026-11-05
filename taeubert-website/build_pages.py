@@ -1838,12 +1838,14 @@ def konfig_page():
   </div>
   <div class="kc-conf" id="kc-conf" hidden>
     <div class="kc-left">
-      <div class="kc-top"><a href="konfigurator.html" id="kc-back" class="kc-link">← Zurück</a><button type="button" id="kc-reset" class="kc-link kc-light">↺ Reset</button></div>
+      <div class="kc-top"><a href="konfigurator.html" id="kc-back" class="kc-link">← Zurück</a><span class="kc-tools"><button type="button" id="kc-share" class="kc-link kc-light">↗ Teilen</button><button type="button" id="kc-reset" class="kc-link kc-light">↺ Reset</button></span></div>
       <div class="kc-stage"><div class="kc-thumbs" id="kc-thumbs" role="group" aria-label="Ansichten"></div>
         <div class="kc-view"><div class="kc-canvas"><canvas id="kc-canvas" role="img" aria-label=""></canvas><div class="kc-spin kc-spin-over" id="kc-imgload"><span></span></div></div></div></div>
-      <div class="kc-info"><p class="kc-brand" id="kc-brand"></p><p class="kc-model" id="kc-model"></p></div>
+      <div class="kc-info"><p class="kc-brand" id="kc-brand"></p><p class="kc-model" id="kc-model"></p><p class="kc-era" id="kc-era"></p></div>
     </div>
     <div class="kc-right">
+      <nav class="kc-tabs" id="kc-tabs" aria-label="Kategorien"></nav>
+      <div class="kc-progress"><span id="kc-progress"></span></div>
       <div class="kc-head">
         <div class="kc-step"><span id="kc-step-name"></span><span id="kc-step-num"></span></div>
         <h2 id="kc-opt-name"></h2><p id="kc-opt-desc"></p>
@@ -1864,7 +1866,7 @@ def konfig_page():
             <button type="submit" class="kc-btn kc-send">➤ Anfrage senden</button>
             <p class="kc-status" id="kc-status" role="status" aria-live="polite"></p>
           </form>
-          <div class="kc-done" id="kc-done" hidden><span>✓</span><h3>Anfrage gesendet</h3><p>Vielen Dank für Ihre Konfiguration. Wir melden uns in Kürze bei Ihnen.</p></div>
+          <div class="kc-done" id="kc-done" hidden><span>✓</span><h3>Anfrage gesendet</h3><p>Vielen Dank für Ihre Konfiguration. Wir melden uns in Kürze bei Ihnen.</p><div class="kc-done-btns"><a class="kc-btn" href="termin.html?leistung=Lackierung#wunschtermin">Beratungstermin anfragen</a><a class="kc-link" href="konfigurator.html">Weitere Modelle ansehen</a></div></div>
         </div>
       </div>
       <div class="kc-nav"><button type="button" id="kc-prev" class="kc-link">‹ Zurück</button><button type="button" id="kc-next" class="kc-btn">Weiter ›</button></div>
@@ -1927,11 +1929,21 @@ KONFIG_CSS = """
   .kc-spin-over { position: absolute; inset: 0; padding: 0; background: rgba(250,250,250,.8); }
   .kc-info { padding: 24px; border-top: 1px solid rgba(229,229,229,.6); background: rgba(255,255,255,.5); }
   .kc-brand { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: #737373; }
-  .kc-model { font-size: 14px; letter-spacing: .1em; text-transform: uppercase; font-weight: 500; }
+  .kc-model { font-size: clamp(20px, 2vw, 28px); letter-spacing: .14em; text-transform: uppercase; font-weight: 300; margin-top: 4px; }
+  .kc-era { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; font-size: 16px; color: #555; margin-top: 4px; }
+  .kc-era:empty { display: none; }
   .kc-right { width: 40%; border-left: 1px solid #f0f0f0; display: flex; flex-direction: column; position: sticky; top: calc(var(--announce-h) + var(--hdr-h)); height: calc(100svh - var(--announce-h) - var(--hdr-h)); align-self: flex-start; }
+  .kc-tools { display: flex; gap: 20px; }
+  .kc-tabs { display: flex; overflow-x: auto; scrollbar-width: none; border-bottom: 1px solid #f0f0f0; }
+  .kc-tab { font: inherit; flex: none; font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: #737373; background: none; border: 0; padding: 16px 12px 14px; cursor: pointer; transition: color .2s; }
+  .kc-tab:first-child { padding-left: 24px; }
+  .kc-tab:hover, .kc-tab.on { color: #171717; }
+  .kc-tab.on { font-weight: 600; }
+  .kc-progress { height: 1px; background: #f0f0f0; }
+  .kc-progress span { display: block; height: 1px; background: #171717; width: 0; transition: width .4s cubic-bezier(.2,.8,.2,1); }
   .kc-head { padding: 24px; border-bottom: 1px solid #f0f0f0; }
   .kc-step { display: flex; justify-content: space-between; font-size: 12px; letter-spacing: .15em; text-transform: uppercase; color: #737373; }
-  .kc-head h2 { font-family: Inter, sans-serif; text-transform: none; font-size: 18px; font-weight: 500; letter-spacing: 0; margin-top: 16px; }
+  .kc-head h2 { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; text-transform: none; font-size: 26px; font-weight: 400; letter-spacing: -.01em; margin-top: 14px; }
   .kc-head p { font-size: 12px; color: #737373; line-height: 1.6; margin-top: 8px; }
   .kc-head h2:empty, .kc-head p:empty { display: none; }
   .kc-body { flex: 1; overflow-y: auto; padding: 24px; }
@@ -1974,6 +1986,8 @@ KONFIG_CSS = """
   .kc-done span { display: inline-flex; width: 64px; height: 64px; border-radius: 50%; background: #171717; color: #fff; align-items: center; justify-content: center; font-size: 26px; }
   .kc-done h3 { font-family: Inter, sans-serif; text-transform: none; font-size: 18px; font-weight: 500; margin: 16px 0 8px; }
   .kc-done p { font-size: 14px; color: #737373; max-width: 24rem; margin: 0 auto; }
+  .kc-done-btns { display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: 28px; }
+  .kc-done-btns .kc-btn { display: inline-flex; align-items: center; }
   .kc-fallback iframe { display: block; width: 100%; height: calc(100svh - var(--announce-h) - var(--hdr-h)); min-height: 620px; border: 0; }
   @media (max-width: 990px) {
     .kc-bgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1991,7 +2005,8 @@ KONFIG_CSS = """
     .kc-info { display: none; }
     .kc-right { position: static; height: auto; border-left: 0; }
     .kc-head, .kc-body, .kc-nav { padding-left: 16px; padding-right: 16px; }
-    .kc-head { padding-top: 14px; padding-bottom: 14px; } .kc-head h2 { margin-top: 8px; font-size: 16px; }
+    .kc-head { padding-top: 14px; padding-bottom: 14px; } .kc-head h2 { margin-top: 6px; font-size: 20px; }
+    .kc-tab:first-child { padding-left: 16px; } .kc-tab { padding: 12px 10px 10px; }
     .kc-nav { position: sticky; bottom: 0; background: #fff; z-index: 3; padding-top: 12px; padding-bottom: 12px; }
   }
   @media (max-width: 760px) { .kc-nav { bottom: calc(61px + env(safe-area-inset-bottom)); } .kc-fallback iframe { height: calc(100svh - var(--announce-h) - 70px - 61px); min-height: 520px; } }
@@ -2155,6 +2170,11 @@ KONFIG_JS = r"""
   function render() {
     const s = steps(), isSummary = currentStep >= s.length, step = s[currentStep];
     $('kc-summary').hidden = !isSummary; $('kc-options').hidden = isSummary; $('kc-next').hidden = isSummary;
+    $('kc-tabs').innerHTML = s.map((st, i) => `<button type="button" class="kc-tab${i === currentStep ? ' on' : ''}" data-step="${i}"${i === currentStep ? ' aria-current="step"' : ''}>${esc(st.step_name)}</button>`).join('') +
+      `<button type="button" class="kc-tab${isSummary ? ' on' : ''}" data-step="${s.length}"${isSummary ? ' aria-current="step"' : ''}>Zusammenfassung</button>`;
+    $('kc-progress').style.width = ((Math.min(currentStep, s.length) + 1) / (s.length + 1) * 100) + '%';
+    const t = $('kc-tabs').querySelector('.on'); if (t) t.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    saveUrl();
     $('kc-prev').disabled = currentStep === 0;
     if (isSummary) {
       $('kc-step-name').textContent = 'Zusammenfassung'; $('kc-step-num').textContent = `Schritt ${s.length + 1}/${s.length + 1}`;
@@ -2176,6 +2196,22 @@ KONFIG_JS = r"""
   $('kc-options').addEventListener('click', e => {
     const b = e.target.closest('[data-opt]'); if (!b) return;
     selections[steps()[currentStep].step_name] = b.dataset.opt; render(); paint();
+  });
+  $('kc-tabs').addEventListener('click', e => { const b = e.target.closest('.kc-tab'); if (!b) return; currentStep = +b.dataset.step; viewForStep(); render(); paint(); });
+  // Auswahl im Link speichern, damit Konfigurationen geteilt werden können
+  function saveUrl() {
+    if (!vehicle) return;
+    const idx = steps().map(st => Math.max(0, st.options.findIndex(o => o.name === selections[st.step_name])));
+    try { history.replaceState({}, '', `?modell=${encodeURIComponent(vehicle.id)}&wahl=${idx.join('-')}`); } catch (e) {}
+  }
+  function loadUrl() {
+    const w = new URLSearchParams(location.search).get('wahl'); if (!w) return;
+    w.split('-').map(Number).forEach((n, i) => { const st = steps()[i]; if (st && st.options[n]) selections[st.step_name] = st.options[n].name; });
+  }
+  $('kc-share').addEventListener('click', async () => {
+    const url = location.href, b = $('kc-share');
+    if (navigator.share) { try { await navigator.share({ title: `${vehicle.brand} ${vehicle.model_name} – meine Konfiguration`, url }); } catch (e) {} return; }
+    try { await navigator.clipboard.writeText(url); b.textContent = '✓ Link kopiert'; setTimeout(() => { b.textContent = '↗ Teilen'; }, 2000); } catch (e) { prompt('Link kopieren:', url); }
   });
   $('kc-thumbs').addEventListener('click', e => { const b = e.target.closest('.kc-thumb'); if (b) { selectedView = +b.dataset.view; paint(); } });
   $('kc-prev').addEventListener('click', () => { currentStep = Math.max(0, currentStep - 1); viewForStep(); render(); paint(); });
@@ -2203,8 +2239,9 @@ KONFIG_JS = r"""
     if (!vehicle) { try { vehicle = await base44.entities.VehicleModel.get(id); } catch (e) { vehicle = null; } }
     if (!vehicle) { history.replaceState({}, '', 'konfigurator.html'); return route(); }
     $('kc-brand').textContent = vehicle.brand; $('kc-model').textContent = `${vehicle.model_name} ${vehicle.variant ? '| ' + vehicle.variant : ''}`;
+    $('kc-era').textContent = [vehicle.era, vehicle.vehicle_type].filter(Boolean).join(' · ');
     $('kc-form').hidden = false; $('kc-form').reset(); $('kc-done').hidden = true; document.querySelector('.kc-note').hidden = false; $('kc-status').textContent = '';
-    defaults(); currentStep = 0; viewForStep(); render(); paint();
+    defaults(); loadUrl(); currentStep = 0; viewForStep(); render(); paint();
   }
   function route() {
     const id = new URLSearchParams(location.search).get('modell');
