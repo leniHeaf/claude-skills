@@ -1820,48 +1820,27 @@ KONFIG_TYPES = [("Pkw", "vom Porsche 911 bis zum Trabant"), ("Transporter", "VW 
 
 
 def konfig_page():
-    types = "".join(f'<li><strong>{esc(t)}</strong><span>{esc(d)}</span></li>' for t, d in KONFIG_TYPES)
-    return f'''<section class="sub-hero" style="--h:620px;--mh:520px">
-  <div class="media"><img src="images/hf_20260210_174113_8bd7f253-8826-4ed4-89ed-56b117c21301.webp" alt="Porsche 911 Klassiker im Lack-Konfigurator" fetchpriority="high"></div><div class="overlay" style="opacity:.45"></div>
-  <div class="sub-hero-content" style="max-width:960px">
-    <p class="overline">Täubert Customize</p>
-    <h1 class="h-8">Lack-Konfigurator</h1>
-    <div class="rte"><p>180 Fahrzeuge, Originalfarben, Interieur, Sitze, Lenkrad und Felgen – gestalten Sie Ihr Fahrzeug und senden Sie die Konfiguration direkt an uns.</p></div>
-    <div class="btns"><a class="btn btn-light" href="{KONFIG_URL}" target="_blank" rel="noopener">Konfigurator öffnen</a><a class="btn btn-outline-light" href="termin.html?leistung=Lackierung#wunschtermin">Beratungstermin anfragen</a></div>
-  </div>
+    """Der Base44-Konfigurator, eingebettet in die Website – genau wie das Original."""
+    return f'''<h1 class="sr-only">Lack-Konfigurator – Täubert Customize</h1>
+<section class="kf-embed">
+  <iframe src="{KONFIG_URL}" title="Lack-Konfigurator von Täubert" allow="clipboard-write; fullscreen" loading="eager"></iframe>
 </section>
-<section class="kf-intro">
-  <div class="page-width kf-intro-inner">
-    <div><p class="eyebrow">So funktioniert's</p><h2>In vier Schritten zur Wunschfarbe.</h2></div>
-    <ol class="kf-steps"><li><strong>01</strong> Modell wählen</li><li><strong>02</strong> Farbe, Interieur, Sitze, Lenkrad und Felgen konfigurieren</li><li><strong>03</strong> Zusammenfassung prüfen</li><li><strong>04</strong> Anfrage senden – wir melden uns mit einem unverbindlichen Angebot</li></ol>
-  </div>
-</section>
-<section class="kf-types">
-  <div class="page-width">
-    <p class="eyebrow">Fahrzeuge</p><h2>Vom Klassiker bis zum Moped.</h2>
-    <ul class="kf-typelist">{types}</ul>
-    <a class="btn btn-dark" href="{KONFIG_URL}" target="_blank" rel="noopener">Alle 180 Fahrzeuge ansehen</a>
-    <p class="kf-hint">Ihr Fahrzeug ist nicht dabei? Wir lackieren jedes Fahrzeug in jedem Farbcode – <a href="termin.html#wunschtermin">einfach anfragen</a>.</p>
-  </div>
-</section>'''
+<div class="kf-bar"><div class="page-width kf-bar-inner">
+  <p>180 Fahrzeuge, Originalfarben, Interieur und Felgen – Ihre Anfrage geht direkt an uns. Ihr Fahrzeug ist nicht dabei? <a href="termin.html#wunschtermin">Einfach anfragen</a>.</p>
+  <a class="kf-open" href="{KONFIG_URL}" target="_blank" rel="noopener">Im Vollbild öffnen ↗</a>
+</div></div>'''
 
 
 KONFIG_CSS = """
-  .kf-intro { padding: 100px 0; }
-  .kf-intro-inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; align-items: start; }
-  .kf-intro h2, .kf-types h2 { font-size: clamp(30px, 3.6vw, 50px); line-height: 1.02; }
-  .kf-steps { list-style: none; border-top: 1px solid var(--black); }
-  .kf-steps li { padding: 20px 0; border-bottom: 1px solid var(--line); font-weight: 600; font-size: 17px; }
-  .kf-steps strong { font-size: 12px; letter-spacing: .2em; color: #6b6b6b; margin-right: 16px; }
-  .kf-types { padding: 100px 0; background: var(--grey); }
-  .kf-typelist { list-style: none; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0 32px; margin: 40px 0; border-top: 1px solid var(--black); }
-  .kf-typelist li { padding: 22px 0; }
-  .kf-typelist strong { display: block; font-family: "Archivo Black", sans-serif; font-weight: 400; text-transform: uppercase; font-size: 20px; }
-  .kf-typelist span { display: block; margin-top: 8px; color: #555; font-size: 15px; }
-  .kf-hint { margin-top: 18px; color: #555; }
-  .kf-hint a { color: var(--black); text-decoration: underline; text-underline-offset: 3px; }
-  @media (max-width: 990px) { .kf-intro-inner { grid-template-columns: 1fr; gap: 32px; } .kf-typelist { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 600px) { .kf-intro, .kf-types { padding: 64px 0; } .kf-typelist { grid-template-columns: 1fr; } .kf-typelist li { border-bottom: 1px solid var(--line); } }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  .kf-embed { background: #fff; }
+  .kf-embed iframe { display: block; width: 100%; height: calc(100svh - var(--announce-h) - var(--hdr-h)); min-height: 620px; border: 0; }
+  .kf-bar { border-top: 1px solid var(--line); background: var(--grey); padding: 18px 0; }
+  .kf-bar-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; }
+  .kf-bar p { color: #555; font-size: 15px; }
+  .kf-bar a { color: var(--black); text-decoration: underline; text-underline-offset: 3px; }
+  .kf-open { font-weight: 600; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
+  @media (max-width: 760px) { .kf-embed iframe { height: calc(100svh - var(--announce-h) - 70px - 61px); min-height: 520px; } }
 """
 
 KONFIG_JS = ""
