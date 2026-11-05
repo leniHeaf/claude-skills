@@ -2241,6 +2241,16 @@ KONFIG_JS = r"""
     vehicle = vehicles.find(v => v.id === id) || null;
     if (!vehicle) { try { vehicle = await base44.entities.VehicleModel.get(id); } catch (e) { vehicle = null; } }
     if (!vehicle) { history.replaceState({}, '', 'konfigurator.html'); return route(); }
+    // Zusätzlicher Schritt nur auf der Website: Unterboden (nicht bei Motorrad und Mofa/Roller)
+    const ohneUnterboden = ['Motorrad', 'Mofa/Roller'];
+    if (!ohneUnterboden.includes(vehicle.vehicle_type) && !(vehicle.configurator_steps || []).some(st => /unterboden/i.test(st.step_name || ''))) {
+      vehicle = { ...vehicle, configurator_steps: [...(vehicle.configurator_steps || []), { step_name: 'Unterboden', options: [
+        { name: 'Kein Unterbodenschutz', description: 'Der Unterboden bleibt, wie er ist.' },
+        { name: 'Unterbodenwäsche & Prüfung', description: 'Gründliche Reinigung von Salz und Schmutz, Prüfung auf Rost auf der Hebebühne.' },
+        { name: 'Unterbodenschutz', description: 'Roststellen behandeln und eine neue Schutzschicht auftragen.' },
+        { name: 'Mike Sanders Versiegelung', description: 'Hohlraum- und Unterbodenkonservierung mit Mike-Sanders-Fett – bleibt elastisch, ideal für Klassiker.' },
+      ] }] };
+    }
     $('kc-brand').textContent = vehicle.brand; $('kc-model').textContent = `${vehicle.model_name} ${vehicle.variant ? '| ' + vehicle.variant : ''}`;
     $('kc-era').textContent = [vehicle.era, vehicle.vehicle_type].filter(Boolean).join(' · ');
     $('kc-form').hidden = false; $('kc-form').reset(); $('kc-done').hidden = true; document.querySelector('.kc-note').hidden = false; $('kc-status').textContent = '';
