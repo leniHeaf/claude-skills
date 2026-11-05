@@ -1889,19 +1889,21 @@ KONFIG_CSS = """
   .kc-spin[hidden] { display: none; }
   .kc-spin span { width: 24px; height: 24px; border: 2px solid #e5e5e5; border-top-color: #262626; border-radius: 50%; animation: kcspin .8s linear infinite; }
   @keyframes kcspin { to { transform: rotate(360deg); } }
-  .kc-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px 32px; }
-  .kc-card { display: block; color: inherit; }
-  .kc-card[hidden] { display: none; }
-  .kc-card-img { display: block; position: relative; aspect-ratio: 1 / 1; background: #fafafa; overflow: hidden; border-radius: 2px; }
-  .kc-card-img img { position: absolute; inset: 24px; width: calc(100% - 48px); height: calc(100% - 48px); object-fit: contain; transition: transform .7s ease; }
-  .kc-card:hover .kc-card-img img { transform: scale(1.05); }
-  .kc-card-img::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0); transition: background .5s; }
-  .kc-card:hover .kc-card-img::after { background: rgba(0,0,0,.05); }
-  .kc-card-brand { display: block; margin-top: 16px; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: #737373; font-weight: 300; }
-  .kc-card-brand em { font-style: normal; font-size: 9px; letter-spacing: .1em; color: #666; margin-left: 8px; }
-  .kc-card-name { display: block; margin-top: 4px; font-size: 14px; letter-spacing: .15em; text-transform: uppercase; font-weight: 500; }
-  .kc-card-type { display: inline-block; margin-top: 8px; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: #737373; border: 1px solid #e5e5e5; padding: 2px 6px; border-radius: 2px; }
-  .kc-card-go { display: table; margin-top: 12px; font-size: 10px; letter-spacing: .25em; text-transform: uppercase; border-bottom: 1px solid #171717; padding-bottom: 2px; transition: border-color .2s; }
+  .kc-grid { display: block; }
+  .kc-brandsec { margin-bottom: 96px; }
+  .kc-brandsec header { padding: 0 0 56px 56px; }
+  .kc-brandsec h2 { font-family: Inter, sans-serif; font-weight: 300; font-size: clamp(34px, 4.4vw, 62px); letter-spacing: .18em; text-transform: uppercase; line-height: 1.05; overflow-wrap: anywhere; }
+  .kc-brandsec header p { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif; font-size: clamp(20px, 2vw, 28px); color: #222; margin-top: 18px; letter-spacing: -.01em; }
+  .kc-bgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid #111; border-left: 1px solid #111; }
+  .kc-card { display: block; color: inherit; padding: 22px 22px 28px; border-right: 1px solid #111; border-bottom: 1px solid #111; }
+  .kc-card-img { display: block; position: relative; aspect-ratio: 5 / 4; background: #dcdcdc; overflow: hidden; }
+  .kc-card-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .9s cubic-bezier(.2,.8,.2,1); }
+  .kc-card:hover .kc-card-img img { transform: scale(1.04); }
+  .kc-card-text { display: block; padding: 22px 4px 0; }
+  .kc-card-name { display: block; font-family: Inter, sans-serif; font-weight: 300; font-size: 20px; letter-spacing: .1em; text-transform: uppercase; }
+  .kc-card-name em { font-style: normal; font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; text-transform: none; letter-spacing: 0; font-size: 19px; margin-left: 6px; color: #333; }
+  .kc-card-meta { display: block; margin-top: 8px; font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; font-size: 15px; color: #555; }
+  .kc-card-go { display: table; margin-top: 16px; font-size: 10px; letter-spacing: .25em; text-transform: uppercase; border-bottom: 1px solid #171717; padding-bottom: 2px; transition: border-color .2s; }
   .kc-card:hover .kc-card-go { border-color: #a3a3a3; }
   .kc-empty { text-align: center; padding: 120px 0; color: #737373; font-size: 14px; }
   .kc-conf { display: flex; min-height: calc(100svh - var(--announce-h) - var(--hdr-h)); }
@@ -1974,8 +1976,9 @@ KONFIG_CSS = """
   .kc-done p { font-size: 14px; color: #737373; max-width: 24rem; margin: 0 auto; }
   .kc-fallback iframe { display: block; width: 100%; height: calc(100svh - var(--announce-h) - var(--hdr-h)); min-height: 620px; border: 0; }
   @media (max-width: 990px) {
-    .kc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 16px; }
-    .kc-card-img img { inset: 12px; width: calc(100% - 24px); height: calc(100% - 24px); }
+    .kc-bgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .kc-brandsec header { padding: 0 0 36px 8px; }
+    .kc-brandsec { margin-bottom: 64px; }
     .kc-conf { flex-direction: column; min-height: 0; }
     .kc-left, .kc-right { width: 100%; }
     .kc-left { position: sticky; top: calc(var(--announce-h) + 70px); z-index: 2; }
@@ -1996,7 +1999,9 @@ KONFIG_CSS = """
     .kc-home { padding: 40px 0 64px; }
     .kc-types { flex-wrap: nowrap; overflow-x: auto; margin: 0 -16px 24px; padding: 0 16px 4px; scrollbar-width: none; }
     .kc-type { flex: none; font-size: 10px; padding: 8px 12px; }
-    .kc-card-name { font-size: 12px; letter-spacing: .1em; }
+    .kc-bgrid { grid-template-columns: 1fr; }
+    .kc-card { padding: 16px 16px 22px; }
+    .kc-card-name { font-size: 17px; }
     .kc-swatches { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   }
 """
@@ -2096,16 +2101,23 @@ KONFIG_JS = r"""
 
   // ---- Übersicht (Home.jsx) ----
   let vehicles = [], activeType = 'Alle';
-  function renderHome() {
+  function renderHome() {   // Übersicht im Banyan-Stil: je Marke ein Abschnitt mit Raster
     const list = activeType === 'Alle' ? vehicles : vehicles.filter(v => v.vehicle_type === activeType);
     $('kc-count').textContent = list.length + ' ' + (list.length === 1 ? 'Modell' : 'Modelle');
     $('kc-empty').hidden = list.length > 0;
-    $('kc-grid').innerHTML = list.map(v => `<a class="kc-card" href="?modell=${esc(v.id)}" data-id="${esc(v.id)}">
+    const brands = new Map();
+    list.forEach(v => { if (!brands.has(v.brand)) brands.set(v.brand, []); brands.get(v.brand).push(v); });
+    const order = [...brands.entries()].sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0], 'de'));
+    const years = vs => { const y = vs.flatMap(v => (v.era || '').match(/\d{4}/g) || []).map(Number); return y.length ? [Math.min(...y), Math.max(...y)] : null; };
+    $('kc-grid').innerHTML = order.map(([brand, vs]) => {
+      const y = years(vs), n = vs.length;
+      const sub = (y ? (y[0] === y[1] ? `Klassiker aus ${y[0]}` : `Klassiker von ${y[0]} bis ${y[1]}`) + ' · ' : '') + n + (n === 1 ? ' Konfigurator' : ' Konfiguratoren');
+      return `<section class="kc-brandsec"><header><h2>${esc(brand)}</h2><p>${esc(sub)}</p></header><div class="kc-bgrid">` + vs.map(v => `<a class="kc-card" href="?modell=${esc(v.id)}" data-id="${esc(v.id)}">
       <span class="kc-card-img"><img src="${esc(v.image_url)}" alt="${esc(v.brand + ' ' + v.model_name)}" loading="lazy"></span>
-      <span class="kc-card-brand">${esc(v.brand)}${v.era ? `<em>${esc(v.era)}</em>` : ''}</span>
-      <span class="kc-card-name">${esc(v.model_name)} ${v.variant ? '| ' + esc(v.variant) : ''}</span>
-      ${v.vehicle_type ? `<span class="kc-card-type">${esc(v.vehicle_type)}</span>` : ''}
-      <span class="kc-card-go">Konfigurieren</span></a>`).join('');
+      <span class="kc-card-text"><span class="kc-card-name">${esc(v.model_name)}${v.variant ? ` <em>${esc(v.variant)}</em>` : ''}</span>
+      <span class="kc-card-meta">${esc([v.era, v.vehicle_type].filter(Boolean).join(' · '))}</span>
+      <span class="kc-card-go">Konfigurieren</span></span></a>`).join('') + '</div></section>';
+    }).join('');
   }
   document.querySelectorAll('.kc-type').forEach(b => b.addEventListener('click', () => {
     activeType = b.dataset.type;
