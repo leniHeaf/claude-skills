@@ -1813,37 +1813,402 @@ def render_faq_page():
 
 
 
-# Lack-Konfigurator: die Website führt zum echten Base44-Konfigurator (180 Fahrzeuge, Originalfarben, Interieur, Felgen)
+# Lack-Konfigurator: exakter Nachbau des Base44-Originals (konfigurationtaeubert.base44.app).
+# Fahrzeuge, Schritte und Ansichten kommen live aus der Base44-App (VehicleModel), Anfragen gehen als Configuration
+# zurück dorthin. Einfärbung wie im Original: Bild über die Funktion proxyImage laden, Karosserie (blau/magenta)
+# und Sitze (warme Töne) per Canvas umfärben. Klappt der Abruf nicht, wird das Original eingebettet.
 KONFIG_URL = "https://konfigurationtaeubert.base44.app"
-KONFIG_TYPES = [("Pkw", "vom Porsche 911 bis zum Trabant"), ("Transporter", "VW Bulli T1 bis T4, Barkas, Tempo"), ("Motorrad", "BMW, Zündapp, Horex, NSU und mehr"),
-                ("Mofa/Roller", "Simson, Kreidler, Hercules, Puch"), ("Kleinstwagen", "Isetta, Goggomobil, Messerschmitt")]
+KONFIG_APP_ID = "6a4632bd35aedaad00a18547"
+KONFIG_SDK = "https://esm.sh/@base44/sdk@0.8.55"
+KONFIG_TYPES = ["Alle", "Pkw", "Motorrad", "Mofa/Roller", "Transporter", "Nutzfahrzeug", "Amphibienfahrzeug", "Kabinenroller", "Kleinstwagen"]
 
 
 def konfig_page():
-    """Der Base44-Konfigurator, eingebettet in die Website – genau wie das Original."""
-    return f'''<h1 class="sr-only">Lack-Konfigurator – Täubert Customize</h1>
-<section class="kf-embed">
-  <iframe src="{KONFIG_URL}" title="Lack-Konfigurator von Täubert" allow="clipboard-write; fullscreen" loading="eager"></iframe>
-</section>
-<div class="kf-bar"><div class="page-width kf-bar-inner">
-  <p>180 Fahrzeuge, Originalfarben, Interieur und Felgen – Ihre Anfrage geht direkt an uns. Ihr Fahrzeug ist nicht dabei? <a href="termin.html#wunschtermin">Einfach anfragen</a>.</p>
-  <a class="kf-open" href="{KONFIG_URL}" target="_blank" rel="noopener">Im Vollbild öffnen ↗</a>
-</div></div>'''
+    types = "".join(f'<button type="button" class="kc-type{" on" if i == 0 else ""}" data-type="{esc(t)}" aria-pressed="{"true" if i == 0 else "false"}">{esc(t)}</button>' for i, t in enumerate(KONFIG_TYPES))
+    return f'''<section class="kc" id="kc" data-app="{KONFIG_APP_ID}" data-url="{KONFIG_URL}">
+  <div class="kc-home" id="kc-home">
+    <div class="page-width">
+      <div class="kc-hero"><h1>Customize</h1><p>Wählen Sie Ihr Modell und gestalten Sie es nach Ihren Wünschen</p></div>
+      <div class="kc-types" role="group" aria-label="Fahrzeugart">{types}</div>
+      <p class="kc-count" id="kc-count"></p>
+      <div class="kc-spin" id="kc-loading" role="status" aria-label="Modelle werden geladen"><span></span></div>
+      <div class="kc-grid" id="kc-grid"></div>
+      <div class="kc-empty" id="kc-empty" hidden><p>Keine Modelle in dieser Kategorie</p></div>
+    </div>
+  </div>
+  <div class="kc-conf" id="kc-conf" hidden>
+    <div class="kc-left">
+      <div class="kc-top"><a href="konfigurator.html" id="kc-back" class="kc-link">← Zurück</a><button type="button" id="kc-reset" class="kc-link kc-light">↺ Reset</button></div>
+      <div class="kc-stage"><div class="kc-thumbs" id="kc-thumbs" role="group" aria-label="Ansichten"></div>
+        <div class="kc-view"><div class="kc-canvas"><canvas id="kc-canvas" role="img" aria-label=""></canvas><div class="kc-spin kc-spin-over" id="kc-imgload"><span></span></div></div></div></div>
+      <div class="kc-info"><p class="kc-brand" id="kc-brand"></p><p class="kc-model" id="kc-model"></p></div>
+    </div>
+    <div class="kc-right">
+      <div class="kc-head">
+        <div class="kc-step"><span id="kc-step-name"></span><span id="kc-step-num"></span></div>
+        <h2 id="kc-opt-name"></h2><p id="kc-opt-desc"></p>
+      </div>
+      <div class="kc-body">
+        <div id="kc-options"></div>
+        <div class="kc-summary" id="kc-summary" hidden>
+          <h3 class="kc-label">Ihre Konfiguration</h3>
+          <div id="kc-sum-list"></div>
+          <p class="kc-note"><strong>Hinweis:</strong> Das Fahrzeug muss von Ihnen angeliefert werden – oder wir holen es im Umkreis von 30 km ab. Die Konfiguration dient als Grundlage für ein unverbindliches Angebot.</p>
+          <form class="kc-form" id="kc-form">
+            <h3 class="kc-label">Kontaktinformationen</h3>
+            <label>Name *<input name="name" autocomplete="name" required></label>
+            <label>E-Mail *<input name="email" type="email" autocomplete="email" required></label>
+            <label>Telefon<input name="phone" type="tel" autocomplete="tel"></label>
+            <label>Nachricht<textarea name="message" rows="3"></textarea></label>
+            <label class="kc-consent"><input type="checkbox" name="einwilligung" required><span>Ich bin einverstanden, dass meine Angaben zur Bearbeitung der Anfrage gespeichert werden (siehe <a href="datenschutz.html">Datenschutz</a>). *</span></label>
+            <button type="submit" class="kc-btn kc-send">➤ Anfrage senden</button>
+            <p class="kc-status" id="kc-status" role="status" aria-live="polite"></p>
+          </form>
+          <div class="kc-done" id="kc-done" hidden><span>✓</span><h3>Anfrage gesendet</h3><p>Vielen Dank für Ihre Konfiguration. Wir melden uns in Kürze bei Ihnen.</p></div>
+        </div>
+      </div>
+      <div class="kc-nav"><button type="button" id="kc-prev" class="kc-link">‹ Zurück</button><button type="button" id="kc-next" class="kc-btn">Weiter ›</button></div>
+    </div>
+  </div>
+  <div class="kc-fallback" id="kc-fallback" hidden><iframe title="Lack-Konfigurator von Täubert" data-src="{KONFIG_URL}" allow="clipboard-write; fullscreen"></iframe></div>
+</section>'''
 
 
 KONFIG_CSS = """
-  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
-  .kf-embed { background: #fff; }
-  .kf-embed iframe { display: block; width: 100%; height: calc(100svh - var(--announce-h) - var(--hdr-h)); min-height: 620px; border: 0; }
-  .kf-bar { border-top: 1px solid var(--line); background: var(--grey); padding: 18px 0; }
-  .kf-bar-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; }
-  .kf-bar p { color: #555; font-size: 15px; }
-  .kf-bar a { color: var(--black); text-decoration: underline; text-underline-offset: 3px; }
-  .kf-open { font-weight: 600; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
-  @media (max-width: 760px) { .kf-embed iframe { height: calc(100svh - var(--announce-h) - 70px - 61px); min-height: 520px; } }
+  .kc { background: #fff; color: #171717; }
+  .kc-home { padding: 72px 0 96px; }
+  .kc-hero { text-align: center; margin-bottom: 40px; }
+  .kc-hero h1 { font-family: Inter, sans-serif; font-weight: 300; font-size: clamp(30px, 5vw, 60px); letter-spacing: .15em; text-transform: uppercase; line-height: 1.1; }
+  .kc-hero p { margin: 14px auto 0; max-width: 28rem; font-size: 14px; color: #737373; letter-spacing: .02em; }
+  .kc-types { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+  .kc-type { font: inherit; font-size: 11px; letter-spacing: .15em; text-transform: uppercase; padding: 8px 16px; border: 1px solid #e5e5e5; border-radius: 2px; background: #fff; color: #737373; cursor: pointer; transition: all .15s; }
+  .kc-type:hover { border-color: #a3a3a3; color: #171717; }
+  .kc-type.on { background: #171717; border-color: #171717; color: #fff; }
+  .kc-count { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: #737373; margin-bottom: 32px; min-height: 1em; }
+  .kc-spin { display: flex; align-items: center; justify-content: center; padding: 120px 0; }
+  .kc-spin[hidden] { display: none; }
+  .kc-spin span { width: 24px; height: 24px; border: 2px solid #e5e5e5; border-top-color: #262626; border-radius: 50%; animation: kcspin .8s linear infinite; }
+  @keyframes kcspin { to { transform: rotate(360deg); } }
+  .kc-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px 32px; }
+  .kc-card { display: block; color: inherit; }
+  .kc-card[hidden] { display: none; }
+  .kc-card-img { display: block; position: relative; aspect-ratio: 1 / 1; background: #fafafa; overflow: hidden; border-radius: 2px; }
+  .kc-card-img img { position: absolute; inset: 24px; width: calc(100% - 48px); height: calc(100% - 48px); object-fit: contain; transition: transform .7s ease; }
+  .kc-card:hover .kc-card-img img { transform: scale(1.05); }
+  .kc-card-img::after { content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0); transition: background .5s; }
+  .kc-card:hover .kc-card-img::after { background: rgba(0,0,0,.05); }
+  .kc-card-brand { display: block; margin-top: 16px; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: #737373; font-weight: 300; }
+  .kc-card-brand em { font-style: normal; font-size: 9px; letter-spacing: .1em; color: #666; margin-left: 8px; }
+  .kc-card-name { display: block; margin-top: 4px; font-size: 14px; letter-spacing: .15em; text-transform: uppercase; font-weight: 500; }
+  .kc-card-type { display: inline-block; margin-top: 8px; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: #737373; border: 1px solid #e5e5e5; padding: 2px 6px; border-radius: 2px; }
+  .kc-card-go { display: table; margin-top: 12px; font-size: 10px; letter-spacing: .25em; text-transform: uppercase; border-bottom: 1px solid #171717; padding-bottom: 2px; transition: border-color .2s; }
+  .kc-card:hover .kc-card-go { border-color: #a3a3a3; }
+  .kc-empty { text-align: center; padding: 120px 0; color: #737373; font-size: 14px; }
+  .kc-conf { display: flex; min-height: calc(100svh - var(--announce-h) - var(--hdr-h)); }
+  .kc-conf[hidden], .kc-home[hidden], .kc-fallback[hidden] { display: none; }
+  .kc-left { width: 60%; background: #fafafa; display: flex; flex-direction: column; }
+  .kc-top { display: flex; justify-content: space-between; align-items: center; padding: 24px; }
+  .kc-link { font: inherit; font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: #737373; background: none; border: 0; cursor: pointer; padding: 6px 0; transition: color .2s; }
+  .kc-link:hover { color: #171717; }
+  .kc-link:disabled { opacity: .35; cursor: default; }
+  .kc-light { color: #666; font-size: 10px; }
+  .kc-stage { flex: 1; display: flex; min-height: 0; }
+  .kc-thumbs { flex: none; display: flex; flex-direction: column; gap: 8px; padding: 16px; border-right: 1px solid #f0f0f0; overflow-y: auto; }
+  .kc-thumbs:empty { display: none; }
+  .kc-thumb { width: 80px; height: 80px; padding: 0; border: 2px solid #e5e5e5; border-radius: 2px; overflow: hidden; background: #fff; cursor: pointer; transition: border-color .2s; flex: none; }
+  .kc-thumb:hover { border-color: #a3a3a3; }
+  .kc-thumb.on { border-color: #171717; }
+  .kc-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .kc-view { flex: 1; display: flex; align-items: center; justify-content: center; padding: 0 32px 32px; }
+  .kc-canvas { position: relative; width: 100%; max-width: 576px; height: 400px; }
+  .kc-canvas canvas { width: 100%; height: 100%; object-fit: contain; }
+  .kc-spin-over { position: absolute; inset: 0; padding: 0; background: rgba(250,250,250,.8); }
+  .kc-info { padding: 24px; border-top: 1px solid rgba(229,229,229,.6); background: rgba(255,255,255,.5); }
+  .kc-brand { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: #737373; }
+  .kc-model { font-size: 14px; letter-spacing: .1em; text-transform: uppercase; font-weight: 500; }
+  .kc-right { width: 40%; border-left: 1px solid #f0f0f0; display: flex; flex-direction: column; position: sticky; top: calc(var(--announce-h) + var(--hdr-h)); height: calc(100svh - var(--announce-h) - var(--hdr-h)); align-self: flex-start; }
+  .kc-head { padding: 24px; border-bottom: 1px solid #f0f0f0; }
+  .kc-step { display: flex; justify-content: space-between; font-size: 12px; letter-spacing: .15em; text-transform: uppercase; color: #737373; }
+  .kc-head h2 { font-family: Inter, sans-serif; text-transform: none; font-size: 18px; font-weight: 500; letter-spacing: 0; margin-top: 16px; }
+  .kc-head p { font-size: 12px; color: #737373; line-height: 1.6; margin-top: 8px; }
+  .kc-head h2:empty, .kc-head p:empty { display: none; }
+  .kc-body { flex: 1; overflow-y: auto; padding: 24px; }
+  .kc-swatches { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; }
+  .kc-sw { font: inherit; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 8px; border: 0; border-radius: 2px; background: none; cursor: pointer; transition: background .15s; min-width: 0; }
+  .kc-sw:hover { background: #fafafa; }
+  .kc-sw.on { background: #f5f5f5; box-shadow: 0 0 0 1px #171717; }
+  .kc-sw i { width: 36px; height: 36px; border-radius: 50%; border: 1px solid #e5e5e5; box-shadow: 0 1px 2px rgba(0,0,0,.08); display: flex; align-items: center; justify-content: center; font-style: normal; font-size: 15px; transition: transform .15s; }
+  .kc-sw:hover i { transform: scale(1.05); }
+  .kc-sw span { font-size: 10px; line-height: 1.2; color: #525252; text-align: center; width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .kc-opts { display: grid; gap: 8px; }
+  .kc-opt { font: inherit; text-align: left; width: 100%; display: flex; gap: 12px; justify-content: space-between; align-items: flex-start; padding: 16px; border: 1px solid #e5e5e5; border-radius: 2px; background: #fff; cursor: pointer; transition: border-color .2s, background .2s; }
+  .kc-opt:hover { border-color: #a3a3a3; }
+  .kc-opt.on { border-color: #171717; background: #fafafa; }
+  .kc-opt strong { display: block; font-size: 14px; font-weight: 500; letter-spacing: .02em; }
+  .kc-opt small { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: 12px; color: #737373; margin-top: 4px; line-height: 1.5; }
+  .kc-opt b { flex: none; width: 20px; height: 20px; border-radius: 50%; border: 1px solid #d4d4d4; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #fff; }
+  .kc-opt.on b { background: #171717; border-color: #171717; }
+  .kc-nav { padding: 24px; border-top: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; }
+  .kc-btn { font: inherit; font-size: 11px; letter-spacing: .15em; text-transform: uppercase; background: #171717; color: #fff; border: 0; border-radius: 2px; padding: 0 24px; height: 40px; cursor: pointer; transition: background .2s; }
+  .kc-btn:hover { background: #262626; }
+  .kc-btn:disabled { opacity: .6; cursor: default; }
+  .kc-label { font-family: Inter, sans-serif; font-size: 12px; font-weight: 400; letter-spacing: .2em; text-transform: uppercase; color: #737373; margin-bottom: 16px; }
+  .kc-row { padding: 8px 0; border-bottom: 1px solid #f5f5f5; }
+  .kc-row small { display: block; font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: #737373; }
+  .kc-row span { font-size: 14px; color: #262626; }
+  .kc-note { margin: 32px 0; background: #fafafa; border: 1px solid #f0f0f0; padding: 16px; font-size: 12px; color: #737373; line-height: 1.6; border-radius: 2px; }
+  .kc-note strong { color: #404040; font-weight: 600; }
+  .kc-form label { display: block; font-size: 12px; color: #737373; margin-bottom: 12px; }
+  .kc-form input:not([type=checkbox]), .kc-form textarea { display: block; width: 100%; margin-top: 4px; padding: 9px 12px; border: 1px solid #e5e5e5; border-radius: 2px; font: inherit; font-size: 14px; color: #171717; resize: none; }
+  .kc-form input:focus, .kc-form textarea:focus { outline: none; border-color: #171717; box-shadow: 0 0 0 1px #171717; }
+  .kc-consent { display: flex !important; gap: 8px; align-items: flex-start; line-height: 1.5; }
+  .kc-consent input { margin-top: 3px; }
+  .kc-consent a { text-decoration: underline; }
+  .kc-send { width: 100%; height: 48px; font-size: 12px; margin-top: 6px; }
+  .kc-status { font-size: 13px; margin-top: 12px; }
+  .kc-status .kc-alt { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+  .kc-status .kc-alt a { border: 1px solid #171717; padding: 8px 12px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+  .kc-done { text-align: center; padding: 64px 0; }
+  .kc-done span { display: inline-flex; width: 64px; height: 64px; border-radius: 50%; background: #171717; color: #fff; align-items: center; justify-content: center; font-size: 26px; }
+  .kc-done h3 { font-family: Inter, sans-serif; text-transform: none; font-size: 18px; font-weight: 500; margin: 16px 0 8px; }
+  .kc-done p { font-size: 14px; color: #737373; max-width: 24rem; margin: 0 auto; }
+  .kc-fallback iframe { display: block; width: 100%; height: calc(100svh - var(--announce-h) - var(--hdr-h)); min-height: 620px; border: 0; }
+  @media (max-width: 990px) {
+    .kc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 16px; }
+    .kc-card-img img { inset: 12px; width: calc(100% - 24px); height: calc(100% - 24px); }
+    .kc-conf { flex-direction: column; min-height: 0; }
+    .kc-left, .kc-right { width: 100%; }
+    .kc-left { position: sticky; top: calc(var(--announce-h) + 70px); z-index: 2; }
+    .kc-top { padding: 4px 16px; }
+    .kc-stage { flex-direction: column-reverse; }
+    .kc-thumbs { flex-direction: row; border-right: 0; padding: 4px 16px 8px; overflow-x: auto; gap: 6px; }
+    .kc-thumb { width: 44px; height: 44px; border-width: 1px; }
+    .kc-view { padding: 0 16px 6px; }
+    .kc-canvas { height: 24svh; }
+    .kc-info { display: none; }
+    .kc-right { position: static; height: auto; border-left: 0; }
+    .kc-head, .kc-body, .kc-nav { padding-left: 16px; padding-right: 16px; }
+    .kc-head { padding-top: 14px; padding-bottom: 14px; } .kc-head h2 { margin-top: 8px; font-size: 16px; }
+    .kc-nav { position: sticky; bottom: 0; background: #fff; z-index: 3; padding-top: 12px; padding-bottom: 12px; }
+  }
+  @media (max-width: 760px) { .kc-nav { bottom: calc(61px + env(safe-area-inset-bottom)); } .kc-fallback iframe { height: calc(100svh - var(--announce-h) - 70px - 61px); min-height: 520px; } }
+  @media (max-width: 600px) {
+    .kc-home { padding: 40px 0 64px; }
+    .kc-types { flex-wrap: nowrap; overflow-x: auto; margin: 0 -16px 24px; padding: 0 16px 4px; scrollbar-width: none; }
+    .kc-type { flex: none; font-size: 10px; padding: 8px 12px; }
+    .kc-card-name { font-size: 12px; letter-spacing: .1em; }
+    .kc-swatches { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
 """
 
-KONFIG_JS = ""
+KONFIG_JS = r"""
+<script type="module">
+  // Lack-Konfigurator: Nachbau von Home.jsx und Configurator.jsx des Base44-Originals
+  const root = document.getElementById('kc');
+  const $ = id => document.getElementById(id);
+  const esc = t => String(t ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  function fallback() {   // Base44 nicht erreichbar: Original einbetten
+    $('kc-home').hidden = true; $('kc-conf').hidden = true;
+    const f = $('kc-fallback'), fr = f.querySelector('iframe'); fr.src = fr.dataset.src; f.hidden = false;
+  }
+  let base44;
+  try {
+    const { createClient } = await import(__SDK__);
+    base44 = createClient({ appId: root.dataset.app, requiresAuth: false });
+  } catch (e) { console.warn('Base44 SDK nicht geladen', e); fallback(); }
+
+  // ---- Bild einfärben (TintedImage.jsx) ----
+  const dataUrlCache = new Map();
+  async function fetchAsDataUrl(url) {
+    if (dataUrlCache.has(url)) return dataUrlCache.get(url);
+    try {
+      const response = await base44.functions.invoke('proxyImage', { url });
+      const dataUrl = response?.data?.data_url || response?.data_url;
+      if (dataUrl && dataUrl.startsWith('data:')) { dataUrlCache.set(url, dataUrl); return dataUrl; }
+    } catch (e) { console.warn('Proxy failed:', e.message); }
+    return url;
+  }
+  function rgbToHsl(r, g, b) {
+    r /= 255; g /= 255; b /= 255; const max = Math.max(r, g, b), min = Math.min(r, g, b); let h = 0, s = 0; const l = (max + min) / 2;
+    if (max !== min) { const d = max - min; s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+      switch (max) { case r: h = ((g - b) / d + (g < b ? 6 : 0)) * 60; break; case g: h = ((b - r) / d + 2) * 60; break; default: h = ((r - g) / d + 4) * 60; } }
+    return { h, s, l };
+  }
+  function hslToRgb(h, s, l) {
+    h /= 360; if (s === 0) { const v = Math.round(l * 255); return { r: v, g: v, b: v }; }
+    const hue2rgb = (p, q, t) => { if (t < 0) t += 1; if (t > 1) t -= 1; if (t < 1 / 6) return p + (q - p) * 6 * t; if (t < 1 / 2) return q; if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6; return p; };
+    const q = l < 0.5 ? l * (1 + s) : l + s - l * s, p = 2 * l - q;
+    return { r: Math.round(hue2rgb(p, q, h + 1 / 3) * 255), g: Math.round(hue2rgb(p, q, h) * 255), b: Math.round(hue2rgb(p, q, h - 1 / 3) * 255) };
+  }
+  const hexToHsl = hex => { const c = hex.replace('#', ''); return rgbToHsl(parseInt(c.substr(0, 2), 16), parseInt(c.substr(2, 2), 16), parseInt(c.substr(4, 2), 16)); };
+  let tintJob = 0;
+  async function tintedImage(src, tintHex, seatTintHex, maxSize = 1000) {
+    const my = ++tintJob, canvas = $('kc-canvas'), spin = $('kc-imgload');
+    spin.hidden = false;
+    const imgUrl = await fetchAsDataUrl(src);
+    if (my !== tintJob) return;
+    const img = new Image();
+    img.onload = () => {
+      if (my !== tintJob) return;
+      const ctx = canvas.getContext('2d'); let w = img.naturalWidth, h = img.naturalHeight;
+      if (w > maxSize || h > maxSize) { const scale = maxSize / Math.max(w, h); w = Math.round(w * scale); h = Math.round(h * scale); }
+      canvas.width = w; canvas.height = h; ctx.drawImage(img, 0, 0, w, h);
+      if (tintHex || seatTintHex) {
+        try {
+          const imageData = ctx.getImageData(0, 0, w, h), data = imageData.data;
+          const bodyTint = tintHex ? hexToHsl(tintHex) : null, seatTint = seatTintHex ? hexToHsl(seatTintHex) : null;
+          for (let i = 0; i < data.length; i += 4) {
+            const r = data[i], g = data[i + 1], b = data[i + 2], sat = Math.max(r, g, b) - Math.min(r, g, b), px = rgbToHsl(r, g, b), hue = px.h;
+            if (bodyTint) {
+              const satWeight = sat <= 15 ? 0 : Math.min((sat - 15) / 40, 1), hueMin = 150, hueMax = 340, hueFeather = 15;
+              let hueWeight;
+              if (hue >= hueMin + hueFeather && hue <= hueMax - hueFeather) hueWeight = 1;
+              else if (hue >= hueMin - hueFeather && hue < hueMin + hueFeather) hueWeight = (hue - (hueMin - hueFeather)) / (2 * hueFeather);
+              else if (hue > hueMax - hueFeather && hue <= hueMax + hueFeather) hueWeight = (hueMax + hueFeather - hue) / (2 * hueFeather);
+              else hueWeight = 0;
+              const lWeight = px.l > 0.93 ? 0 : Math.min((0.93 - px.l) / 0.08, 1), weight = Math.min(satWeight, hueWeight, lWeight);
+              if (weight > 0.01) {
+                const variationScale = bodyTint.l > 0.7 || bodyTint.l < 0.25 ? 0.3 : 0.45, variation = (px.l - 0.5) * variationScale;
+                const c = hslToRgb(bodyTint.h, bodyTint.s, Math.max(0.02, Math.min(0.98, bodyTint.l + variation)));
+                data[i] = Math.round(data[i] * (1 - weight) + c.r * weight); data[i + 1] = Math.round(data[i + 1] * (1 - weight) + c.g * weight); data[i + 2] = Math.round(data[i + 2] * (1 - weight) + c.b * weight);
+                continue;
+              }
+            }
+            if (seatTint) {
+              let hueWeight;
+              if (hue >= 300 || hue <= 120) { const edge = Math.min(hue >= 300 ? 360 - hue : 999, hue <= 120 ? hue : 999); hueWeight = edge < 25 ? edge / 25 : 1; } else hueWeight = 0;
+              const satWeight = sat <= 5 ? 0 : Math.min((sat - 5) / 15, 1), lWeight = px.l > 0.88 ? 0 : Math.min(px.l / 0.12, 1), weight = Math.min(hueWeight, satWeight, lWeight) * 0.92;
+              if (weight > 0.01) {
+                const newL = Math.max(0.02, Math.min(0.92, px.l * (seatTint.l / 0.4))), newS = Math.max(seatTint.s * 0.7, Math.min(seatTint.s + 0.1, 0.85));
+                const c = hslToRgb(seatTint.h, newS, newL);
+                data[i] = Math.round(data[i] * (1 - weight) + c.r * weight); data[i + 1] = Math.round(data[i + 1] * (1 - weight) + c.g * weight); data[i + 2] = Math.round(data[i + 2] * (1 - weight) + c.b * weight);
+              }
+            }
+          }
+          ctx.putImageData(imageData, 0, 0);
+        } catch (e) { console.warn('Canvas recolor failed:', e.message); }
+      }
+      spin.hidden = true;
+    };
+    img.onerror = () => { if (my === tintJob) spin.hidden = true; };
+    img.src = imgUrl;
+  }
+
+  // ---- Übersicht (Home.jsx) ----
+  let vehicles = [], activeType = 'Alle';
+  function renderHome() {
+    const list = activeType === 'Alle' ? vehicles : vehicles.filter(v => v.vehicle_type === activeType);
+    $('kc-count').textContent = list.length + ' ' + (list.length === 1 ? 'Modell' : 'Modelle');
+    $('kc-empty').hidden = list.length > 0;
+    $('kc-grid').innerHTML = list.map(v => `<a class="kc-card" href="?modell=${esc(v.id)}" data-id="${esc(v.id)}">
+      <span class="kc-card-img"><img src="${esc(v.image_url)}" alt="${esc(v.brand + ' ' + v.model_name)}" loading="lazy"></span>
+      <span class="kc-card-brand">${esc(v.brand)}${v.era ? `<em>${esc(v.era)}</em>` : ''}</span>
+      <span class="kc-card-name">${esc(v.model_name)} ${v.variant ? '| ' + esc(v.variant) : ''}</span>
+      ${v.vehicle_type ? `<span class="kc-card-type">${esc(v.vehicle_type)}</span>` : ''}
+      <span class="kc-card-go">Konfigurieren</span></a>`).join('');
+  }
+  document.querySelectorAll('.kc-type').forEach(b => b.addEventListener('click', () => {
+    activeType = b.dataset.type;
+    document.querySelectorAll('.kc-type').forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', x === b); });
+    renderHome();
+  }));
+  $('kc-grid').addEventListener('click', e => {
+    const a = e.target.closest('.kc-card'); if (!a) return; e.preventDefault();
+    history.pushState({}, '', '?modell=' + a.dataset.id); route();
+  });
+
+  // ---- Konfiguration (Configurator.jsx) ----
+  let vehicle = null, currentStep = 0, selections = {}, selectedView = 0;
+  const interiorKeywords = ['interieur', 'sitz', 'lenkrad', 'radio', 'innenraum'];
+  const steps = () => vehicle.configurator_steps || [];
+  const gallery = () => vehicle.gallery_images?.length ? vehicle.gallery_images : [{ url: vehicle.image_url, label: 'Front 3/4', view_type: 'exterior' }];
+  const isLight = hex => { if (!hex) return true; const c = hex.replace('#', ''); return (parseInt(c.substr(0, 2), 16) * 299 + parseInt(c.substr(2, 2), 16) * 587 + parseInt(c.substr(4, 2), 16) * 114) / 1000 > 140; };
+  function defaults() { selections = {}; steps().forEach(s => { if (s.options?.length > 0) selections[s.step_name] = s.options[0].name; }); }
+  function viewForStep() {   // Innenraum-Schritte zeigen die Innenansicht
+    const step = steps()[currentStep]; if (!step) return;
+    const g = gallery(), isInterior = interiorKeywords.some(k => step.step_name?.toLowerCase().includes(k));
+    const idx = isInterior ? g.findIndex(x => x.view_type === 'interior') : g.findIndex(x => x.view_type !== 'interior');
+    selectedView = idx >= 0 ? idx : 0;
+  }
+  function paint() {
+    const g = gallery(), active = g[selectedView] || g[0], isExterior = active?.view_type !== 'interior', hasInterior = g.some(x => x.view_type === 'interior');
+    const paintStep = steps().find(s => s.options?.every(o => o.color_hex) && !/sitz|interieur|seat|innenausstattung/i.test(s.step_name || ''));
+    const paintColor = paintStep?.options?.find(o => o.name === selections[paintStep.step_name])?.color_hex;
+    const seatStep = steps().find(s => /sitz|interieur|seat|innenausstattung/i.test(s.step_name || '') && s.options?.some(o => o.color_hex));
+    const seatColor = seatStep?.options?.find(o => o.name === selections[seatStep?.step_name])?.color_hex;
+    $('kc-canvas').setAttribute('aria-label', `${vehicle.brand} ${vehicle.model_name}`);
+    $('kc-thumbs').innerHTML = g.map((im, i) => `<button type="button" class="kc-thumb${selectedView === i ? ' on' : ''}" data-view="${i}" aria-pressed="${selectedView === i}"><img src="${esc(im.url)}" alt="${esc(im.label || 'Ansicht ' + (i + 1))}"></button>`).join('');
+    tintedImage(active.url, isExterior ? paintColor : undefined, (!hasInterior || !isExterior) ? seatColor : undefined);
+  }
+  function render() {
+    const s = steps(), isSummary = currentStep >= s.length, step = s[currentStep];
+    $('kc-summary').hidden = !isSummary; $('kc-options').hidden = isSummary; $('kc-next').hidden = isSummary;
+    $('kc-prev').disabled = currentStep === 0;
+    if (isSummary) {
+      $('kc-step-name').textContent = 'Zusammenfassung'; $('kc-step-num').textContent = `Schritt ${s.length + 1}/${s.length + 1}`;
+      $('kc-opt-name').textContent = ''; $('kc-opt-desc').textContent = '';
+      $('kc-sum-list').innerHTML = s.map(st => { const o = st.options.find(x => x.name === selections[st.step_name]); return o ? `<div class="kc-row"><small>${esc(st.step_name)}</small><span>${esc(o.name)}</span></div>` : ''; }).join('');
+      return;
+    }
+    $('kc-step-name').textContent = step.step_name; $('kc-step-num').textContent = `Schritt ${currentStep + 1}/${s.length}`;
+    const sel = step.options?.find(o => o.name === selections[step.step_name]);
+    $('kc-opt-name').textContent = sel?.name || ''; $('kc-opt-desc').textContent = sel?.description || '';
+    $('kc-next').textContent = currentStep === s.length - 1 ? 'Zusammenfassung ›' : 'Weiter ›';
+    const isColorStep = step.options?.every(o => o.color_hex);
+    $('kc-options').innerHTML = isColorStep
+      ? '<div class="kc-swatches">' + step.options.map(o => { const on = selections[step.step_name] === o.name;
+          return `<button type="button" class="kc-sw${on ? ' on' : ''}" data-opt="${esc(o.name)}" title="${esc(o.name)}" aria-pressed="${on}"><i style="background:${esc(o.color_hex)};color:${isLight(o.color_hex) ? '#000' : '#fff'}">${on ? '✓' : ''}</i><span>${esc(o.name)}</span></button>`; }).join('') + '</div>'
+      : '<div class="kc-opts">' + step.options.map(o => { const on = selections[step.step_name] === o.name;
+          return `<button type="button" class="kc-opt${on ? ' on' : ''}" data-opt="${esc(o.name)}" aria-pressed="${on}"><span><strong>${esc(o.name)}</strong>${o.description ? `<small>${esc(o.description)}</small>` : ''}</span><b>${on ? '✓' : ''}</b></button>`; }).join('') + '</div>';
+  }
+  $('kc-options').addEventListener('click', e => {
+    const b = e.target.closest('[data-opt]'); if (!b) return;
+    selections[steps()[currentStep].step_name] = b.dataset.opt; render(); paint();
+  });
+  $('kc-thumbs').addEventListener('click', e => { const b = e.target.closest('.kc-thumb'); if (b) { selectedView = +b.dataset.view; paint(); } });
+  $('kc-prev').addEventListener('click', () => { currentStep = Math.max(0, currentStep - 1); viewForStep(); render(); paint(); });
+  $('kc-next').addEventListener('click', () => { currentStep++; viewForStep(); render(); paint(); });
+  $('kc-reset').addEventListener('click', () => { defaults(); currentStep = 0; viewForStep(); render(); paint(); });
+  $('kc-back').addEventListener('click', e => { e.preventDefault(); history.pushState({}, '', 'konfigurator.html'); route(); });
+  $('kc-form').addEventListener('submit', async e => {
+    e.preventDefault(); const f = e.target; if (!f.checkValidity()) { f.reportValidity(); return; }
+    const btn = f.querySelector('.kc-send'), status = $('kc-status'); btn.disabled = true; status.textContent = 'Wird gesendet …';
+    const name = `${vehicle.brand} ${vehicle.model_name} ${vehicle.variant || ''}`.trim();
+    try {
+      await base44.entities.Configuration.create({ vehicle_model_id: vehicle.id, vehicle_name: name, selections, total_price: 0, status: 'submitted',
+        customer_name: f.name.value, customer_email: f.email.value, customer_phone: f.phone.value, customer_message: f.message.value });
+      f.hidden = true; $('kc-done').hidden = false; document.querySelector('.kc-note').hidden = true;
+    } catch (err) {
+      btn.disabled = false;
+      const t = `Konfiguration: ${name}\n` + steps().map(s => `${s.step_name}: ${selections[s.step_name] || ''}`).join('\n') + `\nName: ${f.name.value}\nE-Mail: ${f.email.value}\nTelefon: ${f.phone.value}\n${f.message.value}`;
+      status.innerHTML = 'Das Senden hat gerade nicht geklappt. Schicken Sie Ihre Konfiguration einfach so:<span class="kc-alt"><a target="_blank" rel="noopener" href="https://wa.me/4936754289606?text=' + encodeURIComponent(t) + '">WhatsApp</a><a href="mailto:hallo@taeubert-karosserie-lack.de?subject=' + encodeURIComponent('Konfiguration ' + name) + '&body=' + encodeURIComponent(t) + '">E-Mail</a></span>';
+    }
+  });
+
+  async function openVehicle(id) {
+    $('kc-home').hidden = true; $('kc-conf').hidden = false; window.scrollTo(0, 0);
+    vehicle = vehicles.find(v => v.id === id) || null;
+    if (!vehicle) { try { vehicle = await base44.entities.VehicleModel.get(id); } catch (e) { vehicle = null; } }
+    if (!vehicle) { history.replaceState({}, '', 'konfigurator.html'); return route(); }
+    $('kc-brand').textContent = vehicle.brand; $('kc-model').textContent = `${vehicle.model_name} ${vehicle.variant ? '| ' + vehicle.variant : ''}`;
+    $('kc-form').hidden = false; $('kc-form').reset(); $('kc-done').hidden = true; document.querySelector('.kc-note').hidden = false; $('kc-status').textContent = '';
+    defaults(); currentStep = 0; viewForStep(); render(); paint();
+  }
+  function route() {
+    const id = new URLSearchParams(location.search).get('modell');
+    if (id) openVehicle(id); else { $('kc-conf').hidden = true; $('kc-home').hidden = false; }
+  }
+  window.addEventListener('popstate', route);
+
+  if (base44) {
+    const timer = setTimeout(() => { if (!vehicles.length) fallback(); }, 12000);
+    try {
+      vehicles = await base44.entities.VehicleModel.filter({ is_active: true }, '-created_date', 200);
+      clearTimeout(timer); $('kc-loading').hidden = true; renderHome(); route();
+    } catch (e) { clearTimeout(timer); console.warn('Fahrzeuge nicht geladen', e); fallback(); }
+  }
+</script>
+""".replace("__SDK__", '"' + KONFIG_SDK + '"')
 
 
 # Bewerbung direkt über die Website (Netlify Forms), zusätzlich zur JOIN-Stellenliste
@@ -2188,7 +2553,7 @@ def main():
     kpage = simple_page("konfigurator", "Lack-Konfigurator – Wunschfarbe online wählen",
         "Lack-Konfigurator von Täubert Karosserie & Lack in Sonneberg: Modell und Farbe wählen, Umfang festlegen und die Konfiguration direkt als Anfrage senden.",
         konfig_page(), style, head_links, top, footer, js, ld)
-    kpage = kpage.replace("</style>", KONFIG_CSS + "</style>", 1).replace("</script>\n</body>", KONFIG_JS + "</script>\n</body>", 1)
+    kpage = kpage.replace("</style>", KONFIG_CSS + "</style>", 1).replace("</body>", KONFIG_JS + "</body>", 1)
     open(os.path.join(SITE, "konfigurator.html"), "w", encoding="utf-8").write(sync_images(kpage))
     built.insert(4, "konfigurator")
     faq_body, faq_schema, faq_count = render_faq_page()
