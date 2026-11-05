@@ -1813,419 +1813,58 @@ def render_faq_page():
 
 
 
-# Lack-Konfigurator im Aufbau des Base44-Originals: Modellübersicht (Filter + Karten) und Schritt-für-Schritt-Konfiguration
-# mit Zusammenfassung und Anfrageformular. Die Karosserie wird im Browser live umgefärbt (Technik aus dem Original):
-# Pixel im Farbton-Bereich der Originalkarosserie bekommen Farbton/Sättigung der Wunschfarbe, Reflexe und Schatten bleiben.
-# (slug, Marke, Modell, Variante, Fahrzeugtyp, Epoche, Ansichten: [(Bild, Bezeichnung, Farbton-Mitte, halbe Breite, mittlere Helligkeit der Karosserie)])
-KONFIG_MODELS = [
-    ("911", "Porsche", "911", "Klassiker", "Pkw", "1970er", [
-        ("hf_20260210_174113_8bd7f253-8826-4ed4-89ed-56b117c21301.webp", "Seite", 47, 14, .70)]),
-    ("964", "Porsche", "911 Cabrio", "964", "Pkw", "1990er", [
-        ("ElevenLabs_image_nano-banana_Porsche_rast..._2026-01-13T08_49_41.webp", "Studio", 355, 16, .42),
-        ("67e54e24950565cf808d4ff0_D299D140-703F-4533-93A9-6A85108009BE.webp", "In Fahrt", 355, 16, .42),
-        ("67e54e9e6a50c47dbfeb5962_03_DSC_0367_2-p-3200.webp", "Heck", 355, 10, .42)]),
-    ("w114", "Mercedes-Benz", "/8", "W114", "Pkw", "1970er", [
-        ("hf_20260210_173801_c09630de-aae3-46b1-9460-d37b19053b9d_1.webp", "Seite", 47, 14, .70),
-        ("4_12352486-8bba-4930-ab08-035bdc1e181b.webp", "Altstadt", 215, 30, .30)]),
-    ("g", "Mercedes-Benz", "G-Klasse", "", "Pkw", "", [
-        ("hf_20260210_181224_9fb53726-af8f-484d-9126-6d24f40444b3.webp", "Seite", 245, 80, .55),
-        ("hf_20260210_181415_b7a35485-0e8f-4bc2-a27b-68fbefbdc94a.webp", "Aufbereitung", 245, 80, .55),
-        ("hf_20260210_181635_67b929d3-3424-4e2b-887e-a7b3adbd05fe.webp", "Lackierkabine", 245, 80, .60)]),
-    ("bulli", "Volkswagen", "Bulli", "T2", "Transporter", "1970er", [
-        ("05aec4a8-410c-4309-a1e1-ac39cf6f5274.webp", "Front 3/4", 245, 80, .55),
-        ("ElevenLabs_image_nano-banana_Auto_faehrt_2026-01-13T08_54_47.webp", "Studio", 245, 80, .55)]),
-    ("golf", "Volkswagen", "Golf", "", "Pkw", "", [
-        ("hf_20260210_181007_e0cc78c3-7998-457e-9a33-87828b0061dd.webp", "Seite", 245, 80, .60)]),
-    ("jimny", "Suzuki", "Jimny", "", "Pkw", "", [
-        ("hf_20260210_181330_97f3ed36-acbd-4482-acf3-ff9139249598.webp", "Seite", 245, 80, .55)]),
-]
-KONFIG_TYPES = ["Alle", "Pkw", "Motorrad", "Mofa/Roller", "Transporter", "Nutzfahrzeug", "Amphibienfahrzeug", "Kabinenroller", "Kleinstwagen"]
-KONFIG_PALETTE = [
-    ("schwarz", "Tiefschwarz", "#141518"), ("weiss", "Kreideweiß", "#e9ebec"), ("silber", "Brillantsilber", "#b4b8bc"),
-    ("kreidegrau", "Kreidegrau", "#9b9d99"), ("achatgrau", "Achatgrau", "#5c6064"), ("oliv", "Olivgrün", "#5a6146"),
-    ("mint", "Mintgrün", "#9cc1ae"), ("eisblau", "Eisblau", "#86aec2"), ("gentian", "Gentianblau", "#1f3a68"),
-    ("gelb", "Racinggelb", "#e5c01c"), ("pastellgelb", "Pastellgelb", "#e1d394"), ("orange", "Signalorange", "#e0661c"),
-    ("karmin", "Karminrot", "#8c1c22"), ("braun", "Mahagonibraun", "#5b3d33"), ("sand", "Sandbeige", "#c8b48e"),
-]
-# Schritte nach dem Original: Farb-Schritt mit Farbkreisen, übrige Schritte als Auswahlkarten mit Beschreibung
-KONFIG_STEPS = [
-    ("Lackfarbe", "color", []),
-    ("Lackart", "option", [("Hochglanz", "Klassischer Glanzlack – tiefer Glanz und leicht zu pflegen."),
-                           ("Metallic", "Mit Effektpigmenten – lebendige Reflexe im Sonnenlicht."),
-                           ("Matt", "Seidenmatte Oberfläche – markant und modern, braucht besondere Pflege.")]),
-    ("Umfang", "option", [("Komplettlackierung", "Das gesamte Fahrzeug in der neuen Farbe."),
-                          ("Teillackierung", "Einzelne Bauteile, z. B. Motorhaube, Dach oder Spiegel."),
-                          ("Ausbesserung / Spot Repair", "Kleine Schäden punktgenau im Farbton ausbessern."),
-                          ("Erst beraten lassen", "Wir sehen uns Ihr Fahrzeug an und beraten Sie persönlich.")]),
-    ("Felgen", "option", [("Original belassen", "Die Felgen bleiben, wie sie sind."),
-                          ("Schwarz glänzend", "Felgen in Hochglanz-Schwarz – sportlich und markant."),
-                          ("Anthrazit", "Zeitlos und unempfindlich gegen Bremsstaub."),
-                          ("Silber", "Der klassische Look – passt auch zum Oldtimer.")]),
-]
+# Lack-Konfigurator: die Website führt zum echten Base44-Konfigurator (180 Fahrzeuge, Originalfarben, Interieur, Felgen)
+KONFIG_URL = "https://konfigurationtaeubert.base44.app"
+KONFIG_TYPES = [("Pkw", "vom Porsche 911 bis zum Trabant"), ("Transporter", "VW Bulli T1 bis T4, Barkas, Tempo"), ("Motorrad", "BMW, Zündapp, Horex, NSU und mehr"),
+                ("Mofa/Roller", "Simson, Kreidler, Hercules, Puch"), ("Kleinstwagen", "Isetta, Goggomobil, Messerschmitt")]
 
 
 def konfig_page():
-    def name(m):
-        return f"{m[2]} | {m[3]}" if m[3] else m[2]
-    cards = "".join(f'''<a class="kc-card" href="?modell={m[0]}" data-type="{esc(m[4])}">
-      <span class="kc-card-img"><img src="images/{esc(m[6][0][0])}" alt="{esc(m[1])} {esc(m[2])}" loading="lazy"></span>
-      <span class="kc-card-brand">{esc(m[1])}{f' <em>{esc(m[5])}</em>' if m[5] else ''}</span>
-      <span class="kc-card-name">{esc(name(m))}</span>
-      <span class="kc-card-type">{esc(m[4])}</span>
-      <span class="kc-card-go">Konfigurieren</span>
-    </a>''' for m in KONFIG_MODELS)
-    types = "".join(f'<button type="button" class="kc-type{" on" if i == 0 else ""}" data-type="{esc(t)}" aria-pressed="{"true" if i == 0 else "false"}">{esc(t)}</button>' for i, t in enumerate(KONFIG_TYPES))
-    hidden = "".join(f'<input type="hidden" name="{n}" value="">' for n in ["vorlage", "lackfarbe", "lackart", "umfang", "felgen"])
-    data = {"palette": [{"id": c, "name": n, "hex": h} for c, n, h in KONFIG_PALETTE],
-            "steps": [{"name": n, "type": t, "options": [{"name": o, "desc": d} for o, d in opts]} for n, t, opts in KONFIG_STEPS],
-            "models": {m[0]: {"brand": m[1], "name": name(m), "views": [{"img": f"images/{v[0]}", "label": v[1], "hue": v[2], "range": v[3], "l": v[4]} for v in m[6]]} for m in KONFIG_MODELS}}
-    return f'''<section class="kc">
-  <div class="kc-home" id="kc-home">
-    <div class="page-width">
-      <div class="kc-hero"><h1>Customize</h1><p>Wählen Sie Ihr Modell und gestalten Sie es nach Ihren Wünschen</p></div>
-      <div class="kc-types" role="group" aria-label="Fahrzeugart">{types}</div>
-      <p class="kc-count" id="kc-count">{len(KONFIG_MODELS)} Modelle</p>
-      <div class="kc-grid" id="kc-grid">{cards}</div>
-      <div class="kc-empty" id="kc-empty" hidden><p>Keine Modelle in dieser Kategorie</p><a href="termin.html#wunschtermin">Ihr Fahrzeug ist nicht dabei? Wir lackieren alles – Anfrage senden</a></div>
-    </div>
-  </div>
-  <div class="kc-conf" id="kc-conf" hidden>
-    <div class="kc-left">
-      <div class="kc-top"><a href="konfigurator.html" id="kc-back" class="kc-link">← Zurück</a><button type="button" id="kc-reset" class="kc-link kc-light">↺ Reset</button></div>
-      <div class="kc-stage"><div class="kc-thumbs" id="kc-thumbs" role="group" aria-label="Ansichten"></div><div class="kc-view"><div class="kf-img"><img id="kf-img" src="images/{KONFIG_MODELS[0][6][0][0]}" alt=""><canvas id="kf-canvas" role="img" aria-label=""></canvas></div></div></div>
-      <div class="kc-info"><p class="kc-brand" id="kc-brand"></p><p class="kc-model" id="kc-model"></p></div>
-    </div>
-    <div class="kc-right">
-      <nav class="kc-tabs" id="kc-tabs" aria-label="Kategorien"></nav>
-      <div class="kc-head" id="kc-head">
-        <div class="kc-step"><span id="kc-step-name"></span><span id="kc-step-num"></span></div>
-        <h2 id="kc-opt-name"></h2><p id="kc-opt-desc"></p>
-      </div>
-      <div class="kc-body">
-        <div id="kc-options"></div>
-        <div class="kc-summary" id="kc-summary" hidden>
-          <h3 class="kc-label">Ihre Konfiguration</h3>
-          <div id="kc-sum-list"></div>
-          <p class="kc-note"><strong>Hinweis:</strong> Sie bringen das Fahrzeug zu uns – oder wir holen es im Umkreis von 30 km ab. Die Konfiguration dient als Grundlage für ein unverbindliches Angebot.</p>
-          <form class="kc-form" id="kc-form" name="konfiguration" method="POST" action="konfigurator.html" data-netlify="true" netlify-honeypot="firma">
-            <input type="hidden" name="form-name" value="konfiguration">{hidden}
-            <p class="hp"><label>Nicht ausfüllen: <input name="firma" tabindex="-1" autocomplete="off"></label></p>
-            <h3 class="kc-label">Kontaktinformationen</h3>
-            <label>Name *<input name="name" autocomplete="name" required></label>
-            <label>E-Mail *<input name="email" type="email" autocomplete="email" required></label>
-            <label>Telefon<input name="telefon" type="tel" autocomplete="tel"></label>
-            <label>Nachricht<textarea name="nachricht" rows="3" placeholder="Ihr Fahrzeug, Farbcode oder Wunschtermin"></textarea></label>
-            <label class="kc-consent"><input type="checkbox" name="einwilligung" required><span>Ich bin einverstanden, dass meine Angaben zur Bearbeitung der Anfrage gespeichert werden (siehe <a href="datenschutz.html">Datenschutz</a>). *</span></label>
-            <button type="submit" class="kc-btn kc-send">Anfrage senden</button>
-            <p class="kc-status" id="kc-status" role="status" aria-live="polite"></p>
-          </form>
-          <div class="kc-done" id="kc-done" hidden><span>✓</span><h3>Anfrage gesendet</h3><p>Vielen Dank für Ihre Konfiguration. Wir melden uns in Kürze bei Ihnen.</p></div>
-        </div>
-      </div>
-      <div class="kc-nav"><button type="button" id="kc-prev" class="kc-link">‹ Zurück</button><button type="button" id="kc-next" class="kc-btn">Weiter ›</button></div>
-    </div>
+    types = "".join(f'<li><strong>{esc(t)}</strong><span>{esc(d)}</span></li>' for t, d in KONFIG_TYPES)
+    return f'''<section class="sub-hero" style="--h:620px;--mh:520px">
+  <div class="media"><img src="images/hf_20260210_174113_8bd7f253-8826-4ed4-89ed-56b117c21301.webp" alt="Porsche 911 Klassiker im Lack-Konfigurator" fetchpriority="high"></div><div class="overlay" style="opacity:.45"></div>
+  <div class="sub-hero-content" style="max-width:960px">
+    <p class="overline">Täubert Customize</p>
+    <h1 class="h-8">Lack-Konfigurator</h1>
+    <div class="rte"><p>180 Fahrzeuge, Originalfarben, Interieur, Sitze, Lenkrad und Felgen – gestalten Sie Ihr Fahrzeug und senden Sie die Konfiguration direkt an uns.</p></div>
+    <div class="btns"><a class="btn btn-light" href="{KONFIG_URL}" target="_blank" rel="noopener">Konfigurator öffnen</a><a class="btn btn-outline-light" href="termin.html?leistung=Lackierung#wunschtermin">Beratungstermin anfragen</a></div>
   </div>
 </section>
-<script>window.KONFIG = {json.dumps(data, ensure_ascii=False)};</script>'''
+<section class="kf-intro">
+  <div class="page-width kf-intro-inner">
+    <div><p class="eyebrow">So funktioniert's</p><h2>In vier Schritten zur Wunschfarbe.</h2></div>
+    <ol class="kf-steps"><li><strong>01</strong> Modell wählen</li><li><strong>02</strong> Farbe, Interieur, Sitze, Lenkrad und Felgen konfigurieren</li><li><strong>03</strong> Zusammenfassung prüfen</li><li><strong>04</strong> Anfrage senden – wir melden uns mit einem unverbindlichen Angebot</li></ol>
+  </div>
+</section>
+<section class="kf-types">
+  <div class="page-width">
+    <p class="eyebrow">Fahrzeuge</p><h2>Vom Klassiker bis zum Moped.</h2>
+    <ul class="kf-typelist">{types}</ul>
+    <a class="btn btn-dark" href="{KONFIG_URL}" target="_blank" rel="noopener">Alle 180 Fahrzeuge ansehen</a>
+    <p class="kf-hint">Ihr Fahrzeug ist nicht dabei? Wir lackieren jedes Fahrzeug in jedem Farbcode – <a href="termin.html#wunschtermin">einfach anfragen</a>.</p>
+  </div>
+</section>'''
 
 
 KONFIG_CSS = """
-  .kc { background: #fff; color: #171717; }
-  .kc-home { padding: 72px 0 96px; }
-  .kc-hero { text-align: center; margin-bottom: 40px; }
-  .kc-hero h1 { font-family: Inter, sans-serif; font-weight: 300; font-size: clamp(30px, 5vw, 60px); letter-spacing: .15em; text-transform: uppercase; line-height: 1.1; }
-  .kc-hero p { margin: 14px auto 0; max-width: 28rem; font-size: 14px; color: #737373; letter-spacing: .02em; }
-  .kc-types { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
-  .kc-type { font: inherit; font-size: 11px; letter-spacing: .15em; text-transform: uppercase; padding: 8px 16px; border: 1px solid #e5e5e5; border-radius: 2px; background: #fff; color: #737373; cursor: pointer; transition: all .15s; }
-  .kc-type:hover { border-color: #a3a3a3; color: #171717; }
-  .kc-type.on { background: #171717; border-color: #171717; color: #fff; }
-  .kc-count { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: #737373; margin-bottom: 32px; }
-  .kc-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px 32px; }
-  .kc-card { display: block; color: inherit; }
-  .kc-card[hidden] { display: none; }
-  .kc-card-img { display: block; position: relative; aspect-ratio: 1 / 1; background: #fafafa; overflow: hidden; border-radius: 2px; }
-  .kc-card-img img { position: absolute; inset: 24px; width: calc(100% - 48px); height: calc(100% - 48px); object-fit: contain; transition: transform .7s ease; }
-  .kc-card:hover .kc-card-img img { transform: scale(1.05); }
-  .kc-card-brand { display: block; margin-top: 16px; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: #737373; }
-  .kc-card-brand em { font-style: normal; font-size: 9px; letter-spacing: .1em; color: #666; margin-left: 6px; }
-  .kc-card-name { display: block; margin-top: 4px; font-size: 14px; letter-spacing: .15em; text-transform: uppercase; font-weight: 500; }
-  .kc-card-type { display: inline-block; margin-top: 8px; font-size: 9px; letter-spacing: .1em; text-transform: uppercase; color: #737373; border: 1px solid #e5e5e5; padding: 2px 6px; border-radius: 2px; }
-  .kc-card-go { display: table; margin-top: 12px; font-size: 10px; letter-spacing: .25em; text-transform: uppercase; border-bottom: 1px solid #171717; padding-bottom: 2px; transition: border-color .2s; }
-  .kc-card:hover .kc-card-go { border-color: #a3a3a3; }
-  .kc-empty { text-align: center; padding: 100px 0; color: #737373; font-size: 14px; }
-  .kc-empty a { display: inline-block; margin-top: 14px; color: #171717; border-bottom: 1px solid #171717; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
-  .kc-conf { display: flex; min-height: calc(100svh - var(--announce-h) - var(--hdr-h)); }
-  .kc-conf[hidden], .kc-home[hidden] { display: none; }
-  .kc-left { width: 60%; background: #fafafa; display: flex; flex-direction: column; }
-  .kc-top { display: flex; justify-content: space-between; align-items: center; padding: 24px; }
-  .kc-link { font: inherit; font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: #737373; background: none; border: 0; cursor: pointer; padding: 6px 0; transition: color .2s; }
-  .kc-link:hover { color: #171717; }
-  .kc-link:disabled { opacity: .35; cursor: default; }
-  .kc-light { color: #666; font-size: 10px; }
-  .kc-stage { flex: 1; display: flex; min-height: 0; }
-  .kc-thumbs { flex: none; display: flex; flex-direction: column; gap: 8px; padding: 0 16px 16px; border-right: 1px solid #f0f0f0; }
-  .kc-thumbs:empty { display: none; }
-  .kc-thumb { width: 80px; height: 80px; padding: 0; border: 2px solid #e5e5e5; border-radius: 2px; overflow: hidden; background: #fff; cursor: pointer; transition: border-color .2s; }
-  .kc-thumb:hover { border-color: #a3a3a3; }
-  .kc-thumb.on { border-color: #171717; }
-  .kc-thumb img { width: 100%; height: 100%; object-fit: cover; }
-  .kc-view { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 0 32px 32px; }
-  .kc-viewlabel { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: #737373; margin-top: 12px; }
-  .kc-tabs { display: flex; overflow-x: auto; border-bottom: 1px solid #f0f0f0; scrollbar-width: none; }
-  .kc-tab { font: inherit; flex: none; font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: #737373; background: none; border: 0; border-bottom: 2px solid transparent; padding: 16px 14px 14px; cursor: pointer; transition: color .2s, border-color .2s; }
-  .kc-tab:first-child { padding-left: 24px; }
-  .kc-tab:hover { color: #171717; }
-  .kc-tab.on { color: #171717; border-bottom-color: #171717; }
-  .kc-view .kf-img { position: relative; width: 100%; max-width: 760px; aspect-ratio: 4 / 3; }
-  .kf-img img, .kf-img canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; transition: opacity .35s ease, transform .6s cubic-bezier(.2,.8,.2,1); }
-  .kf-img canvas { opacity: 0; }
-  .kf-img.tinted canvas { opacity: 1; }
-  .kf-img.tinted img { opacity: 0; }
-  .kf-img.out img, .kf-img.out canvas { opacity: 0; transform: scale(.985); }
-  .kf-img.matt canvas { filter: contrast(.88) saturate(.85) brightness(1.03); }
-  .kf-img.metallic canvas { filter: contrast(1.08) saturate(1.06); }
-  .kc-info { padding: 24px; border-top: 1px solid rgba(229,229,229,.6); background: rgba(255,255,255,.5); }
-  .kc-brand { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: #737373; }
-  .kc-model { font-size: 14px; letter-spacing: .1em; text-transform: uppercase; font-weight: 500; }
-  .kc-right { width: 40%; border-left: 1px solid #f0f0f0; display: flex; flex-direction: column; position: sticky; top: calc(var(--announce-h) + var(--hdr-h)); height: calc(100svh - var(--announce-h) - var(--hdr-h)); align-self: flex-start; }
-  .kc-head { padding: 24px; border-bottom: 1px solid #f0f0f0; }
-  .kc-step { display: flex; justify-content: space-between; font-size: 12px; letter-spacing: .15em; text-transform: uppercase; color: #737373; }
-  .kc-head h2 { font-family: Inter, sans-serif; text-transform: none; font-size: 18px; font-weight: 500; letter-spacing: 0; margin-top: 16px; }
-  .kc-head p { font-size: 12px; color: #737373; line-height: 1.6; margin-top: 8px; }
-  .kc-head h2:empty, .kc-head p:empty { display: none; }
-  .kc-body { flex: 1; overflow-y: auto; padding: 24px; }
-  .kc-swatches { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; }
-  .kc-sw { font: inherit; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 8px; border: 0; border-radius: 2px; background: none; cursor: pointer; transition: background .15s; min-width: 0; }
-  .kc-sw:hover { background: #fafafa; }
-  .kc-sw.on { background: #f5f5f5; box-shadow: 0 0 0 1px #171717; }
-  .kc-sw i { width: 36px; height: 36px; border-radius: 50%; border: 1px solid #e5e5e5; box-shadow: 0 1px 2px rgba(0,0,0,.08); display: flex; align-items: center; justify-content: center; font-style: normal; font-size: 15px; transition: transform .15s; }
-  .kc-sw:hover i { transform: scale(1.05); }
-  .kc-sw span { font-size: 10px; line-height: 1.2; color: #525252; text-align: center; width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .kc-sw input[type=color] { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
-  .kc-opts { display: grid; gap: 8px; }
-  .kc-opt { font: inherit; text-align: left; width: 100%; display: flex; gap: 12px; justify-content: space-between; align-items: flex-start; padding: 16px; border: 1px solid #e5e5e5; border-radius: 2px; background: #fff; cursor: pointer; transition: border-color .2s, background .2s; }
-  .kc-opt:hover { border-color: #a3a3a3; }
-  .kc-opt.on { border-color: #171717; background: #fafafa; }
-  .kc-opt strong { display: block; font-size: 14px; font-weight: 500; letter-spacing: .02em; }
-  .kc-opt small { display: block; font-size: 12px; color: #737373; margin-top: 4px; line-height: 1.5; }
-  .kc-opt b { flex: none; width: 20px; height: 20px; border-radius: 50%; border: 1px solid #d4d4d4; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #fff; }
-  .kc-opt.on b { background: #171717; border-color: #171717; }
-  .kc-nav { padding: 24px; border-top: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; }
-  .kc-btn { font: inherit; font-size: 11px; letter-spacing: .15em; text-transform: uppercase; background: #171717; color: #fff; border: 0; border-radius: 2px; padding: 0 24px; height: 40px; cursor: pointer; transition: background .2s; }
-  .kc-btn:hover { background: #262626; }
-  .kc-label { font-family: Inter, sans-serif; font-size: 12px; font-weight: 400; letter-spacing: .2em; text-transform: uppercase; color: #737373; margin-bottom: 16px; }
-  .kc-row { padding: 8px 0; border-bottom: 1px solid #f5f5f5; }
-  .kc-row small { display: block; font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: #737373; }
-  .kc-row span { font-size: 14px; color: #262626; }
-  .kc-note { margin: 32px 0; background: #fafafa; border: 1px solid #f0f0f0; padding: 16px; font-size: 12px; color: #737373; line-height: 1.6; border-radius: 2px; }
-  .kc-note strong { color: #404040; font-weight: 600; }
-  .kc-form label { display: block; font-size: 12px; color: #737373; margin-bottom: 12px; }
-  .kc-form input:not([type=checkbox]), .kc-form textarea { display: block; width: 100%; margin-top: 4px; padding: 9px 12px; border: 1px solid #e5e5e5; border-radius: 2px; font: inherit; font-size: 14px; color: #171717; resize: none; }
-  .kc-form input:focus, .kc-form textarea:focus { outline: none; border-color: #171717; box-shadow: 0 0 0 1px #171717; }
-  .kc-consent { display: flex !important; gap: 8px; align-items: flex-start; line-height: 1.5; }
-  .kc-consent input { margin-top: 3px; }
-  .kc-consent a { text-decoration: underline; }
-  .kc-send { width: 100%; height: 48px; font-size: 12px; margin-top: 6px; }
-  .kc-status { font-size: 13px; margin-top: 12px; }
-  .kc-status .kc-fallback { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
-  .kc-status .kc-fallback a { border: 1px solid #171717; padding: 8px 12px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
-  .kc-done { text-align: center; padding: 64px 0; }
-  .kc-done span { display: inline-flex; width: 64px; height: 64px; border-radius: 50%; background: #171717; color: #fff; align-items: center; justify-content: center; font-size: 26px; }
-  .kc-done h3 { font-family: Inter, sans-serif; text-transform: none; font-size: 18px; font-weight: 500; margin: 16px 0 8px; }
-  .kc-done p { font-size: 14px; color: #737373; max-width: 24rem; margin: 0 auto; }
-  @media (max-width: 990px) {
-    .kc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 16px; }
-    .kc-card-img img { inset: 12px; width: calc(100% - 24px); height: calc(100% - 24px); }
-    .kc-conf { flex-direction: column; min-height: 0; }
-    .kc-left, .kc-right { width: 100%; }
-    .kc-left { position: sticky; top: calc(var(--announce-h) + 70px); z-index: 2; }
-    .kc-top { padding: 4px 16px; }
-    .kc-view { padding: 0 16px 8px; }
-    .kc-stage { flex-direction: column-reverse; }
-    .kc-thumbs { flex-direction: row; border-right: 0; padding: 4px 16px 8px; overflow-x: auto; gap: 6px; }
-    .kc-thumb { width: 40px; height: 40px; border-width: 1px; }
-    .kc-tab:first-child { padding-left: 16px; }
-    .kc-viewlabel { display: none; }
-    .kc-view .kf-img { height: 22svh; aspect-ratio: auto; }
-    .kc-info { display: none; }
-    .kc-right { position: static; height: auto; border-left: 0; }
-    .kc-head, .kc-body, .kc-nav { padding-left: 16px; padding-right: 16px; }
-    .kc-head { padding-top: 14px; padding-bottom: 14px; } .kc-head h2 { margin-top: 8px; font-size: 16px; }
-    .kc-nav { padding-top: 12px; padding-bottom: 12px; }
-    .kc-body { scroll-margin-top: 50svh; }
-    .kc-nav { position: sticky; bottom: 0; background: #fff; z-index: 3; }
-  }
-  @media (max-width: 760px) { .kc-nav { bottom: calc(61px + env(safe-area-inset-bottom)); } }
-  @media (max-width: 600px) {
-    .kc-home { padding: 40px 0 64px; }
-    .kc-types { flex-wrap: nowrap; overflow-x: auto; margin: 0 -16px 24px; padding: 0 16px 4px; scrollbar-width: none; }
-    .kc-type { flex: none; font-size: 10px; padding: 8px 12px; }
-    .kc-card-name { font-size: 12px; letter-spacing: .1em; }
-    .kc-swatches { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  }
+  .kf-intro { padding: 100px 0; }
+  .kf-intro-inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; align-items: start; }
+  .kf-intro h2, .kf-types h2 { font-size: clamp(30px, 3.6vw, 50px); line-height: 1.02; }
+  .kf-steps { list-style: none; border-top: 1px solid var(--black); }
+  .kf-steps li { padding: 20px 0; border-bottom: 1px solid var(--line); font-weight: 600; font-size: 17px; }
+  .kf-steps strong { font-size: 12px; letter-spacing: .2em; color: #6b6b6b; margin-right: 16px; }
+  .kf-types { padding: 100px 0; background: var(--grey); }
+  .kf-typelist { list-style: none; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0 32px; margin: 40px 0; border-top: 1px solid var(--black); }
+  .kf-typelist li { padding: 22px 0; }
+  .kf-typelist strong { display: block; font-family: "Archivo Black", sans-serif; font-weight: 400; text-transform: uppercase; font-size: 20px; }
+  .kf-typelist span { display: block; margin-top: 8px; color: #555; font-size: 15px; }
+  .kf-hint { margin-top: 18px; color: #555; }
+  .kf-hint a { color: var(--black); text-decoration: underline; text-underline-offset: 3px; }
+  @media (max-width: 990px) { .kf-intro-inner { grid-template-columns: 1fr; gap: 32px; } .kf-typelist { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .kf-intro, .kf-types { padding: 64px 0; } .kf-typelist { grid-template-columns: 1fr; } .kf-typelist li { border-bottom: 1px solid var(--line); } }
 """
 
-KONFIG_JS = r"""
-  // Lack-Konfigurator (Aufbau wie das Base44-Original): Übersicht -> Schritte -> Zusammenfassung mit Anfrage
-  (function () {
-    var root = document.getElementById('kc-conf'); if (!root || !window.KONFIG) return;
-    var K = window.KONFIG, M = K.models, home = document.getElementById('kc-home');
-    var img = document.getElementById('kf-img'), cv = document.getElementById('kf-canvas'), box = img.parentNode;
-    var opts = document.getElementById('kc-options'), summary = document.getElementById('kc-summary'), form = document.getElementById('kc-form');
-    var prev = document.getElementById('kc-prev'), next = document.getElementById('kc-next');
-    img.removeAttribute('srcset'); img.removeAttribute('sizes');
-    var cache = {}, job = 0, model = null, step = 0, sel = {}, customHex = null, view = 0;
-    var thumbs = document.getElementById('kc-thumbs'), tabs = document.getElementById('kc-tabs');
-    var esc = function (t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
-
-    // --- Live-Einfärbung ---
-    function rgbToHsl(r, g, b) { r /= 255; g /= 255; b /= 255; var mx = Math.max(r, g, b), mn = Math.min(r, g, b), h = 0, s = 0, l = (mx + mn) / 2;
-      if (mx !== mn) { var d = mx - mn; s = l > .5 ? d / (2 - mx - mn) : d / (mx + mn);
-        h = mx === r ? ((g - b) / d + (g < b ? 6 : 0)) * 60 : mx === g ? ((b - r) / d + 2) * 60 : ((r - g) / d + 4) * 60; }
-      return [h, s, l]; }
-    function hexToHsl(hex) { var n = parseInt(hex.slice(1), 16); return rgbToHsl(n >> 16 & 255, n >> 8 & 255, n & 255); }
-    function hslToRgb(h, s, l) { h /= 360; if (!s) { var v = l * 255; return [v, v, v]; }
-      var f = function (p, q2, t) { if (t < 0) t += 1; if (t > 1) t -= 1; return t < 1 / 6 ? p + (q2 - p) * 6 * t : t < .5 ? q2 : t < 2 / 3 ? p + (q2 - p) * (2 / 3 - t) * 6 : p; };
-      var q2 = l < .5 ? l * (1 + s) : l + s - l * s, p = 2 * l - q2;
-      return [f(p, q2, h + 1 / 3) * 255, f(p, q2, h) * 255, f(p, q2, h - 1 / 3) * 255]; }
-    function prepare(mo, cb) {
-      if (cache[mo.img]) return cb(cache[mo.img]);
-      var im = new Image();
-      im.onload = function () {
-        var w = Math.min(1200, im.naturalWidth), h = Math.round(im.naturalHeight * w / im.naturalWidth), c = document.createElement('canvas');
-        c.width = w; c.height = h; var x = c.getContext('2d'); x.drawImage(im, 0, 0, w, h);
-        try { var src = x.getImageData(0, 0, w, h); } catch (e) { return cb(null); }
-        var d = src.data, n = w * h, wt = new Float32Array(n), lum = new Float32Array(n), feather = Math.min(12, mo.range / 2);
-        for (var i = 0, j = 0; j < n; i += 4, j++) {
-          var r = d[i], g = d[i + 1], b = d[i + 2], sat = Math.max(r, g, b) - Math.min(r, g, b), p = rgbToHsl(r, g, b);
-          var dist = Math.abs(((p[0] - mo.hue) % 360 + 540) % 360 - 180);
-          var hw = dist <= mo.range - feather ? 1 : dist >= mo.range + feather ? 0 : (mo.range + feather - dist) / (2 * feather);
-          var w8 = Math.min(sat <= 15 ? 0 : Math.min((sat - 15) / 40, 1), hw, p[2] > .93 ? 0 : Math.min((.93 - p[2]) / .08, 1));
-          wt[j] = w8 > .01 ? w8 : 0; lum[j] = p[2];
-        }
-        cache[mo.img] = { w: w, h: h, src: src, wt: wt, lum: lum, l: mo.l }; cb(cache[mo.img]);
-      };
-      im.onerror = function () { cb(null); }; im.src = mo.img;
-    }
-    function tint(v, hex) {
-      var my = ++job;
-      prepare(v, function (b) {
-        if (my !== job) return;
-        if (!b) { box.classList.remove('tinted', 'out'); return; }
-        if (cv.width !== b.w) { cv.width = b.w; cv.height = b.h; }
-        var ctx = cv.getContext('2d'), out = ctx.createImageData(b.w, b.h), d = b.src.data, o = out.data, t = hexToHsl(hex), wt = b.wt, lum = b.lum;
-        var scale = t[2] > .7 || t[2] < .25 ? .3 : .45;
-        o.set(d);
-        for (var j = 0, i = 0, n = wt.length; j < n; j++, i += 4) {
-          var a = wt[j]; if (!a) continue;
-          var c = hslToRgb(t[0], t[1], Math.max(.02, Math.min(.98, t[2] + (lum[j] - b.l) * scale)));
-          o[i] = d[i] * (1 - a) + c[0] * a; o[i + 1] = d[i + 1] * (1 - a) + c[1] * a; o[i + 2] = d[i + 2] * (1 - a) + c[2] * a;
-        }
-        ctx.putImageData(out, 0, 0); box.classList.add('tinted'); box.classList.remove('out');
-      });
-    }
-
-    // --- Auswahl ---
-    function color() { return customHex ? { id: customHex.slice(1), name: 'Eigene Farbe ' + customHex.toUpperCase(), hex: customHex } : K.palette.filter(function (p) { return p.id === sel.Lackfarbe; })[0] || K.palette[0]; }
-    function defaults() { sel = {}; customHex = null; K.steps.forEach(function (s) { sel[s.name] = s.type === 'color' ? K.palette[0].id : s.options[0].name; }); }
-    function light(hex) { var n = parseInt(hex.slice(1), 16); return ((n >> 16 & 255) * 299 + (n >> 8 & 255) * 587 + (n & 255) * 114) / 1000 > 140; }
-    function paint() {
-      var c = color(), v = M[model].views[view]; tint(v, c.hex);
-      box.classList.toggle('matt', sel.Lackart === 'Matt'); box.classList.toggle('metallic', sel.Lackart === 'Metallic');
-      cv.setAttribute('aria-label', M[model].brand + ' ' + M[model].name + ' in ' + c.name);
-      try { history.replaceState({ m: model }, '', '?modell=' + model + '&farbe=' + c.id); } catch (e) {}
-    }
-    function render() {
-      var total = K.steps.length, done = step >= total, s = K.steps[step];
-      tabs.innerHTML = K.steps.map(function (st, i) { return '<button type="button" class="kc-tab' + (i === step ? ' on' : '') + '" data-step="' + i + '"' + (i === step ? ' aria-current="step"' : '') + '>' + esc(st.name) + '</button>'; }).join('') +
-        '<button type="button" class="kc-tab' + (done ? ' on' : '') + '" data-step="' + total + '"' + (done ? ' aria-current="step"' : '') + '>Zusammenfassung</button>';
-      document.getElementById('kc-step-name').textContent = done ? 'Zusammenfassung' : s.name;
-      document.getElementById('kc-step-num').textContent = 'Schritt ' + (step + 1) + '/' + (done ? total + 1 : total);
-      var on = done ? null : s.type === 'color' ? color() : s.options.filter(function (o) { return o.name === sel[s.name]; })[0];
-      document.getElementById('kc-opt-name').textContent = on ? on.name : '';
-      document.getElementById('kc-opt-desc').textContent = on && on.desc ? on.desc : '';
-      summary.hidden = !done; opts.hidden = done; next.hidden = done; prev.disabled = step === 0;
-      next.textContent = step === total - 1 ? 'Zusammenfassung ›' : 'Weiter ›';
-      if (done) {
-        var c = color();
-        document.getElementById('kc-sum-list').innerHTML = '<div class="kc-row"><small>Modell</small><span>' + esc(M[model].brand + ' ' + M[model].name) + '</span></div>' +
-          K.steps.map(function (st) { return '<div class="kc-row"><small>' + esc(st.name) + '</small><span>' + esc(st.type === 'color' ? c.name + ' (' + c.hex.toUpperCase() + ')' : sel[st.name]) + '</span></div>'; }).join('');
-        var set = function (n, v) { form.elements[n].value = v; };
-        set('vorlage', M[model].brand + ' ' + M[model].name); set('lackfarbe', c.name + ' ' + c.hex.toUpperCase()); set('lackart', sel.Lackart); set('umfang', sel.Umfang); set('felgen', sel.Felgen);
-        return;
-      }
-      if (s.type === 'color') {
-        opts.innerHTML = '<div class="kc-swatches">' + K.palette.map(function (p) {
-          var act = !customHex && sel.Lackfarbe === p.id;
-          return '<button type="button" class="kc-sw' + (act ? ' on' : '') + '" data-color="' + p.id + '" title="' + esc(p.name) + '" aria-pressed="' + act + '"><i style="background:' + p.hex + ';color:' + (light(p.hex) ? '#000' : '#fff') + '">' + (act ? '✓' : '') + '</i><span>' + esc(p.name) + '</span></button>';
-        }).join('') + '<label class="kc-sw' + (customHex ? ' on' : '') + '" title="Eigene Farbe"><i style="background:' + (customHex || 'conic-gradient(#e53,#ec3,#5c5,#3ad,#83e,#e53)') + '">' + (customHex ? '✓' : '') + '</i><span>Eigene Farbe</span><input type="color" id="kc-custom" value="' + (customHex || '#2b5d4f') + '"></label></div>';
-      } else {
-        opts.innerHTML = '<div class="kc-opts">' + s.options.map(function (o) {
-          var act = sel[s.name] === o.name;
-          return '<button type="button" class="kc-opt' + (act ? ' on' : '') + '" data-opt="' + esc(o.name) + '" aria-pressed="' + act + '"><span><strong>' + esc(o.name) + '</strong>' + (o.desc ? '<small>' + esc(o.desc) + '</small>' : '') + '</span><b>' + (act ? '✓' : '') + '</b></button>';
-        }).join('') + '</div>';
-      }
-    }
-    opts.addEventListener('click', function (e) {
-      var b = e.target.closest('.kc-sw[data-color], .kc-opt'); if (!b) return;
-      var s = K.steps[step];
-      if (b.dataset.color) { sel.Lackfarbe = b.dataset.color; customHex = null; } else sel[s.name] = b.dataset.opt;
-      render(); paint();
-    });
-    opts.addEventListener('input', function (e) { if (e.target.id === 'kc-custom') { customHex = e.target.value; render(); paint(); var c = document.getElementById('kc-custom'); if (c) c.focus(); } });
-    prev.addEventListener('click', function () { if (step > 0) { step--; render(); } });
-    tabs.addEventListener('click', function (e) { var b = e.target.closest('.kc-tab'); if (b) { step = +b.dataset.step; render(); } });
-    function showView(i, anim) {
-      view = i; var v = M[model].views[i];
-      thumbs.querySelectorAll('.kc-thumb').forEach(function (t, j) { t.classList.toggle('on', j === i); t.setAttribute('aria-pressed', j === i); });
-      var go = function () { img.src = v.img; img.alt = M[model].brand + ' ' + M[model].name + ' – ' + v.label; paint(); };
-      if (anim) { box.classList.add('out'); setTimeout(go, 180); } else go();
-    }
-    thumbs.addEventListener('click', function (e) { var b = e.target.closest('.kc-thumb'); if (b && +b.dataset.view !== view) showView(+b.dataset.view, true); });
-    next.addEventListener('click', function () { step++; render(); });
-    document.getElementById('kc-reset').addEventListener('click', function () { defaults(); step = 0; render(); paint(); });
-
-    // --- Anfrage senden (Netlify Forms), bei Fehler WhatsApp/E-Mail anbieten ---
-    form.addEventListener('submit', function (e) {
-      e.preventDefault(); if (!form.checkValidity()) { form.reportValidity(); return; }
-      var status = document.getElementById('kc-status'), btn = form.querySelector('.kc-send'); btn.disabled = true; status.textContent = 'Wird gesendet …';
-      fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() })
-        .then(function (r) { if (!r.ok) throw new Error(r.status); form.hidden = true; document.getElementById('kc-done').hidden = false; document.querySelector('.kc-note').hidden = true; })
-        .catch(function () {
-          btn.disabled = false;
-          var t = 'Konfiguration\n' + ['vorlage', 'lackfarbe', 'lackart', 'umfang', 'felgen', 'name', 'email', 'telefon', 'nachricht'].map(function (n) { return n + ': ' + form.elements[n].value; }).join('\n');
-          status.innerHTML = 'Das Senden hat gerade nicht geklappt. Schicken Sie Ihre Konfiguration einfach so:<span class="kc-fallback"><a target="_blank" rel="noopener" href="https://wa.me/4936754289606?text=' + encodeURIComponent(t) + '">WhatsApp</a><a href="mailto:hallo@taeubert-karosserie-lack.de?subject=' + encodeURIComponent('Konfiguration') + '&body=' + encodeURIComponent(t) + '">E-Mail</a></span>';
-        });
-    });
-
-    // --- Ansichten: Übersicht oder Konfiguration ---
-    var count = document.getElementById('kc-count'), cards = [].slice.call(document.querySelectorAll('.kc-card'));
-    document.querySelectorAll('.kc-type').forEach(function (b) {
-      b.addEventListener('click', function () {
-        document.querySelectorAll('.kc-type').forEach(function (x) { x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', x === b); });
-        var n = 0; cards.forEach(function (c) { var show = b.dataset.type === 'Alle' || c.dataset.type === b.dataset.type; c.hidden = !show; if (show) n++; });
-        count.textContent = n + ' ' + (n === 1 ? 'Modell' : 'Modelle'); document.getElementById('kc-empty').hidden = n > 0;
-      });
-    });
-    function open(m, f) {
-      model = m; defaults(); step = 0;
-      if (f) { if (K.palette.some(function (p) { return p.id === f; })) sel.Lackfarbe = f; else if (/^[0-9a-f]{6}$/i.test(f)) customHex = '#' + f.toLowerCase(); }
-      home.hidden = true; root.hidden = false;
-      document.getElementById('kc-brand').textContent = M[m].brand; document.getElementById('kc-model').textContent = M[m].name;
-      var vs = M[m].views;
-      thumbs.innerHTML = vs.length > 1 ? vs.map(function (v, i) { return '<button type="button" class="kc-thumb' + (i ? '' : ' on') + '" data-view="' + i + '" aria-pressed="' + !i + '" title="' + esc(v.label) + '"><img src="' + v.img.replace(/\.(webp|jpg)$/, '-700.webp') + '" alt="' + esc(v.label) + '" onerror="this.onerror=null;this.src=\'' + v.img + '\'"></button>'; }).join('') : '';
-      view = 0; img.src = vs[0].img; img.alt = M[m].brand + ' ' + M[m].name; box.classList.remove('tinted');
-      form.hidden = false; document.getElementById('kc-done').hidden = true; document.querySelector('.kc-note').hidden = false; document.getElementById('kc-status').textContent = '';
-      render(); showView(0, false); window.scrollTo(0, 0);
-    }
-    function showHome() { root.hidden = true; home.hidden = false; }
-    cards.forEach(function (c) { c.addEventListener('click', function (e) { e.preventDefault(); var m = new URLSearchParams(c.getAttribute('href').slice(1)).get('modell'); try { history.pushState({ m: m }, '', '?modell=' + m); } catch (x) {} open(m); }); });
-    document.getElementById('kc-back').addEventListener('click', function (e) { e.preventDefault(); try { history.pushState({}, '', 'konfigurator.html'); } catch (x) {} showHome(); window.scrollTo(0, 0); });
-    window.addEventListener('popstate', function () { route(); });
-    function route() { var q = new URLSearchParams(location.search), m = q.get('modell'); if (M[m]) open(m, q.get('farbe')); else showHome(); }
-    route();
-  })();
-"""
+KONFIG_JS = ""
 
 
 # Bewerbung direkt über die Website (Netlify Forms), zusätzlich zur JOIN-Stellenliste
