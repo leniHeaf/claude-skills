@@ -1841,7 +1841,7 @@ def konfig_page():
       <div class="kc-top"><a href="konfigurator.html" id="kc-back" class="kc-link">← Zurück</a><span class="kc-tools"><button type="button" id="kc-share" class="kc-link kc-light">↗ Teilen</button><button type="button" id="kc-reset" class="kc-link kc-light">↺ Reset</button></span></div>
       <div class="kc-stage"><div class="kc-thumbs" id="kc-thumbs" role="group" aria-label="Ansichten"></div>
         <div class="kc-view"><div class="kc-canvas"><canvas id="kc-canvas" role="img" aria-label=""></canvas><div class="kc-spin kc-spin-over" id="kc-imgload"><span></span></div></div></div></div>
-      <div class="kc-info"><p class="kc-brand" id="kc-brand"></p><p class="kc-model" id="kc-model"></p><p class="kc-era" id="kc-era"></p></div>
+      <div class="kc-info"><p class="kc-brand" id="kc-brand"></p><p class="kc-model" id="kc-model"></p><p class="kc-era" id="kc-era"></p><p class="kc-pricehint">Preis individuell – nach Ihrer Konfiguration</p></div>
     </div>
     <div class="kc-right">
       <nav class="kc-tabs" id="kc-tabs" aria-label="Kategorien"></nav>
@@ -1855,7 +1855,7 @@ def konfig_page():
         <div class="kc-summary" id="kc-summary" hidden>
           <h3 class="kc-label">Ihre Konfiguration</h3>
           <div id="kc-sum-list"></div>
-          <p class="kc-note"><strong>Hinweis:</strong> Das Fahrzeug muss von Ihnen angeliefert werden – oder wir holen es im Umkreis von 30 km ab. Die Konfiguration dient als Grundlage für ein unverbindliches Angebot.</p>
+          <p class="kc-note"><strong>Hinweis:</strong> Das Fahrzeug muss von Ihnen angeliefert werden – oder wir holen es im Umkreis von 30 km ab. Die Konfiguration dient als Grundlage für Ihr individuelles, unverbindliches Angebot – den Preis erstellen wir passend zu Fahrzeug und Zustand.</p>
           <form class="kc-form" id="kc-form">
             <h3 class="kc-label">Kontaktinformationen</h3>
             <label>Name *<input name="name" autocomplete="name" required></label>
@@ -1932,6 +1932,8 @@ KONFIG_CSS = """
   .kc-model { font-size: clamp(20px, 2vw, 28px); letter-spacing: .14em; text-transform: uppercase; font-weight: 300; margin-top: 4px; }
   .kc-era { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; font-size: 16px; color: #555; margin-top: 4px; }
   .kc-era:empty { display: none; }
+  .kc-pricehint { font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: #737373; margin-top: 10px; }
+  .kc-price span { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; font-size: 16px; }
   .kc-right { width: 40%; border-left: 1px solid #f0f0f0; display: flex; flex-direction: column; position: sticky; top: calc(var(--announce-h) + var(--hdr-h)); height: calc(100svh - var(--announce-h) - var(--hdr-h)); align-self: flex-start; }
   .kc-tools { display: flex; gap: 20px; }
   .kc-tabs { display: flex; overflow-x: auto; scrollbar-width: none; border-bottom: 1px solid #f0f0f0; }
@@ -2179,7 +2181,8 @@ KONFIG_JS = r"""
     if (isSummary) {
       $('kc-step-name').textContent = 'Zusammenfassung'; $('kc-step-num').textContent = `Schritt ${s.length + 1}/${s.length + 1}`;
       $('kc-opt-name').textContent = ''; $('kc-opt-desc').textContent = '';
-      $('kc-sum-list').innerHTML = s.map(st => { const o = st.options.find(x => x.name === selections[st.step_name]); return o ? `<div class="kc-row"><small>${esc(st.step_name)}</small><span>${esc(o.name)}</span></div>` : ''; }).join('');
+      $('kc-sum-list').innerHTML = s.map(st => { const o = st.options.find(x => x.name === selections[st.step_name]); return o ? `<div class="kc-row"><small>${esc(st.step_name)}</small><span>${esc(o.name)}</span></div>` : ''; }).join('') +
+        '<div class="kc-row kc-price"><small>Preis</small><span>Individuelles Angebot</span></div>';
       return;
     }
     $('kc-step-name').textContent = step.step_name; $('kc-step-num').textContent = `Schritt ${currentStep + 1}/${s.length}`;
