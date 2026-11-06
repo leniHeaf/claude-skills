@@ -754,13 +754,14 @@ def faq_ld(body_html):
 
 def service_ld(slug, name, desc):
     data = {"@context": "https://schema.org", "@type": "Service", "name": name, "description": desc,
-            "url": f"{DOMAIN}/{slug}.html", "provider": {"@type": "AutoBodyShop", "name": "Täubert Karosserie und Lack GmbH", "url": f"{DOMAIN}/"},
+            "url": f"{DOMAIN}/{slug}.html", "provider": {"@type": "AutoBodyShop", "name": "Täubert Karosserie & Lack GmbH", "url": f"{DOMAIN}/"},
             "areaServed": [n for _, n in LOCATION_LINKS]}
     return '<script type="application/ld+json">' + json.dumps(data, ensure_ascii=False) + "</script>"
 
 
 # Inhalte, die im Shopify-Editor zusammengelaufen sind, wieder lesbar machen
 FIXES = [
+    ("Täubert Karosserie und Lack GmbH", "Täubert Karosserie &amp; Lack GmbH"),
     ("<p>Smart RepairKlassische Lackierung1–3 Stunden Reparaturmehrere Tage Werkstattdeutlich günstigerdeutlich teurer"
      "Originallack bleibt erhaltenneuer Lackkeine Farbabweichungenmöglich<br/></p>",
      '''<table class="compare">
@@ -1283,7 +1284,7 @@ def city_faq(slug):
 
 def city_ld(slug):
     name = LOCATIONS[slug][1]
-    data = {"@context": "https://schema.org", "@type": "AutoBodyShop", "name": "Täubert Karosserie und Lack GmbH", "url": f"{DOMAIN}/{slug}.html",
+    data = {"@context": "https://schema.org", "@type": "AutoBodyShop", "name": "Täubert Karosserie & Lack GmbH", "url": f"{DOMAIN}/{slug}.html",
             "telephone": "+49 3675 4289606", "address": {"@type": "PostalAddress", "streetAddress": "Bettelhecker Straße 15", "postalCode": "96515", "addressLocality": "Sonneberg", "addressCountry": "DE"},
             "areaServed": [{"@type": "City", "name": n} for n in CITY.get(slug, {}).get("places", [name])]}
     return '<script type="application/ld+json">' + json.dumps(data, ensure_ascii=False) + "</script>"
@@ -1695,7 +1696,7 @@ GENERAL_FAQ = [
     ("Termin & Kontakt", [
         ("Wie bekomme ich einen Termin?", "Am schnellsten über die <a href=\"https://terminbuchungtaeubert.de\">Online-Terminbuchung</a> – rund um die Uhr. Alternativ <a href=\"termin.html#rueckruf\">fordern Sie einen Rückruf an</a>, rufen uns an (03675 4289606) oder schreiben per WhatsApp."),
         ("Wann haben Sie geöffnet?", "Montag bis Donnerstag 08:00–17:00 Uhr, Freitag 08:00–14:30 Uhr. Samstag und Sonntag ist geschlossen."),
-        ("Wo finde ich Sie?", "Täubert Karosserie und Lack GmbH, Bettelhecker Straße 15, 96515 Sonneberg. Kunden kommen auch aus Neustadt bei Coburg, Coburg, Rödental, Kronach und Bamberg. <a href=\"contact.html\">Anfahrt &amp; Kontakt</a>"),
+        ("Wo finde ich Sie?", "Täubert Karosserie &amp; Lack GmbH, Bettelhecker Straße 15, 96515 Sonneberg. Kunden kommen auch aus Neustadt bei Coburg, Coburg, Rödental, Kronach und Bamberg. <a href=\"contact.html\">Anfahrt &amp; Kontakt</a>"),
         ("Kann ich einfach vorbeikommen?", "Ja. Wenn Sie unsicher sind, ob sich eine Reparatur lohnt, schauen wir uns Ihr Fahrzeug an und sagen Ihnen ehrlich, was Sinn macht. Mit Termin geht es für Sie am schnellsten."),
         ("Kann ich den Schaden per Foto oder WhatsApp schicken?", "Ja. Über <a href=\"schaden-melden.html\">Schaden per Foto melden</a> laden Sie ein paar Bilder hoch – oder schicken sie per WhatsApp an 03675 4289606. Wir melden uns mit einer ersten Einschätzung."),
         ("Welche Fotos brauchen Sie für eine Einschätzung?", "Am besten drei bis vier: eine Gesamtansicht des Fahrzeugs, den Schaden aus etwa zwei Metern und ein bis zwei Nahaufnahmen von schräg, damit Dellen sichtbar werden. Ein Foto vom Fahrzeugschein hilft bei der Teilebestellung."),
@@ -2615,7 +2616,7 @@ def main():
         rel = f'<section class="more-svc"><div class="page-width"><h2>Passende Leistungen</h2>{tile_grid([svcs[r] for r in p["related"] if r in svcs])}</div></section>'
         body_html = head[:m.end()] + crumbs + head[m.end():] + rel + LEGAL_NOTE + booking_cta(slug, p["short"])
         art = {"@context": "https://schema.org", "@type": "Article", "headline": p["title"], "description": p["desc"], "image": f"{DOMAIN}/images/{p['img']}",
-               "author": {"@type": "Organization", "name": "Täubert Karosserie und Lack GmbH"}, "publisher": {"@type": "Organization", "name": "Täubert Karosserie und Lack GmbH"},
+               "author": {"@type": "Organization", "name": "Täubert Karosserie & Lack GmbH"}, "publisher": {"@type": "Organization", "name": "Täubert Karosserie & Lack GmbH"},
                "mainEntityOfPage": f"{DOMAIN}/{slug}.html", "inLanguage": "de"}
         extra_ld = '<script type="application/ld+json">' + json.dumps(art, ensure_ascii=False) + "</script>" + breadcrumb_ld(slug, p["short"], ("Ratgeber", f"{DOMAIN}/ratgeber.html")) + faq_ld(body_html)
         page = f"""<!doctype html>
