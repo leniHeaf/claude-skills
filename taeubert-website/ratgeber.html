@@ -1033,7 +1033,7 @@
   }));
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Schadensmeldung: Fotos verkleinern und an Netlify Forms senden
+  // Formulare: Fotos verkleinern und an formular.php (IONOS) senden
   document.querySelectorAll('.damage-form').forEach(form => form.addEventListener('submit', async e => {
     e.preventDefault();
     if (!form.checkValidity()) { form.reportValidity(); return; }
@@ -1057,8 +1057,9 @@
     for (const k of ['foto1', 'foto2', 'foto3']) { const f = data.get(k); if (f && f.size) data.set(k, await shrink(f)); else data.delete(k); }
     say('Wird gesendet …');
     try {
-      const r = await fetch('/', { method: 'POST', body: data });
-      if (!r.ok) throw new Error(r.status);
+      const r = await fetch(form.getAttribute('action'), { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+      const res = await r.json().catch(() => ({}));
+      if (!r.ok || !res.ok) throw new Error(res.message || r.status);
       location.href = form.dataset.thanks || 'danke.html';
     } catch (err) {
       console.warn('Schadensmeldung konnte nicht gesendet werden:', err);

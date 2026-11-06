@@ -1382,7 +1382,7 @@ DAMAGE_FORM = """<section class="sub-hero" style="--h:420px;--mh:380px">
 </section>
 <section class="sec" style="padding:60px 0">
   <div class="page-width"><div class="contact-form" style="max-width:720px">
-    <form class="damage-form" name="schadensmeldung" method="POST" action="danke.html" enctype="multipart/form-data" data-netlify="true" netlify-honeypot="firma">
+    <form class="damage-form" name="schadensmeldung" method="POST" action="formular.php" enctype="multipart/form-data">
       <input type="hidden" name="form-name" value="schadensmeldung">
       <p class="hp"><label>Nicht ausfüllen: <input name="firma" tabindex="-1" autocomplete="off"></label></p>
       <div class="mail-form">
@@ -1440,7 +1440,7 @@ DAMAGE_CSS = """
 """
 
 DAMAGE_JS = r"""
-  // Schadensmeldung: Fotos verkleinern und an Netlify Forms senden
+  // Formulare: Fotos verkleinern und an formular.php (IONOS) senden
   document.querySelectorAll('.damage-form').forEach(form => form.addEventListener('submit', async e => {
     e.preventDefault();
     if (!form.checkValidity()) { form.reportValidity(); return; }
@@ -1464,8 +1464,9 @@ DAMAGE_JS = r"""
     for (const k of ['foto1', 'foto2', 'foto3']) { const f = data.get(k); if (f && f.size) data.set(k, await shrink(f)); else data.delete(k); }
     say('Wird gesendet …');
     try {
-      const r = await fetch('/', { method: 'POST', body: data });
-      if (!r.ok) throw new Error(r.status);
+      const r = await fetch(form.getAttribute('action'), { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+      const res = await r.json().catch(() => ({}));
+      if (!r.ok || !res.ok) throw new Error(res.message || r.status);
       location.href = form.dataset.thanks || 'danke.html';
     } catch (err) {
       console.warn('Schadensmeldung konnte nicht gesendet werden:', err);
@@ -1504,7 +1505,7 @@ BOOKING_PAGE = f"""<section class="sec booking-page" style="padding:50px 0 30px"
       <p class="eyebrow">Option 2 · Rückruf</p>
       <h2>Wir rufen Sie an</h2>
       <p>Name und Telefonnummer reichen – wir melden uns und machen den Termin mit Ihnen aus.</p>
-      <form class="damage-form" name="rueckruf" method="POST" action="danke.html" data-netlify="true" netlify-honeypot="firma" data-title="Rückrufwunsch">
+      <form class="damage-form" name="rueckruf" method="POST" action="formular.php" data-title="Rückrufwunsch">
         <input type="hidden" name="form-name" value="rueckruf">
         <p class="hp"><label>Nicht ausfüllen: <input name="firma" tabindex="-1" autocomplete="off"></label></p>
         <div class="mail-form">
@@ -1544,7 +1545,7 @@ BOOKING_PAGE = f"""<section class="sec booking-page" style="padding:50px 0 30px"
       <ul class="apply-steps"><li><strong>01</strong> Wunschtermin wählen</li><li><strong>02</strong> Wir bestätigen persönlich</li><li><strong>03</strong> Auto bringen – oder abholen lassen</li></ul>
       <p class="wish-hours">Mo–Do 08:00–17:00 Uhr · Fr 08:00–14:30 Uhr</p>
     </div>
-    <form class="damage-form" name="wunschtermin" method="POST" action="danke-termin.html" data-netlify="true" netlify-honeypot="firma" data-title="Wunschtermin" data-thanks="danke-termin.html">
+    <form class="damage-form" name="wunschtermin" method="POST" action="formular.php" data-title="Wunschtermin" data-thanks="danke-termin.html">
       <input type="hidden" name="form-name" value="wunschtermin">
       <p class="hp"><label>Nicht ausfüllen: <input name="firma" tabindex="-1" autocomplete="off"></label></p>
       <div class="mail-form">
@@ -2285,7 +2286,7 @@ APPLY_FORM = f"""<section class="apply" id="bewerbung">
       <ul class="apply-steps"><li><strong>01</strong> Formular ausfüllen</li><li><strong>02</strong> Wir rufen Sie an</li><li><strong>03</strong> Kennenlernen in der Werkstatt</li></ul>
       <p class="apply-alt">Lieber per WhatsApp? <a href="https://wa.me/4936754289606?text={'Hallo, ich möchte mich bei Täubert bewerben.'.replace(' ', '%20')}" target="_blank" rel="noopener">Hier schreiben</a> · oder anrufen: <a href="tel:+4936754289606">03675 4289606</a></p>
     </div>
-    <form class="damage-form" name="bewerbung" method="POST" action="danke-bewerbung.html" enctype="multipart/form-data" data-netlify="true" netlify-honeypot="firma" data-title="Bewerbung" data-thanks="danke-bewerbung.html">
+    <form class="damage-form" name="bewerbung" method="POST" action="formular.php" enctype="multipart/form-data" data-title="Bewerbung" data-thanks="danke-bewerbung.html">
       <input type="hidden" name="form-name" value="bewerbung">
       <p class="hp"><label>Nicht ausfüllen: <input name="firma" tabindex="-1" autocomplete="off"></label></p>
       <div class="mail-form">
@@ -2386,12 +2387,58 @@ def write_seo_files(slugs):
         f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{sm}\n</urlset>\n')
     open(os.path.join(SITE, "robots.txt"), "w", encoding="utf-8").write(
         f"User-agent: *\nAllow: /\n\nSitemap: {DOMAIN}/sitemap.xml\n")
-    # 301-Weiterleitungen von den alten Shopify-Adressen (/pages/<handle>), Netlify-Format
-    lines = [f"/pages/{h}  /{f}.html  301" for h, f in HANDLES.items()]
-    lines += [f"/pages/{x}  /{x}.html  301" for x in slugs if x not in HANDLES]
-    lines += ["/pages/q-a-fanny  /meet-the-team.html  301", "/q-a-fanny.html  /meet-the-team.html  301"]
-    lines += ["/collections/*  /termin.html  301", "/products/*  /termin.html  301"]
-    open(os.path.join(SITE, "_redirects"), "w", encoding="utf-8").write("\n".join(dict.fromkeys(lines)) + "\n")
+    # .htaccess für IONOS (Apache): HTTPS + www, 301 von den alten Shopify-Adressen, Sicherheit und Cache
+    red = [(f"pages/{h}", f"{f}.html") for h, f in HANDLES.items()]
+    red += [(f"pages/{x}", f"{x}.html") for x in slugs if x not in HANDLES]
+    red += [("pages/q-a-fanny", "meet-the-team.html"), ("q-a-fanny.html", "meet-the-team.html")]
+    rules = "\n".join(f"RewriteRule ^{re.escape(a)}/?$ /{b} [R=301,L]" for a, b in dict(red).items())
+    host = DOMAIN.split("//")[1]
+    ht = f"""# IONOS / Apache – erzeugt von build_pages.py
+Options -Indexes
+DirectoryIndex index.html
+ErrorDocument 404 /index.html
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+# Immer HTTPS und mit www
+RewriteCond %{{HTTPS}} off [OR]
+RewriteCond %{{HTTP_HOST}} !^{re.escape(host)}$ [NC]
+RewriteRule ^(.*)$ https://{host}/$1 [R=301,L]
+# Alte Shopify-Adressen
+{rules}
+RewriteRule ^(collections|products)(/.*)?$ /termin.html [R=301,L]
+# Interne Dateien nicht ausliefern
+RewriteRule (^|/)(build_pages|new_pages)\.py$ - [F,L]
+RewriteRule ^images/BILDER\.md$ - [F,L]
+</IfModule>
+
+<IfModule mod_headers.c>
+Header always set X-Content-Type-Options "nosniff"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+Header always set Strict-Transport-Security "max-age=31536000"
+<FilesMatch "\.(woff2)$">
+Header set Cache-Control "public, max-age=31536000, immutable"
+</FilesMatch>
+<FilesMatch "\.(webp|jpg|jpeg|png|svg)$">
+Header set Cache-Control "public, max-age=2592000"
+</FilesMatch>
+<FilesMatch "\.(html)$">
+Header set Cache-Control "public, max-age=600"
+</FilesMatch>
+</IfModule>
+
+<IfModule mod_deflate.c>
+AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml application/xml text/plain
+</IfModule>
+
+AddType font/woff2 .woff2
+AddType image/webp .webp
+AddDefaultCharset utf-8
+"""
+    open(os.path.join(SITE, ".htaccess"), "w", encoding="utf-8").write(ht)
+    for alt in ("_redirects", "netlify.toml"):   # Netlify-Dateien werden bei IONOS nicht gebraucht
+        if os.path.exists(os.path.join(SITE, alt)):
+            os.remove(os.path.join(SITE, alt))
 
 
 def main():

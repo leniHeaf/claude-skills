@@ -811,7 +811,7 @@
       <p class="eyebrow">Option 2 · Rückruf</p>
       <h2>Wir rufen Sie an</h2>
       <p>Name und Telefonnummer reichen – wir melden uns und machen den Termin mit Ihnen aus.</p>
-      <form class="damage-form" name="rueckruf" method="POST" action="danke.html" data-netlify="true" netlify-honeypot="firma" data-title="Rückrufwunsch">
+      <form class="damage-form" name="rueckruf" method="POST" action="formular.php" data-title="Rückrufwunsch">
         <input type="hidden" name="form-name" value="rueckruf">
         <p class="hp"><label>Nicht ausfüllen: <input name="firma" tabindex="-1" autocomplete="off"></label></p>
         <div class="mail-form">
@@ -851,7 +851,7 @@
       <ul class="apply-steps"><li><strong>01</strong> Wunschtermin wählen</li><li><strong>02</strong> Wir bestätigen persönlich</li><li><strong>03</strong> Auto bringen – oder abholen lassen</li></ul>
       <p class="wish-hours">Mo–Do 08:00–17:00 Uhr · Fr 08:00–14:30 Uhr</p>
     </div>
-    <form class="damage-form" name="wunschtermin" method="POST" action="danke-termin.html" data-netlify="true" netlify-honeypot="firma" data-title="Wunschtermin" data-thanks="danke-termin.html">
+    <form class="damage-form" name="wunschtermin" method="POST" action="formular.php" data-title="Wunschtermin" data-thanks="danke-termin.html">
       <input type="hidden" name="form-name" value="wunschtermin">
       <p class="hp"><label>Nicht ausfüllen: <input name="firma" tabindex="-1" autocomplete="off"></label></p>
       <div class="mail-form">
@@ -1089,7 +1089,7 @@
   }));
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Schadensmeldung: Fotos verkleinern und an Netlify Forms senden
+  // Formulare: Fotos verkleinern und an formular.php (IONOS) senden
   document.querySelectorAll('.damage-form').forEach(form => form.addEventListener('submit', async e => {
     e.preventDefault();
     if (!form.checkValidity()) { form.reportValidity(); return; }
@@ -1113,8 +1113,9 @@
     for (const k of ['foto1', 'foto2', 'foto3']) { const f = data.get(k); if (f && f.size) data.set(k, await shrink(f)); else data.delete(k); }
     say('Wird gesendet …');
     try {
-      const r = await fetch('/', { method: 'POST', body: data });
-      if (!r.ok) throw new Error(r.status);
+      const r = await fetch(form.getAttribute('action'), { method: 'POST', body: data, headers: { Accept: 'application/json' } });
+      const res = await r.json().catch(() => ({}));
+      if (!r.ok || !res.ok) throw new Error(res.message || r.status);
       location.href = form.dataset.thanks || 'danke.html';
     } catch (err) {
       console.warn('Schadensmeldung konnte nicht gesendet werden:', err);

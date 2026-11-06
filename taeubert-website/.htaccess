@@ -1,0 +1,103 @@
+# IONOS / Apache – erzeugt von build_pages.py
+Options -Indexes
+DirectoryIndex index.html
+ErrorDocument 404 /index.html
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+# Immer HTTPS und mit www
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} !^www\.taeubert\-karosserie\-lack\.de$ [NC]
+RewriteRule ^(.*)$ https://www.taeubert-karosserie-lack.de/$1 [R=301,L]
+# Alte Shopify-Adressen
+RewriteRule ^pages/contact/?$ /contact.html [R=301,L]
+RewriteRule ^pages/who\-we\-are/?$ /who-we-are.html [R=301,L]
+RewriteRule ^pages/jobs/?$ /jobs.html [R=301,L]
+RewriteRule ^pages/26\-09\-2026\-boxenstopp/?$ /boxenstopp.html [R=301,L]
+RewriteRule ^pages/history/?$ /history.html [R=301,L]
+RewriteRule ^pages/porsche\-911/?$ /porsche-911.html [R=301,L]
+RewriteRule ^pages/porsche\-gts/?$ /porsche-gts.html [R=301,L]
+RewriteRule ^pages/vw\-bulli\-t2/?$ /vw-bulli-t2.html [R=301,L]
+RewriteRule ^pages/q\-a\-marco/?$ /q-a-marco.html [R=301,L]
+RewriteRule ^pages/q\-a\-toni/?$ /q-a-toni.html [R=301,L]
+RewriteRule ^pages/q\-a\-adrian/?$ /q-a-adrian.html [R=301,L]
+RewriteRule ^pages/q\-a\-pascal/?$ /q-a-pascal.html [R=301,L]
+RewriteRule ^pages/azubi/?$ /azubi.html [R=301,L]
+RewriteRule ^pages/meet\-the\-team/?$ /meet-the-team.html [R=301,L]
+RewriteRule ^pages/leistungen/?$ /leistungen.html [R=301,L]
+RewriteRule ^pages/schaden\-melden/?$ /schaden-melden.html [R=301,L]
+RewriteRule ^pages/termin/?$ /termin.html [R=301,L]
+RewriteRule ^pages/unfall\-was\-tun/?$ /unfall-was-tun.html [R=301,L]
+RewriteRule ^pages/fragen/?$ /fragen.html [R=301,L]
+RewriteRule ^pages/konfigurator/?$ /konfigurator.html [R=301,L]
+RewriteRule ^pages/karriere/?$ /karriere.html [R=301,L]
+RewriteRule ^pages/bamberg/?$ /bamberg.html [R=301,L]
+RewriteRule ^pages/boxenstopp/?$ /boxenstopp.html [R=301,L]
+RewriteRule ^pages/fahrzeugaufbereitung/?$ /fahrzeugaufbereitung.html [R=301,L]
+RewriteRule ^pages/karosserie/?$ /karosserie.html [R=301,L]
+RewriteRule ^pages/kleinschaden/?$ /kleinschaden.html [R=301,L]
+RewriteRule ^pages/kratzer/?$ /kratzer.html [R=301,L]
+RewriteRule ^pages/lackierarbeiten/?$ /lackierarbeiten.html [R=301,L]
+RewriteRule ^pages/coburg/?$ /coburg.html [R=301,L]
+RewriteRule ^pages/leasingrueckgabe/?$ /leasingrueckgabe.html [R=301,L]
+RewriteRule ^pages/neustadt/?$ /neustadt.html [R=301,L]
+RewriteRule ^pages/reifenservice/?$ /reifenservice.html [R=301,L]
+RewriteRule ^pages/roedental/?$ /roedental.html [R=301,L]
+RewriteRule ^pages/smartrepair/?$ /smartrepair.html [R=301,L]
+RewriteRule ^pages/sonneberg/?$ /sonneberg.html [R=301,L]
+RewriteRule ^pages/unfall/?$ /unfall.html [R=301,L]
+RewriteRule ^pages/unfall\-oder\-kratzer/?$ /unfall-oder-kratzer.html [R=301,L]
+RewriteRule ^pages/auto\-lackieren\-kosten/?$ /auto-lackieren-kosten.html [R=301,L]
+RewriteRule ^pages/kronach/?$ /kronach.html [R=301,L]
+RewriteRule ^pages/hagelschaden/?$ /hagelschaden.html [R=301,L]
+RewriteRule ^pages/stossstange\-reparieren/?$ /stossstange-reparieren.html [R=301,L]
+RewriteRule ^pages/oldtimer\-restaurierung/?$ /oldtimer-restaurierung.html [R=301,L]
+RewriteRule ^pages/fuhrparkservice/?$ /fuhrparkservice.html [R=301,L]
+RewriteRule ^pages/versicherungsschaden/?$ /versicherungsschaden.html [R=301,L]
+RewriteRule ^pages/unterbodenschutz/?$ /unterbodenschutz.html [R=301,L]
+RewriteRule ^pages/lackaufbereitung/?$ /lackaufbereitung.html [R=301,L]
+RewriteRule ^pages/keramikversiegelung/?$ /keramikversiegelung.html [R=301,L]
+RewriteRule ^pages/innenraumaufbereitung/?$ /innenraumaufbereitung.html [R=301,L]
+RewriteRule ^pages/scheinwerfer\-aufbereiten/?$ /scheinwerfer-aufbereiten.html [R=301,L]
+RewriteRule ^pages/unfallinstandsetzung/?$ /unfallinstandsetzung.html [R=301,L]
+RewriteRule ^pages/hu\-au/?$ /hu-au.html [R=301,L]
+RewriteRule ^pages/reifen\-kaufen/?$ /reifen-kaufen.html [R=301,L]
+RewriteRule ^pages/felgenreparatur/?$ /felgenreparatur.html [R=301,L]
+RewriteRule ^pages/lackstift/?$ /lackstift.html [R=301,L]
+RewriteRule ^pages/wildunfall\-was\-tun/?$ /wildunfall-was-tun.html [R=301,L]
+RewriteRule ^pages/parkschaden\-fahrerflucht/?$ /parkschaden-fahrerflucht.html [R=301,L]
+RewriteRule ^pages/steinschlag\-lack/?$ /steinschlag-lack.html [R=301,L]
+RewriteRule ^pages/leasingrueckgabe\-checkliste/?$ /leasingrueckgabe-checkliste.html [R=301,L]
+RewriteRule ^pages/smart\-repair\-kosten/?$ /smart-repair-kosten.html [R=301,L]
+RewriteRule ^pages/auto\-winterfest/?$ /auto-winterfest.html [R=301,L]
+RewriteRule ^pages/ratgeber/?$ /ratgeber.html [R=301,L]
+RewriteRule ^pages/q\-a\-fanny/?$ /meet-the-team.html [R=301,L]
+RewriteRule ^q\-a\-fanny\.html/?$ /meet-the-team.html [R=301,L]
+RewriteRule ^(collections|products)(/.*)?$ /termin.html [R=301,L]
+# Interne Dateien nicht ausliefern
+RewriteRule (^|/)(build_pages|new_pages)\.py$ - [F,L]
+RewriteRule ^images/BILDER\.md$ - [F,L]
+</IfModule>
+
+<IfModule mod_headers.c>
+Header always set X-Content-Type-Options "nosniff"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+Header always set Strict-Transport-Security "max-age=31536000"
+<FilesMatch "\.(woff2)$">
+Header set Cache-Control "public, max-age=31536000, immutable"
+</FilesMatch>
+<FilesMatch "\.(webp|jpg|jpeg|png|svg)$">
+Header set Cache-Control "public, max-age=2592000"
+</FilesMatch>
+<FilesMatch "\.(html)$">
+Header set Cache-Control "public, max-age=600"
+</FilesMatch>
+</IfModule>
+
+<IfModule mod_deflate.c>
+AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml application/xml text/plain
+</IfModule>
+
+AddType font/woff2 .woff2
+AddType image/webp .webp
+AddDefaultCharset utf-8
