@@ -521,6 +521,16 @@
   }
   @media (prefers-reduced-motion: reduce) { html.rv-on .rv { opacity: 1; transform: none; transition: none; } .scroll-cue span::after { animation: none; } }
 
+  .todo { background: #fff3b0; padding: 0 4px; }
+  .legal-page h2 { font-size: 20px; margin: 32px 0 10px; }
+  .ext-consent { background: var(--grey); border: 1px solid var(--line); padding: 32px; max-width: 760px; }
+  .ext-consent p:not(.eyebrow) { color: #444; margin-bottom: 18px; }
+  .ext-consent a:not(.btn) { text-decoration: underline; text-underline-offset: 3px; }
+  .ext-consent .btns { display: flex; flex-wrap: wrap; gap: 10px; }
+  .ext-remember { display: flex; gap: 8px; align-items: center; margin-top: 14px; font-size: 14px; color: #555; }
+  .ext-consent[hidden] { display: none; }
+  .kc-gate { margin: 40px auto 80px; text-align: left; }
+  .legal-note { font-size: 13px; color: #555; padding-top: 24px; padding-bottom: 24px; }
   /* Unterseiten */
   .sec { background: var(--white); }
   .scheme-dark { background: var(--black); color: var(--white); }
@@ -942,7 +952,13 @@
       <div class="kc-hero"><h1>Customize</h1><p>Wählen Sie Ihr Modell und gestalten Sie es nach Ihren Wünschen</p></div>
       <div class="kc-types" role="group" aria-label="Fahrzeugart"><button type="button" class="kc-type on" data-type="Alle" aria-pressed="true">Alle</button><button type="button" class="kc-type" data-type="Pkw" aria-pressed="false">Pkw</button><button type="button" class="kc-type" data-type="Motorrad" aria-pressed="false">Motorrad</button><button type="button" class="kc-type" data-type="Mofa/Roller" aria-pressed="false">Mofa/Roller</button><button type="button" class="kc-type" data-type="Transporter" aria-pressed="false">Transporter</button><button type="button" class="kc-type" data-type="Nutzfahrzeug" aria-pressed="false">Nutzfahrzeug</button><button type="button" class="kc-type" data-type="Amphibienfahrzeug" aria-pressed="false">Amphibienfahrzeug</button><button type="button" class="kc-type" data-type="Kabinenroller" aria-pressed="false">Kabinenroller</button><button type="button" class="kc-type" data-type="Kleinstwagen" aria-pressed="false">Kleinstwagen</button></div>
       <p class="kc-count" id="kc-count"></p>
-      <div class="kc-spin" id="kc-loading" role="status" aria-label="Modelle werden geladen"><span></span></div>
+      <div class="ext-consent kc-gate" id="kc-gate">
+        <p class="eyebrow">Hinweis zum Datenschutz</p>
+        <p>Der Konfigurator wird von unserem Dienstleister Base44 bereitgestellt. Erst wenn Sie ihn laden, werden Fahrzeugdaten und Bilder von dessen Servern abgerufen; dabei wird Ihre IP-Adresse übertragen, eine Verarbeitung auch außerhalb der EU ist möglich. Mehr in der <a href="datenschutz.html#konfigurator">Datenschutzerklärung</a>.</p>
+        <button type="button" class="btn btn-dark" id="kc-allow">Konfigurator laden</button>
+        <label class="ext-remember"><input type="checkbox" id="kc-remember"> Auf diesem Gerät merken</label>
+      </div>
+      <div class="kc-spin" id="kc-loading" role="status" aria-label="Modelle werden geladen" hidden><span></span></div>
       <div class="kc-grid" id="kc-grid"></div>
       <div class="kc-empty" id="kc-empty" hidden><p>Keine Modelle in dieser Kategorie</p></div>
     </div>
@@ -1136,6 +1152,14 @@
     t.style.animationDuration = (t.scrollWidth / 2 / speed).toFixed(1) + 's';
   }
 
+  // Externe Inhalte (JOIN) erst nach Klick laden
+  document.querySelectorAll('[data-ext="join"]').forEach(box => {
+    const load = () => { const sc = document.createElement('script'); sc.src = box.dataset.src; sc.defer = true; sc.setAttribute('data-mount-in', '#join-widget'); document.body.appendChild(sc); box.hidden = true; };
+    let ok = false; try { ok = localStorage.getItem('consent_join') === '1'; } catch (e) {}
+    if (ok) return load();
+    box.querySelector('[data-ext-load]').addEventListener('click', () => { if (box.querySelector('[data-ext-remember]').checked) { try { localStorage.setItem('consent_join', '1'); } catch (e) {} } load(); });
+  });
+
   // Slideshows
   document.querySelectorAll('.slider').forEach(sl => {
     const slides = [...sl.querySelectorAll('.slide')], dots = sl.querySelector('.dots');
@@ -1264,11 +1288,7 @@
     $('kc-home').hidden = true; $('kc-conf').hidden = true;
     const f = $('kc-fallback'), fr = f.querySelector('iframe'); fr.src = fr.dataset.src; f.hidden = false;
   }
-  let base44;
-  try {
-    const { createClient } = await import("https://esm.sh/@base44/sdk@0.8.55");
-    base44 = createClient({ appId: root.dataset.app, requiresAuth: false });
-  } catch (e) { console.warn('Base44 SDK nicht geladen', e); fallback(); }
+  let base44;   // wird erst nach Einwilligung (Klick auf „Konfigurator laden“) geladen
 
   // ---- Bild einfärben (TintedImage.jsx) ----
   const dataUrlCache = new Map();
@@ -1493,13 +1513,22 @@
   }
   window.addEventListener('popstate', route);
 
-  if (base44) {
+  async function start() {
+    $('kc-gate').hidden = true; $('kc-loading').hidden = false;
+    try {
+      const { createClient } = await import("./js/base44-sdk-0.8.55.js");
+      base44 = createClient({ appId: root.dataset.app, requiresAuth: false });
+    } catch (e) { console.warn('Base44 SDK nicht geladen', e); return fallback(); }
     const timer = setTimeout(() => { if (!vehicles.length) fallback(); }, 12000);
     try {
       vehicles = await base44.entities.VehicleModel.filter({ is_active: true }, '-created_date', 200);
       clearTimeout(timer); $('kc-loading').hidden = true; renderHome(); route();
     } catch (e) { clearTimeout(timer); console.warn('Fahrzeuge nicht geladen', e); fallback(); }
   }
+  // Einwilligung: erst nach Klick laden; auf Wunsch für dieses Gerät merken
+  let erlaubt = false; try { erlaubt = localStorage.getItem('consent_base44') === '1'; } catch (e) {}
+  $('kc-allow').addEventListener('click', () => { if ($('kc-remember').checked) { try { localStorage.setItem('consent_base44', '1'); } catch (e) {} } start(); });
+  if (erlaubt) start();
 </script>
 </body>
 </html>

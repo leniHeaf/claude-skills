@@ -521,6 +521,16 @@
   }
   @media (prefers-reduced-motion: reduce) { html.rv-on .rv { opacity: 1; transform: none; transition: none; } .scroll-cue span::after { animation: none; } }
 
+  .todo { background: #fff3b0; padding: 0 4px; }
+  .legal-page h2 { font-size: 20px; margin: 32px 0 10px; }
+  .ext-consent { background: var(--grey); border: 1px solid var(--line); padding: 32px; max-width: 760px; }
+  .ext-consent p:not(.eyebrow) { color: #444; margin-bottom: 18px; }
+  .ext-consent a:not(.btn) { text-decoration: underline; text-underline-offset: 3px; }
+  .ext-consent .btns { display: flex; flex-wrap: wrap; gap: 10px; }
+  .ext-remember { display: flex; gap: 8px; align-items: center; margin-top: 14px; font-size: 14px; color: #555; }
+  .ext-consent[hidden] { display: none; }
+  .kc-gate { margin: 40px auto 80px; text-align: left; }
+  .legal-note { font-size: 13px; color: #555; padding-top: 24px; padding-bottom: 24px; }
   /* Unterseiten */
   .sec { background: var(--white); }
   .scheme-dark { background: var(--black); color: var(--white); }
@@ -945,6 +955,14 @@
     const speed = window.innerWidth < 760 ? 45 : 70; // Pixel pro Sekunde
     t.style.animationDuration = (t.scrollWidth / 2 / speed).toFixed(1) + 's';
   }
+
+  // Externe Inhalte (JOIN) erst nach Klick laden
+  document.querySelectorAll('[data-ext="join"]').forEach(box => {
+    const load = () => { const sc = document.createElement('script'); sc.src = box.dataset.src; sc.defer = true; sc.setAttribute('data-mount-in', '#join-widget'); document.body.appendChild(sc); box.hidden = true; };
+    let ok = false; try { ok = localStorage.getItem('consent_join') === '1'; } catch (e) {}
+    if (ok) return load();
+    box.querySelector('[data-ext-load]').addEventListener('click', () => { if (box.querySelector('[data-ext-remember]').checked) { try { localStorage.setItem('consent_join', '1'); } catch (e) {} } load(); });
+  });
 
   // Slideshows
   document.querySelectorAll('.slider').forEach(sl => {

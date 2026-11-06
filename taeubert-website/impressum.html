@@ -516,6 +516,16 @@
   }
   @media (prefers-reduced-motion: reduce) { html.rv-on .rv { opacity: 1; transform: none; transition: none; } .scroll-cue span::after { animation: none; } }
 
+  .todo { background: #fff3b0; padding: 0 4px; }
+  .legal-page h2 { font-size: 20px; margin: 32px 0 10px; }
+  .ext-consent { background: var(--grey); border: 1px solid var(--line); padding: 32px; max-width: 760px; }
+  .ext-consent p:not(.eyebrow) { color: #444; margin-bottom: 18px; }
+  .ext-consent a:not(.btn) { text-decoration: underline; text-underline-offset: 3px; }
+  .ext-consent .btns { display: flex; flex-wrap: wrap; gap: 10px; }
+  .ext-remember { display: flex; gap: 8px; align-items: center; margin-top: 14px; font-size: 14px; color: #555; }
+  .ext-consent[hidden] { display: none; }
+  .kc-gate { margin: 40px auto 80px; text-align: left; }
+  .legal-note { font-size: 13px; color: #555; padding-top: 24px; padding-bottom: 24px; }
   /* Unterseiten */
   .sec { background: var(--white); }
   .scheme-dark { background: var(--black); color: var(--white); }
@@ -749,20 +759,34 @@
   </div>
 </aside>
 <main id="inhalt">
-<section class="sec" style="padding:80px 0"><div class="page-width"><div class="rich-inner" style="max-width:760px">
-<h1 class="h-5">Impressum</h1>
-<div class="rte">
-<h3>Angaben gemäß § 5 DDG</h3>
-<p>Täubert Karosserie und Lack GmbH<br>Bettelhecker Straße 15<br>96515 Sonneberg</p>
-<p>Telefon: <a href="tel:+4936754289606">03675 4289606</a><br>E-Mail: <a href="mailto:hallo@taeubert-karosserie-lack.de">hallo@taeubert-karosserie-lack.de</a></p>
-<h3>Vertreten durch</h3>
-<p>Toni Täubert (Geschäftsführer)</p>
-<h3>Registereintrag</h3>
-<p>Registergericht: [bitte ergänzen]<br>Registernummer: HRB [bitte ergänzen]</p>
-<h3>Umsatzsteuer-ID</h3>
-<p>Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG: [bitte ergänzen]</p>
-<p style="background:#fff3cd;color:#222;padding:12px 16px"><strong>Noch zu ergänzen:</strong> Registergericht, HRB-Nummer und USt-IdNr. aus dem bisherigen Impressum im Shop übernehmen und den Text auf Vollständigkeit prüfen.</p>
-</div></div></div></section>
+<section class="sec legal-page" style="padding:60px 0 80px">
+  <div class="page-width"><div class="rich-inner rte" style="max-width:820px">
+    <h1 class="h-6">Impressum</h1>
+    <h2>Angaben gemäß § 5 Digitale-Dienste-Gesetz (DDG)</h2>
+    <p>Täubert Karosserie und Lack GmbH<br>Bettelhecker Straße 15<br>96515 Sonneberg</p>
+    <h2>Vertreten durch</h2>
+    <p>Toni Täubert, Geschäftsführer</p>
+    <h2>Kontakt</h2>
+    <p>Telefon: <a href="tel:+4936754289606">03675 4289606</a><br>E-Mail: <a href="mailto:hallo@taeubert-karosserie-lack.de">hallo@taeubert-karosserie-lack.de</a></p>
+    <h2>Registereintrag</h2>
+    <p>Eintragung im Handelsregister<br>Registergericht: Amtsgericht <mark class="todo">[bitte ergänzen]</mark><br>Registernummer: HRB <mark class="todo">[bitte ergänzen]</mark></p>
+    <h2>Umsatzsteuer-ID</h2>
+    <p>Umsatzsteuer-Identifikationsnummer gemäß § 27a Umsatzsteuergesetz: <mark class="todo">[bitte ergänzen]</mark></p>
+    <h2>Angaben zur Berufshaftung und Handwerksrolle</h2>
+    <p>Eingetragen in die Handwerksrolle der zuständigen Handwerkskammer: <mark class="todo">[bitte ergänzen]</mark><br>Berufsbezeichnung(en): <mark class="todo">[bitte ergänzen]</mark> (verliehen in der Bundesrepublik Deutschland)<br>Berufsrechtliche Regelung: Gesetz zur Ordnung des Handwerks (Handwerksordnung), einsehbar unter <a href="https://www.gesetze-im-internet.de/hwo/" target="_blank" rel="noopener">gesetze-im-internet.de</a></p>
+    <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+    <p>Toni Täubert, Anschrift wie oben</p>
+    <h2>Verbraucherstreitbeilegung</h2>
+    <p>Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+    <h2>Haftung für Inhalte</h2>
+    <p>Wir erstellen die Inhalte dieser Website mit größter Sorgfalt. Für die Richtigkeit, Vollständigkeit und Aktualität können wir jedoch keine Gewähr übernehmen. Ratgeber- und FAQ-Texte sind allgemeine Informationen und keine Rechts- oder Versicherungsberatung. Als Diensteanbieter sind wir für eigene Inhalte nach den allgemeinen Gesetzen verantwortlich; nicht verpflichtet sind wir, übermittelte oder gespeicherte fremde Informationen zu überwachen. Bei Bekanntwerden von Rechtsverletzungen entfernen wir entsprechende Inhalte umgehend.</p>
+    <h2>Haftung für Links</h2>
+    <p>Unsere Website enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Für diese fremden Inhalte ist stets der jeweilige Anbieter verantwortlich. Zum Zeitpunkt der Verlinkung waren keine Rechtsverstöße erkennbar. Bei Bekanntwerden von Rechtsverletzungen entfernen wir derartige Links umgehend.</p>
+    <h2>Urheberrecht und Bildnachweise</h2>
+    <p>Texte, Fotos und Gestaltung dieser Website unterliegen dem deutschen Urheberrecht. Eine Vervielfältigung oder Verwendung außerhalb der Grenzen des Urheberrechts bedarf unserer schriftlichen Zustimmung.</p>
+    <p>Bildnachweise: eigene Aufnahmen von Täubert Karosserie und Lack; einzelne Fotos von <a href="https://www.pexels.com" target="_blank" rel="noopener">Pexels</a> (Pexels-Lizenz), u. a. von Artem Podrez, Markus Spiske und Tima Miroshnichenko sowie weiteren Fotografinnen und Fotografen. Einzelne Fahrzeugabbildungen (Studioaufnahmen, Konfigurator) sind KI-gestützt erstellte Visualisierungen und zeigen keine konkreten Kundenfahrzeuge.</p>
+  </div></div>
+</section>
 </main>
 <footer>
   <div class="foot-grid">
@@ -913,6 +937,14 @@
     const speed = window.innerWidth < 760 ? 45 : 70; // Pixel pro Sekunde
     t.style.animationDuration = (t.scrollWidth / 2 / speed).toFixed(1) + 's';
   }
+
+  // Externe Inhalte (JOIN) erst nach Klick laden
+  document.querySelectorAll('[data-ext="join"]').forEach(box => {
+    const load = () => { const sc = document.createElement('script'); sc.src = box.dataset.src; sc.defer = true; sc.setAttribute('data-mount-in', '#join-widget'); document.body.appendChild(sc); box.hidden = true; };
+    let ok = false; try { ok = localStorage.getItem('consent_join') === '1'; } catch (e) {}
+    if (ok) return load();
+    box.querySelector('[data-ext-load]').addEventListener('click', () => { if (box.querySelector('[data-ext-remember]').checked) { try { localStorage.setItem('consent_join', '1'); } catch (e) {} } load(); });
+  });
 
   // Slideshows
   document.querySelectorAll('.slider').forEach(sl => {

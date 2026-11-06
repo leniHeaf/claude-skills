@@ -522,6 +522,16 @@
   }
   @media (prefers-reduced-motion: reduce) { html.rv-on .rv { opacity: 1; transform: none; transition: none; } .scroll-cue span::after { animation: none; } }
 
+  .todo { background: #fff3b0; padding: 0 4px; }
+  .legal-page h2 { font-size: 20px; margin: 32px 0 10px; }
+  .ext-consent { background: var(--grey); border: 1px solid var(--line); padding: 32px; max-width: 760px; }
+  .ext-consent p:not(.eyebrow) { color: #444; margin-bottom: 18px; }
+  .ext-consent a:not(.btn) { text-decoration: underline; text-underline-offset: 3px; }
+  .ext-consent .btns { display: flex; flex-wrap: wrap; gap: 10px; }
+  .ext-remember { display: flex; gap: 8px; align-items: center; margin-top: 14px; font-size: 14px; color: #555; }
+  .ext-consent[hidden] { display: none; }
+  .kc-gate { margin: 40px auto 80px; text-align: left; }
+  .legal-note { font-size: 13px; color: #555; padding-top: 24px; padding-bottom: 24px; }
   /* Unterseiten */
   .sec { background: var(--white); }
   .scheme-dark { background: var(--black); color: var(--white); }
@@ -764,7 +774,7 @@
 </section>
 <section class="sec" style="padding:60px 0">
   <div class="page-width"><div class="faq"><h2 class="sec-head">Häufige Fragen</h2><details><summary><span>Zahlt die Versicherung einen Steinschlag im Lack?</span></summary><div class="rte"><p>In der Regel nicht über die Teilkasko – die deckt Glasschäden, nicht den Lack. Bei Lackschäden ist Selbstzahlen meist günstiger.</p></div></details><details><summary><span>Kann ich einen Steinschlag selbst ausbessern?</span></summary><div class="rte"><p>Ja, mit einem passend angemischten Lackstift. Wichtig: gründlich reinigen, dünn auftupfen und mit Klarlack abschließen.</p></div></details><details><summary><span>Wie schnell rostet ein Steinschlag?</span></summary><div class="rte"><p>Liegt das Blech frei, kann sich schon nach wenigen Wochen Flugrost bilden – im Winter schneller.</p></div></details></div></div>
-</section><section class="more-svc"><div class="page-width"><h2>Passende Leistungen</h2><div class="tile-grid"><a class="tile-svc" href="lackstift.html"><span class="tile-media"><img src="images/Zwischenueberschrifthinzufuegen.webp" alt="Lackstift" loading="lazy"></span><span class="tile-body"><h3>Lackstift</h3><p>Nach Farbcode exakt angemischt – für Steinschläge und kleine Kratzer.</p><span class="tile-more">Mehr erfahren</span></span></a><a class="tile-svc" href="smartrepair.html"><span class="tile-media"><img src="images/3_508b5dcd-775e-48c9-a539-2a98aafa4f6b.jpg" srcset="images/3_508b5dcd-775e-48c9-a539-2a98aafa4f6b-700.webp 700w, images/3_508b5dcd-775e-48c9-a539-2a98aafa4f6b.jpg 1024w" sizes="(max-width: 760px) 100vw, 60vw" alt="Smart Repair" loading="lazy"></span><span class="tile-body"><h3>Smart Repair</h3><p>Dellen raus, ohne neu zu lackieren. Oft in wenigen Stunden.</p><span class="tile-more">Mehr erfahren</span></span></a><a class="tile-svc" href="lackierarbeiten.html"><span class="tile-media"><img src="images/pexels-markusspiske-1729999.webp" srcset="images/pexels-markusspiske-1729999-700.webp 700w, images/pexels-markusspiske-1729999.webp 1376w" sizes="(max-width: 760px) 100vw, 60vw" alt="Lackierarbeiten" loading="lazy"></span><span class="tile-body"><h3>Lackier&shy;arbeiten</h3><p>Farbton digital gemessen. Man sieht später nicht, wo der Schaden war.</p><span class="tile-more">Mehr erfahren</span></span></a></div></div></section><section class="booking-cta">
+</section><section class="more-svc"><div class="page-width"><h2>Passende Leistungen</h2><div class="tile-grid"><a class="tile-svc" href="lackstift.html"><span class="tile-media"><img src="images/Zwischenueberschrifthinzufuegen.webp" alt="Lackstift" loading="lazy"></span><span class="tile-body"><h3>Lackstift</h3><p>Nach Farbcode exakt angemischt – für Steinschläge und kleine Kratzer.</p><span class="tile-more">Mehr erfahren</span></span></a><a class="tile-svc" href="smartrepair.html"><span class="tile-media"><img src="images/3_508b5dcd-775e-48c9-a539-2a98aafa4f6b.jpg" srcset="images/3_508b5dcd-775e-48c9-a539-2a98aafa4f6b-700.webp 700w, images/3_508b5dcd-775e-48c9-a539-2a98aafa4f6b.jpg 1024w" sizes="(max-width: 760px) 100vw, 60vw" alt="Smart Repair" loading="lazy"></span><span class="tile-body"><h3>Smart Repair</h3><p>Dellen raus, ohne neu zu lackieren. Oft in wenigen Stunden.</p><span class="tile-more">Mehr erfahren</span></span></a><a class="tile-svc" href="lackierarbeiten.html"><span class="tile-media"><img src="images/pexels-markusspiske-1729999.webp" srcset="images/pexels-markusspiske-1729999-700.webp 700w, images/pexels-markusspiske-1729999.webp 1376w" sizes="(max-width: 760px) 100vw, 60vw" alt="Lackierarbeiten" loading="lazy"></span><span class="tile-body"><h3>Lackier&shy;arbeiten</h3><p>Farbton digital gemessen. Man sieht später nicht, wo der Schaden war.</p><span class="tile-more">Mehr erfahren</span></span></a></div></div></section><p class="legal-note page-width">Hinweis: Diese Informationen sind allgemeiner Natur, ohne Gewähr und keine Rechts- oder Versicherungsberatung. Maßgeblich sind Ihr Versicherungsvertrag und der Einzelfall.</p><section class="booking-cta">
   <div class="page-width">
     <h2>Termin online buchen</h2>
     <ul class="trust"><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Kostenvoranschlag in 24 Stunden</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Direkte Abrechnung mit der Versicherung</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ersatzwagen</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Hol- und Bringservice</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Alle Marken</li></ul>
@@ -934,6 +944,14 @@
     const speed = window.innerWidth < 760 ? 45 : 70; // Pixel pro Sekunde
     t.style.animationDuration = (t.scrollWidth / 2 / speed).toFixed(1) + 's';
   }
+
+  // Externe Inhalte (JOIN) erst nach Klick laden
+  document.querySelectorAll('[data-ext="join"]').forEach(box => {
+    const load = () => { const sc = document.createElement('script'); sc.src = box.dataset.src; sc.defer = true; sc.setAttribute('data-mount-in', '#join-widget'); document.body.appendChild(sc); box.hidden = true; };
+    let ok = false; try { ok = localStorage.getItem('consent_join') === '1'; } catch (e) {}
+    if (ok) return load();
+    box.querySelector('[data-ext-load]').addEventListener('click', () => { if (box.querySelector('[data-ext-remember]').checked) { try { localStorage.setItem('consent_join', '1'); } catch (e) {} } load(); });
+  });
 
   // Slideshows
   document.querySelectorAll('.slider').forEach(sl => {

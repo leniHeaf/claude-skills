@@ -309,10 +309,18 @@ def r_scrolling(sec):
 
 
 def r_custom_liquid(sec):
+    """JOIN-Stellenwidget: lädt erst nach Klick (vorher keine Verbindung zu join.com)."""
     code = sec["settings"].get("custom_liquid", "")
-    if "join.com/api/widget" not in code:
+    m = re.search(r'src="(https://join\.com/api/widget/[^"]+)"', code)
+    if not m:
         return ""
-    return f'<section class="sec"><div class="page-width">{code}</div></section>'
+    return f'''<section class="sec"><div class="page-width"><div id="join-widget"></div>
+  <div class="ext-consent" data-ext="join" data-src="{esc(m.group(1))}">
+    <p class="eyebrow">Hinweis zum Datenschutz</p>
+    <p>Unsere aktuellen Stellenangebote werden über den Dienst JOIN (JOIN Solutions AG, Schweiz) angezeigt. Erst wenn Sie sie laden, wird eine Verbindung zu join.com aufgebaut und Ihre IP-Adresse übertragen. Mehr in der <a href="datenschutz.html#join">Datenschutzerklärung</a>.</p>
+    <div class="btns"><button type="button" class="btn btn-dark" data-ext-load>Stellenangebote laden</button><a class="btn btn-outline-dark" href="jobs.html#bewerbung">Direkt bewerben</a></div>
+    <label class="ext-remember"><input type="checkbox" data-ext-remember> Auf diesem Gerät merken</label>
+  </div></div></section>'''
 
 
 def r_blocks(sec):
@@ -366,6 +374,16 @@ RENDER = {
 OVERVIEW_CSS = ""
 
 EXTRA_CSS = """
+  .todo { background: #fff3b0; padding: 0 4px; }
+  .legal-page h2 { font-size: 20px; margin: 32px 0 10px; }
+  .ext-consent { background: var(--grey); border: 1px solid var(--line); padding: 32px; max-width: 760px; }
+  .ext-consent p:not(.eyebrow) { color: #444; margin-bottom: 18px; }
+  .ext-consent a:not(.btn) { text-decoration: underline; text-underline-offset: 3px; }
+  .ext-consent .btns { display: flex; flex-wrap: wrap; gap: 10px; }
+  .ext-remember { display: flex; gap: 8px; align-items: center; margin-top: 14px; font-size: 14px; color: #555; }
+  .ext-consent[hidden] { display: none; }
+  .kc-gate { margin: 40px auto 80px; text-align: left; }
+  .legal-note { font-size: 13px; color: #555; padding-top: 24px; padding-bottom: 24px; }
   /* Unterseiten */
   .sec { background: var(--white); }
   .scheme-dark { background: var(--black); color: var(--white); }
@@ -531,6 +549,14 @@ EXTRA_CSS = """
 """
 
 PAGE_JS = """
+  // Externe Inhalte (JOIN) erst nach Klick laden
+  document.querySelectorAll('[data-ext="join"]').forEach(box => {
+    const load = () => { const sc = document.createElement('script'); sc.src = box.dataset.src; sc.defer = true; sc.setAttribute('data-mount-in', '#join-widget'); document.body.appendChild(sc); box.hidden = true; };
+    let ok = false; try { ok = localStorage.getItem('consent_join') === '1'; } catch (e) {}
+    if (ok) return load();
+    box.querySelector('[data-ext-load]').addEventListener('click', () => { if (box.querySelector('[data-ext-remember]').checked) { try { localStorage.setItem('consent_join', '1'); } catch (e) {} } load(); });
+  });
+
   // Slideshows
   document.querySelectorAll('.slider').forEach(sl => {
     const slides = [...sl.querySelectorAll('.slide')], dots = sl.querySelector('.dots');
@@ -871,6 +897,9 @@ def all_services():
 
 # Ratgeber-Seiten (keine eigene Leistung)
 GUIDES = ["unfall-oder-kratzer", "auto-lackieren-kosten"] + list(RATGEBER)
+
+
+LEGAL_NOTE = '<p class="legal-note page-width">Hinweis: Diese Informationen sind allgemeiner Natur, ohne Gewähr und keine Rechts- oder Versicherungsberatung. Maßgeblich sind Ihr Versicherungsvertrag und der Einzelfall.</p>'
 
 
 def guide_meta(g):
@@ -1820,7 +1849,7 @@ def render_faq_page():
 # und Sitze (warme Töne) per Canvas umfärben. Klappt der Abruf nicht, wird das Original eingebettet.
 KONFIG_URL = "https://konfigurationtaeubert.base44.app"
 KONFIG_APP_ID = "6a4632bd35aedaad00a18547"
-KONFIG_SDK = "https://esm.sh/@base44/sdk@0.8.55"
+KONFIG_SDK = "./js/base44-sdk-0.8.55.js"  # selbst gehostet (keine Verbindung zu einem fremden CDN)
 KONFIG_TYPES = ["Alle", "Pkw", "Motorrad", "Mofa/Roller", "Transporter", "Nutzfahrzeug", "Amphibienfahrzeug", "Kabinenroller", "Kleinstwagen"]
 
 
@@ -1832,7 +1861,13 @@ def konfig_page():
       <div class="kc-hero"><h1>Customize</h1><p>Wählen Sie Ihr Modell und gestalten Sie es nach Ihren Wünschen</p></div>
       <div class="kc-types" role="group" aria-label="Fahrzeugart">{types}</div>
       <p class="kc-count" id="kc-count"></p>
-      <div class="kc-spin" id="kc-loading" role="status" aria-label="Modelle werden geladen"><span></span></div>
+      <div class="ext-consent kc-gate" id="kc-gate">
+        <p class="eyebrow">Hinweis zum Datenschutz</p>
+        <p>Der Konfigurator wird von unserem Dienstleister Base44 bereitgestellt. Erst wenn Sie ihn laden, werden Fahrzeugdaten und Bilder von dessen Servern abgerufen; dabei wird Ihre IP-Adresse übertragen, eine Verarbeitung auch außerhalb der EU ist möglich. Mehr in der <a href="datenschutz.html#konfigurator">Datenschutzerklärung</a>.</p>
+        <button type="button" class="btn btn-dark" id="kc-allow">Konfigurator laden</button>
+        <label class="ext-remember"><input type="checkbox" id="kc-remember"> Auf diesem Gerät merken</label>
+      </div>
+      <div class="kc-spin" id="kc-loading" role="status" aria-label="Modelle werden geladen" hidden><span></span></div>
       <div class="kc-grid" id="kc-grid"></div>
       <div class="kc-empty" id="kc-empty" hidden><p>Keine Modelle in dieser Kategorie</p></div>
     </div>
@@ -2034,11 +2069,7 @@ KONFIG_JS = r"""
     $('kc-home').hidden = true; $('kc-conf').hidden = true;
     const f = $('kc-fallback'), fr = f.querySelector('iframe'); fr.src = fr.dataset.src; f.hidden = false;
   }
-  let base44;
-  try {
-    const { createClient } = await import(__SDK__);
-    base44 = createClient({ appId: root.dataset.app, requiresAuth: false });
-  } catch (e) { console.warn('Base44 SDK nicht geladen', e); fallback(); }
+  let base44;   // wird erst nach Einwilligung (Klick auf „Konfigurator laden“) geladen
 
   // ---- Bild einfärben (TintedImage.jsx) ----
   const dataUrlCache = new Map();
@@ -2263,13 +2294,22 @@ KONFIG_JS = r"""
   }
   window.addEventListener('popstate', route);
 
-  if (base44) {
+  async function start() {
+    $('kc-gate').hidden = true; $('kc-loading').hidden = false;
+    try {
+      const { createClient } = await import(__SDK__);
+      base44 = createClient({ appId: root.dataset.app, requiresAuth: false });
+    } catch (e) { console.warn('Base44 SDK nicht geladen', e); return fallback(); }
     const timer = setTimeout(() => { if (!vehicles.length) fallback(); }, 12000);
     try {
       vehicles = await base44.entities.VehicleModel.filter({ is_active: true }, '-created_date', 200);
       clearTimeout(timer); $('kc-loading').hidden = true; renderHome(); route();
     } catch (e) { clearTimeout(timer); console.warn('Fahrzeuge nicht geladen', e); fallback(); }
   }
+  // Einwilligung: erst nach Klick laden; auf Wunsch für dieses Gerät merken
+  let erlaubt = false; try { erlaubt = localStorage.getItem('consent_base44') === '1'; } catch (e) {}
+  $('kc-allow').addEventListener('click', () => { if ($('kc-remember').checked) { try { localStorage.setItem('consent_base44', '1'); } catch (e) {} } start(); });
+  if (erlaubt) start();
 </script>
 """.replace("__SDK__", '"' + KONFIG_SDK + '"')
 
@@ -2490,6 +2530,8 @@ def main():
                     rest = "".join(f'<section class="sec{" scheme-grey" if i % 2 else ""}" style="padding:80px 0"><div class="page-width"><div class="rich-inner" style="max-width:760px"><h2 class="h-4">{esc(h)}</h2><div class="rte">{b}</div></div></div></section>' for i, (h, b) in enumerate(KRONACH_BODY))
                     rest += f'<section class="more-svc"><div class="page-width"><h2>Unsere Leistungen für Kronach</h2>{tile_grid([x for t in TOP_SERVICES for x in all_services() if x[0] == t])}</div></section>'
                 body_html = head + city_block(slug) + rest + city_faq(slug)
+            if slug in GUIDES:
+                body_html += LEGAL_NOTE
             body_html += booking_cta(slug, short)
             title = seo_title
             if slug in SERVICES:
@@ -2571,7 +2613,7 @@ def main():
         crumbs = f'<nav class="crumbs page-width" aria-label="Brotkrumen"><a href="index.html">Startseite</a><span>›</span><a href="ratgeber.html">Ratgeber</a><span>›</span><span aria-current="page">{esc(p["short"])}</span></nav>'
         svcs = {x[0]: x for x in all_services()}
         rel = f'<section class="more-svc"><div class="page-width"><h2>Passende Leistungen</h2>{tile_grid([svcs[r] for r in p["related"] if r in svcs])}</div></section>'
-        body_html = head[:m.end()] + crumbs + head[m.end():] + rel + booking_cta(slug, p["short"])
+        body_html = head[:m.end()] + crumbs + head[m.end():] + rel + LEGAL_NOTE + booking_cta(slug, p["short"])
         art = {"@context": "https://schema.org", "@type": "Article", "headline": p["title"], "description": p["desc"], "image": f"{DOMAIN}/images/{p['img']}",
                "author": {"@type": "Organization", "name": "Täubert Karosserie und Lack GmbH"}, "publisher": {"@type": "Organization", "name": "Täubert Karosserie und Lack GmbH"},
                "mainEntityOfPage": f"{DOMAIN}/{slug}.html", "inLanguage": "de"}
@@ -2657,7 +2699,7 @@ def main():
     open(os.path.join(SITE, "unfall-was-tun.html"), "w", encoding="utf-8").write(sync_images(simple_page(
         "unfall-was-tun", "Unfall – was tun?",
         "Unfall gehabt? Checkliste in 7 Schritten: sichern, helfen, fotografieren, Daten austauschen – und Täubert in Sonneberg kümmert sich um den Rest.",
-        UNFALL_PAGE, style, head_links, top, footer, js, ld)))
+        UNFALL_PAGE + LEGAL_NOTE, style, head_links, top, footer, js, ld)))
     built.insert(3, "unfall-was-tun")
     kpage = simple_page("konfigurator", "Lack-Konfigurator – Wunschfarbe online wählen",
         "Lack-Konfigurator von Täubert Karosserie & Lack in Sonneberg: Modell und Farbe wählen, Umfang festlegen und die Konfiguration direkt als Anfrage senden.",
@@ -2668,7 +2710,7 @@ def main():
     faq_body, faq_schema, faq_count = render_faq_page()
     faq_page = simple_page("fragen", "Häufige Fragen – Täubert Sonneberg",
         f"{faq_count} Antworten zu Termin, Kostenvoranschlag, Versicherung, Ersatzwagen, Unfallreparatur, Lackierung und Smart Repair bei Täubert in Sonneberg.",
-        faq_body, style, head_links, top, footer, js, ld)
+        faq_body + LEGAL_NOTE, style, head_links, top, footer, js, ld)
     faq_page = faq_page.replace("</head>", faq_schema + "\n</head>", 1)
     open(os.path.join(SITE, "fragen.html"), "w", encoding="utf-8").write(sync_images(faq_page))
     built.insert(4, "fragen")
