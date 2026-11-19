@@ -23,11 +23,13 @@ $FORMULARE = [
     'club'            => ['Täubert Club – Anmeldung', 'danke-anfrage.html'],
     'events'          => ['Täubert Events – Einladung gewünscht', 'danke-anfrage.html'],
     'partner'         => ['Partneranfrage', 'danke-anfrage.html'],
+    'gutschein'       => ['Gutscheinbestellung', 'danke-anfrage.html'],
 ];
 // Feldnamen -> Beschriftung in der E-Mail (Reihenfolge = Reihenfolge in der Mail)
 $FELDER = [
     'unternehmen' => 'Unternehmen', 'name' => 'Name', 'telefon' => 'Telefon', 'email' => 'E-Mail', 'fahrzeug' => 'Fahrzeug',
     'leistung' => 'Leistung', 'schaden' => 'Anliegen', 'kostentraeger' => 'Wer zahlt',
+    'wert' => 'Betrag', 'anzahl' => 'Anzahl', 'empfaenger' => 'Für (Name auf dem Gutschein)', 'versand' => 'Erhalt',
     'datum' => 'Wunschdatum', 'ausweichdatum' => 'Ausweichdatum', 'tageszeit' => 'Tageszeit',
     'stelle' => 'Stelle', 'start' => 'Frühester Start', 'fuehrerschein' => 'Führerschein Klasse B',
     'ersatzwagen' => 'Ersatzwagen gewünscht', 'holservice' => 'Hol- und Bringservice gewünscht',

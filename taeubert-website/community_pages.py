@@ -103,6 +103,44 @@ COMMUNITY = {
     },
 }
 
+COMMUNITY["gutscheine"] = {
+    "title": "Gutscheine",
+    "nav": "Gutscheine",
+    "img": "pexels-tima-miroshnichenko-6872570.webp",
+    "desc": "Gutscheine von Täubert Karosserie & Lack in Sonneberg: Wertgutschein oder Gutschein für Aufbereitung, Keramikversiegelung, Smart Repair – das Geschenk für Autoliebhaber.",
+    "eyebrow": "Das perfekte Geschenk",
+    "claim": "Schenken Sie Glanz.",
+    "lead": "Für alle, die ihr Auto lieben: ein Gutschein für Aufbereitung, Versiegelung, Smart Repair oder einen freien Wert – einlösbar für alle Leistungen bei Täubert.",
+    "perks": [
+        ("Wertgutschein", "Sie wählen den Betrag, der Beschenkte die Leistung – einlösbar für alle Arbeiten in unserer Werkstatt."),
+        ("Leistungsgutschein", "Zum Beispiel Fahrzeugaufbereitung, Innenraumaufbereitung, Keramikversiegelung, Scheinwerfer-Aufbereitung oder Smart Repair."),
+        ("Schön verpackt", "Persönlich in der Werkstatt abholen oder per Post zuschicken lassen – auf Wunsch mit Ihrem Grußtext."),
+        ("Für jeden Anlass", "Geburtstag, Weihnachten, Führerschein, Neuwagen, Jubiläum – oder als Dankeschön für Mitarbeiter und Geschäftspartner."),
+    ],
+    "steps": [("01", "Gutschein anfragen"), ("02", "Wir melden uns zur Bezahlung"), ("03", "Abholen oder per Post erhalten")],
+    "faq": [
+        ("Wie lange ist ein Gutschein gültig?", "Unsere Gutscheine gelten drei Jahre, gerechnet ab dem Ende des Jahres, in dem sie gekauft wurden."),
+        ("Wie bezahle ich den Gutschein?", "Bei Abholung in der Werkstatt per EC-Karte, Kreditkarte oder bar – oder per Rechnung/Überweisung, wenn wir ihn zuschicken."),
+        ("Kann ich einen Wertgutschein für jede Leistung einlösen?", "Ja. Ein Wertgutschein wird auf jede Rechnung bei uns angerechnet – egal ob Aufbereitung, Lack, Reparatur oder Reifen."),
+        ("Was passiert, wenn die Leistung mehr kostet als der Gutschein?", "Dann wird der Gutschein angerechnet und nur der Restbetrag bezahlt."),
+        ("Gibt es Gutscheine auch für Firmen?", "Ja, zum Beispiel als Geschenk für Mitarbeiter oder Kunden. Sprechen Sie uns an, auch für größere Stückzahlen."),
+    ],
+    "form": {
+        "name": "gutschein", "button": "Gutschein anfragen", "headline": "Gutschein bestellen.",
+        "fields": '''<label class="f half">E-Mail<input name="email" type="email" autocomplete="email"></label>
+        <label class="f half">Art des Gutscheins
+          <select name="leistung"><option>Wertgutschein</option><option>Fahrzeugaufbereitung</option><option>Innenraumaufbereitung</option><option>Keramikversiegelung</option><option>Lackaufbereitung / Politur</option><option>Scheinwerfer-Aufbereitung</option><option>Smart Repair</option></select>
+        </label>
+        <label class="f half">Betrag (bei Wertgutschein)<input name="wert" placeholder="z. B. 100 €"></label>
+        <label class="f half">Anzahl<input name="anzahl" type="number" min="1" value="1"></label>
+        <label class="f half">Für wen? <small>(Name auf dem Gutschein, optional)</small><input name="empfaenger"></label>
+        <label class="f half">Erhalt
+          <select name="versand"><option>Abholung in der Werkstatt</option><option>Per Post zusenden</option></select>
+        </label>''',
+        "consent": "Ich bin einverstanden, dass meine Angaben zur Bearbeitung der Gutscheinbestellung gespeichert werden (siehe <a href=\"datenschutz.html\">Datenschutz</a>). *",
+    },
+}
+
 COMMUNITY_CSS = """
   .cm-hero { position: relative; min-height: 78vh; display: flex; align-items: flex-end; color: #fff; background: #000; overflow: hidden; }
   .cm-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .62; }

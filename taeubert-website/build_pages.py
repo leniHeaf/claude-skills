@@ -977,7 +977,7 @@ NAV_GROUPS = [
                  ("versicherungsschaden.html", "Abrechnung mit der Versicherung"), ("unfall-oder-kratzer.html", "Wer zahlt die Reparatur?")]),
     ("Über uns", [("who-we-are.html", "Who we are"), ("history.html", "History"), ("meet-the-team.html", "Meet the Team"),
                   ("porsche-911.html", "Projekt: Porsche 911"), ("porsche-gts.html", "Projekt: Porsche Cayenne GTS"), ("vw-bulli-t2.html", "Projekt: VW Bulli T2")]),
-    ("Club", [("club.html", "Täubert Club"), ("events.html", "Täubert Events"), ("partner.html", "Partner: Autohäuser & Firmen")]),
+    ("Club", [("club.html", "Täubert Club"), ("events.html", "Täubert Events"), ("partner.html", "Partner: Autohäuser & Firmen"), ("gutscheine.html", "Gutscheine")]),
     ("Karriere", [("karriere.html", "Karriere bei Täubert"), ("azubi.html", "Ausbildung"), ("jobs.html", "Stellenangebote"), ("jobs.html#bewerbung", "Direkt bewerben")]),
 ]
 
