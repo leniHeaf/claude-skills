@@ -549,6 +549,17 @@ EXTRA_CSS = """
     .mail-form .f.half { width: 100%; }
     .map iframe { height: 300px; }
   }
+
+  /* Leistungsseiten: Einleitung als ruhiger, großer Auftakt */
+  .svc-lead { padding: 96px 0 80px !important; }
+  .svc-lead .rich-inner { max-width: 820px !important; margin: 0 auto; text-align: center !important; }
+  .svc-lead .eyebrow { justify-content: center; }
+  .svc-lead .rte p:first-child { font-family: var(--f-display); font-size: clamp(24px, 2.6vw, 34px); line-height: 1.22; color: var(--black); margin-bottom: 24px; }
+  .svc-lead .rte p { font-size: 17px; color: #555; max-width: 680px; margin-left: auto; margin-right: auto; }
+  .iwt-media[style*="aspect-ratio:auto"] { min-height: 0; background: none; }
+  .iwt-media[style*="aspect-ratio:auto"] img { display: block; height: auto; }
+  .svc-steps + .sec .faq, .svc-steps ~ .sec .faq { padding-top: 10px; }
+  @media (max-width: 760px) { .svc-lead { padding: 60px 0 50px !important; } .svc-lead .rte p { font-size: 16px; } }
 """
 
 PAGE_JS = """
@@ -1373,11 +1384,32 @@ CITY_CSS = """
 """
 
 
+VISIT_HEADS = ("Kommen Sie einfach vorbei", "Jetzt Termin sichern", "Einfach vorbeikommen")
+
+
 def with_service_frame(slug, name, body_html):
-    """Startbild bleibt oben; danach Brotkrumen + Kurzleiste, am Ende vor dem Buchungsblock der Ablauf."""
+    """Einheitlicher Aufbau jeder Leistungsseite:
+    Startbild → Brotkrumen + Kurzleiste → Einleitung (groß) → Inhalt → Ablauf → Häufige Fragen.
+    Doppelte Ablauf- und „Kommen Sie vorbei“-Blöcke fallen weg (der Buchungsblock am Ende deckt das ab)."""
     m = re.search(r"<section.*?</section>", body_html, re.S)
     head, rest = body_html[:m.end()], body_html[m.end():]
-    return head + service_intro(slug, name) + rest + steps_for(slug)
+    secs = re.findall(r"<section\b.*?</section>", rest, re.S)
+    faq = [x for x in secs if 'class="faq"' in x]
+    out = []
+    for i, x in enumerate(secs):
+        if x in faq:
+            continue
+        if 'rich-sub' in x and any(h in x for h in VISIT_HEADS):
+            continue
+        if i == 0 and 'rich-sub' in x and "<h2" not in x:   # Einleitungstext ohne Überschrift
+            x = x.replace('class="sec rich-sub', 'class="sec rich-sub svc-lead', 1)
+            x = x.replace('<div class="rte">', f'<p class="eyebrow">{esc(name)} bei Täubert</p><div class="rte">', 1)
+            x = re.sub(r"(?:<br/?>\s*)+", " ", x)   # Shopify-Zeilenumbrüche: ruhiger Fließtext
+            x = re.sub(r'\n?<div class="btns">.*?</div>', "", x, count=1, flags=re.S)   # Knöpfe stehen direkt darüber schon
+        x = x.replace('<a class="btn btn-dark" href="contact.html">Kontakt aufnehmen</a>', f'<a class="btn btn-dark" href="{BOOKING}">Termin online buchen</a>')
+        out.append(x)
+    own_steps = re.search(r"<h2[^>]*>[^<]*(Wie läuft|So läuft)[^<]*ab", rest)
+    return head + service_intro(slug, name) + "\n".join(out) + ("" if own_steps else steps_for(slug)) + "\n".join(faq)
 
 
 

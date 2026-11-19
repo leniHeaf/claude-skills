@@ -818,6 +818,17 @@
     .map iframe { height: 300px; }
   }
 
+  /* Leistungsseiten: Einleitung als ruhiger, großer Auftakt */
+  .svc-lead { padding: 96px 0 80px !important; }
+  .svc-lead .rich-inner { max-width: 820px !important; margin: 0 auto; text-align: center !important; }
+  .svc-lead .eyebrow { justify-content: center; }
+  .svc-lead .rte p:first-child { font-family: var(--f-display); font-size: clamp(24px, 2.6vw, 34px); line-height: 1.22; color: var(--black); margin-bottom: 24px; }
+  .svc-lead .rte p { font-size: 17px; color: #555; max-width: 680px; margin-left: auto; margin-right: auto; }
+  .iwt-media[style*="aspect-ratio:auto"] { min-height: 0; background: none; }
+  .iwt-media[style*="aspect-ratio:auto"] img { display: block; height: auto; }
+  .svc-steps + .sec .faq, .svc-steps ~ .sec .faq { padding-top: 10px; }
+  @media (max-width: 760px) { .svc-lead { padding: 60px 0 50px !important; } .svc-lead .rte p { font-size: 16px; } }
+
   .city { padding: 110px 0; border-bottom: 1px solid var(--line); }
   .city-inner { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 64px; align-items: start; }
   .city h2 { font-size: clamp(30px, 3.4vw, 50px); line-height: 1.02; margin-bottom: 18px; }
@@ -902,10 +913,8 @@
     <ul class="trust"><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Kostenvoranschlag in 24 Stunden</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Direkte Abrechnung mit der Versicherung</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ersatzwagen</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Hol- und Bringservice</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Alle Marken</li></ul>
     <div class="btns"><a class="btn btn-dark" href="https://terminbuchungtaeubert.de">Termin online buchen</a><a class="btn btn-outline-dark" href="schaden-melden.html">Schaden per Foto melden</a></div>
   </div>
-</section>
-<section class="sec rich-sub" style="padding:50px 0 50px">
-  <div class="page-width"><div class="rich-inner" style="max-width:650px;text-align:left;"><div class="rte"><p>Viele Autofahrer erleben bei der Leasingrückgabe eine unangenehme Überraschung:<br/><br/>Bei der Fahrzeugbewertung werden selbst kleine Gebrauchsspuren berechnet — oft deutlich teurer als erwartet.</p><p>Typische Kosten bei Leasinggesellschaften:</p><ul><li>Kratzer: mehrere hundert Euro<br/></li><li>kleine Delle: mehrere hundert Euro<br/></li><li>beschädigte Felge: hohe Zusatzkosten<br/></li><li>Stoßfänger: schnell vierstelliger Betrag<br/></li></ul><p>Die gute Nachricht:<br/><br/><strong>Diese Schäden können fast immer vorab deutlich günstiger behoben werden.</strong></p><p>Täubert Karosserie & Lack in Sonneberg bereitet Ihr Fahrzeug gezielt für die Leasingrückgabe vor.alls.</p></div>
-<div class="btns"><a class="btn btn-dark" href="contact.html">Kontakt aufnehmen</a></div></div></div>
+</section><section class="sec rich-sub svc-lead" style="padding:50px 0 50px">
+  <div class="page-width"><div class="rich-inner" style="max-width:650px;text-align:left;"><p class="eyebrow">Leasingrückgabe bei Täubert</p><div class="rte"><p>Viele Autofahrer erleben bei der Leasingrückgabe eine unangenehme Überraschung: Bei der Fahrzeugbewertung werden selbst kleine Gebrauchsspuren berechnet — oft deutlich teurer als erwartet.</p><p>Typische Kosten bei Leasinggesellschaften:</p><ul><li>Kratzer: mehrere hundert Euro </li><li>kleine Delle: mehrere hundert Euro </li><li>beschädigte Felge: hohe Zusatzkosten </li><li>Stoßfänger: schnell vierstelliger Betrag </li></ul><p>Die gute Nachricht: <strong>Diese Schäden können fast immer vorab deutlich günstiger behoben werden.</strong></p><p>Täubert Karosserie & Lack in Sonneberg bereitet Ihr Fahrzeug gezielt für die Leasingrückgabe vor.alls.</p></div></div></div>
 </section>
 <section class="sec" style="padding:50px 0 50px">
   <div class="page-width iwt media-right" style="--cols:50fr 50fr"><div class="iwt-text" style="max-width:500px"><h2 class="h-5">Welche Schäden werden bei Leasing bewertet?</h2>
@@ -929,20 +938,9 @@
 </section>
 <section class="sec rich-sub" style="padding:50px 0 50px">
   <div class="page-width"><div class="rich-inner" style="max-width:650px;text-align:left;"><div class="rte"><p></p><h2>Wann sollten Sie kommen?</h2><p>Ideal sind <strong>2–4 Wochen vor der Rückgabe</strong>.<br/><br/>Dann bleibt genug Zeit für Reparatur und Terminplanung — ohne Zeitdruck.</p><p>Kurzfristig helfen wir natürlich ebenfalls.</p></div>
-<div class="btns"><a class="btn btn-dark" href="contact.html">Kontakt aufnehmen</a></div></div></div>
-</section>
-<section class="sec" style="padding:50px 0 50px">
+<div class="btns"><a class="btn btn-dark" href="https://terminbuchungtaeubert.de">Termin online buchen</a></div></div></div>
+</section><section class="sec" style="padding:50px 0 50px">
   <div class="page-width"><div class="faq"><h2 class="sec-head">Häufige Fragen</h2><details><summary><span>Muss wirklich alles repariert werden?</span></summary><div class="rte"><p><br/>Nein. Viele Gebrauchsspuren werden akzeptiert. Wir sagen Ihnen ehrlich, was relevant ist.<br/><br/></p></div></details><details><summary><span>Lohnt sich das bei jedem Leasingfahrzeug?</span></summary><div class="rte"><p>Fast immer. Schon ein einzelner berechneter Schaden kann teurer sein als unsere komplette Vorbereitung.<br/><br/></p></div></details><details><summary><span>Bekomme ich eine Einschätzung vorab?</span></summary><div class="rte"><p>Ja — wir schauen uns Ihr Fahrzeug unverbindlich an und erklären Ihnen alles verständlich.<br/><br/><br/></p></div></details></div></div>
-</section><section class="svc-steps">
-  <div class="page-width">
-    <h2>So läuft's ab</h2>
-    <ol class="steps">
-      <li><span class="num">1</span><h3>Schaden melden</h3><p>Fotos hochladen, anrufen oder per WhatsApp schreiben.</p></li>
-      <li><span class="num">2</span><h3>Kostenvoranschlag in 24 Stunden</h3><p>Klare Einschätzung, was nötig ist und was es kostet.</p></li>
-      <li><span class="num">3</span><h3>Reparatur – mit Ersatzwagen</h3><p>Auf Wunsch holen wir Ihr Auto ab. Mit der Versicherung rechnen wir direkt ab.</p></li>
-      <li><span class="num">4</span><h3>Abholen und weiterfahren</h3><p>Geprüft und gereinigt – man sieht nicht mehr, wo der Schaden war.</p></li>
-    </ol>
-  </div>
 </section><section class="more-svc">
   <div class="page-width">
     <h2>Das könnte Sie auch interessieren</h2>

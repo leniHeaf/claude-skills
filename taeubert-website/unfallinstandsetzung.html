@@ -817,6 +817,17 @@
     .map iframe { height: 300px; }
   }
 
+  /* Leistungsseiten: Einleitung als ruhiger, großer Auftakt */
+  .svc-lead { padding: 96px 0 80px !important; }
+  .svc-lead .rich-inner { max-width: 820px !important; margin: 0 auto; text-align: center !important; }
+  .svc-lead .eyebrow { justify-content: center; }
+  .svc-lead .rte p:first-child { font-family: var(--f-display); font-size: clamp(24px, 2.6vw, 34px); line-height: 1.22; color: var(--black); margin-bottom: 24px; }
+  .svc-lead .rte p { font-size: 17px; color: #555; max-width: 680px; margin-left: auto; margin-right: auto; }
+  .iwt-media[style*="aspect-ratio:auto"] { min-height: 0; background: none; }
+  .iwt-media[style*="aspect-ratio:auto"] img { display: block; height: auto; }
+  .svc-steps + .sec .faq, .svc-steps ~ .sec .faq { padding-top: 10px; }
+  @media (max-width: 760px) { .svc-lead { padding: 60px 0 50px !important; } .svc-lead .rte p { font-size: 16px; } }
+
   .city { padding: 110px 0; border-bottom: 1px solid var(--line); }
   .city-inner { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 64px; align-items: start; }
   .city h2 { font-size: clamp(30px, 3.4vw, 50px); line-height: 1.02; margin-bottom: 18px; }
@@ -903,8 +914,7 @@
     <ul class="trust"><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Kostenvoranschlag in 24 Stunden</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Direkte Abrechnung mit der Versicherung</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ersatzwagen</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Hol- und Bringservice</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Alle Marken</li></ul>
     <div class="btns"><a class="btn btn-dark" href="https://terminbuchungtaeubert.de">Termin online buchen</a><a class="btn btn-outline-dark" href="schaden-melden.html">Schaden per Foto melden</a></div>
   </div>
-</section>
-<section class="page-width svc-layout">
+</section><section class="page-width svc-layout">
   <div class="svc-article"><div><h2>Ein Unfall ist Stress genug</h2><div class="rte"><p>Telefonate mit der Versicherung, Gutachter, Werkstatt, Mietwagen – nach einem Unfall kommt vieles auf einmal. Bei uns haben Sie dafür einen Ansprechpartner.</p><p>Sie bringen das Auto. Wir regeln den Rest – und Sie bekommen Ihr Fahrzeug so zurück, dass man nicht mehr sieht, wo der Schaden war.</p></div></div><div><h2>Was wir für Sie übernehmen</h2><div class="rte"><ul><li><strong>Schadensaufnahme</strong> mit Fotodokumentation</li><li><strong>Kostenvoranschlag in 24 Stunden</strong></li><li><strong>Abstimmung mit Gutachter und Versicherung</strong> – und direkte Abrechnung mit der Versicherung</li><li><strong>Karosseriereparatur</strong> nach Herstellervorgaben – mit Richtbank und präziser Vermessung</li><li><strong>Lackierung</strong> im eigenen Haus mit digitaler Farbtonmessung</li><li><strong>Ersatzwagen</strong> sowie <strong>Hol- und Bringservice</strong></li></ul></div></div><div><h2>Haftpflicht, Kasko oder selbst zahlen?</h2><div class="rte"><p>Waren Sie nicht schuld, zahlt in der Regel die Haftpflichtversicherung des Unfallgegners. Bei selbst verursachten Schäden kommt Ihre Vollkasko infrage. Bei kleineren Schäden kann es günstiger sein, selbst zu zahlen, um eine Rückstufung zu vermeiden.</p><p>Wir helfen Ihnen bei der Einordnung – mehr dazu im Ratgeber <a href="unfall-oder-kratzer.html">Unfall oder Kratzer – wer zahlt?</a></p></div></div><div><h2>Gerade passiert?</h2><div class="rte"><p>Unfallstelle sichern, Polizei bei Verletzten, Fotos machen, Daten austauschen – unsere Checkliste zeigt Schritt für Schritt, <a href="unfall-was-tun.html">was jetzt zu tun ist</a>. Oder rufen Sie uns direkt an: <a href="tel:+4936754289606">03675 4289606</a>.</p></div></div></div>
   <aside class="svc-aside" aria-label="Termin">
     <p class="aside-kicker">Unfallinstandsetzung</p>
@@ -913,9 +923,6 @@
     <div class="btns"><a class="btn btn-light" href="https://terminbuchungtaeubert.de">Termin online buchen</a><a class="btn btn-outline-light" href="schaden-melden.html">Schaden per Foto melden</a><a class="btn btn-outline-light" href="tel:+4936754289606">03675 4289606</a></div>
     <p class="hours">Mo–Do 8–17 Uhr · Fr 8–14:30 Uhr<br>Bettelhecker Straße 15, Sonneberg</p>
   </aside>
-</section>
-<section class="sec" style="padding:60px 0">
-  <div class="page-width"><div class="faq"><h2 class="sec-head">Häufige Fragen</h2><details><summary><span>Darf ich die Werkstatt selbst wählen?</span></summary><div class="rte"><p>Bei einem Haftpflichtschaden – also wenn der Unfallgegner schuld ist – können Sie die Werkstatt grundsätzlich frei wählen. Bei Kaskoschäden hängt es von Ihrem Tarif ab; manche Verträge sehen eine Werkstattbindung vor.</p></div></details><details><summary><span>Brauche ich einen Gutachter?</span></summary><div class="rte"><p>Bei größeren Haftpflichtschäden haben Sie Anspruch auf einen unabhängigen Gutachter. Bei kleineren Schäden reicht oft ein Kostenvoranschlag. Wir sagen Ihnen, was in Ihrem Fall sinnvoll ist, und stimmen uns mit dem Gutachter ab.</p></div></details><details><summary><span>Bekomme ich einen Ersatzwagen?</span></summary><div class="rte"><p>Ja. Damit Sie mobil bleiben, stellen wir Ihnen für die Dauer der Reparatur einen Ersatzwagen zur Verfügung. Auf Wunsch holen wir Ihr Fahrzeug auch ab und bringen es zurück.</p></div></details><details><summary><span>Wie lange dauert die Reparatur?</span></summary><div class="rte"><p>Das hängt vom Schaden und von der Teileverfügbarkeit ab. Mit dem Kostenvoranschlag nennen wir Ihnen einen realistischen Zeitrahmen.</p></div></details></div></div>
 </section><section class="svc-steps">
   <div class="page-width">
     <h2>So läuft's ab</h2>
@@ -926,6 +933,8 @@
       <li><span class="num">4</span><h3>Abholen und weiterfahren</h3><p>Geprüft und gereinigt – man sieht nicht mehr, wo der Schaden war.</p></li>
     </ol>
   </div>
+</section><section class="sec" style="padding:60px 0">
+  <div class="page-width"><div class="faq"><h2 class="sec-head">Häufige Fragen</h2><details><summary><span>Darf ich die Werkstatt selbst wählen?</span></summary><div class="rte"><p>Bei einem Haftpflichtschaden – also wenn der Unfallgegner schuld ist – können Sie die Werkstatt grundsätzlich frei wählen. Bei Kaskoschäden hängt es von Ihrem Tarif ab; manche Verträge sehen eine Werkstattbindung vor.</p></div></details><details><summary><span>Brauche ich einen Gutachter?</span></summary><div class="rte"><p>Bei größeren Haftpflichtschäden haben Sie Anspruch auf einen unabhängigen Gutachter. Bei kleineren Schäden reicht oft ein Kostenvoranschlag. Wir sagen Ihnen, was in Ihrem Fall sinnvoll ist, und stimmen uns mit dem Gutachter ab.</p></div></details><details><summary><span>Bekomme ich einen Ersatzwagen?</span></summary><div class="rte"><p>Ja. Damit Sie mobil bleiben, stellen wir Ihnen für die Dauer der Reparatur einen Ersatzwagen zur Verfügung. Auf Wunsch holen wir Ihr Fahrzeug auch ab und bringen es zurück.</p></div></details><details><summary><span>Wie lange dauert die Reparatur?</span></summary><div class="rte"><p>Das hängt vom Schaden und von der Teileverfügbarkeit ab. Mit dem Kostenvoranschlag nennen wir Ihnen einen realistischen Zeitrahmen.</p></div></details></div></div>
 </section><section class="more-svc">
   <div class="page-width">
     <h2>Das könnte Sie auch interessieren</h2>

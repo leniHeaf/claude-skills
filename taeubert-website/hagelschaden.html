@@ -817,6 +817,17 @@
     .map iframe { height: 300px; }
   }
 
+  /* Leistungsseiten: Einleitung als ruhiger, großer Auftakt */
+  .svc-lead { padding: 96px 0 80px !important; }
+  .svc-lead .rich-inner { max-width: 820px !important; margin: 0 auto; text-align: center !important; }
+  .svc-lead .eyebrow { justify-content: center; }
+  .svc-lead .rte p:first-child { font-family: var(--f-display); font-size: clamp(24px, 2.6vw, 34px); line-height: 1.22; color: var(--black); margin-bottom: 24px; }
+  .svc-lead .rte p { font-size: 17px; color: #555; max-width: 680px; margin-left: auto; margin-right: auto; }
+  .iwt-media[style*="aspect-ratio:auto"] { min-height: 0; background: none; }
+  .iwt-media[style*="aspect-ratio:auto"] img { display: block; height: auto; }
+  .svc-steps + .sec .faq, .svc-steps ~ .sec .faq { padding-top: 10px; }
+  @media (max-width: 760px) { .svc-lead { padding: 60px 0 50px !important; } .svc-lead .rte p { font-size: 16px; } }
+
   .city { padding: 110px 0; border-bottom: 1px solid var(--line); }
   .city-inner { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 64px; align-items: start; }
   .city h2 { font-size: clamp(30px, 3.4vw, 50px); line-height: 1.02; margin-bottom: 18px; }
@@ -903,8 +914,7 @@
     <ul class="trust"><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Kostenvoranschlag in 24 Stunden</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Direkte Abrechnung mit der Versicherung</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ersatzwagen</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Hol- und Bringservice</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Alle Marken</li></ul>
     <div class="btns"><a class="btn btn-dark" href="https://terminbuchungtaeubert.de">Termin online buchen</a><a class="btn btn-outline-dark" href="schaden-melden.html">Schaden per Foto melden</a></div>
   </div>
-</section>
-<section class="page-width svc-layout">
+</section><section class="page-width svc-layout">
   <div class="svc-article"><div><h2>Hagel hinterlässt mehr als ein paar Dellen</h2><div class="rte"><p>Ein kurzer Schauer reicht, und das Dach sieht aus wie ein Golfball. Hagelschäden sind ärgerlich, aber in vielen Fällen gut zu reparieren – oft sogar, ohne dass der Originallack angetastet werden muss.</p><p>Entscheidend ist, wie tief die Dellen sind und ob der Lack beschädigt wurde. Genau das schauen wir uns als Erstes an.</p></div></div><div><h2>So reparieren wir Hagelschäden</h2><div class="rte"><ul><li><strong>Smart Repair:</strong> Dellen werden von innen schonend zurückgeformt, der Originallack bleibt erhalten.</li><li><strong>Lackreparatur:</strong> Ist der Lack gerissen oder abgeplatzt, lackieren wir die betroffenen Teile mit exakter Farbtonanpassung.</li><li><strong>Karosserie:</strong> Stark verformte Teile setzen wir instand oder ersetzen sie.</li></ul><p>Karosserie und Lackierung passieren bei uns im selben Betrieb – das spart Zeit und sorgt für ein einheitliches Ergebnis.</p></div></div><div><h2>Hagelschaden und Versicherung</h2><div class="rte"><p>Hagel ist in der Regel über die Teilkasko versichert. Wir dokumentieren den Schaden, stimmen uns mit Ihrer Versicherung und dem Gutachter ab und übernehmen die Reparatur. Welche Kosten Ihre Versicherung übernimmt, hängt von Ihrem Vertrag ab – wir helfen Ihnen gern bei der Klärung.</p></div></div></div>
   <aside class="svc-aside" aria-label="Termin">
     <p class="aside-kicker">Hagelschaden</p>
@@ -913,9 +923,6 @@
     <div class="btns"><a class="btn btn-light" href="https://terminbuchungtaeubert.de">Termin online buchen</a><a class="btn btn-outline-light" href="schaden-melden.html">Schaden per Foto melden</a><a class="btn btn-outline-light" href="tel:+4936754289606">03675 4289606</a></div>
     <p class="hours">Mo–Do 8–17 Uhr · Fr 8–14:30 Uhr<br>Bettelhecker Straße 15, Sonneberg</p>
   </aside>
-</section>
-<section class="sec" style="padding:60px 0">
-  <div class="page-width"><div class="faq"><h2 class="sec-head">Häufige Fragen</h2><details><summary><span>Kann jede Hageldelle ohne Lackieren entfernt werden?</span></summary><div class="rte"><p>Nicht jede. Ist der Lack beschädigt oder die Delle sehr tief oder an einer Kante, ist meist eine Lackierung nötig. Wir sagen Ihnen nach der Begutachtung ehrlich, welcher Weg sinnvoll ist.</p></div></details><details><summary><span>Zahlt die Versicherung den Hagelschaden?</span></summary><div class="rte"><p>Hagel ist üblicherweise über die Teilkasko abgedeckt. Die genauen Bedingungen stehen in Ihrem Vertrag; wir unterstützen Sie bei der Abstimmung mit der Versicherung.</p></div></details><details><summary><span>Wie schnell sollte ich nach einem Hagelschauer kommen?</span></summary><div class="rte"><p>So bald wie möglich – vor allem, wenn der Lack beschädigt ist. Offene Stellen können sonst rosten.</p></div></details></div></div>
 </section><section class="svc-steps">
   <div class="page-width">
     <h2>So läuft's ab</h2>
@@ -926,6 +933,8 @@
       <li><span class="num">4</span><h3>Abholen und weiterfahren</h3><p>Geprüft und gereinigt – man sieht nicht mehr, wo der Schaden war.</p></li>
     </ol>
   </div>
+</section><section class="sec" style="padding:60px 0">
+  <div class="page-width"><div class="faq"><h2 class="sec-head">Häufige Fragen</h2><details><summary><span>Kann jede Hageldelle ohne Lackieren entfernt werden?</span></summary><div class="rte"><p>Nicht jede. Ist der Lack beschädigt oder die Delle sehr tief oder an einer Kante, ist meist eine Lackierung nötig. Wir sagen Ihnen nach der Begutachtung ehrlich, welcher Weg sinnvoll ist.</p></div></details><details><summary><span>Zahlt die Versicherung den Hagelschaden?</span></summary><div class="rte"><p>Hagel ist üblicherweise über die Teilkasko abgedeckt. Die genauen Bedingungen stehen in Ihrem Vertrag; wir unterstützen Sie bei der Abstimmung mit der Versicherung.</p></div></details><details><summary><span>Wie schnell sollte ich nach einem Hagelschauer kommen?</span></summary><div class="rte"><p>So bald wie möglich – vor allem, wenn der Lack beschädigt ist. Offene Stellen können sonst rosten.</p></div></details></div></div>
 </section><section class="more-svc">
   <div class="page-width">
     <h2>Das könnte Sie auch interessieren</h2>

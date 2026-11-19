@@ -817,6 +817,17 @@
     .map iframe { height: 300px; }
   }
 
+  /* Leistungsseiten: Einleitung als ruhiger, großer Auftakt */
+  .svc-lead { padding: 96px 0 80px !important; }
+  .svc-lead .rich-inner { max-width: 820px !important; margin: 0 auto; text-align: center !important; }
+  .svc-lead .eyebrow { justify-content: center; }
+  .svc-lead .rte p:first-child { font-family: var(--f-display); font-size: clamp(24px, 2.6vw, 34px); line-height: 1.22; color: var(--black); margin-bottom: 24px; }
+  .svc-lead .rte p { font-size: 17px; color: #555; max-width: 680px; margin-left: auto; margin-right: auto; }
+  .iwt-media[style*="aspect-ratio:auto"] { min-height: 0; background: none; }
+  .iwt-media[style*="aspect-ratio:auto"] img { display: block; height: auto; }
+  .svc-steps + .sec .faq, .svc-steps ~ .sec .faq { padding-top: 10px; }
+  @media (max-width: 760px) { .svc-lead { padding: 60px 0 50px !important; } .svc-lead .rte p { font-size: 16px; } }
+
   .city { padding: 110px 0; border-bottom: 1px solid var(--line); }
   .city-inner { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 64px; align-items: start; }
   .city h2 { font-size: clamp(30px, 3.4vw, 50px); line-height: 1.02; margin-bottom: 18px; }
@@ -903,8 +914,7 @@
     <ul class="trust"><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Kostenvoranschlag in 24 Stunden</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ersatzwagen</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Hol- und Bringservice</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Schlüsselabgabe auch nach Feierabend</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Alle Marken</li></ul>
     <div class="btns"><a class="btn btn-dark" href="https://terminbuchungtaeubert.de">Termin online buchen</a><a class="btn btn-outline-dark" href="termin.html?leistung=Oldtimer%20%26%20Klassiker#wunschtermin">Wunschtermin anfragen</a></div>
   </div>
-</section>
-<section class="page-width svc-layout">
+</section><section class="page-width svc-layout">
   <div class="svc-article"><div><h2>Substanz erhalten, Charakter bewahren</h2><div class="rte"><p>Bei einem Klassiker geht es nicht darum, ihn wie neu aussehen zu lassen. Es geht darum, ihn richtig zu machen: Rost konsequent entfernen, die Substanz erhalten und den Charakter des Fahrzeugs bewahren.</p></div></div><div><h2>Was wir an Oldtimern machen</h2><div class="rte"><ul><li>Entrostung und Instandsetzung tragender Karosseriebereiche</li><li>Karosseriearbeiten an Front, Heck und Anbauteilen</li><li>Lackaufbau im Originalfarbton</li><li>Teil- und Komplettlackierungen</li></ul><p>Vorbereitung, Lackaufbau und Farbton orientieren sich am Original – so bleibt der Klassiker stimmig.</p></div></div><div><h2>Unsere Projekte</h2><div class="rte"><p>Ob Porsche 911, VW Bulli T2 oder Porsche Cayenne: Einige unserer Projekte zeigen wir ausführlich.</p><p><a href="porsche-911.html">Porsche 911</a> · <a href="vw-bulli-t2.html">VW Bulli T2</a> · <a href="porsche-gts.html">Porsche Cayenne GTS</a></p><p>Individuelle Designs und Sonderlackierungen finden Sie bei <a href="https://taeubertcustomize.de/" target="_blank" rel="noopener">Täubert custom</a>.</p></div></div></div>
   <aside class="svc-aside" aria-label="Termin">
     <p class="aside-kicker">Oldtimer &amp; Klassiker</p>
@@ -913,14 +923,13 @@
     <div class="btns"><a class="btn btn-light" href="https://terminbuchungtaeubert.de">Termin online buchen</a><a class="btn btn-outline-light" href="termin.html?leistung=Oldtimer%20%26%20Klassiker#wunschtermin">Wunschtermin anfragen</a><a class="btn btn-outline-light" href="tel:+4936754289606">03675 4289606</a></div>
     <p class="hours">Mo–Do 8–17 Uhr · Fr 8–14:30 Uhr<br>Bettelhecker Straße 15, Sonneberg</p>
   </aside>
-</section>
-<section class="sec" style="padding:60px 0">
-  <div class="page-width"><div class="faq"><h2 class="sec-head">Häufige Fragen</h2><details><summary><span>Bieten Sie Hohlraumversiegelung für Klassiker an?</span></summary><div class="rte"><p>Ja, zum Beispiel mit Mike Sanders Korrosionsschutzfett – ideal für Oldtimer. Mehr dazu beim <a href="unterbodenschutz.html">Unterbodenschutz</a>.</p></div></details><details><summary><span>Restaurieren Sie komplette Fahrzeuge?</span></summary><div class="rte"><p>Unser Schwerpunkt liegt auf Karosserie, Entrostung und Lackierung. Was bei Ihrem Fahrzeug sinnvoll ist, besprechen wir gemeinsam vor Ort.</p></div></details><details><summary><span>Können Sie den Originalfarbton treffen?</span></summary><div class="rte"><p>Ja, der Farbton wird am Original orientiert und digital gemessen. Bei sehr alten Lacken stimmen wir den Ton zusätzlich mit Ihnen ab.</p></div></details><details><summary><span>Wie lange dauert eine Restaurierung?</span></summary><div class="rte"><p>Das hängt stark vom Zustand des Fahrzeugs ab. Nach der Begutachtung bekommen Sie eine realistische Einschätzung.</p></div></details></div></div>
 </section><section class="svc-steps">
   <div class="page-width">
     <h2>So läuft's ab</h2>
     <ol class="steps"><li><span class="num">1</span><h3>Kennenlernen</h3><p>Wir sehen uns Ihr Fahrzeug gemeinsam an und sprechen über Ihre Wünsche.</p></li><li><span class="num">2</span><h3>Bestandsaufnahme &amp; Plan</h3><p>Was ist nötig, was ist möglich – und in welcher Reihenfolge.</p></li><li><span class="num">3</span><h3>Restaurierung</h3><p>Mit Geduld und Handwerk, jeder größere Schritt wird mit Ihnen abgestimmt.</p></li><li><span class="num">4</span><h3>Übergabe</h3><p>Ihr Klassiker – bereit für die nächste Ausfahrt.</p></li></ol>
   </div>
+</section><section class="sec" style="padding:60px 0">
+  <div class="page-width"><div class="faq"><h2 class="sec-head">Häufige Fragen</h2><details><summary><span>Bieten Sie Hohlraumversiegelung für Klassiker an?</span></summary><div class="rte"><p>Ja, zum Beispiel mit Mike Sanders Korrosionsschutzfett – ideal für Oldtimer. Mehr dazu beim <a href="unterbodenschutz.html">Unterbodenschutz</a>.</p></div></details><details><summary><span>Restaurieren Sie komplette Fahrzeuge?</span></summary><div class="rte"><p>Unser Schwerpunkt liegt auf Karosserie, Entrostung und Lackierung. Was bei Ihrem Fahrzeug sinnvoll ist, besprechen wir gemeinsam vor Ort.</p></div></details><details><summary><span>Können Sie den Originalfarbton treffen?</span></summary><div class="rte"><p>Ja, der Farbton wird am Original orientiert und digital gemessen. Bei sehr alten Lacken stimmen wir den Ton zusätzlich mit Ihnen ab.</p></div></details><details><summary><span>Wie lange dauert eine Restaurierung?</span></summary><div class="rte"><p>Das hängt stark vom Zustand des Fahrzeugs ab. Nach der Begutachtung bekommen Sie eine realistische Einschätzung.</p></div></details></div></div>
 </section><section class="more-svc">
   <div class="page-width">
     <h2>Das könnte Sie auch interessieren</h2>
