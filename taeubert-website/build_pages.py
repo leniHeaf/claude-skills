@@ -460,7 +460,9 @@ EXTRA_CSS = """
   .svc-article > div + div { margin-top: 56px; padding-top: 56px; border-top: 1px solid var(--line); }
   .svc-article h2 { font-size: clamp(26px, 2.8vw, 38px); margin-bottom: 18px; }
   .svc-aside { position: sticky; top: 110px; background: var(--black); color: var(--white); padding: 32px; }
-  .svc-aside h2 { font-size: 22px; margin-bottom: 18px; }
+  .svc-aside h2 { font-size: 20px; margin-bottom: 18px; }
+  .svc-aside .aside-kicker { font-family: var(--f-mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.6); margin-bottom: 8px; overflow-wrap: anywhere; }
+  @media (min-width: 991px) { .svc-layout ~ * .svc-quick .trust, body:has(.svc-aside) .svc-quick .trust { display: none; } body:has(.svc-aside) .svc-quick-inner { justify-content: flex-start; } }
   .svc-aside .trust { flex-direction: column; gap: 10px; color: rgba(255,255,255,.9); }
   .svc-aside .btns { flex-direction: column; margin-top: 24px; gap: 10px; display: flex; }
   .svc-aside .btn { width: 100%; text-align: center; }
@@ -715,20 +717,30 @@ def keyword_h1(body_html, h1):
 TRUST = ["Kostenvoranschlag in 24 Stunden", "Direkte Abrechnung mit der Versicherung", "Ersatzwagen", "Hol- und Bringservice", "Alle Marken"]
 CHECK = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>'
 TRUST_HTML = '<ul class="trust">' + "".join(f"<li>{CHECK}{t}</li>" for t in TRUST) + "</ul>"
+TRUST_OTHER = ["Kostenvoranschlag in 24 Stunden", "Ersatzwagen", "Hol- und Bringservice", "Schlüsselabgabe auch nach Feierabend", "Alle Marken"]
+
+
+def trust_for(slug):
+    """Bei Pflege, Reifen, HU usw. ist die Versicherungsabrechnung kein Thema."""
+    if any(slug in slugs for _, slugs in CATEGORIES) and svc_kind(slug) != "damage":
+        return '<ul class="trust">' + "".join(f"<li>{CHECK}{t}</li>" for t in TRUST_OTHER) + "</ul>"
+    return TRUST_HTML
 
 
 def booking_cta(slug, place):
+    in_cat = any(slug in slugs for _, slugs in CATEGORIES)
+    cta2 = second_cta(slug, place, "outline-light") if in_cat else '<a class="btn btn-outline-light" href="schaden-melden.html">Schaden per Foto melden</a>'
     svc = "".join(f'<li><a href="{x}.html">{esc(n)}</a></li>' for x, n in SERVICE_LINKS if x != slug)
     loc = "".join(f'<li><a href="{x}.html">{esc(n)}</a></li>' for x, n in LOCATION_LINKS if x != slug)
     return f'''<section class="booking-cta">
   <div class="page-width">
     <h2>Termin online buchen</h2>
-    {TRUST_HTML}
+    {trust_for(slug)}
     <p class="callback-hint">Keine Zeit zum Buchen? <a href="termin.html#rueckruf">Rückruf anfordern</a> – wir melden uns.</p>
     <p>Wählen Sie Ihren Wunschtermin direkt online – oder rufen Sie uns an. Wir schauen uns Ihr Fahrzeug an und sagen Ihnen ehrlich, was Sinn macht.</p>
     <div class="btns">
       <a class="btn btn-light" href="{BOOKING}">Termin online buchen</a>
-      <a class="btn btn-outline-light" href="schaden-melden.html">Schaden per Foto melden</a>
+      {cta2}
       <a class="btn btn-outline-light" href="tel:+4936754289606">03675 4289606</a>
       <a class="btn btn-outline-light" href="https://wa.me/4936754289606" target="_blank" rel="noopener">WhatsApp</a>
     </div>
@@ -864,9 +876,10 @@ def render_new_page(slug, p, aside_title=None):
     secs = [f'''<section class="page-width svc-layout">
   <div class="svc-article">{art}</div>
   <aside class="svc-aside" aria-label="Termin">
-    <h2>{esc(aside_title or p["short"] + " bei Täubert")}</h2>
-    {TRUST_HTML}
-    <div class="btns"><a class="btn btn-light" href="{BOOKING}">Termin online buchen</a><a class="btn btn-outline-light" href="schaden-melden.html">Schaden per Foto melden</a><a class="btn btn-outline-light" href="tel:+4936754289606">03675 4289606</a></div>
+    <p class="aside-kicker">{esc(p["short"])}</p>
+    <h2>{esc(aside_title or "Ihr Termin bei Täubert")}</h2>
+    {trust_for(slug)}
+    <div class="btns"><a class="btn btn-light" href="{BOOKING}">Termin online buchen</a>{second_cta(slug, p["short"], "outline-light")}<a class="btn btn-outline-light" href="tel:+4936754289606">03675 4289606</a></div>
     <p class="hours">Mo–Do 8–17 Uhr · Fr 8–14:30 Uhr<br>Bettelhecker Straße 15, Sonneberg</p>
   </aside>
 </section>''']
@@ -1130,8 +1143,8 @@ def service_intro(slug, name):
 <p class="svc-area page-width">{esc(name)} für Kunden aus <a href="sonneberg.html">Sonneberg</a>, <a href="coburg.html">Coburg</a>, <a href="kronach.html">Kronach</a>, <a href="neustadt.html">Neustadt bei Coburg</a> und Umgebung – mit Hol- und Bringservice.</p>
 <section class="svc-quick">
   <div class="page-width svc-quick-inner">
-    {TRUST_HTML}
-    <div class="btns"><a class="btn btn-dark" href="{BOOKING}">Termin online buchen</a><a class="btn btn-outline-dark" href="schaden-melden.html">Schaden per Foto melden</a></div>
+    {trust_for(slug)}
+    <div class="btns"><a class="btn btn-dark" href="{BOOKING}">Termin online buchen</a>{second_cta(slug, name)}</div>
   </div>
 </section>'''
 
@@ -1147,6 +1160,52 @@ STEPS_HTML = '''<section class="svc-steps">
     </ol>
   </div>
 </section>'''
+
+
+def svc_kind(slug):
+    """damage = Unfall/Karosserie/Lack, care = Aufbereitung & Pflege, classic = Oldtimer, sonst service."""
+    cat = next((c for c, slugs in CATEGORIES if slug in slugs), "")
+    if cat in ("Unfall & Versicherung", "Karosserie & Lack") or slug in ("unfall", "leasingrueckgabe"):
+        return "damage"
+    return {"Aufbereitung & Pflege": "care", "Klassiker": "classic"}.get(cat, "service")
+
+
+def second_cta(slug, name, style="outline-dark"):
+    if svc_kind(slug) == "damage":
+        return f'<a class="btn btn-{style}" href="schaden-melden.html">Schaden per Foto melden</a>'
+    from urllib.parse import quote
+    return f'<a class="btn btn-{style}" href="termin.html?leistung={quote(name)}#wunschtermin">Wunschtermin anfragen</a>'
+
+
+def _steps(items):
+    lis = "".join(f'<li><span class="num">{i + 1}</span><h3>{esc(h)}</h3><p>{esc(t)}</p></li>' for i, (h, t) in enumerate(items))
+    return f'''<section class="svc-steps">
+  <div class="page-width">
+    <h2>So läuft's ab</h2>
+    <ol class="steps">{lis}</ol>
+  </div>
+</section>'''
+
+
+STEPS_BY_KIND = {
+    "care": [("Termin wählen", "Online buchen, anrufen oder per WhatsApp – wir beraten Sie, welche Pflege zu Ihrem Fahrzeug passt."),
+             ("Bringen oder abholen lassen", "Im Umkreis von 30 km holen wir Ihr Auto ab. Auf Wunsch bekommen Sie einen Ersatzwagen."),
+             ("Aufbereitung in Ruhe", "Gründlich, Schritt für Schritt und mit Produkten, die zu Lack und Material passen."),
+             ("Glänzend zurück", "Gemeinsame Übergabe mit Pflegetipps – auf Wunsch bringen wir Ihr Auto vor die Tür.")],
+    "service": [("Termin buchen", "Online, telefonisch oder per WhatsApp – zu einer Zeit, die Ihnen passt."),
+                ("Auto bringen oder abholen lassen", "Schlüssel auch nach Feierabend abgeben – oder wir holen das Auto im Umkreis von 30 km ab."),
+                ("Wir erledigen alles", "Sie müssen nicht warten. Wenn mehr zu tun ist als besprochen, rufen wir Sie vorher an."),
+                ("Weiterfahren", "Bezahlen per EC-Karte, Kreditkarte, Rechnung oder bar – und los.")],
+    "classic": [("Kennenlernen", "Wir sehen uns Ihr Fahrzeug gemeinsam an und sprechen über Ihre Wünsche."),
+                ("Bestandsaufnahme & Plan", "Was ist nötig, was ist möglich – und in welcher Reihenfolge."),
+                ("Restaurierung", "Mit Geduld und Handwerk, jeder größere Schritt wird mit Ihnen abgestimmt."),
+                ("Übergabe", "Ihr Klassiker – bereit für die nächste Ausfahrt.")],
+}
+
+
+def steps_for(slug):
+    kind = svc_kind(slug)
+    return STEPS_HTML if kind == "damage" else _steps(STEPS_BY_KIND[kind])
 
 
 # Einheitliche Ansprache mit "Sie" (einige Shopify-Texte duzen)
@@ -1318,7 +1377,7 @@ def with_service_frame(slug, name, body_html):
     """Startbild bleibt oben; danach Brotkrumen + Kurzleiste, am Ende vor dem Buchungsblock der Ablauf."""
     m = re.search(r"<section.*?</section>", body_html, re.S)
     head, rest = body_html[:m.end()], body_html[m.end():]
-    return head + service_intro(slug, name) + rest + STEPS_HTML
+    return head + service_intro(slug, name) + rest + steps_for(slug)
 
 
 

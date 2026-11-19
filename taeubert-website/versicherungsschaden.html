@@ -727,7 +727,9 @@
   .svc-article > div + div { margin-top: 56px; padding-top: 56px; border-top: 1px solid var(--line); }
   .svc-article h2 { font-size: clamp(26px, 2.8vw, 38px); margin-bottom: 18px; }
   .svc-aside { position: sticky; top: 110px; background: var(--black); color: var(--white); padding: 32px; }
-  .svc-aside h2 { font-size: 22px; margin-bottom: 18px; }
+  .svc-aside h2 { font-size: 20px; margin-bottom: 18px; }
+  .svc-aside .aside-kicker { font-family: var(--f-mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.6); margin-bottom: 8px; overflow-wrap: anywhere; }
+  @media (min-width: 991px) { .svc-layout ~ * .svc-quick .trust, body:has(.svc-aside) .svc-quick .trust { display: none; } body:has(.svc-aside) .svc-quick-inner { justify-content: flex-start; } }
   .svc-aside .trust { flex-direction: column; gap: 10px; color: rgba(255,255,255,.9); }
   .svc-aside .btns { flex-direction: column; margin-top: 24px; gap: 10px; display: flex; }
   .svc-aside .btn { width: 100%; text-align: center; }
@@ -905,7 +907,8 @@
 <section class="page-width svc-layout">
   <div class="svc-article"><div><h2>Papierkram ist nicht Ihr Job</h2><div class="rte"><p>Nach einem Unfall möchte niemand Formulare ausfüllen und Telefonate führen. Bei Täubert müssen Sie das auch nicht: Wir übernehmen die Abstimmung mit der Versicherung und dem Gutachter und kümmern uns um die Reparatur.</p></div></div><div><h2>So läuft die Abwicklung</h2><div class="rte"><ol><li>Sie melden den Schaden bei uns – telefonisch, per WhatsApp oder über die Online-Terminbuchung.</li><li>Wir nehmen den Schaden auf und dokumentieren ihn.</li><li>Wir stimmen uns mit Ihrer Versicherung und dem Gutachter ab.</li><li>Wir reparieren Karosserie und Lack im eigenen Haus.</li><li>Sie holen Ihr Fahrzeug fertig repariert ab.</li></ol></div></div><div><h2>Haftpflicht oder Kasko?</h2><div class="rte"><p>Wer die Kosten übernimmt, hängt davon ab, wer den Schaden verursacht hat und wie Sie versichert sind. Mehr dazu lesen Sie in unserem Ratgeber <a href="unfall-oder-kratzer.html">Unfall oder Kratzer – wer übernimmt die Reparaturkosten?</a></p></div></div></div>
   <aside class="svc-aside" aria-label="Termin">
-    <h2>Versicherungsschaden bei Täubert</h2>
+    <p class="aside-kicker">Versicherungsschaden</p>
+    <h2>Ihr Termin bei Täubert</h2>
     <ul class="trust"><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Kostenvoranschlag in 24 Stunden</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Direkte Abrechnung mit der Versicherung</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ersatzwagen</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Hol- und Bringservice</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Alle Marken</li></ul>
     <div class="btns"><a class="btn btn-light" href="https://terminbuchungtaeubert.de">Termin online buchen</a><a class="btn btn-outline-light" href="schaden-melden.html">Schaden per Foto melden</a><a class="btn btn-outline-light" href="tel:+4936754289606">03675 4289606</a></div>
     <p class="hours">Mo–Do 8–17 Uhr · Fr 8–14:30 Uhr<br>Bettelhecker Straße 15, Sonneberg</p>

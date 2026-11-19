@@ -728,7 +728,9 @@
   .svc-article > div + div { margin-top: 56px; padding-top: 56px; border-top: 1px solid var(--line); }
   .svc-article h2 { font-size: clamp(26px, 2.8vw, 38px); margin-bottom: 18px; }
   .svc-aside { position: sticky; top: 110px; background: var(--black); color: var(--white); padding: 32px; }
-  .svc-aside h2 { font-size: 22px; margin-bottom: 18px; }
+  .svc-aside h2 { font-size: 20px; margin-bottom: 18px; }
+  .svc-aside .aside-kicker { font-family: var(--f-mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.6); margin-bottom: 8px; overflow-wrap: anywhere; }
+  @media (min-width: 991px) { .svc-layout ~ * .svc-quick .trust, body:has(.svc-aside) .svc-quick .trust { display: none; } body:has(.svc-aside) .svc-quick-inner { justify-content: flex-start; } }
   .svc-aside .trust { flex-direction: column; gap: 10px; color: rgba(255,255,255,.9); }
   .svc-aside .btns { flex-direction: column; margin-top: 24px; gap: 10px; display: flex; }
   .svc-aside .btn { width: 100%; text-align: center; }
@@ -888,9 +890,10 @@
 <section class="page-width svc-layout">
   <div class="svc-article"><div><h2>Was ist Smart Repair?</h2><div class="rte"><p>Beim Smart Repair werden Dellen von innen schonend zurückgedrückt oder von außen herausgezogen – ohne neue Lackierung. Der Originallack bleibt erhalten, und die Reparatur dauert oft nur wenige Stunden.</p></div></div><div><h2>Wovon der Preis abhängt</h2><div class="rte"><ul><li><strong>Größe und Tiefe</strong> der Delle</li><li><strong>Position:</strong> an Kanten und Sicken ist es aufwendiger</li><li><strong>Zugänglichkeit</strong> von innen</li><li><strong>Material:</strong> Aluminium ist anspruchsvoller als Stahl</li><li><strong>Lack:</strong> ist er gerissen, kommt ein Spot Repair hinzu</li></ul></div></div><div><h2>Smart Repair oder Lackierung?</h2><div class="rte"><p>Smart Repair ist meist deutlich günstiger und schneller als eine Lackierung – und es gibt keine Farbunterschiede. Ist der Lack beschädigt oder die Delle zu stark, lackieren wir. Wir sagen Ihnen ehrlich, was sinnvoll ist.</p><p><strong>Ihr Preis in 24 Stunden:</strong> Schicken Sie uns zwei, drei Fotos über <a href="schaden-melden.html">Schaden per Foto melden</a>.</p></div></div></div>
   <aside class="svc-aside" aria-label="Termin">
+    <p class="aside-kicker">Smart Repair: Kosten</p>
     <h2>Wir helfen Ihnen weiter</h2>
     <ul class="trust"><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Kostenvoranschlag in 24 Stunden</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Direkte Abrechnung mit der Versicherung</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ersatzwagen</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Hol- und Bringservice</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Alle Marken</li></ul>
-    <div class="btns"><a class="btn btn-light" href="https://terminbuchungtaeubert.de">Termin online buchen</a><a class="btn btn-outline-light" href="schaden-melden.html">Schaden per Foto melden</a><a class="btn btn-outline-light" href="tel:+4936754289606">03675 4289606</a></div>
+    <div class="btns"><a class="btn btn-light" href="https://terminbuchungtaeubert.de">Termin online buchen</a><a class="btn btn-outline-light" href="termin.html?leistung=Smart%20Repair%3A%20Kosten#wunschtermin">Wunschtermin anfragen</a><a class="btn btn-outline-light" href="tel:+4936754289606">03675 4289606</a></div>
     <p class="hours">Mo–Do 8–17 Uhr · Fr 8–14:30 Uhr<br>Bettelhecker Straße 15, Sonneberg</p>
   </aside>
 </section>

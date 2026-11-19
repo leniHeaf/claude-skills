@@ -727,7 +727,9 @@
   .svc-article > div + div { margin-top: 56px; padding-top: 56px; border-top: 1px solid var(--line); }
   .svc-article h2 { font-size: clamp(26px, 2.8vw, 38px); margin-bottom: 18px; }
   .svc-aside { position: sticky; top: 110px; background: var(--black); color: var(--white); padding: 32px; }
-  .svc-aside h2 { font-size: 22px; margin-bottom: 18px; }
+  .svc-aside h2 { font-size: 20px; margin-bottom: 18px; }
+  .svc-aside .aside-kicker { font-family: var(--f-mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.6); margin-bottom: 8px; overflow-wrap: anywhere; }
+  @media (min-width: 991px) { .svc-layout ~ * .svc-quick .trust, body:has(.svc-aside) .svc-quick .trust { display: none; } body:has(.svc-aside) .svc-quick-inner { justify-content: flex-start; } }
   .svc-aside .trust { flex-direction: column; gap: 10px; color: rgba(255,255,255,.9); }
   .svc-aside .btns { flex-direction: column; margin-top: 24px; gap: 10px; display: flex; }
   .svc-aside .btn { width: 100%; text-align: center; }
@@ -905,7 +907,8 @@
 <section class="page-width svc-layout">
   <div class="svc-article"><div><h2>Lackstift nach Farbcode</h2><div class="rte"><p>Ein guter Lackstift schützt kleine Macken vor Rost und lässt sie fast verschwinden. Wir mischen Ihren Farbton nach Farbcode exakt an – auf Wunsch messen wir den Lack direkt am Fahrzeug digital.</p><p><strong>Ihr Farbcode</strong> steht meist auf dem Typenschild in der Fahrertür bzw. B-Säule, im Kofferraum oder im Serviceheft. Nicht gefunden? Bringen Sie das Auto kurz vorbei.</p></div></div><div><h2>So verwenden Sie den Lackstift richtig</h2><div class="rte"><ol><li>Stelle gründlich reinigen und entfetten</li><li>Lose Lackteile vorsichtig entfernen</li><li>Lack dünn auftupfen, nicht streichen</li><li>Gut trocknen lassen, bei Bedarf eine zweite Schicht</li><li>Zum Schluss Klarlack für Glanz und Schutz</li></ol></div></div><div><h2>Wann ein Lackstift reicht – und wann nicht</h2><div class="rte"><p>Für Steinschläge und kleine, punktuelle Kratzer ist der Lackstift ideal. Längere Kratzer, Dellen oder größere Flächen beheben wir besser mit <a href="smartrepair.html">Smart Repair</a> oder einer <a href="lackierarbeiten.html">Lackierung</a> – dann sieht man wirklich nichts mehr.</p></div></div></div>
   <aside class="svc-aside" aria-label="Termin">
-    <h2>Lackstift bei Täubert</h2>
+    <p class="aside-kicker">Lackstift</p>
+    <h2>Ihr Termin bei Täubert</h2>
     <ul class="trust"><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Kostenvoranschlag in 24 Stunden</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Direkte Abrechnung mit der Versicherung</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ersatzwagen</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Hol- und Bringservice</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Alle Marken</li></ul>
     <div class="btns"><a class="btn btn-light" href="https://terminbuchungtaeubert.de">Termin online buchen</a><a class="btn btn-outline-light" href="schaden-melden.html">Schaden per Foto melden</a><a class="btn btn-outline-light" href="tel:+4936754289606">03675 4289606</a></div>
     <p class="hours">Mo–Do 8–17 Uhr · Fr 8–14:30 Uhr<br>Bettelhecker Straße 15, Sonneberg</p>

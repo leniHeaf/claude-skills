@@ -727,7 +727,9 @@
   .svc-article > div + div { margin-top: 56px; padding-top: 56px; border-top: 1px solid var(--line); }
   .svc-article h2 { font-size: clamp(26px, 2.8vw, 38px); margin-bottom: 18px; }
   .svc-aside { position: sticky; top: 110px; background: var(--black); color: var(--white); padding: 32px; }
-  .svc-aside h2 { font-size: 22px; margin-bottom: 18px; }
+  .svc-aside h2 { font-size: 20px; margin-bottom: 18px; }
+  .svc-aside .aside-kicker { font-family: var(--f-mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.6); margin-bottom: 8px; overflow-wrap: anywhere; }
+  @media (min-width: 991px) { .svc-layout ~ * .svc-quick .trust, body:has(.svc-aside) .svc-quick .trust { display: none; } body:has(.svc-aside) .svc-quick-inner { justify-content: flex-start; } }
   .svc-aside .trust { flex-direction: column; gap: 10px; color: rgba(255,255,255,.9); }
   .svc-aside .btns { flex-direction: column; margin-top: 24px; gap: 10px; display: flex; }
   .svc-aside .btn { width: 100%; text-align: center; }

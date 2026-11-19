@@ -728,7 +728,9 @@
   .svc-article > div + div { margin-top: 56px; padding-top: 56px; border-top: 1px solid var(--line); }
   .svc-article h2 { font-size: clamp(26px, 2.8vw, 38px); margin-bottom: 18px; }
   .svc-aside { position: sticky; top: 110px; background: var(--black); color: var(--white); padding: 32px; }
-  .svc-aside h2 { font-size: 22px; margin-bottom: 18px; }
+  .svc-aside h2 { font-size: 20px; margin-bottom: 18px; }
+  .svc-aside .aside-kicker { font-family: var(--f-mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.6); margin-bottom: 8px; overflow-wrap: anywhere; }
+  @media (min-width: 991px) { .svc-layout ~ * .svc-quick .trust, body:has(.svc-aside) .svc-quick .trust { display: none; } body:has(.svc-aside) .svc-quick-inner { justify-content: flex-start; } }
   .svc-aside .trust { flex-direction: column; gap: 10px; color: rgba(255,255,255,.9); }
   .svc-aside .btns { flex-direction: column; margin-top: 24px; gap: 10px; display: flex; }
   .svc-aside .btn { width: 100%; text-align: center; }
@@ -888,9 +890,10 @@
 <section class="page-width svc-layout">
   <div class="svc-article"><div><h2>Wann anfangen?</h2><div class="rte"><p>Am besten sechs bis acht Wochen vor der Rückgabe. Dann bleibt genug Zeit für Einschätzung, Reparatur und Aufbereitung – ohne Stress.</p></div></div><div><h2>Checkliste außen</h2><div class="rte"><ul><li>Kratzer und Schrammen im Lack</li><li>Dellen und Parkschäden</li><li>Steinschläge an Front und Motorhaube</li><li>Bordsteinschäden an den Felgen</li><li>Risse oder Schäden an Stoßfängern</li><li>Reifen: Profiltiefe und Beschädigungen</li></ul></div></div><div><h2>Checkliste innen und Unterlagen</h2><div class="rte"><ul><li>Flecken, Gerüche, Brandlöcher, Tierhaare</li><li>Kratzer an Verkleidungen und Displays</li><li>Serviceheft bzw. Wartungsnachweise</li><li>alle Schlüssel und Zubehör (Ladekabel, Kofferraumabdeckung, Warndreieck)</li></ul></div></div><div><h2>Reparieren oder zahlen?</h2><div class="rte"><p>Leasinggeber berechnen Schäden oft nach Pauschalen. Kleine Schäden vorher per Smart Repair, Spot Repair oder Aufbereitung zu beheben, ist häufig deutlich günstiger. Wir schauen uns Ihr Fahrzeug an und sagen ehrlich, was sich lohnt – und was als normale Abnutzung durchgeht.</p></div></div></div>
   <aside class="svc-aside" aria-label="Termin">
+    <p class="aside-kicker">Checkliste Leasingrückgabe</p>
     <h2>Wir helfen Ihnen weiter</h2>
     <ul class="trust"><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Kostenvoranschlag in 24 Stunden</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Direkte Abrechnung mit der Versicherung</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ersatzwagen</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Hol- und Bringservice</li><li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Alle Marken</li></ul>
-    <div class="btns"><a class="btn btn-light" href="https://terminbuchungtaeubert.de">Termin online buchen</a><a class="btn btn-outline-light" href="schaden-melden.html">Schaden per Foto melden</a><a class="btn btn-outline-light" href="tel:+4936754289606">03675 4289606</a></div>
+    <div class="btns"><a class="btn btn-light" href="https://terminbuchungtaeubert.de">Termin online buchen</a><a class="btn btn-outline-light" href="termin.html?leistung=Checkliste%20Leasingr%C3%BCckgabe#wunschtermin">Wunschtermin anfragen</a><a class="btn btn-outline-light" href="tel:+4936754289606">03675 4289606</a></div>
     <p class="hours">Mo–Do 8–17 Uhr · Fr 8–14:30 Uhr<br>Bettelhecker Straße 15, Sonneberg</p>
   </aside>
 </section>
