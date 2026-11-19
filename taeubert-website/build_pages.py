@@ -330,11 +330,11 @@ def r_blocks(sec):
         if t == "ai_gen_block_699b8cf":
             out.append('''<section class="map" id="karte">
   <div class="map-consent">
-    <p><strong>Bettelhecker Straße 15, 96515 Sonneberg</strong></p>
+    <p><strong>An der Lehmgrube 3, 96515 Sonneberg</strong></p>
     <p>Die Karte wird von Google Maps geladen. Dabei werden Daten an Google übertragen (siehe <a href="datenschutz.html">Datenschutz</a>).</p>
     <div class="btns" style="justify-content:center">
       <button class="btn btn-dark" type="button" data-load-map>Karte laden</button>
-      <a class="btn btn-outline-dark" href="https://www.google.com/maps/search/?api=1&query=Bettelhecker+Stra%C3%9Fe+15+96515+Sonneberg" target="_blank" rel="noopener">In Google Maps öffnen</a>
+      <a class="btn btn-outline-dark" href="https://www.google.com/maps/search/?api=1&query=An+der+Lehmgrube+3+96515+Sonneberg" target="_blank" rel="noopener">In Google Maps öffnen</a>
     </div>
   </div>
 </section>''')
@@ -596,7 +596,7 @@ PAGE_JS = """
   // Google-Karte erst nach Zustimmung laden
   document.querySelectorAll('[data-load-map]').forEach(btn => btn.addEventListener('click', () => {
     const sec = btn.closest('.map');
-    sec.innerHTML = '<iframe title="Täubert Karosserie und Lack Standort" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Bettelhecker+Stra%C3%9Fe+15,+96515+Sonneberg&z=15&output=embed"></iframe>';
+    sec.innerHTML = '<iframe title="Täubert Karosserie und Lack Standort" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=An+der+Lehmgrube+3,+96515+Sonneberg&z=15&output=embed"></iframe>';
   }));
 
   // Anfragen zählen (nur wenn eine cookielose Statistik wie Plausible eingebunden ist)
@@ -693,7 +693,7 @@ SERVICES = {
 }
 LOCATIONS = {
     "sonneberg": ("Lackierer & Karosserie Sonneberg – Unfallreparatur", "Sonneberg",
-                  "Ihr Lackierer und Karosseriebauer in Sonneberg: Unfallreparatur, Lackierung, Smart Repair und Versicherungsabwicklung – Bettelhecker Straße 15."),
+                  "Ihr Lackierer und Karosseriebauer in Sonneberg: Unfallreparatur, Lackierung, Smart Repair und Versicherungsabwicklung – An der Lehmgrube 3."),
     "neustadt": ("Lackierer & Karosserie Neustadt bei Coburg", "Neustadt bei Coburg",
                  "Lackierer nahe Neustadt bei Coburg: Unfallreparatur, Lackierung und Smart Repair bei Täubert – nur wenige Minuten entfernt in Sonneberg."),
     "coburg": ("Lackierer & Karosserie Coburg – Unfallreparatur", "Coburg",
@@ -786,6 +786,8 @@ def service_ld(slug, name, desc):
 
 # Inhalte, die im Shopify-Editor zusammengelaufen sind, wieder lesbar machen
 FIXES = [
+    ("Bettelheckerstraße 15 </p>", "An der Lehmgrube 3</p>"),   # Werkstatt-Adresse (Theme-Texte)
+    ("Bettelhecker Straße 15", "An der Lehmgrube 3"),
     ("Täubert Karosserie und Lack GmbH", "Täubert Karosserie &amp; Lack GmbH"),
     ("<p>Smart RepairKlassische Lackierung1–3 Stunden Reparaturmehrere Tage Werkstattdeutlich günstigerdeutlich teurer"
      "Originallack bleibt erhaltenneuer Lackkeine Farbabweichungenmöglich<br/></p>",
@@ -892,7 +894,7 @@ def render_new_page(slug, p, aside_title=None):
     <h2>{esc(aside_title or "Ihr Termin bei Täubert")}</h2>
     {trust_for(slug)}
     <div class="btns"><a class="btn btn-light" href="{BOOKING}">Termin online buchen</a>{second_cta(slug, p["short"], "outline-light")}<a class="btn btn-outline-light" href="tel:+4936754289606">03675 4289606</a></div>
-    <p class="hours">Mo–Do 8–17 Uhr · Fr 8–14:30 Uhr<br>Bettelhecker Straße 15, Sonneberg</p>
+    <p class="hours">Mo–Do 8–17 Uhr · Fr 8–14:30 Uhr<br>An der Lehmgrube 3, Sonneberg</p>
   </aside>
 </section>''']
     rows = "".join(f'<details><summary><span>{esc(q)}</span></summary><div class="rte"><p>{a if "<a " in a else esc(a)}</p></div></details>' for q, a in p["faq"])
@@ -1303,13 +1305,13 @@ def tidy_service(slug, body_html):
 # Eigene Inhalte je Ort (gegen doppelte Inhalte, für lokale Suche)
 CITY = {
     "sonneberg": {"time": "mitten in Sonneberg", "places": ["Sonneberg", "Föritztal", "Neuhaus-Schierschnitz", "Judenbach", "Steinach", "Lauscha", "Schalkau"],
-        "text": "Unsere Werkstatt liegt in der Bettelhecker Straße 15 – für Sonneberger nur ein paar Minuten. Karosserie, Lack und Aufbereitung passieren hier unter einem Dach.",
-        "faq": [("Wo genau finde ich Ihre Werkstatt in Sonneberg?", "In der Bettelhecker Straße 15, 96515 Sonneberg. Geöffnet Montag bis Donnerstag 08:00–17:00 Uhr und Freitag 08:00–14:30 Uhr."),
+        "text": "Unsere Werkstatt liegt in der An der Lehmgrube 3 – für Sonneberger nur ein paar Minuten. Karosserie, Lack und Aufbereitung passieren hier unter einem Dach.",
+        "faq": [("Wo genau finde ich Ihre Werkstatt in Sonneberg?", "In der An der Lehmgrube 3, 96515 Sonneberg. Geöffnet Montag bis Donnerstag 08:00–17:00 Uhr und Freitag 08:00–14:30 Uhr."),
                 ("Kann ich in Sonneberg einfach ohne Termin vorbeikommen?", "Ja, für eine erste Einschätzung gern. Für die Reparatur vereinbaren wir einen Termin – am schnellsten online."),
                 ("Holen Sie mein Auto in Sonneberg auch zu Hause ab?", "Ja, mit unserem Hol- und Bringservice holen wir Ihr Fahrzeug ab und bringen es nach der Reparatur zurück.")]},
     "neustadt": {"time": "etwa 10 Minuten", "places": ["Neustadt bei Coburg", "Wildenheid", "Fürth am Berg", "Ebersdorf bei Coburg", "Sonnefeld"],
         "text": "Von Neustadt bei Coburg sind Sie in rund zehn Minuten bei uns in Sonneberg – oder Sie lassen sich das Fahren ganz sparen: Wir holen Ihr Auto ab.",
-        "faq": [("Wie weit ist es von Neustadt bei Coburg zu Ihnen?", "Je nach Verkehr etwa zehn Minuten – unsere Werkstatt liegt in der Bettelhecker Straße 15 in Sonneberg."),
+        "faq": [("Wie weit ist es von Neustadt bei Coburg zu Ihnen?", "Je nach Verkehr etwa zehn Minuten – unsere Werkstatt liegt in der An der Lehmgrube 3 in Sonneberg."),
                 ("Holen Sie mein Auto in Neustadt bei Coburg ab?", "Ja, mit unserem Hol- und Bringservice. Geben Sie es einfach bei der Buchung an.")]},
     "coburg": {"time": "etwa 25 Minuten", "places": ["Coburg", "Rödental", "Dörfles-Esbach", "Ahorn", "Lautertal", "Untersiemau", "Meeder"],
         "text": "Von Coburg aus sind Sie in rund 25 Minuten bei uns. Noch bequemer: Wir holen Ihr Auto in Coburg ab, Sie fahren solange mit dem Ersatzwagen – und bekommen Ihr Fahrzeug repariert und gereinigt zurück.",
@@ -1318,13 +1320,13 @@ CITY = {
                 ("Muss ich für den Kostenvoranschlag extra aus Coburg kommen?", "Nein. Schicken Sie uns Fotos über „Schaden per Foto melden“ oder per WhatsApp – Sie erhalten den Kostenvoranschlag innerhalb von 24 Stunden.")]},
     "kronach": {"time": "etwa 35 Minuten", "places": ["Kronach", "Küps", "Mitwitz", "Stockheim", "Pressig", "Steinbach am Wald", "Wilhelmsthal"],
         "text": "Von Kronach brauchen Sie rund 35 Minuten bis zu uns nach Sonneberg. Damit sich der Weg für Sie nicht wie ein Weg anfühlt, holen wir Ihr Auto auf Wunsch ab und bringen es repariert zurück.",
-        "faq": [("Wie weit ist es von Kronach zu Ihnen?", "Je nach Strecke und Verkehr etwa 35 Minuten bis in die Bettelhecker Straße 15 in Sonneberg – und Kronach liegt in unserem Hol- und Bringservice-Gebiet."),
+        "faq": [("Wie weit ist es von Kronach zu Ihnen?", "Je nach Strecke und Verkehr etwa 35 Minuten bis in die An der Lehmgrube 3 in Sonneberg – und Kronach liegt in unserem Hol- und Bringservice-Gebiet."),
                 ("Holen Sie mein Auto in Kronach ab?", "Ja, mit unserem Hol- und Bringservice holen wir Ihr Fahrzeug im Raum Kronach ab und bringen es nach der Reparatur zurück – sprechen Sie uns bei der Buchung darauf an."),
                 ("Muss ich für den Kostenvoranschlag extra herfahren?", "Nein. Fotos über „Schaden per Foto melden“ oder WhatsApp genügen – Sie bekommen den Kostenvoranschlag innerhalb von 24 Stunden."),
                 ("Bekomme ich als Kunde aus Kronach einen Ersatzwagen?", "Ja. Damit Sie mobil bleiben, stellen wir Ihnen für die Dauer der Reparatur einen Ersatzwagen – auch mit Hund, nach Absprache.")]},
     "roedental": {"time": "etwa 20 Minuten", "places": ["Rödental", "Oeslau", "Einberg", "Mönchröden", "Neustadt bei Coburg"],
         "text": "Von Rödental sind Sie in rund 20 Minuten bei uns in Sonneberg – oder wir holen Ihr Auto mit dem Hol- und Bringservice ab.",
-        "faq": [("Wie weit ist es von Rödental zu Ihnen?", "Je nach Verkehr etwa 20 Minuten bis in die Bettelhecker Straße 15 in Sonneberg.")]},
+        "faq": [("Wie weit ist es von Rödental zu Ihnen?", "Je nach Verkehr etwa 20 Minuten bis in die An der Lehmgrube 3 in Sonneberg.")]},
     "bamberg": {"time": "etwa eine Stunde", "places": ["Bamberg", "Lichtenfels", "Bad Staffelstein", "Ebensfeld"],
         "text": "Von Bamberg sind es über die A73 rund eine Stunde. Viele Kunden schicken uns zuerst Fotos und bekommen innerhalb von 24 Stunden einen Kostenvoranschlag – so wissen Sie vorher genau, woran Sie sind.",
         "faq": [("Lohnt sich der Weg von Bamberg?", "Gerade bei größeren Reparaturen, Lackierungen oder Klassikern ja. Schicken Sie uns vorab Fotos – Sie bekommen den Kostenvoranschlag in 24 Stunden.")]},
@@ -1366,7 +1368,7 @@ def city_faq(slug):
 def city_ld(slug):
     name = LOCATIONS[slug][1]
     data = {"@context": "https://schema.org", "@type": "AutoBodyShop", "name": "Täubert Karosserie & Lack GmbH", "url": f"{DOMAIN}/{slug}.html",
-            "telephone": "+49 3675 4289606", "address": {"@type": "PostalAddress", "streetAddress": "Bettelhecker Straße 15", "postalCode": "96515", "addressLocality": "Sonneberg", "addressCountry": "DE"},
+            "telephone": "+49 3675 4289606", "address": {"@type": "PostalAddress", "streetAddress": "An der Lehmgrube 3", "postalCode": "96515", "addressLocality": "Sonneberg", "addressCountry": "DE"},
             "areaServed": [{"@type": "City", "name": n} for n in CITY.get(slug, {}).get("places", [name])]}
     return '<script type="application/ld+json">' + json.dumps(data, ensure_ascii=False) + "</script>"
 
@@ -1498,7 +1500,7 @@ def render_overview():
 <section class="sec" style="padding:70px 0 90px">
   <div class="page-width"><div style="max-width:860px">
     <h2 class="h-4">Für Kunden aus der Region</h2>
-    <p style="margin-top:12px;color:#555">Unsere Werkstatt liegt in der Bettelhecker Straße 15 in Sonneberg – wenige Minuten von Neustadt bei Coburg. Auf Wunsch holen wir Ihr Fahrzeug ab.</p>
+    <p style="margin-top:12px;color:#555">Unsere Werkstatt liegt in der An der Lehmgrube 3 in Sonneberg – wenige Minuten von Neustadt bei Coburg. Auf Wunsch holen wir Ihr Fahrzeug ab.</p>
     <ul class="chips">{locs}</ul>
   </div></div>
 </section>'''
@@ -1800,7 +1802,7 @@ GENERAL_FAQ = [
     ("Termin & Kontakt", [
         ("Wie bekomme ich einen Termin?", "Am schnellsten über die <a href=\"https://terminbuchungtaeubert.de\">Online-Terminbuchung</a> – rund um die Uhr. Alternativ <a href=\"termin.html#rueckruf\">fordern Sie einen Rückruf an</a>, rufen uns an (03675 4289606) oder schreiben per WhatsApp."),
         ("Wann haben Sie geöffnet?", "Montag bis Donnerstag 08:00–17:00 Uhr, Freitag 08:00–14:30 Uhr. Samstag und Sonntag ist geschlossen."),
-        ("Wo finde ich Sie?", "Täubert Karosserie &amp; Lack GmbH, Bettelhecker Straße 15, 96515 Sonneberg. Kunden kommen auch aus Neustadt bei Coburg, Coburg, Rödental, Kronach und Bamberg. <a href=\"contact.html\">Anfahrt &amp; Kontakt</a>"),
+        ("Wo finde ich Sie?", "Täubert Karosserie &amp; Lack GmbH, An der Lehmgrube 3, 96515 Sonneberg. Kunden kommen auch aus Neustadt bei Coburg, Coburg, Rödental, Kronach und Bamberg. <a href=\"contact.html\">Anfahrt &amp; Kontakt</a>"),
         ("Kann ich einfach vorbeikommen?", "Ja. Wenn Sie unsicher sind, ob sich eine Reparatur lohnt, schauen wir uns Ihr Fahrzeug an und sagen Ihnen ehrlich, was Sinn macht. Mit Termin geht es für Sie am schnellsten."),
         ("Kann ich den Schaden per Foto oder WhatsApp schicken?", "Ja. Über <a href=\"schaden-melden.html\">Schaden per Foto melden</a> laden Sie ein paar Bilder hoch – oder schicken sie per WhatsApp an 03675 4289606. Wir melden uns mit einer ersten Einschätzung."),
         ("Welche Fotos brauchen Sie für eine Einschätzung?", "Am besten drei bis vier: eine Gesamtansicht des Fahrzeugs, den Schaden aus etwa zwei Metern und ein bis zwei Nahaufnahmen von schräg, damit Dellen sichtbar werden. Ein Foto vom Fahrzeugschein hilft bei der Teilebestellung."),
