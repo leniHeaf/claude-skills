@@ -526,7 +526,7 @@ EXTRA_CSS = """
   .countdown p { margin-top: 12px; }
   .cd-cards { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-top: 30px; }
   .cd-card { background: #1a1a1a; border: 1px solid rgba(255,255,255,.35); border-radius: 0; padding: 24px 32px; min-width: 240px; }
-  .cd-card b { display: block; font-family: "Archivo Black"; color: #fff; font-size: clamp(36px, 5vw, 54px); line-height: 1.1; }
+  .cd-card b { display: block; font-family: var(--f-display); color: #fff; font-size: clamp(36px, 5vw, 54px); line-height: 1.1; }
   .promo-box { background: #000; color: #fff; }
   .promo-box .badge { display: inline-block; background: #fff; color: #000; font-weight: 700; padding: 6px 14px; margin-bottom: 16px; }
   .promo-box h2 { font-size: 30px; margin-bottom: 10px; }
@@ -1045,6 +1045,14 @@ def update_index():
   </section>
   <!-- LEISTUNGEN:END -->'''
     s = re.sub(r"<!-- LEISTUNGEN:START -->.*?<!-- LEISTUNGEN:END -->", lambda m: block, s, flags=re.S)
+    opts = "".join(f"<option>{esc(n)}</option>" for _, n, _ in svcs)
+    bookbar = f'''<form class="bookbar" action="termin.html" method="get" aria-label="Termin anfragen">
+      <label><span>Leistung</span><select name="leistung"><option value="">Bitte wählen</option>{opts}</select></label>
+      <label><span>Wunschtermin</span><input type="date" name="datum"></label>
+      <button class="btn btn-dark" type="submit">Termin anfragen</button>
+    </form>
+    <p class="bookbar-alt">Oder direkt <a href="{BOOKING}">online buchen</a> · <a href="schaden-melden.html">Schaden per Foto melden</a></p>'''
+    s = re.sub(r"<!-- BOOKBAR:START -->.*?<!-- BOOKBAR:END -->", lambda m: "<!-- BOOKBAR:START -->" + bookbar + "<!-- BOOKBAR:END -->", s, flags=re.S)
     s = re.sub(r"<!-- SERVICE:START -->.*?<!-- SERVICE:END -->", lambda m: "<!-- SERVICE:START -->\n  " + care_html() + "\n  <!-- SERVICE:END -->", s, flags=re.S)
     s = re.sub(r"<!-- MAINNAV:START -->.*?<!-- MAINNAV:END -->", lambda m: "<!-- MAINNAV:START -->" + nav_html() + "<!-- MAINNAV:END -->", s, flags=re.S)
     s = re.sub(r"<!-- DRAWERNAV:START -->.*?<!-- DRAWERNAV:END -->", lambda m: "<!-- DRAWERNAV:START -->\n    " + drawer_html() + "\n  <!-- DRAWERNAV:END -->", s, flags=re.S)
@@ -1298,7 +1306,7 @@ CITY_CSS = """
   .city-places { margin-top: 14px; font-size: 15px !important; }
   .city-facts { list-style: none; display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--black); }
   .city-facts li { padding: 24px 16px 24px 0; border-bottom: 1px solid var(--line); }
-  .city-facts strong { display: block; font-family: "Archivo Black", sans-serif; font-weight: 400; text-transform: uppercase; font-size: clamp(18px, 1.6vw, 24px); }
+  .city-facts strong { display: block; font-family: var(--f-display); font-weight: 400; text-transform: uppercase; font-size: clamp(18px, 1.6vw, 24px); }
   .city-facts span { display: block; margin-top: 6px; font-size: 14px; color: #555; }
   @media (max-width: 760px) { .city { padding: 64px 0; } .city-inner { grid-template-columns: 1fr; gap: 32px; } }
 """
@@ -1613,8 +1621,10 @@ WISH_JS = r"""
       d.setCustomValidity(day === 0 || day === 6 ? 'Samstag und Sonntag ist geschlossen – bitte einen Werktag wählen.' : '');
     }); });
     var q = new URLSearchParams(location.search), sel = document.getElementById('wish-service');
-    if (q.get('leistung')) { var want = q.get('leistung').toLowerCase(), o = [].find.call(sel.options, function (x) { return x.text.toLowerCase().indexOf(want) === 0; }); if (o) sel.value = o.text; }
+    if (q.get('leistung')) { var want = q.get('leistung').toLowerCase(), o = [].find.call(sel.options, function (x) { return x.text.toLowerCase() === want; }) || [].find.call(sel.options, function (x) { return x.text.toLowerCase().indexOf(want) === 0; }); if (o) sel.value = o.text; }
     if (q.get('notiz')) document.getElementById('wish-note').value = q.get('notiz');
+    if (q.get('datum') && q.get('datum') >= min) { d1.value = q.get('datum'); d1.dispatchEvent(new Event('input')); }
+    if (q.get('leistung') || q.get('datum')) document.getElementById('wunschtermin').scrollIntoView();
   })();
 """
 
@@ -1683,7 +1693,7 @@ UNFALL_CSS = """
   .sos-call { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 14px; }
   .sos-list { list-style: none; counter-reset: sos; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
   .sos-list li { counter-increment: sos; position: relative; padding: 22px 22px 22px 70px; background: var(--grey); }
-  .sos-list li::before { content: counter(sos); position: absolute; left: 22px; top: 18px; font-family: "Archivo Black"; font-size: 30px; color: var(--red); }
+  .sos-list li::before { content: counter(sos); position: absolute; left: 22px; top: 18px; font-family: var(--f-display); font-size: 30px; color: var(--red); }
   .sos-list h2 { font-size: 19px; margin-bottom: 6px; }
   .sos-note { margin-top: 22px; font-size: 14px; color: #555; }
   .faq .cat-head { margin: 40px 0 6px; }
@@ -1917,7 +1927,7 @@ KONFIG_CSS = """
   .kc { background: #fff; color: #171717; }
   .kc-home { padding: 72px 0 96px; }
   .kc-hero { text-align: center; margin-bottom: 40px; }
-  .kc-hero h1 { font-family: Inter, sans-serif; font-weight: 300; font-size: clamp(30px, 5vw, 60px); letter-spacing: .15em; text-transform: uppercase; line-height: 1.1; }
+  .kc-hero h1 { font-family: var(--f-display); font-weight: 400; font-size: clamp(30px, 5vw, 60px); letter-spacing: .15em; text-transform: uppercase; line-height: 1.1; }
   .kc-hero p { margin: 14px auto 0; max-width: 28rem; font-size: 14px; color: #737373; letter-spacing: .02em; }
   .kc-types { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
   .kc-type { font: inherit; font-size: 11px; letter-spacing: .15em; text-transform: uppercase; padding: 8px 16px; border: 1px solid #e5e5e5; border-radius: 2px; background: #fff; color: #737373; cursor: pointer; transition: all .15s; }
@@ -1931,17 +1941,17 @@ KONFIG_CSS = """
   .kc-grid { display: block; }
   .kc-brandsec { margin-bottom: 96px; }
   .kc-brandsec header { padding: 0 0 56px 56px; }
-  .kc-brandsec h2 { font-family: Inter, sans-serif; font-weight: 300; font-size: clamp(34px, 4.4vw, 62px); letter-spacing: .18em; text-transform: uppercase; line-height: 1.05; overflow-wrap: anywhere; }
-  .kc-brandsec header p { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif; font-size: clamp(20px, 2vw, 28px); color: #222; margin-top: 18px; letter-spacing: -.01em; }
+  .kc-brandsec h2 { font-family: var(--f-display); font-weight: 400; font-size: clamp(34px, 4.4vw, 62px); letter-spacing: .18em; text-transform: uppercase; line-height: 1.05; overflow-wrap: anywhere; }
+  .kc-brandsec header p { font-family: var(--f-display); font-size: clamp(20px, 2vw, 28px); color: #222; margin-top: 18px; letter-spacing: -.01em; }
   .kc-bgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid #111; border-left: 1px solid #111; }
   .kc-card { display: block; color: inherit; padding: 22px 22px 28px; border-right: 1px solid #111; border-bottom: 1px solid #111; }
   .kc-card-img { display: block; position: relative; aspect-ratio: 5 / 4; background: #dcdcdc; overflow: hidden; }
   .kc-card-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .9s cubic-bezier(.2,.8,.2,1); }
   .kc-card:hover .kc-card-img img { transform: scale(1.04); }
   .kc-card-text { display: block; padding: 22px 4px 0; }
-  .kc-card-name { display: block; font-family: Inter, sans-serif; font-weight: 300; font-size: 20px; letter-spacing: .1em; text-transform: uppercase; }
-  .kc-card-name em { font-style: normal; font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; text-transform: none; letter-spacing: 0; font-size: 19px; margin-left: 6px; color: #333; }
-  .kc-card-meta { display: block; margin-top: 8px; font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; font-size: 15px; color: #555; }
+  .kc-card-name { display: block; font-family: var(--f-display); font-weight: 400; font-size: 20px; letter-spacing: .1em; text-transform: uppercase; }
+  .kc-card-name em { font-style: normal; font-family: var(--f-display); text-transform: none; letter-spacing: 0; font-size: 19px; margin-left: 6px; color: #333; }
+  .kc-card-meta { display: block; margin-top: 8px; font-family: var(--f-display); font-size: 15px; color: #555; }
   .kc-card-go { display: table; margin-top: 16px; font-size: 10px; letter-spacing: .25em; text-transform: uppercase; border-bottom: 1px solid #171717; padding-bottom: 2px; transition: border-color .2s; }
   .kc-card:hover .kc-card-go { border-color: #a3a3a3; }
   .kc-empty { text-align: center; padding: 120px 0; color: #737373; font-size: 14px; }
@@ -1966,11 +1976,11 @@ KONFIG_CSS = """
   .kc-spin-over { position: absolute; inset: 0; padding: 0; background: rgba(250,250,250,.8); }
   .kc-info { padding: 24px; border-top: 1px solid rgba(229,229,229,.6); background: rgba(255,255,255,.5); }
   .kc-brand { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: #737373; }
-  .kc-model { font-size: clamp(20px, 2vw, 28px); letter-spacing: .14em; text-transform: uppercase; font-weight: 300; margin-top: 4px; }
-  .kc-era { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; font-size: 16px; color: #555; margin-top: 4px; }
+  .kc-model { font-family: var(--f-display); font-size: clamp(22px, 2.2vw, 32px); letter-spacing: .04em; text-transform: uppercase; font-weight: 400; margin-top: 4px; }
+  .kc-era { font-family: var(--f-display); font-size: 16px; color: #555; margin-top: 4px; }
   .kc-era:empty { display: none; }
   .kc-pricehint { font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: #737373; margin-top: 10px; }
-  .kc-price span { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; font-size: 16px; }
+  .kc-price span { font-family: var(--f-display); font-size: 16px; }
   .kc-right { width: 40%; border-left: 1px solid #f0f0f0; display: flex; flex-direction: column; position: sticky; top: calc(var(--announce-h) + var(--hdr-h)); height: calc(100svh - var(--announce-h) - var(--hdr-h)); align-self: flex-start; }
   .kc-tools { display: flex; gap: 20px; }
   .kc-tabs { display: flex; overflow-x: auto; scrollbar-width: none; border-bottom: 1px solid #f0f0f0; }
@@ -1982,7 +1992,7 @@ KONFIG_CSS = """
   .kc-progress span { display: block; height: 1px; background: #171717; width: 0; transition: width .4s cubic-bezier(.2,.8,.2,1); }
   .kc-head { padding: 24px; border-bottom: 1px solid #f0f0f0; }
   .kc-step { display: flex; justify-content: space-between; font-size: 12px; letter-spacing: .15em; text-transform: uppercase; color: #737373; }
-  .kc-head h2 { font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; text-transform: none; font-size: 26px; font-weight: 400; letter-spacing: -.01em; margin-top: 14px; }
+  .kc-head h2 { font-family: var(--f-display); text-transform: none; font-size: 26px; font-weight: 400; letter-spacing: -.01em; margin-top: 14px; }
   .kc-head p { font-size: 12px; color: #737373; line-height: 1.6; margin-top: 8px; }
   .kc-head h2:empty, .kc-head p:empty { display: none; }
   .kc-body { flex: 1; overflow-y: auto; padding: 24px; }

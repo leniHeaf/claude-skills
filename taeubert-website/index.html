@@ -15,18 +15,22 @@
 <meta property="og:image" content="https://www.taeubert-karosserie-lack.de/images/hf_20260210_181531_cb41fa11-8f63-4e1a-93b7-0ea0ed24e5f9.webp">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="images/TAeUBERT-2.png">
-<link rel="preload" href="fonts/archivo-black-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/bodoni-moda-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="images/hf_20260210_181531_cb41fa11-8f63-4e1a-93b7-0ea0ed24e5f9.webp" imagesrcset="images/hf_20260210_181531_cb41fa11-8f63-4e1a-93b7-0ea0ed24e5f9-700.webp 700w, images/hf_20260210_181531_cb41fa11-8f63-4e1a-93b7-0ea0ed24e5f9.webp 1024w" imagesizes="100vw" fetchpriority="high">
 <style>
   /* Schriften lokal (DSGVO: keine Verbindung zu Google) */
-  @font-face { font-family: "Archivo Black"; font-weight: 400; font-display: swap; src: url(fonts/archivo-black-latin-400-normal.woff2) format("woff2"); }
+  @font-face { font-family: "Bodoni Moda"; font-weight: 400; font-display: swap; src: url(fonts/bodoni-moda-latin-400-normal.woff2) format("woff2"); }
+  @font-face { font-family: "Bodoni Moda"; font-weight: 500; font-display: swap; src: url(fonts/bodoni-moda-latin-500-normal.woff2) format("woff2"); }
+  @font-face { font-family: "DM Mono"; font-weight: 400; font-display: swap; src: url(fonts/dm-mono-latin-400-normal.woff2) format("woff2"); }
+  @font-face { font-family: "DM Mono"; font-weight: 500; font-display: swap; src: url(fonts/dm-mono-latin-500-normal.woff2) format("woff2"); }
   @font-face { font-family: Inter; font-weight: 400; font-display: swap; src: url(fonts/inter-latin-400-normal.woff2) format("woff2"); }
   @font-face { font-family: Inter; font-weight: 500; font-display: swap; src: url(fonts/inter-latin-500-normal.woff2) format("woff2"); }
   @font-face { font-family: Inter; font-weight: 600; font-display: swap; src: url(fonts/inter-latin-600-normal.woff2) format("woff2"); }
   @font-face { font-family: Inter; font-weight: 700; font-display: swap; src: url(fonts/inter-latin-700-normal.woff2) format("woff2"); }
   /* Farbschemata aus dem Shopify-Theme (config/settings_data.json) */
-  :root {
+  :root { --f-display: "Bodoni Moda", Didot, "Bodoni 72", Georgia, serif; --f-mono: "DM Mono", ui-monospace, Menlo, monospace;
+  
     --white: #ffffff;
     --black: #000000;
     --text: #222222;
@@ -40,7 +44,7 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body { font-family: Inter, system-ui, sans-serif; font-size: 16px; line-height: 1.6; color: var(--text); background: var(--white); -webkit-font-smoothing: antialiased; }
-  h1, h2, h3, .heading { font-family: "Archivo Black", Inter, sans-serif; font-weight: 400; text-transform: uppercase; letter-spacing: .4px; line-height: 1.1; }
+  h1, h2, h3, .heading { font-family: var(--f-display); font-weight: 400; text-transform: uppercase; letter-spacing: .4px; line-height: 1.1; }
   a { color: inherit; text-decoration: none; }
   img { display: block; max-width: 100%; }
   .page-width { max-width: var(--page); margin: 0 auto; padding: 0 var(--gutter); }
@@ -70,7 +74,7 @@
   .header .logo { justify-self: center; }
   .header .logo img { width: 185px; height: auto; }
   .header.transparent .logo img { filter: brightness(0) invert(1); }
-  .logo-fallback { font-family: "Archivo Black"; font-size: 26px; letter-spacing: .08em; }
+  .logo-fallback { font-family: var(--f-display); font-size: 26px; letter-spacing: .08em; }
   .header-right { justify-self: end; display: flex; align-items: center; gap: 6px; }
 
   /* Menü-Drawer */
@@ -81,7 +85,7 @@
   .drawer-head { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; border-bottom: 1px solid var(--line); }
   .drawer nav { padding: 12px 24px; }
   .drawer details { border-bottom: 1px solid var(--line); }
-  .drawer summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 18px 0; font-family: "Archivo Black"; font-size: 18px; text-transform: uppercase; }
+  .drawer summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 18px 0; font-family: var(--f-display); font-size: 18px; text-transform: uppercase; }
   .drawer summary::-webkit-details-marker { display: none; }
   .drawer summary::after { content: "+"; font-family: Inter; font-size: 22px; transition: transform .2s; }
   .drawer details[open] summary::after { transform: rotate(45deg); }
@@ -90,7 +94,7 @@
   .drawer .sub a:hover { color: var(--black); }
   .promos { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 4px 0 20px; }
   .promo { position: relative; aspect-ratio: 1; overflow: hidden; color: var(--white); }
-  .promo span { position: absolute; left: 12px; bottom: 10px; font-family: "Archivo Black"; text-transform: uppercase; font-size: 15px; }
+  .promo span { position: absolute; left: 12px; bottom: 10px; font-family: var(--f-display); text-transform: uppercase; font-size: 15px; }
   .promo .overlay { opacity: .25; }
   .drawer-foot { margin-top: auto; padding: 24px; border-top: 1px solid var(--line); display: flex; gap: 18px; }
 
@@ -137,7 +141,7 @@
   .marquee-track > * { flex: none; margin-right: clamp(20px, 3vw, 40px); }
   .marquee:hover .marquee-track { animation-play-state: paused; }
   .mq-sep { width: clamp(24px, 3vw, 40px); height: auto; }
-  .marquee-track span { font-family: "Archivo Black"; text-transform: uppercase; font-size: clamp(28px, 4vw, 52px); }
+  .marquee-track span { font-family: var(--f-display); text-transform: uppercase; font-size: clamp(28px, 4vw, 52px); }
   .marquee-track svg { flex: none; }
   @keyframes marquee { to { transform: translateX(-50%); } }
 
@@ -160,7 +164,7 @@
   .featured-links { background: var(--grey); padding: 60px var(--gutter); }
   .fl-inner { display: grid; grid-template-columns: 60% 40%; gap: 40px; align-items: center; }
   .fl-inner h2 { font-size: clamp(18px, 1.6vw, 22px); margin-bottom: 26px; font-family: Inter; font-weight: 700; letter-spacing: .08em; }
-  .fl-links { font-family: "Archivo Black"; text-transform: uppercase; font-size: clamp(40px, 6vw, 88px); line-height: 1.3; }
+  .fl-links { font-family: var(--f-display); text-transform: uppercase; font-size: clamp(40px, 6vw, 88px); line-height: 1.3; }
   .fl-links a { color: #7a7a7a; transition: color .25s; }
   .fl-links a.active, .fl-links a:hover { color: var(--text); }
   .fl-links sup { font-family: Inter; font-size: 14px; vertical-align: super; margin-left: 4px; }
@@ -186,7 +190,7 @@
   /* Footer */
   footer { background: var(--black); color: var(--white); padding: 50px var(--gutter); margin-top: 80px; }
   .foot-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr 1.4fr; gap: 3%; }
-  footer h4 { font-family: "Archivo Black"; text-transform: uppercase; font-size: 16px; margin-bottom: 16px; }
+  footer h4 { font-family: var(--f-display); text-transform: uppercase; font-size: 16px; margin-bottom: 16px; }
   footer p { color: rgba(255,255,255,.8); }
   footer ul { list-style: none; display: grid; gap: 8px; }
   footer ul a { color: rgba(255,255,255,.8); }
@@ -233,7 +237,7 @@
   .steps-sec h2 { font-size: clamp(30px, 3.6vw, 46px); margin-bottom: 36px; }
   .steps { list-style: none; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; margin-bottom: 34px; }
   .steps li { border-top: 2px solid var(--black); padding-top: 18px; }
-  .steps .num { font-family: "Archivo Black"; color: #111; font-size: 30px; }
+  .steps .num { font-family: var(--f-display); color: #111; font-size: 30px; }
   .steps h3 { font-size: 19px; margin: 6px 0 8px; }
   .steps p { color: #444; }
   .steps-sec .btns { display: flex; flex-wrap: wrap; gap: 12px; }
@@ -302,7 +306,7 @@
   .drawer-quick { display: grid; gap: 8px; padding: 6px 0 18px; border-bottom: 1px solid var(--line); }
   .drawer-quick .btn { justify-content: flex-start; }
   .drawer .sub h3 { font-size: 12px; letter-spacing: .1em; color: #6b6b6b; margin: 10px 0 2px; }
-  .drawer .plain { display: block; padding: 18px 0; border-bottom: 1px solid var(--line); font-family: "Archivo Black"; font-size: 18px; text-transform: uppercase; }
+  .drawer .plain { display: block; padding: 18px 0; border-bottom: 1px solid var(--line); font-family: var(--f-display); font-size: 18px; text-transform: uppercase; }
   .drawer a[aria-current="page"] { text-decoration: underline; }
 
   /* ===== Premium-Stil (Porsche-Ruhe + Brabus-Härte): schwarz/weiß, präzise Typo, viel Raum ===== */
@@ -494,7 +498,7 @@
   .spec-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); }
   .spec-grid > div { padding: 34px 24px 32px 0; border-right: 1px solid rgba(255,255,255,.12); margin-right: 24px; }
   .spec-grid > div:last-child { border-right: 0; margin-right: 0; }
-  .spec strong { display: block; font-family: "Archivo Black", sans-serif; font-weight: 400; text-transform: uppercase; font-size: clamp(17px, 1.65vw, 26px); line-height: 1.05; }
+  .spec strong { display: block; font-family: var(--f-display); font-weight: 400; text-transform: uppercase; font-size: clamp(17px, 1.65vw, 26px); line-height: 1.05; }
   .spec span { display: block; margin-top: 10px; font-size: 13px; letter-spacing: .04em; color: rgba(255,255,255,.65); }
   .care { background: #000; color: #fff; padding: 140px 0; }
   .care .eyebrow { color: rgba(255,255,255,.6); }
@@ -522,6 +526,90 @@
     .care { padding: 88px 0; } .care-grid { grid-template-columns: 1fr; margin: 48px 0 36px; } .care-grid li { padding-bottom: 28px; }
   }
   @media (prefers-reduced-motion: reduce) { html.rv-on .rv { opacity: 1; transform: none; transition: none; } .scroll-cue span::after { animation: none; } }
+
+  /* ===== Ameron-Look: klassisch-elegant ===== */
+  h1, h2, h3, .heading { font-family: var(--f-display); font-weight: 400; letter-spacing: .02em; line-height: 1.08; }
+  .hero h1 { font-size: clamp(40px, 5.6vw, 84px); line-height: 1.02; font-weight: 400; }
+  .sec-intro h2, .services-sec h2, .steps-sec h2, .assist-head h2, .faq h2, .konfig h2, .visit h2, .care h2 { font-weight: 400; letter-spacing: .02em; }
+  .eyebrow, .hero-eyebrow, .overline, .kc-label, .kc-step, .kc-type, .kc-tab, .kc-card-go, .kc-link, .tile-more, .spec span, .care-grid .n, .steps .num, .kf-open, .ext-remember, .city-facts span { font-family: var(--f-mono) !important; letter-spacing: .12em; }
+  .btn { font-family: var(--f-mono); font-weight: 400; letter-spacing: .14em; font-size: 12px; padding: 16px 28px; border-width: 1px; }
+  .btn-outline-dark::after, .btn-outline-light::after { content: " →"; }
+  .main-nav .top, .btn-header { font-family: var(--f-mono); font-weight: 400; letter-spacing: .14em; }
+  /* Startbild: Inhalt mittig, Buchungsleiste unten (wie Ameron) */
+  .hero-content { top: 0; bottom: 0; display: flex; align-items: center; padding-bottom: 120px; }
+  .hero-content .page-width { width: 100%; }
+  .hero-content .inner { margin: 0 auto; text-align: center; max-width: 980px; }
+  .hero p { margin-left: auto; margin-right: auto; }
+  .hero-eyebrow::before { display: none; }
+  .hero .overlay { background: linear-gradient(0deg, rgba(0,0,0,.55), rgba(0,0,0,.15) 45%, rgba(0,0,0,.35)); }
+  .hero .btns { display: none; }
+  .scroll-cue { display: none; }
+  .bookbar { position: absolute; left: 50%; bottom: 40px; transform: translateX(-50%); z-index: 3; width: min(1100px, calc(100% - 48px)); display: grid; grid-template-columns: 1.3fr 1fr auto; background: #fff; color: #111; box-shadow: 0 10px 40px rgba(0,0,0,.18); }
+  .bookbar label { display: flex; flex-direction: column; justify-content: center; gap: 4px; padding: 14px 22px; border-right: 1px solid #e6e6e2; min-width: 0; }
+  .bookbar label span { font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: #666; }
+  .bookbar select, .bookbar input { font: inherit; font-family: var(--f-display); font-size: 19px; border: 0; background: none; color: #111; padding: 2px 0; width: 100%; min-width: 0; }
+  .bookbar select:focus, .bookbar input:focus { outline: 2px solid #111; outline-offset: 2px; }
+  .bookbar .btn { margin: 12px; align-self: center; }
+  .bookbar-alt { position: absolute; left: 50%; bottom: 8px; transform: translateX(-50%); z-index: 3; font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.85); white-space: nowrap; }
+  .bookbar-alt a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+  /* Helle, ruhige Flächen statt schwerer schwarzer Blöcke */
+  .spec { background: #fff; color: #111; border-top: 0; border-bottom: 1px solid #e6e6e2; }
+  .spec-grid > div { border-right-color: #e6e6e2; }
+  .spec strong { font-weight: 400; letter-spacing: .02em; }
+  .spec span { color: #666 !important; font-size: 11px; text-transform: uppercase; }
+  .care { background: #f4f3f1; color: #111; }
+  .care .eyebrow, .care .lead, .care-grid p, .care-grid .n { color: #555; }
+  .care-grid li { border-top-color: #d8d8d3; }
+  .care .btn-light { background: #111; color: #fff; border-color: #111; }
+  .care .btn-light:hover { background: transparent; color: #111; }
+  .care .btn-outline-light { color: #111; border-color: #111; }
+  .care .btn-outline-light:hover { background: #111; color: #fff; }
+  /* Kacheln wie Ameron „Top Angebote“: Bild oben, Text darunter */
+  .tile-grid { gap: 48px 32px; }
+  .tile-svc, .tile-grid.c4 .tile-svc, .tile-grid.c1 .tile-svc, .tile-grid.c5 > *, .tile-grid.m1 > *, .tile-grid.m2 > * { aspect-ratio: auto !important; background: none; color: inherit; overflow: visible; }
+  .tile-svc::after { display: none; }
+  .tile-svc .tile-media { position: relative; display: block; inset: auto; height: auto; aspect-ratio: 4 / 3; overflow: hidden; background: #eee; }
+  .tile-svc .tile-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 1; }
+  .tile-svc:hover img { transform: scale(1.04); }
+  .tile-body { position: static; padding: 22px 0 0; }
+  .tile-body h3 { font-size: clamp(22px, 2vw, 28px) !important; margin-bottom: 12px; color: #111; }
+  .tile-body p { color: #444; max-width: none; }
+  .tile-more { display: inline-block; margin-top: 16px; font-size: 11px; text-transform: uppercase; color: #111; border-bottom: 0 !important; }
+  @media (min-width: 991px) {
+    .tile-grid.c4 { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+    .tile-grid.c5, .tile-grid.c1 { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+    .tile-grid.c5 > *, .tile-grid.m1 > *, .tile-grid.m2 > * { grid-column: auto !important; }
+  }
+  @media (min-width: 761px) and (max-width: 990px) { .tile-grid.c5 > *, .tile-grid.c1 { grid-column: auto !important; } }
+  .services-sec .sec-intro, .steps-sec h2, .faq-sec .faq > h2 { text-align: center; margin-left: auto; margin-right: auto; }
+  .services-sec .sec-intro .lead { margin-left: auto; margin-right: auto; }
+  .services-sec .sec-intro .eyebrow::before { display: none; }
+  .svc-more { display: table; margin: 56px auto 0; }
+  .intro { text-align: center; }
+  .intro .inner { margin: 0 auto; }
+  .intro h2, .intro p:not(.eyebrow) { margin-left: auto; margin-right: auto; }
+  .intro .eyebrow { font-size: 12px; color: #6b6b6b; margin-bottom: 18px; }
+  .intro .eyebrow::before { display: none; }
+  /* Bild-Collage */
+  .collage { padding: 120px 0; }
+  .collage-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 56px; align-items: start; }
+  .collage-big img, .collage-small img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .collage-big { aspect-ratio: 4 / 5; overflow: hidden; }
+  .collage-text { padding-top: 40px; }
+  .collage-text h2 { font-size: clamp(32px, 3.4vw, 50px); margin-bottom: 20px; }
+  .collage-text p:not(.eyebrow) { color: #444; margin-bottom: 24px; max-width: 460px; }
+  .collage-small { margin-top: 72px; aspect-ratio: 4 / 3; overflow: hidden; width: 85%; margin-left: auto; }
+  @media (max-width: 900px) {
+    .bookbar { left: 0; right: 0; bottom: 0; transform: none; width: auto; grid-template-columns: 1fr 1fr; box-shadow: none; }
+    .bookbar label { padding: 10px 16px; border-bottom: 1px solid #e6e6e2; }
+    .bookbar label + label { border-right: 0; }
+    .bookbar select, .bookbar input { font-size: 16px; }
+    .bookbar .btn { grid-column: 1 / -1; margin: 10px 16px 12px; }
+    .bookbar-alt { display: none; }
+    .hero-content { padding-bottom: 170px; }
+    .hero-eyebrow { font-size: 11px !important; letter-spacing: .14em; margin-bottom: 14px; }
+    .collage { padding: 72px 0; } .collage-grid { grid-template-columns: 1fr; gap: 28px; } .collage-text { padding-top: 0; } .collage-small { margin-top: 32px; width: 100%; }
+  }
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "AutoBodyShop", "name": "Täubert Karosserie & Lack GmbH", "url": "https://www.taeubert-karosserie-lack.de/", "logo": "https://www.taeubert-karosserie-lack.de/images/Taeubert_Logo.png", "telephone": "+49 3675 4289606", "email": "hallo@taeubert-karosserie-lack.de", "address": {"@type": "PostalAddress", "streetAddress": "Bettelhecker Straße 15", "postalCode": "96515", "addressLocality": "Sonneberg", "addressRegion": "Thüringen", "addressCountry": "DE"}, "areaServed": ["Sonneberg", "Neustadt bei Coburg", "Coburg", "Rödental", "Kronach", "Bamberg"], "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"], "opens": "08:00", "closes": "17:00"}, {"@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "08:00", "closes": "14:30"}], "sameAs": ["https://www.facebook.com/ToniTaeubert/", "https://www.instagram.com/taeubert_karosserieundlack/"], "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Leistungen", "itemListElement": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Karosseriearbeiten", "description": "Karosseriereparatur in Sonneberg & Neustadt bei Coburg: Richtbank, präzise Vermessung, Reparatur nach Herstellervorgaben – Lack direkt im Haus.", "url": "https://www.taeubert-karosserie-lack.de/karosserie.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Lackierarbeiten", "description": "Autolackierung in Sonneberg: digitale Farbtonmessung, staubfreie Lackierkabine, Spot Repair und Komplettlackierung – ohne sichtbaren Unterschied.", "url": "https://www.taeubert-karosserie-lack.de/lackierarbeiten.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Unfallinstandsetzung", "description": "Unfallreparatur in Sonneberg & Neustadt bei Coburg: Karosserie, Lack und Abwicklung mit Versicherung und Gutachter aus einer Hand.", "url": "https://www.taeubert-karosserie-lack.de/unfallinstandsetzung.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Smart Repair", "description": "Smart Repair in Sonneberg: Dellen und kleine Schäden ohne Neulackierung entfernen – Originallack bleibt, oft in wenigen Stunden erledigt.", "url": "https://www.taeubert-karosserie-lack.de/smartrepair.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Kleinschaden-Reparatur", "description": "Parkschaden, Kratzer oder Delle? Kleinschaden-Reparatur in Sonneberg & Neustadt bei Coburg – schnell, günstig und mit Originallack.", "url": "https://www.taeubert-karosserie-lack.de/kleinschaden.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Kratzer entfernen", "description": "Kratzer im Lack entfernen lassen in Sonneberg: vom oberflächlichen Kratzer bis zur Tiefe – mit exakter Farbtonanpassung.", "url": "https://www.taeubert-karosserie-lack.de/kratzer.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Leasingrückgabe", "description": "Leasingrückgabe in Sonneberg vorbereiten: Schäden vorab günstig beseitigen und teure Nachzahlungen beim Leasinggeber vermeiden.", "url": "https://www.taeubert-karosserie-lack.de/leasingrueckgabe.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Fahrzeugaufbereitung", "description": "Fahrzeugaufbereitung in Sonneberg: Politur, Innenraumreinigung und Lackpflege – ideal vor Verkauf oder Leasingrückgabe.", "url": "https://www.taeubert-karosserie-lack.de/fahrzeugaufbereitung.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Reifenservice", "description": "Reifenwechsel, Räderwechsel und Rädereinlagerung in Sonneberg & Neustadt bei Coburg – Termin online buchen.", "url": "https://www.taeubert-karosserie-lack.de/reifenservice.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Unfallreparatur", "description": "Unfall gehabt? Täubert in Sonneberg kümmert sich um Reparatur, Versicherung und Gutachten – direkte Abrechnung mit der Versicherung.", "url": "https://www.taeubert-karosserie-lack.de/unfall.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Hagelschaden", "description": "Hagelschaden am Auto in Sonneberg reparieren: Dellen möglichst ohne Lackieren entfernen, Lack und Karosserie aus einer Hand, direkt mit der Versicherung.", "url": "https://www.taeubert-karosserie-lack.de/hagelschaden.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Stoßstange reparieren", "description": "Stoßstange reparieren oder lackieren in Sonneberg & Neustadt bei Coburg: Kratzer, Risse und Dellen im Stoßfänger beseitigen – oft ohne neues Teil.", "url": "https://www.taeubert-karosserie-lack.de/stossstange-reparieren.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Oldtimer & Klassiker", "description": "Oldtimer-Restaurierung und Klassiker-Lackierung in Sonneberg: Entrostung, Karosseriearbeiten und originalgetreue Lackierung – mit Respekt vor dem Original.", "url": "https://www.taeubert-karosserie-lack.de/oldtimer-restaurierung.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Fuhrparkservice", "description": "Karosserie- und Lackservice für Firmenwagen und Transporter in Sonneberg & Neustadt bei Coburg: Schäden schnell beheben, Fahrzeuge schnell zurück im Einsatz.", "url": "https://www.taeubert-karosserie-lack.de/fuhrparkservice.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Versicherungsschaden", "description": "Versicherungsschaden in Sonneberg: Täubert übernimmt Schadenaufnahme, Abstimmung mit Versicherung und Gutachter sowie die komplette Reparatur.", "url": "https://www.taeubert-karosserie-lack.de/versicherungsschaden.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Unterbodenschutz", "description": "Unterbodenschutz und Hohlraumversiegelung in Sonneberg – auch mit Mike Sanders Korrosionsschutzfett: Unterbodenwäsche, Rostbehandlung und Langzeitschutz für Alltagsauto und Klassiker.", "url": "https://www.taeubert-karosserie-lack.de/unterbodenschutz.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Lackaufbereitung", "description": "Lackaufbereitung und Politur in Sonneberg: Waschkratzer, Hologramme und stumpfen Lack maschinell aufbereiten – für Tiefenglanz wie am ersten Tag.", "url": "https://www.taeubert-karosserie-lack.de/lackaufbereitung.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Keramikversiegelung", "description": "Keramikversiegelung und Lackversiegelung in Sonneberg: dauerhafter Schutz und Tiefenglanz – Wasser perlt ab, Schmutz haftet weniger, Pflege wird leichter.", "url": "https://www.taeubert-karosserie-lack.de/keramikversiegelung.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Innenraumaufbereitung", "description": "Innenraumaufbereitung in Sonneberg: Polster- und Lederreinigung, Teppiche, Armaturen und Geruchsentfernung – damit Sie wieder gern einsteigen.", "url": "https://www.taeubert-karosserie-lack.de/innenraumaufbereitung.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Scheinwerfer aufbereiten", "description": "Scheinwerfer aufbereiten in Sonneberg: vergilbte und matte Scheinwerfer schleifen, polieren und versiegeln – für klare Sicht und gepflegte Optik.", "url": "https://www.taeubert-karosserie-lack.de/scheinwerfer-aufbereiten.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "HU/AU (TÜV)", "description": "HU/AU in Sonneberg: Wir bereiten Ihr Fahrzeug auf die Hauptuntersuchung vor, beheben Mängel wie Rost oder blinde Scheinwerfer direkt im Haus und kümmern uns um die Prüfung.", "url": "https://www.taeubert-karosserie-lack.de/hu-au.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Reifen bestellen", "description": "Neue Reifen in Sonneberg bestellen und montieren lassen: Sommer-, Winter- und Ganzjahresreifen aller Marken – mit Beratung, Montage, Wuchten und Einlagerung.", "url": "https://www.taeubert-karosserie-lack.de/reifen-kaufen.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Felgenreparatur", "description": "Felgenreparatur in Sonneberg: Bordsteinschäden, Kratzer und Korrosion an Alufelgen beseitigen und im Originalfarbton lackieren – günstiger als neue Felgen.", "url": "https://www.taeubert-karosserie-lack.de/felgenreparatur.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Lackstift", "description": "Lackstift im Originalfarbton in Sonneberg: nach Farbcode exakt angemischt – für Steinschläge und kleine Kratzer. Mit Anleitung zur richtigen Anwendung.", "url": "https://www.taeubert-karosserie-lack.de/lackstift.html"}}]}}</script>
 </head>
@@ -601,6 +689,12 @@
       </div>
     </div>
     <a class="scroll-cue" href="#service"><span></span>Scroll</a>
+    <!-- BOOKBAR:START --><form class="bookbar" action="termin.html" method="get" aria-label="Termin anfragen">
+      <label><span>Leistung</span><select name="leistung"><option value="">Bitte wählen</option><option>Karosseriearbeiten</option><option>Lackierarbeiten</option><option>Unfallinstandsetzung</option><option>Smart Repair</option><option>Kleinschaden-Reparatur</option><option>Kratzer entfernen</option><option>Leasingrückgabe</option><option>Fahrzeugaufbereitung</option><option>Reifenservice</option><option>Unfallreparatur</option><option>Hagelschaden</option><option>Stoßstange reparieren</option><option>Oldtimer &amp; Klassiker</option><option>Fuhrparkservice</option><option>Versicherungsschaden</option><option>Unterbodenschutz</option><option>Lackaufbereitung</option><option>Keramikversiegelung</option><option>Innenraumaufbereitung</option><option>Scheinwerfer aufbereiten</option><option>HU/AU (TÜV)</option><option>Reifen bestellen</option><option>Felgenreparatur</option><option>Lackstift</option></select></label>
+      <label><span>Wunschtermin</span><input type="date" name="datum"></label>
+      <button class="btn btn-dark" type="submit">Termin anfragen</button>
+    </form>
+    <p class="bookbar-alt">Oder direkt <a href="https://terminbuchungtaeubert.de">online buchen</a> · <a href="schaden-melden.html">Schaden per Foto melden</a></p><!-- BOOKBAR:END -->
   </section>
 
   <!-- Vertrauensleiste -->
@@ -620,6 +714,18 @@
       <p class="eyebrow">Täubert Karosserie &amp; Lack</p>
       <h2>Karosserie &amp; Lackiererei für Sonneberg, Coburg &amp; Kronach</h2>
       <p>Unfall, Lackschaden oder Aufbereitung: Wir kümmern uns um alles – Reparatur, Versicherung und Gutachten. In unserer Werkstatt in Sonneberg, für Kunden aus Neustadt bei Coburg, Coburg, Kronach und der ganzen Region.</p>
+    </div>
+  </section>
+  <section class="collage">
+    <div class="page-width collage-grid">
+      <div class="collage-big"><img src="images/DSC06286.webp" srcset="images/DSC06286-700.webp 700w, images/DSC06286.webp 1800w" sizes="(max-width: 760px) 100vw, 60vw" alt="Täubert-Team bei der Arbeit am Fahrzeug" loading="lazy"></div>
+      <div class="collage-text">
+        <p class="eyebrow">Die Werkstatt</p>
+        <h2>Handwerk mit Anspruch</h2>
+        <p>Seit 2009 setzen wir Fahrzeuge in Sonneberg instand – von der Delle bis zur Komplettlackierung, vom Alltagsauto bis zum Klassiker. Karosserie, Lack und Aufbereitung unter einem Dach, mit einem Team, das sein Handwerk liebt.</p>
+        <a class="btn btn-outline-dark" href="who-we-are.html">Über uns</a>
+        <div class="collage-small"><img src="images/T_ubert_Karosserie_und_Lack_in_Sonneberg_Mitarbeiter.webp" alt="Das Team von Täubert Karosserie &amp; Lack" loading="lazy"></div>
+      </div>
     </div>
   </section>
   <!-- SERVICE:START -->
