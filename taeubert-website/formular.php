@@ -20,10 +20,13 @@ $FORMULARE = [
     'rueckruf'        => ['Rückrufwunsch', 'danke.html'],
     'wunschtermin'    => ['Wunschtermin', 'danke-termin.html'],
     'bewerbung'       => ['Bewerbung', 'danke-bewerbung.html'],
+    'club'            => ['Täubert Club – Anmeldung', 'danke-anfrage.html'],
+    'events'          => ['Täubert Events – Einladung gewünscht', 'danke-anfrage.html'],
+    'partner'         => ['Partneranfrage', 'danke-anfrage.html'],
 ];
 // Feldnamen -> Beschriftung in der E-Mail (Reihenfolge = Reihenfolge in der Mail)
 $FELDER = [
-    'name' => 'Name', 'telefon' => 'Telefon', 'email' => 'E-Mail', 'fahrzeug' => 'Fahrzeug',
+    'unternehmen' => 'Unternehmen', 'name' => 'Name', 'telefon' => 'Telefon', 'email' => 'E-Mail', 'fahrzeug' => 'Fahrzeug',
     'leistung' => 'Leistung', 'schaden' => 'Anliegen', 'kostentraeger' => 'Wer zahlt',
     'datum' => 'Wunschdatum', 'ausweichdatum' => 'Ausweichdatum', 'tageszeit' => 'Tageszeit',
     'stelle' => 'Stelle', 'start' => 'Frühester Start', 'fuehrerschein' => 'Führerschein Klasse B',

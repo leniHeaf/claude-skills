@@ -6,6 +6,7 @@ import html, json, os, re, sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from new_pages import NEW_PAGES, RATGEBER  # noqa: E402
+from community_pages import COMMUNITY, COMMUNITY_CSS  # noqa: E402
 
 THEME, SITE = sys.argv[1], sys.argv[2]
 BOOKING_URL = "https://terminbuchungtaeubert.de"  # externes Buchungstool
@@ -976,6 +977,7 @@ NAV_GROUPS = [
                  ("versicherungsschaden.html", "Abrechnung mit der Versicherung"), ("unfall-oder-kratzer.html", "Wer zahlt die Reparatur?")]),
     ("Über uns", [("who-we-are.html", "Who we are"), ("history.html", "History"), ("meet-the-team.html", "Meet the Team"),
                   ("porsche-911.html", "Projekt: Porsche 911"), ("porsche-gts.html", "Projekt: Porsche Cayenne GTS"), ("vw-bulli-t2.html", "Projekt: VW Bulli T2")]),
+    ("Club", [("club.html", "Täubert Club"), ("events.html", "Täubert Events"), ("partner.html", "Partner: Autohäuser & Firmen")]),
     ("Karriere", [("karriere.html", "Karriere bei Täubert"), ("azubi.html", "Ausbildung"), ("jobs.html", "Stellenangebote"), ("jobs.html#bewerbung", "Direkt bewerben")]),
 ]
 
@@ -2483,6 +2485,67 @@ THANKS_APPLY = f"""<section class="sec" style="padding:100px 0">
 </section>"""
 
 
+def render_community(slug, p):
+    f = p["form"]
+    perks = "".join(f'<li><span class="n">{i + 1:02d}</span><h3>{esc(h)}</h3><p>{esc(t)}</p></li>' for i, (h, t) in enumerate(p["perks"]))
+    steps = "".join(f"<li><strong>{n}</strong> {esc(t)}</li>" for n, t in p["steps"])
+    rows = "".join(f'<details><summary><span>{esc(q)}</span></summary><div class="rte"><p>{esc(a)}</p></div></details>' for q, a in p["faq"])
+    others = "".join(f'<a href="{s}.html">{esc(o["nav"])}</a>' for s, o in COMMUNITY.items() if s != slug)
+    return f'''<section class="cm-hero">
+  <img src="images/{p["img"]}" alt="" fetchpriority="high">
+  <div class="page-width">
+    <p class="eyebrow">{esc(p["eyebrow"])}</p>
+    <h1>{esc(p["title"])}</h1>
+    <p class="claim">{esc(p["claim"])}</p>
+    <p class="lead">{esc(p["lead"])}</p>
+    <div class="btns"><a class="btn btn-light" href="#anmelden">{esc(f["button"])}</a><a class="btn btn-outline-light" href="tel:+4936754289606">03675 4289606</a></div>
+  </div>
+</section>
+<section class="cm-perks">
+  <div class="page-width">
+    <div class="sec-intro"><p class="eyebrow">{esc(p["nav"])}</p><h2>Das erwartet Sie.</h2></div>
+    <ol>{perks}</ol>
+    <div class="cm-links">{others}<a href="konfigurator.html">Lack-Konfigurator</a></div>
+  </div>
+</section>
+<section class="apply" id="anmelden">
+  <div class="page-width apply-inner">
+    <div class="apply-text">
+      <p class="eyebrow">{esc(p["nav"])}</p>
+      <h2>{esc(f["headline"])}</h2>
+      <p>{esc(p["lead"])}</p>
+      <ul class="apply-steps">{steps}</ul>
+      <p class="apply-alt">Lieber persönlich? <a href="tel:+4936754289606">03675 4289606</a> · <a href="mailto:hallo@taeubert-karosserie-lack.de">hallo@taeubert-karosserie-lack.de</a></p>
+    </div>
+    <form class="damage-form" name="{f["name"]}" method="POST" action="formular.php" data-title="{esc(p["title"])}" data-thanks="danke-anfrage.html">
+      <input type="hidden" name="form-name" value="{f["name"]}">
+      <p class="hp"><label>Nicht ausfüllen: <input name="firma" tabindex="-1" autocomplete="off"></label></p>
+      <div class="mail-form">
+        <label class="f half">Vor- und Nachname *<input name="name" autocomplete="name" required></label>
+        <label class="f half">Telefon *<input name="telefon" type="tel" autocomplete="tel" required></label>
+        {f["fields"]}
+        <label class="f">Nachricht <small>(optional)</small><textarea name="nachricht" rows="3"></textarea></label>
+        <label class="f consent"><input type="checkbox" name="einwilligung" required><span>{f["consent"]}</span></label>
+      </div>
+      <button class="btn btn-dark" type="submit">{esc(f["button"])}</button>
+      <p class="form-status" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+<section class="sec" style="padding:60px 0">
+  <div class="page-width"><div class="faq"><h2 class="sec-head">Häufige Fragen</h2>{rows}</div></div>
+</section>'''
+
+
+THANKS_REQ = """<section class="sec" style="padding:100px 0">
+  <div class="page-width"><div class="rich-inner" style="max-width:640px;margin:0 auto;text-align:center">
+    <h1 class="h-6">Danke – wir haben Ihre Anfrage!</h1>
+    <div class="rte"><p>Wir melden uns persönlich bei Ihnen. Fragen? Rufen Sie uns an: <a href="tel:+4936754289606">03675 4289606</a>.</p></div>
+    <div class="btns" style="justify-content:center"><a class="btn btn-dark" href="index.html">Zur Startseite</a><a class="btn btn-outline-dark" href="leistungen.html">Leistungen ansehen</a></div>
+  </div></div>
+</section>"""
+
+
 def simple_page(slug, title, desc, body_html, style, head_links, top, footer, js, ld, robots=""):
     return f"""<!doctype html>
 <html lang="de">
@@ -2697,6 +2760,12 @@ def main():
 """
         open(os.path.join(SITE, f"{slug}.html"), "w", encoding="utf-8").write(sync_images(page))
         built.append(slug)
+    for slug, p in COMMUNITY.items():
+        body_html = render_community(slug, p)
+        page = simple_page(slug, p["title"], p["desc"], body_html, style, head_links, top, footer, js, ld)
+        page = page.replace("</style>", APPLY_CSS + COMMUNITY_CSS + "</style>", 1).replace("</head>", faq_ld(body_html) + "\n</head>", 1)
+        open(os.path.join(SITE, f"{slug}.html"), "w", encoding="utf-8").write(sync_images(page))
+        built.append(slug)
     for slug, p in RATGEBER.items():
         FALLBACK_IMG[slug] = p["img"]
         head = render_new_page(slug, p, aside_title="Wir helfen Ihnen weiter")
@@ -2813,6 +2882,9 @@ def main():
         robots='<meta name="robots" content="noindex, follow">\n'))
     open(os.path.join(SITE, "danke-bewerbung.html"), "w", encoding="utf-8").write(simple_page(
         "danke-bewerbung", "Danke für Ihre Bewerbung", "Ihre Bewerbung ist bei uns eingegangen.", THANKS_APPLY, style, head_links, top, footer, js, ld,
+        robots='<meta name="robots" content="noindex, follow">\n'))
+    open(os.path.join(SITE, "danke-anfrage.html"), "w", encoding="utf-8").write(simple_page(
+        "danke-anfrage", "Danke für Ihre Anfrage", "Ihre Anfrage ist bei uns eingegangen.", THANKS_REQ, style, head_links, top, footer, js, ld,
         robots='<meta name="robots" content="noindex, follow">\n'))
     write_seo_files(built)
     update_index()  # erneut, jetzt mit den Bildern der gebauten Leistungsseiten
