@@ -7,6 +7,19 @@ import html, json, os, re, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from new_pages import NEW_PAGES, RATGEBER  # noqa: E402
 from community_pages import COMMUNITY, COMMUNITY_CSS  # noqa: E402
+from image_names import IMAGE_NAMES  # noqa: E402
+
+
+def img_new(fn):
+    """Alter Bildname (aus Theme/Quelltexten) -> sprechender Dateiname in images/."""
+    base, ext = os.path.splitext(fn)
+    if base.endswith("-700") and base[:-4] in IMAGE_NAMES:
+        return IMAGE_NAMES[base[:-4]] + "-700" + ext
+    return IMAGE_NAMES[base] + ext if base in IMAGE_NAMES else fn
+
+
+def rename_img_refs(page):
+    return re.sub(r'images/([^"\'\s)<>,]+)', lambda m: "images/" + img_new(m.group(1)), page)
 
 THEME, SITE = sys.argv[1], sys.argv[2]
 BOOKING_URL = "https://terminbuchungtaeubert.de"  # externes Buchungstool
@@ -110,7 +123,7 @@ def button(url, label, cls="btn-dark"):
 
 
 def has_img(ref):
-    return bool(ref) and os.path.exists(os.path.join(SITE, "images", img_name(ref)))
+    return bool(ref) and os.path.exists(os.path.join(SITE, "images", img_new(img_name(ref))))
 
 
 def plain(html_text):
@@ -855,7 +868,7 @@ def fill_alts(page):
 
 def sync_images(page):
     """Fehlende Bilddateien nicht anfragen (keine 404): src <-> data-missing-src je nach Vorhandensein."""
-    page = fill_alts(page)
+    page = rename_img_refs(fill_alts(page))
     def fix(m):
         attr, path = m.group(1), m.group(2)
         exists = os.path.exists(os.path.join(SITE, path))
@@ -1146,7 +1159,7 @@ FALLBACK_IMG = {
 
 def first_image(body_html):
     for m in re.finditer(r'src="images/([^"]+)"', body_html):
-        if os.path.exists(os.path.join(SITE, "images", m.group(1))):
+        if os.path.exists(os.path.join(SITE, "images", img_new(m.group(1)))):
             return m.group(1)
     return None
 
