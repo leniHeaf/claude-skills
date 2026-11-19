@@ -647,7 +647,8 @@ def shell():
     nav_js = re.search(r"(  // Hauptnavigation: Aufklappmenüs.*?\n  \}\)\(\);\n)", js, re.S).group(1)
     status_js = re.search(r"(  // Öffnungsstatus.*?\n  \}\)\(\);\n)", js, re.S).group(1)
     scroll_js = re.search(r"(  // Header beim Scrollen schlanker.*?\n  \}\)\(\);\n)", js, re.S).group(1)
-    return style, head_links, top, footer, menu_js + nav_js + img_js + status_js + scroll_js + marquee_js + PAGE_JS + "  document.getElementById('year').textContent = new Date().getFullYear();\n"
+    cookie_js = re.search(r"(  // Cookie-Banner.*?\n  \}\)\(\);\n)", js, re.S).group(1)
+    return style, head_links, top, footer, menu_js + nav_js + img_js + status_js + scroll_js + marquee_js + PAGE_JS + cookie_js + "  document.getElementById('year').textContent = new Date().getFullYear();\n"
 
 
 def first_heading(d):

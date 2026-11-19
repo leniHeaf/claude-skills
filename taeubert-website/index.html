@@ -643,6 +643,26 @@
     .hero h1 { font-size: 27px !important; }
     .h-8, .h-7, .h-6, .sub-hero .heading, .sub-hero h1:not(.overline), .kc-hero h1 { font-size: 26px !important; }
   }
+
+  /* ===== Cookie-Banner / Einwilligung ===== */
+  .linkbtn { background: none; border: 0; padding: 0; font: inherit; color: inherit; cursor: pointer; text-align: left; }
+  .linkbtn:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .ck { position: fixed; left: 24px; bottom: 24px; z-index: 300; width: min(440px, calc(100vw - 32px)); background: #fff; color: #111; border: 1px solid #111; box-shadow: 0 24px 60px rgba(0,0,0,.18); padding: 28px; font-size: 14px; line-height: 1.55; }
+  .ck[hidden] { display: none; }
+  .ck .ck-kicker { font-family: var(--f-mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: #6b6b6b; margin-bottom: 10px; }
+  .ck h2 { font-family: var(--f-display); font-weight: 400; text-transform: uppercase; letter-spacing: .05em; font-size: 20px !important; line-height: 1.2; margin: 0 0 10px; }
+  .ck p { color: #444; margin: 0 0 14px; }
+  .ck a { color: #111; text-decoration: underline; text-underline-offset: 3px; }
+  .ck-opts { border-top: 1px solid #e5e5e5; margin: 6px 0 16px; }
+  .ck-opts[hidden] { display: none; }
+  .ck-opt { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid #e5e5e5; }
+  .ck-opt input { margin-top: 4px; width: 16px; height: 16px; accent-color: #111; flex: none; }
+  .ck-opt strong { display: block; font-size: 14px; }
+  .ck-opt span span { color: #666; font-size: 13px; }
+  .ck-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .ck-btns .btn { width: 100%; text-align: center; justify-content: center; padding-left: 10px; padding-right: 10px; }
+  .ck-more { grid-column: 1 / -1; background: none; border: 0; font-family: var(--f-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #111; padding: 10px 0 0; cursor: pointer; text-decoration: underline; text-underline-offset: 4px; }
+  @media (max-width: 760px) { .ck { left: 16px; right: 16px; bottom: calc(76px + env(safe-area-inset-bottom)); width: auto; padding: 22px 20px; max-height: calc(100vh - 120px); overflow: auto; } }
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "AutoBodyShop", "name": "Täubert Karosserie & Lack GmbH", "url": "https://www.taeubert-karosserie-lack.de/", "logo": "https://www.taeubert-karosserie-lack.de/images/Taeubert_Logo.png", "telephone": "+49 3675 4289606", "email": "hallo@taeubert-karosserie-lack.de", "address": {"@type": "PostalAddress", "streetAddress": "Bettelhecker Straße 15", "postalCode": "96515", "addressLocality": "Sonneberg", "addressRegion": "Thüringen", "addressCountry": "DE"}, "areaServed": ["Sonneberg", "Neustadt bei Coburg", "Coburg", "Rödental", "Kronach", "Bamberg"], "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"], "opens": "08:00", "closes": "17:00"}, {"@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "08:00", "closes": "14:30"}], "sameAs": ["https://www.facebook.com/ToniTaeubert/", "https://www.instagram.com/taeubert_karosserieundlack/"], "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Leistungen", "itemListElement": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Karosseriearbeiten", "description": "Karosseriereparatur in Sonneberg & Neustadt bei Coburg: Richtbank, präzise Vermessung, Reparatur nach Herstellervorgaben – Lack direkt im Haus.", "url": "https://www.taeubert-karosserie-lack.de/karosserie.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Lackierarbeiten", "description": "Autolackierung in Sonneberg: digitale Farbtonmessung, staubfreie Lackierkabine, Spot Repair und Komplettlackierung – ohne sichtbaren Unterschied.", "url": "https://www.taeubert-karosserie-lack.de/lackierarbeiten.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Unfallinstandsetzung", "description": "Unfallreparatur in Sonneberg & Neustadt bei Coburg: Karosserie, Lack und Abwicklung mit Versicherung und Gutachter aus einer Hand.", "url": "https://www.taeubert-karosserie-lack.de/unfallinstandsetzung.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Smart Repair", "description": "Smart Repair in Sonneberg: Dellen und kleine Schäden ohne Neulackierung entfernen – Originallack bleibt, oft in wenigen Stunden erledigt.", "url": "https://www.taeubert-karosserie-lack.de/smartrepair.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Kleinschaden-Reparatur", "description": "Parkschaden, Kratzer oder Delle? Kleinschaden-Reparatur in Sonneberg & Neustadt bei Coburg – schnell, günstig und mit Originallack.", "url": "https://www.taeubert-karosserie-lack.de/kleinschaden.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Kratzer entfernen", "description": "Kratzer im Lack entfernen lassen in Sonneberg: vom oberflächlichen Kratzer bis zur Tiefe – mit exakter Farbtonanpassung.", "url": "https://www.taeubert-karosserie-lack.de/kratzer.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Leasingrückgabe", "description": "Leasingrückgabe in Sonneberg vorbereiten: Schäden vorab günstig beseitigen und teure Nachzahlungen beim Leasinggeber vermeiden.", "url": "https://www.taeubert-karosserie-lack.de/leasingrueckgabe.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Fahrzeugaufbereitung", "description": "Fahrzeugaufbereitung in Sonneberg: Politur, Innenraumreinigung und Lackpflege – ideal vor Verkauf oder Leasingrückgabe.", "url": "https://www.taeubert-karosserie-lack.de/fahrzeugaufbereitung.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Reifenservice", "description": "Reifenwechsel, Räderwechsel und Rädereinlagerung in Sonneberg & Neustadt bei Coburg – Termin online buchen.", "url": "https://www.taeubert-karosserie-lack.de/reifenservice.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Unfallreparatur", "description": "Unfall gehabt? Täubert in Sonneberg kümmert sich um Reparatur, Versicherung und Gutachten – direkte Abrechnung mit der Versicherung.", "url": "https://www.taeubert-karosserie-lack.de/unfall.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Hagelschaden", "description": "Hagelschaden am Auto in Sonneberg reparieren: Dellen möglichst ohne Lackieren entfernen, Lack und Karosserie aus einer Hand, direkt mit der Versicherung.", "url": "https://www.taeubert-karosserie-lack.de/hagelschaden.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Stoßstange reparieren", "description": "Stoßstange reparieren oder lackieren in Sonneberg & Neustadt bei Coburg: Kratzer, Risse und Dellen im Stoßfänger beseitigen – oft ohne neues Teil.", "url": "https://www.taeubert-karosserie-lack.de/stossstange-reparieren.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Oldtimer & Klassiker", "description": "Oldtimer-Restaurierung und Klassiker-Lackierung in Sonneberg: Entrostung, Karosseriearbeiten und originalgetreue Lackierung – mit Respekt vor dem Original.", "url": "https://www.taeubert-karosserie-lack.de/oldtimer-restaurierung.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Fuhrparkservice", "description": "Karosserie- und Lackservice für Firmenwagen und Transporter in Sonneberg & Neustadt bei Coburg: Schäden schnell beheben, Fahrzeuge schnell zurück im Einsatz.", "url": "https://www.taeubert-karosserie-lack.de/fuhrparkservice.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Versicherungsschaden", "description": "Versicherungsschaden in Sonneberg: Täubert übernimmt Schadenaufnahme, Abstimmung mit Versicherung und Gutachter sowie die komplette Reparatur.", "url": "https://www.taeubert-karosserie-lack.de/versicherungsschaden.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Unterbodenschutz", "description": "Unterbodenschutz und Hohlraumversiegelung in Sonneberg – auch mit Mike Sanders Korrosionsschutzfett: Unterbodenwäsche, Rostbehandlung und Langzeitschutz für Alltagsauto und Klassiker.", "url": "https://www.taeubert-karosserie-lack.de/unterbodenschutz.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Lackaufbereitung", "description": "Lackaufbereitung und Politur in Sonneberg: Waschkratzer, Hologramme und stumpfen Lack maschinell aufbereiten – für Tiefenglanz wie am ersten Tag.", "url": "https://www.taeubert-karosserie-lack.de/lackaufbereitung.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Keramikversiegelung", "description": "Keramikversiegelung und Lackversiegelung in Sonneberg: dauerhafter Schutz und Tiefenglanz – Wasser perlt ab, Schmutz haftet weniger, Pflege wird leichter.", "url": "https://www.taeubert-karosserie-lack.de/keramikversiegelung.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Innenraumaufbereitung", "description": "Innenraumaufbereitung in Sonneberg: Polster- und Lederreinigung, Teppiche, Armaturen und Geruchsentfernung – damit Sie wieder gern einsteigen.", "url": "https://www.taeubert-karosserie-lack.de/innenraumaufbereitung.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Scheinwerfer aufbereiten", "description": "Scheinwerfer aufbereiten in Sonneberg: vergilbte und matte Scheinwerfer schleifen, polieren und versiegeln – für klare Sicht und gepflegte Optik.", "url": "https://www.taeubert-karosserie-lack.de/scheinwerfer-aufbereiten.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "HU/AU (TÜV)", "description": "HU/AU in Sonneberg: Wir bereiten Ihr Fahrzeug auf die Hauptuntersuchung vor, beheben Mängel wie Rost oder blinde Scheinwerfer direkt im Haus und kümmern uns um die Prüfung.", "url": "https://www.taeubert-karosserie-lack.de/hu-au.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Reifen bestellen", "description": "Neue Reifen in Sonneberg bestellen und montieren lassen: Sommer-, Winter- und Ganzjahresreifen aller Marken – mit Beratung, Montage, Wuchten und Einlagerung.", "url": "https://www.taeubert-karosserie-lack.de/reifen-kaufen.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Felgenreparatur", "description": "Felgenreparatur in Sonneberg: Bordsteinschäden, Kratzer und Korrosion an Alufelgen beseitigen und im Originalfarbton lackieren – günstiger als neue Felgen.", "url": "https://www.taeubert-karosserie-lack.de/felgenreparatur.html"}}, {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Lackstift", "description": "Lackstift im Originalfarbton in Sonneberg: nach Farbcode exakt angemischt – für Steinschläge und kleine Kratzer. Mit Anleitung zur richtigen Anwendung.", "url": "https://www.taeubert-karosserie-lack.de/lackstift.html"}}]}}</script>
 </head>
@@ -941,6 +961,7 @@
         <li><a href="contact.html">Kontakt</a></li>
         <li><a href="impressum.html">Impressum</a></li>
         <li><a href="datenschutz.html">Datenschutz</a></li>
+        <li><button type="button" class="linkbtn" data-cookie-settings>Cookie-Einstellungen</button></li>
       </ul>
     </div>
     <div>
@@ -1141,6 +1162,52 @@
   });
 
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Cookie-Banner: zentrale Einwilligung für externe Inhalte (Google Maps, JOIN, Konfigurator). Keine Statistik, kein Tracking.
+  (function () {
+    const KEYS = { maps: 'consent_maps', join: 'consent_join', base44: 'consent_base44' };
+    const get = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
+    const set = (k, v) => { try { v ? localStorage.setItem(k, v) : localStorage.removeItem(k); } catch (e) {} };
+    const box = document.createElement('section');
+    box.className = 'ck'; box.hidden = true; box.setAttribute('role', 'dialog'); box.setAttribute('aria-labelledby', 'ck-title');
+    box.innerHTML = '<p class="ck-kicker">Datenschutz</p><h2 id="ck-title">Ihre Privatsphäre</h2>' +
+      '<p>Wir verwenden keine Werbe- oder Statistik-Cookies. Einige Inhalte stammen von anderen Anbietern (Karte, Stellenbörse, Lack-Konfigurator) – diese laden wir nur mit Ihrer Zustimmung. Mehr in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>' +
+      '<div class="ck-opts" hidden>' +
+      '<label class="ck-opt"><input type="checkbox" checked disabled><span><strong>Notwendig</strong><span>Speichert nur Ihre Auswahl in diesem Browser.</span></span></label>' +
+      '<label class="ck-opt"><input type="checkbox" data-ck="maps"><span><strong>Google Maps</strong><span>Karte zur Anfahrt (Google Ireland Ltd.).</span></span></label>' +
+      '<label class="ck-opt"><input type="checkbox" data-ck="join"><span><strong>JOIN Stellenbörse</strong><span>Aktuelle Stellenangebote (JOIN Solutions AG).</span></span></label>' +
+      '<label class="ck-opt"><input type="checkbox" data-ck="base44"><span><strong>Lack-Konfigurator</strong><span>Fahrzeugdaten und Bilder (Base44).</span></span></label>' +
+      '</div>' +
+      '<div class="ck-btns"><button type="button" class="btn btn-dark" data-ck-all>Alle akzeptieren</button><button type="button" class="btn btn-dark" data-ck-none>Nur notwendige</button>' +
+      '<button type="button" class="ck-more" data-ck-more>Einstellungen</button></div>';
+    document.body.appendChild(box);
+    const opts = box.querySelector('.ck-opts'), more = box.querySelector('[data-ck-more]');
+    const boxes = () => [...box.querySelectorAll('[data-ck]')];
+    const open = detail => {
+      boxes().forEach(c => { c.checked = get(KEYS[c.dataset.ck]) === '1'; });
+      opts.hidden = !detail; more.textContent = detail ? 'Auswahl speichern' : 'Einstellungen';
+      box.hidden = false; box.querySelector('h2').focus && box.querySelector('[data-ck-all]').focus({ preventScroll: true });
+    };
+    const apply = choice => {
+      Object.keys(KEYS).forEach(k => set(KEYS[k], choice[k] ? '1' : null));
+      set('consent_choice', new Date().toISOString().slice(0, 10));
+      box.hidden = true;
+      // bereits sichtbare Platzhalter sofort laden
+      if (choice.maps) document.querySelectorAll('[data-load-map]').forEach(b => b.click());
+      if (choice.join) document.querySelectorAll('[data-ext="join"] [data-ext-load]').forEach(b => b.click());
+      if (choice.base44) { const k = document.getElementById('kc-allow'); if (k && k.offsetParent) k.click(); }
+    };
+    box.querySelector('[data-ck-all]').addEventListener('click', () => apply({ maps: 1, join: 1, base44: 1 }));
+    box.querySelector('[data-ck-none]').addEventListener('click', () => apply({}));
+    more.addEventListener('click', () => {
+      if (opts.hidden) { opts.hidden = false; more.textContent = 'Auswahl speichern'; return; }
+      const c = {}; boxes().forEach(x => { c[x.dataset.ck] = x.checked; }); apply(c);
+    });
+    document.addEventListener('click', e => { if (e.target.closest('[data-cookie-settings]')) { e.preventDefault(); open(true); } });
+    box.addEventListener('keydown', e => { if (e.key === 'Escape' && get('consent_choice')) box.hidden = true; });
+    if (!get('consent_choice')) open(false);
+    else if (get('consent_maps') === '1') document.querySelectorAll('[data-load-map]').forEach(b => b.click());
+  })();
 </script>
 </body>
 </html>

@@ -643,6 +643,26 @@
     .h-8, .h-7, .h-6, .sub-hero .heading, .sub-hero h1:not(.overline), .kc-hero h1 { font-size: 26px !important; }
   }
 
+  /* ===== Cookie-Banner / Einwilligung ===== */
+  .linkbtn { background: none; border: 0; padding: 0; font: inherit; color: inherit; cursor: pointer; text-align: left; }
+  .linkbtn:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .ck { position: fixed; left: 24px; bottom: 24px; z-index: 300; width: min(440px, calc(100vw - 32px)); background: #fff; color: #111; border: 1px solid #111; box-shadow: 0 24px 60px rgba(0,0,0,.18); padding: 28px; font-size: 14px; line-height: 1.55; }
+  .ck[hidden] { display: none; }
+  .ck .ck-kicker { font-family: var(--f-mono); font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: #6b6b6b; margin-bottom: 10px; }
+  .ck h2 { font-family: var(--f-display); font-weight: 400; text-transform: uppercase; letter-spacing: .05em; font-size: 20px !important; line-height: 1.2; margin: 0 0 10px; }
+  .ck p { color: #444; margin: 0 0 14px; }
+  .ck a { color: #111; text-decoration: underline; text-underline-offset: 3px; }
+  .ck-opts { border-top: 1px solid #e5e5e5; margin: 6px 0 16px; }
+  .ck-opts[hidden] { display: none; }
+  .ck-opt { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid #e5e5e5; }
+  .ck-opt input { margin-top: 4px; width: 16px; height: 16px; accent-color: #111; flex: none; }
+  .ck-opt strong { display: block; font-size: 14px; }
+  .ck-opt span span { color: #666; font-size: 13px; }
+  .ck-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .ck-btns .btn { width: 100%; text-align: center; justify-content: center; padding-left: 10px; padding-right: 10px; }
+  .ck-more { grid-column: 1 / -1; background: none; border: 0; font-family: var(--f-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #111; padding: 10px 0 0; cursor: pointer; text-decoration: underline; text-underline-offset: 4px; }
+  @media (max-width: 760px) { .ck { left: 16px; right: 16px; bottom: calc(76px + env(safe-area-inset-bottom)); width: auto; padding: 22px 20px; max-height: calc(100vh - 120px); overflow: auto; } }
+
   .todo { background: #fff3b0; padding: 0 4px; }
   .legal-page h2 { font-size: 20px; margin: 32px 0 10px; }
   .ext-consent { background: var(--grey); border: 1px solid var(--line); padding: 32px; max-width: 760px; }
@@ -1002,6 +1022,7 @@
         <li><a href="contact.html">Kontakt</a></li>
         <li><a href="impressum.html">Impressum</a></li>
         <li><a href="datenschutz.html">Datenschutz</a></li>
+        <li><button type="button" class="linkbtn" data-cookie-settings>Cookie-Einstellungen</button></li>
       </ul>
     </div>
     <div>
@@ -1186,6 +1207,51 @@
     const body = `Name: ${v('name')}\nE-Mail: ${v('email')}\nTelefon: ${v('phone')}\n\n${v('message')}`;
     location.href = 'mailto:hallo@taeubert-karosserie-lack.de?subject=' + encodeURIComponent('Anfrage über die Website') + '&body=' + encodeURIComponent(body);
   }));
+  // Cookie-Banner: zentrale Einwilligung für externe Inhalte (Google Maps, JOIN, Konfigurator). Keine Statistik, kein Tracking.
+  (function () {
+    const KEYS = { maps: 'consent_maps', join: 'consent_join', base44: 'consent_base44' };
+    const get = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
+    const set = (k, v) => { try { v ? localStorage.setItem(k, v) : localStorage.removeItem(k); } catch (e) {} };
+    const box = document.createElement('section');
+    box.className = 'ck'; box.hidden = true; box.setAttribute('role', 'dialog'); box.setAttribute('aria-labelledby', 'ck-title');
+    box.innerHTML = '<p class="ck-kicker">Datenschutz</p><h2 id="ck-title">Ihre Privatsphäre</h2>' +
+      '<p>Wir verwenden keine Werbe- oder Statistik-Cookies. Einige Inhalte stammen von anderen Anbietern (Karte, Stellenbörse, Lack-Konfigurator) – diese laden wir nur mit Ihrer Zustimmung. Mehr in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>' +
+      '<div class="ck-opts" hidden>' +
+      '<label class="ck-opt"><input type="checkbox" checked disabled><span><strong>Notwendig</strong><span>Speichert nur Ihre Auswahl in diesem Browser.</span></span></label>' +
+      '<label class="ck-opt"><input type="checkbox" data-ck="maps"><span><strong>Google Maps</strong><span>Karte zur Anfahrt (Google Ireland Ltd.).</span></span></label>' +
+      '<label class="ck-opt"><input type="checkbox" data-ck="join"><span><strong>JOIN Stellenbörse</strong><span>Aktuelle Stellenangebote (JOIN Solutions AG).</span></span></label>' +
+      '<label class="ck-opt"><input type="checkbox" data-ck="base44"><span><strong>Lack-Konfigurator</strong><span>Fahrzeugdaten und Bilder (Base44).</span></span></label>' +
+      '</div>' +
+      '<div class="ck-btns"><button type="button" class="btn btn-dark" data-ck-all>Alle akzeptieren</button><button type="button" class="btn btn-dark" data-ck-none>Nur notwendige</button>' +
+      '<button type="button" class="ck-more" data-ck-more>Einstellungen</button></div>';
+    document.body.appendChild(box);
+    const opts = box.querySelector('.ck-opts'), more = box.querySelector('[data-ck-more]');
+    const boxes = () => [...box.querySelectorAll('[data-ck]')];
+    const open = detail => {
+      boxes().forEach(c => { c.checked = get(KEYS[c.dataset.ck]) === '1'; });
+      opts.hidden = !detail; more.textContent = detail ? 'Auswahl speichern' : 'Einstellungen';
+      box.hidden = false; box.querySelector('h2').focus && box.querySelector('[data-ck-all]').focus({ preventScroll: true });
+    };
+    const apply = choice => {
+      Object.keys(KEYS).forEach(k => set(KEYS[k], choice[k] ? '1' : null));
+      set('consent_choice', new Date().toISOString().slice(0, 10));
+      box.hidden = true;
+      // bereits sichtbare Platzhalter sofort laden
+      if (choice.maps) document.querySelectorAll('[data-load-map]').forEach(b => b.click());
+      if (choice.join) document.querySelectorAll('[data-ext="join"] [data-ext-load]').forEach(b => b.click());
+      if (choice.base44) { const k = document.getElementById('kc-allow'); if (k && k.offsetParent) k.click(); }
+    };
+    box.querySelector('[data-ck-all]').addEventListener('click', () => apply({ maps: 1, join: 1, base44: 1 }));
+    box.querySelector('[data-ck-none]').addEventListener('click', () => apply({}));
+    more.addEventListener('click', () => {
+      if (opts.hidden) { opts.hidden = false; more.textContent = 'Auswahl speichern'; return; }
+      const c = {}; boxes().forEach(x => { c[x.dataset.ck] = x.checked; }); apply(c);
+    });
+    document.addEventListener('click', e => { if (e.target.closest('[data-cookie-settings]')) { e.preventDefault(); open(true); } });
+    box.addEventListener('keydown', e => { if (e.key === 'Escape' && get('consent_choice')) box.hidden = true; });
+    if (!get('consent_choice')) open(false);
+    else if (get('consent_maps') === '1') document.querySelectorAll('[data-load-map]').forEach(b => b.click());
+  })();
   document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
