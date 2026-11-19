@@ -1886,17 +1886,16 @@ def konfig_page():
   <div class="kc-conf" id="kc-conf" hidden>
     <div class="kc-left">
       <div class="kc-top"><a href="konfigurator.html" id="kc-back" class="kc-link">← Zurück</a><span class="kc-tools"><button type="button" id="kc-share" class="kc-link kc-light">↗ Teilen</button><button type="button" id="kc-reset" class="kc-link kc-light">↺ Reset</button></span></div>
-      <div class="kc-stage"><div class="kc-thumbs" id="kc-thumbs" role="group" aria-label="Ansichten"></div>
+      <div class="kc-stage"><div class="kc-side"><img class="kc-logo" src="images/Taeubert_Logo.png" alt="Täubert"><div class="kc-thumbs" id="kc-thumbs" role="group" aria-label="Ansichten"></div></div>
         <div class="kc-view"><div class="kc-canvas"><canvas id="kc-canvas" role="img" aria-label=""></canvas><div class="kc-spin kc-spin-over" id="kc-imgload"><span></span></div></div></div></div>
       <div class="kc-info"><p class="kc-brand" id="kc-brand"></p><p class="kc-model" id="kc-model"></p><p class="kc-era" id="kc-era"></p><p class="kc-pricehint">Preis individuell – nach Ihrer Konfiguration</p></div>
     </div>
     <div class="kc-right">
-      <nav class="kc-tabs" id="kc-tabs" aria-label="Kategorien"></nav>
-      <div class="kc-progress"><span id="kc-progress"></span></div>
       <div class="kc-head">
-        <div class="kc-step"><span id="kc-step-name"></span><span id="kc-step-num"></span></div>
-        <h2 id="kc-opt-name"></h2><p id="kc-opt-desc"></p>
+        <div class="kc-headrow"><h2 id="kc-opt-name"></h2><span class="kc-price">Individuell</span></div>
+        <p id="kc-opt-desc"></p>
       </div>
+      <div class="kc-stepnav"><button type="button" id="kc-prev" class="kc-link">‹ Zurück</button><div class="kc-stepbox"><span id="kc-step-name"></span><small id="kc-step-num"></small></div><button type="button" id="kc-next" class="kc-nextbtn">Weiter ›</button></div>
       <div class="kc-body">
         <div id="kc-options"></div>
         <div class="kc-summary" id="kc-summary" hidden>
@@ -1916,7 +1915,6 @@ def konfig_page():
           <div class="kc-done" id="kc-done" hidden><span>✓</span><h3>Anfrage gesendet</h3><p>Vielen Dank für Ihre Konfiguration. Wir melden uns in Kürze bei Ihnen.</p><div class="kc-done-btns"><a class="kc-btn" href="termin.html?leistung=Lackierung#wunschtermin">Beratungstermin anfragen</a><a class="kc-link" href="konfigurator.html">Weitere Modelle ansehen</a></div></div>
         </div>
       </div>
-      <div class="kc-nav"><button type="button" id="kc-prev" class="kc-link">‹ Zurück</button><button type="button" id="kc-next" class="kc-btn">Weiter ›</button></div>
     </div>
   </div>
   <div class="kc-fallback" id="kc-fallback" hidden><iframe title="Lack-Konfigurator von Täubert" data-src="{KONFIG_URL}" allow="clipboard-write; fullscreen"></iframe></div>
@@ -2070,6 +2068,69 @@ KONFIG_CSS = """
   }
 """
 
+KONFIG_CSS += """
+  /* ===== Konfiguration im Aufbau des Banyan-Konfigurators ===== */
+  @font-face { font-family: "Michroma"; font-weight: 400; font-display: swap; src: url(fonts/michroma-latin-400-normal.woff2) format("woff2"); }
+  .kc-conf { --f-wide: "Michroma", var(--f-display); min-height: calc(100svh - var(--announce-h) - var(--hdr-h)); background: #fff; }
+  .kc-left { width: auto; flex: 1; background: #f3f3f3; position: relative; }
+  .kc-top { position: absolute; z-index: 2; top: 0; left: 136px; right: 0; padding: 18px 24px; }
+  .kc-stage { flex: 1; display: flex; height: calc(100svh - var(--announce-h) - var(--hdr-h)); min-height: 560px; }
+  .kc-side { flex: none; width: 136px; background: #fff; display: flex; flex-direction: column; align-items: center; padding: 18px 0; gap: 18px; overflow-y: auto; }
+  .kc-logo { width: 72px; height: auto; }
+  .kc-side .kc-thumbs { border: 0; padding: 0; gap: 12px; }
+  .kc-side .kc-thumb { width: 100px; height: 100px; border: 1px solid transparent; border-radius: 0; background: #f3f3f3; }
+  .kc-side .kc-thumb.on { border-color: #111; }
+  .kc-view { padding: 48px 24px 24px; }
+  .kc-canvas { max-width: none; width: 100%; height: 100%; }
+  .kc-info { position: absolute; z-index: 2; top: 14px; left: calc(68px + 50%); transform: translateX(-50%); width: max-content; max-width: 50%; text-align: center; background: none; border: 0; padding: 0; }
+  .kc-info .kc-brand { font-family: var(--f-wide); font-size: 9px; letter-spacing: .14em; }
+  .kc-info .kc-model { font-family: var(--f-wide) !important; font-size: 13px !important; letter-spacing: .08em !important; margin-top: 4px; }
+  .kc-info .kc-era, .kc-info .kc-pricehint { display: none; }
+  .kc-right { width: 440px; flex: none; border-left: 0; padding: 0 20px; background: #fff; }
+  .kc-head { padding: 20px 0 0; border: 0; }
+  .kc-headrow { display: flex; align-items: center; min-height: 72px; border-bottom: 1px solid #d8d8d8; }
+  .kc-headrow h2 { flex: 1; margin: 0; font-family: var(--f-wide) !important; font-size: 17px !important; letter-spacing: .08em !important; text-transform: uppercase; line-height: 1.3 !important; padding-right: 16px; }
+  .kc-price { flex: none; align-self: stretch; display: flex; align-items: center; padding-left: 18px; border-left: 1px solid #d8d8d8; font-family: var(--f-wide); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+  .kc-head p { font-size: 15px; line-height: 1.7; color: #777; margin: 22px 0 0; min-height: 76px; text-align: justify; hyphens: auto; }
+  .kc-stepnav { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 26px 0 18px; border-bottom: 1px solid #d8d8d8; }
+  .kc-stepnav .kc-link { justify-self: start; font-family: var(--f-wide) !important; font-size: 10px; letter-spacing: .1em; color: #111; }
+  .kc-stepnav .kc-link:disabled { color: #bbb; opacity: 1; }
+  .kc-stepbox { text-align: center; }
+  .kc-stepbox span { display: block; font-family: var(--f-wide); font-size: 14px; letter-spacing: .1em; text-transform: uppercase; }
+  .kc-stepbox small { display: block; margin-top: 6px; font-family: var(--f-wide); font-size: 10px; letter-spacing: .1em; color: #777; text-transform: uppercase; }
+  .kc-nextbtn { justify-self: end; font: inherit; font-family: var(--f-wide); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; background: #fff; color: #111; border: 0; border-radius: 2px; padding: 9px 14px; cursor: pointer; transition: background .2s; }
+  .kc-nextbtn:hover { background: #eee; }
+  .kc-nextbtn[hidden] { display: none; }
+  .kc-body { padding: 22px 0 32px; }
+  .kc-swatches { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px 6px; }
+  .kc-sw { padding: 0; gap: 10px; }
+  .kc-sw:hover, .kc-sw.on { background: none; box-shadow: none; }
+  .kc-sw i { width: 58px; height: 58px; border: 0; box-shadow: 0 2px 6px rgba(0,0,0,.18); background: radial-gradient(circle at 32% 28%, rgba(255,255,255,.75), rgba(255,255,255,0) 38%), radial-gradient(circle at 70% 78%, rgba(0,0,0,.28), rgba(0,0,0,0) 62%), var(--c); outline: 1px solid transparent; outline-offset: 4px; transition: outline-color .2s, transform .2s; }
+  .kc-sw.on i { outline-color: #111; }
+  .kc-sw span { font-size: 15px; line-height: 1.2; color: #333; white-space: normal; overflow: visible; }
+  .kc-opts { grid-template-columns: 1fr; gap: 10px; }
+  .kc-opt { padding: 16px 18px; border-color: #d8d8d8; border-radius: 0; }
+  .kc-opt strong { font-family: var(--f-wide); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; font-weight: 400; }
+  .kc-opt small { display: none; }
+  @media (max-width: 990px) {
+    .kc-left { position: sticky; top: calc(var(--announce-h) + 70px); z-index: 4; }
+    .kc-stage { height: auto; min-height: 0; flex-direction: column-reverse; }
+    .kc-side { width: auto; flex-direction: row; padding: 8px 16px; overflow-x: auto; }
+    .kc-logo { display: none; }
+    .kc-side .kc-thumbs { flex-direction: row; }
+    .kc-side .kc-thumb { width: 52px; height: 52px; }
+    .kc-top { left: 0; padding: 8px 16px; }
+    .kc-view { padding: 36px 16px 8px; }
+    .kc-canvas { height: 26svh; }
+    .kc-info { display: none; }
+    .kc-right { width: 100%; padding: 0 16px; }
+    .kc-head p { min-height: 0; text-align: left; }
+    .kc-sw i { width: 48px; height: 48px; }
+    .kc-sw span { font-size: 13px; }
+  }
+"""
+
+
 KONFIG_JS = r"""
 <script type="module">
   // Lack-Konfigurator: Nachbau von Home.jsx und Configurator.jsx des Base44-Originals
@@ -2106,21 +2167,8 @@ KONFIG_JS = r"""
     return { r: Math.round(hue2rgb(p, q, h + 1 / 3) * 255), g: Math.round(hue2rgb(p, q, h) * 255), b: Math.round(hue2rgb(p, q, h - 1 / 3) * 255) };
   }
   const hexToHsl = hex => { const c = hex.replace('#', ''); return rgbToHsl(parseInt(c.substr(0, 2), 16), parseInt(c.substr(2, 2), 16), parseInt(c.substr(4, 2), 16)); };
-  let tintJob = 0;
-  async function tintedImage(src, tintHex, seatTintHex, maxSize = 1000) {
-    const my = ++tintJob, canvas = $('kc-canvas'), spin = $('kc-imgload');
-    spin.hidden = false;
-    const imgUrl = await fetchAsDataUrl(src);
-    if (my !== tintJob) return;
-    const img = new Image();
-    img.onload = () => {
-      if (my !== tintJob) return;
-      const ctx = canvas.getContext('2d'); let w = img.naturalWidth, h = img.naturalHeight;
-      if (w > maxSize || h > maxSize) { const scale = maxSize / Math.max(w, h); w = Math.round(w * scale); h = Math.round(h * scale); }
-      canvas.width = w; canvas.height = h; ctx.drawImage(img, 0, 0, w, h);
-      if (tintHex || seatTintHex) {
-        try {
-          const imageData = ctx.getImageData(0, 0, w, h), data = imageData.data;
+  function applyTint(imageData, tintHex, seatTintHex) {   // Karosserie (blau/magenta) und Sitze (warme Töne) umfärben
+    const data = imageData.data;
           const bodyTint = tintHex ? hexToHsl(tintHex) : null, seatTint = seatTintHex ? hexToHsl(seatTintHex) : null;
           for (let i = 0; i < data.length; i += 4) {
             const r = data[i], g = data[i + 1], b = data[i + 2], sat = Math.max(r, g, b) - Math.min(r, g, b), px = rgbToHsl(r, g, b), hue = px.h;
@@ -2150,6 +2198,41 @@ KONFIG_JS = r"""
               }
             }
           }
+  }
+  // Vorschaubilder ebenfalls in der gewählten Farbe (wie bei Banyan)
+  let thumbJob = 0;
+  async function tintThumbs(g, paintColor, seatColor, hasInterior) {
+    const my = ++thumbJob;
+    for (let i = 0; i < g.length; i++) {
+      const v = g[i], isExterior = v.view_type !== 'interior', body = paintColor, seat = (!hasInterior || !isExterior) ? seatColor : undefined;
+      if (!body && !seat) continue;
+      const url = await fetchAsDataUrl(v.url); if (my !== thumbJob) return;
+      const im = new Image();
+      await new Promise(res => { im.onload = res; im.onerror = res; im.src = url; });
+      if (my !== thumbJob || !im.naturalWidth) continue;
+      const c = document.createElement('canvas'), sc = 200 / Math.max(im.naturalWidth, im.naturalHeight);
+      c.width = Math.round(im.naturalWidth * sc); c.height = Math.round(im.naturalHeight * sc);
+      const x = c.getContext('2d'); x.drawImage(im, 0, 0, c.width, c.height);
+      try { const d = x.getImageData(0, 0, c.width, c.height); applyTint(d, body, seat); x.putImageData(d, 0, 0); } catch (e) { continue; }
+      const el = $('kc-thumbs').querySelector(`[data-view="${i}"] img`); if (el) el.src = c.toDataURL('image/jpeg', 0.85);
+    }
+  }
+  let tintJob = 0;
+  async function tintedImage(src, tintHex, seatTintHex, maxSize = 1000) {
+    const my = ++tintJob, canvas = $('kc-canvas'), spin = $('kc-imgload');
+    spin.hidden = false;
+    const imgUrl = await fetchAsDataUrl(src);
+    if (my !== tintJob) return;
+    const img = new Image();
+    img.onload = () => {
+      if (my !== tintJob) return;
+      const ctx = canvas.getContext('2d'); let w = img.naturalWidth, h = img.naturalHeight;
+      if (w > maxSize || h > maxSize) { const scale = maxSize / Math.max(w, h); w = Math.round(w * scale); h = Math.round(h * scale); }
+      canvas.width = w; canvas.height = h; ctx.drawImage(img, 0, 0, w, h);
+      if (tintHex || seatTintHex) {
+        try {
+          const imageData = ctx.getImageData(0, 0, w, h);
+          applyTint(imageData, tintHex, seatTintHex);
           ctx.putImageData(imageData, 0, 0);
         } catch (e) { console.warn('Canvas recolor failed:', e.message); }
       }
@@ -2210,20 +2293,18 @@ KONFIG_JS = r"""
     const seatColor = seatStep?.options?.find(o => o.name === selections[seatStep?.step_name])?.color_hex;
     $('kc-canvas').setAttribute('aria-label', `${vehicle.brand} ${vehicle.model_name}`);
     $('kc-thumbs').innerHTML = g.map((im, i) => `<button type="button" class="kc-thumb${selectedView === i ? ' on' : ''}" data-view="${i}" aria-pressed="${selectedView === i}"><img src="${esc(im.url)}" alt="${esc(im.label || 'Ansicht ' + (i + 1))}"></button>`).join('');
-    tintedImage(active.url, isExterior ? paintColor : undefined, (!hasInterior || !isExterior) ? seatColor : undefined);
+    // Lackfarbe auch im Innenraum (lackierte Türbleche usw. tragen dieselbe Platzhalterfarbe)
+    tintedImage(active.url, paintColor, (!hasInterior || !isExterior) ? seatColor : undefined);
+    tintThumbs(g, paintColor, seatColor, hasInterior);
   }
   function render() {
     const s = steps(), isSummary = currentStep >= s.length, step = s[currentStep];
     $('kc-summary').hidden = !isSummary; $('kc-options').hidden = isSummary; $('kc-next').hidden = isSummary;
-    $('kc-tabs').innerHTML = s.map((st, i) => `<button type="button" class="kc-tab${i === currentStep ? ' on' : ''}" data-step="${i}"${i === currentStep ? ' aria-current="step"' : ''}>${esc(st.step_name)}</button>`).join('') +
-      `<button type="button" class="kc-tab${isSummary ? ' on' : ''}" data-step="${s.length}"${isSummary ? ' aria-current="step"' : ''}>Zusammenfassung</button>`;
-    $('kc-progress').style.width = ((Math.min(currentStep, s.length) + 1) / (s.length + 1) * 100) + '%';
-    const t = $('kc-tabs').querySelector('.on'); if (t) t.scrollIntoView({ block: 'nearest', inline: 'nearest' });
     saveUrl();
     $('kc-prev').disabled = currentStep === 0;
     if (isSummary) {
       $('kc-step-name').textContent = 'Zusammenfassung'; $('kc-step-num').textContent = `Schritt ${s.length + 1}/${s.length + 1}`;
-      $('kc-opt-name').textContent = ''; $('kc-opt-desc').textContent = '';
+      $('kc-opt-name').textContent = `${vehicle.brand} ${vehicle.model_name}`; $('kc-opt-desc').textContent = 'Prüfen Sie Ihre Auswahl und senden Sie uns die Konfiguration – wir melden uns mit Ihrem individuellen Angebot.';
       $('kc-sum-list').innerHTML = s.map(st => { const o = st.options.find(x => x.name === selections[st.step_name]); return o ? `<div class="kc-row"><small>${esc(st.step_name)}</small><span>${esc(o.name)}</span></div>` : ''; }).join('') +
         '<div class="kc-row kc-price"><small>Preis</small><span>Individuelles Angebot</span></div>';
       return;
@@ -2231,11 +2312,11 @@ KONFIG_JS = r"""
     $('kc-step-name').textContent = step.step_name; $('kc-step-num').textContent = `Schritt ${currentStep + 1}/${s.length}`;
     const sel = step.options?.find(o => o.name === selections[step.step_name]);
     $('kc-opt-name').textContent = sel?.name || ''; $('kc-opt-desc').textContent = sel?.description || '';
-    $('kc-next').textContent = currentStep === s.length - 1 ? 'Zusammenfassung ›' : 'Weiter ›';
+    $('kc-next').textContent = currentStep === s.length - 1 ? 'Abschluss ›' : 'Weiter ›';
     const isColorStep = step.options?.every(o => o.color_hex);
     $('kc-options').innerHTML = isColorStep
       ? '<div class="kc-swatches">' + step.options.map(o => { const on = selections[step.step_name] === o.name;
-          return `<button type="button" class="kc-sw${on ? ' on' : ''}" data-opt="${esc(o.name)}" title="${esc(o.name)}" aria-pressed="${on}"><i style="background:${esc(o.color_hex)};color:${isLight(o.color_hex) ? '#000' : '#fff'}">${on ? '✓' : ''}</i><span>${esc(o.name)}</span></button>`; }).join('') + '</div>'
+          return `<button type="button" class="kc-sw${on ? ' on' : ''}" data-opt="${esc(o.name)}" title="${esc(o.name)}" aria-pressed="${on}"><i style="--c:${esc(o.color_hex)};color:${isLight(o.color_hex) ? '#000' : '#fff'}"></i><span>${esc(o.name)}</span></button>`; }).join('') + '</div>'
       : '<div class="kc-opts">' + step.options.map(o => { const on = selections[step.step_name] === o.name;
           return `<button type="button" class="kc-opt${on ? ' on' : ''}" data-opt="${esc(o.name)}" aria-pressed="${on}"><span><strong>${esc(o.name)}</strong>${o.description ? `<small>${esc(o.description)}</small>` : ''}</span><b>${on ? '✓' : ''}</b></button>`; }).join('') + '</div>';
   }
@@ -2243,7 +2324,6 @@ KONFIG_JS = r"""
     const b = e.target.closest('[data-opt]'); if (!b) return;
     selections[steps()[currentStep].step_name] = b.dataset.opt; render(); paint();
   });
-  $('kc-tabs').addEventListener('click', e => { const b = e.target.closest('.kc-tab'); if (!b) return; currentStep = +b.dataset.step; viewForStep(); render(); paint(); });
   // Auswahl im Link speichern, damit Konfigurationen geteilt werden können
   function saveUrl() {
     if (!vehicle) return;
