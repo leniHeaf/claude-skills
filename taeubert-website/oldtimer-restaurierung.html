@@ -569,10 +569,14 @@
   .tile-svc .tile-media { position: relative; display: block; inset: auto; height: auto; aspect-ratio: 4 / 3; overflow: hidden; background: #eee; }
   .tile-svc .tile-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 1; }
   .tile-svc:hover img { transform: scale(1.04); }
-  .tile-body { position: static; padding: 22px 0 0; }
+  .tile-body { position: static; display: block; padding: 24px 0 0; }
   .tile-body h3 { font-size: clamp(22px, 2vw, 28px) !important; margin-bottom: 12px; color: #111; }
   .tile-body p { color: #444; max-width: none; }
-  .tile-more { display: inline-block; margin-top: 16px; font-size: 11px; text-transform: uppercase; color: #111; border-bottom: 0 !important; }
+  .tile-more { display: inline-block; margin-top: 18px; font-size: 11px; font-weight: 400; letter-spacing: .16em !important; text-transform: uppercase; color: #111; border-bottom: 1px solid rgba(0,0,0,.25) !important; padding-bottom: 4px; transition: border-color .3s; }
+  .tile-more::after { margin-left: .6em; }
+  .tile-svc:hover .tile-more { border-bottom-color: #111 !important; }
+  .tile-body h3 { margin-bottom: 10px !important; }
+  .tile-body p { font-size: 15px; line-height: 1.6; color: #555 !important; }
   @media (min-width: 991px) {
     .tile-grid.c4 { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
     .tile-grid.c5, .tile-grid.c1 { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
