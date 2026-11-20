@@ -24,6 +24,7 @@ $FORMULARE = [
     'events'          => ['Täubert Events – Einladung gewünscht', 'danke-anfrage.html'],
     'partner'         => ['Partneranfrage', 'danke-anfrage.html'],
     'gutschein'       => ['Gutscheinbestellung', 'danke-anfrage.html'],
+    'konfigurator'    => ['Konfigurator-Anfrage', 'danke-anfrage.html'],
 ];
 // Feldnamen -> Beschriftung in der E-Mail (Reihenfolge = Reihenfolge in der Mail)
 $FELDER = [
@@ -68,8 +69,8 @@ if (!isset($FORMULARE[$form])) antwort(false, 'Unbekanntes Formular.');
 // Spamschutz: verstecktes Feld muss leer bleiben (Bots füllen es aus) – dann still "erfolgreich" antworten
 if (feld('firma') !== '') antwort(true, 'Danke.', $danke);
 
-if (feld('name') === '' || feld('telefon') === '' || feld('einwilligung') === '') {
-    antwort(false, 'Bitte Name, Telefonnummer und die Einwilligung zum Datenschutz angeben.');
+if (feld('name') === '' || (feld('telefon') === '' && feld('email') === '') || feld('einwilligung') === '') {
+    antwort(false, 'Bitte Name, Telefonnummer oder E-Mail und die Einwilligung zum Datenschutz angeben.');
 }
 $email = feld('email');
 if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) antwort(false, 'Bitte eine gültige E-Mail-Adresse angeben.');

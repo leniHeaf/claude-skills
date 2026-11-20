@@ -1166,20 +1166,19 @@
     const body = `Name: ${v('name')}\nE-Mail: ${v('email')}\nTelefon: ${v('phone')}\n\n${v('message')}`;
     location.href = 'mailto:hallo@taeubert-karosserie-lack.de?subject=' + encodeURIComponent('Anfrage über die Website') + '&body=' + encodeURIComponent(body);
   }));
-  // Cookie-Banner: zentrale Einwilligung für externe Inhalte (Google Maps, JOIN, Konfigurator). Keine Statistik, kein Tracking.
+  // Cookie-Banner: zentrale Einwilligung für externe Inhalte (Google Maps, JOIN). Keine Statistik, kein Tracking.
   (function () {
-    const KEYS = { maps: 'consent_maps', join: 'consent_join', base44: 'consent_base44' };
+    const KEYS = { maps: 'consent_maps', join: 'consent_join' };
     const get = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
     const set = (k, v) => { try { v ? localStorage.setItem(k, v) : localStorage.removeItem(k); } catch (e) {} };
     const box = document.createElement('section');
     box.className = 'ck'; box.hidden = true; box.setAttribute('role', 'dialog'); box.setAttribute('aria-labelledby', 'ck-title');
     box.innerHTML = '<p class="ck-kicker">Datenschutz</p><h2 id="ck-title">Ihre Privatsphäre</h2>' +
-      '<p>Wir verwenden keine Werbe- oder Statistik-Cookies. Einige Inhalte stammen von anderen Anbietern (Karte, Stellenbörse, Lack-Konfigurator) – diese laden wir nur mit Ihrer Zustimmung. Mehr in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>' +
+      '<p>Wir verwenden keine Werbe- oder Statistik-Cookies. Einige Inhalte stammen von anderen Anbietern (Google-Karte, Stellenbörse von JOIN) – diese laden wir nur mit Ihrer Zustimmung. Mehr in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>' +
       '<div class="ck-opts" hidden>' +
       '<label class="ck-opt"><input type="checkbox" checked disabled><span><strong>Notwendig</strong><span>Speichert nur Ihre Auswahl in diesem Browser.</span></span></label>' +
       '<label class="ck-opt"><input type="checkbox" data-ck="maps"><span><strong>Google Maps</strong><span>Karte zur Anfahrt (Google Ireland Ltd.).</span></span></label>' +
       '<label class="ck-opt"><input type="checkbox" data-ck="join"><span><strong>JOIN Stellenbörse</strong><span>Aktuelle Stellenangebote (JOIN Solutions AG).</span></span></label>' +
-      '<label class="ck-opt"><input type="checkbox" data-ck="base44"><span><strong>Lack-Konfigurator</strong><span>Fahrzeugdaten und Bilder (Base44).</span></span></label>' +
       '</div>' +
       '<div class="ck-btns"><button type="button" class="btn btn-dark" data-ck-all>Alle akzeptieren</button><button type="button" class="btn btn-dark" data-ck-none>Nur notwendige</button>' +
       '<button type="button" class="ck-more" data-ck-more>Einstellungen</button></div>';
@@ -1198,9 +1197,8 @@
       // bereits sichtbare Platzhalter sofort laden
       if (choice.maps) document.querySelectorAll('[data-load-map]').forEach(b => b.click());
       if (choice.join) document.querySelectorAll('[data-ext="join"] [data-ext-load]').forEach(b => b.click());
-      if (choice.base44) { const k = document.getElementById('kc-allow'); if (k && k.offsetParent) k.click(); }
     };
-    box.querySelector('[data-ck-all]').addEventListener('click', () => apply({ maps: 1, join: 1, base44: 1 }));
+    box.querySelector('[data-ck-all]').addEventListener('click', () => apply({ maps: 1, join: 1 }));
     box.querySelector('[data-ck-none]').addEventListener('click', () => apply({}));
     more.addEventListener('click', () => {
       if (opts.hidden) { opts.hidden = false; more.textContent = 'Auswahl speichern'; return; }

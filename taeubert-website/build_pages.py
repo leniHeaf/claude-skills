@@ -1965,31 +1965,21 @@ def render_faq_page():
 
 
 
-# Lack-Konfigurator: exakter Nachbau des Base44-Originals (konfigurationtaeubert.base44.app).
-# Fahrzeuge, Schritte und Ansichten kommen live aus der Base44-App (VehicleModel), Anfragen gehen als Configuration
-# zurück dorthin. Einfärbung wie im Original: Bild über die Funktion proxyImage laden, Karosserie (blau/magenta)
-# und Sitze (warme Töne) per Canvas umfärben. Klappt der Abruf nicht, wird das Original eingebettet.
-KONFIG_URL = "https://konfigurationtaeubert.base44.app"
-KONFIG_APP_ID = "6a4632bd35aedaad00a18547"
-KONFIG_SDK = "./js/base44-sdk-0.8.55.js"  # selbst gehostet (keine Verbindung zu einem fremden CDN)
+# Lack-Konfigurator: eigener Konfigurator nach dem Vorbild der früheren Base44-App, komplett auf dem eigenen Server.
+# Fahrzeuge, Schritte und Ansichten liegen in js/konfigurator/ (fahrzeuge.json + je Fahrzeug eine Datei), die Bilder in
+# images/konfigurator/. Anfragen gehen über formular.php per E-Mail. Einfärbung per Canvas (Karosserie blau/magenta, Sitze warm).
 KONFIG_TYPES = ["Alle", "Pkw", "Motorrad", "Mofa/Roller", "Transporter", "Nutzfahrzeug", "Amphibienfahrzeug", "Kabinenroller", "Kleinstwagen"]
 
 
 def konfig_page():
     types = "".join(f'<button type="button" class="kc-type{" on" if i == 0 else ""}" data-type="{esc(t)}" aria-pressed="{"true" if i == 0 else "false"}">{esc(t)}</button>' for i, t in enumerate(KONFIG_TYPES))
-    return f'''<section class="kc" id="kc" data-app="{KONFIG_APP_ID}" data-url="{KONFIG_URL}">
+    return f'''<section class="kc" id="kc">
   <div class="kc-home" id="kc-home">
     <div class="page-width">
       <div class="kc-hero"><h1>Customize</h1><p>Wählen Sie Ihr Modell und gestalten Sie es nach Ihren Wünschen</p></div>
       <div class="kc-types" role="group" aria-label="Fahrzeugart">{types}</div>
       <p class="kc-count" id="kc-count"></p>
-      <div class="ext-consent kc-gate" id="kc-gate">
-        <p class="eyebrow">Hinweis zum Datenschutz</p>
-        <p>Der Konfigurator wird von unserem Dienstleister Base44 bereitgestellt. Erst wenn Sie ihn laden, werden Fahrzeugdaten und Bilder von dessen Servern abgerufen; dabei wird Ihre IP-Adresse übertragen, eine Verarbeitung auch außerhalb der EU ist möglich. Mehr in der <a href="datenschutz.html#konfigurator">Datenschutzerklärung</a>.</p>
-        <button type="button" class="btn btn-dark" id="kc-allow">Konfigurator laden</button>
-        <label class="ext-remember"><input type="checkbox" id="kc-remember"> Auf diesem Gerät merken</label>
-      </div>
-      <div class="kc-spin" id="kc-loading" role="status" aria-label="Modelle werden geladen" hidden><span></span></div>
+      <div class="kc-spin" id="kc-loading" role="status" aria-label="Modelle werden geladen"><span></span></div>
       <div class="kc-grid" id="kc-grid"></div>
       <div class="kc-empty" id="kc-empty" hidden><p>Keine Modelle in dieser Kategorie</p></div>
     </div>
@@ -2013,8 +2003,9 @@ def konfig_page():
           <h3 class="kc-label">Ihre Konfiguration</h3>
           <div id="kc-sum-list"></div>
           <p class="kc-note"><strong>Hinweis:</strong> Das Fahrzeug muss von Ihnen angeliefert werden – oder wir holen es im Umkreis von 30 km ab. Die Konfiguration dient als Grundlage für Ihr individuelles, unverbindliches Angebot – den Preis erstellen wir passend zu Fahrzeug und Zustand.</p>
-          <form class="kc-form" id="kc-form">
+          <form class="kc-form" id="kc-form" action="formular.php" method="POST">
             <h3 class="kc-label">Kontaktinformationen</h3>
+            <p class="hp"><label>Nicht ausfüllen: <input name="firma" tabindex="-1" autocomplete="off"></label></p>
             <label>Name *<input name="name" autocomplete="name" required></label>
             <label>E-Mail *<input name="email" type="email" autocomplete="email" required></label>
             <label>Telefon<input name="phone" type="tel" autocomplete="tel"></label>
@@ -2028,7 +2019,6 @@ def konfig_page():
       </div>
     </div>
   </div>
-  <div class="kc-fallback" id="kc-fallback" hidden><iframe title="Lack-Konfigurator von Täubert" data-src="{KONFIG_URL}" allow="clipboard-write; fullscreen"></iframe></div>
 </section>'''
 
 
@@ -2225,6 +2215,7 @@ KONFIG_CSS += """
   .kc-opt small { display: none; }
   @media (max-width: 990px) {
     .kc-left { position: sticky; top: calc(var(--announce-h) + 70px); z-index: 4; }
+    .kc-conf.is-summary .kc-left { position: static; }
     .kc-stage { height: auto; min-height: 0; flex-direction: column-reverse; }
     .kc-side { width: auto; flex-direction: row; padding: 8px 16px; overflow-x: auto; }
     .kc-logo { display: none; }
@@ -2244,26 +2235,17 @@ KONFIG_CSS += """
 
 KONFIG_JS = r"""
 <script type="module">
-  // Lack-Konfigurator: Nachbau von Home.jsx und Configurator.jsx des Base44-Originals
+  // Lack-Konfigurator (eigener Server, keine Drittanbieter)
   const root = document.getElementById('kc');
   const $ = id => document.getElementById(id);
   const esc = t => String(t ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  function fallback() {   // Base44 nicht erreichbar: Original einbetten
-    $('kc-home').hidden = true; $('kc-conf').hidden = true;
-    const f = $('kc-fallback'), fr = f.querySelector('iframe'); fr.src = fr.dataset.src; f.hidden = false;
-  }
-  let base44;   // wird erst nach Einwilligung (Klick auf „Konfigurator laden“) geladen
+  // Alle Fahrzeuge, Farben und Bilder liegen auf dem eigenen Server (js/konfigurator/, images/konfigurator/)
+  const DATA = 'js/konfigurator/';
 
   // ---- Bild einfärben (TintedImage.jsx) ----
   const dataUrlCache = new Map();
   async function fetchAsDataUrl(url) {
-    if (dataUrlCache.has(url)) return dataUrlCache.get(url);
-    try {
-      const response = await base44.functions.invoke('proxyImage', { url });
-      const dataUrl = response?.data?.data_url || response?.data_url;
-      if (dataUrl && dataUrl.startsWith('data:')) { dataUrlCache.set(url, dataUrl); return dataUrl; }
-    } catch (e) { console.warn('Proxy failed:', e.message); }
-    return url;
+    return url;   // eigene Bilder (gleiche Domain): kein Proxy nötig
   }
   function rgbToHsl(r, g, b) {
     r /= 255; g /= 255; b /= 255; const max = Math.max(r, g, b), min = Math.min(r, g, b); let h = 0, s = 0; const l = (max + min) / 2;
@@ -2367,7 +2349,7 @@ KONFIG_JS = r"""
       const y = years(vs), n = vs.length;
       const sub = (y ? (y[0] === y[1] ? `Klassiker aus ${y[0]}` : `Klassiker von ${y[0]} bis ${y[1]}`) + ' · ' : '') + n + (n === 1 ? ' Konfigurator' : ' Konfiguratoren');
       return `<section class="kc-brandsec"><header><h2>${esc(brand)}</h2><p>${esc(sub)}</p></header><div class="kc-bgrid">` + vs.map(v => `<a class="kc-card" href="?modell=${esc(v.id)}" data-id="${esc(v.id)}">
-      <span class="kc-card-img"><img src="${esc(v.image_url)}" alt="${esc(v.brand + ' ' + v.model_name)}" loading="lazy"></span>
+      <span class="kc-card-img"><img src="${esc(v.thumb || v.image_url)}" alt="${esc(v.brand + ' ' + v.model_name)}" loading="lazy"></span>
       <span class="kc-card-text"><span class="kc-card-name">${esc(v.model_name)}${v.variant ? ` <em>${esc(v.variant)}</em>` : ''}</span>
       <span class="kc-card-meta">${esc([v.era, v.vehicle_type].filter(Boolean).join(' · '))}</span>
       <span class="kc-card-go">Konfigurieren</span></span></a>`).join('') + '</div></section>';
@@ -2410,6 +2392,7 @@ KONFIG_JS = r"""
   }
   function render() {
     const s = steps(), isSummary = currentStep >= s.length, step = s[currentStep];
+    $('kc-conf').classList.toggle('is-summary', isSummary);
     $('kc-summary').hidden = !isSummary; $('kc-options').hidden = isSummary; $('kc-next').hidden = isSummary;
     saveUrl();
     $('kc-prev').disabled = currentStep === 0;
@@ -2460,8 +2443,14 @@ KONFIG_JS = r"""
     const btn = f.querySelector('.kc-send'), status = $('kc-status'); btn.disabled = true; status.textContent = 'Wird gesendet …';
     const name = `${vehicle.brand} ${vehicle.model_name} ${vehicle.variant || ''}`.trim();
     try {
-      await base44.entities.Configuration.create({ vehicle_model_id: vehicle.id, vehicle_name: name, selections, total_price: 0, status: 'submitted',
-        customer_name: f.name.value, customer_email: f.email.value, customer_phone: f.phone.value, customer_message: f.message.value });
+      const fd = new FormData();
+      fd.append('form-name', 'konfigurator'); fd.append('firma', f.firma.value);
+      fd.append('name', f.name.value); fd.append('email', f.email.value); fd.append('telefon', f.phone.value);
+      fd.append('fahrzeug', name); fd.append('einwilligung', f.einwilligung.checked ? 'ja' : '');
+      fd.append('nachricht', steps().map(st => `${st.step_name}: ${selections[st.step_name] || '–'}`).join('\n') + `\n\nLink zur Konfiguration: ${location.href}` + (f.message.value ? `\n\n${f.message.value}` : ''));
+      const r = await fetch(f.getAttribute('action'), { method: 'POST', body: fd, headers: { Accept: 'application/json' } });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || !j.ok) throw new Error(j.message || 'Senden fehlgeschlagen');
       f.hidden = true; $('kc-done').hidden = false; document.querySelector('.kc-note').hidden = true;
     } catch (err) {
       btn.disabled = false;
@@ -2472,8 +2461,8 @@ KONFIG_JS = r"""
 
   async function openVehicle(id) {
     $('kc-home').hidden = true; $('kc-conf').hidden = false; window.scrollTo(0, 0);
-    vehicle = vehicles.find(v => v.id === id) || null;
-    if (!vehicle) { try { vehicle = await base44.entities.VehicleModel.get(id); } catch (e) { vehicle = null; } }
+    vehicle = null;
+    if (vehicles.some(v => v.id === id)) { try { vehicle = await (await fetch(DATA + encodeURIComponent(id) + '.json')).json(); } catch (e) { vehicle = null; } }
     if (!vehicle) { history.replaceState({}, '', 'konfigurator.html'); return route(); }
     // Zusätzlicher Schritt nur auf der Website: Unterboden (nicht bei Motorrad und Mofa/Roller)
     const ohneUnterboden = ['Motorrad', 'Mofa/Roller'];
@@ -2497,23 +2486,14 @@ KONFIG_JS = r"""
   window.addEventListener('popstate', route);
 
   async function start() {
-    $('kc-gate').hidden = true; $('kc-loading').hidden = false;
     try {
-      const { createClient } = await import(__SDK__);
-      base44 = createClient({ appId: root.dataset.app, requiresAuth: false });
-    } catch (e) { console.warn('Base44 SDK nicht geladen', e); return fallback(); }
-    const timer = setTimeout(() => { if (!vehicles.length) fallback(); }, 12000);
-    try {
-      vehicles = await base44.entities.VehicleModel.filter({ is_active: true }, '-created_date', 200);
-      clearTimeout(timer); $('kc-loading').hidden = true; renderHome(); route();
-    } catch (e) { clearTimeout(timer); console.warn('Fahrzeuge nicht geladen', e); fallback(); }
+      vehicles = await (await fetch(DATA + 'fahrzeuge.json')).json();
+    } catch (e) { console.warn('Fahrzeuge nicht geladen', e); vehicles = []; }
+    $('kc-loading').hidden = true; renderHome(); route();
   }
-  // Einwilligung: erst nach Klick laden; auf Wunsch für dieses Gerät merken
-  let erlaubt = false; try { erlaubt = localStorage.getItem('consent_base44') === '1'; } catch (e) {}
-  $('kc-allow').addEventListener('click', () => { if ($('kc-remember').checked) { try { localStorage.setItem('consent_base44', '1'); } catch (e) {} } start(); });
-  if (erlaubt) start();
+  start();
 </script>
-""".replace("__SDK__", '"' + KONFIG_SDK + '"')
+"""
 
 
 # Bewerbung direkt über die Website (Netlify Forms), zusätzlich zur JOIN-Stellenliste
@@ -2731,7 +2711,7 @@ Header set Cache-Control "public, max-age=600"
 </IfModule>
 
 <IfModule mod_deflate.c>
-AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml application/xml text/plain
+AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml application/xml text/plain
 </IfModule>
 
 AddType font/woff2 .woff2
