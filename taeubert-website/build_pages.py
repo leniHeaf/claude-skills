@@ -2024,6 +2024,9 @@ def konfig_page():
 
 
 KONFIG_CSS = """
+  .kc-conf .kc-left { background: #efefed; }
+  .kc-conf .kc-thumbs, .kc-conf .kc-side { background: transparent; }
+
   .kc { background: #fff; color: #171717; }
   .kc-home { padding: 72px 0 96px; }
   .kc-hero { text-align: center; margin-bottom: 40px; }
@@ -2280,7 +2283,7 @@ KONFIG_JS = r"""
       const r = data[i], g = data[i + 1], b = data[i + 2], sat = Math.max(r, g, b) - Math.min(r, g, b), px = rgbToHsl(r, g, b), hue = px.h;
       L[p] = px.l;
       if (bodyTint) {
-        const satWeight = sat <= 15 ? 0 : Math.min((sat - 15) / 40, 1), hueMin = 150, hueMax = 340, f = 15;
+        const satWeight = sat <= 7 ? 0 : Math.min((sat - 7) / 30, 1), hueMin = 150, hueMax = 340, f = 15;   // auch halbtransparente Kantenpixel (kein Farbsaum)
         let hw;
         if (hue >= hueMin + f && hue <= hueMax - f) hw = 1;
         else if (hue >= hueMin - f && hue < hueMin + f) hw = (hue - (hueMin - f)) / (2 * f);
@@ -2298,7 +2301,7 @@ KONFIG_JS = r"""
         sw[p] = Math.min(hw, satWeight, lWeight) * 0.92;
       }
     }
-    const rad = Math.max(1, Math.round(Math.max(w, h) / 500));
+    const rad = Math.max(1, Math.round(Math.max(w, h) / 450));
     if (bodyTint) blurMask(bw, w, h, rad);
     if (seatTint) blurMask(sw, w, h, rad);
     const bodyScale = bodyTint && (bodyTint.l > 0.7 || bodyTint.l < 0.25) ? 0.3 : 0.45;
