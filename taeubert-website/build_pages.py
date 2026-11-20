@@ -2261,37 +2261,59 @@ KONFIG_JS = r"""
     return { r: Math.round(hue2rgb(p, q, h + 1 / 3) * 255), g: Math.round(hue2rgb(p, q, h) * 255), b: Math.round(hue2rgb(p, q, h - 1 / 3) * 255) };
   }
   const hexToHsl = hex => { const c = hex.replace('#', ''); return rgbToHsl(parseInt(c.substr(0, 2), 16), parseInt(c.substr(2, 2), 16), parseInt(c.substr(4, 2), 16)); };
-  function applyTint(imageData, tintHex, seatTintHex) {   // Karosserie (blau/magenta) und Sitze (warme Töne) umfärben
-    const data = imageData.data;
-          const bodyTint = tintHex ? hexToHsl(tintHex) : null, seatTint = seatTintHex ? hexToHsl(seatTintHex) : null;
-          for (let i = 0; i < data.length; i += 4) {
-            const r = data[i], g = data[i + 1], b = data[i + 2], sat = Math.max(r, g, b) - Math.min(r, g, b), px = rgbToHsl(r, g, b), hue = px.h;
-            if (bodyTint) {
-              const satWeight = sat <= 15 ? 0 : Math.min((sat - 15) / 40, 1), hueMin = 150, hueMax = 340, hueFeather = 15;
-              let hueWeight;
-              if (hue >= hueMin + hueFeather && hue <= hueMax - hueFeather) hueWeight = 1;
-              else if (hue >= hueMin - hueFeather && hue < hueMin + hueFeather) hueWeight = (hue - (hueMin - hueFeather)) / (2 * hueFeather);
-              else if (hue > hueMax - hueFeather && hue <= hueMax + hueFeather) hueWeight = (hueMax + hueFeather - hue) / (2 * hueFeather);
-              else hueWeight = 0;
-              const lWeight = px.l > 0.93 ? 0 : Math.min((0.93 - px.l) / 0.08, 1), weight = Math.min(satWeight, hueWeight, lWeight);
-              if (weight > 0.01) {
-                const variationScale = bodyTint.l > 0.7 || bodyTint.l < 0.25 ? 0.3 : 0.45, variation = (px.l - 0.5) * variationScale;
-                const c = hslToRgb(bodyTint.h, bodyTint.s, Math.max(0.02, Math.min(0.98, bodyTint.l + variation)));
-                data[i] = Math.round(data[i] * (1 - weight) + c.r * weight); data[i + 1] = Math.round(data[i + 1] * (1 - weight) + c.g * weight); data[i + 2] = Math.round(data[i + 2] * (1 - weight) + c.b * weight);
-                continue;
-              }
-            }
-            if (seatTint) {
-              let hueWeight;
-              if (hue >= 300 || hue <= 120) { const edge = Math.min(hue >= 300 ? 360 - hue : 999, hue <= 120 ? hue : 999); hueWeight = edge < 25 ? edge / 25 : 1; } else hueWeight = 0;
-              const satWeight = sat <= 5 ? 0 : Math.min((sat - 5) / 15, 1), lWeight = px.l > 0.88 ? 0 : Math.min(px.l / 0.12, 1), weight = Math.min(hueWeight, satWeight, lWeight) * 0.92;
-              if (weight > 0.01) {
-                const newL = Math.max(0.02, Math.min(0.92, px.l * (seatTint.l / 0.4))), newS = Math.max(seatTint.s * 0.7, Math.min(seatTint.s + 0.1, 0.85));
-                const c = hslToRgb(seatTint.h, newS, newL);
-                data[i] = Math.round(data[i] * (1 - weight) + c.r * weight); data[i + 1] = Math.round(data[i + 1] * (1 - weight) + c.g * weight); data[i + 2] = Math.round(data[i + 2] * (1 - weight) + c.b * weight);
-              }
-            }
-          }
+  function blurMask(m, w, h, r) {   // weiche Übergänge statt Pixelblöcken (Box-Blur, horizontal + vertikal)
+    if (r < 1) return m;
+    const t = new Float32Array(m.length), n = 2 * r + 1;
+    for (let y = 0; y < h; y++) { let acc = 0; const o = y * w;
+      for (let x = -r; x <= r; x++) acc += m[o + Math.min(w - 1, Math.max(0, x))];
+      for (let x = 0; x < w; x++) { t[o + x] = acc / n; acc += m[o + Math.min(w - 1, x + r + 1)] - m[o + Math.max(0, x - r)]; } }
+    for (let x = 0; x < w; x++) { let acc = 0;
+      for (let y = -r; y <= r; y++) acc += t[Math.min(h - 1, Math.max(0, y)) * w + x];
+      for (let y = 0; y < h; y++) { m[y * w + x] = acc / n; acc += t[Math.min(h - 1, y + r + 1) * w + x] - t[Math.max(0, y - r) * w + x]; } }
+    return m;
+  }
+  function applyTint(imageData, tintHex, seatTintHex) {   // Karosserie (blau/magenta) und Sitze/Polster (warme Töne) umfärben
+    const data = imageData.data, w = imageData.width, h = imageData.height, N = w * h;
+    const bodyTint = tintHex ? hexToHsl(tintHex) : null, seatTint = seatTintHex ? hexToHsl(seatTintHex) : null;
+    const bw = new Float32Array(N), sw = new Float32Array(N), L = new Float32Array(N);
+    for (let p = 0, i = 0; p < N; p++, i += 4) {
+      const r = data[i], g = data[i + 1], b = data[i + 2], sat = Math.max(r, g, b) - Math.min(r, g, b), px = rgbToHsl(r, g, b), hue = px.h;
+      L[p] = px.l;
+      if (bodyTint) {
+        const satWeight = sat <= 15 ? 0 : Math.min((sat - 15) / 40, 1), hueMin = 150, hueMax = 340, f = 15;
+        let hw;
+        if (hue >= hueMin + f && hue <= hueMax - f) hw = 1;
+        else if (hue >= hueMin - f && hue < hueMin + f) hw = (hue - (hueMin - f)) / (2 * f);
+        else if (hue > hueMax - f && hue <= hueMax + f) hw = (hueMax + f - hue) / (2 * f);
+        else hw = 0;
+        const lWeight = px.l > 0.93 ? 0 : Math.min((0.93 - px.l) / 0.08, 1);
+        bw[p] = Math.min(satWeight, hw, lWeight);
+      }
+      if (seatTint) {
+        let hw = 0;
+        if (hue >= 300 || hue <= 120) { const edge = Math.min(hue >= 300 ? 360 - hue : 999, hue <= 120 ? hue : 999); hw = edge < 25 ? edge / 25 : 1; }
+        // nur deutlich farbige Flächen (Sitze, Polster) – kein Dachhimmel, keine hellen Kunststoffe, kein Chrom
+        const satWeight = sat <= 22 ? 0 : Math.min((sat - 22) / 30, 1);
+        const lWeight = px.l > 0.8 ? 0 : px.l > 0.68 ? (0.8 - px.l) / 0.12 : Math.min(px.l / 0.12, 1);
+        sw[p] = Math.min(hw, satWeight, lWeight) * 0.92;
+      }
+    }
+    const rad = Math.max(1, Math.round(Math.max(w, h) / 500));
+    if (bodyTint) blurMask(bw, w, h, rad);
+    if (seatTint) blurMask(sw, w, h, rad);
+    const bodyScale = bodyTint && (bodyTint.l > 0.7 || bodyTint.l < 0.25) ? 0.3 : 0.45;
+    for (let p = 0, i = 0; p < N; p++, i += 4) {
+      const wB = bodyTint ? bw[p] : 0, wS = seatTint ? sw[p] * (1 - wB) : 0;
+      if (wB > 0.01) {
+        const c = hslToRgb(bodyTint.h, bodyTint.s, Math.max(0.02, Math.min(0.98, bodyTint.l + (L[p] - 0.5) * bodyScale)));
+        data[i] = Math.round(data[i] * (1 - wB) + c.r * wB); data[i + 1] = Math.round(data[i + 1] * (1 - wB) + c.g * wB); data[i + 2] = Math.round(data[i + 2] * (1 - wB) + c.b * wB);
+      }
+      if (wS > 0.01) {
+        const newL = Math.max(0.02, Math.min(0.92, L[p] * (seatTint.l / 0.4))), newS = Math.max(seatTint.s * 0.7, Math.min(seatTint.s + 0.1, 0.85));
+        const c = hslToRgb(seatTint.h, newS, newL);
+        data[i] = Math.round(data[i] * (1 - wS) + c.r * wS); data[i + 1] = Math.round(data[i + 1] * (1 - wS) + c.g * wS); data[i + 2] = Math.round(data[i + 2] * (1 - wS) + c.b * wS);
+      }
+    }
   }
   // Vorschaubilder ebenfalls in der gewählten Farbe (wie bei Banyan)
   let thumbJob = 0;
