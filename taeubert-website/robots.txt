@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.taeubert-karosserie-lack.de/sitemap.xml
