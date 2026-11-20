@@ -1966,8 +1966,8 @@ def render_faq_page():
 
 
 # Lack-Konfigurator: eigener Konfigurator nach dem Vorbild der früheren Base44-App, komplett auf dem eigenen Server.
-# Fahrzeuge, Schritte und Ansichten liegen in js/konfigurator/ (fahrzeuge.json + je Fahrzeug eine Datei), die Bilder in
-# images/konfigurator/. Anfragen gehen über formular.php per E-Mail. Einfärbung per Canvas (Karosserie blau/magenta, Sitze warm).
+# Fahrzeuge, Schritte und Ansichten liegen in images/konfigurator/daten/ (fahrzeuge.json + je Fahrzeug eine .js-Datei),
+# die Bilder in images/konfigurator/. Anfragen gehen über formular.php per E-Mail. Einfärbung per Canvas (Karosserie blau/magenta, Sitze warm).
 KONFIG_TYPES = ["Alle", "Pkw", "Motorrad", "Mofa/Roller", "Transporter", "Nutzfahrzeug", "Amphibienfahrzeug", "Kabinenroller", "Kleinstwagen"]
 
 
@@ -1982,7 +1982,7 @@ def konfig_page():
       <div class="kc-spin" id="kc-loading" role="status" aria-label="Modelle werden geladen"><span></span></div>
       <div class="kc-grid" id="kc-grid"></div>
       <div class="kc-empty" id="kc-empty" hidden><p>Keine Modelle in dieser Kategorie</p></div>
-      <script type="application/json" id="kc-data">{open(os.path.join(SITE, "js", "konfigurator", "fahrzeuge.json"), encoding="utf-8").read().replace("</", "<\\/")}</script>
+      <script type="application/json" id="kc-data">{open(os.path.join(SITE, "images", "konfigurator", "daten", "fahrzeuge.json"), encoding="utf-8").read().replace("</", "<\\/")}</script>
     </div>
   </div>
   <div class="kc-conf" id="kc-conf" hidden>
@@ -2241,7 +2241,7 @@ KONFIG_JS = r"""
   const $ = id => document.getElementById(id);
   const esc = t => String(t ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   // Alle Fahrzeuge, Farben und Bilder liegen auf dem eigenen Server (js/konfigurator/, images/konfigurator/)
-  const DATA = 'js/konfigurator/';
+  const DATA = 'images/konfigurator/daten/';
 
   // ---- Bild einfärben (TintedImage.jsx) ----
   const dataUrlCache = new Map();

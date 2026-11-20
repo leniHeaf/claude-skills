@@ -1539,7 +1539,7 @@
   const $ = id => document.getElementById(id);
   const esc = t => String(t ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   // Alle Fahrzeuge, Farben und Bilder liegen auf dem eigenen Server (js/konfigurator/, images/konfigurator/)
-  const DATA = 'js/konfigurator/';
+  const DATA = 'images/konfigurator/daten/';
 
   // ---- Bild einfärben (TintedImage.jsx) ----
   const dataUrlCache = new Map();
