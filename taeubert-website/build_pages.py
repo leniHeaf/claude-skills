@@ -2283,13 +2283,13 @@ KONFIG_JS = r"""
       const r = data[i], g = data[i + 1], b = data[i + 2], sat = Math.max(r, g, b) - Math.min(r, g, b), px = rgbToHsl(r, g, b), hue = px.h;
       L[p] = px.l;
       if (bodyTint) {
-        const satWeight = sat <= 7 ? 0 : Math.min((sat - 7) / 30, 1), hueMin = 150, hueMax = 340, f = 15;   // auch halbtransparente Kantenpixel (kein Farbsaum)
+        const mag = hue >= 260 && hue <= 345, sMin = mag ? 5 : 15, satWeight = sat <= sMin ? 0 : Math.min((sat - sMin) / (mag ? 22 : 40), 1), hueMin = 150, hueMax = 340, f = 15;   // Magenta-Kanten empfindlich (kein rosa Saum), Blautöne wie Glas vorsichtig   // auch halbtransparente Kantenpixel (kein Farbsaum)
         let hw;
         if (hue >= hueMin + f && hue <= hueMax - f) hw = 1;
         else if (hue >= hueMin - f && hue < hueMin + f) hw = (hue - (hueMin - f)) / (2 * f);
         else if (hue > hueMax - f && hue <= hueMax + f) hw = (hueMax + f - hue) / (2 * f);
         else hw = 0;
-        const lWeight = px.l > 0.93 ? 0 : Math.min((0.93 - px.l) / 0.08, 1);
+        const lMax = mag ? 0.97 : 0.93, lWeight = px.l > lMax ? 0 : Math.min((lMax - px.l) / (mag ? 0.06 : 0.08), 1);
         bw[p] = Math.min(satWeight, hw, lWeight);
       }
       if (seatTint) {
@@ -2302,7 +2302,7 @@ KONFIG_JS = r"""
       }
     }
     const rad = Math.max(1, Math.round(Math.max(w, h) / 450));
-    if (bodyTint) blurMask(bw, w, h, rad);
+    if (bodyTint) { const raw = bw.slice(); blurMask(bw, w, h, rad); for (let p = 0; p < N; p++) if (raw[p] > bw[p]) bw[p] = raw[p]; }   // Glättung nur verstärkend: Kanten bleiben voll eingefärbt
     if (seatTint) blurMask(sw, w, h, rad);
     const bodyScale = bodyTint && (bodyTint.l > 0.7 || bodyTint.l < 0.25) ? 0.3 : 0.45;
     for (let p = 0, i = 0; p < N; p++, i += 4) {
