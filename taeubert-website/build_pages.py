@@ -1982,6 +1982,7 @@ def konfig_page():
       <div class="kc-spin" id="kc-loading" role="status" aria-label="Modelle werden geladen"><span></span></div>
       <div class="kc-grid" id="kc-grid"></div>
       <div class="kc-empty" id="kc-empty" hidden><p>Keine Modelle in dieser Kategorie</p></div>
+      <script type="application/json" id="kc-data">{open(os.path.join(SITE, "js", "konfigurator", "fahrzeuge.json"), encoding="utf-8").read().replace("</", "<\\/")}</script>
     </div>
   </div>
   <div class="kc-conf" id="kc-conf" hidden>
@@ -2462,7 +2463,7 @@ KONFIG_JS = r"""
   async function openVehicle(id) {
     $('kc-home').hidden = true; $('kc-conf').hidden = false; window.scrollTo(0, 0);
     vehicle = null;
-    if (vehicles.some(v => v.id === id)) { try { vehicle = await (await fetch(DATA + encodeURIComponent(id) + '.json')).json(); } catch (e) { vehicle = null; } }
+    if (vehicles.some(v => v.id === id)) vehicle = await loadVehicle(id);
     if (!vehicle) { history.replaceState({}, '', 'konfigurator.html'); return route(); }
     // Zusätzlicher Schritt nur auf der Website: Unterboden (nicht bei Motorrad und Mofa/Roller)
     const ohneUnterboden = ['Motorrad', 'Mofa/Roller'];
@@ -2485,11 +2486,21 @@ KONFIG_JS = r"""
   }
   window.addEventListener('popstate', route);
 
-  async function start() {
-    try {
-      vehicles = await (await fetch(DATA + 'fahrzeuge.json')).json();
-    } catch (e) { console.warn('Fahrzeuge nicht geladen', e); vehicles = []; }
-    $('kc-loading').hidden = true; renderHome(); route();
+  // Fahrzeugdaten als Skriptdatei laden (funktioniert auf jedem Server und auch lokal ohne Server)
+  function loadVehicle(id) {
+    return new Promise(res => {
+      const sc = document.createElement('script'); let done = false;
+      window.__kc = d => { done = true; res(d); };
+      sc.src = DATA + encodeURIComponent(id) + '.js';
+      sc.onload = () => { if (!done) res(null); }; sc.onerror = () => res(null);
+      document.head.appendChild(sc);
+    });
+  }
+  function start() {
+    try { vehicles = JSON.parse($('kc-data').textContent); } catch (e) { console.warn('Fahrzeugliste fehlt', e); vehicles = []; }
+    $('kc-loading').hidden = true;
+    if (!vehicles.length) { $('kc-empty').innerHTML = '<p>Die Modelle konnten gerade nicht geladen werden. Bitte laden Sie die Seite neu oder rufen Sie uns an: <a href="tel:+4936754289606">03675 4289606</a>.</p>'; $('kc-empty').hidden = false; return; }
+    renderHome(); route();
   }
   start();
 </script>
