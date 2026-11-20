@@ -29,7 +29,7 @@ DOMAIN = "https://www.taeubert-karosserie-lack.de"
 # Vorlage -> Dateiname (nur Seiten mit eigenem Inhalt, keine Theme-Demo-Vorlagen)
 PAGES = {
     "911": "porsche-911", "about-1": "history", "about-2": "karriere", "adrian": "q-a-adrian",
-    "azubi": "azubi", "bamberg": "bamberg", "boxenstopp": "boxenstopp", "bulli-t2": "vw-bulli-t2",
+    "azubi": "azubi", "bamberg": "bamberg", "bulli-t2": "vw-bulli-t2",
     "contact": "contact", "fahrzeugaufbereitung": "fahrzeugaufbereitung",
     "job": "jobs", "karosserie": "karosserie", "kleinschaden": "kleinschaden", "kratzer-2": "kratzer",
     "lackierarbeiten": "lackierarbeiten", "lackierer-karosserie-co": "coburg",
@@ -46,7 +46,6 @@ PAGE_ALIASES = [("sonneberg", "kronach")]
 PAGE_META = {
     "azubi": ("Ausbildung bei Täubert – Azubi in Sonneberg", "Ausbildung zum Fahrzeuglackierer oder Karosseriebauer bei Täubert in Sonneberg: sauberes Handwerk lernen, ernst genommen werden, mit Perspektive."),
     "karriere": ("Karriere & Jobs bei Täubert", "Jobs bei Täubert Karosserie & Lack in Sonneberg: Gesellen, Meister und Quereinsteiger – klare Abläufe, faire Bezahlung, Quartalsprämien."),
-    "boxenstopp": ("Boxenstopp – Reifenwechsel-Event", "Boxenstopp bei Täubert in Sonneberg: Reifenwechsel-Event mit Aktionen und Verpflegung. Infos und Termine."),
     "q-a-marco": ("Q&A mit Marco – Team Täubert", "Marco ist seit 10 Jahren bei Täubert Karosserie & Lack. Im Gespräch über seinen Schwerpunkt, das Team und gutes Handwerk."),
 }
 # Seitenspezifische Textkorrekturen (alt, neu)
@@ -61,7 +60,7 @@ TEXT_FIXES = {
 
 # Shopify-Seiten-Handles -> Datei
 HANDLES = {
-    "contact": "contact", "who-we-are": "who-we-are", "jobs": "jobs", "26-09-2026-boxenstopp": "boxenstopp",
+    "contact": "contact", "who-we-are": "who-we-are", "jobs": "jobs", "26-09-2026-boxenstopp": "events", "boxenstopp": "events",
     "history": "history", "porsche-911": "porsche-911", "porsche-gts": "porsche-gts", "vw-bulli-t2": "vw-bulli-t2",
     "q-a-marco": "q-a-marco", "q-a-toni": "q-a-toni", "q-a-adrian": "q-a-adrian", "q-a-pascal": "q-a-pascal",
     "azubi": "azubi", "meet-the-team": "meet-the-team",
@@ -83,6 +82,9 @@ def img_name(ref):
         return ""
     name = ref.split("/")[-1]
     stem = os.path.splitext(name)[0]
+    if stem in IMAGE_NAMES:   # umbenannte Fotos: unter dem neuen Namen suchen
+        stem = IMAGE_NAMES[stem]
+        name = stem + os.path.splitext(name)[1]
     img_dir = os.path.join(SITE, "images")
     if not os.path.exists(os.path.join(img_dir, name)) and os.path.isdir(img_dir):
         for f in os.listdir(img_dir):
