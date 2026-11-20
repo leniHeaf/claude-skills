@@ -23,7 +23,7 @@ def rename_img_refs(page):
 
 THEME, SITE = sys.argv[1], sys.argv[2]
 BOOKING_URL = "https://terminbuchungtaeubert.de"  # externes Buchungstool
-BOOKING = BOOKING_URL  # Buttons führen direkt zum Buchungstool (Einbetten wird vom Tool nicht zuverlässig erlaubt)
+BOOKING = "termin.html#wunschtermin"  # eigenes Wunschtermin-Formular (das externe Buchungstool ist nicht erreichbar)
 DOMAIN = "https://www.taeubert-karosserie-lack.de"
 
 # Vorlage -> Dateiname (nur Seiten mit eigenem Inhalt, keine Theme-Demo-Vorlagen)
@@ -118,7 +118,7 @@ def a_attrs(href):
 def button(url, label, cls="btn-dark"):
     href = link(url, label)
     if href == BOOKING:
-        label = "Termin online buchen"
+        label = "Termin anfragen"
     if not label or not href:
         return ""
     return f'<a class="btn {cls}" {a_attrs(href)}>{esc(label)}</a>'
@@ -698,7 +698,7 @@ SERVICES = {
     "fahrzeugaufbereitung": ("Fahrzeugaufbereitung Sonneberg", "Fahrzeugaufbereitung",
                              "Fahrzeugaufbereitung in Sonneberg: Politur, Innenraumreinigung und Lackpflege – ideal vor Verkauf oder Leasingrückgabe."),
     "reifenservice": ("Reifenservice Sonneberg & Neustadt", "Reifenservice",
-                      "Reifenwechsel, Räderwechsel und Rädereinlagerung in Sonneberg & Neustadt bei Coburg – Termin online buchen."),
+                      "Reifenwechsel, Räderwechsel und Rädereinlagerung in Sonneberg & Neustadt bei Coburg – Termin anfragen."),
     "unfall": ("Unfall gehabt? Unfallreparatur Sonneberg", "Unfallreparatur",
                "Unfall gehabt? Täubert in Sonneberg kümmert sich um Reparatur, Versicherung und Gutachten – direkte Abrechnung mit der Versicherung."),
     "unfall-oder-kratzer": ("Unfall oder Kratzer – wer zahlt?", "Ratgeber Reparaturkosten",
@@ -761,12 +761,12 @@ def booking_cta(slug, place):
     loc = "".join(f'<li><a href="{x}.html">{esc(n)}</a></li>' for x, n in LOCATION_LINKS if x != slug)
     return f'''<section class="booking-cta">
   <div class="page-width">
-    <h2>Termin online buchen</h2>
+    <h2>Termin anfragen</h2>
     {trust_for(slug)}
     <p class="callback-hint">Keine Zeit zum Buchen? <a href="termin.html#rueckruf">Rückruf anfordern</a> – wir melden uns.</p>
     <p>Wählen Sie Ihren Wunschtermin direkt online – oder rufen Sie uns an. Wir schauen uns Ihr Fahrzeug an und sagen Ihnen ehrlich, was Sinn macht.</p>
     <div class="btns">
-      <a class="btn btn-light" href="{BOOKING}">Termin online buchen</a>
+      <a class="btn btn-light" href="{BOOKING}">Termin anfragen</a>
       {cta2}
       <a class="btn btn-outline-light" href="tel:+4936754289606">03675 4289606</a>
       <a class="btn btn-outline-light" href="https://wa.me/4936754289606" target="_blank" rel="noopener">WhatsApp</a>
@@ -908,7 +908,7 @@ def render_new_page(slug, p, aside_title=None):
     <p class="aside-kicker">{esc(p["short"])}</p>
     <h2>{esc(aside_title or "Ihr Termin bei Täubert")}</h2>
     {trust_for(slug)}
-    <div class="btns"><a class="btn btn-light" href="{BOOKING}">Termin online buchen</a>{second_cta(slug, p["short"], "outline-light")}<a class="btn btn-outline-light" href="tel:+4936754289606">03675 4289606</a></div>
+    <div class="btns"><a class="btn btn-light" href="{BOOKING}">Termin anfragen</a>{second_cta(slug, p["short"], "outline-light")}<a class="btn btn-outline-light" href="tel:+4936754289606">03675 4289606</a></div>
     <p class="hours">Mo–Do 8–17 Uhr · Fr 8–14:30 Uhr<br>An der Lehmgrube 3, Sonneberg</p>
   </aside>
 </section>''']
@@ -921,7 +921,7 @@ def render_new_page(slug, p, aside_title=None):
     <h1 class="overline">{esc(p["title"])}</h1>
     <p class="heading h-8">{esc(p["claim"])}</p>
     <div class="rte"><p>{esc(p["lead"])}</p></div>
-    <div class="btns"><a class="btn btn-light" href="{BOOKING}">Termin online buchen</a><a class="btn btn-outline-light" href="tel:+4936754289606">Anrufen</a></div>
+    <div class="btns"><a class="btn btn-light" href="{BOOKING}">Termin anfragen</a><a class="btn btn-outline-light" href="tel:+4936754289606">Anrufen</a></div>
   </div>
 </section>
 {chr(10).join(secs)}
@@ -967,7 +967,7 @@ CARD_TEXT = {
     "kratzer": "Vom oberflächlichen Kratzer bis zum Metall – passend repariert.",
     "leasingrueckgabe": "Vorher reparieren statt teuer nachzahlen.",
     "fahrzeugaufbereitung": "Politur, Innenraum, Lackpflege – Ihr Auto wie frisch übergeben.",
-    "reifenservice": "Reifenwechsel und Einlagerung – Termin online buchen.",
+    "reifenservice": "Reifenwechsel und Einlagerung – Termin anfragen.",
     "unfall": "Ein Anruf – wir kümmern uns um alles Weitere.",
     "hagelschaden": "Hageldellen möglichst ohne Lackieren entfernen.",
     "stossstange-reparieren": "Kratzer, Risse, Dellen – reparieren statt tauschen, wo es Sinn macht.",
@@ -1038,7 +1038,7 @@ def drawer_html():
     svcs = {s: n for s, n, _ in all_services()}
     groups = "".join(f"<h3>{esc(c)}</h3>" + "".join(f'<a href="{s}.html">{esc(svcs[s])}</a>' for s in slugs if s in svcs) for c, slugs in CATEGORIES)
     out = [f'''<div class="drawer-quick">
-      <a class="btn btn-dark" href="{BOOKING}">Termin online buchen</a>
+      <a class="btn btn-dark" href="{BOOKING}">Termin anfragen</a>
       <a class="btn btn-outline-dark" href="schaden-melden.html">Schaden per Foto melden</a>
       <a class="btn btn-outline-dark" href="unfall-was-tun.html">Unfall – was jetzt tun?</a>
     </div>''',
@@ -1067,7 +1067,7 @@ def care_html():
       <div class="sec-intro"><p class="eyebrow">Rundum-Service</p><h2>Sie lehnen sich zurück. Wir erledigen den Rest.</h2>
       <p class="lead">Ob Parkrempler, Unfall, Lack oder Aufbereitung: Sie haben einen Ansprechpartner, und wir kümmern uns um alles – in höchster Qualität und ohne Aufwand für Sie.</p></div>
       <ol class="care-grid">{items}</ol>
-      <div class="btns"><a class="btn btn-light" href="{BOOKING}">Termin online buchen</a><a class="btn btn-outline-light" href="termin.html#rueckruf">Rückruf anfordern</a></div>
+      <div class="btns"><a class="btn btn-light" href="{BOOKING}">Termin anfragen</a><a class="btn btn-outline-light" href="termin.html#rueckruf">Rückruf anfordern</a></div>
     </div>
   </section>'''
 
@@ -1095,7 +1095,7 @@ def update_index():
       <label><span>Wunschtermin</span><input type="date" name="datum"></label>
       <button class="btn btn-dark" type="submit">Termin anfragen</button>
     </form>
-    <p class="bookbar-alt">Oder direkt <a href="{BOOKING}">online buchen</a> · <a href="schaden-melden.html">Schaden per Foto melden</a></p>'''
+    <p class="bookbar-alt">Oder <a href="termin.html#rueckruf">Rückruf anfordern</a> · <a href="schaden-melden.html">Schaden per Foto melden</a></p>'''
     s = re.sub(r"<!-- BOOKBAR:START -->.*?<!-- BOOKBAR:END -->", lambda m: "<!-- BOOKBAR:START -->" + bookbar + "<!-- BOOKBAR:END -->", s, flags=re.S)
     s = re.sub(r"<!-- SERVICE:START -->.*?<!-- SERVICE:END -->", lambda m: "<!-- SERVICE:START -->\n  " + care_html() + "\n  <!-- SERVICE:END -->", s, flags=re.S)
     s = re.sub(r"<!-- MAINNAV:START -->.*?<!-- MAINNAV:END -->", lambda m: "<!-- MAINNAV:START -->" + nav_html() + "<!-- MAINNAV:END -->", s, flags=re.S)
@@ -1173,7 +1173,7 @@ def service_intro(slug, name):
 <section class="svc-quick">
   <div class="page-width svc-quick-inner">
     {trust_for(slug)}
-    <div class="btns"><a class="btn btn-dark" href="{BOOKING}">Termin online buchen</a>{second_cta(slug, name)}</div>
+    <div class="btns"><a class="btn btn-dark" href="{BOOKING}">Termin anfragen</a>{second_cta(slug, name)}</div>
   </div>
 </section>'''
 
@@ -1310,7 +1310,7 @@ def tidy_service(slug, body_html):
         body_html = body_html.replace(old, new)
     m = re.search(r"<section.*?</section>", body_html, re.S)
     head, rest = body_html[:m.end()], body_html[m.end():]
-    rest = re.sub(r'<a class="btn [^"]*" href="' + re.escape(BOOKING) + r'"[^>]*>Termin online buchen</a>', "", rest)
+    rest = re.sub(r'<a class="btn [^"]*" href="' + re.escape(BOOKING) + r'"[^>]*>Termin anfragen</a>', "", rest)
     rest = re.sub(r'<div class="btns">\s*</div>', "", rest)
     if slug in SERVICE_FAQ:
         rest += faq_section(SERVICE_FAQ[slug])
@@ -1424,7 +1424,7 @@ def with_service_frame(slug, name, body_html):
             x = x.replace('<div class="rte">', f'<p class="eyebrow">{esc(name)} bei Täubert</p><div class="rte">', 1)
             x = re.sub(r"(?:<br/?>\s*)+", " ", x)   # Shopify-Zeilenumbrüche: ruhiger Fließtext
             x = re.sub(r'\n?<div class="btns">.*?</div>', "", x, count=1, flags=re.S)   # Knöpfe stehen direkt darüber schon
-        x = x.replace('<a class="btn btn-dark" href="contact.html">Kontakt aufnehmen</a>', f'<a class="btn btn-dark" href="{BOOKING}">Termin online buchen</a>')
+        x = x.replace('<a class="btn btn-dark" href="contact.html">Kontakt aufnehmen</a>', f'<a class="btn btn-dark" href="{BOOKING}">Termin anfragen</a>')
         out.append(x)
     own_steps = re.search(r"<h2[^>]*>[^<]*(Wie läuft|So läuft)[^<]*ab", rest)
     return head + service_intro(slug, name) + "\n".join(out) + ("" if own_steps else steps_for(slug)) + "\n".join(faq)
@@ -1491,7 +1491,7 @@ def render_overview():
     <p class="overline">Täubert Karosserie &amp; Lack · Sonneberg</p>
     <h1 class="h-8">Leistungen</h1>
     <div class="rte"><p>Unfallreparatur, Lackierung, Smart Repair und Fahrzeugpflege – für PKW, Transporter, Firmenfahrzeuge und Klassiker aller Marken. Alles aus einer Hand.</p></div>
-    <div class="btns"><a class="btn btn-light" href="{BOOKING}">Termin online buchen</a><a class="btn btn-outline-light" href="schaden-melden.html">Schaden per Foto melden</a></div>
+    <div class="btns"><a class="btn btn-light" href="{BOOKING}">Termin anfragen</a><a class="btn btn-outline-light" href="schaden-melden.html">Schaden per Foto melden</a></div>
   </div>
 </section>
 <section class="svc-quick">
@@ -1572,7 +1572,7 @@ THANKS = f"""<section class="sec" style="padding:100px 0">
   <div class="page-width"><div class="rich-inner" style="max-width:640px;margin:0 auto;text-align:center">
     <h1 class="h-6">Danke – Ihre Meldung ist da.</h1>
     <div class="rte"><p>Wir sehen uns die Fotos an und melden uns schnellstmöglich bei Ihnen. Eilt es? Rufen Sie uns an: <a href="tel:+4936754289606">03675 4289606</a>.</p></div>
-    <div class="btns" style="justify-content:center"><a class="btn btn-dark" href="index.html">Zur Startseite</a><a class="btn btn-outline-dark" href="{BOOKING_URL}">Termin online buchen</a></div>
+    <div class="btns" style="justify-content:center"><a class="btn btn-dark" href="index.html">Zur Startseite</a><a class="btn btn-outline-dark" href="{BOOKING_URL}">Termin anfragen</a></div>
   </div></div>
 </section>"""
 
@@ -1647,7 +1647,7 @@ BOOKING_PAGE = f"""<section class="sec booking-page" style="padding:50px 0 30px"
       <p class="eyebrow">Option 1 · Online</p>
       <h2>Wunschtermin selbst wählen</h2>
       <p>Leistung auswählen, freien Termin anklicken, fertig – rund um die Uhr.</p>
-      <a class="btn btn-dark" href="{BOOKING_URL}">Zur Online-Terminbuchung</a>
+      <a class="btn btn-dark" href="{BOOKING_URL}">Wunschtermin anfragen</a>
       <p class="book-note">Lieber ohne externes Buchungstool? <a href="#wunschtermin">Wunschtermin direkt hier anfragen ↓</a></p>
     </div>
     <div class="book-card" id="rueckruf">
@@ -2334,7 +2334,7 @@ KONFIG_JS = r"""
     }
   }
   let tintJob = 0;
-  async function tintedImage(src, tintHex, seatTintHex, maxSize = 1000) {
+  async function tintedImage(src, tintHex, seatTintHex, maxSize = 2400) {
     const my = ++tintJob, canvas = $('kc-canvas'), spin = $('kc-imgload');
     spin.hidden = false;
     const imgUrl = await fetchAsDataUrl(src);
@@ -2344,7 +2344,7 @@ KONFIG_JS = r"""
       if (my !== tintJob) return;
       const ctx = canvas.getContext('2d'); let w = img.naturalWidth, h = img.naturalHeight;
       if (w > maxSize || h > maxSize) { const scale = maxSize / Math.max(w, h); w = Math.round(w * scale); h = Math.round(h * scale); }
-      canvas.width = w; canvas.height = h; ctx.drawImage(img, 0, 0, w, h);
+      canvas.width = w; canvas.height = h; ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high'; ctx.drawImage(img, 0, 0, w, h);
       if (tintHex || seatTintHex) {
         try {
           const imageData = ctx.getImageData(0, 0, w, h);
@@ -2800,7 +2800,7 @@ def main():
     <h1 class="overline">{esc(seo_title)}</h1>
     <p class="heading h-8">Für Kronach. Mit Abholservice.</p>
     <div class="rte"><p>Unfallreparatur, Lackierung und Smart Repair – wir holen Ihr Auto im Raum Kronach ab und bringen es repariert zurück.</p></div>
-    <div class="btns"><a class="btn btn-light" href="{BOOKING}">Termin online buchen</a><a class="btn btn-outline-light" href="schaden-melden.html">Schaden per Foto melden</a></div>
+    <div class="btns"><a class="btn btn-light" href="{BOOKING}">Termin anfragen</a><a class="btn btn-outline-light" href="schaden-melden.html">Schaden per Foto melden</a></div>
   </div>
 </section>'''
                     rest = "".join(f'<section class="sec{" scheme-grey" if i % 2 else ""}" style="padding:80px 0"><div class="page-width"><div class="rich-inner" style="max-width:760px"><h2 class="h-4">{esc(h)}</h2><div class="rte">{b}</div></div></div></section>' for i, (h, b) in enumerate(KRONACH_BODY))
@@ -2975,7 +2975,7 @@ def main():
     built.insert(1, "schaden-melden")
     open(os.path.join(SITE, "termin.html"), "w", encoding="utf-8").write(sync_images(simple_page(
         "termin", "Termin buchen – online, Rückruf oder Anruf",
-        "Termin online buchen bei Täubert Karosserie & Lack in Sonneberg: Unfallreparatur, Lackierung, Smart Repair, Reifenservice und mehr.",
+        "Termin anfragen bei Täubert Karosserie & Lack in Sonneberg: Unfallreparatur, Lackierung, Smart Repair, Reifenservice und mehr.",
         BOOKING_PAGE, style, head_links, top, footer, js, ld)))
     built.insert(2, "termin")
     open(os.path.join(SITE, "unfall-was-tun.html"), "w", encoding="utf-8").write(sync_images(simple_page(
