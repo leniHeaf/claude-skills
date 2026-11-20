@@ -2334,7 +2334,7 @@ KONFIG_JS = r"""
     }
   }
   let tintJob = 0;
-  async function tintedImage(src, tintHex, seatTintHex, maxSize = 2400) {
+  async function tintedImage(src, tintHex, seatTintHex, maxSize = (window.innerWidth < 900 ? 1400 : 2400)) {
     const my = ++tintJob, canvas = $('kc-canvas'), spin = $('kc-imgload');
     spin.hidden = false;
     const imgUrl = await fetchAsDataUrl(src);
