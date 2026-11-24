@@ -58,6 +58,14 @@ TEXT_FIXES = {
     ],
 }
 
+# Weitere alte Shopify-Adressen (SEO-Seiten mit langen Handles) -> neue Seite
+OLD_SHOPIFY_PAGES = {
+    "job": "jobs", "karosserie-lackierer-sonneberg-taubert-karosserie-lack": "sonneberg", "karosseriearbeiten": "karosserie",
+    "kleine-delle-im-auto": "smartrepair", "kratzer-im-auto": "unfall", "lackierer-bamberg-karosserie-unfallreparatur": "bamberg",
+    "lackierer-coburg-karosserie-lack-taubert": "coburg", "lackierer-kronach-unfallreparatur-lackierung": "kronach",
+    "lackierer-neustadt-bei-coburg-karosserie-taubert": "neustadt", "unfall-kratzer": "kratzer", "unfallenstandsetzung": "unfall",
+}
+
 # Shopify-Seiten-Handles -> Datei
 HANDLES = {
     "contact": "contact", "who-we-are": "who-we-are", "jobs": "jobs", "26-09-2026-boxenstopp": "events", "boxenstopp": "events",
@@ -2708,6 +2716,8 @@ def write_seo_files(slugs):
         f"User-agent: *\nAllow: /\n\nSitemap: {DOMAIN}/sitemap.xml\n")
     # .htaccess für IONOS (Apache): HTTPS + www, 301 von den alten Shopify-Adressen, Sicherheit und Cache
     red = [(f"pages/{h}", f"{f}.html") for h, f in HANDLES.items()]
+    red += [(f"pages/{h}", f"{f}.html") for h, f in OLD_SHOPIFY_PAGES.items()]
+    red += [("blogs/news", "ratgeber.html")]
     red += [(f"pages/{x}", f"{x}.html") for x in slugs if x not in HANDLES]
     red += [("pages/q-a-fanny", "meet-the-team.html"), ("q-a-fanny.html", "meet-the-team.html")]
     rules = "\n".join(f"RewriteRule ^{re.escape(a)}/?$ /{b} [R=301,L]" for a, b in dict(red).items())
