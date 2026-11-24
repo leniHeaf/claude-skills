@@ -10,7 +10,7 @@ import os, shutil, sys, zipfile
 
 SITE = os.path.dirname(os.path.abspath(__file__))
 SKIP = {"build_pages.py", "new_pages.py", "community_pages.py", "image_names.py", "rename_images.py",
-        "retro90.py", "deploy_flat.py", "BILDER.md", "higgsfield-prompts.md"}
+        "retro90.py", "deploy_flat.py", "BILDER.md", "higgsfield-prompts.md", "ratgeber_alter_blog.json"}
 PREFIXES = ["images/konfigurator/daten/", "images/konfigurator/", "images/", "fonts/"]   # längste zuerst
 TEXT = (".html", ".js", ".json", ".xml", ".txt", ".php", ".css")
 
