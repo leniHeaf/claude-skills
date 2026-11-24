@@ -1017,7 +1017,7 @@ CHEV = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="curr
 NAV_GROUPS = [
     ("Unfall?", [("unfall-was-tun.html", "Unfall – was jetzt zu tun ist"), ("schaden-melden.html", "Schaden per Foto melden"), ("ratgeber.html", "Ratgeber & Tipps"),
                  ("versicherungsschaden.html", "Abrechnung mit der Versicherung"), ("unfall-oder-kratzer.html", "Wer zahlt die Reparatur?")]),
-    ("Über uns", [("who-we-are.html", "Who we are"), ("history.html", "History"), ("meet-the-team.html", "Meet the Team"),
+    ("Über uns", [("who-we-are.html", "Who we are"), ("history.html", "History"), ("meet-the-team.html", "Meet the Team & Q&A"),
                   ("porsche-911.html", "Projekt: Porsche 911"), ("porsche-gts.html", "Projekt: Porsche Cayenne GTS"), ("vw-bulli-t2.html", "Projekt: VW Bulli T2")]),
     ("Club", [("club.html", "Täubert Club"), ("events.html", "Täubert Events"), ("partner.html", "Partner: Autohäuser & Firmen"), ("gutscheine.html", "Gutscheine")]),
     ("Karriere", [("karriere.html", "Karriere bei Täubert"), ("azubi.html", "Ausbildung"), ("jobs.html", "Stellenangebote"), ("jobs.html#bewerbung", "Direkt bewerben")]),
@@ -2760,6 +2760,33 @@ AddDefaultCharset utf-8
             os.remove(os.path.join(SITE, alt))
 
 
+TEAM_QA = {"Q&amp;A TONI": ("q-a-toni", "Toni"), "Q&amp;A Marco": ("q-a-marco", "Marco"),
+           "Q&amp;A Pascal": ("q-a-pascal", "Pascal"), "Q&amp;A Adrian": ("q-a-adrian", "Adrian")}
+TEAM_QA_CSS = """
+  .mc-col a.mc-media { display: block; }
+  .mc-col h3 a { color: inherit; text-decoration: none; }
+  .mc-col h3 a:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .mc-more { margin-top: 14px; font-family: var(--f-mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; }
+  .mc-more a { color: inherit; border-bottom: 1px solid currentColor; padding-bottom: 3px; text-decoration: none; }
+"""
+
+
+def link_team_cards(page):
+    """Meet the Team: Karten zu den Mitarbeiter-Interviews verlinken (Bild, Name, „Zum Interview →“)."""
+    def col(m):
+        c = m.group(0)
+        for h, (slug, name) in TEAM_QA.items():
+            if f"<h3>{h}</h3>" in c:
+                c = c.replace('<div class="mc-media">', f'<a class="mc-media" href="{slug}.html" aria-label="Interview mit {name} lesen">', 1)
+                c = c.replace('</div></div><h3>', '</div></a><h3>', 1)
+                c = c.replace(f"<h3>{h}</h3>", f'<h3><a href="{slug}.html">{h}</a></h3>', 1)
+                c = c.replace('alt="MEET THE TEAM"', f'alt="{name} – Team Täubert"', 1)
+                c = c[:-6] + f'<p class="mc-more"><a href="{slug}.html">Zum Interview →</a></p></div>'
+        return c
+    page = re.sub(r'<div class="mc-col">.*?</div></div>(?=<div class="mc-col">|</div></div>\s*</section>)', col, page, flags=re.S)
+    return page.replace("</style>", TEAM_QA_CSS + "</style>", 1)
+
+
 def main():
     update_index()
     style, head_links, top, footer, js = shell()
@@ -2855,6 +2882,8 @@ def main():
             page = page.replace("</style>", DAMAGE_CSS + APPLY_CSS + "</style>", 1)
             if slug == "jobs":
                 page = page.replace("</script>\n</body>", DAMAGE_JS + "</script>\n</body>", 1)
+        if slug == "meet-the-team":
+            page = link_team_cards(page)
         open(os.path.join(SITE, f"{slug}.html"), "w", encoding="utf-8").write(sync_images(page))
         built.append(slug)
     for slug, p in NEW_PAGES.items():
