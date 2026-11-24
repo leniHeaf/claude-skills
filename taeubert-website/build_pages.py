@@ -1221,7 +1221,7 @@ STEPS_BY_KIND = {
              ("Bringen oder abholen lassen", "Im Umkreis von 30 km holen wir Ihr Auto ab. Auf Wunsch bekommen Sie einen Ersatzwagen."),
              ("Aufbereitung in Ruhe", "Gründlich, Schritt für Schritt und mit Produkten, die zu Lack und Material passen."),
              ("Glänzend zurück", "Gemeinsame Übergabe mit Pflegetipps – auf Wunsch bringen wir Ihr Auto vor die Tür.")],
-    "service": [("Termin buchen", "Online, telefonisch oder per WhatsApp – zu einer Zeit, die Ihnen passt."),
+    "service": [("Termin anfragen", "Online, telefonisch oder per WhatsApp – zu einer Zeit, die Ihnen passt."),
                 ("Auto bringen oder abholen lassen", "Schlüssel auch nach Feierabend abgeben – oder wir holen das Auto im Umkreis von 30 km ab."),
                 ("Wir erledigen alles", "Sie müssen nicht warten. Wenn mehr zu tun ist als besprochen, rufen wir Sie vorher an."),
                 ("Weiterfahren", "Bezahlen per EC-Karte, Kreditkarte, Rechnung oder bar – und los.")],
