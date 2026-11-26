@@ -1,0 +1,1325 @@
+{
+ "grund": "Nicht im Konfigurator angeboten – Auswahl auf bekannte Oldtimer reduziert",
+ "fahrzeuge": [
+  {
+   "id": "6a468568f7de2edb213a1e72",
+   "brand": "Volkswagen",
+   "model_name": "Bulli",
+   "variant": "T4 Multivan",
+   "era": "1990–2003",
+   "vehicle_type": "Transporter",
+   "category": "Bus",
+   "thumb": "images/konfigurator/volkswagen-bulli-t4-multivan-front-karte.webp"
+  },
+  {
+   "id": "6a468568f7de2edb213a1e71",
+   "brand": "Volkswagen",
+   "model_name": "Bulli",
+   "variant": "T1 Double Cab",
+   "era": "1958–1967",
+   "vehicle_type": "Transporter",
+   "category": "Bus",
+   "thumb": "images/konfigurator/volkswagen-bulli-t1-double-cab-front-karte.webp"
+  },
+  {
+   "id": "6a468568f7de2edb213a1e6c",
+   "brand": "Volkswagen",
+   "model_name": "Bulli",
+   "variant": "T2 Samba",
+   "era": "1967–1979",
+   "vehicle_type": "Transporter",
+   "category": "Bus",
+   "thumb": "images/konfigurator/volkswagen-bulli-t2-samba-front-karte.webp"
+  },
+  {
+   "id": "6a468568f7de2edb213a1e70",
+   "brand": "Volkswagen",
+   "model_name": "Bulli",
+   "variant": "T1 Pick-up",
+   "era": "1952–1967",
+   "vehicle_type": "Transporter",
+   "category": "Bus",
+   "thumb": "images/konfigurator/volkswagen-bulli-t1-pick-up-front-karte.webp"
+  },
+  {
+   "id": "6a468568f7de2edb213a1e6f",
+   "brand": "Volkswagen",
+   "model_name": "Bulli",
+   "variant": "T1 Kombi",
+   "era": "1950–1967",
+   "vehicle_type": "Transporter",
+   "category": "Bus",
+   "thumb": "images/konfigurator/volkswagen-bulli-t1-kombi-front-karte.webp"
+  },
+  {
+   "id": "6a468568f7de2edb213a1e6d",
+   "brand": "Volkswagen",
+   "model_name": "Bulli",
+   "variant": "T3 / T25",
+   "era": "1979–1992",
+   "vehicle_type": "Transporter",
+   "category": "Bus",
+   "thumb": "images/konfigurator/volkswagen-bulli-t3-t25-front-karte.webp"
+  },
+  {
+   "id": "6a4662c1591d4a90cec64188",
+   "brand": "Volkswagen",
+   "model_name": "Golf Rallye",
+   "variant": "G60",
+   "era": "1989–1991",
+   "vehicle_type": "Pkw",
+   "category": "Sportcoupé",
+   "thumb": "images/konfigurator/volkswagen-golf-rallye-g60-front-karte.webp"
+  },
+  {
+   "id": "6a466034b864d38cf24332b9",
+   "brand": "Kreidler",
+   "model_name": "Florett RS",
+   "variant": "",
+   "era": "1965–1982",
+   "vehicle_type": "Mofa/Roller",
+   "category": "Kleinkraftrad",
+   "thumb": "images/konfigurator/kreidler-florett-rs-front-karte.webp"
+  },
+  {
+   "id": "6a466034b864d38cf24332bd",
+   "brand": "Hercules",
+   "model_name": "W 2000",
+   "variant": "",
+   "era": "1974–1978",
+   "vehicle_type": "Mofa/Roller",
+   "category": "Wankel-Mofa",
+   "thumb": "images/konfigurator/hercules-w-2000-front-karte.webp"
+  },
+  {
+   "id": "6a466034b864d38cf24332bb",
+   "brand": "Hercules",
+   "model_name": "K 50",
+   "variant": "",
+   "era": "1965–1980",
+   "vehicle_type": "Mofa/Roller",
+   "category": "Mofa",
+   "thumb": "images/konfigurator/hercules-k-50-front-karte.webp"
+  },
+  {
+   "id": "6a466034b864d38cf24332c8",
+   "brand": "Miele",
+   "model_name": "K 50",
+   "variant": "",
+   "era": "1958–1970",
+   "vehicle_type": "Mofa/Roller",
+   "category": "Mofa",
+   "thumb": "images/konfigurator/miele-k-50-front-karte.webp"
+  },
+  {
+   "id": "6a466034b864d38cf24332c3",
+   "brand": "Puch",
+   "model_name": "Maxi",
+   "variant": "",
+   "era": "1970–1995",
+   "vehicle_type": "Mofa/Roller",
+   "category": "Mofa",
+   "thumb": "images/konfigurator/puch-maxi-front-karte.webp"
+  },
+  {
+   "id": "6a466034b864d38cf24332ba",
+   "brand": "Kreidler",
+   "model_name": "Mofa 45",
+   "variant": "",
+   "era": "1968–1980",
+   "vehicle_type": "Mofa/Roller",
+   "category": "Mofa",
+   "thumb": "images/konfigurator/kreidler-mofa-45-front-karte.webp"
+  },
+  {
+   "id": "6a466034b864d38cf24332c7",
+   "brand": "Gritzner",
+   "model_name": "Blitz",
+   "variant": "",
+   "era": "1955–1970",
+   "vehicle_type": "Mofa/Roller",
+   "category": "Mofa",
+   "thumb": "images/konfigurator/gritzner-blitz-front-karte.webp"
+  },
+  {
+   "id": "6a466034b864d38cf24332bc",
+   "brand": "Hercules",
+   "model_name": "Ultra",
+   "variant": "",
+   "era": "1970–1985",
+   "vehicle_type": "Mofa/Roller",
+   "category": "Kleinkraftrad",
+   "thumb": "images/konfigurator/hercules-ultra-front-karte.webp"
+  },
+  {
+   "id": "6a466034b864d38cf24332be",
+   "brand": "DKW",
+   "model_name": "Hummel",
+   "variant": "",
+   "era": "1956–1962",
+   "vehicle_type": "Mofa/Roller",
+   "category": "Mofa",
+   "thumb": "images/konfigurator/dkw-hummel-front-karte.webp"
+  },
+  {
+   "id": "6a466034b864d38cf24332b6",
+   "brand": "Zündapp",
+   "model_name": "GS 125",
+   "variant": "",
+   "era": "1955–1962",
+   "vehicle_type": "Mofa/Roller",
+   "category": "Motorroller",
+   "thumb": "images/konfigurator/zuendapp-gs-125-front-karte.webp"
+  },
+  {
+   "id": "6a466034b864d38cf24332ca",
+   "brand": "Zündapp",
+   "model_name": "ZD 10",
+   "variant": "",
+   "era": "1965–1975",
+   "vehicle_type": "Mofa/Roller",
+   "category": "Mofa",
+   "thumb": "images/konfigurator/zuendapp-zd-10-front-karte.webp"
+  },
+  {
+   "id": "6a466034b864d38cf24332cb",
+   "brand": "Zündapp",
+   "model_name": "ZD 50",
+   "variant": "",
+   "era": "1970–1985",
+   "vehicle_type": "Mofa/Roller",
+   "category": "Mofa",
+   "thumb": "images/konfigurator/zuendapp-zd-50-front-karte.webp"
+  },
+  {
+   "id": "6a466034b864d38cf24332c4",
+   "brand": "Puch",
+   "model_name": "MV 50",
+   "variant": "",
+   "era": "1973–1985",
+   "vehicle_type": "Mofa/Roller",
+   "category": "Mofa",
+   "thumb": "images/konfigurator/puch-mv-50-front-karte.webp"
+  },
+  {
+   "id": "6a466034b864d38cf24332c0",
+   "brand": "Sachs",
+   "model_name": "Balloon",
+   "variant": "",
+   "era": "1955–1970",
+   "vehicle_type": "Mofa/Roller",
+   "category": "Mofa",
+   "thumb": "images/konfigurator/sachs-balloon-front-karte.webp"
+  },
+  {
+   "id": "6a466034b864d38cf24332c1",
+   "brand": "Sachs",
+   "model_name": "Roadstar",
+   "variant": "",
+   "era": "1980–1995",
+   "vehicle_type": "Mofa/Roller",
+   "category": "Kleinkraftrad",
+   "thumb": "images/konfigurator/sachs-roadstar-front-karte.webp"
+  },
+  {
+   "id": "6a466034b864d38cf24332b4",
+   "brand": "Zündapp",
+   "model_name": "Bella R 154",
+   "variant": "",
+   "era": "1953–1962",
+   "vehicle_type": "Mofa/Roller",
+   "category": "Motorroller",
+   "thumb": "images/konfigurator/zuendapp-bella-r-154-front-karte.webp"
+  },
+  {
+   "id": "6a466034b864d38cf24332b7",
+   "brand": "Zündapp",
+   "model_name": "GTS 50",
+   "variant": "",
+   "era": "1975–1985",
+   "vehicle_type": "Mofa/Roller",
+   "category": "Kleinkraftrad",
+   "thumb": "images/konfigurator/zuendapp-gts-50-front-karte.webp"
+  },
+  {
+   "id": "6a466034b864d38cf24332c5",
+   "brand": "Fichtel & Sachs",
+   "model_name": "Dolomiti",
+   "variant": "",
+   "era": "1955–1965",
+   "vehicle_type": "Mofa/Roller",
+   "category": "Kleinkraftrad",
+   "thumb": "images/konfigurator/fichtel-sachs-dolomiti-front-karte.webp"
+  },
+  {
+   "id": "6a466034b864d38cf24332b5",
+   "brand": "Zündapp",
+   "model_name": "Bella R 200",
+   "variant": "",
+   "era": "1955–1962",
+   "vehicle_type": "Mofa/Roller",
+   "category": "Motorroller",
+   "thumb": "images/konfigurator/zuendapp-bella-r-200-front-karte.webp"
+  },
+  {
+   "id": "6a466034b864d38cf24332b8",
+   "brand": "Kreidler",
+   "model_name": "K 50",
+   "variant": "",
+   "era": "1955–1970",
+   "vehicle_type": "Mofa/Roller",
+   "category": "Mofa",
+   "thumb": "images/konfigurator/kreidler-k-50-front-karte.webp"
+  },
+  {
+   "id": "6a466034b864d38cf24332c9",
+   "brand": "Kreidler",
+   "model_name": "MP 9",
+   "variant": "",
+   "era": "1960–1975",
+   "vehicle_type": "Mofa/Roller",
+   "category": "Mofa",
+   "thumb": "images/konfigurator/kreidler-mp-9-front-karte.webp"
+  },
+  {
+   "id": "6a466034b864d38cf24332bf",
+   "brand": "Victoria",
+   "model_name": "Pirol",
+   "variant": "",
+   "era": "1958–1965",
+   "vehicle_type": "Mofa/Roller",
+   "category": "Mofa",
+   "thumb": "images/konfigurator/victoria-pirol-front-karte.webp"
+  },
+  {
+   "id": "6a466034b864d38cf24332c6",
+   "brand": "Fichtel & Sachs",
+   "model_name": "Sachs 98",
+   "variant": "",
+   "era": "1936–1940",
+   "vehicle_type": "Mofa/Roller",
+   "category": "Mofa",
+   "thumb": "images/konfigurator/fichtel-sachs-sachs-98-front-karte.webp"
+  },
+  {
+   "id": "6a466034b864d38cf24332c2",
+   "brand": "Tomos",
+   "model_name": "A3",
+   "variant": "",
+   "era": "1974–1990",
+   "vehicle_type": "Mofa/Roller",
+   "category": "Mofa",
+   "thumb": "images/konfigurator/tomos-a3-front-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc20",
+   "brand": "Adler",
+   "model_name": "M 200",
+   "variant": "",
+   "era": "1934–1938",
+   "vehicle_type": "Motorrad",
+   "category": "Zweitakter",
+   "thumb": "images/konfigurator/adler-m-200-front-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc25",
+   "brand": "Münch",
+   "model_name": "Mammut 2000",
+   "variant": "",
+   "era": "1971–1980",
+   "vehicle_type": "Motorrad",
+   "category": "Viertakter",
+   "thumb": "images/konfigurator/muench-mammut-2000-front-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc24",
+   "brand": "Münch",
+   "model_name": "Mammut 1200",
+   "variant": "",
+   "era": "1966–1971",
+   "vehicle_type": "Motorrad",
+   "category": "Viertakter",
+   "thumb": "images/konfigurator/muench-mammut-1200-front-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc23",
+   "brand": "Kreidler",
+   "model_name": "Florett",
+   "variant": "",
+   "era": "1955–1982",
+   "vehicle_type": "Motorrad",
+   "category": "Zweitakter",
+   "thumb": "images/konfigurator/kreidler-florett-front-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc26",
+   "brand": "Sachs",
+   "model_name": "Roadster 800",
+   "variant": "",
+   "era": "1995–2003",
+   "vehicle_type": "Motorrad",
+   "category": "Viertakter",
+   "thumb": "images/konfigurator/sachs-roadster-800-front-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc1f",
+   "brand": "Maico",
+   "model_name": "MD 250",
+   "variant": "",
+   "era": "1956–1966",
+   "vehicle_type": "Motorrad",
+   "category": "Zweitakter",
+   "thumb": "images/konfigurator/maico-md-250-front-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc21",
+   "brand": "Ardie",
+   "model_name": "T 200",
+   "variant": "",
+   "era": "1934–1939",
+   "vehicle_type": "Motorrad",
+   "category": "Zweitakter",
+   "thumb": "images/konfigurator/ardie-t-200-front-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc1e",
+   "brand": "Maico",
+   "model_name": "250 B",
+   "variant": "",
+   "era": "1950–1960",
+   "vehicle_type": "Motorrad",
+   "category": "Zweitakter",
+   "thumb": "images/konfigurator/maico-250-b-front-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc22",
+   "brand": "Bismarck",
+   "model_name": "Bismarck 198",
+   "variant": "",
+   "era": "1934–1938",
+   "vehicle_type": "Motorrad",
+   "category": "Zweitakter",
+   "thumb": "images/konfigurator/bismarck-bismarck-198-front-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc27",
+   "brand": "Hercules",
+   "model_name": "W 2000",
+   "variant": "",
+   "era": "1974–1978",
+   "vehicle_type": "Motorrad",
+   "category": "Wankel",
+   "thumb": "images/konfigurator/hercules-w-2000-front-2-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc0a",
+   "brand": "BMW",
+   "model_name": "R 51/3",
+   "variant": "",
+   "era": "1951–1969",
+   "vehicle_type": "Motorrad",
+   "category": "Boxer-Klassiker",
+   "thumb": "images/konfigurator/bmw-r-51-3-front-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc1c",
+   "brand": "Horex",
+   "model_name": "Regina",
+   "variant": "",
+   "era": "1950–1956",
+   "vehicle_type": "Motorrad",
+   "category": "Viertakter",
+   "thumb": "images/konfigurator/horex-regina-front-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc15",
+   "brand": "NSU",
+   "model_name": "FOX 101",
+   "variant": "",
+   "era": "1949–1955",
+   "vehicle_type": "Motorrad",
+   "category": "Zweitakter",
+   "thumb": "images/konfigurator/nsu-fox-101-front-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc13",
+   "brand": "Zündapp",
+   "model_name": "DB 200",
+   "variant": "",
+   "era": "1951–1958",
+   "vehicle_type": "Motorrad",
+   "category": "Zweitakter",
+   "thumb": "images/konfigurator/zuendapp-db-200-front-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc1d",
+   "brand": "Horex",
+   "model_name": "Imperator",
+   "variant": "",
+   "era": "1953–1960",
+   "vehicle_type": "Motorrad",
+   "category": "Zweitakter",
+   "thumb": "images/konfigurator/horex-imperator-front-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc0d",
+   "brand": "BMW",
+   "model_name": "R 75/5",
+   "variant": "",
+   "era": "1969–1973",
+   "vehicle_type": "Motorrad",
+   "category": "/5er Serie",
+   "thumb": "images/konfigurator/bmw-r-75-5-front-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc1a",
+   "brand": "Victoria",
+   "model_name": "KR 6",
+   "variant": "",
+   "era": "1933–1939",
+   "vehicle_type": "Motorrad",
+   "category": "Zweitakter",
+   "thumb": "images/konfigurator/victoria-kr-6-front-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc18",
+   "brand": "DKW",
+   "model_name": "RT 125",
+   "variant": "",
+   "era": "1939–1965",
+   "vehicle_type": "Motorrad",
+   "category": "Zweitakter",
+   "thumb": "images/konfigurator/dkw-rt-125-front-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc14",
+   "brand": "Zündapp",
+   "model_name": "GS 125",
+   "variant": "",
+   "era": "1955–1965",
+   "vehicle_type": "Motorrad",
+   "category": "Gelände",
+   "thumb": "images/konfigurator/zuendapp-gs-125-front-2-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc17",
+   "brand": "NSU",
+   "model_name": "Supermax",
+   "variant": "",
+   "era": "1956–1960",
+   "vehicle_type": "Motorrad",
+   "category": "Viertakter",
+   "thumb": "images/konfigurator/nsu-supermax-front-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc0b",
+   "brand": "BMW",
+   "model_name": "R 60/2",
+   "variant": "",
+   "era": "1955–1969",
+   "vehicle_type": "Motorrad",
+   "category": "Boxer-Tourer",
+   "thumb": "images/konfigurator/bmw-r-60-2-front-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc19",
+   "brand": "DKW",
+   "model_name": "NZ 350",
+   "variant": "",
+   "era": "1938–1942",
+   "vehicle_type": "Motorrad",
+   "category": "Zweitakter",
+   "thumb": "images/konfigurator/dkw-nz-350-front-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc10",
+   "brand": "BMW",
+   "model_name": "R 80 G/S",
+   "variant": "",
+   "era": "1980–1987",
+   "vehicle_type": "Motorrad",
+   "category": "Gelände",
+   "thumb": "images/konfigurator/bmw-r-80-g-s-front-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc0f",
+   "brand": "BMW",
+   "model_name": "R 100 RS",
+   "variant": "",
+   "era": "1976–1984",
+   "vehicle_type": "Motorrad",
+   "category": "Tourer",
+   "thumb": "images/konfigurator/bmw-r-100-rs-front-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc11",
+   "brand": "Zündapp",
+   "model_name": "KS 750",
+   "variant": "",
+   "era": "1940–1945",
+   "vehicle_type": "Motorrad",
+   "category": "Gelände/ Militär",
+   "thumb": "images/konfigurator/zuendapp-ks-750-front-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc12",
+   "brand": "Zündapp",
+   "model_name": "KS 600",
+   "variant": "",
+   "era": "1938–1940",
+   "vehicle_type": "Motorrad",
+   "category": "Boxer",
+   "thumb": "images/konfigurator/zuendapp-ks-600-front-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc1b",
+   "brand": "Victoria",
+   "model_name": "Bergmeister",
+   "variant": "",
+   "era": "1951–1958",
+   "vehicle_type": "Motorrad",
+   "category": "Viertakter",
+   "thumb": "images/konfigurator/victoria-bergmeister-front-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc16",
+   "brand": "NSU",
+   "model_name": "Max 251",
+   "variant": "",
+   "era": "1952–1955",
+   "vehicle_type": "Motorrad",
+   "category": "Viertakter",
+   "thumb": "images/konfigurator/nsu-max-251-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db5b",
+   "brand": "NSU",
+   "model_name": "TT / TTS",
+   "variant": "",
+   "era": "1965–1972",
+   "vehicle_type": "Pkw",
+   "category": "Sportlimousine",
+   "thumb": "images/konfigurator/nsu-tt-tts-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db57",
+   "brand": "Neckar",
+   "model_name": "Jagst / Riviera / St. Trop",
+   "variant": "",
+   "era": "1957–1971",
+   "vehicle_type": "Pkw",
+   "category": "Fiat-Lizenz",
+   "thumb": "images/konfigurator/neckar-jagst-riviera-st-trop-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db58",
+   "brand": "NSU",
+   "model_name": "Prinz I–IV",
+   "variant": "",
+   "era": "1958–1973",
+   "vehicle_type": "Pkw",
+   "category": "Kleinwagen",
+   "thumb": "images/konfigurator/nsu-prinz-iiv-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db5a",
+   "brand": "NSU",
+   "model_name": "Spider",
+   "variant": "",
+   "era": "1964–1967",
+   "vehicle_type": "Pkw",
+   "category": "Cabrio/Wankel",
+   "thumb": "images/konfigurator/nsu-spider-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db5f",
+   "brand": "Opel",
+   "model_name": "Kapitän",
+   "variant": "",
+   "era": "1938–1970",
+   "vehicle_type": "Pkw",
+   "category": "Oberklasse",
+   "thumb": "images/konfigurator/opel-kapitaen-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db4f",
+   "brand": "Mercedes-Benz",
+   "model_name": "SSK / SSKL",
+   "variant": "",
+   "era": "1928–1932",
+   "vehicle_type": "Pkw",
+   "category": "Sportwagen",
+   "thumb": "images/konfigurator/mercedes-benz-ssk-sskl-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db59",
+   "brand": "NSU",
+   "model_name": "Sport Prinz",
+   "variant": "",
+   "era": "1958–1968",
+   "vehicle_type": "Pkw",
+   "category": "Coupé",
+   "thumb": "images/konfigurator/nsu-sport-prinz-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db5e",
+   "brand": "Opel",
+   "model_name": "Olympia",
+   "variant": "",
+   "era": "1935–1953",
+   "vehicle_type": "Pkw",
+   "category": "Selbsttragend",
+   "thumb": "images/konfigurator/opel-olympia-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db50",
+   "brand": "Mercedes-Benz",
+   "model_name": "170 V / 170 S",
+   "variant": "",
+   "era": "1936–1955",
+   "vehicle_type": "Pkw",
+   "category": "Vorkriegs-/Nachkriegsmodell",
+   "thumb": "images/konfigurator/mercedes-benz-170-v-170-s-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db55",
+   "brand": "Mercedes-Benz",
+   "model_name": "S-Klasse",
+   "variant": "W108/W109/W116",
+   "era": "1965–1980",
+   "vehicle_type": "Pkw",
+   "category": "Oberklasse",
+   "thumb": "images/konfigurator/mercedes-benz-s-klasse-w108-w109-w116-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db5d",
+   "brand": "Opel",
+   "model_name": "Laubfrosch",
+   "variant": "",
+   "era": "1924–1931",
+   "vehicle_type": "Pkw",
+   "category": "Kleinwagen",
+   "thumb": "images/konfigurator/opel-laubfrosch-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db60",
+   "brand": "Opel",
+   "model_name": "Rekord",
+   "variant": "P1–E",
+   "era": "1957–1986",
+   "vehicle_type": "Pkw",
+   "category": "Mittelklasse",
+   "thumb": "images/konfigurator/opel-rekord-p1e-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db73",
+   "brand": "Volkswagen",
+   "model_name": "Typ 3",
+   "variant": "1500/1600",
+   "era": "1961–1973",
+   "vehicle_type": "Pkw",
+   "category": "Klassiker",
+   "thumb": "images/konfigurator/volkswagen-typ-3-1500-1600-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db70",
+   "brand": "Stoewer",
+   "model_name": "V5 / Greif / Arkona",
+   "variant": "",
+   "era": "1930–1940",
+   "vehicle_type": "Pkw",
+   "category": "Vorkriegs-Klassiker",
+   "thumb": "images/konfigurator/stoewer-v5-greif-arkona-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db62",
+   "brand": "Opel",
+   "model_name": "Commodore",
+   "variant": "A/B/C",
+   "era": "1967–1982",
+   "vehicle_type": "Pkw",
+   "category": "Coupé",
+   "thumb": "images/konfigurator/opel-commodore-a-b-c-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db6c",
+   "brand": "Robur",
+   "model_name": "Garant / LO / LD",
+   "variant": "",
+   "era": "1950–1990",
+   "vehicle_type": "Nutzfahrzeug",
+   "category": "Lkw/Bus",
+   "thumb": "images/konfigurator/robur-garant-lo-ld-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db67",
+   "brand": "Porsche",
+   "model_name": "912",
+   "variant": "",
+   "era": "1965–1969",
+   "vehicle_type": "Pkw",
+   "category": "Sportwagen",
+   "thumb": "images/konfigurator/porsche-912-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db6f",
+   "brand": "Sachsenring",
+   "model_name": "Trabant 1.1",
+   "variant": "",
+   "era": "1990–1991",
+   "vehicle_type": "Pkw",
+   "category": "Letzte Serie",
+   "thumb": "images/konfigurator/sachsenring-trabant-1-1-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db71",
+   "brand": "Tempo",
+   "model_name": "Hanseat / Matador",
+   "variant": "",
+   "era": "1949–1967",
+   "vehicle_type": "Transporter",
+   "category": "Dreirad",
+   "thumb": "images/konfigurator/tempo-hanseat-matador-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db65",
+   "brand": "Opel",
+   "model_name": "Diplomat / Admiral",
+   "variant": "",
+   "era": "1964–1977",
+   "vehicle_type": "Pkw",
+   "category": "Oberklasse",
+   "thumb": "images/konfigurator/opel-diplomat-admiral-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db72",
+   "brand": "Veritas",
+   "model_name": "RS / Meteor",
+   "variant": "",
+   "era": "1947–1953",
+   "vehicle_type": "Pkw",
+   "category": "Renn-/Sportwagen",
+   "thumb": "images/konfigurator/veritas-rs-meteor-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db6d",
+   "brand": "Sachsenring",
+   "model_name": "Trabant",
+   "variant": "P50/P60",
+   "era": "1958–1965",
+   "vehicle_type": "Pkw",
+   "category": "DDR-Kleinwagen",
+   "thumb": "images/konfigurator/sachsenring-trabant-p50-p60-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db74",
+   "brand": "Volkswagen",
+   "model_name": "Typ 4",
+   "variant": "411/412",
+   "era": "1968–1974",
+   "vehicle_type": "Pkw",
+   "category": "Klassiker",
+   "thumb": "images/konfigurator/volkswagen-typ-4-411-412-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db6b",
+   "brand": "Porsche",
+   "model_name": "959",
+   "variant": "",
+   "era": "1986–1988",
+   "vehicle_type": "Pkw",
+   "category": "Supersportwagen",
+   "thumb": "images/konfigurator/porsche-959-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db61",
+   "brand": "Opel",
+   "model_name": "Kadett",
+   "variant": "A–E",
+   "era": "1962–1991",
+   "vehicle_type": "Pkw",
+   "category": "Kompaktwagen",
+   "thumb": "images/konfigurator/opel-kadett-ae-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db69",
+   "brand": "Porsche",
+   "model_name": "924",
+   "variant": "",
+   "era": "1975–1988",
+   "vehicle_type": "Pkw",
+   "category": "Sportwagen",
+   "thumb": "images/konfigurator/porsche-924-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db7c",
+   "brand": "Wartburg",
+   "model_name": "1.3",
+   "variant": "",
+   "era": "1988–1991",
+   "vehicle_type": "Pkw",
+   "category": "Letzte Serie",
+   "thumb": "images/konfigurator/wartburg-1-3-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db79",
+   "brand": "Wartburg",
+   "model_name": "311",
+   "variant": "",
+   "era": "1956–1965",
+   "vehicle_type": "Pkw",
+   "category": "DDR-Klassiker",
+   "thumb": "images/konfigurator/wartburg-311-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db7b",
+   "brand": "Wartburg",
+   "model_name": "353",
+   "variant": "",
+   "era": "1966–1988",
+   "vehicle_type": "Pkw",
+   "category": "DDR-Mittelklasse",
+   "thumb": "images/konfigurator/wartburg-353-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db77",
+   "brand": "Volkswagen",
+   "model_name": "Passat",
+   "variant": "B1/B2",
+   "era": "1973–1988",
+   "vehicle_type": "Pkw",
+   "category": "Mittelklasse",
+   "thumb": "images/konfigurator/volkswagen-passat-b1-b2-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db7a",
+   "brand": "Wartburg",
+   "model_name": "312",
+   "variant": "",
+   "era": "1965–1967",
+   "vehicle_type": "Pkw",
+   "category": "Übergangsmodell",
+   "thumb": "images/konfigurator/wartburg-312-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db78",
+   "brand": "Wanderer",
+   "model_name": "W10 / W24 / W25 K",
+   "variant": "",
+   "era": "1920–1940",
+   "vehicle_type": "Pkw",
+   "category": "Auto-Union",
+   "thumb": "images/konfigurator/wanderer-w10-w24-w25-k-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db7d",
+   "brand": "Zündapp",
+   "model_name": "Janus",
+   "variant": "",
+   "era": "1957–1958",
+   "vehicle_type": "Kleinstwagen",
+   "category": "Kleinstwagen",
+   "thumb": "images/konfigurator/zuendapp-janus-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db23",
+   "brand": "Audi",
+   "model_name": "80",
+   "variant": "B1 / B2",
+   "era": "1972–1986",
+   "vehicle_type": "Pkw",
+   "category": "Mittelklasse",
+   "thumb": "images/konfigurator/audi-80-b1-b2-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db25",
+   "brand": "Auto Union",
+   "model_name": "1000 S",
+   "variant": "",
+   "era": "1958–1965",
+   "vehicle_type": "Pkw",
+   "category": "Zweitakter",
+   "thumb": "images/konfigurator/auto-union-1000-s-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db21",
+   "brand": "Audi",
+   "model_name": "Typ A",
+   "variant": "Alpensieger",
+   "era": "1910–1920",
+   "vehicle_type": "Pkw",
+   "category": "Vorkriegs-Klassiker",
+   "thumb": "images/konfigurator/audi-typ-a-alpensieger-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db41",
+   "brand": "Goliath",
+   "model_name": "GP700 / GP900",
+   "variant": "",
+   "era": "1950–1957",
+   "vehicle_type": "Pkw",
+   "category": "Borgward-Gruppe",
+   "thumb": "images/konfigurator/goliath-gp700-gp900-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db40",
+   "brand": "Glas",
+   "model_name": "V8",
+   "variant": "",
+   "era": "1966–1968",
+   "vehicle_type": "Pkw",
+   "category": "Coupé",
+   "thumb": "images/konfigurator/glas-v8-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db1e",
+   "brand": "Adler",
+   "model_name": "Trumpf",
+   "variant": "Trumpf Junior",
+   "era": "1932–1941",
+   "vehicle_type": "Pkw",
+   "category": "Vorkriegs-Klassiker",
+   "thumb": "images/konfigurator/adler-trumpf-trumpf-junior-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db29",
+   "brand": "Bitter",
+   "model_name": "CD",
+   "variant": "",
+   "era": "1973–1979",
+   "vehicle_type": "Pkw",
+   "category": "Luxus-Coupé",
+   "thumb": "images/konfigurator/bitter-cd-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db27",
+   "brand": "AWZ",
+   "model_name": "P70",
+   "variant": "",
+   "era": "1955–1959",
+   "vehicle_type": "Pkw",
+   "category": "Kleinstwagen",
+   "thumb": "images/konfigurator/awz-p70-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db26",
+   "brand": "Auto Union",
+   "model_name": "Munga",
+   "variant": "",
+   "era": "1956–1968",
+   "vehicle_type": "Pkw",
+   "category": "Geländewagen",
+   "thumb": "images/konfigurator/auto-union-munga-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db3b",
+   "brand": "Fuldamobil",
+   "model_name": "N / S / S-7",
+   "variant": "",
+   "era": "1950–1969",
+   "vehicle_type": "Kleinstwagen",
+   "category": "Dreirad",
+   "thumb": "images/konfigurator/fuldamobil-n-s-s-7-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db28",
+   "brand": "Barkas",
+   "model_name": "B1000",
+   "variant": "",
+   "era": "1961–1991",
+   "vehicle_type": "Transporter",
+   "category": "DDR-Transporter",
+   "thumb": "images/konfigurator/barkas-b1000-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db32",
+   "brand": "BMW",
+   "model_name": "E3 / E9",
+   "variant": "",
+   "era": "1968–1977",
+   "vehicle_type": "Pkw",
+   "category": "Limousine/Coupé",
+   "thumb": "images/konfigurator/bmw-e3-e9-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db1f",
+   "brand": "Adler",
+   "model_name": "Diplomat",
+   "variant": "",
+   "era": "1934–1938",
+   "vehicle_type": "Pkw",
+   "category": "Repräsentationswagen",
+   "thumb": "images/konfigurator/adler-diplomat-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db22",
+   "brand": "Audi",
+   "model_name": "60 / 75",
+   "variant": "Super 90",
+   "era": "1965–1972",
+   "vehicle_type": "Pkw",
+   "category": "Nachkriegs-Klassiker",
+   "thumb": "images/konfigurator/audi-60-75-super-90-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db24",
+   "brand": "Audi",
+   "model_name": "100",
+   "variant": "C1 / C2 / C3",
+   "era": "1968–1991",
+   "vehicle_type": "Pkw",
+   "category": "Obere Mittelklasse",
+   "thumb": "images/konfigurator/audi-100-c1-c2-c3-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db33",
+   "brand": "Borgward",
+   "model_name": "Hansa",
+   "variant": "1500 / 1800",
+   "era": "1949–1954",
+   "vehicle_type": "Pkw",
+   "category": "Nachkriegs-Klassiker",
+   "thumb": "images/konfigurator/borgward-hansa-1500-1800-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db3a",
+   "brand": "EMW",
+   "model_name": "340",
+   "variant": "",
+   "era": "1949–1955",
+   "vehicle_type": "Pkw",
+   "category": "DDR-Klassiker",
+   "thumb": "images/konfigurator/emw-340-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db49",
+   "brand": "Horch",
+   "model_name": "8 / 830 / 853",
+   "variant": "",
+   "era": "1920–1940",
+   "vehicle_type": "Pkw",
+   "category": "Luxuswagen",
+   "thumb": "images/konfigurator/horch-8-830-853-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db47",
+   "brand": "Hansa-Lloyd",
+   "model_name": "Diverse",
+   "variant": "",
+   "era": "1914–1930",
+   "vehicle_type": "Pkw",
+   "category": "Bremer Marke",
+   "thumb": "images/konfigurator/hansa-lloyd-diverse-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db46",
+   "brand": "Hansa",
+   "model_name": "1100 / 1700",
+   "variant": "",
+   "era": "1934–1939",
+   "vehicle_type": "Pkw",
+   "category": "Vorkriegs-Klassiker",
+   "thumb": "images/konfigurator/hansa-1100-1700-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db38",
+   "brand": "DKW",
+   "model_name": "F89 / F91 / F93",
+   "variant": "",
+   "era": "1950–1959",
+   "vehicle_type": "Pkw",
+   "category": "Nachkriegs-Zweitakter",
+   "thumb": "images/konfigurator/dkw-f89-f91-f93-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db37",
+   "brand": "DKW",
+   "model_name": "F1–F8",
+   "variant": "",
+   "era": "1931–1942",
+   "vehicle_type": "Pkw",
+   "category": "Zweitakter",
+   "thumb": "images/konfigurator/dkw-f1f8-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db43",
+   "brand": "Gutbrod",
+   "model_name": "Superior",
+   "variant": "",
+   "era": "1950–1954",
+   "vehicle_type": "Kleinstwagen",
+   "category": "Kleinwagen",
+   "thumb": "images/konfigurator/gutbrod-superior-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db48",
+   "brand": "Heinkel",
+   "model_name": "Kabine",
+   "variant": "",
+   "era": "1956–1958",
+   "vehicle_type": "Kabinenroller",
+   "category": "Kabinenroller",
+   "thumb": "images/konfigurator/heinkel-kabine-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db42",
+   "brand": "Goliath",
+   "model_name": "1100",
+   "variant": "",
+   "era": "1957–1961",
+   "vehicle_type": "Pkw",
+   "category": "Kleinwagen",
+   "thumb": "images/konfigurator/goliath-1100-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db44",
+   "brand": "Hanomag",
+   "model_name": "2/10 PS",
+   "variant": "Kommissbrot",
+   "era": "1925–1928",
+   "vehicle_type": "Kleinstwagen",
+   "category": "Ikonischer Kleinwagen",
+   "thumb": "images/konfigurator/hanomag-2-10-ps-kommissbrot-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db34",
+   "brand": "Borgward",
+   "model_name": "Isabella",
+   "variant": "",
+   "era": "1954–1962",
+   "vehicle_type": "Pkw",
+   "category": "Coupé/Kombi",
+   "thumb": "images/konfigurator/borgward-isabella-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db36",
+   "brand": "Champion",
+   "model_name": "CH-2 / 400 / 500",
+   "variant": "",
+   "era": "1949–1954",
+   "vehicle_type": "Kleinstwagen",
+   "category": "Nachkriegs-Kleinwagen",
+   "thumb": "images/konfigurator/champion-ch-2-400-500-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db3e",
+   "brand": "Glas",
+   "model_name": "1004 / 1204 / 1304",
+   "variant": "",
+   "era": "1962–1968",
+   "vehicle_type": "Pkw",
+   "category": "Mittelklasse",
+   "thumb": "images/konfigurator/glas-1004-1204-1304-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db35",
+   "brand": "Borgward",
+   "model_name": "P100",
+   "variant": "",
+   "era": "1959–1962",
+   "vehicle_type": "Pkw",
+   "category": "Oberklasse",
+   "thumb": "images/konfigurator/borgward-p100-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db3f",
+   "brand": "Glas",
+   "model_name": "1300 GT / 1700 GT",
+   "variant": "",
+   "era": "1964–1968",
+   "vehicle_type": "Pkw",
+   "category": "Coupé/Cabrio",
+   "thumb": "images/konfigurator/glas-1300-gt-1700-gt-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db4e",
+   "brand": "Maybach",
+   "model_name": "W3 / W5 / Zeppelin",
+   "variant": "",
+   "era": "1921–1941",
+   "vehicle_type": "Pkw",
+   "category": "Luxuswagen",
+   "thumb": "images/konfigurator/maybach-w3-w5-zeppelin-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db39",
+   "brand": "DKW",
+   "model_name": "Junior / F12",
+   "variant": "",
+   "era": "1959–1965",
+   "vehicle_type": "Pkw",
+   "category": "Kompaktwagen",
+   "thumb": "images/konfigurator/dkw-junior-f12-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db3d",
+   "brand": "Glas",
+   "model_name": "Isar",
+   "variant": "",
+   "era": "1958–1965",
+   "vehicle_type": "Pkw",
+   "category": "Kleinwagen",
+   "thumb": "images/konfigurator/glas-isar-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db45",
+   "brand": "Hanomag",
+   "model_name": "Rekord",
+   "variant": "",
+   "era": "1934–1940",
+   "vehicle_type": "Pkw",
+   "category": "Vorkriegsmodell",
+   "thumb": "images/konfigurator/hanomag-rekord-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db4b",
+   "brand": "Lloyd",
+   "model_name": "LP 300",
+   "variant": "",
+   "era": "1950–1952",
+   "vehicle_type": "Pkw",
+   "category": "Kleinwagen",
+   "thumb": "images/konfigurator/lloyd-lp-300-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db4a",
+   "brand": "Kleinschnittger",
+   "model_name": "F125",
+   "variant": "",
+   "era": "1950–1957",
+   "vehicle_type": "Kleinstwagen",
+   "category": "Leichtbau-Roadster",
+   "thumb": "images/konfigurator/kleinschnittger-f125-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db4d",
+   "brand": "Lloyd",
+   "model_name": "Alexander",
+   "variant": "",
+   "era": "1957–1961",
+   "vehicle_type": "Pkw",
+   "category": "Kleinwagen",
+   "thumb": "images/konfigurator/lloyd-alexander-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db4c",
+   "brand": "Lloyd",
+   "model_name": "LP 400 / LP 600",
+   "variant": "",
+   "era": "1953–1961",
+   "vehicle_type": "Pkw",
+   "category": "Kleinwagen",
+   "thumb": "images/konfigurator/lloyd-lp-400-lp-600-front-karte.webp"
+  },
+  {
+   "id": "6a4633dd1fd3fa7bb2c013f8",
+   "brand": "Mercedes-Benz",
+   "model_name": "G-Klasse LWB",
+   "variant": "Soft Top",
+   "era": "1979–1991",
+   "vehicle_type": "Pkw",
+   "category": "Geländewagen",
+   "thumb": "images/konfigurator/mercedes-benz-g-klasse-lwb-soft-top-front-karte.webp"
+  }
+ ]
+}
