@@ -8,6 +8,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from new_pages import NEW_PAGES, RATGEBER  # noqa: E402
 from community_pages import COMMUNITY, COMMUNITY_CSS  # noqa: E402
 from image_names import IMAGE_NAMES  # noqa: E402
+from text_spacing import fix_spacing  # noqa: E402
 
 
 def img_new(fn):
@@ -809,6 +810,7 @@ def service_ld(slug, name, desc):
 
 # Inhalte, die im Shopify-Editor zusammengelaufen sind, wieder lesbar machen
 FIXES = [
+    ("03675 4289606  I  hallo@taeubert-karosserie-lack.de", "03675 4289606 · hallo@taeubert-karosserie-lack.de"),
     ("TÄUBERT befindet sich im nähe des Zentrums in Sonneberg.", "Täubert befindet sich in der Nähe des Sonneberger Zentrums."),
     ("Bettelheckerstraße 15 </p>", "An der Lehmgrube 3</p>"),   # Werkstatt-Adresse (Theme-Texte)
     ("Bettelhecker Straße 15", "An der Lehmgrube 3"),
@@ -879,7 +881,7 @@ def fill_alts(page):
 
 def sync_images(page):
     """Fehlende Bilddateien nicht anfragen (keine 404): src <-> data-missing-src je nach Vorhandensein."""
-    page = rename_img_refs(fill_alts(page))
+    page = fix_spacing(rename_img_refs(fill_alts(page)))   # fehlende Leerzeichen nach Satzzeichen ergänzen
     def fix(m):
         attr, path = m.group(1), m.group(2)
         exists = os.path.exists(os.path.join(SITE, path))
