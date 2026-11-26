@@ -2198,6 +2198,17 @@
       const opts = st.options.map(o => { if (o.color_hex) return o; const m = NAME_COLORS.find(([re]) => re.test(o.name || '')); return m ? { ...o, color_hex: m[1] } : o; });
       return opts.every(o => o.color_hex) ? { ...st, options: opts } : st;
     }) };
+    // Lila-/Violett-Töne für die Lackfarbe ergänzen (nach Magenta einsortiert)
+    const LILA = [['Lavender', '#9c8cbf', 'Zartes Lavendel – hell, elegant und selten.'], ['Amethyst Metallic', '#5f4b80', 'Amethyst mit feinem Metallic-Effekt – edel und zurückhaltend.'],
+      ['Ultraviolet', '#4f2d8c', 'Kräftiges Ultraviolett – ein echter Hingucker.'], ['Plum Crazy', '#5c2a87', 'Leuchtendes Pflaumen-Lila im Stil der Muscle-Car-Ära.'],
+      ['Viola Metallic', '#4b2549', 'Tiefes Violett mit Metallic-Schimmer.'], ['Techno Violet', '#3d2a57', 'Dunkles Blau-Violett – wirkt je nach Licht fast schwarz.'], ['Aubergine', '#3a1f34', 'Dunkle Aubergine – warm, satt und klassisch.']];
+    if (vehicle) vehicle = { ...vehicle, configurator_steps: (vehicle.configurator_steps || []).map(st => {
+      if (!/lackfarbe/i.test(st.step_name || '') || !st.options?.every(o => o.color_hex)) return st;
+      const neu = LILA.filter(([n]) => !st.options.some(o => o.name === n)).map(([name, color_hex, description]) => ({ name, color_hex, description }));
+      const i = st.options.findIndex(o => /magenta/i.test(o.name)), opts = [...st.options];
+      opts.splice(i >= 0 ? i + 1 : opts.length, 0, ...neu);
+      return { ...st, options: opts };
+    }) };
     // Zusätzlicher Schritt nur auf der Website: Unterboden (nicht bei Motorrad und Mofa/Roller)
     const ohneUnterboden = ['Motorrad', 'Mofa/Roller'];
     if (!ohneUnterboden.includes(vehicle.vehicle_type) && !(vehicle.configurator_steps || []).some(st => /unterboden/i.test(st.step_name || ''))) {
