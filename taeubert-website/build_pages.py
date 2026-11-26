@@ -809,6 +809,7 @@ def service_ld(slug, name, desc):
 
 # Inhalte, die im Shopify-Editor zusammengelaufen sind, wieder lesbar machen
 FIXES = [
+    ("TÄUBERT befindet sich im nähe des Zentrums in Sonneberg.", "Täubert befindet sich in der Nähe des Sonneberger Zentrums."),
     ("Bettelheckerstraße 15 </p>", "An der Lehmgrube 3</p>"),   # Werkstatt-Adresse (Theme-Texte)
     ("Bettelhecker Straße 15", "An der Lehmgrube 3"),
     ("Täubert Karosserie und Lack GmbH", "Täubert Karosserie &amp; Lack GmbH"),
@@ -1793,7 +1794,9 @@ UNFALL_PAGE = f"""<section class="sec soforthilfe" style="padding:50px 0 20px">
   <div class="page-width">
     <h1 class="overline">Unfall-Soforthilfe</h1>
     <p class="heading h-6">Unfall gehabt? Das ist jetzt zu tun.</p>
+    <p class="sos-112-hint"><strong>Gibt es Verletzte?</strong> Dann zuerst: Notruf 112 wählen.</p>
     <div class="sos-call">
+      <a class="btn btn-dark sos-112" href="tel:112">Notruf 112 wählen</a>
       <a class="btn btn-dark" href="tel:+4936754289606">Täubert anrufen: 03675 4289606</a>
       <a class="btn btn-outline-dark" href="https://wa.me/4936754289606" target="_blank" rel="noopener">Fotos per WhatsApp</a>
       <a class="btn btn-outline-dark" href="schaden-melden.html">Schaden per Foto melden</a>
@@ -1809,6 +1812,8 @@ UNFALL_PAGE = f"""<section class="sec soforthilfe" style="padding:50px 0 20px">
 </section>"""
 
 UNFALL_CSS = """
+  .sos-112-hint { margin: 6px 0 18px; font-size: 17px; }
+  .sos-call .sos-112 { background: #fff !important; color: #000 !important; border: 2px solid #000 !important; font-weight: 600; }
   .sos-call { display: flex; flex-wrap: wrap; gap: 10px; margin: 18px 0 14px; }
   .sos-list { list-style: none; counter-reset: sos; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
   .sos-list li { counter-increment: sos; position: relative; padding: 22px 22px 22px 70px; background: var(--grey); }
@@ -2032,6 +2037,9 @@ def konfig_page():
 
 
 KONFIG_CSS = """
+  .kc-head .kc-opt-note, .kc-opt-note { margin-top: 10px; font-size: 12px !important; line-height: 1.5; color: #737373; border-left: 2px solid #d4d4d4; padding-left: 10px; }
+  .kc-opt-note[hidden] { display: none; }
+
   .kc-conf .kc-left { background: #efefed; }
   .kc-conf .kc-thumbs, .kc-conf .kc-side { background: transparent; }
 
@@ -2283,7 +2291,7 @@ KONFIG_JS = r"""
       for (let y = 0; y < h; y++) { m[y * w + x] = acc / n; acc += t[Math.min(h - 1, y + r + 1) * w + x] - t[Math.max(0, y - r) * w + x]; } }
     return m;
   }
-  function applyTint(imageData, tintHex, seatTintHex) {   // Karosserie (blau/magenta) und Sitze/Polster (warme Töne) umfärben
+  function applyTint(imageData, tintHex, seatTintHex, interiorView) {   // Karosserie (blau/magenta) und Sitze/Polster (warme Töne) umfärben
     const data = imageData.data, w = imageData.width, h = imageData.height, N = w * h;
     const bodyTint = tintHex ? hexToHsl(tintHex) : null, seatTint = seatTintHex ? hexToHsl(seatTintHex) : null;
     const bw = new Float32Array(N), sw = new Float32Array(N), L = new Float32Array(N);
@@ -2306,7 +2314,24 @@ KONFIG_JS = r"""
         // nur deutlich farbige Flächen (Sitze, Polster) – kein Dachhimmel, keine hellen Kunststoffe, kein Chrom
         const satWeight = sat <= 22 ? 0 : Math.min((sat - 22) / 30, 1);
         const lWeight = px.l > 0.8 ? 0 : px.l > 0.68 ? (0.8 - px.l) / 0.12 : Math.min(px.l / 0.12, 1);
-        sw[p] = Math.min(hw, satWeight, lWeight) * 0.92;
+        const yy = (p / w) | 0, yF = yy < h * 0.48 ? 0 : Math.min(1, (yy - h * 0.48) / (h * 0.08));   // Polster liegen in der unteren Bildhälfte
+        sw[p] = Math.min(hw, satWeight, lWeight, yF) * 0.92;
+      }
+    }
+    // Keine farbigen Polster im Bild (z. B. schwarze Sitze): dunkle, wenig gesättigte Polsterflächen im unteren Bildteil einfärben
+    let darkSeats = false;
+    if (seatTint && interiorView) {
+      let tot = 0; const y0 = Math.floor(h * 0.5) * w; for (let p = y0; p < N; p++) if (bw[p] < 0.05) tot += sw[p];
+      if (tot < (N - y0) * 0.03) {
+        darkSeats = true;
+        for (let p = 0, i = 0; p < N; p++, i += 4) {
+          const y = (p / w) | 0; if (y < h * 0.5 || bw[p] > 0.05) { sw[p] = 0; continue; }
+          const r = data[i], g = data[i + 1], b = data[i + 2], sat = Math.max(r, g, b) - Math.min(r, g, b), l = L[p];
+          const sW = sat > 46 ? 0 : sat > 30 ? (46 - sat) / 16 : 1;
+          const lW = l < 0.05 ? 0 : l < 0.09 ? (l - 0.05) / 0.04 : l > 0.62 ? 0 : l > 0.5 ? (0.62 - l) / 0.12 : 1;
+          const yW = Math.min(1, (y - h * 0.5) / (h * 0.1));
+          sw[p] = Math.min(sW, lW, yW) * 0.85;
+        }
       }
     }
     const rad = Math.max(1, Math.round(Math.max(w, h) / 450));
@@ -2320,7 +2345,7 @@ KONFIG_JS = r"""
         data[i] = Math.round(data[i] * (1 - wB) + c.r * wB); data[i + 1] = Math.round(data[i + 1] * (1 - wB) + c.g * wB); data[i + 2] = Math.round(data[i + 2] * (1 - wB) + c.b * wB);
       }
       if (wS > 0.01) {
-        const newL = Math.max(0.02, Math.min(0.92, L[p] * (seatTint.l / 0.4))), newS = Math.max(seatTint.s * 0.7, Math.min(seatTint.s + 0.1, 0.85));
+        const newL = darkSeats ? Math.max(0.04, Math.min(0.85, seatTint.l * (0.55 + L[p] * 1.25))) : Math.max(0.02, Math.min(0.92, L[p] * (seatTint.l / 0.4))), newS = Math.max(seatTint.s * 0.7, Math.min(seatTint.s + 0.1, 0.85));
         const c = hslToRgb(seatTint.h, newS, newL);
         data[i] = Math.round(data[i] * (1 - wS) + c.r * wS); data[i + 1] = Math.round(data[i + 1] * (1 - wS) + c.g * wS); data[i + 2] = Math.round(data[i + 2] * (1 - wS) + c.b * wS);
       }
@@ -2340,12 +2365,12 @@ KONFIG_JS = r"""
       const c = document.createElement('canvas'), sc = 200 / Math.max(im.naturalWidth, im.naturalHeight);
       c.width = Math.round(im.naturalWidth * sc); c.height = Math.round(im.naturalHeight * sc);
       const x = c.getContext('2d'); x.drawImage(im, 0, 0, c.width, c.height);
-      try { const d = x.getImageData(0, 0, c.width, c.height); applyTint(d, body, seat); x.putImageData(d, 0, 0); } catch (e) { continue; }
+      try { const d = x.getImageData(0, 0, c.width, c.height); applyTint(d, body, seat, !isExterior && !/motorrad|mofa|roller/i.test(vehicle.vehicle_type || '')); x.putImageData(d, 0, 0); } catch (e) { continue; }
       const el = $('kc-thumbs').querySelector(`[data-view="${i}"] img`); if (el) el.src = c.toDataURL('image/jpeg', 0.85);
     }
   }
   let tintJob = 0;
-  async function tintedImage(src, tintHex, seatTintHex, maxSize = (window.innerWidth < 900 ? 1400 : 2400)) {
+  async function tintedImage(src, tintHex, seatTintHex, interiorView, maxSize = (window.innerWidth < 900 ? 1400 : 2400)) {
     const my = ++tintJob, canvas = $('kc-canvas'), spin = $('kc-imgload');
     spin.hidden = false;
     const imgUrl = await fetchAsDataUrl(src);
@@ -2359,7 +2384,7 @@ KONFIG_JS = r"""
       if (tintHex || seatTintHex) {
         try {
           const imageData = ctx.getImageData(0, 0, w, h);
-          applyTint(imageData, tintHex, seatTintHex);
+          applyTint(imageData, tintHex, seatTintHex, interiorView);
           ctx.putImageData(imageData, 0, 0);
         } catch (e) { console.warn('Canvas recolor failed:', e.message); }
       }
@@ -2421,7 +2446,7 @@ KONFIG_JS = r"""
     $('kc-canvas').setAttribute('aria-label', `${vehicle.brand} ${vehicle.model_name}`);
     $('kc-thumbs').innerHTML = g.map((im, i) => `<button type="button" class="kc-thumb${selectedView === i ? ' on' : ''}" data-view="${i}" aria-pressed="${selectedView === i}"><img src="${esc(im.url)}" alt="${esc(im.label || 'Ansicht ' + (i + 1))}"></button>`).join('');
     // Lackfarbe auch im Innenraum (lackierte Türbleche usw. tragen dieselbe Platzhalterfarbe)
-    tintedImage(active.url, paintColor, (!hasInterior || !isExterior) ? seatColor : undefined);
+    tintedImage(active.url, paintColor, (!hasInterior || !isExterior) ? seatColor : undefined, !isExterior && !/motorrad|mofa|roller/i.test(vehicle.vehicle_type || ''));
     tintThumbs(g, paintColor, seatColor, hasInterior);
   }
   function render() {
@@ -2440,6 +2465,11 @@ KONFIG_JS = r"""
     $('kc-step-name').textContent = step.step_name; $('kc-step-num').textContent = `Schritt ${currentStep + 1}/${s.length}`;
     const sel = step.options?.find(o => o.name === selections[step.step_name]);
     $('kc-opt-name').textContent = sel?.name || ''; $('kc-opt-desc').textContent = sel?.description || '';
+    // Schritte ohne Darstellung im Bild (Felgen, Lenkrad, Sitzform, Radio, Unterboden …) ehrlich kennzeichnen
+    const visual = step.options?.every(o => o.color_hex);
+    let note = $('kc-opt-note'); if (!note) { note = document.createElement('p'); note.id = 'kc-opt-note'; note.className = 'kc-opt-note'; $('kc-opt-desc').after(note); }
+    note.hidden = !!visual;
+    note.textContent = visual ? '' : 'Diese Auswahl ist im Bild nicht dargestellt – im Bild sehen Sie Lack und Interieurfarbe. Muster und Varianten zeigen wir Ihnen gern bei uns in der Werkstatt.';
     $('kc-next').textContent = currentStep === s.length - 1 ? 'Abschluss ›' : 'Weiter ›';
     const isColorStep = step.options?.every(o => o.color_hex);
     $('kc-options').innerHTML = isColorStep
@@ -2498,6 +2528,15 @@ KONFIG_JS = r"""
     vehicle = null;
     if (vehicles.some(v => v.id === id)) vehicle = await loadVehicle(id);
     if (!vehicle) { history.replaceState({}, '', 'konfigurator.html'); return route(); }
+    // Interieur-, Sitz- und Verdeck-Optionen ohne Farbwert: Farbe aus dem Namen ableiten, damit sich das Bild sichtbar ändert
+    const NAME_COLORS = [[/cognac/i, '#8b4a26'], [/tobacco|tabak/i, '#6e4b2e'], [/burgund|bordeaux|weinrot/i, '#5c2230'], [/braun|brown|mokka/i, '#6a4429'],
+      [/beige|creme|cream|sand|natur/i, '#cdb894'], [/cork|kork/i, '#a8855a'], [/palomino/i, '#b07a45'], [/khaki/i, '#8a8458'], [/grau|grey|gray|anthrazit/i, '#5f5f5f'], [/blau|blue/i, '#2c3e5a'], [/gr(ü|ue)n|green/i, '#2f4a3a'],
+      [/rot\b|red/i, '#7e2a2a'], [/wei(ß|ss)|white/i, '#e6e2d9'], [/schwarz|black|geriffelt/i, '#1f1d1c']];
+    if (vehicle) vehicle = { ...vehicle, configurator_steps: (vehicle.configurator_steps || []).map(st => {
+      if (!/interieur|sitzbank|^sitz$|verdeck|innenausstattung/i.test(st.step_name || '') || st.options?.every(o => o.color_hex)) return st;
+      const opts = st.options.map(o => { if (o.color_hex) return o; const m = NAME_COLORS.find(([re]) => re.test(o.name || '')); return m ? { ...o, color_hex: m[1] } : o; });
+      return opts.every(o => o.color_hex) ? { ...st, options: opts } : st;
+    }) };
     // Zusätzlicher Schritt nur auf der Website: Unterboden (nicht bei Motorrad und Mofa/Roller)
     const ohneUnterboden = ['Motorrad', 'Mofa/Roller'];
     if (!ohneUnterboden.includes(vehicle.vehicle_type) && !(vehicle.configurator_steps || []).some(st => /unterboden/i.test(st.step_name || ''))) {
