@@ -2004,7 +2004,7 @@ def konfig_page():
     <div class="kc-left">
       <div class="kc-top"><a href="konfigurator.html" id="kc-back" class="kc-link">← Zurück</a><span class="kc-tools"><button type="button" id="kc-share" class="kc-link kc-light">↗ Teilen</button><button type="button" id="kc-reset" class="kc-link kc-light">↺ Reset</button></span></div>
       <div class="kc-stage"><div class="kc-side"><img class="kc-logo" src="images/Taeubert_Logo.png" alt="Täubert"><div class="kc-thumbs" id="kc-thumbs" role="group" aria-label="Ansichten"></div></div>
-        <div class="kc-view"><div class="kc-canvas"><canvas id="kc-canvas" role="img" aria-label=""></canvas><div class="kc-spin kc-spin-over" id="kc-imgload"><span></span></div></div></div></div>
+        <div class="kc-view"><div class="kc-canvas"><canvas id="kc-canvas" role="img" aria-label=""></canvas><div class="kc-spin kc-spin-over" id="kc-imgload"><span></span></div><figure class="kc-detail" id="kc-detail" hidden><div class="kc-detail-art" id="kc-detail-art"></div><figcaption><small id="kc-detail-step"></small><span id="kc-detail-name"></span></figcaption></figure></div></div></div>
       <div class="kc-info"><p class="kc-brand" id="kc-brand"></p><p class="kc-model" id="kc-model"></p><p class="kc-era" id="kc-era"></p><p class="kc-pricehint">Preis individuell – nach Ihrer Konfiguration</p></div>
     </div>
     <div class="kc-right">
@@ -2039,6 +2039,20 @@ def konfig_page():
 
 
 KONFIG_CSS = """
+  /* Detailansicht: gewählte Felge, Lenkrad, Sitz, Radio … als Zeichnung im Bild */
+  .kc-detail { position: absolute; right: 0; bottom: 0; z-index: 3; width: clamp(150px, 30%, 260px); margin: 0; background: rgba(255,255,255,.94); border: 1px solid #e2e2e0; box-shadow: 0 10px 30px rgba(0,0,0,.08); padding: 14px 14px 12px; }
+  .kc-detail[hidden] { display: none; }
+  .kc-detail-art svg { display: block; width: 100%; height: auto; max-height: 190px; }
+  .kc-detail figcaption { margin-top: 10px; border-top: 1px solid #ececec; padding-top: 8px; }
+  .kc-detail small { display: block; font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: #737373; }
+  .kc-detail span { display: block; font-size: 13px; color: #171717; line-height: 1.3; }
+  .kc-detail.swap .kc-detail-art { animation: kcDetailIn .28s cubic-bezier(.2,.7,.2,1); }
+  @keyframes kcDetailIn { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .kc-detail.swap .kc-detail-art { animation: none; } }
+  @media (max-width: 899px) { .kc-detail { width: 42%; max-width: 170px; padding: 8px 8px 6px; } .kc-detail-art svg { max-height: 78px; } .kc-detail figcaption { margin-top: 4px; padding-top: 4px; } .kc-detail small { font-size: 8px; } .kc-detail span { font-size: 11px; } }
+  .kc-row.has-art { display: flex; align-items: center; gap: 12px; }
+  .kc-row .kc-row-art { flex: 0 0 52px; width: 52px; height: 40px; display: flex; align-items: center; justify-content: center; }
+  .kc-row .kc-row-art svg { max-width: 100%; max-height: 100%; }
   .kc-head .kc-opt-note, .kc-opt-note { margin-top: 10px; font-size: 12px !important; line-height: 1.5; color: #737373; border-left: 2px solid #d4d4d4; padding-left: 10px; }
   .kc-opt-note[hidden] { display: none; }
 
@@ -2426,6 +2440,348 @@ KONFIG_JS = r"""
     history.pushState({}, '', '?modell=' + a.dataset.id); route();
   });
 
+  // ---- Detailansicht: zeigt Felgen, Lenkrad, Sitze, Radio, Lenker, Auspuff, Verdeck, Fahrwerk, Zubehör, Unterboden als Zeichnung ----
+  const KD = (() => {
+    let uidN = 0;
+    const hx = h => { h = String(h || '#777').replace('#', ''); if (h.length === 3) h = h.split('').map(c => c + c).join(''); return [0, 2, 4].map(i => parseInt(h.substr(i, 2), 16) || 0); };
+    const toHex = a => '#' + a.map(v => Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, '0')).join('');
+    const mix = (a, b, t) => { const A = hx(a), B = hx(b); return toHex(A.map((v, i) => v + (B[i] - v) * t)); };
+    const sh = (c, t) => t < 0 ? mix(c, '#000000', -t) : mix(c, '#ffffff', t);
+    const lum = c => { const [r, g, b] = hx(c); return (r * 299 + g * 587 + b * 114) / 1000; };
+    const f = n => (+n).toFixed(2);
+    const P = (r, a) => { const t = (a - 90) * Math.PI / 180; return f(r * Math.cos(t)) + ' ' + f(r * Math.sin(t)); };
+    const rot = (a, pts) => { const t = a * Math.PI / 180, c = Math.cos(t), s = Math.sin(t); return pts.map(([x, y]) => f(x * c - y * s) + ',' + f(x * s + y * c)).join(' '); };
+    const spoke = (a, r1, r2, w1, w2) => rot(a, [[-w1, -r1], [-w2, -r2], [w2, -r2], [w1, -r1]]);
+    const svg = (vb, body) => `<svg viewBox="${vb}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">${body}</svg>`;
+    const lg = (id, stops, x2 = 1, y2 = 1) => `<linearGradient id="${id}" x1="0" y1="0" x2="${x2}" y2="${y2}">${stops.map(([o, c]) => `<stop offset="${o}" stop-color="${c}"/>`).join('')}</linearGradient>`;
+    function base(u) {
+      return lg(u + 'ch', [[0, '#fdfdfd'], [.3, '#a3a8ad'], [.48, '#f1f3f4'], [.7, '#74797e'], [1, '#dfe2e4']]) +
+        lg(u + 'al', [[0, '#eceef0'], [.45, '#b4b9bd'], [.6, '#d6d9dc'], [1, '#8f949a']]) +
+        lg(u + 'bk', [[0, '#48484b'], [.35, '#151516'], [.7, '#0c0c0d'], [1, '#2c2c2e']]) +
+        lg(u + 'go', [[0, '#efe2b4'], [.4, '#b59c5c'], [.6, '#dcc78f'], [1, '#8a733d']]) +
+        lg(u + 'gl', [[0, '#dfe7ec'], [.5, '#9fb0bb'], [1, '#6f808c']], 0, 1) +
+        `<radialGradient id="${u}ty"><stop offset=".55" stop-color="#2f2f30"/><stop offset=".82" stop-color="#1b1b1c"/><stop offset="1" stop-color="#0a0a0a"/></radialGradient>` +
+        `<filter id="${u}sh" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="3" stdDeviation="3.5" flood-color="#000" flood-opacity=".28"/></filter>`;
+    }
+    const mat = (u, id, c, vertical = true) => lg(u + id, [[0, sh(c, .22)], [.45, c], [1, sh(c, -.42)]], vertical ? 0 : 1, 1);
+    const stitchCol = c => lum(c) > 120 ? sh(c, -.35) : sh(c, .45);
+
+    // ---------- Felgen und Räder ----------
+    function brake(u, R) {
+      return `<circle r="${f(R * .8)}" fill="url(#${u}disc)"/><circle r="${f(R * .8)}" fill="none" stroke="#4c4f53" stroke-width="1"/><circle r="${f(R * .36)}" fill="#2a2b2d"/>` +
+        `<path d="M${P(R * .84, 105)} A${f(R * .84)} ${f(R * .84)} 0 0 1 ${P(R * .84, 155)} L${P(R * .6, 152)} A${f(R * .6)} ${f(R * .6)} 0 0 0 ${P(R * .6, 108)} Z" fill="#303033"/>`;
+    }
+    function lugs(u, n, r, sz, off = 0) { let s = ''; for (let i = 0; i < n; i++) s += `<circle transform="translate(${P(r, i * 360 / n + off).replace(' ', ',')})" r="${sz}" fill="url(#${u}ch)" stroke="#555" stroke-width=".5"/>`; return s; }
+    function wheel(name, moto) {
+      const u = 'kd' + (++uidN), nm = name.toLowerCase();
+      const inch = +((nm.match(/(\d\d)"/) || [])[1] || 0);
+      const off = /beadlock|wolf/.test(nm);
+      let R = inch === 15 ? 55 : inch === 16 ? 61 : inch === 17 ? 67 : /sport schwarz/.test(nm) ? 67 : 59;
+      if (off) R = 54;
+      if (moto) R = /alu/.test(nm) ? 76 : 82;
+      let s = `<defs>${base(u)}${lg(u + 'disc', [[0, '#9da1a5'], [.5, '#6c7074'], [1, '#8b8f93']])}${lg(u + 'st', [[0, '#b9bec3'], [.5, '#868c92'], [1, '#a4a9ae']])}</defs><g filter="url(#${u}sh)">`;
+      s += `<circle r="97" fill="url(#${u}ty)"/>`;
+      if (off) for (let i = 0; i < 40; i++) s += `<rect x="-4.6" y="-101" width="9.2" height="8" rx="1.6" fill="#1c1c1d" transform="rotate(${i * 9})"/>`;
+      s += `<circle r="${f((97 + R) / 2)}" fill="none" stroke="#fff" stroke-opacity=".05" stroke-width="${f(97 - R - 8)}"/>`;
+      s += `<path d="M${P(90, 300)} A90 90 0 0 1 ${P(90, 345)}" fill="none" stroke="#fff" stroke-opacity=".14" stroke-width="3" stroke-linecap="round"/>`;
+      if (moto && !/alu/.test(nm)) {   // Speichenrad
+        const chrome = /chrom/.test(nm), sc = chrome ? '#e3e6e8' : '#8f9398';
+        s += `<circle r="${R}" fill="none" stroke="url(#${u}${chrome ? 'ch' : 'al'})" stroke-width="7"/><circle r="${R - 4}" fill="none" stroke="#3a3b3d" stroke-width="1"/>`;
+        for (let i = 0; i < 36; i++) { const a = i * 10, b = a + (i % 2 ? 32 : -32); s += `<line x1="${P(i % 4 < 2 ? 11 : 15, a).split(' ')[0]}" y1="${P(i % 4 < 2 ? 11 : 15, a).split(' ')[1]}" x2="${P(R - 4, b).split(' ')[0]}" y2="${P(R - 4, b).split(' ')[1]}" stroke="${sc}" stroke-width="1.05"/>`; }
+        s += `<circle r="17" fill="url(#${u}${chrome ? 'ch' : 'al'})"/><circle r="11" fill="none" stroke="#666" stroke-width="1"/><circle r="5" fill="#2a2a2c"/>`;
+        return svg('-106 -106 212 212', s + '</g>');
+      }
+      if (moto) {   // Alu-Guss
+        s += `<circle r="${R}" fill="#18181a"/>`;
+        s += `<circle r="${f(R * .74)}" fill="url(#${u}disc)"/>`;
+        for (let i = 0; i < 18; i++) s += `<circle transform="translate(${P(R * .62, i * 20).replace(' ', ',')})" r="2.2" fill="#2c2d2f"/>`;
+        s += `<circle r="${f(R * .4)}" fill="#2a2b2d"/>`;
+        for (let i = 0; i < 6; i++) s += `<polygon points="${spoke(i * 60 + 30, 14, R - 3, 6, 4)}" fill="url(#${u}al)" stroke="#7d8287" stroke-width=".6"/>`;
+        s += `<circle r="${R - 2}" fill="none" stroke="url(#${u}al)" stroke-width="6"/><circle r="17" fill="url(#${u}al)"/><circle r="7" fill="#2a2a2c"/>`;
+        return svg('-106 -106 212 212', s + '</g>');
+      }
+      s += `<circle r="${R}" fill="#141416"/>`;
+      if (/fuchs/.test(nm)) {
+        const black = /schwarz/.test(nm), pol = /poliert/.test(nm);
+        s += `<circle r="${R - 1}" fill="url(#${u}ch)"/><circle r="${R - 4}" fill="url(#${u}${black ? 'bk' : pol ? 'ch' : 'al'})"/>`;
+        for (let i = 0; i < 5; i++) {
+          const a = i * 72 + 36;
+          s += `<path d="M${P(R * .5, a)} Q${P(R * .7, a - 15)} ${P(R * .87, a - 17)} A${f(R * .87)} ${f(R * .87)} 0 0 1 ${P(R * .87, a + 17)} Q${P(R * .7, a + 15)} ${P(R * .5, a)} Z" fill="#2b2c2f" stroke="${black ? '#cfd3d6' : '#55585c'}" stroke-width="${black ? 1.3 : .8}" stroke-linejoin="round"/>`;
+          if (!black && !pol) { const b = i * 72; s += `<path d="M${P(R * .36, b - 17)} L${P(R * .78, b - 12)} Q${P(R * .87, b)} ${P(R * .78, b + 12)} L${P(R * .36, b + 17)} Q${P(R * .3, b)} ${P(R * .36, b - 17)} Z" fill="#19191b"/>`; }
+        }
+        s += `<circle r="${f(R * .3)}" fill="url(#${u}${black ? 'bk' : pol ? 'ch' : 'al'})" stroke="${black ? '#bfc3c6' : '#8a8f94'}" stroke-width=".8"/>` + lugs(u, 5, R * .2, 3, 36) + `<circle r="${f(R * .11)}" fill="url(#${u}ch)"/>`;
+      } else if (/bbs/.test(nm)) {
+        s += `<circle r="${R - 1}" fill="url(#${u}ch)"/><circle r="${R - 10}" fill="#18181a"/>` + brake(u, R - 10);
+        for (let i = 0; i < 40; i++) s += `<circle transform="translate(${P(R - 5.5, i * 9).replace(' ', ',')})" r="1.1" fill="#7c8186"/>`;
+        let dk = '', lt = '';
+        for (let i = 0; i < 15; i++) for (const d of [-1, 1]) {
+          const a = i * 24, p1 = P(R * .34, a - 13 * d).split(' '), p2 = P(R - 10, a + 13 * d).split(' ');
+          dk += `<line x1="${p1[0]}" y1="${p1[1]}" x2="${p2[0]}" y2="${p2[1]}" stroke="#6b5a2e" stroke-width="5.4" stroke-linecap="round"/>`;
+          lt += `<line x1="${p1[0]}" y1="${p1[1]}" x2="${p2[0]}" y2="${p2[1]}" stroke="${d > 0 ? '#e2cf93' : '#c8b170'}" stroke-width="3.4" stroke-linecap="round"/>`;
+        }
+        s += dk + lt + `<circle r="${f(R * .35)}" fill="url(#${u}go)" stroke="#6b5a2e" stroke-width="1"/><circle r="${f(R * .2)}" fill="url(#${u}ch)"/><polygon points="${rot(0, Array.from({ length: 6 }, (_, k) => [Math.cos(k * Math.PI / 3) * R * .1, Math.sin(k * Math.PI / 3) * R * .1]))}" fill="url(#${u}al)" stroke="#666" stroke-width=".6"/>`;
+      } else if (/sport schwarz/.test(nm)) {
+        s += brake(u, R - 5);
+        for (let i = 0; i < 5; i++) for (const d of [-8, 8]) s += `<polygon points="${spoke(i * 72 + d, R * .28, R - 6, 4.6, 3.4)}" fill="url(#${u}bk)" stroke="#4a4a4d" stroke-width=".7"/>`;
+        s += `<circle r="${R - 5}" fill="none" stroke="#121213" stroke-width="5"/><circle r="${R - 1.5}" fill="none" stroke="url(#${u}ch)" stroke-width="3"/>`;
+        s += `<circle r="${f(R * .32)}" fill="url(#${u}bk)" stroke="#444" stroke-width=".8"/>` + lugs(u, 5, R * .19, 2.6, 36) + `<circle r="${f(R * .09)}" fill="#202022" stroke="#555" stroke-width=".6"/>`;
+      } else if (/minilite/.test(nm)) {
+        s += `<circle r="${R - 1}" fill="url(#${u}al)"/><circle r="${R - 5}" fill="url(#${u}st)"/>`;
+        for (let i = 0; i < 8; i++) { const a = i * 45 + 22.5; s += `<path d="M${P(R * .44, a - 10)} L${P(R * .83, a - 15)} A${f(R * .83)} ${f(R * .83)} 0 0 1 ${P(R * .83, a + 15)} L${P(R * .44, a + 10)} A${f(R * .44)} ${f(R * .44)} 0 0 0 ${P(R * .44, a - 10)} Z" fill="#242527" stroke="#242527" stroke-width="5" stroke-linejoin="round"/>`; }
+        s += `<circle r="${f(R * .33)}" fill="url(#${u}al)" stroke="#7d8287" stroke-width=".8"/>` + lugs(u, 4, R * .2, 2.8, 45) + `<circle r="${f(R * .1)}" fill="url(#${u}ch)"/>`;
+      } else if (/wolf/.test(nm)) {
+        const black = /schwarz/.test(nm);
+        s += `<circle r="${R - 1}" fill="${black ? 'url(#' + u + 'bk)' : 'url(#' + u + 'st)'}"/><circle r="${R - 6}" fill="none" stroke="${black ? '#2e2e30' : '#7a8086'}" stroke-width="2"/>`;
+        for (let i = 0; i < 6; i++) s += `<circle transform="translate(${P(R * .66, i * 60 + 30).replace(' ', ',')})" r="${f(R * .1)}" fill="#141416"/>`;
+        s += `<circle r="${f(R * .44)}" fill="${black ? '#232325' : '#9aa0a6'}" stroke="${black ? '#3a3a3c' : '#6e747a'}" stroke-width="1.4"/>` + lugs(u, 5, R * .28, 3.2) + `<circle r="${f(R * .14)}" fill="${black ? '#151516' : '#5d6268'}"/>`;
+      } else if (/beadlock/.test(nm)) {
+        s += brake(u, R - 8);
+        for (let i = 0; i < 6; i++) s += `<polygon points="${spoke(i * 60, R * .3, R - 8, 8, 6.5)}" fill="url(#${u}bk)" stroke="#3c3c3f" stroke-width=".8"/>`;
+        s += `<circle r="${R - 4.5}" fill="none" stroke="#262628" stroke-width="9"/>` + lugs(u, 24, R - 4.5, 1.8) + `<circle r="${R}" fill="none" stroke="#3a3a3c" stroke-width="1"/>`;
+        s += `<circle r="${f(R * .34)}" fill="url(#${u}bk)" stroke="#444" stroke-width="1"/>` + lugs(u, 6, R * .22, 2.6, 30) + `<circle r="${f(R * .1)}" fill="#2a2a2c"/>`;
+      } else {   // Serienfelge: Stahlfelge mit Radkappe
+        s += `<circle r="${R - 1}" fill="url(#${u}al)"/><circle r="${R - 5}" fill="#bfc3c7"/>`;
+        for (let i = 0; i < 8; i++) s += `<rect x="-3.4" y="${f(-R * .8)}" width="6.8" height="${f(R * .17)}" rx="3.4" fill="#262729" transform="rotate(${i * 45 + 22.5})"/>`;
+        s += `<circle r="${f(R * .6)}" fill="none" stroke="#9ca1a6" stroke-width="1.6"/><circle r="${f(R * .52)}" fill="url(#${u}ch)" stroke="#8a8f94" stroke-width=".8"/>`;
+        s += `<circle r="${f(R * .42)}" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="1"/><circle r="${f(R * .2)}" fill="url(#${u}al)"/>`;
+      }
+      return svg('-106 -106 212 212', s + '</g>');
+    }
+
+    // ---------- Lenkrad ----------
+    function steering(name) {
+      const u = 'kd' + (++uidN), nm = name.toLowerCase();
+      const type = /holz\s*&\s*leder/.test(nm) ? 'mix' : /nardi|holz/.test(nm) ? 'wood' : /momo/.test(nm) ? 'momo' : /leder/.test(nm) ? 'leder' : 'orig';
+      let s = `<defs>${base(u)}${lg(u + 'wd', [[0, '#b06c37'], [.35, '#7c4220'], [.6, '#a0602f'], [1, '#5e3017']])}</defs><g filter="url(#${u}sh)">`;
+      const wood = (r, w) => { let g = `<circle r="${r}" fill="none" stroke="url(#${u}wd)" stroke-width="${w}"/>`; const tones = ['#9a5a2c', '#6b3a1b', '#b37440', '#5a2e15', '#8d4f25'];
+        for (let k = 0; k < 5; k++) g += `<circle r="${f(r - w / 2 + 1.5 + k * (w - 3) / 4)}" fill="none" stroke="${tones[k]}" stroke-opacity=".55" stroke-width=".9" stroke-dasharray="${38 + k * 7} ${5 + k * 2} ${17 + k * 3} ${9 - k}" transform="rotate(${k * 37})"/>`;
+        return g + `<circle r="${f(r + w / 2)}" fill="none" stroke="#3a1d0c" stroke-width=".8"/><circle r="${f(r - w / 2)}" fill="none" stroke="#3a1d0c" stroke-width=".8"/>`; };
+      const leather = (r, w, a1 = 0, a2 = 360) => { const full = a2 - a1 >= 360;
+        const arc = full ? `<circle r="${r}" fill="none" stroke="#1c1c1d" stroke-width="${w}"/>` : `<path d="M${P(r, a1)} A${r} ${r} 0 0 1 ${P(r, a2)}" fill="none" stroke="#1c1c1d" stroke-width="${w}" stroke-linecap="butt"/>`;
+        const st = full ? `<circle r="${f(r - w / 2 + 2.2)}" fill="none" stroke="#8a8a8a" stroke-width=".8" stroke-dasharray="2 2.2"/>` : `<path d="M${P(r - w / 2 + 2.2, a1 + 1)} A${r} ${r} 0 0 1 ${P(r - w / 2 + 2.2, a2 - 1)}" fill="none" stroke="#8a8a8a" stroke-width=".8" stroke-dasharray="2 2.2"/>`;
+        return arc + st; };
+      const gloss = r => `<path d="M${P(r, 215)} A${r} ${r} 0 0 1 ${P(r, 300)}" fill="none" stroke="#fff" stroke-opacity=".32" stroke-width="2.4" stroke-linecap="round"/>`;
+      if (type === 'orig') {
+        s += `<circle r="84" fill="none" stroke="#141415" stroke-width="7.5"/><circle r="85.8" fill="none" stroke="#fff" stroke-opacity=".12" stroke-width="1"/>`;
+        for (const a of [118, 242]) s += `<polygon points="${spoke(a, 18, 82, 3.4, 2.4)}" fill="url(#${u}ch)" stroke="#777" stroke-width=".5"/>`;
+        s += `<circle r="52" fill="none" stroke="url(#${u}ch)" stroke-width="2.6"/><circle r="24" fill="#161617"/><circle r="24" fill="none" stroke="url(#${u}ch)" stroke-width="2"/><circle r="13" fill="url(#${u}bk)"/>` + gloss(84);
+      } else {
+        const sp = type === 'momo' || type === 'leder' ? 'bk' : 'al';
+        for (const a of [90, 180, 270]) {
+          s += `<polygon points="${spoke(a, 20, 76, type === 'leder' ? 14 : 9.5, type === 'leder' ? 10 : 6.2)}" fill="url(#${u}${sp})" stroke="${sp === 'al' ? '#80858a' : '#333'}" stroke-width=".7" stroke-linejoin="round"/>`;
+          if (type === 'wood' || type === 'mix') for (const [r1, h] of [[30, 16], [52, 14]]) s += `<rect x="-2.6" y="${-r1 - h}" width="5.2" height="${h}" rx="2.6" fill="#1b1b1c" transform="rotate(${a})"/>`;
+          if (type === 'momo') for (const r1 of [36, 54]) s += `<circle transform="rotate(${a}) translate(0,${-r1})" r="4" fill="#0b0b0c" stroke="#3a3a3c" stroke-width=".6"/>`;
+          if (type === 'leder') s += `<polyline points="${rot(a, [[-10, -24], [-7, -72]])}" fill="none" stroke="#7a7a7a" stroke-width=".7" stroke-dasharray="2 2"/><polyline points="${rot(a, [[10, -24], [7, -72]])}" fill="none" stroke="#7a7a7a" stroke-width=".7" stroke-dasharray="2 2"/>`;
+        }
+        if (type === 'wood') s += wood(80, 13) + gloss(81);
+        if (type === 'momo') s += leather(80, 15) + gloss(83);
+        if (type === 'leder') s += leather(80, 16) + gloss(84);
+        if (type === 'mix') s += wood(80, 14) + leather(80, 16, 235, 305) + leather(80, 16, 55, 125) + gloss(81);
+        for (const a of [90, 180, 270]) for (const d of [-4, 4]) s += `<circle transform="translate(${P(80, a + d).replace(' ', ',')})" r="1.3" fill="url(#${u}ch)"/>`;
+        s += `<circle r="25" fill="#171718"/><circle r="25" fill="none" stroke="url(#${u}${sp === 'al' ? 'al' : 'ch'})" stroke-width="1.6"/><circle r="18" fill="url(#${u}bk)"/>`;
+      }
+      return svg('-104 -104 208 208', s + '</g>');
+    }
+
+    // ---------- Sitze (Frontansicht), Farbe aus Interieur ----------
+    function seat(style, color) {
+      const u = 'kd' + (++uidN), c = color || '#2a2a2a', st = stitchCol(c), nm = (style || '').toLowerCase();
+      const type = /recaro|schale/.test(nm) && !/leicht/.test(nm) ? 'recaro' : /leicht|gfk/.test(nm) ? 'shell' : /komfort/.test(nm) ? 'comfort' : 'sport';
+      let s = `<defs>${base(u)}${mat(u, 'm', c)}${mat(u, 'b', sh(c, -.18))}${mat(u, 'p', sh(c, .06), false)}` +
+        `<pattern id="${u}cf" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#2b2c2e"/><rect width="3" height="6" fill="#323336"/></pattern></defs><g filter="url(#${u}sh)">`;
+      const pleatsH = (x, y, w, h, n) => { let g = ''; for (let i = 1; i < n; i++) g += `<line x1="${x + 3}" x2="${x + w - 3}" y1="${f(y + i * h / n)}" y2="${f(y + i * h / n)}" stroke="${sh(c, -.45)}" stroke-opacity=".55" stroke-width="1.4"/>`; return g; };
+      const pleatsV = (x, y, w, h, n) => { let g = ''; for (let i = 1; i < n; i++) g += `<line y1="${y + 3}" y2="${y + h - 3}" x1="${f(x + i * w / n)}" x2="${f(x + i * w / n)}" stroke="${sh(c, -.45)}" stroke-opacity=".55" stroke-width="1.4"/>`; return g; };
+      const stitch = d => `<path d="${d}" fill="none" stroke="${st}" stroke-width=".9" stroke-dasharray="2.4 2" stroke-opacity=".9"/>`;
+      if (type === 'sport') {
+        s += `<rect x="88" y="42" width="4" height="14" fill="url(#${u}ch)"/><rect x="108" y="42" width="4" height="14" fill="url(#${u}ch)"/>`;
+        s += `<rect x="70" y="10" width="60" height="36" rx="15" fill="url(#${u}m)"/>` + stitch('M76,16 Q100,12 124,16');
+        s += `<path d="M58,54 Q58,50 64,50 L136,50 Q142,50 142,54 L150,150 Q151,162 140,162 L60,162 Q49,162 50,150 Z" fill="url(#${u}b)"/>`;
+        s += `<rect x="72" y="56" width="56" height="100" rx="9" fill="url(#${u}m)"/>` + pleatsH(72, 56, 56, 100, 8) + stitch('M75,60 L75,152 M125,60 L125,152');
+        s += `<path d="M40,166 L160,166 Q170,167 167,178 L160,208 Q158,216 148,216 L52,216 Q42,216 40,208 L33,178 Q30,167 40,166 Z" fill="url(#${u}b)"/>`;
+        s += `<path d="M66,170 L134,170 L138,210 L62,210 Z" fill="url(#${u}m)"/>` + pleatsV(64, 170, 72, 40, 6);
+      } else if (type === 'recaro') {
+        s += `<path d="M66,22 Q66,6 100,6 Q134,6 134,22 L136,46 Q150,48 156,60 L162,150 Q163,164 150,164 L50,164 Q37,164 38,150 L44,60 Q50,48 64,46 Z" fill="url(#${u}b)"/>`;
+        s += `<path d="M80,18 Q80,12 100,12 Q120,12 120,18 L121,40 L79,40 Z" fill="url(#${u}m)"/>`;
+        s += `<path d="M74,58 L126,58 L130,156 L70,156 Z" fill="url(#${u}m)"/>` + pleatsH(72, 70, 56, 86, 7);
+        s += `<rect x="78" y="46" width="11" height="5" rx="2.5" fill="#0d0d0e"/><rect x="111" y="46" width="11" height="5" rx="2.5" fill="#0d0d0e"/>`;
+        s += `<path d="M44,62 Q56,66 66,100 L68,150 L52,156 Q42,150 42,138 Z" fill="${sh(c, -.08)}" opacity=".9"/><path d="M156,62 Q144,66 134,100 L132,150 L148,156 Q158,150 158,138 Z" fill="${sh(c, -.08)}" opacity=".9"/>`;
+        s += stitch('M72,60 L68,154 M128,60 L132,154');
+        s += `<path d="M34,168 L166,168 Q174,170 171,182 L162,210 Q159,218 149,218 L51,218 Q41,218 38,210 L29,182 Q26,170 34,168 Z" fill="url(#${u}b)"/>`;
+        s += `<path d="M70,172 L130,172 L134,212 L66,212 Z" fill="url(#${u}m)"/><rect x="94" y="196" width="12" height="5" rx="2.5" fill="#0d0d0e"/>`;
+      } else if (type === 'comfort') {
+        s += `<rect x="86" y="44" width="5" height="14" fill="url(#${u}ch)"/><rect x="109" y="44" width="5" height="14" fill="url(#${u}ch)"/>`;
+        s += `<rect x="62" y="8" width="76" height="40" rx="18" fill="url(#${u}m)"/>`;
+        s += `<path d="M48,58 Q48,50 58,50 L142,50 Q152,50 152,58 L156,154 Q156,164 146,164 L54,164 Q44,164 44,154 Z" fill="url(#${u}m)"/>`;
+        for (let i = 0; i < 5; i++) s += `<rect x="${64 + i * 15}" y="58" width="13" height="98" rx="6.5" fill="url(#${u}p)" stroke="${sh(c, -.4)}" stroke-opacity=".5" stroke-width="1"/>`;
+        s += stitch('M54,56 L50,158 M146,56 L150,158');
+        s += `<path d="M36,166 L164,166 Q176,168 172,182 L164,212 Q162,220 150,220 L50,220 Q38,220 36,212 L28,182 Q24,168 36,166 Z" fill="url(#${u}m)"/>`;
+        for (let i = 0; i < 5; i++) s += `<rect x="${60 + i * 16.5}" y="172" width="14" height="42" rx="7" fill="url(#${u}p)" stroke="${sh(c, -.4)}" stroke-opacity=".5" stroke-width="1"/>`;
+      } else {   // Leichtbau-Schale (GFK)
+        s += `<path d="M66,22 Q66,4 100,4 Q134,4 134,22 L136,44 Q150,46 156,58 L162,152 Q163,166 150,166 L50,166 Q37,166 38,152 L44,58 Q50,46 64,44 Z" fill="url(#${u}cf)" stroke="#1a1a1b" stroke-width="1.2"/>`;
+        s += `<path d="M34,168 L166,168 Q174,170 171,182 L162,210 Q159,220 149,220 L51,220 Q41,220 38,210 L29,182 Q26,170 34,168 Z" fill="url(#${u}cf)" stroke="#1a1a1b" stroke-width="1.2"/>`;
+        s += `<rect x="78" y="46" width="12" height="6" rx="3" fill="#0b0b0c"/><rect x="110" y="46" width="12" height="6" rx="3" fill="#0b0b0c"/><rect x="93" y="200" width="14" height="6" rx="3" fill="#0b0b0c"/>`;
+        s += `<path d="M80,14 Q80,10 100,10 Q120,10 120,14 L120,36 L80,36 Z" fill="url(#${u}m)"/>`;
+        s += `<path d="M72,58 L128,58 L131,154 L69,154 Z" fill="url(#${u}m)"/>` + stitch('M75,61 L72,151 M125,61 L128,151');
+        s += `<path d="M64,174 L136,174 L139,196 L61,196 Z" fill="url(#${u}m)"/>`;
+        s += `<path d="M50,60 L46,150" stroke="#fff" stroke-opacity=".12" stroke-width="2"/>`;
+      }
+      return svg('0 0 200 226', s + '</g>');
+    }
+
+    // ---------- Sitzkonfiguration (Bus, Draufsicht) ----------
+    function seating(name, color) {
+      const u = 'kd' + (++uidN), c = color || '#3a3a3a';
+      let s = `<defs>${base(u)}${mat(u, 'm', c)}</defs><g filter="url(#${u}sh)"><rect x="14" y="16" width="252" height="108" rx="26" fill="#ecebe8" stroke="#bdbbb6" stroke-width="2"/>`;
+      s += `<rect x="18" y="22" width="36" height="96" rx="18" fill="#d9d7d2"/>`;
+      const seatT = (x, y, w, h) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="6" fill="url(#${u}m)"/><rect x="${x + (w > h ? 0 : w - 7)}" y="${y + (w > h ? h - 7 : 0)}" width="${w > h ? w : 7}" height="${w > h ? 7 : h}" rx="3.5" fill="${sh(c, -.3)}"/>`;
+      s += seatT(64, 28, 30, 34) + seatT(64, 78, 30, 34);
+      if (/bank/i.test(name)) { s += `<rect x="118" y="26" width="24" height="88" rx="6" fill="url(#${u}m)"/><rect x="118" y="26" width="7" height="88" rx="3.5" fill="${sh(c, -.3)}"/>`; s += `<rect x="208" y="26" width="24" height="88" rx="6" fill="url(#${u}m)"/><rect x="225" y="26" width="7" height="88" rx="3.5" fill="${sh(c, -.3)}"/><rect x="156" y="52" width="38" height="36" rx="4" fill="#cfcdc8"/>`; }
+      else s += seatT(130, 28, 30, 34) + seatT(130, 78, 30, 34) + seatT(196, 28, 30, 34) + seatT(196, 78, 30, 34);
+      return svg('0 0 280 140', s + '</g>');
+    }
+
+    // ---------- Radio ----------
+    function radio(name, dash) {
+      const u = 'kd' + (++uidN), nm = name.toLowerCase(), d = dash || '#3a3a3a';
+      let s = `<defs>${base(u)}${mat(u, 'd', d)}${lg(u + 'gw', [[0, '#211d16'], [1, '#0f0d0a']], 0, 1)}</defs><g filter="url(#${u}sh)"><rect x="6" y="10" width="268" height="116" rx="14" fill="url(#${u}d)"/>`;
+      if (/ohne/.test(nm)) {
+        s += `<rect x="54" y="40" width="172" height="54" rx="5" fill="${sh(d, -.12)}" stroke="url(#${u}ch)" stroke-width="2.5"/>` + `<circle cx="66" cy="67" r="3" fill="url(#${u}ch)"/><circle cx="214" cy="67" r="3" fill="url(#${u}ch)"/>`;
+        for (let i = 0; i < 9; i++) s += `<rect x="${92 + i * 11}" y="56" width="4" height="22" rx="2" fill="${sh(d, -.4)}"/>`;
+        return svg('0 0 280 136', s + '</g>');
+      }
+      const dark = /europa/.test(nm);
+      s += `<rect x="30" y="30" width="220" height="76" rx="7" fill="${dark ? '#19191b' : 'url(#' + u + 'ch)'}" stroke="${dark ? 'url(#' + u + 'ch)' : '#8a8f94'}" stroke-width="${dark ? 2.5 : 1}"/>`;
+      s += `<rect x="76" y="38" width="128" height="28" rx="3" fill="url(#${u}gw)" stroke="#555" stroke-width=".8"/>`;
+      for (let i = 0; i <= 20; i++) s += `<line x1="${82 + i * 5.8}" x2="${82 + i * 5.8}" y1="${i % 5 ? 56 : 52}" y2="60" stroke="#e8dcbf" stroke-width=".7"/>`;
+      [88, 92, 96, 100, 104, 108].forEach((t, i) => { s += `<text x="${82 + i * 23.2}" y="48.5" font-size="6.2" font-family="Helvetica,Arial,sans-serif" fill="#e8dcbf" text-anchor="middle">${t}</text>`; });
+      s += `<line x1="141" x2="141" y1="40" y2="64" stroke="#e7a548" stroke-width="1.4"/>`;
+      for (const x of [52, 228]) s += `<circle cx="${x}" cy="62" r="14" fill="${dark ? '#202022' : 'url(#' + u + 'al)'}" stroke="#555" stroke-width=".8"/><circle cx="${x}" cy="62" r="11" fill="none" stroke="${dark ? '#8a8f94' : '#777'}" stroke-width="1.6" stroke-dasharray="1 1.4"/><circle cx="${x}" cy="62" r="5" fill="url(#${u}ch)"/>`;
+      for (let i = 0; i < 5; i++) s += `<rect x="${82 + i * 24}" y="74" width="20" height="22" rx="2.5" fill="${dark ? '#262628' : '#efe8d6'}" stroke="${dark ? '#555' : '#a79f8b'}" stroke-width=".8"/><rect x="${82 + i * 24}" y="74" width="20" height="5" rx="2" fill="${dark ? 'url(#' + u + 'ch)' : '#fffaf0'}"/>`;
+      if (dark) s += `<circle cx="214" cy="40" r="2" fill="#5fa3d6"/>`;
+      return svg('0 0 280 136', s + '</g>');
+    }
+
+    // ---------- Motorrad: Lenker, Auspuff, Sitzbank ----------
+    function bars(name) {
+      const u = 'kd' + (++uidN), nm = name.toLowerCase();
+      const path = /superbike/.test(nm) ? 'M28,84 Q60,80 100,76 L180,76 Q220,80 252,84' : /cruiser/.test(nm) ? 'M120,74 L114,40 Q110,22 84,22 Q50,24 30,42 M160,74 L166,40 Q170,22 196,22 Q230,24 250,42' : /ace/.test(nm) ? 'M30,104 Q70,100 104,80 L120,72 L160,72 L176,80 Q210,100 250,104' : 'M30,62 Q66,52 104,64 L120,70 L160,70 L176,64 Q214,52 250,62';
+      const ends = /superbike/.test(nm) ? [[28, 84], [252, 84]] : /cruiser/.test(nm) ? [[30, 42], [250, 42]] : /ace/.test(nm) ? [[30, 104], [250, 104]] : [[30, 62], [250, 62]];
+      let s = `<defs>${base(u)}</defs><g filter="url(#${u}sh)">`;
+      s += `<rect x="112" y="70" width="56" height="12" rx="4" fill="url(#${u}al)"/><rect x="116" y="82" width="10" height="30" fill="url(#${u}ch)"/><rect x="154" y="82" width="10" height="30" fill="url(#${u}ch)"/>`;
+      s += `<circle cx="140" cy="118" r="20" fill="url(#${u}ch)"/><circle cx="140" cy="118" r="14" fill="#e9eef0" stroke="#999" stroke-width="1"/>`;
+      s += `<path d="${path}" fill="none" stroke="#5b6066" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/><path d="${path}" fill="none" stroke="url(#${u}ch)" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>`;
+      if (/cruiser/.test(nm)) s += `<rect x="112" y="66" width="56" height="12" rx="4" fill="url(#${u}al)"/>`;
+      for (const [x, y] of ends) { const dx = x < 140 ? -1 : 1; s += `<rect x="${x - (dx < 0 ? 4 : 18)}" y="${y - 6}" width="22" height="12" rx="6" fill="#161617" transform="rotate(${dx * 4} ${x} ${y})"/>`; s += `<path d="M${x - dx * 22},${y + 4} q${dx * 14},10 ${dx * 30},6" fill="none" stroke="url(#${u}al)" stroke-width="3" stroke-linecap="round"/>`; }
+      return svg('0 0 280 144', s + '</g>');
+    }
+    function exhaust(name) {
+      const u = 'kd' + (++uidN), nm = name.toLowerCase(), chrome = !/serie/.test(nm);
+      const m = chrome ? 'ch' : 'sat';
+      let s = `<defs>${base(u)}${lg(u + 'sat', [[0, '#c9ccd0'], [.45, '#8c9196'], [.6, '#aeb2b6'], [1, '#6b7075']], 0, 1)}${lg(u + 'v', [[0, '#fdfdfd'], [.3, '#a3a8ad'], [.5, '#f1f3f4'], [.75, '#74797e'], [1, '#c8ccd0']], 0, 1)}</defs><g filter="url(#${u}sh)">`;
+      s += `<rect x="14" y="20" width="64" height="58" rx="8" fill="#4a4c50"/>`;
+      for (let i = 0; i < 6; i++) s += `<rect x="18" y="${24 + i * 9}" width="56" height="5" rx="2" fill="#6a6d72"/>`;
+      const g = chrome ? 'v' : 'sat';
+      if (/megaphon/.test(nm)) {
+        s += `<path d="M60,72 Q66,96 96,96 L120,96" fill="none" stroke="url(#${u}${g})" stroke-width="11" stroke-linecap="round"/>`;
+        s += `<path d="M118,90 L260,76 L260,116 L118,102 Z" fill="url(#${u}v)" stroke="#777" stroke-width=".8"/><ellipse cx="260" cy="96" rx="6" ry="20" fill="#1a1a1b" stroke="url(#${u}ch)" stroke-width="2"/>`;
+      } else if (/sport/.test(nm)) {
+        s += `<path d="M60,72 Q66,98 100,96 L140,90" fill="none" stroke="url(#${u}v)" stroke-width="11" stroke-linecap="round"/>`;
+        s += `<g transform="rotate(-8 190 84)"><rect x="132" y="70" width="112" height="28" rx="14" fill="url(#${u}v)" stroke="#777" stroke-width=".8"/><ellipse cx="244" cy="84" rx="5" ry="10" fill="#222"/><rect x="146" y="70" width="3" height="28" fill="#fff" opacity=".5"/></g>`;
+      } else {
+        s += `<path d="M60,72 Q66,100 100,100 L130,100" fill="none" stroke="url(#${u}sat)" stroke-width="11" stroke-linecap="round"/>`;
+        s += `<path d="M124,90 L140,86 L236,86 Q250,86 254,100 Q250,114 236,114 L140,114 L124,110 Z" fill="url(#${u}sat)" stroke="#666" stroke-width=".8"/><rect x="252" y="96" width="14" height="8" rx="2" fill="url(#${u}sat)"/>`;
+      }
+      s += `<line x1="150" y1="60" x2="160" y2="${/sport/.test(nm) ? 76 : 86}" stroke="#333" stroke-width="3"/>`;
+      return svg('0 0 280 136', s + '</g>');
+    }
+    function saddle(name, color, small) {
+      const u = 'kd' + (++uidN), c = color || '#222', nm = name.toLowerCase();
+      let s = `<defs>${base(u)}${mat(u, 'm', c)}<clipPath id="${u}c"><path id="${u}p" d="M22,74 Q30,50 72,46 L150,40 Q176,38 192,30 Q216,20 238,32 Q246,42 234,54 L202,64 Q140,74 42,82 Q20,84 22,74 Z"/></clipPath></defs><g filter="url(#${u}sh)" ${small ? 'transform="translate(40 10) scale(.75)"' : ''}>`;
+      s += `<path d="M30,84 L230,58" stroke="#3a3b3d" stroke-width="7" stroke-linecap="round"/><path d="M40,84 L44,100 M208,62 L214,84" stroke="url(#${u}al)" stroke-width="5"/>`;
+      s += `<path d="M22,74 Q30,50 72,46 L150,40 Q176,38 192,30 Q216,20 238,32 Q246,42 234,54 L202,64 Q140,74 42,82 Q20,84 22,74 Z" fill="url(#${u}m)"/>`;
+      if (/geriffelt/.test(nm)) { s += `<g clip-path="url(#${u}c)">`; for (let x = 40; x < 240; x += 8) s += `<line x1="${x}" y1="20" x2="${x + 4}" y2="90" stroke="${sh(c, .22)}" stroke-width="2.2"/><line x1="${x + 3}" y1="20" x2="${x + 7}" y2="90" stroke="${sh(c, -.5)}" stroke-width="1"/>`; s += '</g>'; }
+      if (/braun|stepp/.test(nm) || /braun/.test(nm)) s += `<path d="M34,70 Q42,56 74,53 L150,47 Q176,45 194,37 Q214,29 230,37" fill="none" stroke="${stitchCol(c)}" stroke-width="1" stroke-dasharray="2.6 2.2"/>`;
+      s += `<path d="M40,60 Q60,52 100,50" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="3" stroke-linecap="round"/>`;
+      return svg('0 0 260 112', s + '</g>');
+    }
+
+    // ---------- Fahrzeug-Silhouetten: Verdeck, Fahrwerk, Zubehör ----------
+    function wheelSide(u, cx, cy, r) { return `<circle cx="${cx}" cy="${cy}" r="${r}" fill="#1b1b1c"/><circle cx="${cx}" cy="${cy}" r="${f(r * .55)}" fill="url(#${u}al)"/><circle cx="${cx}" cy="${cy}" r="${f(r * .2)}" fill="#555"/>`; }
+    function softtop(name, topColor, paint) {
+      const u = 'kd' + (++uidN), p = paint || '#8a8f94', t = topColor || '#1f1d1c';
+      let s = `<defs>${base(u)}${mat(u, 'p', p)}${mat(u, 't', t)}</defs><g filter="url(#${u}sh)">`;
+      s += `<path d="M140,38 Q146,30 162,30 L206,30 Q226,32 240,54 L250,70 L136,66 Z" fill="url(#${u}t)"/>`;
+      s += `<path d="M150,62 L153,40 Q156,36 164,36 L196,36 L200,62 Z" fill="url(#${u}gl)" opacity=".85"/><line x1="216" y1="34" x2="230" y2="66" stroke="${sh(t, -.35)}" stroke-width="1.2"/><line x1="204" y1="31" x2="214" y2="66" stroke="${sh(t, -.35)}" stroke-width="1"/>`;
+      s += `<line x1="122" y1="66" x2="142" y2="36" stroke="url(#${u}ch)" stroke-width="3" stroke-linecap="round"/>`;
+      s += `<path d="M16,98 L16,86 Q18,76 34,74 L96,68 Q110,66 122,66 L200,66 Q220,66 238,70 L272,78 Q286,82 286,94 L286,98 Q286,102 282,102 L252,102 A24,24 0 0 0 204,102 L98,102 A24,24 0 0 0 50,102 L20,102 Q16,102 16,98 Z" fill="url(#${u}p)"/>`;
+      s += `<path d="M24,84 L276,86" stroke="#fff" stroke-opacity=".25" stroke-width="1.5"/><line x1="130" y1="70" x2="128" y2="100" stroke="${sh(p, -.4)}" stroke-width="1"/><circle cx="26" cy="82" r="6" fill="url(#${u}ch)"/><rect x="12" y="94" width="20" height="5" rx="2.5" fill="url(#${u}ch)"/><rect x="270" y="94" width="20" height="5" rx="2.5" fill="url(#${u}ch)"/>`;
+      s += wheelSide(u, 74, 104, 21) + wheelSide(u, 228, 104, 21);
+      return svg('0 0 300 132', s + '</g>');
+    }
+    function offroad(fahrwerk, zubehoer, paint, top) {
+      const u = 'kd' + (++uidN), p = paint || '#5d6448', fw = (fahrwerk || '').toLowerCase(), z = (zubehoer || '').toLowerCase();
+      const L = /4"/.test(fw) ? 16 : /2"/.test(fw) ? 8 : 0, r = 22 + L / 4, cy = 154 - r;
+      let s = `<defs>${base(u)}${mat(u, 'p', p)}</defs><g filter="url(#${u}sh)"><line x1="10" y1="154" x2="290" y2="154" stroke="#cfcdc8" stroke-width="2"/>`;
+      for (const x of [78, 226]) s += `<rect x="${x - 4}" y="${cy - 36 - L}" width="8" height="${36 + L}" fill="#4a4c50"/><rect x="${x - 2}" y="${cy - 34 - L}" width="4" height="${30 + L}" fill="url(#${u}ch)"/>`;
+      s += `<g transform="translate(0 ${-L})">`;
+      if (/expedition/.test(z)) {
+        s += `<rect x="94" y="28" width="156" height="5" rx="2" fill="#2a2a2c"/>`; for (let x = 100; x < 250; x += 16) s += `<rect x="${x}" y="22" width="3" height="8" fill="#2a2a2c"/>`;
+        s += `<rect x="96" y="18" width="150" height="4" rx="2" fill="#2a2a2c"/><rect x="200" y="6" width="18" height="16" rx="2" fill="#5b6146"/><rect x="220" y="6" width="18" height="16" rx="2" fill="#5b6146"/><rect x="100" y="10" width="60" height="7" rx="2" fill="#1d1d1e"/>`;
+        for (let i = 0; i < 7; i++) s += `<circle cx="${105 + i * 8.3}" cy="13.5" r="2.3" fill="#f4f6f7"/>`;
+      }
+      s += `<path d="M28,124 L28,80 Q28,74 34,74 L70,74 L88,42 Q90,38 96,38 L244,38 Q252,38 254,46 L260,74 L270,76 Q278,78 278,86 L278,124 Q278,128 274,128 L254,128 A28,28 0 0 0 198,128 L106,128 A28,28 0 0 0 50,128 L32,128 Q28,128 28,124 Z" fill="url(#${u}p)"/>`;
+      s += `<path d="M96,44 L140,44 L140,72 L78,72 Z M148,44 L196,44 L196,72 L148,72 Z M204,44 L246,44 L252,72 L204,72 Z" fill="url(#${u}gl)" opacity=".9"/>`;
+      if (top) s += `<defs>${mat(u, 't', top)}</defs><path d="M144,36 L244,36 Q253,36 255,45 L261,75 L144,75 Z" fill="url(#${u}t)"/><path d="M158,46 L192,46 L192,64 L158,64 Z M206,46 L240,46 L244,64 L206,64 Z" fill="url(#${u}gl)" opacity=".75"/><path d="M199,38 L199,74 M146,40 L258,40" stroke="${sh(top, -.35)}" stroke-width="1"/>`;
+      s += `<line x1="144" y1="76" x2="144" y2="126" stroke="${sh(p, -.4)}" stroke-width="1"/><line x1="200" y1="76" x2="200" y2="126" stroke="${sh(p, -.4)}" stroke-width="1"/><circle cx="34" cy="90" r="7" fill="url(#${u}ch)"/><rect x="20" y="112" width="16" height="12" rx="2" fill="#222"/><rect x="272" y="112" width="14" height="12" rx="2" fill="#222"/>`;
+      if (/expedition/.test(z)) s += `<path d="M66,96 L70,80 L84,46 L90,32" fill="none" stroke="#1d1d1e" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><rect x="12" y="110" width="14" height="14" rx="3" fill="#333"/><circle cx="19" cy="117" r="4" fill="url(#${u}al)"/>`;
+      if (/urban/.test(z)) {
+        s += `<rect x="104" y="128" width="96" height="6" rx="2" fill="url(#${u}al)"/><path d="M38,84 h-6 M38,90 h-6 M38,96 h-6" stroke="#222" stroke-width="1.4"/><circle cx="34" cy="90" r="8" fill="none" stroke="#222" stroke-width="1.6"/>`;
+        s += `<path d="M24,128 L16,104 Q14,96 22,94 L26,94" fill="none" stroke="url(#${u}ch)" stroke-width="4" stroke-linecap="round"/><path d="M20,112 L28,112" stroke="url(#${u}ch)" stroke-width="3"/>`;
+      }
+      s += '</g>' + wheelSide(u, 78, cy, r) + wheelSide(u, 226, cy, r);
+      for (const x of [78, 226]) for (let i = 0; i < 16; i++) s += `<rect x="${x - 2}" y="${cy - r - 1.5}" width="4" height="4" fill="#111" transform="rotate(${i * 22.5} ${x} ${cy})"/>`;
+      if (L) s += `<text x="292" y="${cy - 30}" font-size="9" font-family="Helvetica,Arial,sans-serif" fill="#737373" text-anchor="end">+${L / 4}"</text>`;
+      return svg('0 0 300 160', s + '</g>');
+    }
+
+    // ---------- Unterboden ----------
+    function underbody(name) {
+      const u = 'kd' + (++uidN), nm = name.toLowerCase();
+      const state = /sanders/.test(nm) ? 'wax' : /schutz/.test(nm) && !/kein/.test(nm) ? 'coat' : /wäsche|prüf/.test(nm) ? 'clean' : 'raw';
+      const metal = state === 'raw' ? '#7d7b74' : '#9aa0a5';
+      let s = `<defs>${base(u)}${mat(u, 'm', metal)}${mat(u, 'r', sh(metal, -.12))}` +
+        `<pattern id="${u}stp" width="5" height="5" patternUnits="userSpaceOnUse"><rect width="5" height="5" fill="#1c1c1d"/><circle cx="1.5" cy="1.5" r="1" fill="#2e2e30"/><circle cx="3.8" cy="3.6" r=".8" fill="#141415"/></pattern>` +
+        lg(u + 'wx', [[0, '#e0b25a'], [.5, '#a8741f'], [1, '#c8923a']], 0, 1) + `</defs><g filter="url(#${u}sh)">`;
+      s += `<rect x="14" y="16" width="252" height="96" rx="8" fill="url(#${u}m)"/>`;
+      for (let i = 0; i < 4; i++) s += `<rect x="24" y="${26 + i * 21}" width="232" height="11" rx="5.5" fill="url(#${u}r)"/><rect x="24" y="${26 + i * 21}" width="232" height="3" rx="1.5" fill="#fff" opacity=".18"/>`;
+      if (state === 'raw') [[48, 30, 9], [96, 74, 7], [150, 46, 11], [200, 92, 8], [232, 38, 6], [70, 96, 6], [180, 64, 5]].forEach(([x, y, r]) => { s += `<circle cx="${x}" cy="${y}" r="${r}" fill="#8a4a20" opacity=".72"/><circle cx="${x + 2}" cy="${y - 1}" r="${f(r * .55)}" fill="#6b3414" opacity=".7"/>`; });
+      if (state === 'clean') s += `<ellipse cx="160" cy="62" rx="70" ry="34" fill="#fff" opacity=".22"/><circle cx="236" cy="38" r="15" fill="#1f1f1f"/><path d="M229,38 l5,5 l9,-10" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
+      if (state === 'coat') s += `<rect x="14" y="16" width="252" height="96" rx="8" fill="url(#${u}stp)"/>` + Array.from({ length: 4 }, (_, i) => `<rect x="24" y="${26 + i * 21}" width="232" height="11" rx="5.5" fill="#000" opacity=".25"/><rect x="24" y="${26 + i * 21}" width="232" height="2" rx="1" fill="#fff" opacity=".08"/>`).join('');
+      if (state === 'wax') { s += `<rect x="14" y="16" width="252" height="96" rx="8" fill="url(#${u}wx)" opacity=".62"/><path d="M30,22 Q120,30 250,22" stroke="#fff" stroke-opacity=".4" stroke-width="3" fill="none" stroke-linecap="round"/>`; [60, 132, 204].forEach(x => { s += `<path d="M${x},112 q-3,8 0,12 q3,-4 0,-12 Z" fill="#b8822c" opacity=".85"/>`; }); }
+      return svg('0 0 280 132', s + '</g>');
+    }
+
+    // Auswahl → Zeichnung (null = keine Detailansicht, z. B. Lackfarbe)
+    function detail(stepName, optName, ctx) {
+      const n = (stepName || '').toLowerCase(), o = optName || '';
+      if (/felge|räder|rad$/.test(n) && !/lenkrad/.test(n)) return wheel(o, ctx.moto);
+      if (/lenkrad/.test(n)) return steering(o);
+      if (/sitzkonfig/.test(n)) return seating(o, ctx.seat);
+      if (/sitzbank/.test(n) || (/^sitz$/.test(n) && ctx.moto)) return saddle(o, ctx.colorOf(o) || ctx.seat, /^sitz$/.test(n));
+      if (/^sitze$|^sitz$/.test(n)) return seat(o, ctx.seat);
+      if (/interieur|innenausstattung/.test(n)) return ctx.moto ? saddle(o, ctx.colorOf(o)) : seat(ctx.seatStyle, ctx.colorOf(o) || ctx.seat);
+      if (/radio/.test(n)) return radio(o, ctx.dash);
+      if (/lenker/.test(n)) return bars(o);
+      if (/auspuff/.test(n)) return exhaust(o);
+      if (/verdeck/.test(n)) return ctx.offroad ? offroad(ctx.sel('fahrwerk|reifen'), ctx.sel('zubeh'), ctx.paint, ctx.colorOf(o)) : softtop(o, ctx.colorOf(o), ctx.paint);
+      if (/fahrwerk|reifen/.test(n)) return offroad(o, ctx.sel('zubeh'), ctx.paint, ctx.colorOf(ctx.sel('verdeck')));
+      if (/zubeh/.test(n)) return offroad(ctx.sel('fahrwerk|reifen'), o, ctx.paint, ctx.colorOf(ctx.sel('verdeck')));
+      if (/unterboden/.test(n)) return underbody(o);
+      return null;
+    }
+    return { detail };
+  })();
+
   // ---- Konfiguration (Configurator.jsx) ----
   let vehicle = null, currentStep = 0, selections = {}, selectedView = 0;
   const interiorKeywords = ['interieur', 'sitz', 'lenkrad', 'radio', 'innenraum'];
@@ -2450,6 +2806,25 @@ KONFIG_JS = r"""
     // Lackfarbe auch im Innenraum (lackierte Türbleche usw. tragen dieselbe Platzhalterfarbe)
     tintedImage(active.url, paintColor, (!hasInterior || !isExterior) ? seatColor : undefined, !isExterior && !/motorrad|mofa|roller/i.test(vehicle.vehicle_type || ''));
     tintThumbs(g, paintColor, seatColor, hasInterior);
+    updateDetail();
+  }
+  function detailCtx() {   // Zusammenhang für die Zeichnungen: Lack, Interieurfarbe, gewählte Sitzform
+    const st = steps(), selOf = re => { const x = st.find(s => re.test(s.step_name || '')); return x ? selections[x.step_name] : ''; };
+    const hexOf = (re, name) => { for (const s of st) if (!re || re.test(s.step_name || '')) { const o = s.options?.find(x => x.name === name && x.color_hex); if (o) return o.color_hex; } return ''; };
+    const paintStep = st.find(s => s.options?.every(o => o.color_hex) && !/sitz|interieur|seat|innenausstattung|verdeck/i.test(s.step_name || ''));
+    const paintColor = paintStep ? hexOf(null, selections[paintStep.step_name]) : '';
+    const seatStep = st.find(s => /interieur|innenausstattung|sitzbank|^sitz$/i.test(s.step_name || '') && s.options?.some(o => o.color_hex));
+    return { moto: /motorrad|mofa|roller/i.test(vehicle.vehicle_type || ''), offroad: /gelände/i.test(vehicle.category || '') || st.some(s => /fahrwerk/i.test(s.step_name || '')), paint: paintColor, dash: paintColor, seat: seatStep ? hexOf(null, selections[seatStep.step_name]) : '#2a2a2a',
+      seatStyle: selOf(/^sitze$/i), colorOf: name => hexOf(null, name), sel: k => selOf(new RegExp(k, 'i')) };
+  }
+  function updateDetail() {
+    const step = steps()[currentStep], box = $('kc-detail');
+    const art = step ? KD.detail(step.step_name, selections[step.step_name], detailCtx()) : null;
+    if (!art) { box.hidden = true; return; }
+    const key = step.step_name + '|' + selections[step.step_name];
+    if (box.dataset.key !== key) { box.classList.remove('swap'); void box.offsetWidth; box.classList.add('swap'); box.dataset.key = key; }
+    $('kc-detail-art').innerHTML = art; $('kc-detail-step').textContent = 'Detail · ' + step.step_name; $('kc-detail-name').textContent = selections[step.step_name] || '';
+    box.hidden = false;
   }
   function render() {
     const s = steps(), isSummary = currentStep >= s.length, step = s[currentStep];
@@ -2460,7 +2835,7 @@ KONFIG_JS = r"""
     if (isSummary) {
       $('kc-step-name').textContent = 'Zusammenfassung'; $('kc-step-num').textContent = `Schritt ${s.length + 1}/${s.length + 1}`;
       $('kc-opt-name').textContent = `${vehicle.brand} ${vehicle.model_name}`; $('kc-opt-desc').textContent = 'Prüfen Sie Ihre Auswahl und senden Sie uns die Konfiguration – wir melden uns mit Ihrem individuellen Angebot.';
-      $('kc-sum-list').innerHTML = s.map(st => { const o = st.options.find(x => x.name === selections[st.step_name]); return o ? `<div class="kc-row"><small>${esc(st.step_name)}</small><span>${esc(o.name)}</span></div>` : ''; }).join('') +
+      $('kc-sum-list').innerHTML = s.map(st => { const o = st.options.find(x => x.name === selections[st.step_name]); if (!o) return ''; const art = KD.detail(st.step_name, o.name, detailCtx()); return art ? `<div class="kc-row has-art"><i class="kc-row-art">${art}</i><div><small>${esc(st.step_name)}</small><span>${esc(o.name)}</span></div></div>` : `<div class="kc-row"><small>${esc(st.step_name)}</small><span>${esc(o.name)}</span></div>`; }).join('') +
         '<div class="kc-row kc-price"><small>Preis</small><span>Individuelles Angebot</span></div>';
       return;
     }
@@ -2471,7 +2846,7 @@ KONFIG_JS = r"""
     const visual = step.options?.every(o => o.color_hex);
     let note = $('kc-opt-note'); if (!note) { note = document.createElement('p'); note.id = 'kc-opt-note'; note.className = 'kc-opt-note'; $('kc-opt-desc').after(note); }
     note.hidden = !!visual;
-    note.textContent = visual ? '' : 'Diese Auswahl ist im Bild nicht dargestellt – im Bild sehen Sie Lack und Interieurfarbe. Muster und Varianten zeigen wir Ihnen gern bei uns in der Werkstatt.';
+    note.textContent = visual ? '' : 'Die Detailansicht im Bild zeigt Ihre Auswahl. Die genaue Ausführung stimmen wir passend zu Ihrem Fahrzeug mit Ihnen ab – Muster zeigen wir Ihnen gern bei uns in der Werkstatt.';
     $('kc-next').textContent = currentStep === s.length - 1 ? 'Abschluss ›' : 'Weiter ›';
     const isColorStep = step.options?.every(o => o.color_hex);
     $('kc-options').innerHTML = isColorStep
