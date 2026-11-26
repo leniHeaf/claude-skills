@@ -1104,8 +1104,9 @@
   .kc-conf .kc-left { background: #efefed; }
   .kc-conf .kc-thumbs, .kc-conf .kc-side { background: transparent; }
   /* Detailansicht: gewählte Felge, Lenkrad, Sitz, Radio … als Zeichnung im Bild */
-  .kc-detail { position: absolute; right: 0; bottom: 0; z-index: 3; width: clamp(150px, 30%, 260px); margin: 0; background: rgba(255,255,255,.94); border: 1px solid #e2e2e0; box-shadow: 0 10px 30px rgba(0,0,0,.08); padding: 14px 14px 12px; }
+  .kc-detail { position: absolute; right: 0; top: 50%; transform: translateY(-50%); z-index: 3; width: clamp(150px, 30%, 260px); margin: 0; background: rgba(255,255,255,.94); border: 1px solid #e2e2e0; box-shadow: 0 10px 30px rgba(0,0,0,.08); padding: 14px 14px 12px; }
   .kc-detail[hidden] { display: none; }
+  .kc-conf.has-detail .kc-canvas canvas { width: calc(100% - min(30%, 270px)); }
   .kc-detail-art svg { display: block; width: 100%; height: auto; max-height: 190px; }
   .kc-detail figcaption { margin-top: 10px; border-top: 1px solid #ececec; padding-top: 8px; }
   .kc-detail small { display: block; font-size: 10px; letter-spacing: .15em; text-transform: uppercase; color: #737373; }
@@ -1113,7 +1114,7 @@
   .kc-detail.swap .kc-detail-art { animation: kcDetailIn .28s cubic-bezier(.2,.7,.2,1); }
   @keyframes kcDetailIn { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: none; } }
   @media (prefers-reduced-motion: reduce) { .kc-detail.swap .kc-detail-art { animation: none; } }
-  @media (max-width: 899px) { .kc-detail { width: 42%; max-width: 170px; padding: 8px 8px 6px; } .kc-detail-art svg { max-height: 78px; } .kc-detail figcaption { margin-top: 4px; padding-top: 4px; } .kc-detail small { font-size: 8px; } .kc-detail span { font-size: 11px; } }
+  @media (max-width: 899px) { .kc-conf.has-detail .kc-canvas canvas { width: 58%; } .kc-detail { width: 40%; max-width: 170px; padding: 8px 8px 6px; } .kc-detail-art svg { max-height: 78px; } .kc-detail figcaption { margin-top: 4px; padding-top: 4px; } .kc-detail small { font-size: 8px; } .kc-detail span { font-size: 11px; } }
   .kc-row.has-art { display: flex; align-items: center; gap: 12px; }
   .kc-row .kc-row-art { flex: 0 0 52px; width: 52px; height: 40px; display: flex; align-items: center; justify-content: center; }
   .kc-row .kc-row-art svg { max-width: 100%; max-height: 100%; }
@@ -2101,6 +2102,7 @@
   function updateDetail() {
     const step = steps()[currentStep], box = $('kc-detail');
     const art = step ? KD.detail(step.step_name, selections[step.step_name], detailCtx()) : null;
+    $('kc-conf').classList.toggle('has-detail', !!art);
     if (!art) { box.hidden = true; return; }
     const key = step.step_name + '|' + selections[step.step_name];
     if (box.dataset.key !== key) { box.classList.remove('swap'); void box.offsetWidth; box.classList.add('swap'); box.dataset.key = key; }
@@ -2114,6 +2116,7 @@
     saveUrl();
     $('kc-prev').disabled = currentStep === 0;
     if (isSummary) {
+      if ($('kc-opt-note')) $('kc-opt-note').hidden = true;
       $('kc-step-name').textContent = 'Zusammenfassung'; $('kc-step-num').textContent = `Schritt ${s.length + 1}/${s.length + 1}`;
       $('kc-opt-name').textContent = `${vehicle.brand} ${vehicle.model_name}`; $('kc-opt-desc').textContent = 'Prüfen Sie Ihre Auswahl und senden Sie uns die Konfiguration – wir melden uns mit Ihrem individuellen Angebot.';
       $('kc-sum-list').innerHTML = s.map(st => { const o = st.options.find(x => x.name === selections[st.step_name]); if (!o) return ''; const art = KD.detail(st.step_name, o.name, detailCtx()); return art ? `<div class="kc-row has-art"><i class="kc-row-art">${art}</i><div><small>${esc(st.step_name)}</small><span>${esc(o.name)}</span></div></div>` : `<div class="kc-row"><small>${esc(st.step_name)}</small><span>${esc(o.name)}</span></div>`; }).join('') +
