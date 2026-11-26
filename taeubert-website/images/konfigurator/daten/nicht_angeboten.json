@@ -2,6 +2,286 @@
  "grund": "Nicht im Konfigurator angeboten – Auswahl auf bekannte Oldtimer reduziert",
  "fahrzeuge": [
   {
+   "id": "6a468568f7de2edb213a1e6b",
+   "brand": "Volkswagen",
+   "model_name": "Bulli",
+   "variant": "T2 Bay Window",
+   "era": "1967–1979",
+   "vehicle_type": "Transporter",
+   "category": "Bus",
+   "thumb": "images/konfigurator/volkswagen-bulli-t2-bay-window-front-karte.webp"
+  },
+  {
+   "id": "6a468568f7de2edb213a1e6e",
+   "brand": "Volkswagen",
+   "model_name": "Bulli",
+   "variant": "T3 Westfalia Joker",
+   "era": "1979–1992",
+   "vehicle_type": "Transporter",
+   "category": "Bus",
+   "thumb": "images/konfigurator/volkswagen-bulli-t3-westfalia-joker-front-karte.webp"
+  },
+  {
+   "id": "6a4662c15e4cce5d11231ce4",
+   "brand": "Simson",
+   "model_name": "Schwalbe",
+   "variant": "KR51/2",
+   "era": "1964–1986",
+   "vehicle_type": "Mofa/Roller",
+   "category": "Roller",
+   "thumb": "images/konfigurator/simson-schwalbe-kr51-2-front-karte.webp"
+  },
+  {
+   "id": "6a4662c1b7e79c89daded689",
+   "brand": "Simson",
+   "model_name": "S51",
+   "variant": "Enduro",
+   "era": "1975–1990",
+   "vehicle_type": "Mofa/Roller",
+   "category": "Mokick",
+   "thumb": "images/konfigurator/simson-s51-enduro-front-karte.webp"
+  },
+  {
+   "id": "6a4662c134512c4cc5686582",
+   "brand": "Volkswagen",
+   "model_name": "Golf II",
+   "variant": "GTI",
+   "era": "1983–1992",
+   "vehicle_type": "Pkw",
+   "category": "Kompaktwagen",
+   "thumb": "images/konfigurator/volkswagen-golf-ii-gti-front-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc0e",
+   "brand": "BMW",
+   "model_name": "R 90 S",
+   "variant": "",
+   "era": "1973–1976",
+   "vehicle_type": "Motorrad",
+   "category": "Sport-Coupé",
+   "thumb": "images/konfigurator/bmw-r-90-s-front-karte.webp"
+  },
+  {
+   "id": "6a4660347fe3ab53cdb3bc0c",
+   "brand": "BMW",
+   "model_name": "R 69 S",
+   "variant": "",
+   "era": "1955–1969",
+   "vehicle_type": "Motorrad",
+   "category": "Sport-Roadster",
+   "thumb": "images/konfigurator/bmw-r-69-s-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db54",
+   "brand": "Mercedes-Benz",
+   "model_name": "/8",
+   "variant": "W114/W115",
+   "era": "1968–1976",
+   "vehicle_type": "Pkw",
+   "category": "Alltagsklassiker",
+   "thumb": "images/konfigurator/mercedes-benz-8-w114-w115-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db51",
+   "brand": "Mercedes-Benz",
+   "model_name": "300 Adenauer",
+   "variant": "",
+   "era": "1951–1962",
+   "vehicle_type": "Pkw",
+   "category": "Oberklasse",
+   "thumb": "images/konfigurator/mercedes-benz-300-adenauer-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db53",
+   "brand": "Mercedes-Benz",
+   "model_name": "Heckflosse",
+   "variant": "W110/W111/W112",
+   "era": "1959–1968",
+   "vehicle_type": "Pkw",
+   "category": "Klassiker",
+   "thumb": "images/konfigurator/mercedes-benz-heckflosse-w110-w111-w112-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db52",
+   "brand": "Mercedes-Benz",
+   "model_name": "Ponton",
+   "variant": "W120/W121/W180",
+   "era": "1953–1962",
+   "vehicle_type": "Pkw",
+   "category": "Nachkriegs-Klassiker",
+   "thumb": "images/konfigurator/mercedes-benz-ponton-w120-w121-w180-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db5c",
+   "brand": "NSU",
+   "model_name": "Ro 80",
+   "variant": "",
+   "era": "1967–1977",
+   "vehicle_type": "Pkw",
+   "category": "Wankel-Ikone",
+   "thumb": "images/konfigurator/nsu-ro-80-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db56",
+   "brand": "Messerschmitt",
+   "model_name": "KR175 / KR200",
+   "variant": "",
+   "era": "1953–1964",
+   "vehicle_type": "Kabinenroller",
+   "category": "Kabinenroller",
+   "thumb": "images/konfigurator/messerschmitt-kr175-kr200-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db68",
+   "brand": "Porsche",
+   "model_name": "914",
+   "variant": "",
+   "era": "1969–1976",
+   "vehicle_type": "Pkw",
+   "category": "Sportwagen",
+   "thumb": "images/konfigurator/porsche-914-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db6e",
+   "brand": "Sachsenring",
+   "model_name": "Trabant 601",
+   "variant": "",
+   "era": "1964–1990",
+   "vehicle_type": "Pkw",
+   "category": "DDR-Klassiker",
+   "thumb": "images/konfigurator/sachsenring-trabant-601-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db64",
+   "brand": "Opel",
+   "model_name": "Manta",
+   "variant": "A/B",
+   "era": "1970–1988",
+   "vehicle_type": "Pkw",
+   "category": "Coupé",
+   "thumb": "images/konfigurator/opel-manta-a-b-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db6a",
+   "brand": "Porsche",
+   "model_name": "944",
+   "variant": "",
+   "era": "1981–1991",
+   "vehicle_type": "Pkw",
+   "category": "Sportwagen",
+   "thumb": "images/konfigurator/porsche-944-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db66",
+   "brand": "Porsche",
+   "model_name": "911 G-Modell",
+   "variant": "",
+   "era": "1973–1989",
+   "vehicle_type": "Pkw",
+   "category": "Sportwagen",
+   "thumb": "images/konfigurator/porsche-911-g-modell-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db75",
+   "brand": "Volkswagen",
+   "model_name": "Golf I",
+   "variant": "",
+   "era": "1974–1983",
+   "vehicle_type": "Pkw",
+   "category": "Kompaktwagen",
+   "thumb": "images/konfigurator/volkswagen-golf-i-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db76",
+   "brand": "Volkswagen",
+   "model_name": "Scirocco",
+   "variant": "I/II",
+   "era": "1974–1992",
+   "vehicle_type": "Pkw",
+   "category": "Coupé",
+   "thumb": "images/konfigurator/volkswagen-scirocco-i-ii-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db20",
+   "brand": "Amphicar",
+   "model_name": "Model 770",
+   "variant": "",
+   "era": "1961–1968",
+   "vehicle_type": "Amphibienfahrzeug",
+   "category": "Schwimmwagen",
+   "thumb": "images/konfigurator/amphicar-model-770-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db3c",
+   "brand": "Glas",
+   "model_name": "Goggomobil",
+   "variant": "T / L / TS",
+   "era": "1955–1969",
+   "vehicle_type": "Kleinstwagen",
+   "category": "Kleinstwagen",
+   "thumb": "images/konfigurator/glas-goggomobil-t-l-ts-front-karte.webp"
+  },
+  {
+   "id": "6a465435f73729b513bf4371",
+   "brand": "Mercedes-Benz",
+   "model_name": "R107",
+   "variant": "SL Roadster",
+   "era": "1971–1989",
+   "vehicle_type": "Pkw",
+   "category": "Roadster",
+   "thumb": "images/konfigurator/mercedes-benz-r107-sl-roadster-front-karte.webp"
+  },
+  {
+   "id": "6a465435374c829b7166c018",
+   "brand": "Mercedes-Benz",
+   "model_name": "W123",
+   "variant": "Limousine",
+   "era": "1976–1986",
+   "vehicle_type": "Pkw",
+   "category": "Limousine",
+   "thumb": "images/konfigurator/mercedes-benz-w123-limousine-front-karte.webp"
+  },
+  {
+   "id": "6a4654355ea119d064b13fec",
+   "brand": "BMW",
+   "model_name": "3er",
+   "variant": "E30 Coupé",
+   "era": "1975–1994",
+   "vehicle_type": "Pkw",
+   "category": "Coupé",
+   "thumb": "images/konfigurator/bmw-3er-e30-coupe-front-karte.webp"
+  },
+  {
+   "id": "6a46525021f869a54ce5dd7a",
+   "brand": "Mercedes-Benz",
+   "model_name": "190SL",
+   "variant": "Roadster",
+   "era": "1955–1963",
+   "vehicle_type": "Pkw",
+   "category": "Roadster",
+   "thumb": "images/konfigurator/mercedes-benz-190sl-roadster-front-karte.webp"
+  },
+  {
+   "id": "6a4652508994c769734ef5cb",
+   "brand": "Porsche",
+   "model_name": "928",
+   "variant": "S",
+   "era": "1977–1995",
+   "vehicle_type": "Pkw",
+   "category": "GT",
+   "thumb": "images/konfigurator/porsche-928-s-front-karte.webp"
+  },
+  {
+   "id": "6a4633dd1fd3fa7bb2c013fb",
+   "brand": "Porsche",
+   "model_name": "911 F-Modell",
+   "variant": "Targa",
+   "era": "1964–1973",
+   "vehicle_type": "Pkw",
+   "category": "Sportwagen",
+   "thumb": "images/konfigurator/porsche-911-f-modell-targa-front-karte.webp"
+  },
+  {
    "id": "6a468568f7de2edb213a1e72",
    "brand": "Volkswagen",
    "model_name": "Bulli",

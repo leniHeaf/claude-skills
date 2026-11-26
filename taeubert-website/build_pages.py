@@ -2342,10 +2342,30 @@ KONFIG_JS = r"""
     if (bodyTint) { const raw = bw.slice(); blurMask(bw, w, h, rad); for (let p = 0; p < N; p++) if (raw[p] > bw[p]) bw[p] = raw[p]; }   // Glättung nur verstärkend: Kanten bleiben voll eingefärbt
     if (seatTint) blurMask(sw, w, h, rad);
     const bodyScale = bodyTint && (bodyTint.l > 0.7 || bodyTint.l < 0.25) ? 0.3 : 0.45;
+    // Fotorealistische Lackwirkung: Helligkeitsverlauf des Originals relativ zum mittleren Lackton übernehmen (Schatten, Reflexe, Glanzlichter)
+    let tR = 0, tG = 0, tB = 0, Ym = 0, Yhi = 1;
+    if (bodyTint) {
+      const t = hslToRgb(bodyTint.h, bodyTint.s, bodyTint.l); tR = t.r; tG = t.g; tB = t.b;
+      const hist = new Uint32Array(256); let n = 0;
+      for (let p = 0, i = 0; p < N; p++, i += 4) if (bw[p] > 0.6) { hist[Math.min(255, Math.round(0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]))]++; n++; }
+      let acc = 0, med = 0, hi = 0; for (let k = 0; k < 256; k++) { acc += hist[k]; if (!med && acc >= n * 0.5) med = k; if (!hi && acc >= n * 0.985) { hi = k; break; } }
+      Ym = Math.max(20, med); Yhi = Math.max(Ym + 10, hi);
+    }
+    // Lokaler Kontrast (wie bei einem Foto): Formen und Kanten des Lacks plastischer herausarbeiten
+    const Yl = new Float32Array(N), Yb = new Float32Array(N);
+    if (bodyTint) {   // Weichzeichnung nur über die Lackfläche (keine Säume an Reifen und Hintergrund)
+      const Mb = new Float32Array(N), R2 = Math.max(4, Math.round(Math.max(w, h) / 70));
+      for (let p = 0, i = 0; p < N; p++, i += 4) { Yl[p] = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2]; Mb[p] = bw[p] > 0.5 ? 1 : 0; Yb[p] = Yl[p] * Mb[p]; }
+      const Ys = Yl.slice(); blurMask(Ys, w, h, Math.max(1, Math.round(Math.max(w, h) / 600))); for (let p = 0; p < N; p++) Yl[p] = Ys[p] * Mb[p] + Yl[p] * (1 - Mb[p]);
+      blurMask(Yb, w, h, R2); blurMask(Mb, w, h, R2); for (let p = 0; p < N; p++) Yb[p] = Mb[p] > 0.05 ? Yb[p] / Mb[p] : Yl[p];
+    }
     for (let p = 0, i = 0; p < N; p++, i += 4) {
       const wB = bodyTint ? bw[p] : 0, wS = seatTint ? sw[p] * (1 - wB) : 0;
       if (wB > 0.01) {
-        const c = hslToRgb(bodyTint.h, bodyTint.s, Math.max(0.02, Math.min(0.98, bodyTint.l + (L[p] - 0.5) * bodyScale)));
+        const Y = Math.max(0, Yl[p] + 0.7 * (Yl[p] - Yb[p])), ratio = Y / Ym;
+        let c;
+        if (ratio <= 1) { const k = Math.pow(ratio, 1.15); c = { r: tR * k, g: tG * k, b: tB * k }; }
+        else { const hgl = Math.min(1, (Y - Ym) / (Yhi - Ym)), m = Math.pow(hgl, 1.6) * 0.85; c = { r: tR + (255 - tR) * m, g: tG + (255 - tG) * m, b: tB + (255 - tB) * m }; }
         data[i] = Math.round(data[i] * (1 - wB) + c.r * wB); data[i + 1] = Math.round(data[i + 1] * (1 - wB) + c.g * wB); data[i + 2] = Math.round(data[i + 2] * (1 - wB) + c.b * wB);
       }
       if (wS > 0.01) {
