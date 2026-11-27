@@ -1670,23 +1670,67 @@
       const c = document.createElement('canvas'), sc = 200 / Math.max(im.naturalWidth, im.naturalHeight);
       c.width = Math.round(im.naturalWidth * sc); c.height = Math.round(im.naturalHeight * sc);
       const x = c.getContext('2d'); x.drawImage(im, 0, 0, c.width, c.height);
-      try { const d = x.getImageData(0, 0, c.width, c.height); applyTint(d, body, seat, !isExterior && !/motorrad|mofa|roller/i.test(vehicle.vehicle_type || '')); x.putImageData(d, 0, 0); } catch (e) { continue; }
+      try { const d = x.getImageData(0, 0, c.width, c.height); if (v.mask && body) recolorPhoto(d, await loadMask(v.mask, c.width, c.height), body); else applyTint(d, body, seat, !isExterior && !/motorrad|mofa|roller/i.test(vehicle.vehicle_type || '')); x.putImageData(d, 0, 0); } catch (e) { continue; }
       const el = $('kc-thumbs').querySelector(`[data-view="${i}"] img`); if (el) el.src = c.toDataURL('image/jpeg', 0.85);
     }
   }
   let tintJob = 0;
-  async function tintedImage(src, tintHex, seatTintHex, interiorView, maxSize = (window.innerWidth < 900 ? 1400 : 2400)) {
+  // ---- Umfärben echter Fotos: Lackmaske + Lab-Farbraum (Grundfarbe wechselt, Schatten, Spiegelungen und Glanz bleiben) ----
+  const LIN = new Float32Array(256); for (let i = 0; i < 256; i++) { const c = i / 255; LIN[i] = c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); }
+  const labF = t => t > 0.008856 ? Math.cbrt(t) : 7.787 * t + 16 / 116;
+  function rgb2lab(r, g, b) {
+    const R = LIN[r], G = LIN[g], B = LIN[b];
+    const x = labF((R * 0.4124 + G * 0.3576 + B * 0.1805) / 0.95047), y = labF(R * 0.2126 + G * 0.7152 + B * 0.0722), z = labF((R * 0.0193 + G * 0.1192 + B * 0.9505) / 1.08883);
+    return [116 * y - 16, 500 * (x - y), 200 * (y - z)];
+  }
+  const labInv = t => t > 0.206893 ? t * t * t : (t - 16 / 116) / 7.787;
+  const toSrgb = c => { c = c <= 0.0031308 ? 12.92 * c : 1.055 * Math.pow(Math.max(0, c), 1 / 2.4) - 0.055; return Math.max(0, Math.min(255, Math.round(c * 255))); };
+  function lab2rgb(L, a, b) {
+    const y = (L + 16) / 116, x = labInv(a / 500 + y) * 0.95047, Y = labInv(y), z = labInv(y - b / 200) * 1.08883;
+    return [toSrgb(x * 3.2406 + Y * -1.5372 + z * -0.4986), toSrgb(x * -0.9689 + Y * 1.8758 + z * 0.0415), toSrgb(x * 0.0557 + Y * -0.2040 + z * 1.0570)];
+  }
+  function recolorPhoto(imageData, mask, tintHex) {
+    const d = imageData.data, N = d.length / 4, c = tintHex.replace('#', '');
+    const [tL, tA, tB] = rgb2lab(parseInt(c.substr(0, 2), 16), parseInt(c.substr(2, 2), 16), parseInt(c.substr(4, 2), 16));
+    const Ls = new Float32Array(N), Cs = new Float32Array(N), hL = new Uint32Array(201), hC = new Uint32Array(301); let n = 0;
+    for (let p = 0, i = 0; p < N; p++, i += 4) {
+      if (mask[i] < 4) continue;
+      const [L, a, b] = rgb2lab(d[i], d[i + 1], d[i + 2]), C = Math.hypot(a, b); Ls[p] = L; Cs[p] = C;
+      if (mask[i] > 230) { hL[Math.min(200, Math.round(L * 2))]++; hC[Math.min(300, Math.round(C * 2))]++; n++; }
+    }
+    const med = h => { let acc = 0; for (let k = 0; k < h.length; k++) { acc += h[k]; if (acc >= n / 2) return k / 2; } return 50; };
+    const Lm = med(hL), Cm = Math.max(1, med(hC)), gain = tL > 78 ? 0.8 : 1;
+    for (let p = 0, i = 0; p < N; p++, i += 4) {
+      const m = mask[i]; if (m < 4) continue;
+      const w = m / 255, L = Ls[p], k = Math.min(Cs[p] / Cm, 1);
+      let nL = Math.max(0, Math.min(100, tL + (L - Lm) * gain));
+      if (L > Lm) { const spec = 1 - k; nL = nL * (1 - spec) + Math.max(nL, L) * spec; }   // farblose Glanzlichter bleiben hell
+      const [r, g, b] = lab2rgb(nL, tA * k, tB * k);
+      d[i] = Math.round(d[i] * (1 - w) + r * w); d[i + 1] = Math.round(d[i + 1] * (1 - w) + g * w); d[i + 2] = Math.round(d[i + 2] * (1 - w) + b * w);
+    }
+  }
+  async function loadMask(url, w, h) {
+    const im = new Image(); im.src = await fetchAsDataUrl(url); await im.decode();
+    const c = document.createElement('canvas'); c.width = w; c.height = h; const x = c.getContext('2d'); x.drawImage(im, 0, 0, w, h);
+    return x.getImageData(0, 0, w, h).data;
+  }
+  async function tintedImage(src, tintHex, seatTintHex, interiorView, maskUrl, maxSize = (window.innerWidth < 900 ? 1400 : 2400)) {
     const my = ++tintJob, canvas = $('kc-canvas'), spin = $('kc-imgload');
     spin.hidden = false;
     const imgUrl = await fetchAsDataUrl(src);
     if (my !== tintJob) return;
     const img = new Image();
-    img.onload = () => {
+    img.onload = async () => {
       if (my !== tintJob) return;
-      const ctx = canvas.getContext('2d'); let w = img.naturalWidth, h = img.naturalHeight;
+      let w = img.naturalWidth, h = img.naturalHeight;
       if (w > maxSize || h > maxSize) { const scale = maxSize / Math.max(w, h); w = Math.round(w * scale); h = Math.round(h * scale); }
+      let mask = null;
+      if (maskUrl && tintHex) { try { mask = await loadMask(maskUrl, w, h); } catch (e) { mask = null; } if (my !== tintJob) return; }
+      const ctx = canvas.getContext('2d');
       canvas.width = w; canvas.height = h; ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high'; ctx.drawImage(img, 0, 0, w, h);
-      if (tintHex || seatTintHex) {
+      if (mask) {
+        try { const imageData = ctx.getImageData(0, 0, w, h); recolorPhoto(imageData, mask, tintHex); ctx.putImageData(imageData, 0, 0); } catch (e) { console.warn('Canvas recolor failed:', e.message); }
+      } else if (tintHex || seatTintHex) {
         try {
           const imageData = ctx.getImageData(0, 0, w, h);
           applyTint(imageData, tintHex, seatTintHex, interiorView);
@@ -1754,7 +1798,7 @@
     $('kc-thumbs').innerHTML = g.map((im, i) => `<button type="button" class="kc-thumb${selectedView === i ? ' on' : ''}" data-view="${i}" aria-pressed="${selectedView === i}"><img src="${esc(im.url)}" alt="${esc(im.label || 'Ansicht ' + (i + 1))}"></button>`).join('');
     // Lackfarbe auch im Innenraum (lackierte Türbleche usw. tragen dieselbe Platzhalterfarbe)
     const PHOTO_HEX = '#2f5d9e', paintTint = (paintColor || '').toLowerCase() === PHOTO_HEX ? undefined : paintColor;   // Fotofarbe: Originalbild ohne Umfärbung
-    tintedImage(active.url, paintTint, (!hasInterior || !isExterior) ? seatColor : undefined, !isExterior && !/motorrad|mofa|roller/i.test(vehicle.vehicle_type || ''));
+    tintedImage(active.url, paintTint, (!hasInterior || !isExterior) ? seatColor : undefined, !isExterior && !/motorrad|mofa|roller/i.test(vehicle.vehicle_type || ''), active.mask);
     tintThumbs(g, paintTint, seatColor, hasInterior);
   }
   function render() {
@@ -1847,7 +1891,12 @@
       const i = st.options.findIndex(o => /magenta/i.test(o.name)), opts = [...st.options];
       opts.splice(i >= 0 ? i + 1 : opts.length, 0, ...neu);
       if (!opts.some(o => o.name === 'Riviera Blue')) opts.unshift({ name: 'Riviera Blue', color_hex: '#2f5d9e', description: 'Klassisches Mittelblau – so wie im Foto.' });
-      return { ...st, options: opts };
+      // Auswahl auf 30 klassische Lackfarben beschränken (in dieser Reihenfolge)
+      const AUSWAHL = ['Riviera Blue', 'Grand Prix White', 'Light Ivory', 'Medium Ivory', 'Sahara Beige', 'Polar Silver Metallic', 'Palladium Metallic', 'Stone Grey', 'Slate Grey 7051',
+        'Mexico Blue', 'Gulf Blue', 'Pastel Blue', 'Aga Blue', 'Petrol Blue Metallic', 'Mint Green', 'Viper Green', 'Irish Green', 'British Racing Green', 'Olive',
+        'Signal Yellow', 'Speed Yellow', 'Tangerine', 'Guards Red', 'Polo Red', 'Burgundy Red', 'Copper Bronze Metallic', 'Sepia Brown', 'Amethyst Metallic', 'Aubergine', 'Black'];
+      const sel = AUSWAHL.map(n => opts.find(o => o.name === n)).filter(Boolean);
+      return { ...st, options: sel.length >= 10 ? sel : opts };
     }) };
     // Auf der Website ist nur die Lackfarbe wählbar
     vehicle = { ...vehicle, configurator_steps: (vehicle.configurator_steps || []).filter(st => /lackfarbe/i.test(st.step_name || '')) };
