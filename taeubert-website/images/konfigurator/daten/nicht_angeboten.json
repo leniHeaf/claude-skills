@@ -2,6 +2,26 @@
  "grund": "Nicht im Konfigurator angeboten – Auswahl auf bekannte Oldtimer reduziert",
  "fahrzeuge": [
   {
+   "id": "6a465435ec220c085b4e7e36",
+   "brand": "Audi",
+   "model_name": "Quattro",
+   "variant": "Urquattro",
+   "era": "1980–1991",
+   "vehicle_type": "Pkw",
+   "category": "Sportlimousine",
+   "thumb": "images/konfigurator/audi-quattro-urquattro-front-karte.webp"
+  },
+  {
+   "id": "6a4633dd1fd3fa7bb2c013fc",
+   "brand": "Mercedes-Benz",
+   "model_name": "G-Klasse LWB",
+   "variant": "Hard Top",
+   "era": "1979–1991",
+   "vehicle_type": "Pkw",
+   "category": "Geländewagen",
+   "thumb": "images/konfigurator/mercedes-benz-g-klasse-lwb-hard-top-front-karte.webp"
+  },
+  {
    "id": "6a46601485747338ec45db63",
    "brand": "Opel",
    "model_name": "GT",
