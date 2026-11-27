@@ -150,6 +150,9 @@
   .slider { position: relative; height: 750px; overflow: hidden; color: var(--white); }
   .slide { position: absolute; inset: 0; opacity: 0; transition: opacity .9s ease, clip-path 1.1s cubic-bezier(.6,0,.2,1); clip-path: circle(0% at 50% 50%); }
   .slide.active { opacity: 1; clip-path: circle(150% at 50% 50%); z-index: 1; }
+  /* Customize-Slider: Bilder gleiten von rechts nach links */
+  #slider .slide { opacity: 1; clip-path: none; transform: translateX(100%); transition: transform .9s cubic-bezier(.65,0,.35,1); will-change: transform; }
+  #slider .slide.active { transform: translateX(0); }
   .slide .overlay { opacity: .2; }
   .slide-content { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 20px; }
   .slide h2 { font-size: clamp(40px, 6vw, 80px); margin-bottom: 26px; }
@@ -441,7 +444,7 @@
   .fl-inner.no-showcase .showcase { display: none; }
   @media (prefers-reduced-motion: reduce) {
     .marquee-track { animation: none; } .reveal-text { animation: none; opacity: 1; transform: none; }
-    .slide { transition: none; } html { scroll-behavior: auto; }
+    .slide, #slider .slide { transition: none; } html { scroll-behavior: auto; }
   }
   @media (max-width: 990px) {
     :root { --gutter: 20px; }
@@ -1122,16 +1125,23 @@
   slides.forEach((_, i) => {
     const b = document.createElement('button');
     b.setAttribute('aria-label', `Slide ${i + 1}`);
-    b.onclick = () => go(i);
+    b.onclick = () => go(i, i >= cur ? 1 : -1);
     dots.appendChild(b);
   });
-  function go(i) {
-    cur = (i + slides.length) % slides.length;
+  let started = false;
+  function go(i, d = 1) {   // d = 1: neues Bild kommt von rechts, altes geht nach links
+    const prev = cur; cur = (i + slides.length) % slides.length;
+    if (started && prev !== cur) {
+      const a = slides[prev], b = slides[cur];
+      b.style.transition = 'none'; b.style.transform = `translateX(${100 * d}%)`; void b.offsetWidth;
+      b.style.transition = ''; a.style.transform = `translateX(${-100 * d}%)`; b.style.transform = 'translateX(0)';
+    }
+    started = true;
     slides.forEach((s, j) => s.classList.toggle('active', j === cur));
     [...dots.children].forEach((d, j) => d.classList.toggle('active', j === cur));
     clearInterval(timer); timer = setInterval(() => go(cur + 1), 6000);
   }
-  document.querySelectorAll('.arrows button').forEach(b => b.onclick = () => go(cur + +b.dataset.dir));
+  document.querySelectorAll('.arrows button').forEach(b => b.onclick = () => go(cur + +b.dataset.dir, +b.dataset.dir));
   go(0);
 
   // Featured Links: Bild wechselt beim Hovern
