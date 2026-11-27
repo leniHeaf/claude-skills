@@ -1,0 +1,85 @@
+{
+ "grund": "Bild in Base44 zeigt ein anderes Fahrzeug – ausgeblendet bis richtige Bilder vorliegen",
+ "fahrzeuge": [
+  {
+   "id": "6a46601485747338ec45db2d",
+   "brand": "BMW",
+   "model_name": "328",
+   "variant": "",
+   "era": "1936–1940",
+   "vehicle_type": "Pkw",
+   "category": "Roadster/Rennsport",
+   "thumb": "images/konfigurator/bmw-328-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db2a",
+   "brand": "Bitter",
+   "model_name": "SC",
+   "variant": "",
+   "era": "1979–1989",
+   "vehicle_type": "Pkw",
+   "category": "Coupé",
+   "thumb": "images/konfigurator/bitter-sc-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db31",
+   "brand": "BMW",
+   "model_name": "Neue Klasse",
+   "variant": "1500–2000",
+   "era": "1962–1972",
+   "vehicle_type": "Pkw",
+   "category": "Limousine",
+   "thumb": "images/konfigurator/bmw-neue-klasse-15002000-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db2e",
+   "brand": "BMW",
+   "model_name": "501 / 502",
+   "variant": "Barockengel",
+   "era": "1952–1964",
+   "vehicle_type": "Pkw",
+   "category": "Oberklasse",
+   "thumb": "images/konfigurator/bmw-501-502-barockengel-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db2f",
+   "brand": "BMW",
+   "model_name": "Isetta",
+   "variant": "",
+   "era": "1955–1962",
+   "vehicle_type": "Kleinstwagen",
+   "category": "Kabinenroller",
+   "thumb": "images/konfigurator/bmw-isetta-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db2b",
+   "brand": "BMW",
+   "model_name": "Dixi",
+   "variant": "3/15",
+   "era": "1928–1932",
+   "vehicle_type": "Pkw",
+   "category": "Vorkriegs-Klassiker",
+   "thumb": "images/konfigurator/bmw-dixi-3-15-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db30",
+   "brand": "BMW",
+   "model_name": "600 / 700",
+   "variant": "",
+   "era": "1957–1965",
+   "vehicle_type": "Pkw",
+   "category": "Kleinwagen",
+   "thumb": "images/konfigurator/bmw-600-700-front-karte.webp"
+  },
+  {
+   "id": "6a46601485747338ec45db2c",
+   "brand": "BMW",
+   "model_name": "327",
+   "variant": "",
+   "era": "1937–1941",
+   "vehicle_type": "Pkw",
+   "category": "Coupé/Cabrio",
+   "thumb": "images/konfigurator/bmw-327-front-karte.webp"
+  }
+ ]
+}
