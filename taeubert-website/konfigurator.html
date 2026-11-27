@@ -1736,7 +1736,7 @@
   const steps = () => vehicle.configurator_steps || [];
   const gallery = () => vehicle.gallery_images?.length ? vehicle.gallery_images : [{ url: vehicle.image_url, label: 'Front 3/4', view_type: 'exterior' }];
   const isLight = hex => { if (!hex) return true; const c = hex.replace('#', ''); return (parseInt(c.substr(0, 2), 16) * 299 + parseInt(c.substr(2, 2), 16) * 587 + parseInt(c.substr(4, 2), 16) * 114) / 1000 > 140; };
-  const START_COLOR = 'Palladium Metallic';   // dieselbe neutrale Farbe wie in der Übersicht
+  const START_COLOR = 'Riviera Blue';   // Farbe der Fotos, wie in der Übersicht
   function defaults() { selections = {}; steps().forEach(s => { if (s.options?.length > 0) selections[s.step_name] = (s.options.find(o => o.name === START_COLOR) || s.options[0]).name; }); }
   function viewForStep() {   // Innenraum-Schritte zeigen die Innenansicht
     const step = steps()[currentStep]; if (!step) return;
@@ -1753,8 +1753,9 @@
     $('kc-canvas').setAttribute('aria-label', `${vehicle.brand} ${vehicle.model_name}`);
     $('kc-thumbs').innerHTML = g.map((im, i) => `<button type="button" class="kc-thumb${selectedView === i ? ' on' : ''}" data-view="${i}" aria-pressed="${selectedView === i}"><img src="${esc(im.url)}" alt="${esc(im.label || 'Ansicht ' + (i + 1))}"></button>`).join('');
     // Lackfarbe auch im Innenraum (lackierte Türbleche usw. tragen dieselbe Platzhalterfarbe)
-    tintedImage(active.url, paintColor, (!hasInterior || !isExterior) ? seatColor : undefined, !isExterior && !/motorrad|mofa|roller/i.test(vehicle.vehicle_type || ''));
-    tintThumbs(g, paintColor, seatColor, hasInterior);
+    const PHOTO_HEX = '#2f5d9e', paintTint = (paintColor || '').toLowerCase() === PHOTO_HEX ? undefined : paintColor;   // Fotofarbe: Originalbild ohne Umfärbung
+    tintedImage(active.url, paintTint, (!hasInterior || !isExterior) ? seatColor : undefined, !isExterior && !/motorrad|mofa|roller/i.test(vehicle.vehicle_type || ''));
+    tintThumbs(g, paintTint, seatColor, hasInterior);
   }
   function render() {
     const s = steps(), isSummary = currentStep >= s.length, step = s[currentStep];
@@ -1845,6 +1846,7 @@
       const neu = LILA.filter(([n]) => !st.options.some(o => o.name === n)).map(([name, color_hex, description]) => ({ name, color_hex, description }));
       const i = st.options.findIndex(o => /magenta/i.test(o.name)), opts = [...st.options];
       opts.splice(i >= 0 ? i + 1 : opts.length, 0, ...neu);
+      if (!opts.some(o => o.name === 'Riviera Blue')) opts.unshift({ name: 'Riviera Blue', color_hex: '#2f5d9e', description: 'Klassisches Mittelblau – so wie im Foto.' });
       return { ...st, options: opts };
     }) };
     // Auf der Website ist nur die Lackfarbe wählbar
