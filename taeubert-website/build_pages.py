@@ -2303,13 +2303,13 @@ KONFIG_JS = r"""
       const r = data[i], g = data[i + 1], b = data[i + 2], sat = Math.max(r, g, b) - Math.min(r, g, b), px = rgbToHsl(r, g, b), hue = px.h;
       L[p] = px.l;
       if (bodyTint) {
-        const mag = hue >= 260 && hue <= 345, sMin = mag ? 5 : 15, satWeight = sat <= sMin ? 0 : Math.min((sat - sMin) / (mag ? 22 : 40), 1), hueMin = 150, hueMax = 340, f = 15;   // Magenta-Kanten empfindlich (kein rosa Saum), Blautöne wie Glas vorsichtig   // auch halbtransparente Kantenpixel (kein Farbsaum)
+        const mag = hue >= 260 && hue <= 345, sMin = mag ? 5 : 8, satWeight = sat <= sMin ? 0 : Math.min((sat - sMin) / (mag ? 22 : 22), 1), hueMin = 150, hueMax = 340, f = 15;   // Magenta-Kanten empfindlich (kein rosa Saum), Blautöne wie Glas vorsichtig   // auch halbtransparente Kantenpixel (kein Farbsaum)
         let hw;
         if (hue >= hueMin + f && hue <= hueMax - f) hw = 1;
         else if (hue >= hueMin - f && hue < hueMin + f) hw = (hue - (hueMin - f)) / (2 * f);
         else if (hue > hueMax - f && hue <= hueMax + f) hw = (hueMax + f - hue) / (2 * f);
         else hw = 0;
-        const lMax = mag ? 0.97 : 0.93, lWeight = px.l > lMax ? 0 : Math.min((lMax - px.l) / (mag ? 0.06 : 0.08), 1);
+        const lMax = mag ? 0.97 : 0.985, lWeight = px.l > lMax ? 0 : Math.min((lMax - px.l) / (mag ? 0.06 : 0.05), 1);
         bw[p] = Math.min(satWeight, hw, lWeight);
       }
       if (seatTint) {
@@ -2362,7 +2362,7 @@ KONFIG_JS = r"""
     for (let p = 0, i = 0; p < N; p++, i += 4) {
       const wB = bodyTint ? bw[p] : 0, wS = seatTint ? sw[p] * (1 - wB) : 0;
       if (wB > 0.01) {
-        const Y = Math.max(0, Yl[p] + 0.7 * (Yl[p] - Yb[p])), ratio = Y / Ym;
+        const Y = Yl[p], ratio = Y / Ym;   // echte Fotos: Helligkeit unverändert übernehmen
         let c;
         if (ratio <= 1) { const k = Math.pow(ratio, 1.15); c = { r: tR * k, g: tG * k, b: tB * k }; }
         else { const hgl = Math.min(1, (Y - Ym) / (Yhi - Ym)), m = Math.pow(hgl, 1.6) * 0.85; c = { r: tR + (255 - tR) * m, g: tG + (255 - tG) * m, b: tB + (255 - tB) * m }; }
