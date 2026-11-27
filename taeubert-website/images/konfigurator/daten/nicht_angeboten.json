@@ -2,6 +2,16 @@
  "grund": "Nicht im Konfigurator angeboten – Auswahl auf bekannte Oldtimer reduziert",
  "fahrzeuge": [
   {
+   "id": "6a46601485747338ec45db63",
+   "brand": "Opel",
+   "model_name": "GT",
+   "variant": "",
+   "era": "1968–1973",
+   "vehicle_type": "Pkw",
+   "category": "Sportwagen",
+   "thumb": "images/konfigurator/opel-gt-front-karte.webp"
+  },
+  {
    "id": "6a468568f7de2edb213a1e6b",
    "brand": "Volkswagen",
    "model_name": "Bulli",
