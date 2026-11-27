@@ -153,6 +153,16 @@
   /* Customize-Slider: Bilder gleiten von rechts nach links */
   #slider .slide { opacity: 1; clip-path: none; transform: translateX(100%); transition: transform .9s cubic-bezier(.65,0,.35,1); will-change: transform; }
   #slider .slide.active { transform: translateX(0); }
+  #slider { background: #efefed; color: #111; }
+  #slider .slide, #slider .media { background: #efefed; }
+  #slider .overlay { display: none; }
+  #slider .media img { object-fit: contain; object-position: center 70%; }
+  #slider .slide-content { align-items: start; padding-top: clamp(28px, 6vh, 70px); }
+  #slider .slide h2 { color: #111; margin-bottom: 18px; }
+  #slider .btn-light { background: #111; color: #fff; border-color: #111; }
+  #slider .btn-light:hover { background: #333; border-color: #333; }
+  #slider .dots { background: rgba(0,0,0,.25); }
+  @media (max-width: 760px) { #slider .slide h2 { font-size: 34px; } #slider .media img { object-position: center 75%; } }
   .slide .overlay { opacity: .2; }
   .slide-content { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 20px; }
   .slide h2 { font-size: clamp(40px, 6vw, 80px); margin-bottom: 26px; }
@@ -811,17 +821,17 @@
   <section class="slides-section">
     <div class="slider" id="slider">
       <div class="slide active">
-        <div class="media"><img src="images/oldtimer-mercedes-strich-acht-gruen-lackierung.webp" srcset="images/oldtimer-mercedes-strich-acht-gruen-lackierung-700.webp 700w, images/oldtimer-mercedes-strich-acht-gruen-lackierung-1400.webp 1400w, images/oldtimer-mercedes-strich-acht-gruen-lackierung.webp 2560w" sizes="100vw" alt="Klassiker nach der Lackierung"></div>
+        <div class="media"><img src="images/slider-porsche-911-pastellblau.webp" srcset="images/slider-porsche-911-pastellblau-700.webp 700w, images/slider-porsche-911-pastellblau-1400.webp 1400w, images/slider-porsche-911-pastellblau.webp 2400w" sizes="100vw" alt="Porsche 911 in Pastellblau"></div>
         <div class="overlay"></div>
-        <div class="slide-content"><div><h2><strong>Klassiker </strong></h2><a class="btn btn-light" href="konfigurator.html">Täubert Customize</a></div></div>
+        <div class="slide-content"><div><h2><strong>Klassiker</strong></h2><a class="btn btn-light" href="konfigurator.html">Täubert Customize</a></div></div>
       </div>
       <div class="slide">
-        <div class="media"><img src="images/oldtimer-mercedes-strich-acht-gelb-restauriert.webp" srcset="images/oldtimer-mercedes-strich-acht-gelb-restauriert-700.webp 700w, images/oldtimer-mercedes-strich-acht-gelb-restauriert-1400.webp 1400w, images/oldtimer-mercedes-strich-acht-gelb-restauriert.webp 2560w" sizes="100vw" alt="Klassiker in der Werkstatt"></div>
+        <div class="media"><img src="images/slider-vw-kaefer-creme.webp" srcset="images/slider-vw-kaefer-creme-700.webp 700w, images/slider-vw-kaefer-creme-1400.webp 1400w, images/slider-vw-kaefer-creme.webp 2400w" sizes="100vw" alt="VW Käfer in Creme"></div>
         <div class="overlay"></div>
         <div class="slide-content"><div><h2><strong>Ihr Wunschlack</strong></h2><a class="btn btn-light" href="konfigurator.html">Täubert Customize</a></div></div>
       </div>
       <div class="slide">
-        <div class="media"><img src="images/vw-bulli-t2-oldtimer-restauriert.webp" srcset="images/vw-bulli-t2-oldtimer-restauriert-700.webp 700w, images/vw-bulli-t2-oldtimer-restauriert-1400.webp 1400w, images/vw-bulli-t2-oldtimer-restauriert.webp 2160w" sizes="100vw" alt="Restaurierter Klassiker"></div>
+        <div class="media"><img src="images/slider-mercedes-pagode-salbeigruen.webp" srcset="images/slider-mercedes-pagode-salbeigruen-700.webp 700w, images/slider-mercedes-pagode-salbeigruen-1400.webp 1400w, images/slider-mercedes-pagode-salbeigruen.webp 2400w" sizes="100vw" alt="Mercedes-Benz 280 SL Pagode in Salbeigrün"></div>
         <div class="overlay"></div>
         <div class="slide-content"><div><h2><strong>Restauration</strong></h2><a class="btn btn-light" href="konfigurator.html">Täubert Customize</a></div></div>
       </div>
