@@ -1700,14 +1700,20 @@
     }
     const med = h => { let acc = 0; for (let k = 0; k < h.length; k++) { acc += h[k]; if (acc >= n / 2) return k / 2; } return 50; };
     const Lm = med(hL), Cm = Math.max(1, med(hC)), Ym = Math.pow((Lm + 16) / 116, 3), tY = Math.pow((tL + 16) / 116, 3);
+    // Farbrauschen der Bildkompression glätten (Sättigung nur über die Lackfläche weichzeichnen)
+    const W = imageData.width, H = imageData.height, CW = new Float32Array(N), WF = new Float32Array(N);
+    for (let p = 0, i = 0; p < N; p++, i += 4) if (mask[i] > 127) { CW[p] = Cs[p]; WF[p] = 1; }
+    const r = Math.max(1, Math.round(Math.max(W, H) / 800));
+    blurMask(CW, W, H, r); blurMask(CW, W, H, r); blurMask(WF, W, H, r); blurMask(WF, W, H, r);
     for (let p = 0, i = 0; p < N; p++, i += 4) {
       const m = mask[i]; if (m < 4) continue;
-      const w = m / 255, L = Ls[p], k = Math.min(Cs[p] / Cm, 1);
-      const Y = Math.pow((L + 16) / 116, 3);   // Helligkeit linear wie Licht: Schatten multiplikativ (Schwarz bleibt schwarz), Glanz zur Weiß-Seite
-      const nY = Y <= Ym ? tY * Y / Ym : tY + (1 - tY) * (Y - Ym) / Math.max(1 - Ym, 1e-3);
+      const w = m / 255, L = Ls[p], D = Math.min(1.4, (WF[p] > 0.001 ? CW[p] / WF[p] : Cs[p]) / Cm), k = Math.min(D, 1);
+      // Licht auf dem Lack und farblose Spiegelung trennen: neu = Zielfarbe × Licht + Spiegelung (auf hellem Lack schwächer)
+      const Y = Math.pow((L + 16) / 116, 3), Yr = Math.min(1.4, Y / Ym), shade = Math.sqrt(Math.max(D, 0.02) * Math.max(Yr, 0.02));
+      const nY = tY * shade + Math.max(0, Y - Ym * shade) * (1 - 0.6 * tY);
       const nL = Math.max(0, Math.min(100, 116 * Math.cbrt(Math.max(0, Math.min(1, nY))) - 16));
-      const [r, g, b] = lab2rgb(nL, tA * k, tB * k);
-      d[i] = Math.round(d[i] * (1 - w) + r * w); d[i + 1] = Math.round(d[i + 1] * (1 - w) + g * w); d[i + 2] = Math.round(d[i + 2] * (1 - w) + b * w);
+      const [rr, gg, bb] = lab2rgb(nL, tA * k, tB * k);
+      d[i] = Math.round(d[i] * (1 - w) + rr * w); d[i + 1] = Math.round(d[i + 1] * (1 - w) + gg * w); d[i + 2] = Math.round(d[i + 2] * (1 - w) + bb * w);
     }
   }
   async function loadMask(url, w, h) {
