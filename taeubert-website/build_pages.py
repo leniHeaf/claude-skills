@@ -2418,12 +2418,13 @@ KONFIG_JS = r"""
       if (mask[i] > 230) { hL[Math.min(200, Math.round(L * 2))]++; hC[Math.min(300, Math.round(C * 2))]++; n++; }
     }
     const med = h => { let acc = 0; for (let k = 0; k < h.length; k++) { acc += h[k]; if (acc >= n / 2) return k / 2; } return 50; };
-    const Lm = med(hL), Cm = Math.max(1, med(hC)), gain = tL > 78 ? 0.8 : 1;
+    const Lm = med(hL), Cm = Math.max(1, med(hC)), Ym = Math.pow((Lm + 16) / 116, 3), tY = Math.pow((tL + 16) / 116, 3);
     for (let p = 0, i = 0; p < N; p++, i += 4) {
       const m = mask[i]; if (m < 4) continue;
       const w = m / 255, L = Ls[p], k = Math.min(Cs[p] / Cm, 1);
-      let nL = Math.max(0, Math.min(100, tL + (L - Lm) * gain));
-      if (L > Lm) { const spec = 1 - k; nL = nL * (1 - spec) + Math.max(nL, L) * spec; }   // farblose Glanzlichter bleiben hell
+      const Y = Math.pow((L + 16) / 116, 3);   // Helligkeit linear wie Licht: Schatten multiplikativ (Schwarz bleibt schwarz), Glanz zur Weiß-Seite
+      const nY = Y <= Ym ? tY * Y / Ym : tY + (1 - tY) * (Y - Ym) / Math.max(1 - Ym, 1e-3);
+      const nL = Math.max(0, Math.min(100, 116 * Math.cbrt(Math.max(0, Math.min(1, nY))) - 16));
       const [r, g, b] = lab2rgb(nL, tA * k, tB * k);
       d[i] = Math.round(d[i] * (1 - w) + r * w); d[i + 1] = Math.round(d[i + 1] * (1 - w) + g * w); d[i + 2] = Math.round(d[i + 2] * (1 - w) + b * w);
     }
