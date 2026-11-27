@@ -1709,7 +1709,8 @@
       const m = mask[i]; if (m < 4) continue;
       const w = m / 255, L = Ls[p], D = Math.min(1.4, (WF[p] > 0.001 ? CW[p] / WF[p] : Cs[p]) / Cm), k = Math.min(D, 1);
       // Licht auf dem Lack und farblose Spiegelung trennen: neu = Zielfarbe × Licht + Spiegelung (auf hellem Lack schwächer)
-      const Y = Math.pow((L + 16) / 116, 3), Yr = Math.min(1.4, Y / Ym), shade = Math.sqrt(Math.max(D, 0.02) * Math.max(Yr, 0.02));
+      const Y = Math.pow((L + 16) / 116, 3), Yr = Math.min(1.4, Y / Ym); let shade = Math.sqrt(Math.max(D, 0.02) * Math.max(Yr, 0.02));
+      if (shade < 1) shade = 1 - (1 - shade) * (1 - 0.5 * tY * tY);   // heller Lack streut mehr Licht: Schatten weicher (Weiß wirkt sonst wie Silber)
       const nY = tY * shade + Math.max(0, Y - Ym * shade) * (1 - 0.6 * tY);
       const nL = Math.max(0, Math.min(100, 116 * Math.cbrt(Math.max(0, Math.min(1, nY))) - 16));
       const [rr, gg, bb] = lab2rgb(nL, tA * k, tB * k);
